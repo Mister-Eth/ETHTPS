@@ -1,4 +1,7 @@
+using EtherscanApi.Net.Interfaces;
+
 using ETHTPS.API.Infrastructure.Database.Models;
+using ETHTPS.API.Infrastructure.TPSProviders.Implementations;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace ETHTPS.API
@@ -28,6 +32,9 @@ namespace ETHTPS.API
             services.AddControllers().AddNewtonsoftJson().AddJsonOptions(options => { options.JsonSerializerOptions.IgnoreNullValues = true; });
             services.AddSwaggerGen();
             services.AddDbContext<ETHTPSContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            var httpClient = new HttpClient();
+            services.AddSingleton(new EtherscanTPSProvider(new EtherScanClient(Configuration.GetSection("APIKeys").GetValue<string>("Etherscan"))));
+            services.AddSingleton(new ArbiscanTPSProvider(new EtherScanClient(Configuration.GetSection("APIKeys").GetValue<string>("Arbiscan"))));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
