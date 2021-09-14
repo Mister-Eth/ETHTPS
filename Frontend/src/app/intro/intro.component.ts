@@ -1,9 +1,14 @@
-import { Component, ViewChild } from '@angular/core';
-import { fromEvent } from 'rxjs';
-import { ArbitrumTxDataService, transactionsPerDay } from '../services/arbitrum-tx-data.service';
+import { Component } from '@angular/core';
+import { ArbitrumTxDataService } from '../services/arbitrum-tx-data.service';
+import { transactionsPerDay, txService } from '../services/common-classes';
 import { OptimismTxDataService } from '../services/optimism-tx-data.service';
 
-
+export interface chain {
+  name:string;
+  show: boolean;
+  lineColor: string;
+  dataService: txService;
+}
 
 @Component({
   selector: 'app-intro',
@@ -16,14 +21,13 @@ export class IntroComponent {
     layout: {  title: 'Transactions per day' }
   };
 
-
-
-  public chains =  new Map<string, boolean>() ;
+  public chains : chain[] = [] ;
+  public tp = true;
 
   constructor(private arbitrumTxDataService: ArbitrumTxDataService, private optimismTxDataService: OptimismTxDataService) { 
-    this.chains.set('Arbitrum', true);
-    this.chains.set('Optimism', true);
-
+    this.chains.push ({name: 'Arbitrum', show: true, lineColor: 'red', dataService: arbitrumTxDataService});
+    this.chains.push ({name: 'Optimism', show: true, lineColor: 'blue', dataService: optimismTxDataService});
+    
     //this.arbitrumTxDataService.getTxPerDayCount().subscribe( transactions => console.log(transactions));
     this.generateData();
   }
@@ -34,10 +38,11 @@ export class IntroComponent {
     return {x: xValues, y: yValues, name: name, type: 'scatter', mode: 'lines', marker: { color: color } }; 
   }
 
-  private generateData() {
+  public generateData() {
     let data = [];
-    if (this.chains.get('Arbitrum')) data.push(this.extractDataFromService(this.arbitrumTxDataService.getMockTxCount(), 'red', 'Arbitrum'));
-    if (this.chains.get('Optimism')) data.push(this.extractDataFromService(this.optimismTxDataService.getMockTxCount(), 'blue', 'Optimism'));
-    this.graph.data = data;
+    for (let chain of this.chains) {
+      if (chain.show) data.push(this.extractDataFromService(chain.dataService.getMockTxCount(), chain.lineColor, chain.name));
+    }
+    this.graph.data = data as any;
   }
 }

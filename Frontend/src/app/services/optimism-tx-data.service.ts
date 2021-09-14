@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {transactionsPerDay } from './arbitrum-tx-data.service'
+import {transactionsPerDay } from './common-classes'
 import { mockData } from './mock-data/optimism-txcount-history-20210914';
 
 @Injectable({
