@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ArbitrumTxDataService, transactionsPerDay } from '../services/arbitrum-tx-data.service';
+import { OptimismTxDataService } from '../services/optimism-tx-data.service';
 
 @Component({
   selector: 'app-intro',
@@ -7,18 +8,23 @@ import { Router } from '@angular/router';
   styleUrls: ['./intro.component.scss']
 })
 export class IntroComponent {
-
-  
   public graph = {
-    data: [
-      { x: [1, 2, 3], y: [2, 6, 3], type: 'scatter', mode: 'lines+points', marker: { color: 'red' } },
-      { x: [1, 2, 3], y: [2, 5, 3], type: 'bar' },
-    ],
-    layout: {  title: 'A Fancy Plot' }
+    data: [],
+    layout: {  title: 'Transactions per day' }
   };
 
-  constructor(private router: Router) { }
+  //private arbitrumTxCount : transactionsPerDay[] = [];
 
+  constructor(private arbitrumTxDataService: ArbitrumTxDataService, private optimismTxDataService: OptimismTxDataService) { 
+    //this.arbitrumTxDataService.getTxPerDayCount().subscribe( transactions => console.log(transactions));
+    this.graph.data=[this.extractDataFromService(this.arbitrumTxDataService.getMockTxCount(), 'red', 'Arbitrum'),
+                     this.extractDataFromService(this.optimismTxDataService.getMockTxCount(), 'blue', 'Optimism')];
+  }
 
-
+  private extractDataFromService (transactionCount : transactionsPerDay[], color : string, name: string) {
+    let xValues = transactionCount.map(value => value.date);
+    let yValues = transactionCount.map(value => value.txCount);
+    return {x: xValues as number, y: yValues, name: name, type: 'scatter', mode: 'lines', marker: { color: color } };
+    
+  }
 }

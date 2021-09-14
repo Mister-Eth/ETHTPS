@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { HttpClientModule } from '@angular/common/http';
+
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
@@ -19,6 +21,7 @@ import {A11yModule} from '@angular/cdk/a11y';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AboutComponent } from './about/about.component';
 import { IntroComponent } from './intro/intro.component';
+
 
 import {OverlayContainer} from '@angular/cdk/overlay';
 
@@ -36,6 +39,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     IntroComponent,
   ],
   imports: [
+    HttpClientModule,
     A11yModule,
     BrowserModule,
     MatButtonModule,
