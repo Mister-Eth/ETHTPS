@@ -16,20 +16,19 @@ export class ArbitrumTxDataService {
   private arbiscanUrl = `https://arbiscan.io/chart/tx?output=csv`;
   private headers : HttpHeaders = new HttpHeaders()
   .set('Content-Type', 'application/json')
-  .set('Cookie', 'ASP.NET_SessionId=ile2ynidpztfdgu1gxjwj1uk')
-  .set('User-Agent', 'PostmanRuntime/7.26.8');
+  .set('Access-Control-Allow-Origin', '*')
+  .set('Referrer-Policy', 'origin-when-cross-origin')
+  .set('Accept-Encoding', 'br');
 
 
 
   constructor(private http: HttpClient) { }
 
   public getTxPerDayCount()  {
-    return this.http.get(this.arbiscanUrl, { headers: this.headers });
-    //return this.http.get(this.arbiscanUrl);
+    return this.http.get(this.arbiscanUrl,  { headers: this.headers });
   }
 
   public getMockTxCount() : transactionsPerDay[]{
     return mockData.map(entry => ({date: new Date(entry.date), unixTime: entry.unixTime, txCount: entry.txCount}));
-
   }
 }

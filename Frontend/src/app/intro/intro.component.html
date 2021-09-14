@@ -1,1 +1,5 @@
-<plotly-plot [data]="graph.data" [layout]="graph.layout"></plotly-plot>
+<plotly-plot [data]="graph.data" [layout]="graph.layout" [useResizeHandler]="true"></plotly-plot>
+
+<section class="example-section">
+    <mat-checkbox *ngFor="let item of chains | keyvalue" [(checked)]="item.value" (change)="generateData()">{{item.key}}</mat-checkbox>
+</section>
