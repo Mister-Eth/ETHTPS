@@ -1,4 +1,5 @@
 // read this
+@use '~@angular/material' as mat;
 
 @import '~@angular/material/theming';
 // Plus imports for other components in your app.
@@ -6,20 +7,20 @@
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
-@include mat-core();
+@include mat.core();
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$app-primary: mat-palette($mat-lime, 900);
-$app-accent:  mat-palette($mat-orange, 600);
+$app-primary: mat.define-palette(mat.$lime-palette, 900);
+$app-accent:  mat.define-palette(mat.$orange-palette, 600);
 
 // The warn palette is optional (defaults to red).
-$app-warn:    mat-palette($mat-red);
+$app-warn:    mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as `color` or `typography`.
-$app-theme: mat-light-theme((
+$app-theme: mat.define-light-theme((
   color: (
     primary: $app-primary,
     accent: $app-accent,
@@ -30,13 +31,13 @@ $app-theme: mat-light-theme((
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include angular-material-theme($app-theme);
+@include mat.all-component-themes($app-theme);
 
 // Define an alternate dark theme.
-$dark-primary: mat-palette($mat-green, 900);
-$dark-accent:  mat-palette($mat-orange, A200, A100, A400);
-$dark-warn:    mat-palette($mat-deep-orange);
-$dark-theme:   mat-dark-theme((
+$dark-primary: mat.define-palette(mat.$green-palette, 900);
+$dark-accent:  mat.define-palette(mat.$orange-palette, A200, A100, A400);
+$dark-warn:    mat.define-palette(mat.$deep-orange-palette);
+$dark-theme:   mat.define-dark-theme((
   color: (
     primary: $dark-primary,
     accent: $dark-accent,
@@ -48,5 +49,5 @@ $dark-theme:   mat-dark-theme((
 // CSS class whatever you want. In this example, any component inside of an element with
 // `.unicorn-dark-theme` will be affected by this alternate dark theme instead of the default theme.
 .dark-theme {
-  @include angular-material-color($dark-theme);
+  @include mat.all-component-colors($dark-theme);
 }
