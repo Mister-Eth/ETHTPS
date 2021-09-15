@@ -7,3 +7,13 @@ export interface transactionsPerDay {
     unixTime: number;
     txCount: number;
 }
+
+export interface chain {
+    name: string;
+    show: boolean;
+    lineColor: string;
+    dataService: txService;
+    generalInfoLink: string;
+    attributionToDataSourceText: string;
+    attributionToDataSourceLink: string;
+}

@@ -1,9 +1,8 @@
 <plotly-plot [data]="graph.data" [layout]="graph.layout" [useResizeHandler]="true"></plotly-plot>
 
-<section class="example-section">
-    <mat-checkbox *ngFor="let chain of chains"  [checked]="chain.show" (change)="generateData()">
+<section class="showChainCheckboxContainer">
+    <mat-checkbox *ngFor="let chain of chains" [(ngModel)]="chain.show" (change)="generateData()" class="showChainCheckbox">
         {{chain.name}}
-    </mat-checkbox> 
+    </mat-checkbox>
 </section>
 
-<!-- <mat-checkbox  [(ngModel)]="tp" >{{tp}}</mat-checkbox> -->

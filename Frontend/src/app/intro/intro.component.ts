@@ -1,14 +1,7 @@
 import { Component } from '@angular/core';
 import { ArbitrumTxDataService } from '../services/arbitrum-tx-data.service';
-import { transactionsPerDay, txService } from '../services/common-classes';
+import { chain, transactionsPerDay, txService } from '../services/common-classes';
 import { OptimismTxDataService } from '../services/optimism-tx-data.service';
-
-export interface chain {
-  name:string;
-  show: boolean;
-  lineColor: string;
-  dataService: txService;
-}
 
 @Component({
   selector: 'app-intro',
@@ -25,17 +18,10 @@ export class IntroComponent {
   public tp = true;
 
   constructor(private arbitrumTxDataService: ArbitrumTxDataService, private optimismTxDataService: OptimismTxDataService) { 
-    this.chains.push ({name: 'Arbitrum', show: true, lineColor: 'red', dataService: arbitrumTxDataService});
-    this.chains.push ({name: 'Optimism', show: true, lineColor: 'blue', dataService: optimismTxDataService});
+    this.setChainMetaData();
     
     //this.arbitrumTxDataService.getTxPerDayCount().subscribe( transactions => console.log(transactions));
     this.generateData();
-  }
-
-  private extractDataFromService (transactionCount : transactionsPerDay[], color : string, name: string) {
-    let xValues = transactionCount.map(value => value.date);
-    let yValues = transactionCount.map(value => value.txCount);
-    return {x: xValues, y: yValues, name: name, type: 'scatter', mode: 'lines', marker: { color: color } }; 
   }
 
   public generateData() {
@@ -45,4 +31,31 @@ export class IntroComponent {
     }
     this.graph.data = data as any;
   }
+
+  private extractDataFromService (transactionCount : transactionsPerDay[], color : string, name: string) {
+    let xValues = transactionCount.map(value => value.date);
+    let yValues = transactionCount.map(value => value.txCount);
+    return {x: xValues, y: yValues, name: name, type: 'scatter', mode: 'lines', marker: { color: color } }; 
+  }
+
+  private setChainMetaData() {
+    this.chains.push ({name: 'Arbitrum', 
+                       show: true, 
+                       lineColor: 'red', 
+                       dataService: this.arbitrumTxDataService,
+                       generalInfoLink: 'https://l2beat.com/projects/arbitrum/',
+                       attributionToDataSourceText: `Daily transaction data for Optimism retrieved from https://arbiscan.io`,
+                       attributionToDataSourceLink: 'https://arbiscan.io/chart/tx'
+                      });
+    this.chains.push ({name: 'Optimism', 
+                       show: true, 
+                       lineColor: 'blue', 
+                       dataService: this.optimismTxDataService,
+                       generalInfoLink: 'https://l2beat.com/projects/optimism/',
+                       attributionToDataSourceText: `Daily transaction data for Optimism retrieved from https://arbiscan.io`,
+                       attributionToDataSourceLink: 'https://optimistic.etherscan.io/chart/tx'
+                      });
+
+  }
+
 }
