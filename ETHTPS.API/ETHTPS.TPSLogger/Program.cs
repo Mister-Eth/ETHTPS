@@ -1,4 +1,5 @@
 ﻿using ETHTPS.API.Infrastructure.Database.Models;
+using ETHTPS.TPSLogger.TPSLogging.ScanLogger;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -26,9 +27,9 @@ namespace ETHTPS.TPSLogger
             .Build();
             services.AddDbContext<ETHTPSContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
             var provider = services.BuildServiceProvider();
-            var etherscanLogger= new EtherscanLogger(provider.GetRequiredService<ETHTPSContext>(), "Ethereum", configuration.GetSection("APIKeys").GetValue<string>("Etherscan"));
+            var etherscanLogger= new EtherscanTPSLogger(provider.GetRequiredService<ETHTPSContext>(), "Ethereum", configuration.GetSection("APIKeys").GetValue<string>("Etherscan"));
             etherscanLogger.LogDataAsync();
-            var arbiscanLogger = new ArbiscanLogger(provider.GetRequiredService<ETHTPSContext>(), "Arbitrum One", configuration.GetSection("APIKeys").GetValue<string>("Arbiscan"));
+            var arbiscanLogger = new ArbiscanTPSLogger(provider.GetRequiredService<ETHTPSContext>(), "Arbitrum One", configuration.GetSection("APIKeys").GetValue<string>("Arbiscan"));
             arbiscanLogger.LogDataAsync();
             while (true) { await Task.Delay(1); }
         }

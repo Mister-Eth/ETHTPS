@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ETHTPS.TPSLogger
+namespace ETHTPS.TPSLogger.TPSLogging
 {
     public abstract class TPSLoggerBase : ITPSLogger
     {

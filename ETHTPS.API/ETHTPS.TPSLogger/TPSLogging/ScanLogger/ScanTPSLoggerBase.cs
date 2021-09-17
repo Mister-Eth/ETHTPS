@@ -9,13 +9,16 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ETHTPS.TPSLogger
+namespace ETHTPS.TPSLogger.TPSLogging.ScanLogger
 {
-    public class ArbiscanLogger : TPSLoggerBase
+    public abstract class ScanTPSLoggerBase : TPSLoggerBase
     {
+        private readonly string _websiteName;
         private readonly string _apiKey;
-        public ArbiscanLogger(ETHTPSContext Context, string name, string apiKey) : base(Context, name)
+
+        protected ScanTPSLoggerBase(API.Infrastructure.Database.Models.ETHTPSContext context, string name, string apiKey, string websiteName) : base(context, name)
         {
+            _websiteName = websiteName;
             _apiKey = apiKey;
         }
 
@@ -26,8 +29,8 @@ namespace ETHTPS.TPSLogger
                 var client = new HttpClient();
                 try
                 {
-                    int latestBlock = HexToDec(JsonConvert.DeserializeObject<dynamic>(await client.GetStringAsync($"https://api.arbiscan.io/api?module=proxy&action=eth_blockNumber&apikey={_apiKey}")).result.ToString());
-                    int blockTransactions = HexToDec(JsonConvert.DeserializeObject<dynamic>(await client.GetStringAsync($"https://api.arbiscan.io/api?module=proxy&action=eth_getBlockTransactionCountByNumber&apikey={_apiKey}&tag={latestBlock.ToString("X")}")).result.ToString());
+                    int latestBlock = HexToDec(JsonConvert.DeserializeObject<dynamic>(await client.GetStringAsync($"https://api.{_websiteName}.io/api?module=proxy&action=eth_blockNumber&apikey={_apiKey}")).result.ToString());
+                    int blockTransactions = HexToDec(JsonConvert.DeserializeObject<dynamic>(await client.GetStringAsync($"https://api.{_websiteName}.io/api?module=proxy&action=eth_getBlockTransactionCountByNumber&apikey={_apiKey}&tag={latestBlock.ToString("X")}")).result.ToString());
                     lock (Program.LockObject)
                     {
                         var provider = Context.Providers.First(x => x.Name == "Ethereum");
