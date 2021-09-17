@@ -19,6 +19,7 @@ namespace ETHTPS.API.Infrastructure.Database.Models
 
         public virtual DbSet<Provider> Providers { get; set; }
         public virtual DbSet<ProviderType> ProviderTypes { get; set; }
+        public virtual DbSet<TPSData> Tpsdata { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -41,6 +42,19 @@ namespace ETHTPS.API.Infrastructure.Database.Models
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Name).HasMaxLength(255);
+            });
+
+            modelBuilder.Entity<TPSData>(entity =>
+            {
+                entity.ToTable("TPSData");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Block).HasMaxLength(255);
+
+                entity.Property(e => e.Date).HasColumnType("datetime");
+
+                entity.Property(e => e.Tps).HasColumnName("TPS");
             });
 
             OnModelCreatingPartial(modelBuilder);
