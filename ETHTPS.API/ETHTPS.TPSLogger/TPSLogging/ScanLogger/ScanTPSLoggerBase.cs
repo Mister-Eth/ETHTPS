@@ -15,11 +15,13 @@ namespace ETHTPS.TPSLogger.TPSLogging.ScanLogger
     {
         private readonly string _websiteName;
         private readonly string _apiKey;
+        private readonly double _blockTime;
 
-        protected ScanTPSLoggerBase(API.Infrastructure.Database.Models.ETHTPSContext context, string name, string apiKey, string websiteName) : base(context, name)
+        protected ScanTPSLoggerBase(API.Infrastructure.Database.Models.ETHTPSContext context, string name, string apiKey, string websiteName, double blockTime) : base(context, name)
         {
             _websiteName = websiteName;
             _apiKey = apiKey;
+            _blockTime = blockTime;
         }
 
         public override async void LogDataAsync()
@@ -39,7 +41,7 @@ namespace ETHTPS.TPSLogger.TPSLogging.ScanLogger
                             Block = latestBlock.ToString(),
                             Date = DateTime.Now,
                             Provider = provider.Id,
-                            Tps = (int)(Math.Ceiling(blockTransactions / 13.1))
+                            Tps = (int)(Math.Ceiling(blockTransactions / _blockTime))
                         };
                         if (!Context.Tpsdata.Any(x => x.Provider.Value == provider.Id && x.Block == latestBlock.ToString()))
                         {

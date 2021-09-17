@@ -13,7 +13,7 @@ namespace ETHTPS.TPSLogger.TPSLogging.ScanLogger
 {
     public class ArbiscanTPSLogger : ScanTPSLoggerBase
     {
-        public ArbiscanTPSLogger(ETHTPSContext context, string name, string apiKey) : base(context, name, apiKey, "arbiscan")
+        public ArbiscanTPSLogger(ETHTPSContext context, string name, string apiKey) : base(context, name, apiKey, "arbiscan", 1)
         {
         }
     }

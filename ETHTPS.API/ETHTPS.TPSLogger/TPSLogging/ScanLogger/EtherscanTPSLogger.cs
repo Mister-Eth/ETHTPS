@@ -13,7 +13,7 @@ namespace ETHTPS.TPSLogger.TPSLogging.ScanLogger
 {
     public class EtherscanTPSLogger : ScanTPSLoggerBase
     {
-        public EtherscanTPSLogger(ETHTPSContext context, string name, string apiKey) : base(context, name, apiKey, "etherscan")
+        public EtherscanTPSLogger(ETHTPSContext context, string name, string apiKey) : base(context, name, apiKey, "etherscan", 13.1)
         {
         }
     }
