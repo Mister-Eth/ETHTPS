@@ -7,13 +7,14 @@ import { transactionsPerDay } from './common-classes';
 @Injectable({
   providedIn: 'root'
 })
-export class ArbitrumTxDataService {
+export class EthereumTxDataService {
   // private arbiscanUrl = `https://arbiscan.io/chart/tx?output=csv`;
   private headers: HttpHeaders = new HttpHeaders()
     .set('Content-Type', 'application/json')
     .set('Access-Control-Allow-Origin', '*');
 
-  private baseUrl = `https://api.ethtps.info/API`;
+  //private baseUrl = `https://api.ethtps.info/API`;
+  private baseUrl = `/API`;
 
   private ethTpsUrl = `${this.baseUrl}/GetTPS?provider=Ethereum&interval=OneHour`;
 
