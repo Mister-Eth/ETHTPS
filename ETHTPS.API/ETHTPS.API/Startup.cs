@@ -19,6 +19,8 @@ namespace ETHTPS.API
 {
     public class Startup
     {
+        private readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -28,6 +30,15 @@ namespace ETHTPS.API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("https://ethtps.info");
+                                  });
+            });
+
             services.AddControllers().AddNewtonsoftJson().AddJsonOptions(options => { options.JsonSerializerOptions.IgnoreNullValues = true; });
             services.AddSwaggerGen();
             services.AddDbContext<ETHTPSContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -47,7 +58,7 @@ namespace ETHTPS.API
                 c.RoutePrefix = string.Empty;
             });
             app.UseRouting();
-
+            app.UseCors(MyAllowSpecificOrigins);
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

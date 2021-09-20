@@ -48,12 +48,11 @@ namespace ETHTPS.API.Controllers
         public async Task<IEnumerable<TPSResponseModel>> GetTPS(string provider, string interval)
         {
             var timeInterval = Enum.Parse<TimeInterval>(interval);
-            if(timeInterval == TimeInterval.OneMinute)
+            if(timeInterval == TimeInterval.Latest)
             {
                 return (await GetDataAsync(TimeInterval.OneHour, provider)).Select(x => new TPSResponseModel()
                 {
                     Date = x.Date.Value,
-                    Provider = provider,
                     TPS = x.Tps.Value
                 });
             }
@@ -65,8 +64,7 @@ namespace ETHTPS.API.Controllers
                 {
                     list.Add(new TPSResponseModel()
                     {
-                        Date = group.First().Date.Value,
-                        Provider = provider,
+                        Date = group.First().Date.Value.Subtract(TimeSpan.FromSeconds(group.First().Date.Value.Second)),
                         TPS = group.Average(x => x.Tps.Value)
                     });
                 }
@@ -80,8 +78,7 @@ namespace ETHTPS.API.Controllers
                 {
                     list.Add(new TPSResponseModel()
                     {
-                        Date = group.First().Date.Value,
-                        Provider = provider,
+                        Date = group.First().Date.Value.Subtract(TimeSpan.FromSeconds(group.First().Date.Value.Second)).Subtract(TimeSpan.FromMinutes(group.First().Date.Value.Minute)),
                         TPS = group.Average(x => x.Tps.Value)
                     });
                 }
@@ -95,7 +92,7 @@ namespace ETHTPS.API.Controllers
             var targetProvider = _context.Providers.First(x => x.Name.ToUpper() == provider.ToUpper());
             switch (interval)
             {
-                case TimeInterval.OneMinute:
+                case TimeInterval.Latest:
                     return _context.Tpsdata.AsEnumerable().Where(x => x.Provider.Value == targetProvider.Id && x.Date >= DateTime.Now.Subtract(TimeSpan.FromMinutes(1)));
                 case TimeInterval.OneHour:
                     return _context.Tpsdata.AsEnumerable().Where(x => x.Provider.Value == targetProvider.Id && x.Date >= DateTime.Now.Subtract(TimeSpan.FromHours(1)));
@@ -107,5 +104,5 @@ namespace ETHTPS.API.Controllers
         }
     }
 
-    public enum TimeInterval { OneMinute, OneHour, OneDay }
+    public enum TimeInterval { Latest, OneHour, OneDay }
 }

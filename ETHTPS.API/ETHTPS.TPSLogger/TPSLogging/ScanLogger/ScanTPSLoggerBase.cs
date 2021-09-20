@@ -31,8 +31,8 @@ namespace ETHTPS.TPSLogger.TPSLogging.ScanLogger
                 var client = new HttpClient();
                 try
                 {
-                    int latestBlock = HexToDec(JsonConvert.DeserializeObject<dynamic>(await client.GetStringAsync($"https://api.{_websiteName}.io/api?module=proxy&action=eth_blockNumber&apikey={_apiKey}")).result.ToString());
-                    int blockTransactions = HexToDec(JsonConvert.DeserializeObject<dynamic>(await client.GetStringAsync($"https://api.{_websiteName}.io/api?module=proxy&action=eth_getBlockTransactionCountByNumber&apikey={_apiKey}&tag={latestBlock.ToString("X")}")).result.ToString());
+                    int latestBlock = HexToDec(JsonConvert.DeserializeObject<dynamic>(await client.GetStringAsync($"https://api.{_websiteName}/api?module=proxy&action=eth_blockNumber&apikey={_apiKey}")).result.ToString());
+                    int blockTransactions = HexToDec(JsonConvert.DeserializeObject<dynamic>(await client.GetStringAsync($"https://api.{_websiteName}/api?module=proxy&action=eth_getBlockTransactionCountByNumber&apikey={_apiKey}&tag={latestBlock.ToString("X")}")).result.ToString());
                     lock (Program.LockObject)
                     {
                         var provider = Context.Providers.First(x => x.Name == "Ethereum");

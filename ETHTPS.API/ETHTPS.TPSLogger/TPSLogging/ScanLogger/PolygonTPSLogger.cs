@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace ETHTPS.TPSLogger.TPSLogging.ScanLogger
 {
-    public class EtherscanTPSLogger : ScanTPSLoggerBase
+    public class PolygonTPSLogger : ScanTPSLoggerBase
     {
-        public EtherscanTPSLogger(ETHTPSContext context, string name, string apiKey) : base(context, name, apiKey, "etherscan.io", 13.1)
+        public PolygonTPSLogger(ETHTPSContext context, string name, string apiKey) : base(context, name, apiKey, "polygonscan.com", 2.35)
         {
         }
     }

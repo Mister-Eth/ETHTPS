@@ -31,6 +31,8 @@ namespace ETHTPS.TPSLogger
             etherscanLogger.LogDataAsync();
             var arbiscanLogger = new ArbiscanTPSLogger(provider.GetRequiredService<ETHTPSContext>(), "Arbitrum One", configuration.GetSection("APIKeys").GetValue<string>("Arbiscan"));
             arbiscanLogger.LogDataAsync();
+            var polygonscanLogger = new PolygonTPSLogger(provider.GetRequiredService<ETHTPSContext>(), "Polygon", configuration.GetSection("APIKeys").GetValue<string>("Polygon"));
+            polygonscanLogger.LogDataAsync();
             while (true) { await Task.Delay(1); }
         }
 
