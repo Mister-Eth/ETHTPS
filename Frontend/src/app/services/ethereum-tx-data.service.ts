@@ -13,7 +13,9 @@ export class ArbitrumTxDataService {
     .set('Content-Type', 'application/json')
     .set('Access-Control-Allow-Origin', '*');
 
-  private ethTpsUrl = `/API/GetTPS?provider=Ethereum&interval=OneHour`;
+  private baseUrl = `https://api.ethtps.info/API`;
+
+  private ethTpsUrl = `${this.baseUrl}/GetTPS?provider=Ethereum&interval=OneHour`;
 
   constructor(private http: HttpClient) { }
 
