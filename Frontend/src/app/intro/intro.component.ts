@@ -20,7 +20,7 @@ export class IntroComponent {
   constructor(private arbitrumTxDataService: ArbitrumTxDataService, private optimismTxDataService: OptimismTxDataService) { 
     this.setChainMetaData();
     
-    //this.arbitrumTxDataService.getTxPerDayCount().subscribe( transactions => console.log(transactions));
+    this.arbitrumTxDataService.getTxPerDayCount().subscribe( transactions => console.log(transactions));
     this.generateData();
   }
 

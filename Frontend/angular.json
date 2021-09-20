@@ -75,7 +75,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "Prostor:build"
+            "browserTarget": "Prostor:build",
+            "proxyConfig": "./proxy.conf.json"
           },
           "configurations": {
             "production": {
