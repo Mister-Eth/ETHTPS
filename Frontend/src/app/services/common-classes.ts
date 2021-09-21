@@ -1,14 +1,14 @@
 export interface txService {
-    getMockTxCount(): transactionsPerDay[];
+    getMockTxCount(): TransactionsPerDay[];
 }
 
-export interface transactionsPerDay {
+export interface TransactionsPerDay {
     date: Date;
     unixTime: number;
     txCount: number;
 }
 
-export interface chain {
+export interface Chain {
     name: string;
     show: boolean;
     lineColor: string;
@@ -16,4 +16,10 @@ export interface chain {
     generalInfoLink: string;
     attributionToDataSourceText: string;
     attributionToDataSourceLink: string;
+}
+
+export interface Providers {
+    id: number;
+    name: string;
+    type: number;
 }
