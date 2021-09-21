@@ -1,10 +1,20 @@
 .showChainCheckbox {
     padding: 10px;
     display: inline-table;
-
 }
 
 .showChainCheckboxContainer {
     display: inline-flex;
+}
+
+.intervalList {
+    display: flex; 
+    justify-content: flex-end;
+    padding: 5px;
     
+       
+}
+.intervalChip {
+    padding: 5px;
+       
 }

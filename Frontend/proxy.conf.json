@@ -1,6 +1,6 @@
 {
     "/API": {
-        "target": "https://api.ethtps.info/",
+        "target": "https://api.ethtps.info",
         "secure": true,
         "changeOrigin": true,
         "logLevel": "debug"

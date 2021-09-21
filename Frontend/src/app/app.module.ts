@@ -18,6 +18,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
 import { A11yModule } from '@angular/cdk/a11y';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
 
 
 
@@ -50,6 +51,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     MatSidenavModule,
     MatToolbarModule,
     MatCheckboxModule,
+    MatChipsModule,
     MatIconModule,
     MatListModule,
     BrowserAnimationsModule,

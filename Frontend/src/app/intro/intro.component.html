@@ -1,3 +1,12 @@
+<mat-chip-list aria-label="Interval selection" selectable class="intervalList">
+    <mat-chip *ngFor="let interval of intervals$ | async"
+              #c="matChip" 
+              color="accent" 
+              class="intervalChip"
+              [value]="interval"
+              (click)="toggleIntervalSelection(c)">{{interval}}</mat-chip>
+</mat-chip-list>
+
 <plotly-plot [data]="graph.data" [layout]="graph.layout" [useResizeHandler]="true"></plotly-plot>
 
 <section class="showChainCheckboxContainer">
