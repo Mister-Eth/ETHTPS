@@ -5,7 +5,8 @@ export interface txService {
 export interface TransactionsPerDay {
     date: Date;
     unixTime: number;
-    txCount: number;
+    txCount?: number;
+    tps?: number;
 }
 
 export interface Chain {

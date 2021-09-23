@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatChip, MatChipList } from '@angular/material/chips';
 
-import { Observable, zip } from 'rxjs';
+import { forkJoin, Observable, zip } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { ArbitrumTxDataService } from '../services/arbitrum-tx-data.service';
 import { Chain, Providers, TransactionsPerDay, txService } from '../services/common-classes';
@@ -35,6 +35,7 @@ export class IntroComponent {
   private providers$: Observable<Providers[]>;
 
   public chains: Chain[] = [];
+  private aquiredData: {[key: string]: TransactionsPerDay[]} = {};
 
 
   constructor(private arbitrumTxDataService: ArbitrumTxDataService,
@@ -46,32 +47,42 @@ export class IntroComponent {
     this.setChainMetaData();
     this.intervals$ = this.http.get<string[]>(this.intervalsUrl, { headers: this.headers });
     this.providers$ = this.http.get<Providers[]>(this.providersUrl, { headers: this.headers });
-    let tpsObservables = this.getTpsRequests(this.providers$, this.intervals$);
-    tpsObservables.subscribe(observables => {
-       for (let observable of observables) {
-         observable.subscribe( transactions => {
-           console.log(transactions.length);
-           
-         });
-       }
-    });
+    this.getTpsRequests(this.providers$, this.intervals$)
+      .subscribe( data => {
+        this.aquiredData = data;
+        this.extractData();
+      })
 
-    //this.ethereumTxDataService.getTxPerDayCount().subscribe(transactions => console.table(transactions));
-    this.generateData();
+    
   }
 
-  private getTpsRequests(providers$: Observable<Providers[]>, intervals$: Observable<string[]>) : Observable<Observable<TransactionsPerDay[]>[]>{
-    //merge two first values of two observables
-    let zippedOs = zip(intervals$, providers$).pipe(map(x => x[1].map(provider => {
-      return ({provider: provider.name, interval: x[0][0]})
-    })));
+  private getTpsRequests(providers$: Observable<Providers[]>, intervals$: Observable<string[]>) 
+    : Observable<{[key: string]: TransactionsPerDay[]}> {
+    // combine both requests so we can wait for them together
+    let together = forkJoin({
+      providers: providers$,
+      intervals: intervals$
+    });
 
-    //map them to get calls' observables
-    let mappedOs = zippedOs.pipe(map(array => array.map(element => this.txDataService.getTxPerDayCount(element.provider, element.interval))));
+    // map the providers and intervals to requests for transaction count
+    // flatten them to get one observable, instead of nested observables
+    let mappedToTxRequests = together.pipe(mergeMap( ({providers,intervals}) => {
+      //map to multiple get requests 
+      let requestsArray = providers.map(provider => this.providerToRequest(provider.name, intervals[0]));
+      // convert array to object to feed the forkJoin
+      let requestsObject : {[chainName: string]: Observable<TransactionsPerDay[]>} = requestsArray.reduce((a, v) => ({ ...a, [v.provider]: v.request}), {})
+      //combine all requests to one observable
+      let combined : Observable<{[chainName: string]: TransactionsPerDay[]}> =  forkJoin (requestsObject);
+      return combined;
+    }));
 
-    //todo: merge them
-    
-    return mappedOs;
+    return mappedToTxRequests;
+  }
+
+  private providerToRequest (provider: string, interval: string) : {provider: string, request: Observable<TransactionsPerDay[]>} {
+    return ({
+      provider: provider,
+      request: this.txDataService.getTxPerDayCount(provider, interval)});
   }
 
   public toggleIntervalSelection(chip: MatChip) {
@@ -90,23 +101,23 @@ export class IntroComponent {
     }
   }
 
-  public generateData() {
+  public extractData() {
     let data = [];
     for (let chain of this.chains) {
-      if (chain.show) data.push(this.extractDataFromService(chain.dataService.getMockTxCount(), chain.lineColor, chain.name));
+      if (chain.show) data.push(this.extractDataFromService(this.aquiredData[chain.name], chain.lineColor, chain.name));
     }
     this.graph.data = data as any;
   }
 
   private extractDataFromService(transactionCount: TransactionsPerDay[], color: string, name: string) {
     let xValues = transactionCount.map(value => value.date);
-    let yValues = transactionCount.map(value => value.txCount);
+    let yValues = transactionCount.map(value => value.tps);
     return { x: xValues, y: yValues, name: name, type: 'scatter', mode: 'lines', marker: { color: color } };
   }
 
   private setChainMetaData() {
     this.chains.push({
-      name: 'Arbitrum',
+      name: 'Arbitrum One',
       show: true,
       lineColor: 'red',
       dataService: this.arbitrumTxDataService,
@@ -122,6 +133,15 @@ export class IntroComponent {
       generalInfoLink: 'https://l2beat.com/projects/optimism/',
       attributionToDataSourceText: `Daily transaction data for Optimism retrieved from https://arbiscan.io`,
       attributionToDataSourceLink: 'https://optimistic.etherscan.io/chart/tx'
+    });
+    this.chains.push({
+      name: 'Ethereum',
+      show: true,
+      lineColor: 'green',
+      dataService: this.ethereumTxDataService,
+      generalInfoLink: '',
+      attributionToDataSourceText: ``,
+      attributionToDataSourceLink: ''
     });
 
   }
