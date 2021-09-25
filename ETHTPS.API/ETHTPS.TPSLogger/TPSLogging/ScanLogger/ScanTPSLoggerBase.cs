@@ -41,7 +41,7 @@ namespace ETHTPS.TPSLogger.TPSLogging.ScanLogger
                             Block = latestBlock.ToString(),
                             Date = DateTime.Now,
                             Provider = provider.Id,
-                            Tps = (int)(Math.Ceiling(blockTransactions / _blockTime))
+                            Tps = (float)(Math.Ceiling(blockTransactions / _blockTime))
                         };
                         if (!Context.Tpsdata.Any(x => x.Provider.Value == provider.Id && x.Block == latestBlock.ToString()))
                         {

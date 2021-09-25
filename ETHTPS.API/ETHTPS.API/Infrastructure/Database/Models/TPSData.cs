@@ -11,6 +11,6 @@ namespace ETHTPS.API.Infrastructure.Database.Models
         public int? Provider { get; set; }
         public DateTime? Date { get; set; }
         public string Block { get; set; }
-        public int? Tps { get; set; }
+        public float? Tps { get; set; }
     }
 }
