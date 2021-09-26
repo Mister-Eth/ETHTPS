@@ -1,0 +1,12 @@
+Table Providers{
+  ID int [pk, increment]
+  Name varchar
+  Type int
+}
+
+Ref: Providers.Type > ProviderTypes.ID
+
+Table ProviderTypes{
+  ID int [pk, increment]
+  Name varchar
+}

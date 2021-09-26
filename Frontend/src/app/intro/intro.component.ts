@@ -8,6 +8,7 @@ import { ArbitrumTxDataService } from '../services/arbitrum-tx-data.service';
 import { Chain, Providers, TransactionsPerDay, txService } from '../services/common-classes';
 import { EthereumTxDataService } from '../services/ethereum-tx-data.service';
 import { OptimismTxDataService } from '../services/optimism-tx-data.service';
+import { PolygonTxDataService } from '../services/polygon-tx-data.service';
 import { TxDataService } from '../services/tx-data.service';
 
 @Component({
@@ -18,7 +19,7 @@ import { TxDataService } from '../services/tx-data.service';
 export class IntroComponent {
   public graph = {
     data: [],
-    layout: { title: 'Transactions per day' }
+    layout: { title: 'TPS' }
   };
 
   private headers: HttpHeaders = new HttpHeaders()
@@ -41,6 +42,7 @@ export class IntroComponent {
   constructor(private arbitrumTxDataService: ArbitrumTxDataService,
     private optimismTxDataService: OptimismTxDataService,
     private ethereumTxDataService: EthereumTxDataService,
+    private polygonTxDataService: PolygonTxDataService,
     private txDataService: TxDataService,
     private http: HttpClient) {
 
@@ -143,7 +145,15 @@ export class IntroComponent {
       attributionToDataSourceText: ``,
       attributionToDataSourceLink: ''
     });
-
+    this.chains.push({
+      name: 'Polygon',
+      show: true,
+      lineColor: 'green',
+      dataService: this.polygonTxDataService,
+      generalInfoLink: '',
+      attributionToDataSourceText: ``,
+      attributionToDataSourceLink: ''
+    });
   }
 
 }

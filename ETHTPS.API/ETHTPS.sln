@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETHTPS.API", "ETHTPS.API\ETHTPS.API.csproj", "{B0C857E2-7DCF-420A-B2A6-9E5FAB5BA12E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETHTPS.API", "ETHTPS.API\ETHTPS.API.csproj", "{B0C857E2-7DCF-420A-B2A6-9E5FAB5BA12E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETHTPS.TPSLogger", "ETHTPS.TPSLogger\ETHTPS.TPSLogger.csproj", "{72CAF73A-3A18-4642-AEE6-6A10807A7A97}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{B0C857E2-7DCF-420A-B2A6-9E5FAB5BA12E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0C857E2-7DCF-420A-B2A6-9E5FAB5BA12E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0C857E2-7DCF-420A-B2A6-9E5FAB5BA12E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72CAF73A-3A18-4642-AEE6-6A10807A7A97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72CAF73A-3A18-4642-AEE6-6A10807A7A97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72CAF73A-3A18-4642-AEE6-6A10807A7A97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72CAF73A-3A18-4642-AEE6-6A10807A7A97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
