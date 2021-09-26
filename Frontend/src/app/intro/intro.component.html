@@ -10,7 +10,7 @@
 <plotly-plot [data]="graph.data" [layout]="graph.layout" [useResizeHandler]="true"></plotly-plot>
 
 <section class="showChainCheckboxContainer">
-    <mat-checkbox *ngFor="let chain of chains" [(ngModel)]="chain.show" (change)="generateData()" class="showChainCheckbox">
+    <mat-checkbox *ngFor="let chain of chains" [(ngModel)]="chain.show" (change)="extractData()" class="showChainCheckbox">
         {{chain.name}}
     </mat-checkbox>
 </section>

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { mockData } from './mock-data/arbitrum-txcount-history-20210914';
-import { transactionsPerDay } from './common-classes';
+import { TransactionsPerDay } from './common-classes';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +25,7 @@ export class EthereumTxDataService {
     return this.http.get(this.ethTpsUrl, { headers: this.headers });
   }
 
-  public getMockTxCount(): transactionsPerDay[] {
+  public getMockTxCount(): TransactionsPerDay[] {
     return mockData.map(entry => ({ date: new Date(entry.date), unixTime: entry.unixTime, txCount: entry.txCount }));
   }
 }
