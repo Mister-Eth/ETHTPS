@@ -84,6 +84,14 @@ namespace ETHTPS.API.Controllers
                 }
                 return list;
             }
+            else if (timeInterval == TimeInterval.Instant)
+            {
+                return (await GetDataAsync(TimeInterval.Instant, provider)).Select(x => new TPSResponseModel()
+                {
+                    Date = x.Date.Value,
+                    TPS = x.Tps.Value
+                });
+            }
             return new TPSResponseModel[] { };
         }
 
@@ -98,11 +106,13 @@ namespace ETHTPS.API.Controllers
                     return _context.Tpsdata.AsEnumerable().Where(x => x.Provider.Value == targetProvider.Id && x.Date >= DateTime.Now.Subtract(TimeSpan.FromHours(1)));
                 case TimeInterval.OneDay:
                     return _context.Tpsdata.AsEnumerable().Where(x => x.Provider.Value == targetProvider.Id && x.Date >= DateTime.Now.Subtract(TimeSpan.FromDays(1)));
+                case TimeInterval.Instant:
+                    return _context.Tpsdata.OrderByDescending(x => x.Date).GroupBy(x => x.Provider).Select(x => x.First());
                 default:
                     return null;
             }
         }
     }
 
-    public enum TimeInterval { Latest, OneHour, OneDay }
+    public enum TimeInterval { Instant, Latest, OneHour, OneDay }
 }
