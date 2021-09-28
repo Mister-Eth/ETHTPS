@@ -10,6 +10,7 @@ import { EthereumTxDataService } from '../services/ethereum-tx-data.service';
 import { OptimismTxDataService } from '../services/optimism-tx-data.service';
 import { PolygonTxDataService } from '../services/polygon-tx-data.service';
 import { TxDataService } from '../services/tx-data.service';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-intro',
@@ -36,7 +37,10 @@ export class IntroComponent {
   private providers$: Observable<Providers[]>;
 
   public chains: Chain[] = [];
-  private aquiredData: {[key: string]: TransactionsPerDay[]} = {};
+  private acquiredData: { [key: string]: TransactionsPerDay[] } = {};
+
+  public columnsToDisplay = ['select', 'name'];
+  public selection = new SelectionModel<Chain>(true, []);
 
 
   constructor(private arbitrumTxDataService: ArbitrumTxDataService,
@@ -50,16 +54,16 @@ export class IntroComponent {
     this.intervals$ = this.http.get<string[]>(this.intervalsUrl, { headers: this.headers });
     this.providers$ = this.http.get<Providers[]>(this.providersUrl, { headers: this.headers });
     this.getTpsRequests(this.providers$, this.intervals$)
-      .subscribe( data => {
-        this.aquiredData = data;
+      .subscribe(data => {
+        this.acquiredData = data;
         this.extractData();
       })
 
-    
+
   }
 
-  private getTpsRequests(providers$: Observable<Providers[]>, intervals$: Observable<string[]>) 
-    : Observable<{[key: string]: TransactionsPerDay[]}> {
+  private getTpsRequests(providers$: Observable<Providers[]>, intervals$: Observable<string[]>)
+    : Observable<{ [key: string]: TransactionsPerDay[] }> {
     // combine both requests so we can wait for them together
     let together = forkJoin({
       providers: providers$,
@@ -68,23 +72,24 @@ export class IntroComponent {
 
     // map the providers and intervals to requests for transaction count
     // flatten them to get one observable, instead of nested observables
-    let mappedToTxRequests = together.pipe(mergeMap( ({providers,intervals}) => {
+    let mappedToTxRequests = together.pipe(mergeMap(({ providers, intervals }) => {
       //map to multiple get requests 
       let requestsArray = providers.map(provider => this.providerToRequest(provider.name, intervals[0]));
       // convert array to object to feed the forkJoin
-      let requestsObject : {[chainName: string]: Observable<TransactionsPerDay[]>} = requestsArray.reduce((a, v) => ({ ...a, [v.provider]: v.request}), {})
+      let requestsObject: { [chainName: string]: Observable<TransactionsPerDay[]> } = requestsArray.reduce((a, v) => ({ ...a, [v.provider]: v.request }), {})
       //combine all requests to one observable
-      let combined : Observable<{[chainName: string]: TransactionsPerDay[]}> =  forkJoin (requestsObject);
+      let combined: Observable<{ [chainName: string]: TransactionsPerDay[] }> = forkJoin(requestsObject);
       return combined;
     }));
 
     return mappedToTxRequests;
   }
 
-  private providerToRequest (provider: string, interval: string) : {provider: string, request: Observable<TransactionsPerDay[]>} {
+  private providerToRequest(provider: string, interval: string): { provider: string, request: Observable<TransactionsPerDay[]> } {
     return ({
       provider: provider,
-      request: this.txDataService.getTxPerDayCount(provider, interval)});
+      request: this.txDataService.getTxPerDayCount(provider, interval)
+    });
   }
 
   public toggleIntervalSelection(chip: MatChip) {
@@ -106,7 +111,8 @@ export class IntroComponent {
   public extractData() {
     let data = [];
     for (let chain of this.chains) {
-      if (chain.show) data.push(this.extractDataFromService(this.aquiredData[chain.name], chain.lineColor, chain.name));
+      console.log(chain.name + this.selection.isSelected(chain));
+      if (chain.show) data.push(this.extractDataFromService(this.acquiredData[chain.name], chain.lineColor, chain.name));
     }
     this.graph.data = data as any;
   }
@@ -115,6 +121,31 @@ export class IntroComponent {
     let xValues = transactionCount.map(value => value.date);
     let yValues = transactionCount.map(value => value.tps);
     return { x: xValues, y: yValues, name: name, type: 'scatter', mode: 'lines', marker: { color: color } };
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  public masterToggle() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      return;
+    }
+
+    this.selection.select(...this.chains);
+  }
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  public isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.chains.length;
+    return numSelected === numRows;
+  }
+
+  /** The label for the checkbox on the passed row */
+  public checkboxLabel(row?: Chain): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.name }`;
   }
 
   private setChainMetaData() {

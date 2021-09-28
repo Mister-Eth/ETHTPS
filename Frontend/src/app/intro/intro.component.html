@@ -1,17 +1,40 @@
 <mat-chip-list aria-label="Interval selection" selectable class="intervalList">
-    <mat-chip *ngFor="let interval of intervals$ | async"
-              #c="matChip" 
-              color="accent" 
-              class="intervalChip"
-              [value]="interval"
-              (click)="toggleIntervalSelection(c)">{{interval}}</mat-chip>
+    <mat-chip *ngFor="let interval of intervals$ | async" #c="matChip" color="accent" class="intervalChip"
+        [value]="interval" (click)="toggleIntervalSelection(c)">{{interval}}</mat-chip>
 </mat-chip-list>
 
 <plotly-plot [data]="graph.data" [layout]="graph.layout" [useResizeHandler]="true"></plotly-plot>
 
 <section class="showChainCheckboxContainer">
-    <mat-checkbox *ngFor="let chain of chains" [(ngModel)]="chain.show" (change)="extractData()" class="showChainCheckbox">
+    <mat-checkbox *ngFor="let chain of chains" [(ngModel)]="chain.show" (change)="extractData()"
+        class="showChainCheckbox">
         {{chain.name}}
     </mat-checkbox>
 </section>
 
+<table mat-table [dataSource]="chains">
+
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+                [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+            </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+                [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+            </mat-checkbox>
+        </td>
+    </ng-container>
+
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"></tr>
+</table>

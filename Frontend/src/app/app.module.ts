@@ -19,6 +19,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { A11yModule } from '@angular/cdk/a11y';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatTableModule } from '@angular/material/table';
 
 
 
@@ -61,7 +62,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
     MatDialogModule,
     PlotlyModule, 
     FormsModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
