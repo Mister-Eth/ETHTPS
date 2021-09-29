@@ -22,7 +22,7 @@
                         @provider
                     </td>
                     <td id="td-@provider">
-                        @Math.Round(Model.ChartData.Data.First(x => x.Provider == provider).Groups.First(x => x.Interval == "Latest").Data.First().TPS, 2)
+                        @Math.Round(Model.ChartData.Data.First(x => x.Provider == provider).Groups.First(x => x.Interval == "Latest").Data.OrderByDescending(x=>x.Date).First().TPS, 2)
                     </td>
                     <td>
                         @{ 
