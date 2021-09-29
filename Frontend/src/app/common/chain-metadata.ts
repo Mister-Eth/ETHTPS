@@ -7,7 +7,8 @@ export const chains: Chain[] = [
         lineColor: 'red',
         generalInfoLink: 'https://l2beat.com/projects/arbitrum/',
         attributionToDataSourceText: `Daily transaction data for Optimism retrieved from https://arbiscan.io`,
-        attributionToDataSourceLink: 'https://arbiscan.io/chart/tx'
+        attributionToDataSourceLink: 'https://arbiscan.io/chart/tx',
+        logo: `https://arbitrum.io/wp-content/uploads/2021/01/cropped-Arbitrum_Horizontal-Logo-Full-color-White-background-scaled-1-2048x562.jpg`
     },
     {
         name: 'Optimism',
@@ -15,23 +16,26 @@ export const chains: Chain[] = [
         lineColor: 'blue',
         generalInfoLink: 'https://l2beat.com/projects/optimism/',
         attributionToDataSourceText: `Daily transaction data for Optimism retrieved from https://arbiscan.io`,
-        attributionToDataSourceLink: 'https://optimistic.etherscan.io/chart/tx'
+        attributionToDataSourceLink: 'https://optimistic.etherscan.io/chart/tx',
+        logo: `https://assets-global.website-files.com/611dbb3c82ba72fbc285d4e2/611fd32ef63b79b5f8568d58_OPTIMISM-logo.svg`
     },
     {
         name: 'Ethereum',
         show: true,
         lineColor: 'green',
-        generalInfoLink: '',
+        generalInfoLink: 'https://ethereum.org/',
         attributionToDataSourceText: ``,
-        attributionToDataSourceLink: ''
+        attributionToDataSourceLink: '', 
+        logo: `https://ethereum.org/static/a110735dade3f354a46fc2446cd52476/0ee04/eth-home-icon.png`
     },
     {
         name: 'Polygon',
         show: true,
         lineColor: 'orange',
-        generalInfoLink: '',
+        generalInfoLink: 'https://polygon.technology/',
         attributionToDataSourceText: ``,
-        attributionToDataSourceLink: ''
+        attributionToDataSourceLink: '',
+        logo: `https://polygon.technology/wp-content/uploads/2021/07/polygon-logo.svg`
     }
 ]
 

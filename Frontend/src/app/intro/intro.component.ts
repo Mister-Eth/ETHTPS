@@ -7,13 +7,21 @@ import { mergeMap } from 'rxjs/operators';
 import { Chain, Providers, TransactionsPerDay } from '../common/common-classes';
 import { TxDataService } from '../services/tx-data.service';
 import { SelectionModel } from '@angular/cdk/collections';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 import { chains } from '../common/chain-metadata';
 
 @Component({
   selector: 'app-intro',
   templateUrl: './intro.component.html',
-  styleUrls: ['./intro.component.scss']
+  styleUrls: ['./intro.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class IntroComponent {
   public graph = {
@@ -43,6 +51,8 @@ export class IntroComponent {
   public selection : SelectionModel<Chain>;
 
   public isTxDataAcquired = false;
+
+  public expandedElement: Chain | null = null;
 
 
   constructor(
@@ -128,6 +138,12 @@ export class IntroComponent {
     }
 
     this.selection.select(...this.chains);
+  }
+
+  //debug
+  public handleRowClick(element: Chain) {
+    console.log("clicked!");
+    this.expandedElement = this.expandedElement === element ? null : element;
   }
 
   /** Whether the number of selected elements matches the total number of rows. */

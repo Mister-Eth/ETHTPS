@@ -16,6 +16,7 @@ export interface Chain {
     generalInfoLink: string;
     attributionToDataSourceText: string;
     attributionToDataSourceLink: string;
+    logo?: string;
 }
 
 export interface Providers {
