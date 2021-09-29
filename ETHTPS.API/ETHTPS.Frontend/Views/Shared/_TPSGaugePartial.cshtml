@@ -1,0 +1,19 @@
+﻿<div class="container">
+    <p id="tps-label"></p>
+</div>
+<script>
+    $("#tps-label").html(parseFloat(config.CurrentTPS).toFixed(2)  + " TPS");
+    setInterval(updateTPS, 10000);
+
+    function updateTPS() {
+        $.get("http://localhost:10202/API/GetTPS?Provider=Ethereum&Interval=Instant", function (data) {
+            //console.log(data);
+            let totalTPS = 0;
+            for (var i = 0; i < data.length; i++) {
+                totalTPS += data[i].tps;
+            }
+            $("#tps-label").html(parseFloat(totalTPS).toFixed(2) + " TPS");
+        });
+    }
+</script>
+

@@ -71,8 +71,9 @@ body {
 }
 
 img {
-    width: 25px;
-    height: 25px;
+    width: 32px;
+    height: 32px;
+    margin:5px;
 }
 
 header{
@@ -81,4 +82,25 @@ header{
 
 footer{
     cursor: pointer;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.browser text {
+    text-anchor: end;
+}
+
+.focus circle {
+    fill: black;
+    stroke: white;
+}
+
+.overlay {
+    fill: none;
+    pointer-events: all;
 }

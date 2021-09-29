@@ -15,12 +15,10 @@ namespace ETHTPS.API.Controllers
     public class APIController : ControllerBase
     {
         private readonly ETHTPSContext _context;
-        private readonly IServiceProvider _services;
 
-        public APIController(ETHTPSContext context, IServiceProvider services)
+        public APIController(ETHTPSContext context)
         {
             _context = context;
-            _services = services;
         }
 
         [HttpGet]
@@ -50,7 +48,7 @@ namespace ETHTPS.API.Controllers
             var timeInterval = Enum.Parse<TimeInterval>(interval);
             if(timeInterval == TimeInterval.Latest)
             {
-                return (await GetDataAsync(TimeInterval.OneHour, provider)).Select(x => new TPSResponseModel()
+                return (await GetDataAsync(TimeInterval.OneHour, provider)).Take(100).Select(x => new TPSResponseModel()
                 {
                     Date = x.Date.Value,
                     TPS = x.Tps.Value
@@ -64,7 +62,7 @@ namespace ETHTPS.API.Controllers
                 {
                     list.Add(new TPSResponseModel()
                     {
-                        Date = group.First().Date.Value.Subtract(TimeSpan.FromSeconds(group.First().Date.Value.Second)),
+                        Date = group.First().Date.Value.Subtract(TimeSpan.FromSeconds(group.First().Date.Value.Second)).Subtract(TimeSpan.FromMilliseconds(group.First().Date.Value.Millisecond)).Subtract(TimeSpan.FromMilliseconds(group.First().Date.Value.Millisecond)),
                         TPS = group.Average(x => x.Tps.Value)
                     });
                 }
@@ -78,7 +76,21 @@ namespace ETHTPS.API.Controllers
                 {
                     list.Add(new TPSResponseModel()
                     {
-                        Date = group.First().Date.Value.Subtract(TimeSpan.FromSeconds(group.First().Date.Value.Second)).Subtract(TimeSpan.FromMinutes(group.First().Date.Value.Minute)),
+                        Date = group.First().Date.Value.Subtract(TimeSpan.FromSeconds(group.First().Date.Value.Second)).Subtract(TimeSpan.FromMilliseconds(group.First().Date.Value.Millisecond)).Subtract(TimeSpan.FromMinutes(group.First().Date.Value.Minute)),
+                        TPS = group.Average(x => x.Tps.Value)
+                    });
+                }
+                return list;
+            }
+            else if (timeInterval == TimeInterval.OneWeek)
+            {
+                var groups = (await GetDataAsync(TimeInterval.OneWeek, provider)).GroupBy(x => x.Date.Value.Hour);
+                var list = new List<TPSResponseModel>();
+                foreach (var group in groups)
+                {
+                    list.Add(new TPSResponseModel()
+                    {
+                        Date = group.First().Date.Value.Subtract(TimeSpan.FromSeconds(group.First().Date.Value.Second)).Subtract(TimeSpan.FromMilliseconds(group.First().Date.Value.Millisecond)).Subtract(TimeSpan.FromMinutes(group.First().Date.Value.Minute)),
                         TPS = group.Average(x => x.Tps.Value)
                     });
                 }
@@ -89,7 +101,8 @@ namespace ETHTPS.API.Controllers
                 return (await GetDataAsync(TimeInterval.Instant, provider)).Select(x => new TPSResponseModel()
                 {
                     Date = x.Date.Value,
-                    TPS = x.Tps.Value
+                    TPS = x.Tps.Value,
+                    Provider = _context.Providers.First(y => y.Id == x.Provider).Name
                 });
             }
             return new TPSResponseModel[] { };
@@ -106,13 +119,15 @@ namespace ETHTPS.API.Controllers
                     return _context.Tpsdata.AsEnumerable().Where(x => x.Provider.Value == targetProvider.Id && x.Date >= DateTime.Now.Subtract(TimeSpan.FromHours(1)));
                 case TimeInterval.OneDay:
                     return _context.Tpsdata.AsEnumerable().Where(x => x.Provider.Value == targetProvider.Id && x.Date >= DateTime.Now.Subtract(TimeSpan.FromDays(1)));
+                case TimeInterval.OneWeek:
+                    return _context.Tpsdata.AsEnumerable().Where(x => x.Provider.Value == targetProvider.Id && x.Date >= DateTime.Now.Subtract(TimeSpan.FromDays(7)));
                 case TimeInterval.Instant:
-                    return _context.Tpsdata.OrderByDescending(x => x.Date).GroupBy(x => x.Provider).Select(x => x.First());
+                    return _context.Tpsdata.OrderByDescending(x => x.Date).AsEnumerable().GroupBy(x => x.Provider).Select(x => x.First());
                 default:
                     return null;
             }
         }
     }
 
-    public enum TimeInterval { Instant, Latest, OneHour, OneDay }
+    public enum TimeInterval { Instant, Latest, OneHour, OneDay, OneWeek }
 }
