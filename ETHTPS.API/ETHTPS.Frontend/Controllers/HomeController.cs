@@ -18,7 +18,7 @@ namespace ETHTPS.Frontend.Controllers
 
         private static IndexViewModel _cachedIndexViewModel = new IndexViewModel();
         private static DateTime _lastCacheTime = DateTime.MinValue;
-        private static int _cacheTimeSeconds = 60;
+        private static int _cacheTimeSeconds = 300;
 
         public HomeController(ETHTPSContext context)
         {

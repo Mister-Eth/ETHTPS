@@ -1,12 +1,11 @@
 ﻿@inject ETHTPS.API.Infrastructure.Database.Models.ETHTPSContext _context;
 @using System.Linq;
 @using Newtonsoft.Json;
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <div>
     <div id="intervals-container" style="float:right;">
 
     </div>
-    <canvas id="myChart" width="400" height="250"></canvas>
+    <canvas id="stackedChart" width="400" height="300"></canvas>
 </div>
 <script>
     function intervalFormat(interval) {
@@ -30,7 +29,7 @@
         $("#intervals-container").append(`<button type="button" id="${id}" class="btn btn-light">${intervalFormat(interval)}</button>`);
         $(`#${id}`).on('click', function () {
             config.selectedInterval = $(this).attr('id').replace('interval-btn-', "");
-            redrawChart();
+            redrawStackedChart();
         });
     }
     config.selectedInterval = "OneHour";
@@ -45,7 +44,6 @@
         return [];
     }
 
-    var colors = ["#009999", "#22cf22", "#490092", "#006ddb", "#b66dff", "#ff6db6", "#920000", "#db6d00", "#ffdf4d"];
     function getColorFor(provider, offset) {
         for (let i = 0; i < config.Providers.length; i++) {
             if (config.Providers[i] === provider) {
@@ -55,12 +53,12 @@
     }
 </script>
 <script>
-    var myChart = null;
-    function redrawChart() {
-        if (myChart !== null) {
-            myChart.destroy();
+    var stackedChart = null;
+    function redrawStackedChart() {
+        if (stackedChart !== null) {
+            stackedChart.destroy();
         }
-        var ctx = document.getElementById("myChart").getContext("2d");
+        var ctx = document.getElementById("stackedChart").getContext("2d");
 
         function createLine(provider) {
             return {
@@ -72,11 +70,12 @@
                 pointHighlightStroke: getColorFor(provider, 1),
                 borderCapStyle: 'butt',
                 data: getDataFor(provider).map(x => x.TPS),
-                tension: 0.3
+                tension: 0.3,
+                hoverOffset: 4
             }
         }
 
-        myChart = new Chart(ctx, {
+        stackedChart = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: getDataFor(config.Providers[0]).map(x => x.Date),
@@ -84,6 +83,11 @@
             },
             options: {
                 responsive: true,
+                elements: {
+                    point: {
+                        radius: 0
+                    }
+                },
                 scales: {
                     yAxes: [{
                         stacked: true,
@@ -103,6 +107,6 @@
             }
         });
     }
-    redrawChart();
+    redrawStackedChart();
 
 </script>
