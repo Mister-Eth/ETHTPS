@@ -3,6 +3,7 @@ import { MediaMatcher} from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatIcon } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
+import { ThemingService } from './services/theming.service';
 
 
 @Component({
@@ -14,7 +15,7 @@ export class AppComponent {
   @ViewChild('sidenav') sidenav?: MatSidenav;
   @ViewChild('dark-theme-icon') darkThemeIcon?: MatIcon;
 
-  public title = 'L2 stats';
+  public title = 'Transaction count metrics';
 
   private _mobileQueryListener: () => void;
   public mobileQuery: MediaQueryList;
@@ -23,7 +24,8 @@ export class AppComponent {
 
   constructor(changeDetectorRef: ChangeDetectorRef, 
               media: MediaMatcher,
-              public dialog: MatDialog) {
+              public dialog: MatDialog, 
+              private themingService: ThemingService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);    
@@ -36,6 +38,8 @@ export class AppComponent {
 
   onThemeChange(event: any) {
     this.darkTheme=!this.darkTheme;
+    this.themingService.darkTheme.next(this.darkTheme);
+
     if (!this.darkTheme) {
       document.body.classList.remove("dark-theme");
     }

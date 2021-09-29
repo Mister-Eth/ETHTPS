@@ -10,6 +10,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
 import { chains } from '../common/chain-metadata';
+import { ThemingService } from '../services/theming.service';
 
 @Component({
   selector: 'app-intro',
@@ -24,9 +25,29 @@ import { chains } from '../common/chain-metadata';
   ],
 })
 export class IntroComponent {
+  private layout_dark = { 
+    title: 'Transaction count',
+    plot_bgcolor: '#303030',
+    paper_bgcolor: '#303030',
+    font: {
+      size: 10,
+      color: 'white'
+    }
+  }
+
+  private layout_light = { 
+    title: 'Transaction count',
+    plot_bgcolor: 'white',
+    paper_bgcolor: 'white',
+    font: {
+      size: 10,
+      color: 'black'
+    }
+  }
+
   public graph = {
     data: [],
-    layout: { title: 'TPS' }
+    layout: this.layout_dark
   };
 
   private headers: HttpHeaders = new HttpHeaders()
@@ -57,7 +78,8 @@ export class IntroComponent {
 
   constructor(
     private txDataService: TxDataService,
-    private http: HttpClient) {
+    private http: HttpClient, 
+    private themingService: ThemingService) {
 
     this.selection = new SelectionModel<Chain>(true, chains); // initially select all chains
 
@@ -70,6 +92,10 @@ export class IntroComponent {
     this.getInitialTxData(this.providers$, this.intervals$)
 
     this.selection.changed.subscribe(_ => this.extractData());
+
+    this.themingService.darkTheme.subscribe (darkTheme => {
+      this.graph.layout = darkTheme ? this.layout_dark : this.layout_light;
+    });
   }
 
 
