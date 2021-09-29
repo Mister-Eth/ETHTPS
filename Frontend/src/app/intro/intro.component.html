@@ -3,14 +3,13 @@
         [value]="interval" (click)="toggleIntervalSelection(c)">{{interval}}</mat-chip>
 </mat-chip-list>
 
-<plotly-plot [data]="graph.data" [layout]="graph.layout" [useResizeHandler]="true"></plotly-plot>
 
-<section class="showChainCheckboxContainer">
-    <mat-checkbox *ngFor="let chain of chains" [(ngModel)]="chain.show" (change)="extractData()"
-        class="showChainCheckbox">
-        {{chain.name}}
-    </mat-checkbox>
-</section>
+<div *ngIf="!isTxDataAcquired" class="progressSpinnerContainer">
+    <mat-progress-spinner  color="accent" mode="indeterminate"> </mat-progress-spinner>
+</div>
+<plotly-plot *ngIf="isTxDataAcquired" [data]="graph.data" [layout]="graph.layout" [useResizeHandler]="true">
+</plotly-plot>
+
 
 <table mat-table [dataSource]="chains">
 

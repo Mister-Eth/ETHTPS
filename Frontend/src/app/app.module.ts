@@ -20,15 +20,13 @@ import { A11yModule } from '@angular/cdk/a11y';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTableModule } from '@angular/material/table';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-
-
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AboutComponent } from './about/about.component';
 import { IntroComponent } from './intro/intro.component';
 
-
-import {OverlayContainer} from '@angular/cdk/overlay';
+import { OverlayContainer } from '@angular/cdk/overlay';
 
 import * as PlotlyJS from 'plotly.js-dist-min';
 import { PlotlyModule } from 'angular-plotly.js';
@@ -60,15 +58,16 @@ PlotlyModule.plotlyjs = PlotlyJS;
     MatSlideToggleModule,
     MatMenuModule,
     MatDialogModule,
-    PlotlyModule, 
-    FormsModule, 
+    PlotlyModule,
+    FormsModule,
     ReactiveFormsModule,
-    MatTableModule
+    MatTableModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { 
+export class AppModule {
   constructor(overlayContainer: OverlayContainer) {
     overlayContainer.getContainerElement().classList.add('dark-theme');
   }
