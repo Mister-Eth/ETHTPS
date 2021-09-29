@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, forkJoin } from 'rxjs';
-import { TransactionsPerDay, Providers } from './common-classes';
+import { TransactionsPerDay, Providers } from '../common/common-classes';
 
 @Injectable({
   providedIn: 'root'
