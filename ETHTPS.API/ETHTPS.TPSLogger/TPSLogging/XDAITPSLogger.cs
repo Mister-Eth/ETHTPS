@@ -49,7 +49,7 @@ namespace ETHTPS.TPSLogger.TPSLogging
                         {
                             Date = DateTime.Now,
                             Provider = provider.Id,
-                            Tps = n1 / 5 //5s block time
+                            Tps = (double)n1 / 5 //5s block time
                         };
                         Context.Tpsdata.Add(data);
                         Context.SaveChanges();
