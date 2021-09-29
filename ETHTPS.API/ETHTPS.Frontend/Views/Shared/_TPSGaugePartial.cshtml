@@ -5,6 +5,7 @@
 <script>
     $("#tps-label").html(parseFloat(config.CurrentTPS).toFixed(2) + " TPS");
     setInterval(updateTPS, 10000);
+    updateTPS();
 
     function updateTPS() {
         $.get("https://api.ethtps.info/API/GetTPS?Provider=Ethereum&Interval=Instant", function (data) {

@@ -1,4 +1,5 @@
 ﻿using ETHTPS.API.Infrastructure.Database.Models;
+using ETHTPS.TPSLogger.TPSLogging;
 using ETHTPS.TPSLogger.TPSLogging.HttpLogger;
 using ETHTPS.TPSLogger.TPSLogging.ScanLogger;
 
@@ -39,6 +40,8 @@ namespace ETHTPS.TPSLogger
             polygonscanLogger.LogDataAsync();
             var optimismScanLogger = new OptimismHTTPTPSLoggerBase(provider.GetRequiredService<ETHTPSContext>(), "Optimism", "https://optimistic.etherscan.io/", defaultSelector);
             optimismScanLogger.LogDataAsync();
+            var xdaiLogger = new XDAITPSLogger(provider.GetRequiredService<ETHTPSContext>(), "XDAI");
+            xdaiLogger.LogDataAsync();
             while (true) { await Task.Delay(1); }
         }
 
