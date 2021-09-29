@@ -16,6 +16,10 @@ namespace ETHTPS.Frontend.Controllers
         private readonly ETHTPSContext _context;
         private readonly APIController _apiController;
 
+        private static IndexViewModel _cachedIndexViewModel = new IndexViewModel();
+        private static DateTime _lastCacheTime = DateTime.MinValue;
+        private static int _cacheTimeSeconds = 10;
+
         public HomeController(ETHTPSContext context)
         {
             _context = context;
@@ -24,36 +28,42 @@ namespace ETHTPS.Frontend.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var result = new IndexViewModel()
+            //Cahe stuff so it doesn't always load slowly
+            if (DateTime.Now.Subtract(_lastCacheTime).TotalSeconds >= _cacheTimeSeconds)
             {
-                Providers = _context.Providers.Select(x => x.Name).ToList(),
-                CurrentTPS = (await _apiController.GetTPS("Ethereum", "Instant")).Sum(x => x.TPS), 
-                Intervals = Enum.GetValues(typeof(TimeInterval)).Cast<TimeInterval>().Select(x=>x.ToString())
-            };
-            foreach(var provider in result.Providers)
-            {
-                var chartData = new ChartData()
+                _lastCacheTime = DateTime.Now;
+
+                _cachedIndexViewModel = new IndexViewModel()
                 {
-                    Provider = provider
+                    Providers = _context.Providers.Select(x => x.Name).ToList(),
+                    CurrentTPS = (await _apiController.GetTPS("Ethereum", "Instant")).Sum(x => x.TPS),
+                    Intervals = Enum.GetValues(typeof(TimeInterval)).Cast<TimeInterval>().Select(x => x.ToString())
                 };
-                result.ChartData.Data.Add(chartData);
-                foreach (var interval in Enum.GetValues(typeof(TimeInterval)))
+                foreach (var provider in _cachedIndexViewModel.Providers)
                 {
-                    if (interval.ToString() == "Instant")
-                        continue;
-                    var dataGrouping = new IntervalDataGrouping()
+                    var chartData = new ChartData()
                     {
-                        Interval = interval.ToString(),
-                        Data = (await _apiController.GetTPS(provider, interval.ToString())).Select(x=>new DataPoint()
-                        {
-                            Date = x.Date,
-                            TPS = x.TPS
-                        }).ToList()
+                        Provider = provider
                     };
-                    result.ChartData.AddDataGrouping(provider, dataGrouping);
+                    _cachedIndexViewModel.ChartData.Data.Add(chartData);
+                    foreach (var interval in Enum.GetValues(typeof(TimeInterval)))
+                    {
+                        if (interval.ToString() == "Instant")
+                            continue;
+                        var dataGrouping = new IntervalDataGrouping()
+                        {
+                            Interval = interval.ToString(),
+                            Data = (await _apiController.GetTPS(provider, interval.ToString())).Select(x => new DataPoint()
+                            {
+                                Date = x.Date,
+                                TPS = x.TPS
+                            }).ToList()
+                        };
+                        _cachedIndexViewModel.ChartData.AddDataGrouping(provider, dataGrouping);
+                    }
                 }
             }
-            return View(result);
+            return View(_cachedIndexViewModel);
         }
     }
 }
