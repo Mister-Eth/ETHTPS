@@ -36,6 +36,15 @@ export const chains: Chain[] = [
         attributionToDataSourceText: ``,
         attributionToDataSourceLink: '',
         logo: `https://polygon.technology/wp-content/uploads/2021/07/polygon-logo.svg`
+    },
+    {
+        name: 'XDAI',
+        show: true,
+        lineColor: 'orange',
+        generalInfoLink: 'https://www.xdaichain.com/',
+        attributionToDataSourceText: ``,
+        attributionToDataSourceLink: '',
+        logo: `https://gblobscdn.gitbook.com/spaces%2F-Lpi9AHj62wscNlQjI-l%2Favatar.png?alt=media`
     }
 ]
 
