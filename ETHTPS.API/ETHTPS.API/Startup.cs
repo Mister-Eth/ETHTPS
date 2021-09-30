@@ -1,6 +1,7 @@
 using EtherscanApi.Net.Interfaces;
 
 using ETHTPS.API.Infrastructure.Database.Models;
+using ETHTPS.API.Middlewares;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -52,6 +53,7 @@ namespace ETHTPS.API
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseMiddleware<AccesStatsMiddleware>();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

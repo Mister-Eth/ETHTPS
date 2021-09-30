@@ -1,4 +1,5 @@
 using ETHTPS.API.Infrastructure.Database.Models;
+using ETHTPS.API.Middlewares;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -42,6 +43,7 @@ namespace ETHTPS.Frontend
             {
                 app.UseExceptionHandler("/Error");
             }
+            app.UseMiddleware<AccesStatsMiddleware>();
 
             app.UseStaticFiles();
 

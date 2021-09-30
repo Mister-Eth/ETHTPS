@@ -17,6 +17,7 @@ namespace ETHTPS.API.Infrastructure.Database.Models
         {
         }
 
+        public virtual DbSet<AccesStat> AccesStats { get; set; }
         public virtual DbSet<Provider> Providers { get; set; }
         public virtual DbSet<ProviderType> ProviderTypes { get; set; }
         public virtual DbSet<TPSData> Tpsdata { get; set; }
@@ -24,6 +25,15 @@ namespace ETHTPS.API.Infrastructure.Database.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+
+            modelBuilder.Entity<AccesStat>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Path).HasMaxLength(255);
+
+                entity.Property(e => e.Project).HasMaxLength(255);
+            });
 
             modelBuilder.Entity<Provider>(entity =>
             {
