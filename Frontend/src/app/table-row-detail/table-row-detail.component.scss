@@ -1,0 +1,18 @@
+.container {
+    display: flex;
+    align-items: center ;
+  }
+
+.logo {
+    height: 50px;
+    margin: 10px;
+}
+
+.link {
+    margin: 10px;
+}
+
+.link.darkMode {
+    color: lightblue;
+} 
+

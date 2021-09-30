@@ -3,6 +3,11 @@
     display: inline-table;
 }
 
+.mat-header-cell {
+    font-size: 20px;
+    font-style: bold;
+}
+
 .showChainCheckboxContainer {
     display: inline-flex;
 }
@@ -16,7 +21,7 @@
     padding: 5px;
 }
 
-table {
+app-selection-table {
     width: 100%;
 }
 
@@ -29,28 +34,7 @@ mat-progress-spinner {
     height: 450px;
 }
 
-.example-element-detail {
-    overflow: hidden;
-    display: flex;
-}
 
-.example-element-row td {
-    border-bottom-width: 0;
-}
 
-tr.example-detail-row {
-    height: 0;
-}
 
-tr.example-detail-row {
-    height: 0;
-}
 
-.expandedRowImage {
-    height: 50px;
-    margin: 10px;
-}
-
-.expandedRowLink {
-    margin: 10px;
-}
