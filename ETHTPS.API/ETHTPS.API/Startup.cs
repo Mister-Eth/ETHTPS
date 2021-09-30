@@ -54,8 +54,8 @@ namespace ETHTPS.API
             {
                 app.UseDeveloperExceptionPage();
             }
-            //app.UseMiddleware<RequestConsoleLoggingMiddleware>();
-            //app.UseMiddleware<AccesStatsMiddleware>();
+            app.UseMiddleware<RequestConsoleLoggingMiddleware>();
+            app.UseMiddleware<AccesStatsMiddleware>();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
