@@ -44,9 +44,5 @@ namespace ETHTPS.TPSLogger
             xdaiLogger.LogDataAsync();
             while (true) { await Task.Delay(1); }
         }
-
-        
-
-        //public static object LockObject = new object();
     }
 }

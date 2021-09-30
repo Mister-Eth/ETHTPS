@@ -3,6 +3,7 @@ using ETHTPS.API.Infrastructure.Database.Models;
 using ETHTPS.API.Models;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 
 using System;
@@ -16,10 +17,12 @@ namespace ETHTPS.API.Controllers
     public class APIController : ControllerBase
     {
         private readonly ETHTPSContext _context;
-        private static ResponseCacher<(string Provider, string Interval), IEnumerable<TPSResponseModel>> _tpsResponseCacher = new ResponseCacher<(string Provider, string Interval), IEnumerable<TPSResponseModel>>(300); //Use cache for TPS tasks because they are resource intensive
-        public APIController(ETHTPSContext context)
+        private readonly IMemoryCache _cache;
+
+        public APIController(ETHTPSContext context, IMemoryCache cache)
         {
             _context = context;
+            _cache = cache;
         }
 
         [HttpGet]
@@ -46,27 +49,34 @@ namespace ETHTPS.API.Controllers
         [HttpGet]
         public async Task<IEnumerable<TPSResponseModel>> GetTPS(string provider, string interval)
         {
-            var timeInterval = Enum.Parse<TimeInterval>(interval);
-            if (timeInterval == TimeInterval.Latest)
+            var result = default(IEnumerable<TPSResponseModel>);
+
+            if (!_cache.TryGetValue(provider + interval, out result))
             {
-                return (await GetDataAsync(TimeInterval.OneHour, provider)).Take(100).Select(x => new TPSResponseModel()
+                var cacheEntryOptions = new MemoryCacheEntryOptions();
+                cacheEntryOptions.SetSlidingExpiration(TimeSpan.FromSeconds(300));
+
+                var timeInterval = Enum.Parse<TimeInterval>(interval);
+                if (timeInterval == TimeInterval.Latest)
                 {
-                    Date = x.Date.Value,
-                    TPS = x.Tps.Value
-                });
-            }
-            else if (timeInterval == TimeInterval.Instant)
-            {
-                return (await GetDataAsync(TimeInterval.Instant, provider)).Select(x => new TPSResponseModel()
+                    result = (await GetDataAsync(TimeInterval.OneHour, provider)).Take(100).Select(x => new TPSResponseModel()
+                    {
+                        Date = x.Date.Value,
+                        TPS = x.Tps.Value
+                    }).ToList();
+                    cacheEntryOptions.SetSlidingExpiration(TimeSpan.FromSeconds(60));
+                }
+                else if (timeInterval == TimeInterval.Instant)
                 {
-                    Date = x.Date.Value,
-                    TPS = x.Tps.Value,
-                    Provider = _context.Providers.First(y => y.Id == x.Provider).Name
-                });
-            }
-            return await _tpsResponseCacher.ExecuteOrGetCachedValueAsync((provider, interval), Task.Run<IEnumerable<TPSResponseModel>>(async() => 
-            {
-               if (timeInterval == TimeInterval.OneHour)
+                    result = (await GetDataAsync(TimeInterval.Instant, provider)).Select(x => new TPSResponseModel()
+                    {
+                        Date = x.Date.Value,
+                        TPS = x.Tps.Value,
+                        Provider = _context.Providers.First(y => y.Id == x.Provider).Name
+                    }).ToList();
+                    cacheEntryOptions.SetSlidingExpiration(TimeSpan.FromSeconds(10));
+                }
+                else if (timeInterval == TimeInterval.OneHour)
                 {
                     var groups = (await GetDataAsync(TimeInterval.OneHour, provider)).GroupBy(x => x.Date.Value.Minute);
                     var list = new List<TPSResponseModel>();
@@ -78,7 +88,7 @@ namespace ETHTPS.API.Controllers
                             TPS = group.Average(x => x.Tps.Value)
                         });
                     }
-                    return list;
+                    result = list;
                 }
                 else if (timeInterval == TimeInterval.OneDay)
                 {
@@ -92,7 +102,7 @@ namespace ETHTPS.API.Controllers
                             TPS = group.Average(x => x.Tps.Value)
                         });
                     }
-                    return list;
+                    result = list;
                 }
                 else if (timeInterval == TimeInterval.OneWeek)
                 {
@@ -106,10 +116,12 @@ namespace ETHTPS.API.Controllers
                             TPS = group.Average(x => x.Tps.Value)
                         });
                     }
-                    return list;
+                    result = list;
                 }
-                return new TPSResponseModel[] { };
-            }));
+                _cache.Set(provider + interval, result, cacheEntryOptions);
+            }
+          
+            return result;
         }
 
         private async Task<IEnumerable<TPSData>> GetDataAsync(TimeInterval interval, string provider)
