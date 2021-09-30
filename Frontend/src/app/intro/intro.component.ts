@@ -74,6 +74,7 @@ export class IntroComponent {
   public isTxDataAcquired = false;
 
   public expandedElement: Chain | null = null;
+  public darkMode = true;
 
 
   constructor(
@@ -95,6 +96,7 @@ export class IntroComponent {
 
     this.themingService.darkTheme.subscribe (darkTheme => {
       this.graph.layout = darkTheme ? this.layout_dark : this.layout_light;
+      this.darkMode = darkTheme;
     });
   }
 

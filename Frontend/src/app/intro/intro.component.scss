@@ -59,3 +59,16 @@ tr.example-detail-row {
 .expandedRowLink {
     margin: 10px;
 }
+
+.expandedRowLink.darkMode {
+    color: lightblue;
+} 
+
+tr.example-element-row:not(.example-expanded-row):hover {
+    background: whitesmoke;
+}
+
+tr.example-element-row.darkMode:not(.example-expanded-row):hover {
+    background: #5F5C5C;
+}
+  

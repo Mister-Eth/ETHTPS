@@ -54,7 +54,9 @@
         <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
             <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
                 <img src="{{element['logo']}}" class="expandedRowImage">
-                <a href="{{element['generalInfoLink']}}" class="expandedRowLink">General information</a>
+                <a href="{{element['generalInfoLink']}}" 
+                   class="expandedRowLink" 
+                   [class.darkMode]="darkMode">General information</a>
             </div>
         </td>
     </ng-container>
@@ -63,6 +65,7 @@
     <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
                 class="example-element-row" 
                 [class.example-expanded-row]="expandedElement === element" 
+                [class.darkMode]="darkMode"
                 (click)="this.expandedElement = this.expandedElement === element ? null : element">
     </tr>
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
