@@ -11,6 +11,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 
 import { chains } from '../common/chain-metadata';
 import { ThemingService } from '../services/theming.service';
+import { TableRowDetailComponent } from '../table-row-detail/table-row-detail.component';
 
 @Component({
   selector: 'app-intro',
@@ -75,6 +76,9 @@ export class IntroComponent {
 
   public expandedElement: Chain | null = null;
   public darkMode = true;
+
+  public tpLink = `https://www.google.com/`;
+  public tpLogo = `https://angular.io/assets/images/logos/angular/logo-nav@2x.png`;
 
 
   constructor(

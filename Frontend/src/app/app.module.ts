@@ -30,6 +30,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 
 import * as PlotlyJS from 'plotly.js-dist-min';
 import { PlotlyModule } from 'angular-plotly.js';
+import { TableRowDetailComponent } from './table-row-detail/table-row-detail.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -40,6 +41,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     AppComponent,
     AboutComponent,
     IntroComponent,
+    TableRowDetailComponent,
   ],
   imports: [
     HttpClientModule,
