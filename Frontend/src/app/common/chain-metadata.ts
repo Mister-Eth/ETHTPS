@@ -1,10 +1,11 @@
-import { Chain } from './common-classes';
+import { Chain, ChainType } from './common-classes';
 
 export const chains: Chain[] = [
     {
         name: 'Arbitrum One',
         show: true,
         lineColor: 'red',
+        type: ChainType.OptimisticRollup,
         generalInfoLink: 'https://l2beat.com/projects/arbitrum/',
         attributionToDataSourceText: `Daily transaction data for Optimism retrieved from https://arbiscan.io`,
         attributionToDataSourceLink: 'https://arbiscan.io/chart/tx',
@@ -14,6 +15,7 @@ export const chains: Chain[] = [
         name: 'Optimism',
         show: true,
         lineColor: 'blue',
+        type: ChainType.OptimisticRollup,
         generalInfoLink: 'https://l2beat.com/projects/optimism/',
         attributionToDataSourceText: `Daily transaction data for Optimism retrieved from https://arbiscan.io`,
         attributionToDataSourceLink: 'https://optimistic.etherscan.io/chart/tx',
@@ -23,6 +25,7 @@ export const chains: Chain[] = [
         name: 'Ethereum',
         show: true,
         lineColor: 'green',
+        type: ChainType.Mainnet,
         generalInfoLink: 'https://ethereum.org/',
         attributionToDataSourceText: ``,
         attributionToDataSourceLink: '', 
@@ -32,6 +35,7 @@ export const chains: Chain[] = [
         name: 'Polygon',
         show: true,
         lineColor: 'orange',
+        type: ChainType.Sidechain,
         generalInfoLink: 'https://polygon.technology/',
         attributionToDataSourceText: ``,
         attributionToDataSourceLink: '',
@@ -40,7 +44,8 @@ export const chains: Chain[] = [
     {
         name: 'XDAI',
         show: true,
-        lineColor: 'orange',
+        lineColor: 'purple',
+        type: ChainType.Sidechain,
         generalInfoLink: 'https://www.xdaichain.com/',
         attributionToDataSourceText: ``,
         attributionToDataSourceLink: '',

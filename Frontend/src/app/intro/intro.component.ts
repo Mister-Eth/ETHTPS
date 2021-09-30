@@ -68,7 +68,7 @@ export class IntroComponent {
   public chains: Chain[] = chains;
   private acquiredData: { [key: string]: TransactionsPerDay[] } = {};
 
-  public columnsToDisplay = ['select', 'name'];
+  public columnsToDisplay = ['select', 'name', 'type'];
   public selection : SelectionModel<Chain>;
 
   public isTxDataAcquired = false;
