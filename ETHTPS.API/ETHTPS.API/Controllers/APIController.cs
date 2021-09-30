@@ -46,18 +46,27 @@ namespace ETHTPS.API.Controllers
         [HttpGet]
         public async Task<IEnumerable<TPSResponseModel>> GetTPS(string provider, string interval)
         {
-            return await _tpsResponseCacher.ExecuteOrGetCachedValueAsync((provider, interval), Task.Run(async() => 
+            var timeInterval = Enum.Parse<TimeInterval>(interval);
+            if (timeInterval == TimeInterval.Latest)
             {
-                var timeInterval = Enum.Parse<TimeInterval>(interval);
-                if (timeInterval == TimeInterval.Latest)
+                return (await GetDataAsync(TimeInterval.OneHour, provider)).Take(100).Select(x => new TPSResponseModel()
                 {
-                    return (await GetDataAsync(TimeInterval.OneHour, provider)).Take(100).Select(x => new TPSResponseModel()
-                    {
-                        Date = x.Date.Value,
-                        TPS = x.Tps.Value
-                    });
-                }
-                else if (timeInterval == TimeInterval.OneHour)
+                    Date = x.Date.Value,
+                    TPS = x.Tps.Value
+                });
+            }
+            else if (timeInterval == TimeInterval.Instant)
+            {
+                return (await GetDataAsync(TimeInterval.Instant, provider)).Select(x => new TPSResponseModel()
+                {
+                    Date = x.Date.Value,
+                    TPS = x.Tps.Value,
+                    Provider = _context.Providers.First(y => y.Id == x.Provider).Name
+                });
+            }
+            return await _tpsResponseCacher.ExecuteOrGetCachedValueAsync((provider, interval), Task.Run<IEnumerable<TPSResponseModel>>(async() => 
+            {
+               if (timeInterval == TimeInterval.OneHour)
                 {
                     var groups = (await GetDataAsync(TimeInterval.OneHour, provider)).GroupBy(x => x.Date.Value.Minute);
                     var list = new List<TPSResponseModel>();
@@ -98,15 +107,6 @@ namespace ETHTPS.API.Controllers
                         });
                     }
                     return list;
-                }
-                else if (timeInterval == TimeInterval.Instant)
-                {
-                    return (await GetDataAsync(TimeInterval.Instant, provider)).Select(x => new TPSResponseModel()
-                    {
-                        Date = x.Date.Value,
-                        TPS = x.Tps.Value,
-                        Provider = _context.Providers.First(y => y.Id == x.Provider).Name
-                    });
                 }
                 return new TPSResponseModel[] { };
             }));
