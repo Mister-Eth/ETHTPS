@@ -24,7 +24,7 @@ namespace ETHTPS.API.Middlewares
             var entry = new AccesStat()
             {
                 Count = 1,
-                Path = context.Request.PathBase + context.Request.Path + "?" + context.Request.QueryString,
+                Path = context.Request.PathBase + context.Request.Path + context.Request.QueryString,
                 Project = Assembly.GetEntryAssembly().FullName
             };
             if (!dbContext.AccesStats.Any(x=>x.Path == entry.Path && x.Project == entry.Project))
