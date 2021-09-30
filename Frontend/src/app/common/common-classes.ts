@@ -13,10 +13,10 @@ export interface Chain {
     name: string;
     show: boolean;
     lineColor: string;
-    dataService: txService;
     generalInfoLink: string;
     attributionToDataSourceText: string;
     attributionToDataSourceLink: string;
+    logo?: string;
 }
 
 export interface Providers {

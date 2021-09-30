@@ -1,25 +1,53 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatChip, MatChipList } from '@angular/material/chips';
 
-import { forkJoin, Observable, zip } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
-import { ArbitrumTxDataService } from '../services/arbitrum-tx-data.service';
-import { Chain, Providers, TransactionsPerDay, txService } from '../services/common-classes';
-import { EthereumTxDataService } from '../services/ethereum-tx-data.service';
-import { OptimismTxDataService } from '../services/optimism-tx-data.service';
-import { PolygonTxDataService } from '../services/polygon-tx-data.service';
+import { forkJoin, Observable } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
+import { Chain, Providers, TransactionsPerDay } from '../common/common-classes';
 import { TxDataService } from '../services/tx-data.service';
+import { SelectionModel } from '@angular/cdk/collections';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+
+import { chains } from '../common/chain-metadata';
+import { ThemingService } from '../services/theming.service';
 
 @Component({
   selector: 'app-intro',
   templateUrl: './intro.component.html',
-  styleUrls: ['./intro.component.scss']
+  styleUrls: ['./intro.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class IntroComponent {
+  private layout_dark = { 
+    title: 'Transaction count',
+    plot_bgcolor: '#303030',
+    paper_bgcolor: '#303030',
+    font: {
+      size: 10,
+      color: 'white'
+    }
+  }
+
+  private layout_light = { 
+    title: 'Transaction count',
+    plot_bgcolor: 'white',
+    paper_bgcolor: 'white',
+    font: {
+      size: 10,
+      color: 'black'
+    }
+  }
+
   public graph = {
     data: [],
-    layout: { title: 'TPS' }
+    layout: this.layout_dark
   };
 
   private headers: HttpHeaders = new HttpHeaders()
@@ -28,38 +56,50 @@ export class IntroComponent {
 
   private intervalsUrl = `/API/intervals`;
   public intervals$: Observable<string[]>;
+  public intervals: string[] = [];
   public selectedInterval = "";
   @ViewChild(MatChipList)
   chipList!: MatChipList;
 
   private providersUrl = `/API/Providers`;
   private providers$: Observable<Providers[]>;
+  private providers: Providers[] = [];
 
-  public chains: Chain[] = [];
-  private aquiredData: {[key: string]: TransactionsPerDay[]} = {};
+  public chains: Chain[] = chains;
+  private acquiredData: { [key: string]: TransactionsPerDay[] } = {};
+
+  public columnsToDisplay = ['select', 'name'];
+  public selection : SelectionModel<Chain>;
+
+  public isTxDataAcquired = false;
+
+  public expandedElement: Chain | null = null;
 
 
-  constructor(private arbitrumTxDataService: ArbitrumTxDataService,
-    private optimismTxDataService: OptimismTxDataService,
-    private ethereumTxDataService: EthereumTxDataService,
-    private polygonTxDataService: PolygonTxDataService,
+  constructor(
     private txDataService: TxDataService,
-    private http: HttpClient) {
+    private http: HttpClient, 
+    private themingService: ThemingService) {
 
-    this.setChainMetaData();
+    this.selection = new SelectionModel<Chain>(true, chains); // initially select all chains
+
     this.intervals$ = this.http.get<string[]>(this.intervalsUrl, { headers: this.headers });
-    this.providers$ = this.http.get<Providers[]>(this.providersUrl, { headers: this.headers });
-    this.getTpsRequests(this.providers$, this.intervals$)
-      .subscribe( data => {
-        this.aquiredData = data;
-        this.extractData();
-      })
+    this.intervals$.subscribe(intervals => this.intervals = intervals);
 
-    
+    this.providers$ = this.http.get<Providers[]>(this.providersUrl, { headers: this.headers });
+    this.providers$.subscribe(providers => this.providers = providers);
+
+    this.getInitialTxData(this.providers$, this.intervals$)
+
+    this.selection.changed.subscribe(_ => this.extractData());
+
+    this.themingService.darkTheme.subscribe (darkTheme => {
+      this.graph.layout = darkTheme ? this.layout_dark : this.layout_light;
+    });
   }
 
-  private getTpsRequests(providers$: Observable<Providers[]>, intervals$: Observable<string[]>) 
-    : Observable<{[key: string]: TransactionsPerDay[]}> {
+
+  private getInitialTxData(providers$: Observable<Providers[]>, intervals$: Observable<string[]>): void {
     // combine both requests so we can wait for them together
     let together = forkJoin({
       providers: providers$,
@@ -67,29 +107,28 @@ export class IntroComponent {
     });
 
     // map the providers and intervals to requests for transaction count
-    // flatten them to get one observable, instead of nested observables
-    let mappedToTxRequests = together.pipe(mergeMap( ({providers,intervals}) => {
-      //map to multiple get requests 
-      let requestsArray = providers.map(provider => this.providerToRequest(provider.name, intervals[0]));
-      // convert array to object to feed the forkJoin
-      let requestsObject : {[chainName: string]: Observable<TransactionsPerDay[]>} = requestsArray.reduce((a, v) => ({ ...a, [v.provider]: v.request}), {})
-      //combine all requests to one observable
-      let combined : Observable<{[chainName: string]: TransactionsPerDay[]}> =  forkJoin (requestsObject);
-      return combined;
+    let mappedToTxRequests = together.pipe(mergeMap(({ providers, intervals }) => {
+      let interval = intervals[intervals.length - 1];
+      return this.txDataService.getTransactionsForInterval(interval, providers);
     }));
 
-    return mappedToTxRequests;
+    mappedToTxRequests.subscribe(data => {
+      this.acquiredData = data;
+      this.extractData();
+      this.isTxDataAcquired = true;
+    })
   }
 
-  private providerToRequest (provider: string, interval: string) : {provider: string, request: Observable<TransactionsPerDay[]>} {
-    return ({
-      provider: provider,
-      request: this.txDataService.getTxPerDayCount(provider, interval)});
-  }
-
-  public toggleIntervalSelection(chip: MatChip) {
+  public toggleIntervalSelection(chip: MatChip): void {
+    this.isTxDataAcquired = false;
     chip.toggleSelected();
     this.selectedInterval = (this.chipList.selected as MatChip).value;
+    let tp$ = this.txDataService.getTransactionsForInterval(this.selectedInterval, this.providers);
+    tp$.subscribe(data => {
+      this.acquiredData = data;
+      this.extractData();
+      this.isTxDataAcquired = true;
+    });
   }
 
   ngAfterViewInit() {
@@ -97,7 +136,7 @@ export class IntroComponent {
   }
 
   private setInitialIntervalOnChips(availableIntervals: string[]): void {
-    this.selectedInterval = availableIntervals[0];
+    this.selectedInterval = availableIntervals[availableIntervals.length - 1];
     for (let chip of this.chipList.chips) {
       if (chip.value == this.selectedInterval) chip.toggleSelected();
     }
@@ -106,7 +145,7 @@ export class IntroComponent {
   public extractData() {
     let data = [];
     for (let chain of this.chains) {
-      if (chain.show) data.push(this.extractDataFromService(this.aquiredData[chain.name], chain.lineColor, chain.name));
+      if (this.selection.isSelected(chain)) data.push(this.extractDataFromService(this.acquiredData[chain.name], chain.lineColor, chain.name));
     }
     this.graph.data = data as any;
   }
@@ -117,43 +156,34 @@ export class IntroComponent {
     return { x: xValues, y: yValues, name: name, type: 'scatter', mode: 'lines', marker: { color: color } };
   }
 
-  private setChainMetaData() {
-    this.chains.push({
-      name: 'Arbitrum One',
-      show: true,
-      lineColor: 'red',
-      dataService: this.arbitrumTxDataService,
-      generalInfoLink: 'https://l2beat.com/projects/arbitrum/',
-      attributionToDataSourceText: `Daily transaction data for Optimism retrieved from https://arbiscan.io`,
-      attributionToDataSourceLink: 'https://arbiscan.io/chart/tx'
-    });
-    this.chains.push({
-      name: 'Optimism',
-      show: true,
-      lineColor: 'blue',
-      dataService: this.optimismTxDataService,
-      generalInfoLink: 'https://l2beat.com/projects/optimism/',
-      attributionToDataSourceText: `Daily transaction data for Optimism retrieved from https://arbiscan.io`,
-      attributionToDataSourceLink: 'https://optimistic.etherscan.io/chart/tx'
-    });
-    this.chains.push({
-      name: 'Ethereum',
-      show: true,
-      lineColor: 'green',
-      dataService: this.ethereumTxDataService,
-      generalInfoLink: '',
-      attributionToDataSourceText: ``,
-      attributionToDataSourceLink: ''
-    });
-    this.chains.push({
-      name: 'Polygon',
-      show: true,
-      lineColor: 'green',
-      dataService: this.polygonTxDataService,
-      generalInfoLink: '',
-      attributionToDataSourceText: ``,
-      attributionToDataSourceLink: ''
-    });
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  public masterToggle() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      return;
+    }
+
+    this.selection.select(...this.chains);
   }
 
+  //debug
+  public handleRowClick(element: Chain) {
+    console.log("clicked!");
+    this.expandedElement = this.expandedElement === element ? null : element;
+  }
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  public isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.chains.length;
+    return numSelected === numRows;
+  }
+
+  /** The label for the checkbox on the passed row */
+  public checkboxLabel(row?: Chain): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.name}`;
+  }
 }
