@@ -1,12 +1,18 @@
-.expandedRowImage {
+.container {
+    display: flex;
+    align-items: center ;
+  }
+
+.logo {
     height: 50px;
     margin: 10px;
 }
 
-.expandedRowLink {
+.link {
     margin: 10px;
 }
 
-.expandedRowLink.darkMode {
+.link.darkMode {
     color: lightblue;
 } 
+

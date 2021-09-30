@@ -12,62 +12,6 @@
 </plotly-plot>
 
 
-<!-- Datatable for selecting chains -->
-<table mat-table [dataSource]="chains" multiTemplateDataRows>
-
-    <!-- Checkbox Column -->
-    <ng-container matColumnDef="select">
-        <th mat-header-cell *matHeaderCellDef>
-            <mat-checkbox (change)="$event ? masterToggle() : null" 
-                          [checked]="selection.hasValue() && isAllSelected()"
-                          [indeterminate]="selection.hasValue() && !isAllSelected()" 
-                          [aria-label]="checkboxLabel()"
-                          [disabled]="!isTxDataAcquired">
-            </mat-checkbox>
-        </th>
-        <td mat-cell *matCellDef="let row">
-            <mat-checkbox (click)="$event.stopPropagation()" 
-                          (change)="$event ? selection.toggle(row) : null"
-                          [checked]="selection.isSelected(row)" 
-                          [aria-label]="checkboxLabel(row)"
-                          [disabled]="!isTxDataAcquired">
-            </mat-checkbox>
-        </td>
-    </ng-container>
-
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef class="headerText"> Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-    </ng-container>
-
-    <!-- Type Column -->
-    <ng-container matColumnDef="type">
-        <th mat-header-cell *matHeaderCellDef class="headerText"> Type </th>
-        <td mat-cell *matCellDef="let element"> 
-            <mat-chip  color="accent" class="typeChip" selected>{{element.type}}</mat-chip> 
-        </td>
-    </ng-container>
-
-    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-    <ng-container matColumnDef="expandedDetail">
-        <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-            <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                <app-table-row-detail [logo]="element.logo" [infoLink]="element.generalInfoLink"></app-table-row-detail> 
-                <!-- <img src="{{element['logo']}}" class="expandedRowImage"> 
-                <a href="{{element['generalInfoLink']}}" 
-                   class="expandedRowLink" 
-                   [class.darkMode]="darkMode">General information</a> -->
-            </div>
-        </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-    <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
-                class="example-element-row" 
-                [class.example-expanded-row]="expandedElement === element" 
-                [class.darkMode]="darkMode"
-                (click)="this.expandedElement = this.expandedElement === element ? null : element">
-    </tr>
-    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-</table>
+<app-selection-table [selectionDisabled]="!isTxDataAcquired" 
+                     (selectionChanged)="handleSelectionChange($event)">
+</app-selection-table>

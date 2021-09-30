@@ -31,6 +31,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import * as PlotlyJS from 'plotly.js-dist-min';
 import { PlotlyModule } from 'angular-plotly.js';
 import { TableRowDetailComponent } from './table-row-detail/table-row-detail.component';
+import { SelectionTableComponent } from './selection-table/selection-table.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -42,6 +43,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     AboutComponent,
     IntroComponent,
     TableRowDetailComponent,
+    SelectionTableComponent,
   ],
   imports: [
     HttpClientModule,

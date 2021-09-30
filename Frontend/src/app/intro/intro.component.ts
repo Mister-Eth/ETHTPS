@@ -6,24 +6,18 @@ import { forkJoin, Observable } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { Chain, Providers, TransactionsPerDay } from '../common/common-classes';
 import { TxDataService } from '../services/tx-data.service';
-import { SelectionModel } from '@angular/cdk/collections';
-import {animate, state, style, transition, trigger} from '@angular/animations';
+
+
 
 import { chains } from '../common/chain-metadata';
 import { ThemingService } from '../services/theming.service';
-import { TableRowDetailComponent } from '../table-row-detail/table-row-detail.component';
+import { SelectionModel } from '@angular/cdk/collections';
+
 
 @Component({
   selector: 'app-intro',
   templateUrl: './intro.component.html',
-  styleUrls: ['./intro.component.scss'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
+  styleUrls: ['./intro.component.scss']
 })
 export class IntroComponent {
   private layout_dark = { 
@@ -69,24 +63,25 @@ export class IntroComponent {
   public chains: Chain[] = chains;
   private acquiredData: { [key: string]: TransactionsPerDay[] } = {};
 
-  public columnsToDisplay = ['select', 'name', 'type'];
-  public selection : SelectionModel<Chain>;
+
+
 
   public isTxDataAcquired = false;
 
-  public expandedElement: Chain | null = null;
+
   public darkMode = true;
 
-  public tpLink = `https://www.google.com/`;
-  public tpLogo = `https://angular.io/assets/images/logos/angular/logo-nav@2x.png`;
+  //TODO: remove
+  public selection : SelectionModel<Chain>;
 
 
   constructor(
     private txDataService: TxDataService,
     private http: HttpClient, 
     private themingService: ThemingService) {
-
     this.selection = new SelectionModel<Chain>(true, chains); // initially select all chains
+
+    
 
     this.intervals$ = this.http.get<string[]>(this.intervalsUrl, { headers: this.headers });
     this.intervals$.subscribe(intervals => this.intervals = intervals);
@@ -162,34 +157,10 @@ export class IntroComponent {
     return { x: xValues, y: yValues, name: name, type: 'scatter', mode: 'lines', marker: { color: color } };
   }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  public masterToggle() {
-    if (this.isAllSelected()) {
-      this.selection.clear();
-      return;
-    }
-
-    this.selection.select(...this.chains);
+  public handleSelectionChange (chains: Chain[]) {    
+    this.chains=chains;
+    this.extractData();
   }
 
-  //debug
-  public handleRowClick(element: Chain) {
-    console.log("clicked!");
-    this.expandedElement = this.expandedElement === element ? null : element;
-  }
 
-  /** Whether the number of selected elements matches the total number of rows. */
-  public isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.chains.length;
-    return numSelected === numRows;
-  }
-
-  /** The label for the checkbox on the passed row */
-  public checkboxLabel(row?: Chain): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
-    }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.name}`;
-  }
 }
