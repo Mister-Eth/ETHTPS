@@ -37,19 +37,16 @@ namespace ETHTPS.TPSLogger.TPSLogging.HttpLogger
                     var nodes = doc.DocumentNode.QuerySelectorAll(_targetElementSelector);
                     var x = new string(nodes.First().InnerText.Where(c => char.IsNumber(c) || c == '.').ToArray());
                     Console.WriteLine($"{Name}: {x}TPS");
-                    lock (Program.LockObject)
+                    var provider = Context.Providers.First(x => x.Name == Name);
+                    var data = new TPSData()
                     {
-                        var provider = Context.Providers.First(x => x.Name == Name);
-                        var data = new TPSData()
-                        {
-                            Date = DateTime.Now,
-                            Provider = provider.Id,
-                            Tps = float.Parse(x)
-                        };
-                        Context.Tpsdata.Add(data);
-                        Context.SaveChanges();
-                    }
-               ;
+                        Date = DateTime.Now,
+                        Provider = provider.Id,
+                        Tps = float.Parse(x)
+                    };
+                    Context.Tpsdata.Add(data);
+                    Context.SaveChanges();
+                    ;
                 }
                 catch (Exception e)
                 {

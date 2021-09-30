@@ -42,19 +42,16 @@ namespace ETHTPS.TPSLogger.TPSLogging
                     var latest = obj.items[0].ToString();
                     var secondLatest = obj.items[1].ToString();
                     var n1 = GetTransactionCount(latest);
-                    lock (Program.LockObject)
+                    var provider = Context.Providers.First(x => x.Name == Name);
+                    var data = new TPSData()
                     {
-                        var provider = Context.Providers.First(x => x.Name == Name);
-                        var data = new TPSData()
-                        {
-                            Date = DateTime.Now,
-                            Provider = provider.Id,
-                            Tps = (double)n1 / 5 //5s block time
-                        };
-                        Context.Tpsdata.Add(data);
-                        Context.SaveChanges();
-                        Console.WriteLine($"{Name}: {data.Tps}TPS");
-                    }
+                        Date = DateTime.Now,
+                        Provider = provider.Id,
+                        Tps = (double)n1 / 5 //5s block time
+                    };
+                    Context.Tpsdata.Add(data);
+                    Context.SaveChanges();
+                    Console.WriteLine($"{Name}: {data.Tps}TPS");
                     ;
                 }
                 catch (Exception e)

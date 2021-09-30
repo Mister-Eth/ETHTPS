@@ -27,7 +27,7 @@ namespace ETHTPS.TPSLogger
             .SetBasePath(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location))
             .AddJsonFile("appsettings.json")
             .Build();
-            services.AddDbContext<ETHTPSContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ETHTPSContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient);
             var provider = services.BuildServiceProvider();
 
             var defaultSelector = "#ContentPlaceHolder1_mainboxes > div > div > div.col-md-6.col-lg-4.u-ver-divider.u-ver-divider--left.u-ver-divider--none-md > div:nth-child(1) > div.media-body > span";
@@ -45,6 +45,8 @@ namespace ETHTPS.TPSLogger
             while (true) { await Task.Delay(1); }
         }
 
-        public static object LockObject = new object();
+        
+
+        //public static object LockObject = new object();
     }
 }

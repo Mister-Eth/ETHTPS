@@ -33,23 +33,20 @@ namespace ETHTPS.TPSLogger.TPSLogging.ScanLogger
                 {
                     int latestBlock = HexToDec(JsonConvert.DeserializeObject<dynamic>(await client.GetStringAsync($"https://api.{_websiteName}/api?module=proxy&action=eth_blockNumber&apikey={_apiKey}")).result.ToString());
                     int blockTransactions = HexToDec(JsonConvert.DeserializeObject<dynamic>(await client.GetStringAsync($"https://api.{_websiteName}/api?module=proxy&action=eth_getBlockTransactionCountByNumber&apikey={_apiKey}&tag={latestBlock.ToString("X")}")).result.ToString());
-                    lock (Program.LockObject)
+                    var provider = Context.Providers.First(x => x.Name == "Ethereum");
+                    var data = new TPSData()
                     {
-                        var provider = Context.Providers.First(x => x.Name == "Ethereum");
-                        var data = new TPSData()
-                        {
-                            Block = latestBlock.ToString(),
-                            Date = DateTime.Now,
-                            Provider = provider.Id,
-                            Tps = (float)(Math.Ceiling(blockTransactions / _blockTime))
-                        };
-                        if (!Context.Tpsdata.Any(x => x.Provider.Value == provider.Id && x.Block == latestBlock.ToString()))
-                        {
-                            Context.Tpsdata.Add(data);
-                        }
-                        Context.SaveChanges();
-                        Console.WriteLine($"{Name} block {latestBlock} transaction count: {blockTransactions} ({data.Tps} tps)");
+                        Block = latestBlock.ToString(),
+                        Date = DateTime.Now,
+                        Provider = provider.Id,
+                        Tps = (float)(Math.Ceiling(blockTransactions / _blockTime))
+                    };
+                    if (!Context.Tpsdata.Any(x => x.Provider.Value == provider.Id && x.Block == latestBlock.ToString()))
+                    {
+                        Context.Tpsdata.Add(data);
                     }
+                    Context.SaveChanges();
+                    Console.WriteLine($"{Name} block {latestBlock} transaction count: {blockTransactions} ({data.Tps} tps)");
                 }
                 catch (Exception e)
                 {
