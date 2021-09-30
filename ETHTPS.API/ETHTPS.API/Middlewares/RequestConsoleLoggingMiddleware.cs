@@ -22,7 +22,7 @@ namespace ETHTPS.API.Middlewares
 
         public async Task InvokeAsync(HttpContext context, ILogger<RequestConsoleLoggingMiddleware> logger)
         {
-            logger.LogInformation($"{context.Connection.Id}: {context.Request.Path}");
+            logger.LogInformation($"{context.Connection.Id}: {context.Request.Path}{context.Request.QueryString}");
             await _next(context);
         }
     }
