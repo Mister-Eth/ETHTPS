@@ -1,4 +1,5 @@
-﻿using ETHTPS.API.Infrastructure.Database.Models;
+﻿using ETHTPS.API.Infrastructure;
+using ETHTPS.API.Infrastructure.Database.Models;
 using ETHTPS.API.Models;
 
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +16,7 @@ namespace ETHTPS.API.Controllers
     public class APIController : ControllerBase
     {
         private readonly ETHTPSContext _context;
-
+        private static ResponseCacher<(string Provider, string Interval), IEnumerable<TPSResponseModel>> _tpsResponseCacher = new ResponseCacher<(string Provider, string Interval), IEnumerable<TPSResponseModel>>(300); //Use cache for TPS tasks because they are resource intensive
         public APIController(ETHTPSContext context)
         {
             _context = context;
@@ -45,67 +46,70 @@ namespace ETHTPS.API.Controllers
         [HttpGet]
         public async Task<IEnumerable<TPSResponseModel>> GetTPS(string provider, string interval)
         {
-            var timeInterval = Enum.Parse<TimeInterval>(interval);
-            if(timeInterval == TimeInterval.Latest)
+            return await _tpsResponseCacher.ExecuteOrGetCachedValueAsync((provider, interval), Task.Run(async() => 
             {
-                return (await GetDataAsync(TimeInterval.OneHour, provider)).Take(100).Select(x => new TPSResponseModel()
+                var timeInterval = Enum.Parse<TimeInterval>(interval);
+                if (timeInterval == TimeInterval.Latest)
                 {
-                    Date = x.Date.Value,
-                    TPS = x.Tps.Value
-                });
-            }
-            else if (timeInterval == TimeInterval.OneHour)
-            {
-                var groups = (await GetDataAsync(TimeInterval.OneHour, provider)).GroupBy(x => x.Date.Value.Minute);
-                var list = new List<TPSResponseModel>();
-                foreach(var group in groups)
-                {
-                    list.Add(new TPSResponseModel()
+                    return (await GetDataAsync(TimeInterval.OneHour, provider)).Take(100).Select(x => new TPSResponseModel()
                     {
-                        Date = group.First().Date.Value.Subtract(TimeSpan.FromSeconds(group.First().Date.Value.Second)).Subtract(TimeSpan.FromMilliseconds(group.First().Date.Value.Millisecond)).Subtract(TimeSpan.FromMilliseconds(group.First().Date.Value.Millisecond)),
-                        TPS = group.Average(x => x.Tps.Value)
+                        Date = x.Date.Value,
+                        TPS = x.Tps.Value
                     });
                 }
-                return list;
-            }
-            else if (timeInterval == TimeInterval.OneDay)
-            {
-                var groups = (await GetDataAsync(TimeInterval.OneDay, provider)).GroupBy(x => x.Date.Value.Hour);
-                var list = new List<TPSResponseModel>();
-                foreach (var group in groups)
+                else if (timeInterval == TimeInterval.OneHour)
                 {
-                    list.Add(new TPSResponseModel()
+                    var groups = (await GetDataAsync(TimeInterval.OneHour, provider)).GroupBy(x => x.Date.Value.Minute);
+                    var list = new List<TPSResponseModel>();
+                    foreach (var group in groups)
                     {
-                        Date = group.First().Date.Value.Subtract(TimeSpan.FromSeconds(group.First().Date.Value.Second)).Subtract(TimeSpan.FromMilliseconds(group.First().Date.Value.Millisecond)).Subtract(TimeSpan.FromMinutes(group.First().Date.Value.Minute)),
-                        TPS = group.Average(x => x.Tps.Value)
+                        list.Add(new TPSResponseModel()
+                        {
+                            Date = group.First().Date.Value.Subtract(TimeSpan.FromSeconds(group.First().Date.Value.Second)).Subtract(TimeSpan.FromMilliseconds(group.First().Date.Value.Millisecond)).Subtract(TimeSpan.FromMilliseconds(group.First().Date.Value.Millisecond)),
+                            TPS = group.Average(x => x.Tps.Value)
+                        });
+                    }
+                    return list;
+                }
+                else if (timeInterval == TimeInterval.OneDay)
+                {
+                    var groups = (await GetDataAsync(TimeInterval.OneDay, provider)).GroupBy(x => x.Date.Value.Hour);
+                    var list = new List<TPSResponseModel>();
+                    foreach (var group in groups)
+                    {
+                        list.Add(new TPSResponseModel()
+                        {
+                            Date = group.First().Date.Value.Subtract(TimeSpan.FromSeconds(group.First().Date.Value.Second)).Subtract(TimeSpan.FromMilliseconds(group.First().Date.Value.Millisecond)).Subtract(TimeSpan.FromMinutes(group.First().Date.Value.Minute)),
+                            TPS = group.Average(x => x.Tps.Value)
+                        });
+                    }
+                    return list;
+                }
+                else if (timeInterval == TimeInterval.OneWeek)
+                {
+                    var groups = (await GetDataAsync(TimeInterval.OneWeek, provider)).GroupBy(x => x.Date.Value.Hour);
+                    var list = new List<TPSResponseModel>();
+                    foreach (var group in groups)
+                    {
+                        list.Add(new TPSResponseModel()
+                        {
+                            Date = group.First().Date.Value.Subtract(TimeSpan.FromSeconds(group.First().Date.Value.Second)).Subtract(TimeSpan.FromMilliseconds(group.First().Date.Value.Millisecond)).Subtract(TimeSpan.FromMinutes(group.First().Date.Value.Minute)),
+                            TPS = group.Average(x => x.Tps.Value)
+                        });
+                    }
+                    return list;
+                }
+                else if (timeInterval == TimeInterval.Instant)
+                {
+                    return (await GetDataAsync(TimeInterval.Instant, provider)).Select(x => new TPSResponseModel()
+                    {
+                        Date = x.Date.Value,
+                        TPS = x.Tps.Value,
+                        Provider = _context.Providers.First(y => y.Id == x.Provider).Name
                     });
                 }
-                return list;
-            }
-            else if (timeInterval == TimeInterval.OneWeek)
-            {
-                var groups = (await GetDataAsync(TimeInterval.OneWeek, provider)).GroupBy(x => x.Date.Value.Hour);
-                var list = new List<TPSResponseModel>();
-                foreach (var group in groups)
-                {
-                    list.Add(new TPSResponseModel()
-                    {
-                        Date = group.First().Date.Value.Subtract(TimeSpan.FromSeconds(group.First().Date.Value.Second)).Subtract(TimeSpan.FromMilliseconds(group.First().Date.Value.Millisecond)).Subtract(TimeSpan.FromMinutes(group.First().Date.Value.Minute)),
-                        TPS = group.Average(x => x.Tps.Value)
-                    });
-                }
-                return list;
-            }
-            else if (timeInterval == TimeInterval.Instant)
-            {
-                return (await GetDataAsync(TimeInterval.Instant, provider)).Select(x => new TPSResponseModel()
-                {
-                    Date = x.Date.Value,
-                    TPS = x.Tps.Value,
-                    Provider = _context.Providers.First(y => y.Id == x.Provider).Name
-                });
-            }
-            return new TPSResponseModel[] { };
+                return new TPSResponseModel[] { };
+            }));
         }
 
         private async Task<IEnumerable<TPSData>> GetDataAsync(TimeInterval interval, string provider)
