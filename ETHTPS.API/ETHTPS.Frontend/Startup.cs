@@ -43,6 +43,7 @@ namespace ETHTPS.Frontend
             {
                 app.UseExceptionHandler("/Error");
             }
+            app.UseMiddleware<RequestConsoleLoggingMiddleware>();
             app.UseMiddleware<AccesStatsMiddleware>();
 
             app.UseStaticFiles();
