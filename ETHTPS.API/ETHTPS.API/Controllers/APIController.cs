@@ -62,7 +62,7 @@ namespace ETHTPS.API.Controllers
                 var timeInterval = Enum.Parse<TimeInterval>(interval);
                 if (timeInterval == TimeInterval.Latest)
                 {
-                    result = (await GetDataAsync(TimeInterval.OneHour, provider)).Take(100).Select(x => new TPSResponseModel()
+                    result = (GetData(TimeInterval.OneHour, provider)).Take(100).Select(x => new TPSResponseModel()
                     {
                         Date = x.Date.Value,
                         TPS = x.Tps.Value
@@ -71,7 +71,7 @@ namespace ETHTPS.API.Controllers
                 }
                 else if (timeInterval == TimeInterval.Instant)
                 {
-                    result = (await GetDataAsync(TimeInterval.Instant, provider)).Select(x => new TPSResponseModel()
+                    result = (GetData(TimeInterval.Instant, provider)).Select(x => new TPSResponseModel()
                     {
                         Date = x.Date.Value,
                         TPS = x.Tps.Value,
@@ -81,7 +81,7 @@ namespace ETHTPS.API.Controllers
                 }
                 else if (timeInterval == TimeInterval.OneHour)
                 {
-                    var groups = (await GetDataAsync(TimeInterval.OneHour, provider)).GroupBy(x => x.Date.Value.Minute);
+                    var groups = (GetData(TimeInterval.OneHour, provider)).GroupBy(x => x.Date.Value.Minute);
                     var list = new List<TPSResponseModel>();
                     foreach (var group in groups)
                     {
@@ -96,7 +96,7 @@ namespace ETHTPS.API.Controllers
                 }
                 else if (timeInterval == TimeInterval.OneDay)
                 {
-                    var groups = (await GetDataAsync(TimeInterval.OneDay, provider)).GroupBy(x => x.Date.Value.Hour);
+                    var groups = (GetData(TimeInterval.OneDay, provider)).GroupBy(x => x.Date.Value.Hour);
                     var list = new List<TPSResponseModel>();
                     foreach (var group in groups)
                     {
@@ -111,7 +111,7 @@ namespace ETHTPS.API.Controllers
                 }
                 else if (timeInterval == TimeInterval.OneWeek)
                 {
-                    var groups = (await GetDataAsync(TimeInterval.OneWeek, provider)).GroupBy(x => x.Date.Value.Hour);
+                    var groups = (GetData(TimeInterval.OneWeek, provider)).GroupBy(x => x.Date.Value.Hour);
                     var list = new List<TPSResponseModel>();
                     foreach (var group in groups)
                     {
@@ -130,7 +130,7 @@ namespace ETHTPS.API.Controllers
             return result;
         }
 
-        private async Task<IEnumerable<TPSData>> GetDataAsync(TimeInterval interval, string provider)
+        private IEnumerable<TPSData> GetData(TimeInterval interval, string provider)
         {
             var targetProvider = _context.Providers.First(x => x.Name.ToUpper() == provider.ToUpper());
             switch (interval)

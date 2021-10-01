@@ -42,6 +42,8 @@ namespace ETHTPS.TPSLogger
             optimismScanLogger.LogDataAsync();
             var xdaiLogger = new XDAITPSLogger(provider.GetRequiredService<ETHTPSContext>(), "XDAI");
             xdaiLogger.LogDataAsync();
+            var zkSwapLogger = new ZKSwapTPSLogger(provider.GetRequiredService<ETHTPSContext>(), "ZKSwap");
+            zkSwapLogger.LogDataAsync();
             while (true) { await Task.Delay(1); }
         }
     }
