@@ -92,6 +92,7 @@ namespace ETHTPS.API.Controllers
                         });
                     }
                     result = list;
+                    cacheEntryOptions.SetSlidingExpiration(TimeSpan.FromMinutes(1));
                 }
                 else if (timeInterval == TimeInterval.OneDay)
                 {
@@ -106,6 +107,7 @@ namespace ETHTPS.API.Controllers
                         });
                     }
                     result = list;
+                    cacheEntryOptions.SetSlidingExpiration(TimeSpan.FromHours(1));
                 }
                 else if (timeInterval == TimeInterval.OneWeek)
                 {
@@ -120,6 +122,7 @@ namespace ETHTPS.API.Controllers
                         });
                     }
                     result = list;
+                    cacheEntryOptions.SetSlidingExpiration(TimeSpan.FromHours(1));
                 }
                 _cache.Set(provider + interval, result, cacheEntryOptions);
             }

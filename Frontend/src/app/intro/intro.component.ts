@@ -168,7 +168,8 @@ export class IntroComponent {
     let xValues = transactionCount.map(value => value.date);
     let yValues = transactionCount.map(value => value.tps);
     let layout = { 
-      showlegend: false,
+      showlegend: true,
+      legend: {"orientation": "h"},
       x: xValues, 
       y: yValues, 
       name: name, 

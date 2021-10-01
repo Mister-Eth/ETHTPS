@@ -24,6 +24,7 @@
     "@angular/platform-browser-dynamic": "~12.2.5",
     "@angular/router": "~12.2.5",
     "angular-plotly.js": "^4.0.4",
+    "plotly": "^1.0.6",
     "plotly.js-dist-min": "^2.5.1",
     "rxjs": "~6.6.0",
     "rxjs-compat": "^6.6.7",
