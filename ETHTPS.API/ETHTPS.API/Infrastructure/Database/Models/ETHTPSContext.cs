@@ -67,6 +67,15 @@ namespace ETHTPS.API.Infrastructure.Database.Models
                 entity.Property(e => e.Tps).HasColumnName("TPS");
             });
 
+            modelBuilder.Entity<AccesStat>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Path).HasMaxLength(255);
+
+                entity.Property(e => e.Project).HasMaxLength(255);
+            });
+
             OnModelCreatingPartial(modelBuilder);
         }
 
