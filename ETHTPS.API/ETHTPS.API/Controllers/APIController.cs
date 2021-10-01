@@ -42,6 +42,9 @@ namespace ETHTPS.API.Controllers
         {
             foreach(var interval in Enum.GetValues(typeof(TimeInterval)))
             {
+                if (interval.ToString() == "Instant" || interval.ToString() == "Latest")
+                    continue;
+
                 yield return interval.ToString();
             }
         }

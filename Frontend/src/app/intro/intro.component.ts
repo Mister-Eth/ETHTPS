@@ -14,7 +14,7 @@ import { ThemingService } from '../services/theming.service';
 import { SelectionModel } from '@angular/cdk/collections';
 
 
-import { filter } from 'rxjs/operators';
+import 'rxjs/add/operator/filter';
 
 @Component({
   selector: 'app-intro',
