@@ -150,7 +150,7 @@ export class IntroComponent {
   }
 
   private setInitialIntervalOnChips(availableIntervals: string[]): void {
-    this.selectedInterval = availableIntervals[1];
+    this.selectedInterval = availableIntervals[availableIntervals.length - 1];
     for (let chip of this.chipList.chips) {
       if (chip.value == this.selectedInterval) chip.toggleSelected();
     }
