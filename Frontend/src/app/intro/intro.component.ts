@@ -167,7 +167,18 @@ export class IntroComponent {
   private extractDataFromService(transactionCount: TransactionsPerDay[], color: string, name: string) {
     let xValues = transactionCount.map(value => value.date);
     let yValues = transactionCount.map(value => value.tps);
-    return { x: xValues, y: yValues, name: name, type: 'scatter', line: {shape: 'spline'}, mode: 'lines', marker: { color: color } };
+    let layout = { 
+      showlegend: false,
+      x: xValues, 
+      y: yValues, 
+      name: name, 
+      type: 'scatter', 
+      line: {shape: 'spline'},
+      mode: 'lines', 
+      marker: { color: color }
+    };
+
+    return layout;
   }
 
   public handleSelectionChange (chains: Chain[]) {    
