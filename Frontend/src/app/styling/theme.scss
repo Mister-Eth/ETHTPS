@@ -51,3 +51,9 @@ $dark-theme:   mat.define-dark-theme((
 .dark-theme {
   @include mat.all-component-colors($dark-theme);
 }
+
+.small-img{
+  width: 35px;
+  height: 35px;
+  margin: 5px;
+}

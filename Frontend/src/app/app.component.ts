@@ -13,9 +13,9 @@ import { ThemingService } from './services/theming.service';
 })
 export class AppComponent {
   @ViewChild('sidenav') sidenav?: MatSidenav;
-  @ViewChild('dark-theme-icon') darkThemeIcon?: MatIcon;
+  @ViewChild('light-theme-icon') darkThemeIcon?: MatIcon;
 
-  public title = 'Transaction count metrics';
+  public title = 'ethtps.info';
 
   private _mobileQueryListener: () => void;
   public mobileQuery: MediaQueryList;

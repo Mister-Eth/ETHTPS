@@ -14,6 +14,8 @@ import { ThemingService } from '../services/theming.service';
 import { SelectionModel } from '@angular/cdk/collections';
 
 
+import { filter } from 'rxjs/operators';
+
 @Component({
   selector: 'app-intro',
   templateUrl: './intro.component.html',
@@ -21,7 +23,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 })
 export class IntroComponent {
   private layout_dark = { 
-    title: 'Transaction count',
+    title: 'TPS',
     plot_bgcolor: '#303030',
     paper_bgcolor: '#303030',
     font: {
@@ -31,7 +33,7 @@ export class IntroComponent {
   }
 
   private layout_light = { 
-    title: 'Transaction count',
+    title: 'TPS',
     plot_bgcolor: 'white',
     paper_bgcolor: 'white',
     font: {
@@ -118,6 +120,18 @@ export class IntroComponent {
       this.extractData();
       this.isTxDataAcquired = true;
     })
+  }
+
+  public toHumanReadable(interval: string): string{
+    switch(interval){
+      case "OneHour":
+        return "1h";
+      case "OneDay":
+        return "1d";
+      case "OneWeek":
+        return "1w";
+    }
+    return interval;
   }
 
   public toggleIntervalSelection(chip: MatChip): void {
