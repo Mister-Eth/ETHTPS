@@ -1,7 +1,7 @@
 <!-- Chips for selecting interval -->
 <mat-chip-list aria-label="Interval selection" selectable class="intervalList">
     <mat-chip *ngFor="let interval of intervals$ | async" #c="matChip" color="accent" class="intervalChip"
-        [value]="interval" (click)="toggleIntervalSelection(c)">{{interval}}</mat-chip>
+        [value]="interval" (click)="toggleIntervalSelection(c)">{{toHumanReadable(interval)}}</mat-chip>
 </mat-chip-list>
 
 <!-- Chart and progress indicator while the data is loading -->
