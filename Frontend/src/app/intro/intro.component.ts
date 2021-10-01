@@ -76,7 +76,6 @@ export class IntroComponent {
   //TODO: remove
   public selection : SelectionModel<Chain>;
 
-
   constructor(
     private txDataService: TxDataService,
     private http: HttpClient, 
@@ -168,7 +167,7 @@ export class IntroComponent {
   private extractDataFromService(transactionCount: TransactionsPerDay[], color: string, name: string) {
     let xValues = transactionCount.map(value => value.date);
     let yValues = transactionCount.map(value => value.tps);
-    return { x: xValues, y: yValues, name: name, type: 'scatter', mode: 'lines', marker: { color: color } };
+    return { x: xValues, y: yValues, name: name, type: 'scatter', line: {shape: 'spline'}, mode: 'lines', marker: { color: color } };
   }
 
   public handleSelectionChange (chains: Chain[]) {    
