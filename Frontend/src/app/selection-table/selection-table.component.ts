@@ -6,6 +6,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { ThemingService } from '../services/theming.service';
 import { TxDataService } from '../services/tx-data.service';
 import { TransactionsPerDay, Providers } from '../common/common-classes';
+import { TPSStatComponent } from '../tps-stat/tps-stat.component';
 
 @Component({
   selector: 'app-selection-table',
@@ -27,7 +28,7 @@ export class SelectionTableComponent {
   public columnsToDisplay = ['select', 'name', 'type', 'tps'];
   public expandedElement: Chain | null = null;
   public darkMode = true;
-  constructor(private themingService: ThemingService, private txDataService: TxDataService ) {
+  constructor(private themingService: ThemingService, private txDataService: TxDataService, private tpsStatComponent: TPSStatComponent) {
     this.selection = new SelectionModel<Chain>(true); // initially select all chains
     this.masterToggle();
     this.themingService.darkTheme.subscribe(darkTheme => {
@@ -38,8 +39,8 @@ export class SelectionTableComponent {
       this.selectionChanged.emit(selection.source.selected);
     });
 
-    this.updateTPSContinuously(this.txDataService, this.chains, this.selection);
-    setInterval(() => this.updateTPSContinuously(this.txDataService, this.chains, this.selection), 10 * 1000);
+    this.updateTPSContinuously(this.txDataService, this.chains, this.selection, this.tpsStatComponent);
+    setInterval(() => this.updateTPSContinuously(this.txDataService, this.chains, this.selection, this.tpsStatComponent), 10 * 1000);
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
@@ -67,7 +68,7 @@ export class SelectionTableComponent {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.name}`;
   }
 
-  private updateTPSContinuously(txDataService: TxDataService, chains: Chain[], selection: SelectionModel<Chain>): void{
+  private updateTPSContinuously(txDataService: TxDataService, chains: Chain[], selection: SelectionModel<Chain>, tpsStatComponent: TPSStatComponent): void{
     let x = txDataService.getTxPerDayCount('Ethereum', "Instant");
     let total = 0;
     x.forEach(y => {
@@ -84,5 +85,6 @@ export class SelectionTableComponent {
         }
       });
     });
+    tpsStatComponent.tps = total;
   }
 }
