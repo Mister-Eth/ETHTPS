@@ -96,7 +96,7 @@ namespace ETHTPS.API.Controllers
                 }
                 else if (timeInterval == TimeInterval.OneDay)
                 {
-                    var groups = (GetData(TimeInterval.OneDay, provider)).GroupBy(x => x.Date.Value.Hour);
+                    var groups = (GetData(TimeInterval.OneDay, provider)).GroupBy(x =>x.Date.Value.Hour);
                     var list = new List<TPSResponseModel>();
                     foreach (var group in groups)
                     {
@@ -111,7 +111,7 @@ namespace ETHTPS.API.Controllers
                 }
                 else if (timeInterval == TimeInterval.OneWeek)
                 {
-                    var groups = (GetData(TimeInterval.OneWeek, provider)).GroupBy(x => x.Date.Value.Hour);
+                    var groups = (GetData(TimeInterval.OneWeek, provider)).GroupBy(x => x.Date.Value.Day * 100 + x.Date.Value.Hour);
                     var list = new List<TPSResponseModel>();
                     foreach (var group in groups)
                     {
