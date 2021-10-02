@@ -32,6 +32,7 @@ import * as PlotlyJS from 'plotly.js-dist-min';
 import { PlotlyModule } from 'angular-plotly.js';
 import { TableRowDetailComponent } from './table-row-detail/table-row-detail.component';
 import { SelectionTableComponent } from './selection-table/selection-table.component';
+import { TPSStatComponent } from './tps-stat/tps-stat.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -44,6 +45,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     IntroComponent,
     TableRowDetailComponent,
     SelectionTableComponent,
+    TPSStatComponent
   ],
   imports: [
     HttpClientModule,

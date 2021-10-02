@@ -32,7 +32,7 @@ export class TxDataService {
     return combined;
   }
 
-  private providerToRequest(provider: string, interval: string): { provider: string, request: Observable<TransactionsPerDay[]> } {
+  public providerToRequest(provider: string, interval: string): { provider: string, request: Observable<TransactionsPerDay[]> } {
     return ({
       provider: provider,
       request: this.getTxPerDayCount(provider, interval)
