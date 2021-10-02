@@ -7,6 +7,7 @@ export interface TransactionsPerDay {
     unixTime: number;
     txCount?: number;
     tps?: number;
+    provider?: string;
 }
 
 export interface Chain {
@@ -18,6 +19,7 @@ export interface Chain {
     attributionToDataSourceText: string;
     attributionToDataSourceLink: string;
     logo?: string;
+    tps?: number;
 }
 
 export enum ChainType {

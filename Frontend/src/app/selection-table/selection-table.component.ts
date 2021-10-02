@@ -4,6 +4,8 @@ import { chains } from '../common/chain-metadata';
 import { Chain } from '../common/common-classes';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ThemingService } from '../services/theming.service';
+import { TxDataService } from '../services/tx-data.service';
+import { TransactionsPerDay, Providers } from '../common/common-classes';
 
 @Component({
   selector: 'app-selection-table',
@@ -22,13 +24,12 @@ export class SelectionTableComponent {
   public chains: Chain[] = chains;
   @Output() selectionChanged = new EventEmitter<Chain[]>();
   public selection: SelectionModel<Chain>;
-  public columnsToDisplay = ['select', 'name', 'type'];
+  public columnsToDisplay = ['select', 'name', 'type', 'tps'];
   public expandedElement: Chain | null = null;
   public darkMode = true;
-
-  constructor(private themingService: ThemingService) {
-    this.selection = new SelectionModel<Chain>(true, chains); // initially select all chains
-
+  constructor(private themingService: ThemingService, private txDataService: TxDataService ) {
+    this.selection = new SelectionModel<Chain>(true); // initially select all chains
+    this.masterToggle();
     this.themingService.darkTheme.subscribe(darkTheme => {
       this.darkMode = darkTheme;
     });
@@ -36,6 +37,9 @@ export class SelectionTableComponent {
     this.selection.changed.subscribe(selection => {
       this.selectionChanged.emit(selection.source.selected);
     });
+
+    this.updateTPSContinuously(this.txDataService, this.chains, this.selection);
+    setInterval(() => this.updateTPSContinuously(this.txDataService, this.chains, this.selection), 10 * 1000);
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
@@ -61,5 +65,24 @@ export class SelectionTableComponent {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.name}`;
+  }
+
+  private updateTPSContinuously(txDataService: TxDataService, chains: Chain[], selection: SelectionModel<Chain>): void{
+    let x = txDataService.getTxPerDayCount('Ethereum', "Instant");
+    let total = 0;
+    x.forEach(y => {
+      y.forEach(entry => {
+        let chain = chains.find(c => c.name == entry.provider!)!;
+        if (selection.isSelected(chain)){
+          total += entry.tps!;
+          if (entry.tps! > 0.01){
+            chain.tps = Number.parseFloat(entry.tps!.toFixed(2));
+          }
+          else{
+            chain.tps = Number.parseFloat(entry.tps!.toFixed(4));
+          }
+        }
+      });
+    });
   }
 }
