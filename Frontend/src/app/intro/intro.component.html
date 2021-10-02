@@ -1,4 +1,4 @@
-<app-tps-stat [tps]="0"> 
+<app-tps-stat [tps]="0">
 
 </app-tps-stat>
 <!-- Chips for selecting interval -->
@@ -11,10 +11,10 @@
 <div *ngIf="!isTxDataAcquired" class="progressSpinnerContainer">
     <mat-progress-spinner color="accent" mode="indeterminate"> </mat-progress-spinner>
 </div>
-<plotly-plot *ngIf="isTxDataAcquired" [data]="graph.data" [layout]="graph.layout" [useResizeHandler]="true">
-</plotly-plot>
+<div class="chart-parent">
+    <plotly-plot *ngIf="isTxDataAcquired" [data]="graph.data" [layout]="graph.layout" [useResizeHandler]="true">
+    </plotly-plot>
+</div>
 
-
-<app-selection-table [selectionDisabled]="!isTxDataAcquired" 
-                     (selectionChanged)="handleSelectionChange($event)">
+<app-selection-table [selectionDisabled]="!isTxDataAcquired" (selectionChanged)="handleSelectionChange($event)">
 </app-selection-table>
