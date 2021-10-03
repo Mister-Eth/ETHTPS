@@ -13,8 +13,6 @@ import { ChangeDetectionStrategy } from '@angular/core';
     providedIn: 'root',
   })
 export class TPSStatComponent {
-  @Input() logo = '';
-  @Input() infoLink = '';
   public darkMode = true;
   @Input() tps: Number = 0;
   constructor(private themingService: ThemingService) {
