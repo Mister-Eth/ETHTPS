@@ -25,5 +25,18 @@ tr.example-element-row.darkMode:not(.example-expanded-row):hover {
 }
   
 table {
-    width: 100%;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.name-cell {
+    display: flex;
+    align-items: center ;
+}
+
+.name-cell-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 20px;
 }

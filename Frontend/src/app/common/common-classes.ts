@@ -20,6 +20,7 @@ export interface Chain {
     attributionToDataSourceLink: string;
     logo?: string;
     tps?: number;
+    icon?: string;
 }
 
 export enum ChainType {
