@@ -22,6 +22,9 @@ import 'rxjs/add/operator/filter';
   styleUrls: ['./intro.component.scss']
 })
 export class IntroComponent {
+  private legend_config ={
+    orientation:'h'
+  }
   private layout_dark = { 
     title: 'TPS',
     plot_bgcolor: '#303030',
@@ -29,7 +32,8 @@ export class IntroComponent {
     font: {
       size: 10,
       color: 'white'
-    }
+    },
+    legend: this.legend_config
   }
 
   private layout_light = { 
@@ -39,7 +43,8 @@ export class IntroComponent {
     font: {
       size: 10,
       color: 'black'
-    }
+    },
+    legend: this.legend_config
   }
 
   public graph = {
@@ -169,7 +174,6 @@ export class IntroComponent {
     let yValues = transactionCount.map(value => value.tps);
     let layout = { 
       showlegend: true,
-      legend: {"orientation": "h"},
       x: xValues, 
       y: yValues, 
       name: name, 
