@@ -1,6 +1,12 @@
 <app-tps-stat [tps]="0">
 
 </app-tps-stat>
+
+<mat-button-toggle-group #group="matButtonToggleGroup" [(ngModel)]="yAxisType" (change)="yAxisTypeChanged()">
+    <mat-button-toggle value="Logarithmic"> Logarithmic </mat-button-toggle>
+    <mat-button-toggle value="Linear"> Linear  </mat-button-toggle>
+</mat-button-toggle-group>
+
 <!-- Chips for selecting interval -->
 <mat-chip-list aria-label="Interval selection" selectable class="intervalList">
     <mat-chip *ngFor="let interval of intervals$ | async" #c="matChip" color="accent" class="intervalChip"

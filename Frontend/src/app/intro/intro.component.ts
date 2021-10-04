@@ -33,8 +33,14 @@ export class IntroComponent {
       size: 10,
       color: 'white'
     },
-    legend: this.legend_config
+    legend: this.legend_config,
+    yaxis: {
+      type: 'linear',
+      autorange: true
+    }
   }
+
+  public yAxisType : "Logarithmic" | "Linear" = "Linear"
 
   private layout_light = { 
     title: 'TPS',
@@ -44,7 +50,11 @@ export class IntroComponent {
       size: 10,
       color: 'black'
     },
-    legend: this.legend_config
+    legend: this.legend_config,
+    yaxis: {
+      type: 'linear',
+      autorange: true
+    }
   }
 
   public graph = {
@@ -188,6 +198,11 @@ export class IntroComponent {
 
   public handleSelectionChange (chains: Chain[]) {    
     this.chains=chains;
+    this.extractData();
+  }
+
+  public yAxisTypeChanged () : void {
+    this.graph.layout.yaxis.type = this.yAxisType == "Logarithmic" ? "log" : "linear";
     this.extractData();
   }
 
