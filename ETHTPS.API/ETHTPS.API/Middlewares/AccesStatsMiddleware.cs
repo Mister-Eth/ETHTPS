@@ -52,20 +52,12 @@ namespace ETHTPS.API.Middlewares
             stopwatch.Stop();
 
             var isExternal = false;
-            var key = "X-Forwarded-For";
-            if (context.Request.Headers.ContainsKey(key))
+            var remoteIP = context.Request.HttpContext.Connection.RemoteIpAddress.ToString();
+            if (!IsLocalIpAddress(remoteIP))
             {
-                var externalIPs = context.Request.Headers[key];
-                foreach(var ip in externalIPs)
+                if (!Dns.GetHostAddresses("ethtps.info").ToList().Select(x => x.MapToIPv4().ToString()).Contains(remoteIP))
                 {
-                    if (!IsLocalIpAddress(ip))
-                    {
-                        if (!Dns.GetHostAddresses("ethtps.info").ToList().Select(x => x.MapToIPv4().ToString()).Contains(ip))
-                        {
-                            isExternal = true;
-                            break;
-                        }
-                    }
+                    isExternal = true;
                 }
             }
             var entry = new AccesStat()
