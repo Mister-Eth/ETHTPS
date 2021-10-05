@@ -66,6 +66,17 @@ export const chains: Chain[] = [
         attributionToDataSourceLink: '',
         logo: `https://aws1.discourse-cdn.com/business5/uploads/zks/original/1X/c361d0d6fc319deefe3ec1bfadd6a72878f70cc6.png`,
         icon: `zkswap.png`
+    },
+    {
+        name: 'ZKSync',
+        show: true,
+        lineColor: 'purple',
+        type: ChainType.ZKRollup,
+        generalInfoLink: 'https://zksync.io/',
+        attributionToDataSourceText: ``,
+        attributionToDataSourceLink: '',
+        logo: `https://aws1.discourse-cdn.com/business5/uploads/zks/original/1X/c361d0d6fc319deefe3ec1bfadd6a72878f70cc6.png`,
+        icon: `zkSync.jpg`
     }
 ]
 
