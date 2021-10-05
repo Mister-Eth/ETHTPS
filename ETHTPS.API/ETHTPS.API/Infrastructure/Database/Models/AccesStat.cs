@@ -11,7 +11,6 @@ namespace ETHTPS.API.Infrastructure.Database.Models
         public string Project { get; set; }
         public string Path { get; set; }
         public int? Count { get; set; }
-        public int? ExternalCount { get; set; }
         public double? AverageRequestTimeMs { get; set; }
     }
 }
