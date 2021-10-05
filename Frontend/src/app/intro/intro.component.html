@@ -1,11 +1,19 @@
 <app-tps-stat [tps]="0">
-
 </app-tps-stat>
-<!-- Chips for selecting interval -->
-<mat-chip-list aria-label="Interval selection" selectable class="intervalList">
-    <mat-chip *ngFor="let interval of intervals$ | async" #c="matChip" color="accent" class="intervalChip"
-        [value]="interval" (click)="toggleIntervalSelection(c)">{{toHumanReadable(interval)}}</mat-chip>
-</mat-chip-list>
+
+<div class="plot-options">
+    <!-- Buttons for selecting yaxis type: linear | log -->
+    <mat-button-toggle-group #group="matButtonToggleGroup" [(ngModel)]="yAxisType" (change)="yAxisTypeChanged()">
+        <mat-button-toggle value="Logarithmic" color="accent"> Logarithmic </mat-button-toggle>
+        <mat-button-toggle value="Linear" color="accent"> Linear </mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <!-- Chips for selecting interval -->
+    <mat-chip-list aria-label="Interval selection" selectable class="intervalList">
+        <mat-chip *ngFor="let interval of intervals$ | async" #c="matChip" color="accent" class="intervalChip"
+            [value]="interval" (click)="toggleIntervalSelection(c)">{{toHumanReadable(interval)}}</mat-chip>
+    </mat-chip-list>
+</div>
 
 <!-- Chart and progress indicator while the data is loading -->
 <div *ngIf="!isTxDataAcquired" class="progressSpinnerContainer">
