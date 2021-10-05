@@ -136,13 +136,13 @@ namespace ETHTPS.API.Controllers
             switch (interval)
             {
                 case TimeInterval.Latest:
-                    return _context.Tpsdata.AsEnumerable().Where(x => x.Provider.Value == targetProvider.Id && x.Date >= DateTime.Now.Subtract(TimeSpan.FromMinutes(1)));
+                    return _context.Tpsdata.AsEnumerable().Where(x => x.Provider.Value == targetProvider.Id && x.Date >= DateTime.Now.Subtract(TimeSpan.FromMinutes(1))).OrderBy(x => x.Date);
                 case TimeInterval.OneHour:
-                    return _context.Tpsdata.AsEnumerable().Where(x => x.Provider.Value == targetProvider.Id && x.Date >= DateTime.Now.Subtract(TimeSpan.FromHours(1)));
+                    return _context.Tpsdata.AsEnumerable().Where(x => x.Provider.Value == targetProvider.Id && x.Date >= DateTime.Now.Subtract(TimeSpan.FromHours(1))).OrderBy(x => x.Date);
                 case TimeInterval.OneDay:
-                    return _context.Tpsdata.AsEnumerable().Where(x => x.Provider.Value == targetProvider.Id && x.Date >= DateTime.Now.Subtract(TimeSpan.FromDays(1)));
+                    return _context.Tpsdata.AsEnumerable().Where(x => x.Provider.Value == targetProvider.Id && x.Date >= DateTime.Now.Subtract(TimeSpan.FromDays(1))).OrderBy(x => x.Date);
                 case TimeInterval.OneWeek:
-                    return _context.Tpsdata.AsEnumerable().Where(x => x.Provider.Value == targetProvider.Id && x.Date >= DateTime.Now.Subtract(TimeSpan.FromDays(7)));
+                    return _context.Tpsdata.AsEnumerable().Where(x => x.Provider.Value == targetProvider.Id && x.Date >= DateTime.Now.Subtract(TimeSpan.FromDays(7))).OrderBy(x => x.Date);
                 case TimeInterval.Instant:
                     return _context.Tpsdata.OrderByDescending(x => x.Date).AsEnumerable().GroupBy(x => x.Provider).Select(x => x.First());
                 default:
