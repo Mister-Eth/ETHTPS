@@ -34,7 +34,7 @@ namespace ETHTPS.TPSLogger.TPSLogging
         {
             while (true)
             {
-               // try
+                try
                 {
                     var blocks = JsonConvert.DeserializeObject<dynamic>(await _httpClient.GetStringAsync("https://api.zksync.io/api/v0.1/blocks?limit=20"));
                     for (int i = 0; i < blocks.Count - 1; i++)
@@ -70,6 +70,11 @@ namespace ETHTPS.TPSLogger.TPSLogging
                         }
                     }
                 }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"{Name}: {e.Message}");
+                }
+
                 await Task.Delay(TimeSpan.FromMinutes(1));
             }
         }
