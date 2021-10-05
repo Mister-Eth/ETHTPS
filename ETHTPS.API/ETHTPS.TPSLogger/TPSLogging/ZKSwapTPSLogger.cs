@@ -44,7 +44,8 @@ namespace ETHTPS.TPSLogger.TPSLogging
                         {
                             var previousBlock = blocks.data.data[i + 1];
                             string blockNumber = block.number.ToString();
-                            if (!Context.Tpsdata.Any(x => x.Block == blockNumber))
+                            var providerID = Context.Providers.First(x => x.Name == Name).Id;
+                            if (!Context.Tpsdata.Any(x => x.Block == blockNumber && x.Provider == providerID))
                             {
                                 var provider = Context.Providers.First(x => x.Name == Name);
                                 DateTime currentBlockTime = FromUnixTime(long.Parse(block.committed_at.ToString()));
