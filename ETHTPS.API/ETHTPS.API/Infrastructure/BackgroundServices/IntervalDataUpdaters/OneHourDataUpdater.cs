@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace ETHTPS.API.Infrastructure.BackgroundServices.IntervalDataUpdaters
 {
-    public class InstantDataUpdaterBase : IntervalDataUpdaterBase
+    public class OneHourDataUpdater : IntervalDataUpdaterBase
     {
-        public InstantDataUpdaterBase(ILogger<IntervalDataUpdaterBase> logger, IServiceScopeFactory serviceScopeFactory) : base(logger, serviceScopeFactory, "Instant", TimeSpan.FromSeconds(10))
+        public OneHourDataUpdater(ILogger<IntervalDataUpdaterBase> logger, IServiceScopeFactory serviceScopeFactory) : base(logger, serviceScopeFactory, "OneHour", TimeSpan.FromMinutes(5))
         {
         }
     }

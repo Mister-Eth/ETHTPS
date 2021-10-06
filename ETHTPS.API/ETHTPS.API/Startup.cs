@@ -67,11 +67,11 @@ namespace ETHTPS.API
 
         private void AddDataUpdaters(IServiceCollection services)
         {
-            services.AddHostedService<InstantDataUpdaterBase>();
-            services.AddHostedService<OneHourDataUpdaterBase>();
-            services.AddHostedService<OneDayDataUpdaterBase>();
-            services.AddHostedService<OneWeekDataUpdaterBase>();
-            services.AddHostedService<OneMonthDataUpdaterBase>();
+            services.AddHostedService<InstantDataUpdater>();
+            services.AddHostedService<OneHourDataUpdater>();
+            services.AddHostedService<OneDayDataUpdater>();
+            services.AddHostedService<OneWeekDataUpdater>();
+            services.AddHostedService<OneMonthDataUpdater>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
