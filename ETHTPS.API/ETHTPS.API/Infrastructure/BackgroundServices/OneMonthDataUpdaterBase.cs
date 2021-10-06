@@ -12,7 +12,7 @@ namespace ETHTPS.API.Infrastructure.BackgroundServices
 {
     public class OneMonthDataUpdaterBase : IntervalDataUpdaterBase
     {
-        public OneMonthDataUpdaterBase(ILogger<IntervalDataUpdaterBase> logger, IServiceScopeFactory serviceScopeFactory) : base(logger, serviceScopeFactory, "OneMonth", TimeSpan.FromDays(1))
+        public OneMonthDataUpdaterBase(ILogger<IntervalDataUpdaterBase> logger, IServiceScopeFactory serviceScopeFactory) : base(logger, serviceScopeFactory, "OneMonth", TimeSpan.FromHours(1))
         {
         }
     }

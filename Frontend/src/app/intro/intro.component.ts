@@ -143,6 +143,8 @@ export class IntroComponent {
         return "1d";
       case "OneWeek":
         return "1w";
+      case "OneMonth":
+          return "1m";
     }
     return interval;
   }
