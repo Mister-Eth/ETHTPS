@@ -1,6 +1,12 @@
 ﻿using System;
+using System.Threading.Tasks;
+
+using ETHTPS.API.Infrastructure.Extensions.StringExtensions;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+
+using Newtonsoft.Json;
 
 #nullable disable
 
@@ -21,6 +27,7 @@ namespace ETHTPS.API.Infrastructure.Database.Models
         public virtual DbSet<Provider> Providers { get; set; }
         public virtual DbSet<ProviderType> ProviderTypes { get; set; }
         public virtual DbSet<TPSData> Tpsdata { get; set; }
+        public virtual DbSet<CachedResponse> CachedResponses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -76,7 +83,41 @@ namespace ETHTPS.API.Infrastructure.Database.Models
                 entity.Property(e => e.Project).HasMaxLength(255);
             });
 
+            modelBuilder.Entity<CachedResponse>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Json)
+                    .IsUnicode(false)
+                    .HasColumnName("JSON");
+
+                entity.Property(e => e.Name).HasMaxLength(255);
+            });
+
             OnModelCreatingPartial(modelBuilder);
+        }
+
+        public async Task<T> GetOrAddCachedResponseAsync<T>(params object[] args)
+        {
+            var name = StringExtensions.AggregateToLowercase(args);
+            if (!await CachedResponses.AnyAsync(x=>x.Name == name))
+            {
+                await CachedResponses.AddAsync(new CachedResponse()
+                {
+                    Name = name,
+                    Json = null
+                });
+                await this.SaveChangesAsync();
+            }
+            var json = (await CachedResponses.FirstAsync(x => x.Name == name)).Json;
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                return default(T);
+            }
+            else
+            {
+                return JsonConvert.DeserializeObject<T>(json);
+            }
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

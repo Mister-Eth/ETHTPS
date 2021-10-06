@@ -1,5 +1,6 @@
 using EtherscanApi.Net.Interfaces;
 
+using ETHTPS.API.Infrastructure.BackgroundServices;
 using ETHTPS.API.Infrastructure.Database.Models;
 using ETHTPS.API.Middlewares;
 
@@ -46,6 +47,11 @@ namespace ETHTPS.API
             services.AddSwaggerGen();
             services.AddDbContext<ETHTPSContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMemoryCache();
+            services.AddHostedService<InstantDataUpdaterBase>();
+            services.AddHostedService<OneHourDataUpdaterBase>();
+            services.AddHostedService<OneDayDataUpdaterBase>();
+            services.AddHostedService<OneWeekDataUpdaterBase>();
+            services.AddHostedService<OneMonthDataUpdaterBase>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

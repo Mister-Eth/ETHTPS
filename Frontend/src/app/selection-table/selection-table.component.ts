@@ -69,7 +69,7 @@ export class SelectionTableComponent {
   }
 
   private updateTPSContinuously(txDataService: TxDataService, chains: Chain[], selection: SelectionModel<Chain>, tpsStatComponent: TPSStatComponent): void{
-    let x = txDataService.getTxPerDayCount('Ethereum', "Instant");
+    let x = txDataService.getTxPerDayCount('Any', "Instant");
     let total = 0;
     x.forEach(y => {
       y.forEach(entry => {
