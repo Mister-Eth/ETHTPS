@@ -14,7 +14,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ETHTPS.API.Infrastructure.BackgroundServices
+namespace ETHTPS.API.Infrastructure.BackgroundServices.IntervalDataUpdaters
 {
     public abstract class IntervalDataUpdaterBase : IHostedService, IDisposable
     {

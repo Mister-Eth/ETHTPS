@@ -14,4 +14,8 @@
     <ProjectReference Include="..\ETHTPS.API\ETHTPS.API.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="TPSLogging\" />
+  </ItemGroup>
+
 </Project>
