@@ -19,10 +19,10 @@ using System.Threading.Tasks;
 
 namespace ETHTPS.API.Infrastructure.BackgroundServices.TPSDataUpdaters.Standard
 {
-    public class ZKSwapUpdater : TPSLoggerBase
+    public class ZKSwapUpdater : TPSDataUpdaterBase
     {
         private readonly HttpClient _httpClient;
-        public ZKSwapUpdater(IServiceScopeFactory scopeFactory, ILogger<TPSLoggerBase> logger) : base("ZKSwap", scopeFactory, logger, TimeSpan.FromMinutes(1))
+        public ZKSwapUpdater(IServiceScopeFactory scopeFactory, ILogger<TPSDataUpdaterBase> logger) : base("ZKSwap", scopeFactory, logger, TimeSpan.FromMinutes(1))
         {
             _httpClient = new HttpClient();
         }

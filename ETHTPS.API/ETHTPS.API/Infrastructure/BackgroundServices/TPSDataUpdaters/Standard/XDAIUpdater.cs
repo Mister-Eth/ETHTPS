@@ -22,10 +22,10 @@ using System.Threading.Tasks;
 
 namespace ETHTPS.API.Infrastructure.BackgroundServices.TPSDataUpdaters.Standard
 {
-    public class XDAIUpdater : TPSLoggerBase
+    public class XDAIUpdater : TPSDataUpdaterBase
     {
         private readonly HttpClient _httpClient;
-        public XDAIUpdater(IServiceScopeFactory scopeFactory, ILogger<TPSLoggerBase> logger) : base("XDAI", scopeFactory, logger, TimeSpan.FromSeconds(5))
+        public XDAIUpdater(IServiceScopeFactory scopeFactory, ILogger<TPSDataUpdaterBase> logger) : base("XDAI", scopeFactory, logger, TimeSpan.FromSeconds(5))
         {
             _httpClient = new HttpClient();
         }

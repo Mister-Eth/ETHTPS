@@ -19,10 +19,10 @@ using System.Threading.Tasks;
 
 namespace ETHTPS.API.Infrastructure.BackgroundServices.TPSDataUpdaters.Standard
 {
-    public class ZKSyncUpdater : TPSLoggerBase
+    public class ZKSyncUpdater : TPSDataUpdaterBase
     {
         private readonly HttpClient _httpClient;
-        public ZKSyncUpdater(IServiceScopeFactory scopeFactory, ILogger<TPSLoggerBase> logger) : base("ZKSync", scopeFactory, logger, TimeSpan.FromMinutes(1))
+        public ZKSyncUpdater(IServiceScopeFactory scopeFactory, ILogger<TPSDataUpdaterBase> logger) : base("ZKSync", scopeFactory, logger, TimeSpan.FromMinutes(1))
         {
             _httpClient = new HttpClient();
         }

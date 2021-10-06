@@ -15,7 +15,7 @@ namespace ETHTPS.API.Infrastructure.BackgroundServices.TPSDataUpdaters.Http
 {
     public class EtherscanUpdater : HTTPUpdaterBase
     {
-        public EtherscanUpdater(IServiceScopeFactory scopeFactory, ILogger<TPSLoggerBase> logger, IConfiguration configuration) : base("Ethereum", scopeFactory, logger, configuration)
+        public EtherscanUpdater(IServiceScopeFactory scopeFactory, ILogger<TPSDataUpdaterBase> logger, IConfiguration configuration) : base("Ethereum", scopeFactory, logger, configuration)
         {
         }
     }

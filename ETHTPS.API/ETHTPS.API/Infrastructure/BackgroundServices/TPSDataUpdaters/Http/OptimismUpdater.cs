@@ -14,7 +14,7 @@ namespace ETHTPS.API.Infrastructure.BackgroundServices.TPSDataUpdaters.Http
 {
     public class OptimismUpdater : HTTPUpdaterBase
     {
-        public OptimismUpdater(IServiceScopeFactory scopeFactory, ILogger<TPSLoggerBase> logger, IConfiguration configuration) : base("Optimism", scopeFactory, logger, configuration)
+        public OptimismUpdater(IServiceScopeFactory scopeFactory, ILogger<TPSDataUpdaterBase> logger, IConfiguration configuration) : base("Optimism", scopeFactory, logger, configuration)
         {
         }
     }

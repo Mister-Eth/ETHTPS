@@ -14,15 +14,15 @@ using System.Threading.Tasks;
 
 namespace ETHTPS.API.Infrastructure.BackgroundServices.TPSDataUpdaters
 {
-    public abstract class TPSLoggerBase : ITPSLogger, IHostedService, IDisposable
+    public abstract class TPSDataUpdaterBase : ITPSDataUpdater, IHostedService, IDisposable
     {
         protected string Name { get; private set; }
         protected readonly IServiceScopeFactory _scopeFactory;
-        protected readonly ILogger<TPSLoggerBase> _logger;
+        protected readonly ILogger<TPSDataUpdaterBase> _logger;
         protected readonly TimeSpan _updateEvery;
         protected Timer _timer;
 
-        protected TPSLoggerBase(string name, IServiceScopeFactory scopeFactory, ILogger<TPSLoggerBase> logger, TimeSpan updateEvery)
+        protected TPSDataUpdaterBase(string name, IServiceScopeFactory scopeFactory, ILogger<TPSDataUpdaterBase> logger, TimeSpan updateEvery)
         {
             Name = name;
             _scopeFactory = scopeFactory;

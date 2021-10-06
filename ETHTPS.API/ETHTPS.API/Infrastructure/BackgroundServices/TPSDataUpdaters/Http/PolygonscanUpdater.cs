@@ -14,7 +14,7 @@ namespace ETHTPS.API.Infrastructure.BackgroundServices.TPSDataUpdaters.Http
 {
     public class PolygonscanUpdater : HTTPUpdaterBase
     {
-        public PolygonscanUpdater(IServiceScopeFactory scopeFactory, ILogger<TPSLoggerBase> logger, IConfiguration configuration) : base("Polygon", scopeFactory, logger, configuration)
+        public PolygonscanUpdater(IServiceScopeFactory scopeFactory, ILogger<TPSDataUpdaterBase> logger, IConfiguration configuration) : base("Polygon", scopeFactory, logger, configuration)
         {
         }
     }

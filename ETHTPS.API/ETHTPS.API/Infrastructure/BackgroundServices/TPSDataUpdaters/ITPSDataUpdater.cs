@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ETHTPS.API.Infrastructure.BackgroundServices.TPSDataUpdaters
 {
-    public interface ITPSLogger
+    public interface ITPSDataUpdater
     {
         Task LogDataAsync(ETHTPSContext context);
     }

@@ -23,13 +23,13 @@ using System.Threading.Tasks;
 
 namespace ETHTPS.API.Infrastructure.BackgroundServices.TPSDataUpdaters.Http
 {
-    public abstract class HTTPUpdaterBase : TPSLoggerBase
+    public abstract class HTTPUpdaterBase : TPSDataUpdaterBase
     {
         public string BaseURL { get; private set; }
         private readonly string _targetElementSelector;
         private readonly HttpClient _httpClient;
 
-        protected HTTPUpdaterBase(string name, IServiceScopeFactory scopeFactory, ILogger<TPSLoggerBase> logger, IConfiguration configuration) : base(name, scopeFactory, logger, TimeSpan.FromSeconds(5))
+        protected HTTPUpdaterBase(string name, IServiceScopeFactory scopeFactory, ILogger<TPSDataUpdaterBase> logger, IConfiguration configuration) : base(name, scopeFactory, logger, TimeSpan.FromSeconds(5))
         {
             var config = configuration.GetSection("TPSLoggerConfigurations").GetSection("HTTPTPSLoggerConfiguration").GetSection(name);
             BaseURL = config.GetValue<string>("BaseURL");

@@ -14,7 +14,7 @@ namespace ETHTPS.API.Infrastructure.BackgroundServices.TPSDataUpdaters.Http
 {
     public class ArbiscanUpdater : HTTPUpdaterBase
     {
-        public ArbiscanUpdater(IServiceScopeFactory scopeFactory, ILogger<TPSLoggerBase> logger, IConfiguration configuration) : base("Arbitrum One", scopeFactory, logger, configuration)
+        public ArbiscanUpdater(IServiceScopeFactory scopeFactory, ILogger<TPSDataUpdaterBase> logger, IConfiguration configuration) : base("Arbitrum One", scopeFactory, logger, configuration)
         {
         }
     }
