@@ -29,7 +29,7 @@ namespace ETHTPS.API.Middlewares
             await _next(context);
             stopwatch.Stop();
 
-            logger.LogInformation($"{context.Connection.Id}: {context.Request.Path}{context.Request.QueryString}({stopwatch.Elapsed.TotalMilliseconds}ms)");
+            logger.LogInformation($"{context.Connection.Id}: {context.Request.Path}{context.Request.QueryString} ({stopwatch.Elapsed.TotalMilliseconds}ms)");
             var entry = new AccesStat()
             {
                 Count = 1,
