@@ -1,11 +1,9 @@
-<app-tps-stat [tps]="0">
-</app-tps-stat>
 
 <div class="plot-options">
     <!-- Buttons for selecting yaxis type: linear | log -->
     <mat-button-toggle-group #group="matButtonToggleGroup" [(ngModel)]="yAxisType" (change)="yAxisTypeChanged()">
-        <mat-button-toggle value="Logarithmic" color="accent"> Logarithmic </mat-button-toggle>
-        <mat-button-toggle value="Linear" color="accent"> Linear </mat-button-toggle>
+        <mat-button-toggle value="Logarithmic" color="accent"> LOG </mat-button-toggle>
+        <mat-button-toggle value="Linear" color="accent"> LIN </mat-button-toggle>
     </mat-button-toggle-group>
 
     <!-- Chips for selecting interval -->

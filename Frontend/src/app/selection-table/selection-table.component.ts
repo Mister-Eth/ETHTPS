@@ -38,7 +38,6 @@ export class SelectionTableComponent {
     this.selection.changed.subscribe(selection => {
       this.selectionChanged.emit(selection.source.selected);
     });
-
     this.updateTPSContinuously(this.txDataService, this.chains, this.selection, this.tpsStatComponent);
     setInterval(() => this.updateTPSContinuously(this.txDataService, this.chains, this.selection, this.tpsStatComponent), 10 * 1000);
   }

@@ -4,7 +4,7 @@ export const chains: Chain[] = [
     {
         name: 'Arbitrum One',
         show: true,
-        lineColor: 'red',
+        lineColor: '#920000',
         type: ChainType.OptimisticRollup,
         generalInfoLink: 'https://l2beat.com/projects/arbitrum/',
         attributionToDataSourceText: `Daily transaction data for Optimism retrieved from https://arbiscan.io`,
@@ -15,7 +15,7 @@ export const chains: Chain[] = [
     {
         name: 'Optimism',
         show: true,
-        lineColor: 'blue',
+        lineColor: ' #490092',
         type: ChainType.OptimisticRollup,
         generalInfoLink: 'https://l2beat.com/projects/optimism/',
         attributionToDataSourceText: `Daily transaction data for Optimism retrieved from https://arbiscan.io`,
@@ -26,7 +26,7 @@ export const chains: Chain[] = [
     {
         name: 'Ethereum',
         show: true,
-        lineColor: 'green',
+        lineColor: '#006ddb',
         type: ChainType.Mainnet,
         generalInfoLink: 'https://ethereum.org/',
         attributionToDataSourceText: ``,
@@ -37,7 +37,7 @@ export const chains: Chain[] = [
     {
         name: 'Polygon',
         show: true,
-        lineColor: 'orange',
+        lineColor: '#b66dff',
         type: ChainType.Sidechain,
         generalInfoLink: 'https://polygon.technology/',
         attributionToDataSourceText: ``,
@@ -48,7 +48,7 @@ export const chains: Chain[] = [
     {
         name: 'XDAI',
         show: true,
-        lineColor: 'purple',
+        lineColor: '#ff6db6',
         type: ChainType.Sidechain,
         generalInfoLink: 'https://www.xdaichain.com/',
         attributionToDataSourceText: ``,
@@ -59,7 +59,7 @@ export const chains: Chain[] = [
     {
         name: 'ZKSwap',
         show: true,
-        lineColor: 'purple',
+        lineColor: '#ffdf4d',
         type: ChainType.ZKRollup,
         generalInfoLink: 'https://zkswap.info/',
         attributionToDataSourceText: ``,
@@ -70,7 +70,7 @@ export const chains: Chain[] = [
     {
         name: 'ZKSync',
         show: true,
-        lineColor: 'purple',
+        lineColor: '#004949',
         type: ChainType.ZKRollup,
         generalInfoLink: 'https://zksync.io/',
         attributionToDataSourceText: ``,
