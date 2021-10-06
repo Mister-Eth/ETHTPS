@@ -1,6 +1,7 @@
 ﻿using ETHTPS.API.Infrastructure.Database.Models;
 
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 using System;
 using System.Collections.Generic;
@@ -21,13 +22,14 @@ namespace ETHTPS.API.Middlewares
             _next = next;
         }
 
-        public async Task InvokeAsync(HttpContext context, ETHTPSContext dbContext)
+        public async Task InvokeAsync(HttpContext context, ETHTPSContext dbContext, ILogger<AccesStatsMiddleware> logger)
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
             await _next(context);
             stopwatch.Stop();
 
+            logger.LogInformation($"{context.Connection.Id}: {context.Request.Path}{context.Request.QueryString}({stopwatch.Elapsed.TotalMilliseconds}ms)");
             var entry = new AccesStat()
             {
                 Count = 1,

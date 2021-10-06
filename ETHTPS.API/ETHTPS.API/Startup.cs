@@ -65,7 +65,6 @@ namespace ETHTPS.API
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
-            app.UseMiddleware<RequestConsoleLoggingMiddleware>();
             app.UseMiddleware<AccesStatsMiddleware>();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
