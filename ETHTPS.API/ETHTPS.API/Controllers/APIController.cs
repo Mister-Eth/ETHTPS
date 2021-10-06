@@ -57,5 +57,4 @@ namespace ETHTPS.API.Controllers
 
     }
 
-    public enum TimeInterval { Instant, Latest, OneHour, OneDay, OneWeek }
 }
