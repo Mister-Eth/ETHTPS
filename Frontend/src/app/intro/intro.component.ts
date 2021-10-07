@@ -38,6 +38,7 @@ export class IntroComponent {
       autorange: true
     }
   }
+  public totalTps = 100;
 
   public yAxisType : "Logarithmic" | "Linear" = "Linear"
 
