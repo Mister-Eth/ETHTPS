@@ -23,12 +23,6 @@
     margin-right: 5%;
 }
 
-.plot-options {
-    display: flex;
-    justify-content:  space-between;
-    margin: 10px;
-}
-
 .mat-button-toggle-checked {
     background-color: mat-color($app-accent);
     color: mat-color($app-accent, default-contrast);
@@ -55,9 +49,14 @@ mat-progress-spinner {
     width: 100%;
 }
 
+.scale-options{
+    float: right;
+    margin-right: 10px;
+}
 
-
-
+.scale-btn{
+    border-radius: 10px;
+}
 
 
 

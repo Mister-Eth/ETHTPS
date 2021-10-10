@@ -1,5 +1,5 @@
 <div class="container" [class.is-mobile]="mobileQuery.matches">
-    <mat-toolbar color="primary" class="toolbar">
+    <mat-toolbar color="primary">
         <span>{{title}}</span>
         <span class="spacer"></span>
         <button mat-icon-button>
@@ -24,20 +24,6 @@
     </mat-toolbar>
 
     <mat-sidenav-container class="sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-        <mat-sidenav #sidenav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
-            fixedTopGap="56">
-            <mat-nav-list>
-                <mat-list-item routerLink="intro" (click)="sidenavItemClicked()">
-                    <mat-icon mat-list-icon>deck</mat-icon>
-                    <div mat-line>L2 stats</div>
-                </mat-list-item>                
-                <mat-list-item routerLink="about" (click)="sidenavItemClicked()">
-                    <mat-icon mat-list-icon>accessible_forward</mat-icon>
-                    <div mat-line>About</div>
-                </mat-list-item>
-            </mat-nav-list>
-        </mat-sidenav>
-
         <mat-sidenav-content>
             <router-outlet></router-outlet>
         </mat-sidenav-content>

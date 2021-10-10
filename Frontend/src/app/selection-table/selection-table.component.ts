@@ -67,14 +67,16 @@ export class SelectionTableComponent {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.name}`;
   }
 
+  private total:number=0;
+
   private updateTPSContinuously(txDataService: TxDataService, chains: Chain[], selection: SelectionModel<Chain>, tpsStatComponent: TPSStatComponent): void{
     let x = txDataService.getTxPerDayCount('Any', "Instant");
-    let total = 0;
+ 
     x.forEach(y => {
       y.forEach(entry => {
         let chain = chains.find(c => c.name == entry.provider!)!;
         if (selection.isSelected(chain)){
-          total += entry.tps!;
+          this.total += entry.tps!;
           if (entry.tps! > 0.01){
             chain.tps = Number.parseFloat(entry.tps!.toFixed(2));
           }
@@ -84,6 +86,5 @@ export class SelectionTableComponent {
         }
       });
     });
-    tpsStatComponent.tps = total;
   }
 }
