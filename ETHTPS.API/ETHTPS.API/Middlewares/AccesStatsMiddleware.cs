@@ -1,4 +1,6 @@
-﻿using ETHTPS.API.Infrastructure.Database.Models;
+﻿
+
+using ETHTPS.Data.Database;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;

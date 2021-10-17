@@ -1,6 +1,7 @@
 ﻿using ETHTPS.API.Infrastructure;
-using ETHTPS.API.Infrastructure.Database.Models;
-using ETHTPS.API.Models;
+using ETHTPS.Data;
+using ETHTPS.Data.Database;
+using ETHTPS.Data.ResponseModels;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
@@ -38,6 +39,12 @@ namespace ETHTPS.API.Controllers
         public IEnumerable<ProviderType> ProviderTypes()
         {
             return _context.ProviderTypes;
+        }
+
+        [HttpGet]
+        public IEnumerable<Network> Networks()
+        {
+            return _context.Networks;
         }
 
         [HttpGet]

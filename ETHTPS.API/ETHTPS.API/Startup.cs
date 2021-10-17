@@ -1,11 +1,11 @@
 using EtherscanApi.Net.Interfaces;
 
-using ETHTPS.API.Infrastructure.BackgroundServices;
-using ETHTPS.API.Infrastructure.BackgroundServices.IntervalDataUpdaters;
-using ETHTPS.API.Infrastructure.BackgroundServices.TPSDataUpdaters.Http;
-using ETHTPS.API.Infrastructure.BackgroundServices.TPSDataUpdaters.Standard;
-using ETHTPS.API.Infrastructure.Database.Models;
+
 using ETHTPS.API.Middlewares;
+using ETHTPS.BackgroundServices.IntervalDataUpdaters;
+using ETHTPS.BackgroundServices.TPSDataUpdaters.Http;
+using ETHTPS.BackgroundServices.TPSDataUpdaters.Standard;
+using ETHTPS.Data.Database;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

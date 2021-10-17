@@ -10,7 +10,6 @@
     <PackageReference Include="HtmlAgilityPack" Version="1.11.36" />
     <PackageReference Include="Microsoft.AspNetCore.HttpOverrides" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.9" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="5.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.9">
       <PrivateAssets>all</PrivateAssets>
@@ -29,6 +28,15 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.2.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.2.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ETHTPS.BackgroundServices\ETHTPS.BackgroundServices.csproj" />
+    <ProjectReference Include="..\ETHTPS.Data\ETHTPS.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Infrastructure\Database\Models\" />
   </ItemGroup>
 
 </Project>
