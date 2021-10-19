@@ -60,7 +60,7 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<TPSResponseModel>> GetTPS(string provider, string interval, bool includeSidechains = false) => await _context.GetOrAddCachedResponseAsync<IEnumerable<TPSResponseModel>>(provider, interval, includeSidechains);
+        public async Task<IEnumerable<TPSResponseModel>> GetTPS(string provider, string interval) => await _context.GetOrAddCachedResponseAsync<IEnumerable<TPSResponseModel>>(provider, interval);
 
     }
 
