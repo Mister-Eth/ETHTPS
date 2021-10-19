@@ -1,10 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
-import TopBar from './components/TopBar'
+import TPSStat from './components/TPSStat'
 
 function App() {
   return (
-    <TopBar></TopBar>
+    <TPSStat></TPSStat>
   );
 }
 
