@@ -65,23 +65,21 @@ class DoughnutChart extends React.Component{
 
   plugins = [{
     beforeDraw: function(chart) {
-    this.text = `w:${chart.width}`;
      var width = chart.width,
          height = chart.height,
          ctx = chart.ctx;
          ctx.restore();
          
-         let yOffset = 50;
-         var fontSize = (this.cutoutSize / 160).toFixed(2);
+         var fontSize = (this.cutoutSize / 200).toFixed(2);
          ctx.font = fontSize + "em sans-serif";
          ctx.textBaseline = "top";
          let tpsText=  (chart.data.datasets[0].data.reduce((a,b) => a+b) / 2).toString();
          tpsText = tpsText.substr(0, tpsText.indexOf('.') + 3);
          var text = `${tpsText} TPS`,
          textX = Math.round((width - ctx.measureText(text).width) / 2),
-         textY = height / 2;
+         textY = (height - fontSize) / 2;
          ctx.fillStyle = "white";
-         ctx.fillText(text, textX, yOffset - 10 + textY);
+         ctx.fillText(text, textX, textY);
 
          ctx.save();
     }.bind(this)
@@ -103,9 +101,6 @@ class DoughnutChart extends React.Component{
                 }
             }
            }}/>
-           <p>
-               {this.text}
-           </p>
         </>
     }
 
