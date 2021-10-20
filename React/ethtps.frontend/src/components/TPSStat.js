@@ -18,14 +18,19 @@ class TPSStat extends React.Component{
 
     this.api = new API("http://localhost:10202/API/v2");
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.offsetSidechainBug = false;
   }
 
   handleInputChange(event) {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
-    this.setState({
-      [name]: value    });
+    this.setState({ [name]: value });
+
+    if (!this.offsetSidechainBug){
+      this.offsetSidechainBug = true;
+    }
+    this.updateTPS();
   }
 
   render(){
@@ -51,21 +56,23 @@ class TPSStat extends React.Component{
   }
 
   async updateTPS(){
-    let tpsData = await this.api.getTPS("Any", "Instant");
-    if (!this.state.includeSidechains){
+    let tpsData = await this.api.getTPS("Any", "Instant", "Mainnet", (this.offsetSidechainBug)?!this.state.includeSidechains:this.state.includeSidechains);
+    /*if (!this.state.includeSidechains){
       let dd = await this.api.getProviderTypes();
       console.log(dd)
       let sidechainID = (dd).filter(x=>x.name==="Sidechain").first().id;
       let providers = await this.api.getProviders();
       tpsData = tpsData.filter(x=>providers.any(y=>y.name==x.name && y.type!=sidechainID));
-    }
+    }*/
     let totalTPS = tpsData.map(x => (Math.round(x.tps * 100) / 100)).reduce((a,b) => a+b);
+    totalTPS = totalTPS.toString();
+    totalTPS = totalTPS.substr(0, totalTPS.indexOf('.') + 3);
     this.setState({tps:totalTPS});
   }
 
   componentDidMount() {
     this.updateTPS();
-    this.updateTPSContinuously();
+    //this.updateTPSContinuously();
   }
 }
 

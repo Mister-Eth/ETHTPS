@@ -3,8 +3,8 @@ class API{
         this.endpoint = endpoint;
     }
 
-    async getTPS(provider, interval) {
-        return await fetch(`${this.endpoint}/GetTPS?provider=${provider}&interval=${interval}`).then(response => response.json());
+    async getTPS(provider, interval, network, includeSidechains) {
+        return await fetch(`${this.endpoint}/TPS?provider=${provider}&interval=${interval}&network=${network}&includeSidechains=${includeSidechains}`).then(response => response.json());
     }
 
     async getProviders(){

@@ -34,13 +34,13 @@ namespace ETHTPS.API.Controllers
         [HttpGet]
         public IEnumerable<string> ProviderTypes()
         {
-            return _context.ProviderTypes.Select(x=>x.Name);
+            return _context.ProviderTypes.Select(x => x.Name);
         }
 
         [HttpGet]
         public IEnumerable<string> Networks()
         {
-            return _context.Networks.Select(x=>x.Name);
+            return _context.Networks.Select(x => x.Name);
         }
 
         [HttpGet]
@@ -56,6 +56,21 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<TPSResponseModel>> GetTPS(string provider, string interval, string network) => await _context.GetOrAddCachedResponseAsync<IEnumerable<TPSResponseModel>>(provider, interval);
+        public async Task<IEnumerable<TPSResponseModel>> TPS(string provider, string interval, string network, bool includeSidechains)
+        {
+            var response = await _context.GetOrAddCachedResponseAsync<IEnumerable<TPSResponseModel>>(provider, interval);
+            if (!includeSidechains) 
+            {
+                response = response.Where(x => !IsSidechain(x.Provider));
+            }
+            return response;
+        }
+
+        private bool IsSidechain(string provider)
+        {
+            var sidechainID = _context.ProviderTypes.First(x => x.Name == "Sidechain").Id;
+            var dbProvider = _context.Providers.First(x => x.Name.ToUpper() == provider.ToUpper());
+            return dbProvider.Type == sidechainID;
+        }
     }
 }
