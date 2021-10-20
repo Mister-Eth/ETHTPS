@@ -29,6 +29,7 @@ namespace ETHTPS.Data.Database
         public virtual DbSet<TPSData> Tpsdata { get; set; }
         public virtual DbSet<Network> Networks { get; set; }
         public virtual DbSet<CachedResponse> CachedResponses { get; set; }
+        public virtual DbSet<ProviderProperty> ProviderProperties { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -102,6 +103,15 @@ namespace ETHTPS.Data.Database
                 entity.Property(e => e.Name).HasMaxLength(255);
             });
 
+            modelBuilder.Entity<ProviderProperty>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Name).HasMaxLength(255);
+
+                entity.Property(e => e.Value).HasMaxLength(255);
+            });
+
             OnModelCreatingPartial(modelBuilder);
         }
 
@@ -127,6 +137,8 @@ namespace ETHTPS.Data.Database
                 return JsonConvert.DeserializeObject<T>(json);
             }
         }
+
+        public async Task<int> GetProviderIDAsync(string provider) => (await Providers.FirstAsync(x => x.Name.ToUpper() == provider.ToUpper())).Id;
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }

@@ -63,7 +63,23 @@ namespace ETHTPS.API.Controllers
             {
                 response = response.Where(x => !IsSidechain(x.Provider));
             }
-            return response;
+            foreach(var x in response)
+            {
+                if (string.IsNullOrWhiteSpace(x.Color))
+                {
+                    var providerID = await _context.GetProviderIDAsync(x.Provider);
+                    x.Color = _context.ProviderProperties.First(y => y.Name == "Color" && y.Provider.Value == providerID).Value;
+                }
+            }
+            var responseList = response.ToList();
+            responseList.Add(new TPSResponseModel() //Add a filler response equal to the sum of all providers in order to display half a doughnut chart
+            {
+                Color = "#ffffff",
+                Date = DateTime.Now,
+                Provider = "Filler",
+                TPS = response.Sum(x => x.TPS)
+            });
+            return responseList;
         }
 
         private bool IsSidechain(string provider)

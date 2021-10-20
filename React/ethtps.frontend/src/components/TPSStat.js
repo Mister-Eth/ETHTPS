@@ -50,7 +50,7 @@ class TPSStat extends React.Component{
   async updateTPS(){
     let tpsData = await this.api.getTPS("Any", "Instant", "Mainnet", this.state.includeSidechains);
     this.state.tpsData = tpsData;
-    let totalTPS = tpsData.map(x => (Math.round(x.tps * 100) / 100)).reduce((a,b) => a+b);
+    let totalTPS = tpsData.map(x => (Math.round(x.tps * 100) / 100)).reduce((a,b) => a+b) / 2;
     totalTPS = totalTPS.toString();
     totalTPS = totalTPS.substr(0, totalTPS.indexOf('.') + 3);
     this.setState({tps:totalTPS});

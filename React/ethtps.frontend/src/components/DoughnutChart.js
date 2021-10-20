@@ -31,42 +31,41 @@ class DoughnutChart extends React.Component{
     }
 
     render(){
-        return  <Doughnut data={this.data} />
+        return  <Doughnut data={this.data}/>
     }
 
     componentDidMount(){
-        console.log(this.props);
         this.update();
     }
 
     shouldComponentUpdate(nextProps, nextState){
-        console.log('Should update')
         this.update();
         return true;
     }
 
+    tpsComparator(a,b) {
+        return a.tps-b.tps;
+      }
+
     update(){
-        if (this.props.tpsData.length === 0)
-        return;
+        if (this.props.tpsData.length === 0){
+            return;
+        }
+
+        //Order ascending by tps
+        this.props.tpsData.sort(this.tpsComparator);
+
         this.data = {
             labels: this.props.tpsData.map(x => x.provider),
             datasets: [
-              {//.insert(0, this.props.tpsData.map(x => x.tps).reduce((a,b)=>a+b)),
-                label: '# of Votes',
-                data:this.props.tpsData.map(x => x.tps),
-                backgroundColor: [
-                  '#920000',
-                  '#490092',
-                  '#006ddb',
-                  '#b66dff',
-                  '#ff6db6',
-                  '#ffdf4d',
-                  '#004949'
-                ],
+              {
+                data: this.props.tpsData.map(x => x.tps),
+                backgroundColor: this.props.tpsData.map(x => x.color),
                 borderColor: [
                   'black',
                 ],
                 borderWidth: 3,
+                rotation: 90,
               },
             ],
           };

@@ -45,3 +45,11 @@
 .small{
   font-size:small;
 }
+
+.rotated90cw{
+  transform: rotate(90deg);
+}
+
+.rotated90acw{
+  transform: rotate(-90deg);
+}
