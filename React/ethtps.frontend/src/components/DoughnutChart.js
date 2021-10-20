@@ -73,7 +73,7 @@ class DoughnutChart extends React.Component{
          var fontSize = (this.cutoutSize / 200).toFixed(2);
          ctx.font = fontSize + "em sans-serif";
          ctx.textBaseline = "top";
-         let tpsText=  (chart.data.datasets[0].data.reduce((a,b) => a+b) / 2).toString();
+         let tpsText=  (chart.data.datasets[0].data.reduce((a,b) => a+b)).toString();
          tpsText = tpsText.substr(0, tpsText.indexOf('.') + 3);
          var text = `${tpsText} TPS`,
          textX = Math.round((width - ctx.measureText(text).width) / 2),
