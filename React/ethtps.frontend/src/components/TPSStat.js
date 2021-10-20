@@ -42,6 +42,11 @@ class TPSStat extends React.Component{
     </div>
   }
 
+  shouldComponentUpdate(nextProps, nextState){
+    this.forceUpdate();
+    return true;
+}
+
   async updateTPSContinuously(){
     clearInterval(this.intervalRef);
     console.log('Cleared interval ref #' + this.intervalRef)
