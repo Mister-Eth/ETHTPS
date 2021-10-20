@@ -38,8 +38,11 @@
 }
 
 .tps-stat{
-  margin-top: -36%;
-  width: 60%;
+  position: absolute;
+  left: 50%;
+  width: 50%;
+  -webkit-transform: translate(-51%, -51%);
+  transform: translate(-51%, -51%);
 }
 
 .small{

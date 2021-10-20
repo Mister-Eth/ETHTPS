@@ -1,7 +1,43 @@
 import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
+import { useState, useEffect } from 'react';
+
+const getWidth = () => window.innerWidth 
+  || document.documentElement.clientWidth 
+  || document.body.clientWidth;
+
+function useCurrentWidth() {
+  // save current window width in the state object
+  let [width, setWidth] = useState(getWidth());
+
+  // in this case useEffect will execute only once because
+  // it does not have any dependencies.
+  useEffect(() => {
+    // timeoutId for debounce mechanism
+    let timeoutId = null;
+    const resizeListener = () => {
+      // prevent execution of previous setTimeout
+      clearTimeout(timeoutId);
+      // change width from the state object after 150 milliseconds
+      timeoutId = setTimeout(() => setWidth(getWidth()), 150);
+    };
+    // set resize listener
+    window.addEventListener('resize', resizeListener);
+
+    // clean up function
+    return () => {
+      // remove resize listener
+      window.removeEventListener('resize', resizeListener);
+    }
+  }, [])
+
+  return width;
+}
 
 class DoughnutChart extends React.Component{
+
+
+
  data = {
     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
     datasets: [
@@ -25,15 +61,18 @@ class DoughnutChart extends React.Component{
     ],
   };
   
+  cutoutSize = 200;
 
   plugins = [{
     beforeDraw: function(chart) {
+    this.text = `w:${chart.width}`;
      var width = chart.width,
          height = chart.height,
          ctx = chart.ctx;
          ctx.restore();
-         let yOffset = 100;
-         var fontSize = (height / 320).toFixed(2);
+         
+         let yOffset = 50;
+         var fontSize = (this.cutoutSize / 160).toFixed(2);
          ctx.font = fontSize + "em sans-serif";
          ctx.textBaseline = "top";
          let tpsText=  (chart.data.datasets[0].data.reduce((a,b) => a+b) / 2).toString();
@@ -44,16 +83,6 @@ class DoughnutChart extends React.Component{
          ctx.fillStyle = "white";
          ctx.fillText(text, textX, yOffset - 10 + textY);
 
-         fontSize = (height / 700).toFixed(2);
-         ctx.font = fontSize + "em sans-serif";
-         ctx.fillText("Ethereum currently does", textX, yOffset + textY - fontSize - 50);
-
-         if (this.props.includeSidechains){
-            fontSize = (height / 700).toFixed(2);
-            ctx.font = fontSize + "em sans-serif";
-            ctx.fillText("(including sidechains)", textX, yOffset + textY + 50);
-         }
-
          ctx.save();
     }.bind(this)
   }]
@@ -63,10 +92,21 @@ class DoughnutChart extends React.Component{
         super(props);
     }
 
+
     render(){
-        return <Doughnut plugins={this.plugins} data={this.data} options={{
-            cutout: 200
+        return <>
+        <Doughnut plugins={this.plugins} data={this.data} options={{
+           
+            plugins:{
+                legend:{
+                    display:false
+                }
+            }
            }}/>
+           <p>
+               {this.text}
+           </p>
+        </>
     }
 
     componentDidMount(){

@@ -32,6 +32,19 @@ function App() {
       <TPSChart></TPSChart>
     </div>
    <br></br>
+   <br></br>
+   <br></br>
+   <br></br>
+   <br></br>
+   <br></br>
+   <br></br>
+   <br></br>
+   <br></br>
+   <br></br>
+   <br></br>
+   <br></br>
+   <br></br>
+   <br></br>
    <center>
    <p>
       We'll be back with more charts soon
