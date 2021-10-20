@@ -26,12 +26,7 @@ class TPSStat extends React.Component{
 
   render(){
     return <div class="tps-stat">
-      <p class="small">
-        Ethereum currently does
-      </p>
-      <p>
-        {this.state.tps} TPS
-      </p>
+      <DoughnutChart tpsData={this.state.tpsData}/>
       <label class="small">
         Include sidechains?
       <input
@@ -39,7 +34,6 @@ class TPSStat extends React.Component{
             checked={this.state.includeSidechains}
             onChange={this.handleInputChange} />
       </label>
-      <DoughnutChart tpsData={this.state.tpsData}/>
     </div>
   }
 

@@ -24,14 +24,40 @@ class DoughnutChart extends React.Component{
       },
     ],
   };
+  
+
+  plugins = [{
+    beforeDraw: function(chart) {
+     var width = chart.width,
+         height = chart.height,
+         ctx = chart.ctx;
+         ctx.restore();
+         let yOffset = 100;
+         var fontSize = (height / 320).toFixed(2);
+         ctx.font = fontSize + "em sans-serif";
+         ctx.textBaseline = "top";
+         let tpsText=  (chart.data.datasets[0].data.reduce((a,b) => a+b) / 2).toString();
+         tpsText = tpsText.substr(0, tpsText.indexOf('.') + 3);
+         var text = `${tpsText} TPS`,
+         textX = Math.round((width - ctx.measureText(text).width) / 2),
+         textY = height / 2;
+         ctx.fillStyle = "white";
+         ctx.fillText(text, textX, yOffset + textY);
+
+         fontSize = (height / 1280).toFixed(2);
+         ctx.font = fontSize + "em sans-serif";
+         ctx.fillText("Ethereum currently does", textX, yOffset + textY - fontSize - 50)
+         ctx.save();
+    } 
+  }]
+
 
     constructor(props){
         super(props);
-        
     }
 
     render(){
-        return  <Doughnut data={this.data}/>
+        return  <Doughnut plugins={this.plugins} data={this.data}/>
     }
 
     componentDidMount(){
