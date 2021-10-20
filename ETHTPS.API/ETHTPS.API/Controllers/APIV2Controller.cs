@@ -22,9 +22,13 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<string> Providers()
+        public IEnumerable<ProviderResponseModel> Providers()
         {
-            return _context.Providers.Select(x => x.Name);
+            return _context.Providers.ToList().Select(x => new ProviderResponseModel()
+            {
+                Name = x.Name,
+                Type = _context.ProviderTypes.First(y => y.Id == x.Type.Value).Name
+            });
         }
 
         [HttpGet]

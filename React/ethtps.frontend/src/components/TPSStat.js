@@ -16,7 +16,7 @@ class TPSStat extends React.Component{
       includeSidechains: false
     };
 
-    this.api = new API("http://localhost:10202/API");
+    this.api = new API("http://localhost:10202/API/v2");
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
