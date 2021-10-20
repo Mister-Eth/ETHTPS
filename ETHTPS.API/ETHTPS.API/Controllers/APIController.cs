@@ -21,12 +21,10 @@ namespace ETHTPS.API.Controllers
     public class APIController : ControllerBase
     {
         private readonly ETHTPSContext _context;
-        private readonly IMemoryCache _cache;
 
-        public APIController(ETHTPSContext context, IMemoryCache cache)
+        public APIController(ETHTPSContext context)
         {
             _context = context;
-            _cache = cache;
         }
 
         [HttpGet]

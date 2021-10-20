@@ -4,7 +4,9 @@ import TPSStat from './components/TPSStat'
 
 function App() {
   return (
-    <TPSStat></TPSStat>
+    <center>
+      <TPSStat></TPSStat>
+    </center>
   );
 }
 
