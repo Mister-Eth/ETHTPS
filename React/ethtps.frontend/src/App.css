@@ -58,5 +58,13 @@
   display: inline;
   width: 35px;
   height: 35px;
-  margin-right: 5px;
+  margin-left: 5px;
+}
+
+footer{
+  position:absolute;
+left:10px;
+bottom:0;
+right:0;
+font-size: small;
 }

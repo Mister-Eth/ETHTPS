@@ -31,6 +31,20 @@ function App() {
     <div>
       <TPSChart></TPSChart>
     </div>
+   <br></br>
+   <center>
+   <p>
+      We'll be back with more charts soon
+    </p>
+   </center>
+   <footer>
+    <p>
+    Brought to you by Mister_Eth
+    </p>
+    <p>
+      Donate: 0x466Ef24d68ac9b61670eeE7fC2E001B951aBf482
+    </p>
+   </footer>
     </>
   );
 }
