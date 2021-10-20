@@ -2,6 +2,7 @@
 using ETHTPS.Data.Database;
 using ETHTPS.Data.ResponseModels;
 
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 using System;

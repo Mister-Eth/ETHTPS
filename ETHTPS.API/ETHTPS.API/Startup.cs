@@ -44,7 +44,7 @@ namespace ETHTPS.API
                                       builder.WithOrigins("https://ethtps.info");
 #if DEBUG
                                       builder.WithOrigins("http://localhost:28999");
-                                      builder.WithOrigins("http://localhost:3000");
+                                      builder.WithOrigins("http://localhost:3007");
 #endif
                                   });
             });
