@@ -38,7 +38,7 @@
 }
 
 .tps-stat{
-  margin-top: -33%;
+  margin-top: -36%;
   width: 60%;
 }
 
@@ -52,4 +52,11 @@
 
 .rotated90acw{
   transform: rotate(-90deg);
+}
+
+.small-img{
+  display: inline;
+  width: 35px;
+  height: 35px;
+  margin-right: 5px;
 }
