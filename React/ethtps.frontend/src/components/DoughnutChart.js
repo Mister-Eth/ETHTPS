@@ -42,13 +42,20 @@ class DoughnutChart extends React.Component{
          textX = Math.round((width - ctx.measureText(text).width) / 2),
          textY = height / 2;
          ctx.fillStyle = "white";
-         ctx.fillText(text, textX, yOffset + textY);
+         ctx.fillText(text, textX, yOffset - 10 + textY);
 
-         fontSize = (height / 1280).toFixed(2);
+         fontSize = (height / 700).toFixed(2);
          ctx.font = fontSize + "em sans-serif";
-         ctx.fillText("Ethereum currently does", textX, yOffset + textY - fontSize - 50)
+         ctx.fillText("Ethereum currently does", textX, yOffset + textY - fontSize - 50);
+
+         if (this.props.includeSidechains){
+            fontSize = (height / 700).toFixed(2);
+            ctx.font = fontSize + "em sans-serif";
+            ctx.fillText("(including sidechains)", textX, yOffset + textY + 50);
+         }
+
          ctx.save();
-    } 
+    }.bind(this)
   }]
 
 
@@ -57,7 +64,9 @@ class DoughnutChart extends React.Component{
     }
 
     render(){
-        return  <Doughnut plugins={this.plugins} data={this.data}/>
+        return <Doughnut plugins={this.plugins} data={this.data} options={{
+            cutout: 200
+           }}/>
     }
 
     componentDidMount(){
@@ -82,6 +91,10 @@ class DoughnutChart extends React.Component{
         this.props.tpsData.sort(this.tpsComparator);
 
         this.data = {
+            options:{
+                cutout:40,
+                cutoutPercentage:40,
+            },
             labels: this.props.tpsData.map(x => x.provider),
             datasets: [
               {
@@ -92,6 +105,7 @@ class DoughnutChart extends React.Component{
                 ],
                 borderWidth: 3,
                 rotation: 90,
+                lineTension:0.1
               },
             ],
           };
