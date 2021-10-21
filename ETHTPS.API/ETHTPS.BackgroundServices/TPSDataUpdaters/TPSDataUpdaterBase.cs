@@ -35,7 +35,11 @@ namespace ETHTPS.API.Infrastructure.BackgroundServices.TPSDataUpdaters
                 using (var scope = _scopeFactory.CreateScope())
                 {
                     var context = scope.ServiceProvider.GetRequiredService<ETHTPSContext>();
-                    await LogDataAsync(context);
+                    var data = await LogDataAsync(context);
+                    if (data != null)
+                    {
+                        await AddLatestEntryAsync(data, context);
+                    }
                 }
             },
               null,
@@ -43,15 +47,36 @@ namespace ETHTPS.API.Infrastructure.BackgroundServices.TPSDataUpdaters
               _updateEvery);
             return Task.CompletedTask;
         }
+
+        public async Task AddLatestEntryAsync(TPSData entry, ETHTPSContext context)
+        {
+            if (!context.LatestEntries.Any(x => x.Provider == entry.Provider))
+            {
+                context.LatestEntries.Add(new LatestEntry()
+                {
+                    Entry = entry.Id,
+                    Provider = entry.Provider
+                });
+            }
+            else
+            {
+                var targetEntry = context.LatestEntries.First(x => x.Provider == entry.Provider);
+                targetEntry.Entry = entry.Id;
+                context.LatestEntries.Update(targetEntry);
+            }
+            await context.SaveChangesAsync();
+        }
+
         public Task StopAsync(CancellationToken cancellationToken)
         {
             return Task.CompletedTask;
         }
+
         public void Dispose()
         {
             _timer?.Dispose();
         }
 
-        public abstract Task LogDataAsync(ETHTPSContext context);
+        public abstract Task<TPSData> LogDataAsync(ETHTPSContext context);
     }
 }

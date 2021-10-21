@@ -34,8 +34,9 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
             return epoch.AddSeconds(unixTime);
         }
 
-        public override async Task LogDataAsync(ETHTPSContext context)
+        public override async Task<TPSData> LogDataAsync(ETHTPSContext context)
         {
+            var data = default(TPSData);
             try
             {
                 var blocks = JsonConvert.DeserializeObject<dynamic>(await _httpClient.GetStringAsync("https://api.zkswap.info/v2/blocks?start=0&limit=50"));
@@ -52,7 +53,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
                             var provider = context.Providers.First(x => x.Name == Name);
                             DateTime currentBlockTime = FromUnixTime(long.Parse(block.committed_at.ToString()));
                             DateTime previousBlockTime = FromUnixTime(long.Parse(previousBlock.committed_at.ToString()));
-                            var data = new TPSData()
+                            data = new TPSData()
                             {
                                 Date = currentBlockTime,
                                 Provider = provider.Id,
@@ -71,6 +72,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
             {
                 _logger.LogError($"{Name}: {e.Message}");
             }
+            return data;
         }
     }
     

@@ -30,6 +30,7 @@ namespace ETHTPS.Data.Database
         public virtual DbSet<Network> Networks { get; set; }
         public virtual DbSet<CachedResponse> CachedResponses { get; set; }
         public virtual DbSet<ProviderProperty> ProviderProperties { get; set; }
+        public virtual DbSet<LatestEntry> LatestEntries { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -110,6 +111,11 @@ namespace ETHTPS.Data.Database
                 entity.Property(e => e.Name).HasMaxLength(255);
 
                 entity.Property(e => e.Value).HasMaxLength(255);
+            });
+
+            modelBuilder.Entity<LatestEntry>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("ID");
             });
 
             OnModelCreatingPartial(modelBuilder);

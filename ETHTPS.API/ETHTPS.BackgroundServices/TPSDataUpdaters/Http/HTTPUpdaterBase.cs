@@ -37,8 +37,9 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Http
             _httpClient = new HttpClient();
         }
 
-        public override async Task LogDataAsync(ETHTPSContext context)
+        public override async Task<TPSData> LogDataAsync(ETHTPSContext context)
         {
+            var data = default(TPSData);
             try
             {
                 HtmlWeb web = new HtmlWeb();
@@ -47,7 +48,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Http
                 var nodes = doc.DocumentNode.QuerySelectorAll(_targetElementSelector);
                 var x = new string(nodes.First().InnerText.Where(c => char.IsNumber(c) || c == '.').ToArray());
                 var provider = context.Providers.First(x => x.Name == Name);
-                var data = new TPSData()
+                data = new TPSData()
                 {
                     Date = DateTime.Now,
                     Provider = provider.Id,
@@ -61,6 +62,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Http
             {
                 _logger.LogError($"{Name}: {e.Message}");
             }
+            return data;
         }
     }
 }

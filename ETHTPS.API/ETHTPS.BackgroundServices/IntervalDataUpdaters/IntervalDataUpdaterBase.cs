@@ -185,7 +185,13 @@ namespace ETHTPS.BackgroundServices.IntervalDataUpdaters
                 case TimeInterval.OneMonth:
                     return context.Tpsdata.AsEnumerable().Where(x => x.Provider.Value == targetProvider.Id && x.Date >= DateTime.Now.Subtract(TimeSpan.FromDays(30))).OrderBy(x => x.Date);
                 case TimeInterval.Instant:
-                    return context.Tpsdata.OrderByDescending(x => x.Date).AsEnumerable().GroupBy(x => x.Provider).Select(x => x.First());
+                    var latestEntryIDs = context.LatestEntries.Select(x => x.Entry).ToList();
+                    var entries = new List<TPSData>();
+                    foreach(var id in latestEntryIDs)
+                    {
+                        entries.Add(context.Tpsdata.First(x => x.Id == id));
+                    }
+                    return entries;
                 default:
                     return null;
             }
