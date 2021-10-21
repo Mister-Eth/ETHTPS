@@ -2,6 +2,11 @@
 using ETHTPS.Data.Database;
 using ETHTPS.Data.Extensions.StringExtensions;
 
+using Fizzler.Systems.HtmlAgilityPack;
+
+using HtmlAgilityPack;
+
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -18,9 +23,15 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
 {
     public class AVAXCChainUpdater : TPSDataUpdaterBase
     {
+        private const string NAME = "AVAX C-chain";
         private readonly HttpClient _httpClient;
-        public AVAXCChainUpdater(IServiceScopeFactory scopeFactory, ILogger<TPSDataUpdaterBase> logger) : base("AVAX C-chain", scopeFactory, logger, TimeSpan.FromSeconds(5))
+        private readonly string _transactionCountSelector;
+        private readonly string _dateSelector;
+        public AVAXCChainUpdater(IServiceScopeFactory scopeFactory, ILogger<TPSDataUpdaterBase> logger, IConfiguration configuration) : base(NAME, scopeFactory, logger, TimeSpan.FromSeconds(5))
         {
+            var config = configuration.GetSection("TPSLoggerConfigurations").GetSection("StandardLoggerConfiguration").GetSection(NAME);
+            _transactionCountSelector = config.GetValue<string>("TransactionCountSelector");
+            _dateSelector = config.GetValue<string>("DateSelector");
             _httpClient = new HttpClient();
         }
 
@@ -36,7 +47,18 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
 
         private async Task<AVAXBlockInfo> GetBlockInfoAsync(int block)
         {
-            return null;
+            HtmlWeb web = new HtmlWeb();
+            HtmlDocument doc = web.Load($"https://cchain.explorer.avax.network/block/{block}/transactions");
+            var txCountNode = doc.DocumentNode.QuerySelectorAll(_transactionCountSelector);
+            var txCount = new string(string.Join(" ",txCountNode.Select(x => x.InnerText)).Where(Char.IsNumber).ToArray());
+
+            var dateNode = doc.DocumentNode.QuerySelectorAll(_dateSelector);
+            var date = string.Join(" ", dateNode.Select(x => x.Attributes["data-from-now"].Value));
+            return new AVAXBlockInfo()
+            {
+                TransactionCount = int.Parse(txCount),
+                Time = DateTime.Parse(date)
+            };
         }
 
         public override async Task<TPSData> LogDataAsync(ETHTPSContext context)
@@ -55,7 +77,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
                 {
                     Date = DateTime.Now,
                     Provider = provider.Id,
-                    Tps = latestBlock.TransactionCount / (latestBlock.Time.Subtract(secondLatestBlock.Time).TotalSeconds)
+                    Tps = (float)latestBlock.TransactionCount / (float)(latestBlock.Time.Subtract(secondLatestBlock.Time).TotalSeconds)
                 };
                 context.Tpsdata.Add(data);
                 context.SaveChanges();
