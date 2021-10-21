@@ -12,7 +12,7 @@ namespace ETHTPS.BackgroundServices.IntervalDataUpdaters
 {
     public class InstantDataUpdater : IntervalDataUpdaterBase
     {
-        public InstantDataUpdater(ILogger<IntervalDataUpdaterBase> logger, IServiceScopeFactory serviceScopeFactory) : base(logger, serviceScopeFactory, "Instant", TimeSpan.FromSeconds(2))
+        public InstantDataUpdater(ILogger<IntervalDataUpdaterBase> logger, IServiceScopeFactory serviceScopeFactory) : base(logger, serviceScopeFactory, "Instant", TimeSpan.FromSeconds(5))
         {
         }
     }
