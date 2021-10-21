@@ -103,4 +103,5 @@ font-size: small;
 ul {
   list-style-type: none;
   float: right;
+  margin-right: 5px;
 }

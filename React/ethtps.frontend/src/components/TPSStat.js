@@ -15,7 +15,7 @@ class TPSStat extends React.Component{
       tpsData: []
     };
 
-    this.api = new API("http://localhost:10202/API/v2");
+    this.api = new API("https://api.ethtps.info/API/v2");
     this.handleInputChange = this.handleInputChange.bind(this);
 
   }
