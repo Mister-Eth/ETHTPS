@@ -11,7 +11,7 @@ class TPSStat extends React.Component{
 
     this.state = {
       tps: 0,
-      includeSidechains: false,
+      includeSidechains: true,
       tpsData: []
     };
 
@@ -25,6 +25,7 @@ class TPSStat extends React.Component{
     const value = target.type === 'checkbox' ? target.checked : target.value;
     console.log('input changed to ' + value)
     this.setState({includeSidechains : value});
+    await this.updateTPS();
     await this.updateTPSContinuously();
   }
 
