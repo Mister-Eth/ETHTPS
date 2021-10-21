@@ -99,3 +99,8 @@ font-size: small;
   transition: transform 0.3s ease;
   }
 }
+
+ul {
+  list-style-type: none;
+  float: right;
+}

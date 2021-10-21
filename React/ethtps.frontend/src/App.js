@@ -9,21 +9,26 @@ import discordIcon from './assets/discord-mascot.png';
 function App() {
   return (
     <>
-    <a href="https://github.com/WhoEvenAmI/ETHTPS">
-      <img class="small-img" src={githubIcon}>
-
-      </img>
-    </a>
-    <a href="https://twitter.com/ethtps">
-      <img class="small-img" src={twitterIcon}>
-
-      </img>
-    </a>
-    <a href="https://discord.gg/jWPcsTzpCT">
-      <img class="small-img" src={discordIcon}>
-
-      </img>
-    </a>
+    <ul>
+      <li>
+        <a href="https://github.com/WhoEvenAmI/ETHTPS">
+          <img class="small-img" src={githubIcon}>
+          </img>
+        </a>
+      </li>
+      <li>
+        <a href="https://discord.gg/jWPcsTzpCT">
+          <img class="small-img" src={discordIcon}>
+          </img>
+        </a>
+      </li>
+      <li>
+        <a href="https://twitter.com/ethtps">
+          <img class="small-img" src={twitterIcon}>
+          </img>
+        </a>
+      </li>
+    </ul>
     <center>
       <TPSStat></TPSStat>
     </center>
@@ -31,6 +36,10 @@ function App() {
     <div>
       <TPSChart></TPSChart>
     </div>
+   <br></br>
+   <br></br>
+   <br></br>
+   <br></br>
    <br></br>
    <center>
    <p>

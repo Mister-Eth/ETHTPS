@@ -15,7 +15,7 @@ class TPSStat extends React.Component{
       tpsData: []
     };
 
-    this.api = new API("https://api.ethtps.info/API/v2");
+    this.api = new API("http://localhost:10202/API/v2");
     this.handleInputChange = this.handleInputChange.bind(this);
 
   }
@@ -30,7 +30,15 @@ class TPSStat extends React.Component{
 
   render(){
     return <div class="tps-stat">
-      <DoughnutChart tpsData={this.state.tpsData} includeSidechains={this.state.includeSidechains}/>
+     <DoughnutChart tpsData={this.state.tpsData} includeSidechains={this.state.includeSidechains}/>
+   <br></br>
+   <br></br>
+   <br></br>
+   <br></br>
+   <br></br>
+   <br></br>
+   <br></br>
+   <br></br>
       <label class="small">
         Include sidechains?
       <input
@@ -57,7 +65,7 @@ class TPSStat extends React.Component{
 
   async updateTPS(includeSidechains){
     let tpsData = await this.api.getTPS("Any", "Instant", "Mainnet", includeSidechains);
-    this.state.tpsData = tpsData;
+    this.setState({tpsData: tpsData})
     let totalTPS = tpsData.map(x => (Math.round(x.tps * 100) / 100)).reduce((a,b) => a+b);
     totalTPS = totalTPS.toString();
     totalTPS = totalTPS.substr(0, totalTPS.indexOf('.') + 3);

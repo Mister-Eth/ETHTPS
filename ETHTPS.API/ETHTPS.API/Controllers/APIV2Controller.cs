@@ -72,7 +72,15 @@ namespace ETHTPS.API.Controllers
                     x.Color = _context.ProviderProperties.First(y => y.Name == "Color" && y.Provider.Value == providerID).Value;
                 }
             }
-            return response;
+            var responseList = response.ToList();
+            responseList.Add(new TPSResponseModel() //Add a filler response equal to the sum of all providers in order to display half a doughnut chart
+            {
+                Color = "#000000",
+                Date = DateTime.Now,
+                Provider = "Filler",
+                TPS = response.Sum(x => x.TPS)
+            });
+            return responseList;
         }
 
         private bool IsSidechain(string provider)

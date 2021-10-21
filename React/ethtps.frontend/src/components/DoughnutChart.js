@@ -1,41 +1,8 @@
 import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
-import { useState, useEffect } from 'react';
 
-const getWidth = () => window.innerWidth 
-  || document.documentElement.clientWidth 
-  || document.body.clientWidth;
-
-function useCurrentWidth() {
-  // save current window width in the state object
-  let [width, setWidth] = useState(getWidth());
-
-  // in this case useEffect will execute only once because
-  // it does not have any dependencies.
-  useEffect(() => {
-    // timeoutId for debounce mechanism
-    let timeoutId = null;
-    const resizeListener = () => {
-      // prevent execution of previous setTimeout
-      clearTimeout(timeoutId);
-      // change width from the state object after 150 milliseconds
-      timeoutId = setTimeout(() => setWidth(getWidth()), 150);
-    };
-    // set resize listener
-    window.addEventListener('resize', resizeListener);
-
-    // clean up function
-    return () => {
-      // remove resize listener
-      window.removeEventListener('resize', resizeListener);
-    }
-  }, [])
-
-  return width;
-}
 
 class DoughnutChart extends React.Component{
-
 
 
  data = {
@@ -73,14 +40,13 @@ class DoughnutChart extends React.Component{
          var fontSize = (this.cutoutSize / 200).toFixed(2);
          ctx.font = fontSize + "em sans-serif";
          ctx.textBaseline = "top";
-         let tpsText=  (chart.data.datasets[0].data.reduce((a,b) => a+b)).toString();
+         let tpsText=  (chart.data.datasets[0].data.reduce((a,b) => a+b) / 2).toString();
          tpsText = tpsText.substr(0, tpsText.indexOf('.') + 3);
          var text = `${tpsText} TPS`,
          textX = Math.round((width - ctx.measureText(text).width) / 2),
-         textY = (height - fontSize) / 2;
+         textY = (height + 50 - fontSize) / 2;
          ctx.fillStyle = "white";
          ctx.fillText(text, textX, textY);
-
          ctx.save();
     }.bind(this)
   }]
@@ -88,13 +54,20 @@ class DoughnutChart extends React.Component{
 
     constructor(props){
         super(props);
+        this.state = { 
+          height: window.innerHeight, 
+          width: window.innerWidth
+        };
+        this.updateDimensions = this.updateDimensions.bind(this);
     }
 
+    top = -100;
+    doughnut; 
 
     render(){
         return <>
-        <Doughnut plugins={this.plugins} data={this.data} options={{
-           
+        <Doughnut ref={(input)=>{this.doughnut = input}} style={{top:this.top, position:"absolute"}} plugins={this.plugins} data={this.data} options={{
+           cutout: 70,
             plugins:{
                 legend:{
                     display:false
@@ -104,8 +77,19 @@ class DoughnutChart extends React.Component{
         </>
     }
 
+  updateDimensions() {
+    this.setState({
+      height: window.innerHeight, 
+      width: window.innerWidth
+    });
+  }
     componentDidMount(){
-        this.update();
+      window.addEventListener("resize", this.updateDimensions);
+      this.update();
+    }
+
+    componentWillUnmount() {
+      window.removeEventListener("resize", this.updateDimensions);
     }
 
     shouldComponentUpdate(nextProps, nextState){
@@ -144,6 +128,10 @@ class DoughnutChart extends React.Component{
               },
             ],
           };
+          
+    if (this.doughnut === undefined)
+    return;
+  this.top = -this.doughnut.height / 2
     }
 }
 export default DoughnutChart;
