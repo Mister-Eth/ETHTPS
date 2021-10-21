@@ -52,7 +52,7 @@ namespace ETHTPS.API
             services.AddDbContext<ETHTPSContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMemoryCache();
 #if DEBUG
-            services.AddHostedService<AVAXCChainUpdater>();
+
 #else
             AddDataUpdaters(services);
             AddTPSDataUpdaters(services);
