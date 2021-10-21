@@ -62,11 +62,15 @@ class DoughnutChart extends React.Component{
     }
 
     top = -100;
+    animationDuration = 500;
     doughnut; 
 
     render(){
         return <>
         <Doughnut ref={(input)=>{this.doughnut = input}} style={{top:this.top, position:"absolute"}} plugins={this.plugins} data={this.data} options={{
+           animation:{
+              //duration: this.animationDuration
+           },
            cutout: 70,
             plugins:{
                 legend:{
@@ -130,8 +134,8 @@ class DoughnutChart extends React.Component{
           };
           
     if (this.doughnut === undefined)
-    return;
-  this.top = -this.doughnut.height / 2
+      return;
+    this.top = -this.doughnut.height / 2;
     }
 }
 export default DoughnutChart;

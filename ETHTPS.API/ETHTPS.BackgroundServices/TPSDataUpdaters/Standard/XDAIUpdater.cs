@@ -1,5 +1,6 @@
 ﻿using ETHTPS.API.Infrastructure.BackgroundServices.TPSDataUpdaters;
 using ETHTPS.Data.Database;
+using ETHTPS.Data.Extensions.StringExtensions;
 
 using Fizzler.Systems.HtmlAgilityPack;
 
@@ -52,7 +53,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
                 {
                     Date = DateTime.Now,
                     Provider = provider.Id,
-                    Tps = (double)n1 / 5 //5s block time
+                    Tps = (double)n1 / 5.2 //block time
                 };
                 context.Tpsdata.Add(data);
                 context.SaveChanges();
@@ -65,23 +66,5 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
             return data;
         }
 
-    }
-    public static class StringExtender
-    {
-        public static int IndexOfOccurence(this string s, string match, int occurence)
-        {
-            int i = 1;
-            int index = 0;
-
-            while (i <= occurence && (index = s.IndexOf(match, index + 1)) != -1)
-            {
-                if (i == occurence)
-                    return index;
-
-                i++;
-            }
-
-            return -1;
-        }
     }
 }

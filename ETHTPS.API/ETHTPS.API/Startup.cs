@@ -52,6 +52,7 @@ namespace ETHTPS.API
             services.AddDbContext<ETHTPSContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMemoryCache();
 #if DEBUG
+            services.AddHostedService<AVAXCChainUpdater>();
 #else
             AddDataUpdaters(services);
             AddTPSDataUpdaters(services);
@@ -67,6 +68,7 @@ namespace ETHTPS.API
             services.AddHostedService<XDAIUpdater>();
             services.AddHostedService<ZKSwapUpdater>();
             services.AddHostedService<ZKSyncUpdater>();
+            services.AddHostedService<AVAXCChainUpdater>();
         }
 
         private void AddDataUpdaters(IServiceCollection services)
