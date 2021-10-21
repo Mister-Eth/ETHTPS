@@ -34,11 +34,18 @@ namespace ETHTPS.API.Infrastructure.BackgroundServices.TPSDataUpdaters
             _timer = new Timer(async o => {
                 using (var scope = _scopeFactory.CreateScope())
                 {
-                    var context = scope.ServiceProvider.GetRequiredService<ETHTPSContext>();
-                    var data = await LogDataAsync(context);
-                    if (data != null)
+                    try
                     {
-                        await AddLatestEntryAsync(data, context);
+                        var context = scope.ServiceProvider.GetRequiredService<ETHTPSContext>();
+                        var data = await LogDataAsync(context);
+                        if (data != null)
+                        {
+                            await AddLatestEntryAsync(data, context);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        _logger.LogError("TPSDataUpdaterBase", e);
                     }
                 }
             },
