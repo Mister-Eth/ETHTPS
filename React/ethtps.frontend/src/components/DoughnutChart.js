@@ -111,7 +111,7 @@ class DoughnutChart extends React.Component{
         }
 
         //Order ascending by tps
-        this.props.tpsData.sort(this.tpsComparator);
+        //this.props.tpsData.sort(this.tpsComparator);
 
         this.data = {
             options:{

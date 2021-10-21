@@ -1,5 +1,5 @@
 import * as React from 'react';
-import API from '../services/api'
+import globalApi from '../services/common'
 import DoughnutChart from './DoughnutChart';
 
 class TPSStat extends React.Component{
@@ -15,7 +15,7 @@ class TPSStat extends React.Component{
       tpsData: []
     };
 
-    this.api = new API("https://api.ethtps.info/API/v2");
+    this.api = globalApi;
     this.handleInputChange = this.handleInputChange.bind(this);
 
   }
