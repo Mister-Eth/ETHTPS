@@ -33,11 +33,11 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
             {
                 tps = _random.Next(20, 25);
             }
-            else if (value < 25)
+            else if (value < 10)
             {
                 tps = _random.Next(15, 20);
             }
-            else if (value < 45)
+            else if (value < 35)
             {
                 tps = _random.Next(10, 15);
             }
