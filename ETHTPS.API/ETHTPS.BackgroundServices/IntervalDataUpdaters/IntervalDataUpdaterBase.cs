@@ -35,9 +35,6 @@ namespace ETHTPS.BackgroundServices.IntervalDataUpdaters
             foreach (var provider in context.Providers.Select(x => x.Name).ToArray())
             {
                 _logger.LogInformation($"Updating {provider}-{_interval}");
-                var stopwatch = new Stopwatch();
-                stopwatch.Start();
-
                 var timeInterval = Enum.Parse<TimeInterval>(_interval);
                 var name = StringExtensions.AggregateToLowercase(provider, _interval);
                 if (timeInterval == TimeInterval.Instant)
@@ -61,8 +58,7 @@ namespace ETHTPS.BackgroundServices.IntervalDataUpdaters
                 context.Update(entry);
                 context.SaveChanges();
 
-                stopwatch.Stop();
-                _logger.LogInformation($"Updated {provider}-{_interval} in {stopwatch.Elapsed.TotalSeconds}s");
+                _logger.LogInformation($"Updated {provider}-{_interval}");
                 if (timeInterval == TimeInterval.Instant)
                 {
                     break;

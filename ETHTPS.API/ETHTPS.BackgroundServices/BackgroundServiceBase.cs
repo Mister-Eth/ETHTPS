@@ -48,6 +48,7 @@ namespace ETHTPS.BackgroundServices
                         await RunAsync(context);
 
                         stopwatch.Stop();
+                        _logger.LogInformation($"Ran {Name} in {stopwatch.Elapsed.TotalMilliseconds.ToString("N2")}ms");
                         Func<TaskPerformanceMetric, bool> filter = x => x.Machine == machine.Id && x.TaskName == Name;
                         if (!context.TaskPerformanceMetrics.Any(filter))
                         {
