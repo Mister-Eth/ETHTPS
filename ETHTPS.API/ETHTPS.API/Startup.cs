@@ -51,9 +51,12 @@ namespace ETHTPS.API
             services.AddSwaggerGen();
             services.AddDbContext<ETHTPSContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMemoryCache();
-            if (Configuration.GetValue<bool>("EnableBackgroundTasks"))
+            if (Configuration.GetValue<bool>("AddDataUpdaters"))
             {
                 AddDataUpdaters(services);
+            }
+            if (Configuration.GetValue<bool>("AddTPSDataUpdaters"))
+            {
                 AddTPSDataUpdaters(services);
             }
         }
