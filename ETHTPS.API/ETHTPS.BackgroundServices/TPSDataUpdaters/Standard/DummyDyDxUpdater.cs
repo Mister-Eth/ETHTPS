@@ -41,6 +41,10 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
             {
                 tps = _random.Next(10, 15);
             }
+            else if (value < 20)
+            {
+                tps = _random.Next(5, 10);
+            }
             else if (value < 80)
             {
                 tps = _random.Next(3, 5);
