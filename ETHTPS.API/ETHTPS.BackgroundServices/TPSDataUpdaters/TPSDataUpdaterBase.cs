@@ -13,71 +13,23 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ETHTPS.API.Infrastructure.BackgroundServices.TPSDataUpdaters
+namespace ETHTPS.BackgroundServices.TPSDataUpdaters
 {
-    public abstract class TPSDataUpdaterBase : ITPSDataUpdater, IHostedService, IDisposable
+    public abstract class TPSDataUpdaterBase : BackgroundServiceBase
     {
-        protected string Name { get; private set; }
-        protected readonly IServiceScopeFactory _scopeFactory;
-        protected readonly ILogger<TPSDataUpdaterBase> _logger;
-        protected readonly TimeSpan _updateEvery;
-        protected Timer _timer;
-
-        protected TPSDataUpdaterBase(string name, IServiceScopeFactory scopeFactory, ILogger<TPSDataUpdaterBase> logger, TimeSpan updateEvery)
+        public TPSDataUpdaterBase(string name, IServiceScopeFactory scopeFactory, ILogger<BackgroundServiceBase> logger, TimeSpan updateEvery) : base(name, scopeFactory, logger, updateEvery)
         {
-            Name = name;
-            _scopeFactory = scopeFactory;
-            _logger = logger;
-            _updateEvery = updateEvery;
+
         }
+        public abstract Task<TPSData> LogDataAsync(ETHTPSContext context);
 
-        public Task StartAsync(CancellationToken cancellationToken)
+        public override async Task RunAsync(ETHTPSContext context)
         {
-            _timer = new Timer(async o => {
-                using (var scope = _scopeFactory.CreateScope())
-                {
-                    try
-                    {
-                        var context = scope.ServiceProvider.GetRequiredService<ETHTPSContext>();
-                        var machine = context.GetOrInsertCurrentMachineConfiguration();
-                        var stopwatch = new Stopwatch();
-                        stopwatch.Start();
-                        
-                        var data = await LogDataAsync(context);
-                        if (data != null)
-                        {
-                            await AddLatestEntryAsync(data, context);
-                        }
-
-                        stopwatch.Stop();
-                        Func<TaskPerformanceMetric, bool> filter = x => x.Machine == machine.Id && x.TaskName == Name;
-                        if (!context.TaskPerformanceMetrics.Any(filter))
-                        {
-                            context.TaskPerformanceMetrics.Add(new TaskPerformanceMetric()
-                            {
-                                AverageRunTime = stopwatch.Elapsed.TotalMilliseconds,
-                                Machine = machine.Id,
-                                RunCount = 1,
-                                TaskName = Name
-                            });
-                        }
-                        else
-                        {
-                            var entry = context.TaskPerformanceMetrics.First(filter);
-                            entry.AverageRunTime = (entry.AverageRunTime * entry.RunCount + stopwatch.Elapsed.TotalMilliseconds) / (++entry.RunCount);
-                        }
-                        await context.SaveChangesAsync();
-                    }
-                    catch (Exception e)
-                    {
-                        _logger.LogError(Name, e);
-                    }
-                }
-            },
-              null,
-              TimeSpan.Zero,
-              _updateEvery);
-            return Task.CompletedTask;
+            var data = await LogDataAsync(context);
+            if (data != null)
+            {
+                await AddLatestEntryAsync(data, context);
+            }
         }
 
         public async Task AddLatestEntryAsync(TPSData entry, ETHTPSContext context)
@@ -98,17 +50,5 @@ namespace ETHTPS.API.Infrastructure.BackgroundServices.TPSDataUpdaters
             }
             await context.SaveChangesAsync();
         }
-
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            return Task.CompletedTask;
-        }
-
-        public void Dispose()
-        {
-            _timer?.Dispose();
-        }
-
-        public abstract Task<TPSData> LogDataAsync(ETHTPSContext context);
     }
 }

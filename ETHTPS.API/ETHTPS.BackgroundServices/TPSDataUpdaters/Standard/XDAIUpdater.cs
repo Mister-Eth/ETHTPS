@@ -1,4 +1,4 @@
-﻿using ETHTPS.API.Infrastructure.BackgroundServices.TPSDataUpdaters;
+﻿using ETHTPS.BackgroundServices.TPSDataUpdaters;
 using ETHTPS.Data.Database;
 using ETHTPS.Data.Extensions.StringExtensions;
 
@@ -26,7 +26,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
     public class XDAIUpdater : TPSDataUpdaterBase
     {
         private readonly HttpClient _httpClient;
-        public XDAIUpdater(IServiceScopeFactory scopeFactory, ILogger<TPSDataUpdaterBase> logger) : base("XDAI", scopeFactory, logger, TimeSpan.FromSeconds(5))
+        public XDAIUpdater(IServiceScopeFactory scopeFactory, ILogger<BackgroundServiceBase> logger) : base("XDAI", scopeFactory, logger, TimeSpan.FromSeconds(5))
         {
             _httpClient = new HttpClient();
         }

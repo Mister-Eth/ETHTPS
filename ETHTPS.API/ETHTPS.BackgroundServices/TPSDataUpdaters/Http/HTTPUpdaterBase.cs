@@ -1,4 +1,4 @@
-﻿using ETHTPS.API.Infrastructure.BackgroundServices.TPSDataUpdaters;
+﻿using ETHTPS.BackgroundServices.TPSDataUpdaters;
 using ETHTPS.Data.Database;
 
 using Fizzler.Systems.HtmlAgilityPack;
@@ -29,7 +29,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Http
         private readonly string _targetElementSelector;
         private readonly HttpClient _httpClient;
 
-        protected HTTPUpdaterBase(string name, IServiceScopeFactory scopeFactory, ILogger<TPSDataUpdaterBase> logger, IConfiguration configuration) : base(name, scopeFactory, logger, TimeSpan.FromSeconds(5))
+        protected HTTPUpdaterBase(string name, IServiceScopeFactory scopeFactory, ILogger<BackgroundServiceBase> logger, IConfiguration configuration) : base(name, scopeFactory, logger, TimeSpan.FromSeconds(5))
         {
             var config = configuration.GetSection("TPSLoggerConfigurations").GetSection("HTTPTPSLoggerConfiguration").GetSection(name);
             BaseURL = config.GetValue<string>("BaseURL");

@@ -1,4 +1,4 @@
-﻿using ETHTPS.API.Infrastructure.BackgroundServices.TPSDataUpdaters;
+﻿using ETHTPS.BackgroundServices.TPSDataUpdaters;
 using ETHTPS.Data.Database;
 
 using Fizzler.Systems.HtmlAgilityPack;
@@ -22,7 +22,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
     public class ZKSwapUpdater : TPSDataUpdaterBase
     {
         private readonly HttpClient _httpClient;
-        public ZKSwapUpdater(IServiceScopeFactory scopeFactory, ILogger<TPSDataUpdaterBase> logger) : base("ZKSwap", scopeFactory, logger, TimeSpan.FromMinutes(1))
+        public ZKSwapUpdater(IServiceScopeFactory scopeFactory, ILogger<BackgroundServiceBase> logger) : base("ZKSwap", scopeFactory, logger, TimeSpan.FromMinutes(1))
         {
             _httpClient = new HttpClient();
         }

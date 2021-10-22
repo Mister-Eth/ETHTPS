@@ -1,4 +1,4 @@
-﻿using ETHTPS.API.Infrastructure.BackgroundServices.TPSDataUpdaters;
+﻿using ETHTPS.BackgroundServices.TPSDataUpdaters;
 using ETHTPS.Data.Database;
 using ETHTPS.Data.Extensions.StringExtensions;
 
@@ -27,7 +27,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
         private readonly HttpClient _httpClient;
         private readonly string _transactionCountSelector;
         private readonly string _dateSelector;
-        public AVAXCChainUpdater(IServiceScopeFactory scopeFactory, ILogger<TPSDataUpdaterBase> logger, IConfiguration configuration) : base(NAME, scopeFactory, logger, TimeSpan.FromSeconds(5))
+        public AVAXCChainUpdater(IServiceScopeFactory scopeFactory, ILogger<BackgroundServiceBase> logger, IConfiguration configuration) : base(NAME, scopeFactory, logger, TimeSpan.FromSeconds(5))
         {
             var config = configuration.GetSection("TPSLoggerConfigurations").GetSection("StandardLoggerConfiguration").GetSection(NAME);
             _transactionCountSelector = config.GetValue<string>("TransactionCountSelector");
@@ -45,7 +45,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
             return int.Parse(new string(targetString.Where(char.IsDigit).ToArray()));
         }
 
-        private async Task<AVAXBlockInfo> GetBlockInfoAsync(int block)
+        private Task<AVAXBlockInfo> GetBlockInfoAsync(int block)
         {
             HtmlWeb web = new HtmlWeb();
             HtmlDocument doc = web.Load($"https://cchain.explorer.avax.network/block/{block}/transactions");
@@ -54,11 +54,11 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
 
             var dateNode = doc.DocumentNode.QuerySelectorAll(_dateSelector);
             var date = string.Join(" ", dateNode.Select(x => x.Attributes["data-from-now"].Value));
-            return new AVAXBlockInfo()
+            return Task.FromResult(new AVAXBlockInfo()
             {
                 TransactionCount = int.Parse(txCount),
                 Time = DateTime.Parse(date)
-            };
+            });
         }
 
         public override async Task<TPSData> LogDataAsync(ETHTPSContext context)
