@@ -26,10 +26,7 @@ namespace ETHTPS.BackgroundServices.Infrastructure.Performance.Tasks.Extensions
                     context.MachineConfigurations.Add(currentMachineConfiguration);
                     context.SaveChanges();
                 }
-                else
-                {
-                    CurrentMachine = context.MachineConfigurations.First(filter);
-                }
+                CurrentMachine = context.MachineConfigurations.First(filter);
             }
             return CurrentMachine;
         }
