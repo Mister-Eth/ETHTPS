@@ -33,21 +33,21 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
             {
                 tps = _random.Next(20, 25);
             }
-            else if (value < 10)
+            else if (value < 8)
             {
                 tps = _random.Next(15, 20);
             }
-            else if (value < 25)
+            else if (value < 11)
             {
                 tps = _random.Next(10, 15);
             }
-            else if (value < 50)
+            else if (value < 80)
             {
-                tps = _random.Next(5, 10);
+                tps = _random.Next(3, 5);
             }
             else
             {
-                tps = _random.Next(0, 5);
+                tps = _random.Next(0, 2);
             }
             var provider = context.Providers.First(x => x.Name == Name);
             var data = new TPSData()
