@@ -14,7 +14,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
     public class DummyDyDxUpdater : TPSDataUpdaterBase
     {
         private static readonly Random _random = new Random();
-        public DummyDyDxUpdater(IServiceScopeFactory scopeFactory, ILogger<BackgroundServiceBase> logger) : base("DyDx", scopeFactory, logger, TimeSpan.FromSeconds(10))
+        public DummyDyDxUpdater(IServiceScopeFactory scopeFactory, ILogger<BackgroundServiceBase> logger) : base("DyDx", scopeFactory, logger, TimeSpan.FromSeconds(5))
         {
 
         }
