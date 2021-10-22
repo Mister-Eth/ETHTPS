@@ -21,8 +21,16 @@ namespace ETHTPS.BackgroundServices.IntervalDataUpdaters
 
         public override Task<IEnumerable<TPSResponseModel>> RunAsync(ETHTPSContext context, int providerID, List<TPSResponseModel> currentCachedResponse)
         {
-            var entries = context.Tpsdata.AsEnumerable().Where(x => x.Provider.Value == providerID && x.Date >= DateTime.Now.Subtract(TimeSpan.FromDays(1))).OrderBy(x => x.Date);
-            var groups = entries.GroupBy(x => x.Date.Value.Hour);
+            currentCachedResponse = currentCachedResponse.OrderBy(x => x.Date).Where(x => x.Date > DateTime.Now.Subtract(TimeSpan.FromDays(1))).ToList(); //Filter out entries older than 1d
+            var newestEntryDate = DateTime.Now.Subtract(TimeSpan.FromDays(1));
+            if (currentCachedResponse.Count >= 1)
+            {
+                var last = currentCachedResponse.TakeLast(1).First();
+                newestEntryDate = last.Date; //Get last entry date
+            }
+
+            var newEntries = context.Tpsdata.AsEnumerable().Where(x => x.Provider.Value == providerID && x.Date >= newestEntryDate).OrderBy(x => x.Date);
+            var groups = newEntries.GroupBy(x => x.Date.Value.Hour);
             var list = new List<TPSResponseModel>();
             foreach (var group in groups)
             {
@@ -32,7 +40,8 @@ namespace ETHTPS.BackgroundServices.IntervalDataUpdaters
                     TPS = group.Average(x => x.Tps.Value)
                 });
             }
-            var result = list.AsEnumerable();
+            currentCachedResponse.AddRange(list);
+            var result = currentCachedResponse.AsEnumerable();
             return Task.FromResult(result);
         }
     }
