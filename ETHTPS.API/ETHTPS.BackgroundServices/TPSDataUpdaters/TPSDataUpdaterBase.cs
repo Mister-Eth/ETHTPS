@@ -1,4 +1,5 @@
-﻿using ETHTPS.Data.Database;
+﻿using ETHTPS.BackgroundServices.Infrastructure.Performance.Tasks.Extensions;
+using ETHTPS.Data.Database;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.Logging;
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -37,15 +39,38 @@ namespace ETHTPS.API.Infrastructure.BackgroundServices.TPSDataUpdaters
                     try
                     {
                         var context = scope.ServiceProvider.GetRequiredService<ETHTPSContext>();
+                        var machine = context.GetOrInsertCurrentMachineConfiguration();
+                        var stopwatch = new Stopwatch();
+                        stopwatch.Start();
+                        
                         var data = await LogDataAsync(context);
                         if (data != null)
                         {
                             await AddLatestEntryAsync(data, context);
                         }
+
+                        stopwatch.Stop();
+                        Func<TaskPerformanceMetric, bool> filter = x => x.Machine == machine.Id && x.TaskName == Name;
+                        if (!context.TaskPerformanceMetrics.Any(filter))
+                        {
+                            context.TaskPerformanceMetrics.Add(new TaskPerformanceMetric()
+                            {
+                                AverageRunTime = stopwatch.Elapsed.TotalMilliseconds,
+                                Machine = machine.Id,
+                                RunCount = 1,
+                                TaskName = Name
+                            });
+                        }
+                        else
+                        {
+                            var entry = context.TaskPerformanceMetrics.First(filter);
+                            entry.AverageRunTime = (entry.AverageRunTime * entry.RunCount + stopwatch.Elapsed.TotalMilliseconds) / (++entry.RunCount);
+                        }
+                        await context.SaveChangesAsync();
                     }
                     catch (Exception e)
                     {
-                        _logger.LogError("TPSDataUpdaterBase", e);
+                        _logger.LogError(Name, e);
                     }
                 }
             },

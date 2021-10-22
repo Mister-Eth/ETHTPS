@@ -8,14 +8,15 @@ class TPSChart extends React.Component {
         super(props);
 
         this.api = globalApi;
+        this.state = {
+            intervals: []
+        } 
     }
-
-    intervals;
 
     render(){
         return <>
         <div>
-            <IntervalSelector intervals={this.intervals}></IntervalSelector>
+            <IntervalSelector intervals={this.state.intervals}></IntervalSelector>
             <div>
 
             </div>
@@ -24,9 +25,9 @@ class TPSChart extends React.Component {
         </>;
     }
 
-    async componentDidMount(){
-        this.intervals = await this.api.getIntervals();
-        console.log(await this.api.getIntervals())
+    componentDidMount(){
+        this.setState({intervals: this.api.getIntervals()})
+        console.log(this.api)
         this.update();
       }
   
@@ -40,6 +41,7 @@ class TPSChart extends React.Component {
       }
 
       update(){
+          
       }
 }    
 

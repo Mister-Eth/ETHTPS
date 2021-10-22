@@ -28,15 +28,12 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.2.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.2.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.2.1" />
+    <PackageReference Include="System.Management" Version="6.0.0-rc.2.21480.5" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ETHTPS.BackgroundServices\ETHTPS.BackgroundServices.csproj" />
     <ProjectReference Include="..\ETHTPS.Data\ETHTPS.Data.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Infrastructure\Database\Models\" />
   </ItemGroup>
 
 </Project>

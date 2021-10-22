@@ -31,6 +31,8 @@ namespace ETHTPS.Data.Database
         public virtual DbSet<CachedResponse> CachedResponses { get; set; }
         public virtual DbSet<ProviderProperty> ProviderProperties { get; set; }
         public virtual DbSet<LatestEntry> LatestEntries { get; set; }
+        public virtual DbSet<MachineConfiguration> MachineConfigurations { get; set; }
+        public virtual DbSet<TaskPerformanceMetric> TaskPerformanceMetrics { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -118,6 +120,23 @@ namespace ETHTPS.Data.Database
                 entity.Property(e => e.Id).HasColumnName("ID");
             });
 
+            modelBuilder.Entity<MachineConfiguration>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.CPUCoreCount).HasColumnName("CPUCoreCount");
+
+                entity.Property(e => e.Name).HasMaxLength(255);
+
+                entity.Property(e => e.TotalRam).HasColumnName("TotalRAM");
+            });
+
+            modelBuilder.Entity<TaskPerformanceMetric>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.TaskName).HasMaxLength(255);
+            });
             OnModelCreatingPartial(modelBuilder);
         }
 

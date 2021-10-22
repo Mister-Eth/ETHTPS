@@ -10,3 +10,68 @@ Table ProviderTypes{
   ID int [pk, increment]
   Name varchar
 }
+
+Table ProviderProperties{
+  ID int [pk, increment]
+  Provider int
+  Name varchar
+  Value varchar
+}
+
+Ref: ProviderProperties.Provider > Providers.ID
+
+Table TPSData{
+  ID int [pk, increment]
+  Network ID
+  Provider int
+  Date datetime
+  Block varchar
+  TPS double
+}
+
+Ref: TPSData.Provider > Providers.ID
+Ref: TPSData.Network > Networks.ID
+
+Table AccesStats{
+  ID int [pk, increment]
+  Project varchar
+  Path varchar
+  Count int
+}
+
+Table CachedResponses{
+  ID int [pk, increment]
+  Name varchar
+  JSON varchar(max)
+}
+
+Table Networks{
+  ID int [pk, increment]
+  Name varchar
+}
+
+Table LatestEntries{
+  ID int [pk, increment]
+  Provider int
+  Entry int
+}
+
+Table TaskPerformanceMetrics{
+  ID int [pk, increment]
+  Machine int
+  TaskName varchar
+  RunCount int
+  AverageRunTime float
+}
+
+Ref: TaskPerformanceMetrics.Machine > MachineConfigurations.ID
+
+Table MachineConfigurations{
+  ID int [pk, increment]
+  Name varchar
+  CPUCoreCount int
+  TotalRAM int
+}
+
+Ref: LatestEntries.Provider > Providers.ID
+Ref: LatestEntries.Entry > TPSData.ID
