@@ -20,14 +20,51 @@ namespace ETHTPS.BackgroundServices.IntervalDataUpdaters
 {
     public abstract class IntervalDataUpdaterBase : BackgroundServiceBase
     {
-        private readonly string _interval;
+        protected readonly string _interval;
+
         protected IntervalDataUpdaterBase(ILogger<BackgroundServiceBase> logger, IServiceScopeFactory serviceScopeFactory, string interval, TimeSpan updateEvery) : base($"IntervalDataUpdaterBase {interval}", serviceScopeFactory, logger, updateEvery)
         {
             _interval = interval;
         }
 
-        public override Task RunAsync(ETHTPSContext context)
+        public abstract Task<IEnumerable<TPSResponseModel>> RunAsync(ETHTPSContext context, int providerID, List<TPSResponseModel> currentCachedResponse);
+
+        public override async Task RunAsync(ETHTPSContext context)
         {
+            foreach (var provider in context.Providers.Select(x => x.Name).ToArray())
+            {
+                _logger.LogInformation($"Updating {provider}-{_interval}");
+
+                var timeInterval = Enum.Parse<TimeInterval>(_interval);
+                var name = StringExtensions.AggregateToLowercase(provider, _interval);
+                if (timeInterval == TimeInterval.Instant)
+                {
+                    name = StringExtensions.AggregateToLowercase("Any", _interval);
+                }
+                IEnumerable<TPSResponseModel> result = new List<TPSResponseModel>() { };
+                if (!context.CachedResponses.Any(x => x.Name == name))
+                {
+                    context.CachedResponses.Add(new CachedResponse()
+                    {
+                        Name = name,
+                        Json = JsonConvert.SerializeObject(result)
+                    });
+                    context.SaveChanges();
+                }
+                var entry = context.CachedResponses.First(x => x.Name == name);
+                var targetProvider = context.Providers.First(x => x.Name.ToUpper() == provider.ToUpper());
+                result = await RunAsync(context, targetProvider.Id, JsonConvert.DeserializeObject<List<TPSResponseModel>>(entry.Json));
+                entry.Json = JsonConvert.SerializeObject(result);
+                context.Update(entry);
+                context.SaveChanges();
+
+                if (timeInterval == TimeInterval.Instant)
+                {
+                    break;
+                }
+            }
+        }
+        /*
             var timeInterval = Enum.Parse<TimeInterval>(_interval);
             foreach (var provider in context.Providers.Select(x => x.Name).ToArray())
             {
@@ -52,17 +89,7 @@ namespace ETHTPS.BackgroundServices.IntervalDataUpdaters
                 }
                 else if (timeInterval == TimeInterval.OneHour)
                 {
-                    var groups = (GetData(context, TimeInterval.OneHour, provider)).GroupBy(x => x.Date.Value.Minute);
-                    var list = new List<TPSResponseModel>();
-                    foreach (var group in groups)
-                    {
-                        list.Add(new TPSResponseModel()
-                        {
-                            Date = group.First().Date.Value.Subtract(TimeSpan.FromSeconds(group.First().Date.Value.Second)).Subtract(TimeSpan.FromMilliseconds(group.First().Date.Value.Millisecond)).Subtract(TimeSpan.FromMilliseconds(group.First().Date.Value.Millisecond)),
-                            TPS = group.Average(x => x.Tps.Value)
-                        });
-                    }
-                    result = list;
+                   
                 }
                 else if (timeInterval == TimeInterval.OneDay)
                 {
@@ -107,34 +134,11 @@ namespace ETHTPS.BackgroundServices.IntervalDataUpdaters
                     result = list;
                 }
 
-                var name = StringExtensions.AggregateToLowercase(provider, _interval);
-                if (timeInterval == TimeInterval.Instant)
-                {
-                    name = StringExtensions.AggregateToLowercase("Any", _interval);
-                }
-                if (!context.CachedResponses.Any(x => x.Name == name))
-                {
-                    context.CachedResponses.Add(new CachedResponse()
-                    {
-                        Name = name,
-                        Json = JsonConvert.SerializeObject(result)
-                    });
-                    context.SaveChanges();
-                }
-
-                var entry = context.CachedResponses.First(x => x.Name == name);
-                entry.Json = JsonConvert.SerializeObject(result);
-                context.Update(entry);
-                context.SaveChanges();
-
-                if (timeInterval == TimeInterval.Instant)
-                {
-                    break;
-                }
+                
             }
             return Task.CompletedTask;
-        }
-        private IEnumerable<TPSData> GetData(ETHTPSContext context, TimeInterval interval, string provider)
+        }*/
+        protected IEnumerable<TPSData> GetData(ETHTPSContext context, TimeInterval interval, string provider)
         {
             var targetProvider = context.Providers.First(x => x.Name.ToUpper() == provider.ToUpper());
             switch (interval)
@@ -150,13 +154,7 @@ namespace ETHTPS.BackgroundServices.IntervalDataUpdaters
                 case TimeInterval.OneMonth:
                     return context.Tpsdata.AsEnumerable().Where(x => x.Provider.Value == targetProvider.Id && x.Date >= DateTime.Now.Subtract(TimeSpan.FromDays(30))).OrderBy(x => x.Date);
                 case TimeInterval.Instant:
-                    var latestEntryIDs = context.LatestEntries.Select(x => x.Entry).ToList();
-                    var entries = new List<TPSData>();
-                    foreach (var id in latestEntryIDs)
-                    {
-                        entries.Add(context.Tpsdata.First(x => x.Id == id));
-                    }
-                    return entries;
+                    
                 default:
                     return null;
             }
