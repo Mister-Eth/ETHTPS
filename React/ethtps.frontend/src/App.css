@@ -64,10 +64,8 @@
 }
 
 footer{
-  position:absolute;
 left:10px;
 bottom:0;
-right:0;
 font-size: small;
 }
 
@@ -104,4 +102,15 @@ ul {
   list-style-type: none;
   float: right;
   margin-right: 5px;
+}
+
+.flex-right{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: right;
+}
+
+.min-300{
+  /*min-height: 500px;*/
 }
