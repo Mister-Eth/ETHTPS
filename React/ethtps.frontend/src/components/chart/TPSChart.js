@@ -28,13 +28,13 @@ class TPSChart extends React.Component {
         return <>
         <ThemeProvider theme={theme}>
            <Container>
-                <div class="flex-right">
+                <div className={"flex-right"}>
                     <IntervalSelector onIntervalChanged={(e) => { this.onIntervalChanged(e) }}></IntervalSelector>
                 </div>
-                <div class="min-300">
+                <div>
                     <StackedLineChart scale={this.state.scale} interval={this.state.interval}></StackedLineChart>
                 </div>
-                <div class="flex-right">
+                <div className={"flex-right"}>
                     <ScaleSelector onScaleChanged={(e) => { this.onScaleChanged(e) }}></ScaleSelector>
                 </div>
            </Container>

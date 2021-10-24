@@ -12,19 +12,19 @@ function App() {
     <ul>
       <li>
         <a href="https://github.com/WhoEvenAmI/ETHTPS">
-          <img class="small-img" src={githubIcon}>
+          <img className={"small-img"} src={githubIcon}>
           </img>
         </a>
       </li>
       <li>
         <a href="https://discord.gg/jWPcsTzpCT">
-          <img class="small-img" src={discordIcon}>
+          <img className={"small-img"} src={discordIcon}>
           </img>
         </a>
       </li>
       <li>
         <a href="https://twitter.com/ethtps">
-          <img class="small-img" src={twitterIcon}>
+          <img className={"small-img"} src={twitterIcon}>
           </img>
         </a>
       </li>

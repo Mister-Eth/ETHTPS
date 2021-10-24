@@ -29,7 +29,7 @@ class TPSStat extends React.Component{
   }
 
   render(){
-    return <div class="tps-stat">
+    return <div className={"tps-stat"}>
      <DoughnutChart tpsData={this.state.tpsData} includeSidechains={this.state.includeSidechains}/>
    <br></br>
    <br></br>
@@ -39,7 +39,7 @@ class TPSStat extends React.Component{
    <br></br>
    <br></br>
    <br></br>
-      <label class="small">
+      <label className={"small"}>
         Include sidechains?
       <input
             ref={ref=>this.includeSidechainsCheckBox = ref}
