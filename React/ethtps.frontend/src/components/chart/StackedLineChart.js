@@ -43,6 +43,7 @@ class StackedLineChart extends React.Component {
             borderCapStyle: 'butt',
             data: x.filter(y => y.tps > 0.01).map(y => y.tps),
             tension: 0.3,
+            pointRadius: 0,
             pointHitRadius: 10
         }
     }
