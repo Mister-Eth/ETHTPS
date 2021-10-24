@@ -5,81 +5,60 @@ import Container from '@mui/material/Container';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../../services/theme';
 import { Line } from "react-chartjs-2";
+import Stack from '@mui/material/Stack';
+import globalApi from '../../services/common';
+import CircularProgress from '@mui/material/CircularProgress';
 
 class StackedLineChart extends React.Component {
     constructor(props){
         super(props);
+
+        this.state = {
+            scale: props.scale,
+            interval: props.interval,
+            loadingPercentage: 10,
+            datasets: [],
+            xData: []
+        }
+        this.buildDatasets(props.interval);
     }
 
-    colors = {
-        green: {
-          fill: '#e0eadf',
-          stroke: '#5eb84d',
-        },
-        lightBlue: {
-          stroke: '#6fccdd',
-        },
-        darkBlue: {
-          fill: '#92bed2',
-          stroke: '#3282bf',
-        },
-        purple: {
-          fill: '#8fa8c8',
-          stroke: '#75539e',
-        },
-      };
+    buildDataPoint(x){
+        return {
+            label: x[0].provider,
+            fill: true,
+            backgroundColor: x[0].color,
+            pointBackgroundColor: "#ffffff",
+            pointHighlightStroke: x[0].color,
+            borderCapStyle: 'butt',
+            data: x.map(y => y.tps)
+        }
+    }
+    
+    async buildDatasets(interval){
+        let data = await globalApi.getAllTPS(globalApi.toLongName(interval), 'Mainnet', true);
+        console.log(data);
+        let datasets = data.filter(x => x.length > 0).map(this.buildDataPoint);
+        this.setState({xData: data[0].map(x => x.date)});
+        this.setState({datasets: datasets});
+        this.setState({loadingPercentage: 0});
+    }
 
-    loggedIn = [26, 36, 42, 38, 40, 30, 12];
-    available = [34, 44, 33, 24, 25, 28, 25];
-    availableForExisting = [16, 13, 25, 33, 40, 33, 45];
-    unavailable = [5, 9, 10, 9, 18, 19, 20];
-    xData = [13, 14, 15, 16, 17, 18, 19];
+    async componentWillReceiveProps(nextProps) {
+        this.setState({scale: nextProps.scale});
+        this.setState({interval: nextProps.interval});
+        await this.buildDatasets(nextProps.interval);
+    }
 
     render(){
         return <>
         <Line data={{
-    labels: this.xData,
-    datasets: [{
-        label: "Unavailable",
-        fill: true,
-        backgroundColor: this.colors.purple.fill,
-        pointBackgroundColor: this.colors.purple.stroke,
-        borderColor: this.colors.purple.stroke,
-        pointHighlightStroke: this.colors.purple.stroke,
-        borderCapStyle: 'butt',
-        data: this.unavailable,
-  
-      }, {
-        label: "Available for Existing",
-        fill: true,
-        backgroundColor: this.colors.darkBlue.fill,
-        pointBackgroundColor: this.colors.darkBlue.stroke,
-        borderColor: this.colors.darkBlue.stroke,
-        pointHighlightStroke: this.colors.darkBlue.stroke,
-        borderCapStyle: 'butt',
-        data: this.availableForExisting,
-      }, {
-        label: "Available",
-        fill: true,
-        backgroundColor: this.colors.green.fill,
-        pointBackgroundColor: this.colors.lightBlue.stroke,
-        borderColor: this.colors.lightBlue.stroke,
-        pointHighlightStroke: this.colors.lightBlue.stroke,
-        borderCapStyle: 'butt',
-        data: this.available,
-      }, {
-        label: "Logged In",
-        fill: true,
-        backgroundColor: this.colors.green.fill,
-        pointBackgroundColor: this.colors.green.stroke,
-        borderColor: this.colors.green.stroke,
-        pointHighlightStroke: this.colors.green.stroke,
-        data: this.loggedIn,
-      }]}}
-    options={{
-        
-    }}
-/>
+                labels: this.state.xData,
+                datasets: this.state.datasets
+              }}
+              options={{
+                
+              }}/>
         </>;
     }
 }    

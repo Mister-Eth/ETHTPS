@@ -9,14 +9,19 @@ import theme from '../../services/theme';
 class TPSChart extends React.Component {
     constructor(props){
         super(props);
+
+        this.state = {
+            scale: "LIN",
+            interval: "1h"
+        }
     }
 
     onScaleChanged = event => {
-        console.log(event.target.textContent);
+        this.setState({scale: event.target.textContent});
     }
 
     onIntervalChanged = event => {
-        console.log(event.target.textContent);
+        this.setState({interval: event.target.textContent});
     }
 
     render(){
@@ -27,7 +32,7 @@ class TPSChart extends React.Component {
                     <IntervalSelector onIntervalChanged={(e) => { this.onIntervalChanged(e) }}></IntervalSelector>
                 </div>
                 <div class="min-300">
-                    <StackedLineChart></StackedLineChart>
+                    <StackedLineChart scale={this.state.scale} interval={this.state.interval}></StackedLineChart>
                 </div>
                 <div class="flex-right">
                     <ScaleSelector onScaleChanged={(e) => { this.onScaleChanged(e) }}></ScaleSelector>

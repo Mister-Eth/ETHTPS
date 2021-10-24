@@ -26,7 +26,6 @@ class IntervalSelector extends React.Component {
 
     async componentDidMount(){
         let intervals = await globalApi.getIntervals();
-        console.log(intervals)
         this.setState({buttons: intervals.map(x => <Button color="primary" onClick={this.onClick} key={x} variant="contained" aria-label="contained button group">{x}</Button>)});
     }
 }    

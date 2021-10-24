@@ -4,7 +4,17 @@ class API{
     }
 
     async getTPS(provider, interval, network, includeSidechains) {
-        return await fetch(`${this.endpoint}/TPS?provider=${provider}&interval=${interval}&network=${network}&includeSidechains=${includeSidechains}`).then(response => response.json());
+        return await fetch(this.buildTPSPath(provider, interval, network, includeSidechains)).then(response => response.json());
+    }
+
+    buildTPSPath(provider, interval, network, includeSidechains){
+        return `${this.endpoint}/TPS?provider=${provider}&interval=${interval}&network=${network}&includeSidechains=${includeSidechains}`;
+    }
+
+    async getAllTPS(interval, network, includeSidechains){
+        let providers = await this.getProviders();
+        let fetchobj = providers.map(x => fetch(this.buildTPSPath(x.name, interval, network, includeSidechains)).then(response => response.json()));
+        return await Promise.all(fetchobj);
     }
 
     async getProviders(){
@@ -45,6 +55,21 @@ class API{
                 return "1w";
             case "OneMonth":
                 return "1m";
+            default:
+                return interval;
+        }
+    }
+
+    toLongName(interval){
+        switch(interval){
+            case "1h":
+                return "OneHour";
+            case "1d":
+               return "OneDay";
+            case "1w":
+                return "OneWeek";
+            case "1m":
+                return "OneMonth";
             default:
                 return interval;
         }
