@@ -11,10 +11,16 @@ class API{
         return `${this.endpoint}/TPS?provider=${provider}&interval=${interval}&network=${network}&includeSidechains=${includeSidechains}`;
     }
 
+    tpsDictionary = {};
+
     async getAllTPS(interval, network, includeSidechains){
-        let providers = await this.getProviders();
-        let fetchobj = providers.map(x => fetch(this.buildTPSPath(x.name, interval, network, includeSidechains)).then(response => response.json()));
-        return await Promise.all(fetchobj);
+         let key = interval + network + includeSidechains;
+        if (this.tpsDictionary[key] === undefined){
+            let providers = await this.getProviders();
+            let fetchobj = providers.map(x => fetch(this.buildTPSPath(x.name, interval, network, includeSidechains)).then(response => response.json()));
+            this.tpsDictionary[key] = await Promise.all(fetchobj);
+        }
+        return this.tpsDictionary[key];
     }
 
     async getProviders(){
