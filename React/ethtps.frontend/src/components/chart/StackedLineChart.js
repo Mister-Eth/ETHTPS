@@ -18,7 +18,9 @@ class StackedLineChart extends React.Component {
             interval: props.interval,
             loadingPercentage: 10,
             datasets: [],
-            xData: []
+            xData: [],
+            min: 0.01,
+            max: 100
         }
         this.buildDatasets(props.interval);
     }
@@ -47,10 +49,17 @@ class StackedLineChart extends React.Component {
             pointHitRadius: 10
         }
     }
+
+    setMinAndMax(data){
+        let tps = data.filter(x => x.length > 0).map(x => x.filter(y => y.tps > 0.01).map(y => y.tps)).flat(1);
+        this.setState({min:Math.min.apply(Math, tps)});
+        this.setState({max:Math.max.apply(Math, tps)});
+    }
     
     async buildDatasets(interval){
         let data = await globalApi.getAllTPS(globalApi.toLongName(interval), 'Mainnet', true);
         let datasets = data.filter(x => x.length > 0).map(this.buildDataPoint);
+        //this.setMinAndMax(data);
         this.setState({xData: data[0].map(x => x.date)});
         this.setState({datasets: datasets});
         this.setState({loadingPercentage: 0});
@@ -88,8 +97,8 @@ class StackedLineChart extends React.Component {
                     y: {
                         type: this.state.scale,
                         ticks: {
-                            min: 0.01, //minimum tick
-                            max: 100, //maximum tick
+                            min: this.state.min, //minimum tick
+                            max: this.state.max, //maximum tick
                             callback: function (value, index, values) {
                                 return Number(value.toString());//pass tick values as a string into Number function
                             }
