@@ -23,7 +23,6 @@ class TPSStat extends React.Component{
   async handleInputChange(event) {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
-    console.log('input changed to ' + value)
     this.setState({includeSidechains : value});
     await this.updateTPS();
     await this.updateTPSContinuously();
@@ -58,10 +57,8 @@ class TPSStat extends React.Component{
 
   async updateTPSContinuously(){
     clearInterval(this.intervalRef);
-    console.log('Cleared interval ref #' + this.intervalRef)
     await this.updateTPS(this.state.includeSidechains);
     this.intervalRef = setInterval(async()=>{await this.updateTPS(this.state.includeSidechains)}, 5000);
-    console.log('Created interval ref #' + this.intervalRef)
   }
 
   async updateTPS(includeSidechains){

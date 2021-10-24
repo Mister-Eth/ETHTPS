@@ -50,7 +50,6 @@ class StackedLineChart extends React.Component {
     
     async buildDatasets(interval){
         let data = await globalApi.getAllTPS(globalApi.toLongName(interval), 'Mainnet', true);
-        console.log(data);
         let datasets = data.filter(x => x.length > 0).map(this.buildDataPoint);
         this.setState({xData: data[0].map(x => x.date)});
         this.setState({datasets: datasets});
@@ -72,6 +71,12 @@ class StackedLineChart extends React.Component {
                 datasets: this.state.datasets
               }}
               options={{
+                plugins:{
+                    legend:{
+                        position: 'bottom',
+                        display: true
+                    }
+                },
                 scales: {
                     x: {
                       ticks: {
@@ -81,7 +86,7 @@ class StackedLineChart extends React.Component {
                     y: {
                         type: this.state.scale,
                         ticks: {
-                            min: 0.1, //minimum tick
+                            min: 0.01, //minimum tick
                             max: 100, //maximum tick
                             callback: function (value, index, values) {
                                 return Number(value.toString());//pass tick values as a string into Number function
