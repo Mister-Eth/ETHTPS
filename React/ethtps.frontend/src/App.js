@@ -44,14 +44,14 @@ function App() {
       </p>
     </center>
     </div>
-   <footer>
+   <div className={"container"}>
     <p>
     Brought to you by Mister_Eth
     </p>
     <p>
       Donate: 0x466Ef24d68ac9b61670eeE7fC2E001B951aBf482
     </p>
-   </footer>
+   </div>
     </>
   );
 }
