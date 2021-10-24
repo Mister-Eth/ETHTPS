@@ -70,7 +70,9 @@ class StackedLineChart extends React.Component {
                 labels: this.state.xData,
                 datasets: this.state.datasets
               }}
+              height={400}
               options={{
+                maintainAspectRatio: false,
                 plugins:{
                     legend:{
                         position: 'bottom',
