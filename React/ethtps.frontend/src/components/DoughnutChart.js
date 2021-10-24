@@ -45,7 +45,7 @@ class DoughnutChart extends React.Component{
          var text = `${tpsText} TPS`,
          textX = Math.round((width - ctx.measureText(text).width) / 2),
          textY = (height + 50 - fontSize) / 2;
-         ctx.fillStyle = "white";
+         ctx.fillStyle = "black";
          ctx.fillText(text, textX, textY);
          ctx.save();
     }.bind(this)

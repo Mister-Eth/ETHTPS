@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import TPSStat from './components/TPSStat';
 import TPSChart from './components/chart/TPSChart';
-import githubIcon from './assets/600px-Octicons-mark-github.svg.png';
+import githubIcon from './assets/600px-Octicons-mark-github.svg - inv.png';
 import twitterIcon from './assets/1486053611-twitter_79195.png';
 import discordIcon from './assets/discord-mascot.png';
 
@@ -37,11 +37,13 @@ function App() {
       <TPSChart></TPSChart>
     </div>
    <br></br>
-   <center>
-   <p>
-      We'll be back with more charts soon
-    </p>
-   </center>
+   <div className={"container"}>
+    <center>
+    <p>
+        We'll be back with more charts soon
+      </p>
+    </center>
+    </div>
    <footer>
     <p>
     Brought to you by Mister_Eth

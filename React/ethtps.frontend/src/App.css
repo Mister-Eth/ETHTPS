@@ -112,6 +112,18 @@ ul {
   justify-content: right;
 }
 
-.min-300{
-  /*min-height: 500px;*/
+.container{
+  background-color: white;
+  padding: 10px;
+  margin:10px;
+  border-radius: 10px;
+}
+
+canvas {
+  background-color: rgba(47, 152, 208, 0);
+}
+
+.rounded1{
+  margin-right: 5px;
+  border-radius: 10px;
 }

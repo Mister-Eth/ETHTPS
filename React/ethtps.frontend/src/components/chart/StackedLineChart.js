@@ -40,12 +40,13 @@ class StackedLineChart extends React.Component {
             fill: true,
             borderColor: x[0].color,
             //backgroundColor: x[0].color,
-            pointBackgroundColor: x[0].color,
+            //pointBackgroundColor: x[0].color,
             pointHighlightStroke: x[0].color,
             borderCapStyle: 'butt',
             data: x.filter(y => y.tps > 0.01).map(y => y.tps),
             tension: 0.3,
             pointRadius: 0,
+            backgroundColor: 'transparent',
             pointHitRadius: 10
         }
     }
@@ -92,7 +93,10 @@ class StackedLineChart extends React.Component {
                     x: {
                       ticks: {
                         display: false
-                      }
+                      },
+                    grid: {
+                            display:false
+                        }
                     },
                     y: {
                         type: this.state.scale,
@@ -102,7 +106,10 @@ class StackedLineChart extends React.Component {
                             callback: function (value, index, values) {
                                 return Number(value.toString());//pass tick values as a string into Number function
                             }
-                       }
+                       },
+                       grid: {
+                        display:false
+                        }
                     }
                   }
               }}/>
