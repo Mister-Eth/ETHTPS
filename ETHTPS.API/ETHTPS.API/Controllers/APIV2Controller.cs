@@ -77,13 +77,16 @@ namespace ETHTPS.API.Controllers
                 }
             }
             var responseList = response.ToList();
-            responseList.Add(new TPSResponseModel() //Add a filler response equal to the sum of all providers in order to display half a doughnut chart
+            if (provider.ToUpper() == "ANY")
             {
-                Color = "#000000",
-                Date = DateTime.Now,
-                Provider = "All",
-                TPS = response.Sum(x => x.TPS)
-            });
+                responseList.Add(new TPSResponseModel() //Add a filler response equal to the sum of all providers in order to display half a doughnut chart
+                {
+                    Color = "#000000",
+                    Date = DateTime.Now,
+                    Provider = "All",
+                    TPS = response.Sum(x => x.TPS)
+                });
+            }
             return responseList;
         }
 
