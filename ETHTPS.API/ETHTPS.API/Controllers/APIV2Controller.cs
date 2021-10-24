@@ -68,6 +68,10 @@ namespace ETHTPS.API.Controllers
             {
                 if (string.IsNullOrWhiteSpace(x.Color))
                 {
+                    if (string.IsNullOrWhiteSpace(x.Provider))
+                    {
+                        x.Provider = provider;
+                    }
                     var providerID = await _context.GetProviderIDAsync(x.Provider);
                     x.Color = _context.ProviderProperties.First(y => y.Name == "Color" && y.Provider.Value == providerID).Value;
                 }
@@ -77,7 +81,7 @@ namespace ETHTPS.API.Controllers
             {
                 Color = "#000000",
                 Date = DateTime.Now,
-                Provider = "Filler",
+                Provider = "All",
                 TPS = response.Sum(x => x.TPS)
             });
             return responseList;
