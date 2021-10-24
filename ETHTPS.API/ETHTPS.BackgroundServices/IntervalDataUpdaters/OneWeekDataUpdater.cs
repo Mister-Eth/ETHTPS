@@ -30,13 +30,13 @@ namespace ETHTPS.BackgroundServices.IntervalDataUpdaters
             }
 
             var entries = context.Tpsdata.AsEnumerable().Where(x => x.Provider.Value == providerID && x.Date >= newestEntryDate).OrderBy(x => x.Date);
-            var groups = entries.GroupBy(x => x.Date.Value.Day * 100 + x.Date.Value.Hour);
+            var groups = entries.GroupBy(x => x.Date.Value.Day);
             var list = new List<TPSResponseModel>();
             foreach (var group in groups)
             {
                 list.Add(new TPSResponseModel()
                 {
-                    Date = group.First().Date.Value.Subtract(TimeSpan.FromSeconds(group.First().Date.Value.Second)).Subtract(TimeSpan.FromMilliseconds(group.First().Date.Value.Millisecond)).Subtract(TimeSpan.FromMinutes(group.First().Date.Value.Minute)),
+                    Date = group.First().Date.Value.Subtract(TimeSpan.FromSeconds(group.First().Date.Value.Second)).Subtract(TimeSpan.FromMilliseconds(group.First().Date.Value.Millisecond)).Subtract(TimeSpan.FromMinutes(group.First().Date.Value.Minute)).Subtract(TimeSpan.FromHours(group.First().Date.Value.Hour)),
                     TPS = group.Average(x => x.Tps.Value)
                 });
             }
