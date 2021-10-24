@@ -11,8 +11,8 @@ class TPSChart extends React.Component {
         super(props);
 
         this.state = {
-            scale: "LIN",
-            interval: "1h"
+            scale: "LOG",
+            interval: "1d"
         }
     }
 

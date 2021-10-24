@@ -1,5 +1,5 @@
 import * as React from 'react';
-import globalApi from '../services/common'
+import globalApi from '../services/common';
 import DoughnutChart from './DoughnutChart';
 
 class TPSStat extends React.Component{

@@ -14,7 +14,7 @@ class StackedLineChart extends React.Component {
         super(props);
 
         this.state = {
-            scale: props.scale,
+            scale: this.transformScale(props.scale),
             interval: props.interval,
             loadingPercentage: 10,
             datasets: [],
@@ -23,15 +23,27 @@ class StackedLineChart extends React.Component {
         this.buildDatasets(props.interval);
     }
 
+    transformScale(scale){
+        switch (scale){
+            case "LOG":
+                return "logarithmic";
+            default:
+                return "linear";
+        }
+    }
+
     buildDataPoint(x){
         return {
             label: x[0].provider,
             fill: true,
-            backgroundColor: x[0].color,
-            pointBackgroundColor: "#ffffff",
+            borderColor: x[0].color,
+            //backgroundColor: x[0].color,
+            pointBackgroundColor: x[0].color,
             pointHighlightStroke: x[0].color,
             borderCapStyle: 'butt',
-            data: x.map(y => y.tps)
+            data: x.filter(y => y.tps > 0.01).map(y => y.tps),
+            tension: 0.3,
+            pointHitRadius: 10
         }
     }
     
@@ -45,9 +57,11 @@ class StackedLineChart extends React.Component {
     }
 
     async componentWillReceiveProps(nextProps) {
-        this.setState({scale: nextProps.scale});
-        this.setState({interval: nextProps.interval});
-        await this.buildDatasets(nextProps.interval);
+        this.setState({scale: this.transformScale(nextProps.scale)});
+        if (this.state.interval !== nextProps.interval){
+            this.setState({interval: nextProps.interval});
+            await this.buildDatasets(nextProps.interval);
+        }
     }
 
     render(){
@@ -57,7 +71,23 @@ class StackedLineChart extends React.Component {
                 datasets: this.state.datasets
               }}
               options={{
-                
+                scales: {
+                    x: {
+                      ticks: {
+                        display: false
+                      }
+                    },
+                    y: {
+                        type: this.state.scale,
+                        ticks: {
+                            min: 0.1, //minimum tick
+                            max: 100, //maximum tick
+                            callback: function (value, index, values) {
+                                return Number(value.toString());//pass tick values as a string into Number function
+                            }
+                       }
+                    }
+                  }
               }}/>
         </>;
     }
