@@ -71,7 +71,7 @@ namespace ETHTPS.API
             services.AddHostedService<ZKSwapUpdater>();
             services.AddHostedService<ZKSyncUpdater>();
             services.AddHostedService<AVAXCChainUpdater>();
-            services.AddHostedService<DummyDyDxUpdater>();
+            //services.AddHostedService<DummyDyDxUpdater>();
         }
 
         private void AddDataUpdaters(IServiceCollection services)
