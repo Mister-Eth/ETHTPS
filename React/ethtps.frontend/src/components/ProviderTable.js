@@ -12,8 +12,8 @@ class ProviderTable extends React.Component {
     }
 
     columns = [
-        { field: 'providerName', headerName: 'Name', width: 130 },
-        { field: 'type', headerName: 'Type', width: 130 },
+        { field: 'providerName', headerName: 'Name', width: 120 },
+        { field: 'type', headerName: 'Type', width: 120 },
         {
           field: 'tps',
           headerName: 'TPS',
@@ -27,6 +27,7 @@ class ProviderTable extends React.Component {
         <h4>Overview</h4>
         <div style={{ height: 400, width: '100%' }}>
       <DataGrid
+        disableColumnMenu={true}
         rows={this.state.rows}
         columns={this.columns}
         ptpsSize={15}

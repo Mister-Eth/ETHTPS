@@ -46,6 +46,27 @@ class StackedLineChart extends React.Component {
         }
     }
 
+    defaultLegendClickHandler = Chart.defaults.plugins.legend.onClick;
+    newLegendClickHandler = function (e, legendItem, legend) {
+        let index = legendItem.datasetIndex;
+        let ci = legend.chart;
+        if (ci.isDatasetVisible(index)) {
+            ci.hide(index);
+            legendItem.hidden = true;
+        } else {
+            ci.show(index);
+            legendItem.hidden = false;
+        }
+
+        if (legendItem.hidden){
+            providerExclusionList.addExcludedProvider(legendItem.text);
+        }
+        else{
+            providerExclusionList.removeExcludedProvider(legendItem.text);
+        }
+    };
+    
+
     buildDataPoint(x){
         return {
             label: x[0].provider,
