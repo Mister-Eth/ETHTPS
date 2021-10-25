@@ -4,7 +4,7 @@ import ScaleSelector from './ScaleSelector';
 import Container from '@mui/material/Container';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../../services/theme';
-import { Line } from "react-chartjs-2";
+import { Line, Chart } from "react-chartjs-2";
 import Stack from '@mui/material/Stack';
 import { globalApi, providerExclusionList } from '../../services/common';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -77,6 +77,7 @@ class StackedLineChart extends React.Component {
             pointHighlightStroke: x[0].color,
             borderCapStyle: 'butt',
             data: x.map(y => y.tps),
+            labels: x.map(y => y.date),
             tension: 0.3,
             pointRadius: 2,
             backgroundColor: 'transparent',
@@ -126,10 +127,20 @@ class StackedLineChart extends React.Component {
               height={400}
               options={{
                 maintainAspectRatio: false,
+                responsive: true,
                 plugins:{
                     legend:{
                         position: 'bottom',
-                        display: true
+                        display: true,
+                        onClick: this.newLegendClickHandler
+                    },
+                    labels: {/*
+                        render: 'image',
+                        images: [
+                          { src: 'taiwan.png', width: 32, height: 22 },
+                          { src: 'jpan.png', width: 32, height: 22 },
+                          { src: 'usa.png', width: 32, height: 22 }
+                        ]*/
                     }
                 },
                 scales: {
@@ -138,7 +149,8 @@ class StackedLineChart extends React.Component {
                         display: false,
                         callback: function(value, index, values) {
                             return value;
-                        }
+                        },
+                        type: 'timeseries'
                       },
                     grid: {
                             display:false
