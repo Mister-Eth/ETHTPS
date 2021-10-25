@@ -6,7 +6,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from '../../services/theme';
 import { Line } from "react-chartjs-2";
 import Stack from '@mui/material/Stack';
-import globalApi from '../../services/common';
+import { globalApi, providerExclusionList } from '../../services/common';
 import CircularProgress from '@mui/material/CircularProgress';
 
 class StackedLineChart extends React.Component {
@@ -23,6 +23,28 @@ class StackedLineChart extends React.Component {
             max: 100
         }
         this.buildDatasets(props.interval);
+        
+        providerExclusionList.registerOnProviderExcluded((e)=> {
+            console.log("Excluded " + e);
+            this.hideDataset(e, true);
+        });
+        providerExclusionList.registerOnProviderIncluded((e)=> {
+            console.log("Included " + e);
+            this.hideDataset(e, false);
+        });
+    }
+
+    hideDataset(name, value){
+        let changes = 0;
+        for (let dataset of this.state.datasets){
+            if (dataset.label == name){
+                dataset.hidden = value;
+                changes++;
+            }
+        }
+        if (changes > 0){
+            this.setState({datasets: this.state.datasets});
+        }
     }
 
     transformScale(scale){

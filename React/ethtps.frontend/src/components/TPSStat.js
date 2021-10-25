@@ -1,5 +1,5 @@
 import * as React from 'react';
-import globalApi from '../services/common';
+import { globalApi, providerExclusionList } from '../services/common';
 import DoughnutChart from './DoughnutChart';
 
 class TPSStat extends React.Component{
@@ -17,13 +17,18 @@ class TPSStat extends React.Component{
 
     this.api = globalApi;
     this.handleInputChange = this.handleInputChange.bind(this);
-
   }
 
   async handleInputChange(event) {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     this.setState({includeSidechains : value});
+    if (value){
+      await providerExclusionList.includeSidechains();
+    }
+    else{
+      await providerExclusionList.excludeSidechains();
+    }
     await this.updateTPS();
     await this.updateTPSContinuously();
   }

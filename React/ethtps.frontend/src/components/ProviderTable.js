@@ -1,5 +1,5 @@
 import * as React from 'react';
-import globalApi from '../services/common';
+import { globalApi } from '../services/common';
 import { DataGrid } from '@mui/x-data-grid';
 
 class ProviderTable extends React.Component {
