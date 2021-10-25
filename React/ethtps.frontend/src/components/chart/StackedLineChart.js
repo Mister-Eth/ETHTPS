@@ -125,7 +125,7 @@ class StackedLineChart extends React.Component {
                     legend:{
                         position: 'bottom',
                         display: true,
-                        onClick: this.newLegendClickHandler
+                        //onClick: this.newLegendClickHandler
                     },
                     labels: {/*
                         render: 'image',
