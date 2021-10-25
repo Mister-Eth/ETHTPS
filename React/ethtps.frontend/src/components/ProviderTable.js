@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { globalApi } from '../services/common';
+import { globalApi, providerExclusionList, liveTPSObservable } from '../services/common';
 import { DataGrid } from '@mui/x-data-grid';
 
 class ProviderTable extends React.Component {
@@ -44,6 +44,21 @@ class ProviderTable extends React.Component {
     async componentDidMount(){
         let providers = await globalApi.getProviders();
         this.setState({rows: providers.map(this.createRow)});
+
+        liveTPSObservable.registerOnTPSChanged(x => {
+            let rows = this.state.rows;
+            let getTPS = (provider) => {
+                for(let tpsEntry of x){
+                    if (tpsEntry.provider == provider){
+                        return tpsEntry.tps;
+                    }
+                }
+            }
+            for(let row of rows) {
+                row.tps = getTPS(row.providerName);
+            }
+            this.setState({rows: rows});
+        });
      }
 }    
 

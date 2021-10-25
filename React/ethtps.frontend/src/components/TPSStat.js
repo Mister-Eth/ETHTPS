@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { globalApi, providerExclusionList } from '../services/common';
+import { globalApi, providerExclusionList, liveTPSObservable } from '../services/common';
 import DoughnutChart from './DoughnutChart';
 
 class TPSStat extends React.Component{
@@ -68,6 +68,7 @@ class TPSStat extends React.Component{
 
   async updateTPS(includeSidechains){
     let tpsData = await this.api.getTPS("Any", "Instant", "Mainnet", includeSidechains);
+    liveTPSObservable.tpsChanged(tpsData);
     this.setState({tpsData: tpsData})
     let totalTPS = tpsData.map(x => (Math.round(x.tps * 100) / 100)).reduce((a,b) => a+b);
     totalTPS = totalTPS.toString();

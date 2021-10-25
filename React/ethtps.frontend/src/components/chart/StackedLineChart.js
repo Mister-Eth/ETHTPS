@@ -22,16 +22,6 @@ class StackedLineChart extends React.Component {
             min: 0.01,
             max: 100
         }
-        this.buildDatasets(props.interval);
-        
-        providerExclusionList.registerOnProviderExcluded((e)=> {
-            console.log("Excluded " + e);
-            this.hideDataset(e, true);
-        });
-        providerExclusionList.registerOnProviderIncluded((e)=> {
-            console.log("Included " + e);
-            this.hideDataset(e, false);
-        });
     }
 
     hideDataset(name, value){
@@ -94,6 +84,16 @@ class StackedLineChart extends React.Component {
             this.setState({interval: nextProps.interval});
             await this.buildDatasets(nextProps.interval);
         }
+    }
+
+    componentDidMount(){
+        providerExclusionList.registerOnProviderExcluded((e)=> {
+            this.hideDataset(e, true);
+        });
+        providerExclusionList.registerOnProviderIncluded((e)=> {
+            this.hideDataset(e, false);
+        });
+        this.buildDatasets(this.props.interval);
     }
 
     render(){
