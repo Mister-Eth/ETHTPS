@@ -1,13 +1,6 @@
 import * as React from 'react';
-import IntervalSelector from './IntervalSelector';
-import ScaleSelector from './ScaleSelector';
-import Container from '@mui/material/Container';
-import { ThemeProvider } from '@mui/material/styles';
-import theme from '../../services/theme';
 import { Line, Chart } from "react-chartjs-2";
-import Stack from '@mui/material/Stack';
 import { globalApi, providerExclusionList } from '../../services/common';
-import CircularProgress from '@mui/material/CircularProgress';
 
 class StackedLineChart extends React.Component {
     constructor(props){
