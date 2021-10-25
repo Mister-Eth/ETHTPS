@@ -14,12 +14,12 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
     public class DummyDyDxUpdater : TPSDataUpdaterBase
     {
         private static readonly Random _random = new Random();
-        public DummyDyDxUpdater(IServiceScopeFactory scopeFactory, ILogger<BackgroundServiceBase> logger) : base("DyDx", scopeFactory, logger, TimeSpan.FromSeconds(5))
+        public DummyDyDxUpdater(ETHTPSContext context, ILogger<HangfireBackgroundService> logger) : base("DyDx", logger, context)
         {
 
         }
 
-        public override async Task<TPSData> LogDataAsync(ETHTPSContext context)
+        public override async Task<TPSData> LogDataAsync()
         {
             var value = _random.Next(100);
             //Random values inspired by https://pbs.twimg.com/media/FAZmFInUcAUBJ4d?format=png&name=small
@@ -53,15 +53,15 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
             {
                 tps = _random.Next(0, 2);
             }
-            var provider = context.Providers.First(x => x.Name == Name);
+            var provider = _context.Providers.First(x => x.Name == Name);
             var data = new TPSData()
             {
                 Date = DateTime.Now,
                 Provider = provider.Id,
                 Tps = tps //block time
             };
-            context.Tpsdata.Add(data);
-            await context.SaveChangesAsync();
+            _context.Tpsdata.Add(data);
+            await _context.SaveChangesAsync();
             _logger.LogInformation($"{Name}: {data.Tps}TPS");
             return data;
         }

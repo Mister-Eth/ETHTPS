@@ -22,7 +22,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
     public class ZKSyncUpdater : TPSDataUpdaterBase
     {
         private readonly HttpClient _httpClient;
-        public ZKSyncUpdater(IServiceScopeFactory scopeFactory, ILogger<BackgroundServiceBase> logger) : base("ZKSync", scopeFactory, logger, TimeSpan.FromMinutes(1))
+        public ZKSyncUpdater(ETHTPSContext context, ILogger<HangfireBackgroundService> logger) : base("ZKSync", logger, context)
         {
             _httpClient = new HttpClient();
         }
@@ -34,7 +34,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
             return epoch.AddSeconds(unixTime);
         }
 
-        public override async Task<TPSData> LogDataAsync(ETHTPSContext context)
+        public override async Task<TPSData> LogDataAsync()
         {
             var data = default(TPSData);
             try
@@ -48,8 +48,8 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
                         var nextBlockBatchIndex = GetNextBlockBatchIndex(blocks, i);
                         var previousBlockBatchFirstEntry = blocks[nextBlockBatchIndex];
                         string blockNumber = block.block_number.ToString();
-                        var providerID = context.Providers.First(x => x.Name == Name).Id;
-                        if (!context.Tpsdata.Any(x => x.Block == blockNumber && x.Provider == providerID))
+                        var providerID = _context.Providers.First(x => x.Name == Name).Id;
+                        if (!_context.Tpsdata.Any(x => x.Block == blockNumber && x.Provider == providerID))
                         {
                             DateTime currentBlockTime = DateTime.Parse(block.committed_at.ToString());
                             DateTime previousBlockTime = DateTime.Parse(previousBlockBatchFirstEntry.committed_at.ToString());
@@ -65,8 +65,8 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
                                 data.Tps += await GetNumberOfTransactionsAsync(blocks[j].block_number.ToString());
                             }
                             data.Tps /= currentBlockTime.Subtract(previousBlockTime).TotalSeconds;
-                            context.Tpsdata.Add(data);
-                            context.SaveChanges();
+                            _context.Tpsdata.Add(data);
+                            _context.SaveChanges();
                             _logger.LogInformation($"{Name}: {data.Tps}TPS");
                             break;
                         }

@@ -26,7 +26,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
     public class XDAIUpdater : TPSDataUpdaterBase
     {
         private readonly HttpClient _httpClient;
-        public XDAIUpdater(IServiceScopeFactory scopeFactory, ILogger<BackgroundServiceBase> logger) : base("XDAI", scopeFactory, logger, TimeSpan.FromSeconds(5))
+        public XDAIUpdater(ETHTPSContext context, ILogger<HangfireBackgroundService> logger) : base("XDAI", logger, context)
         {
             _httpClient = new HttpClient();
         }
@@ -39,7 +39,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
             return int.Parse(targetString);
         }
 
-        public override async Task<TPSData> LogDataAsync(ETHTPSContext context)
+        public override async Task<TPSData> LogDataAsync()
         {
             var data = default(TPSData);
             try
@@ -48,15 +48,15 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
                 var latest = obj.items[0].ToString();
                 var secondLatest = obj.items[1].ToString();
                 var n1 = GetTransactionCount(latest);
-                var provider = context.Providers.First(x => x.Name == Name);
+                var provider = _context.Providers.First(x => x.Name == Name);
                 data = new TPSData()
                 {
                     Date = DateTime.Now,
                     Provider = provider.Id,
                     Tps = (double)n1 / 5.2 //block time
                 };
-                context.Tpsdata.Add(data);
-                context.SaveChanges();
+                _context.Tpsdata.Add(data);
+                _context.SaveChanges();
                 _logger.LogInformation($"{Name}: {data.Tps}TPS");
             }
             catch (Exception e)

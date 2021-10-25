@@ -1,5 +1,5 @@
 ﻿using ETHTPS.BackgroundServices.TPSDataUpdaters;
-
+using ETHTPS.Data.Database;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,7 +15,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Http
 {
     public class OptimismUpdater : HTTPUpdaterBase
     {
-        public OptimismUpdater(IServiceScopeFactory scopeFactory, ILogger<BackgroundServiceBase> logger, IConfiguration configuration) : base("Optimism", scopeFactory, logger, configuration)
+        public OptimismUpdater(ETHTPSContext context, ILogger<HangfireBackgroundService> logger, IConfiguration configuration) : base("Optimism", context, logger, configuration)
         {
         }
     }

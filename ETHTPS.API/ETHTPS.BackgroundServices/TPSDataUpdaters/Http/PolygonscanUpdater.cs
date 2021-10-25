@@ -1,5 +1,5 @@
 ﻿using ETHTPS.BackgroundServices.TPSDataUpdaters;
-
+using ETHTPS.Data.Database;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,7 +15,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Http
 {
     public class PolygonscanUpdater : HTTPUpdaterBase
     {
-        public PolygonscanUpdater(IServiceScopeFactory scopeFactory, ILogger<BackgroundServiceBase> logger, IConfiguration configuration) : base("Polygon", scopeFactory, logger, configuration)
+        public PolygonscanUpdater(ETHTPSContext context, ILogger<HangfireBackgroundService> logger, IConfiguration configuration) : base("Polygon", context, logger, configuration)
         {
         }
     }

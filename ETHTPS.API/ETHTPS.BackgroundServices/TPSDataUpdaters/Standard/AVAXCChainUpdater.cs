@@ -27,7 +27,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
         private readonly HttpClient _httpClient;
         private readonly string _transactionCountSelector;
         private readonly string _dateSelector;
-        public AVAXCChainUpdater(IServiceScopeFactory scopeFactory, ILogger<BackgroundServiceBase> logger, IConfiguration configuration) : base(NAME, scopeFactory, logger, TimeSpan.FromSeconds(5))
+        public AVAXCChainUpdater(ETHTPSContext context, ILogger<HangfireBackgroundService> logger, IConfiguration configuration, ETHTPSContext _context) : base(NAME, logger, _context)
         {
             var config = configuration.GetSection("TPSLoggerConfigurations").GetSection("StandardLoggerConfiguration").GetSection(NAME);
             _transactionCountSelector = config.GetValue<string>("TransactionCountSelector");
@@ -61,7 +61,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
             });
         }
 
-        public override async Task<TPSData> LogDataAsync(ETHTPSContext context)
+        public override async Task<TPSData> LogDataAsync()
         {
             var data = default(TPSData);
             try
@@ -72,15 +72,15 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
                 var latestBlock = await GetBlockInfoAsync(GetBlockNumber(latest));
                 var secondLatestBlock = await GetBlockInfoAsync(GetBlockNumber(secondLatest));
                 
-                var provider = context.Providers.First(x => x.Name == Name);
+                var provider = _context.Providers.First(x => x.Name == Name);
                 data = new TPSData()
                 {
                     Date = DateTime.Now,
                     Provider = provider.Id,
                     Tps = (float)latestBlock.TransactionCount / (float)(latestBlock.Time.Subtract(secondLatestBlock.Time).TotalSeconds)
                 };
-                context.Tpsdata.Add(data);
-                context.SaveChanges();
+                _context.Tpsdata.Add(data);
+                _context.SaveChanges();
                 _logger.LogInformation($"{Name}: {data.Tps}TPS");
                 
             }

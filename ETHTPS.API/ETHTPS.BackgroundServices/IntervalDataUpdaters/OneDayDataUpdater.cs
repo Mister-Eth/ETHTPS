@@ -15,11 +15,11 @@ namespace ETHTPS.BackgroundServices.IntervalDataUpdaters
 {
     public class OneDayDataUpdater : IntervalDataUpdaterBase
     {
-        public OneDayDataUpdater(ILogger<BackgroundServiceBase> logger, IServiceScopeFactory serviceScopeFactory) : base(logger, serviceScopeFactory, "OneDay", TimeSpan.FromMinutes(60))
+        public OneDayDataUpdater(ILogger<HangfireBackgroundService> logger, ETHTPSContext context) : base("OneDay", logger, context)
         {
         }
 
-        public override Task<IEnumerable<TPSResponseModel>> RunAsync(ETHTPSContext context, int providerID, List<TPSResponseModel> currentCachedResponse)
+        public override Task<IEnumerable<TPSResponseModel>> RunAsync(ETHTPSContext _context, int providerID, List<TPSResponseModel> currentCachedResponse)
         {
             currentCachedResponse = currentCachedResponse.OrderBy(x => x.Date).Where(x => x.Date > DateTime.Now.Subtract(TimeSpan.FromDays(1))).ToList(); //Filter out entries older than 1d
             var newestEntryDate = DateTime.Now.Subtract(TimeSpan.FromDays(1));
@@ -29,7 +29,7 @@ namespace ETHTPS.BackgroundServices.IntervalDataUpdaters
                 newestEntryDate = last.Date; //Get last entry date
             }
 
-            var newEntries = context.Tpsdata.AsEnumerable().Where(x => x.Provider.Value == providerID && x.Date >= newestEntryDate).OrderBy(x => x.Date);
+            var newEntries = _context.Tpsdata.AsEnumerable().Where(x => x.Provider.Value == providerID && x.Date >= newestEntryDate).OrderBy(x => x.Date);
             var groups = newEntries.GroupBy(x => x.Date.Value.Hour);
             var list = new List<TPSResponseModel>();
             foreach (var group in groups)
