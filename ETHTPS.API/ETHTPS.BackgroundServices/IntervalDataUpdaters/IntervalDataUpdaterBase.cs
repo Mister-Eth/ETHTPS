@@ -54,7 +54,14 @@ namespace ETHTPS.BackgroundServices.IntervalDataUpdaters
                 var entry = context.CachedResponses.First(x => x.Name == name);
                 var targetProvider = context.Providers.First(x => x.Name.ToUpper() == provider.ToUpper());
                 result = await RunAsync(context, targetProvider.Id, JsonConvert.DeserializeObject<List<TPSResponseModel>>(entry.Json));
-                entry.Json = JsonConvert.SerializeObject(result);
+                if (result?.Count() > 0)
+                {
+                    entry.Json = JsonConvert.SerializeObject(result);
+                }
+                else
+                {
+                    entry.Json = "[]";
+                }
                 context.Update(entry);
                 context.SaveChanges();
 
