@@ -14,9 +14,9 @@ class ScaleSelector extends React.Component {
 
     render(){
         return <>
-         <ButtonGroup variant="text" aria-label="text button group">
-            <Button color="primary" style={{marginRight: 2, borderRadius: 8}} onClick={this.onClick} key="LOG" variant="contained" aria-label="contained button group">LOG</Button>
-            <Button color="primary" style={{marginRight: 2, borderRadius: 8}} onClick={this.onClick} key="LIN" variant="contained" aria-label="contained button group">LIN</Button>
+         <ButtonGroup color="primary" variant="text" aria-label="text button group">
+            <Button style={{marginRight: 2, borderRadius: 8}} onClick={this.onClick} key="LOG" variant="contained" aria-label="contained button group">LOG</Button>
+            <Button style={{marginRight: 2, borderRadius: 8}} onClick={this.onClick} key="LIN" variant="contained" aria-label="contained button group">LIN</Button>
         </ButtonGroup>
         </>;
     }

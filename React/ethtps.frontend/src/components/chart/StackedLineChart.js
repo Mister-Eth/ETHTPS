@@ -43,7 +43,7 @@ class StackedLineChart extends React.Component {
             pointBackgroundColor: x[0].color,
             pointHighlightStroke: x[0].color,
             borderCapStyle: 'butt',
-            data: x.filter(y => y.tps > 0.01).map(y => y.tps),
+            data: x.map(y => y.tps),
             tension: 0.3,
             pointRadius: 2,
             backgroundColor: 'transparent',
@@ -52,7 +52,7 @@ class StackedLineChart extends React.Component {
     }
 
     setMinAndMax(data){
-        let tps = data.filter(x => x.length > 0).map(x => x.filter(y => y.tps > 0.01).map(y => y.tps)).flat(1);
+        let tps = data.filter(x => x.length > 0).map(x => x.map(y => y.tps)).flat(1);
         this.setState({min:Math.min.apply(Math, tps)});
         this.setState({max:Math.max.apply(Math, tps)});
     }
