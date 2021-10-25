@@ -2,6 +2,7 @@
 
 using ETHTPS.Data;
 using ETHTPS.Data.Database;
+using ETHTPS.Data.Extensions;
 using ETHTPS.Data.ResponseModels;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -30,7 +31,7 @@ namespace ETHTPS.BackgroundServices.IntervalDataUpdaters
                 newestEntryDate = last.Date; //Get last entry date
             }
 
-            var newEntries = context.Tpsdata.AsEnumerable().Where(x => x.Provider.Value == providerID && x.Date >= newestEntryDate).OrderBy(x => x.Date);
+            var newEntries = context.Tpsdata.AsEnumerable().Where(x => x.Provider.Value == providerID && x.Date > newestEntryDate).OrderBy(x => x.Date);
             var groups = newEntries.GroupBy(x => x.Date.Value.Minute);
             var list = new List<TPSResponseModel>();
             foreach (var group in groups)
@@ -43,7 +44,7 @@ namespace ETHTPS.BackgroundServices.IntervalDataUpdaters
             }
             currentCachedResponse.AddRange(list);
             var result = currentCachedResponse.AsEnumerable();
-            return Task.FromResult(result);
+            return Task.FromResult(result.DistinctBy(x => x.Date));
         }
     }
 }
