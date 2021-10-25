@@ -47,7 +47,7 @@ namespace ETHTPS.BackgroundServices.IntervalDataUpdaters
                     context.CachedResponses.Add(new CachedResponse()
                     {
                         Name = name,
-                        Json = JsonConvert.SerializeObject(result)
+                        Json = "[]"
                     });
                     context.SaveChanges();
                 }
