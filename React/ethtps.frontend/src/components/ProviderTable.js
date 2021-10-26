@@ -72,14 +72,14 @@ class ProviderTable extends React.Component {
               <TableCell align="left">
                 <div className={'l1'}>
                   {(row.tps == 0)?
-                  <div class="tooltip red">0
-                  <span class="tooltiptext">This network is currently doing less than 0.01 TPS</span>
-                </div>
+                    <div class="tooltip red">0
+                        <span class="tooltiptext">This network is currently doing less than 0.01 TPS</span>
+                    </div>
                   :row.tps}
                   </div>
               </TableCell>
               <TableCell align="left">
-                <div className={'l1'}>
+                <div className={((row.type == "Sidechain")?'l1':'l1 green')}>
                   {row.type}
                 </div>
               </TableCell>

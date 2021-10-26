@@ -159,6 +159,10 @@ a:active { color: #000000; text-decoration: none}
   color: red;
 }
 
+.green{
+  color: green;
+}
+
 .tooltip {
   position: relative;
   display: inline-block;
