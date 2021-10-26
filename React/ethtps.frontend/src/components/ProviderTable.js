@@ -17,14 +17,10 @@ class ProviderTable extends React.Component {
         }
     }
 
-    createData(name, calories, fat, carbs, protein) {
-        return { name, calories, fat, carbs, protein };
-      }
-
     render(){
         return <>
         <h3>Projects</h3>
-        <div style={{ height: 400, width: '100%' }}>
+        <div style={{ width: '100%' }}>
         <TableContainer component={Paper}>
       <Table sx={{ minWidth: 300 }} size={"small"} aria-label="simple table">
         <TableHead>
@@ -52,7 +48,7 @@ class ProviderTable extends React.Component {
           </TableRow>
         </TableHead>
         <TableBody>
-          {this.state.rows.map((row) => (
+          {this.state.rows.filter(x => x.included).map((row) => (
             <TableRow
               key={row.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -72,8 +68,8 @@ class ProviderTable extends React.Component {
               <TableCell align="left">
                 <div className={'l1'}>
                   {(row.tps == 0)?
-                    <div class="tooltip red">0
-                        <span class="tooltiptext">This network is currently doing less than 0.01 TPS</span>
+                    <div className={"tooltip red"}>0
+                        <span className={"tooltiptext"}>This network is currently doing less than 0.01 TPS</span>
                     </div>
                   :row.tps}
                   </div>
@@ -93,7 +89,7 @@ class ProviderTable extends React.Component {
     }
 
     createRow(x, i){
-        return  { no: (i + 1) + ".", name: x.name, type: x.type, tps: 0 };
+        return  { no: (i + 1) + ".", name: x.name, type: x.type, tps: 0, included: true };
     }
 
     
@@ -106,7 +102,7 @@ class ProviderTable extends React.Component {
         return 0;
     }
 
-    updateChart(x){
+    updateTable(x){
         let rows = this.state.rows;
         for(let row of rows) {
             let tps = Math.round(this.getTPS(x, row.name) * 100) / 100;
@@ -117,11 +113,33 @@ class ProviderTable extends React.Component {
         this.setState({rows: rows});
     }
 
+    onProviderExcluded(provider){
+        let rows = this.state.rows;
+        for(let row of rows) {
+            if (row.name == provider){
+                row.included = false;
+            }
+        }
+        this.setState({rows: rows});
+    }
+
+    onProviderIncluded(provider){
+        let rows = this.state.rows;
+        for(let row of rows) {
+            if (row.name == provider){
+                row.included = true;
+            }
+        }
+        this.setState({rows: rows});
+    }
+
     async componentDidMount(){
         let providers = await globalApi.getProviders();
         this.setState({rows: providers.map(this.createRow)});
 
-        liveTPSObservable.registerOnTPSChanged(this.updateChart.bind(this));
+        liveTPSObservable.registerOnTPSChanged(this.updateTable.bind(this));
+        providerExclusionList.registerOnProviderExcluded(this.onProviderExcluded.bind(this));
+        providerExclusionList.registerOnProviderIncluded(this.onProviderIncluded.bind(this));
      }
 }    
 
