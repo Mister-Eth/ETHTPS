@@ -25,10 +25,17 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters
 
         public override async Task RunAsync()
         {
-            var data = await LogDataAsync();
-            if (data != null)
+            try
             {
-                await AddLatestEntryAsync(data);
+                var data = await LogDataAsync();
+                if (data != null)
+                {
+                    await AddLatestEntryAsync(data);
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("TPSDataUpdaterBase", e);
             }
         }
 

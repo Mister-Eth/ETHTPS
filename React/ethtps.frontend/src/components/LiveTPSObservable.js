@@ -1,6 +1,6 @@
 class LiveTPSObservable {
     callbackList = [];
-
+    latestData = {};
     registerOnTPSChanged(callback){
         this.callbackList.push(callback);
     }
@@ -12,6 +12,7 @@ class LiveTPSObservable {
     }
 
     tpsChanged(tpsData){
+        this.latestData = tpsData;
         this.triggerCallbacks(tpsData);
     }
 }

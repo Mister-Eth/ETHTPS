@@ -23,7 +23,7 @@ class ProviderTable extends React.Component {
 
     render(){
         return <>
-        <h4>Projects</h4>
+        <h3>Projects</h3>
         <div style={{ height: 400, width: '100%' }}>
         <TableContainer component={Paper}>
       <Table sx={{ minWidth: 300 }} size={"small"} aria-label="simple table">
@@ -73,20 +73,22 @@ class ProviderTable extends React.Component {
         return 0;
     }
 
+    updateChart(x){
+        let rows = this.state.rows;
+        for(let row of rows) {
+            let tps = Math.round(this.getTPS(x, row.name) * 100) / 100;
+            tps = tps.toString();
+            tps = tps.substr(0, tps.indexOf('.') + 3);
+            row.tps = tps;
+        }
+        this.setState({rows: rows});
+    }
+
     async componentDidMount(){
         let providers = await globalApi.getProviders();
         this.setState({rows: providers.map(this.createRow)});
 
-        liveTPSObservable.registerOnTPSChanged(x => {
-            let rows = this.state.rows;
-            for(let row of rows) {
-                let tps = Math.round(this.getTPS(x, row.name) * 100) / 100;
-                tps = tps.toString();
-                tps = tps.substr(0, tps.indexOf('.') + 3);
-                row.tps = tps;
-            }
-            this.setState({rows: rows});
-        });
+        liveTPSObservable.registerOnTPSChanged(this.updateChart.bind(this));
      }
 }    
 

@@ -86,14 +86,14 @@ namespace ETHTPS.API
             RecurringJob.AddOrUpdate<ZKSyncUpdater>("ZKSyncUpdater", x => x.RunAsync(), CronConstants.EveryMinute, queue: TPSUPDATERQUEUE);
             services.AddScoped<AVAXCChainUpdater>();
             RecurringJob.AddOrUpdate<AVAXCChainUpdater>("AVAXCChainUpdater", x => x.RunAsync(), CronConstants.Every5s, queue: TPSUPDATERQUEUE);
+            services.AddScoped<InstantCacheUpdater>();
+            RecurringJob.AddOrUpdate<InstantCacheUpdater>("InstantDataUpdater", x => x.RunAsync(), CronConstants.Every5s, queue: TPSUPDATERQUEUE);
             //services.AddScoped<DummyDyDxUpdater>();
 
         }
 
         private void AddCacheUpdaters(IServiceCollection services)
         {
-            services.AddScoped<InstantCacheUpdater>();
-            RecurringJob.AddOrUpdate<InstantCacheUpdater>("InstantDataUpdater", x => x.RunAsync(), CronConstants.Every5s, queue: CACHEUPDATERQUEUE);
             services.AddScoped<OneHourCacheUpdater>();
             RecurringJob.AddOrUpdate<OneHourCacheUpdater>("OneHourDataUpdater", x => x.RunAsync(), CronConstants.Every15Minutes, queue: CACHEUPDATERQUEUE);
             services.AddScoped<OneDayCacheUpdater>();
