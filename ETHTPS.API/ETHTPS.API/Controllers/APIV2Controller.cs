@@ -57,17 +57,23 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
-        public async Task<TPSResponseModel> MaxTPS(string provider)
+        public async Task<IEnumerable<TPSResponseModel>> MaxTPS(string provider)
         {
-            var result = new TPSResponseModel();
-            var providerID = await _context.GetProviderIDAsync(provider);
-            var entry = _context.MaxTPSEntries.FirstOrDefault(x => x.Provider == providerID);
-            if (entry != null)
+            var result = new List<TPSResponseModel>();
+            var providers = (provider.ToUpper() == "ALL") ? _context.Providers.AsEnumerable() : new Provider[] { _context.Providers.First(x => x.Name.ToUpper() == provider.ToUpper()) };
+            foreach(var p in providers.ToArray())
             {
-                var targetEntry = _context.TPSData.First(x => x.Id == entry.Entry);
-                result.Date = targetEntry.Date.Value;
-                result.TPS = targetEntry.Tps.Value;
-                result.Provider = provider;
+                var entry = _context.MaxTPSEntries.FirstOrDefault(x => x.Provider == p.Id);
+                if (entry != null)
+                {
+                    var targetEntry = _context.TPSData.First(x => x.Id == entry.Entry);
+                    result.Add(new TPSResponseModel()
+                    {
+                        Date = targetEntry.Date.Value,
+                        TPS = targetEntry.Tps.Value,
+                        Provider = p.Name
+                    });
+                }
             }
             return result;
         }

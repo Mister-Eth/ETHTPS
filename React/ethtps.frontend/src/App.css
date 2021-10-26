@@ -179,7 +179,7 @@ a:active { color: #000000; text-decoration: none}
 
 .tooltip .tooltiptext {
   visibility: hidden;
-  width: 200px;
+  width: 300px;
   background-color: black;
   color: #fff;
   text-align: center;

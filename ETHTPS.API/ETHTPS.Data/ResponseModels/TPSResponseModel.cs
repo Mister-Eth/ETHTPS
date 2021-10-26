@@ -11,6 +11,7 @@ namespace ETHTPS.Data.ResponseModels
     {
         public DateTime Date { get; set; }
         public double TPS { get; set; }
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Color { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
