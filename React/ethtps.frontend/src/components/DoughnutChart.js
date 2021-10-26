@@ -40,11 +40,11 @@ class DoughnutChart extends React.Component{
          var fontSize = (this.cutoutSize / 200).toFixed(2);
          ctx.font = fontSize + "em sans-serif";
          ctx.textBaseline = "top";
-         let tpsText=  (chart.data.datasets[0].data.reduce((a,b) => a+b) / 2).toString();
+         let tpsText=  (chart.data.datasets[0].data.reduce((a,b) => a+b) / 1).toString();
          tpsText = tpsText.substr(0, tpsText.indexOf('.') + 3);
          var text = `${tpsText} TPS`,
          textX = Math.round((width - ctx.measureText(text).width) / 2),
-         textY = (height + 50 - fontSize) / 2;
+         textY = (height - fontSize) / 2;
          ctx.fillStyle = "black";
          ctx.fillText(text, textX, textY);
          ctx.save();
@@ -67,11 +67,11 @@ class DoughnutChart extends React.Component{
 
     render(){
         return <>
-        <Doughnut ref={(input)=>{this.doughnut = input}} style={{top:this.top, position:"absolute"}} plugins={this.plugins} data={this.data} options={{
+        <Doughnut ref={(input)=>{this.doughnut = input}} style={{top:this.top }} plugins={this.plugins} data={this.data} options={{
            animation:{
               //duration: this.animationDuration
            },
-           cutout: 70,
+           cutout: 60,
             plugins:{
                 legend:{
                     display:false
@@ -127,7 +127,6 @@ class DoughnutChart extends React.Component{
                   'black',
                 ],
                 borderWidth: 3,
-                rotation: 90,
                 lineTension:0.1
               },
             ],
@@ -135,7 +134,7 @@ class DoughnutChart extends React.Component{
           
     if (this.doughnut === undefined)
       return;
-    this.top = -this.doughnut.height / 2;
+   // this.top = -this.doughnut.height / 2;
     }
 }
 export default DoughnutChart;

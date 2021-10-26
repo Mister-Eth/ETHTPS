@@ -40,8 +40,9 @@
 .tps-stat{
   left: 50%;
   width: 50%;
-  max-width: 300px;
-  min-width: 210px;
+  margin-top: 5px;
+  max-width: 250px;
+  min-width: 150px;
 }
 
 .small{

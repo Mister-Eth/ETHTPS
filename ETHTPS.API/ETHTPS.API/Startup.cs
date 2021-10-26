@@ -57,6 +57,8 @@ namespace ETHTPS.API
             services.AddHangfire(x => x.UseSqlServerStorage(defaultConnectionString));
             services.AddHangfireServer();
             AddCacheUpdaters(services);
+            services.AddScoped<BobaNetworkUpdater>();
+            RecurringJob.AddOrUpdate<BobaNetworkUpdater>("BobaNetworkUpdater", x => x.RunAsync(), CronConstants.EveryMinute, queue: TPSUPDATERQUEUE);
             AddTPSDataUpdaters(services);
         }
 
@@ -98,8 +100,6 @@ namespace ETHTPS.API
                 services.AddScoped<AVAXCChainUpdater>();
                 RecurringJob.AddOrUpdate<AVAXCChainUpdater>("AVAXCChainUpdater", x => x.RunAsync(), CronConstants.Every5s, queue: TPSUPDATERQUEUE);
                 
-                services.AddScoped<BobaNetworkUpdater>();
-                RecurringJob.AddOrUpdate<BobaNetworkUpdater>("BobaNetworkUpdater", x => x.RunAsync(), CronConstants.EveryMinute, queue: TPSUPDATERQUEUE);
                 
                 services.AddScoped<InstantCacheUpdater>();
                 RecurringJob.AddOrUpdate<InstantCacheUpdater>("InstantDataUpdater", x => x.RunAsync(), CronConstants.Every5s, queue: TPSUPDATERQUEUE);
