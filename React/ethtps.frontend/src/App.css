@@ -123,7 +123,26 @@ canvas {
   background-color: rgba(47, 152, 208, 0);
 }
 
+.provider-icon{
+  width: 25x;
+  height: 25px;
+  margin-right: 5px;
+}
+
 .rounded1{
   margin-right: 5px;
   border-radius: 10px;
+}
+
+a{
+  color:black;
+}
+a:link { color: #000000; text-decoration: none}
+a:visited { color: #000000; text-decoration: none}
+a:hover { color: #000000; text-decoration: underline}
+a:active { color: #000000; text-decoration: none}
+
+.td > provider-icon,
+.td > a{
+  display: inline-block;
 }

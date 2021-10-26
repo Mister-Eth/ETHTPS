@@ -26,13 +26,13 @@ class ProviderTable extends React.Component {
         <h4>Projects</h4>
         <div style={{ height: 400, width: '100%' }}>
         <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} size={"small"} aria-label="simple table">
+      <Table sx={{ minWidth: 300 }} size={"small"} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell align="left">No. </TableCell>
-            <TableCell align="left">Name</TableCell>
-            <TableCell align="left">TPS</TableCell>
-            <TableCell align="left">Type</TableCell>
+            <TableCell width={10} align="left">No. </TableCell>
+            <TableCell width={150} align="left">Name</TableCell>
+            <TableCell width={10} align="left">TPS</TableCell>
+            <TableCell width={150} align="left">Type</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -42,7 +42,12 @@ class ProviderTable extends React.Component {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell align="left">{row.no}</TableCell>
-              <TableCell align="left">{row.name}</TableCell>
+              <TableCell align="left">
+                    <a href={`/${row.name}`}>
+                        <img className={'provider-icon'} src={`/provider-icons/${row.name}.png`} />
+                        {row.name}
+                    </a>
+              </TableCell>
               <TableCell align="left">{row.tps}</TableCell>
               <TableCell align="left">{row.type}</TableCell>
             </TableRow>
