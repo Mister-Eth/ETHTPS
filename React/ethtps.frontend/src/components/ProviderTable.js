@@ -40,6 +40,11 @@ class ProviderTable extends React.Component {
                     TPS
                 </div>
             </TableCell>
+            <TableCell width={10} align="left">
+                <div className={'l1 b'}>
+                    Max TPS
+                </div>
+            </TableCell>
             <TableCell width={150} align="left">
                 <div className={'l1 b'}>
                     Type
@@ -75,6 +80,11 @@ class ProviderTable extends React.Component {
                   </div>
               </TableCell>
               <TableCell align="left">
+              <div className={'l1'}>
+                {(row.maxTPS < row.tps)?row.tps:row.maxTPS}
+              </div>
+              </TableCell>
+              <TableCell align="left">
                 <div className={((row.type == "Sidechain")?'l1':'l1 green')}>
                   {row.type}
                 </div>
@@ -89,7 +99,7 @@ class ProviderTable extends React.Component {
     }
 
     createRow(x, i){
-        return  { no: (i + 1) + ".", name: x.name, type: x.type, tps: 0, included: true };
+        return  { no: (i + 1) + ".", name: x.name, type: x.type, tps: 0, maxTPS: 0, included: true };
     }
 
     
@@ -102,13 +112,17 @@ class ProviderTable extends React.Component {
         return 0;
     }
 
+    to2DecimalPlaces(number){
+        let value = Math.round(number * 100) / 100;
+        value = value.toString();
+        value = value.substr(0, value.indexOf('.') + 3);
+        return value;
+    }
+
     updateTable(x){
         let rows = this.state.rows;
         for(let row of rows) {
-            let tps = Math.round(this.getTPS(x, row.name) * 100) / 100;
-            tps = tps.toString();
-            tps = tps.substr(0, tps.indexOf('.') + 3);
-            row.tps = tps;
+            row.tps = this.to2DecimalPlaces(this.getTPS(x, row.name));
         }
         this.setState({rows: rows});
     }
@@ -133,6 +147,20 @@ class ProviderTable extends React.Component {
         this.setState({rows: rows});
     }
 
+    async updateMaxTPS(){
+        let maxTPS = await globalApi.getMaxTPS("All");
+        let rows = this.state.rows;
+        for(let row of rows) {
+            let tps = 0;
+            let entries = maxTPS.filter(x => x.provider == row.name);
+            if (entries != null && entries.length > 0){
+                tps = entries[0].tps;
+            }
+            row.maxTPS = this.to2DecimalPlaces(tps);
+        }
+        this.setState({rows: rows});
+    }
+
     async componentDidMount(){
         let providers = await globalApi.getProviders();
         this.setState({rows: providers.map(this.createRow)});
@@ -140,6 +168,7 @@ class ProviderTable extends React.Component {
         liveTPSObservable.registerOnTPSChanged(this.updateTable.bind(this));
         providerExclusionList.registerOnProviderExcluded(this.onProviderExcluded.bind(this));
         providerExclusionList.registerOnProviderIncluded(this.onProviderIncluded.bind(this));
+        await this.updateMaxTPS();
      }
 }    
 

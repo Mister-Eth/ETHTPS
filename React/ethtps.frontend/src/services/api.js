@@ -7,6 +7,10 @@ class API{
         return await fetch(this.buildTPSPath(provider, interval, network, includeSidechains)).then(response => response.json());
     }
 
+    async getMaxTPS(provider) {
+        return await fetch(`${this.endpoint}/MaxTPS?provider=${provider}`).then(response => response.json());
+    }
+
     buildTPSPath(provider, interval, network, includeSidechains){
         return `${this.endpoint}/TPS?provider=${provider}&interval=${interval}&network=${network}&includeSidechains=${includeSidechains}`;
     }
