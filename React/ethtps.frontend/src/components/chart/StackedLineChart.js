@@ -58,9 +58,16 @@ class StackedLineChart extends React.Component {
             providerExclusionList.removeExcludedProvider(legendItem.text);
         }
     };
-    
 
     buildDataPoint(x){
+        let 
+    
+        createPoint = (x) => {
+            return{
+                x: x.date,
+                y: x.tps
+            }
+        }
         return {
             label: x[0].provider,
             fill: true,
@@ -69,8 +76,7 @@ class StackedLineChart extends React.Component {
             pointBackgroundColor: x[0].color,
             pointHighlightStroke: x[0].color,
             borderCapStyle: 'butt',
-            data: x.map(y => y.tps),
-            labels: x.map(y => y.date),
+            data: x.map(y=>y.tps),//x.map(createPoint),
             tension: 0.3,
             pointRadius: 2,
             backgroundColor: 'transparent',
@@ -143,7 +149,7 @@ class StackedLineChart extends React.Component {
                         callback: function(value, index, values) {
                             return value;
                         },
-                        type: 'timeseries'
+                        type: 'timeseries',
                       },
                     grid: {
                             display:false
