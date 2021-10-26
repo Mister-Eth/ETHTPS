@@ -132,8 +132,8 @@ canvas {
 }
 
 .provider-icon{
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   margin-right: 5px;
 }
 
@@ -156,7 +156,7 @@ a:active { color: #000000; text-decoration: none}
 }
 
 .l1{
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .b{
@@ -185,7 +185,7 @@ a:active { color: #000000; text-decoration: none}
   text-align: center;
   border-radius: 6px;
   padding: 5px 0;
-
+  font-size: 16px;
   /* Position the tooltip */
   position: absolute;
   z-index: 1;

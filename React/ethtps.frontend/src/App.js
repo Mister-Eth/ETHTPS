@@ -33,7 +33,7 @@ function App() {
     <center>
       <TPSStat></TPSStat>
     </center>
-    
+    <br></br>
     <div className={''}>
     <div className={"container"}>
      <ProviderTable/>
