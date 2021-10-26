@@ -48,7 +48,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
                         var previousBlock = blocks.data.data[i + 1];
                         string blockNumber = block.number.ToString();
                         var providerID = _context.Providers.First(x => x.Name == Name).Id;
-                        if (!_context.Tpsdata.Any(x => x.Block == blockNumber && x.Provider == providerID))
+                        if (!_context.TPSData.Any(x => x.Block == blockNumber && x.Provider == providerID))
                         {
                             var provider = _context.Providers.First(x => x.Name == Name);
                             DateTime currentBlockTime = FromUnixTime(long.Parse(block.committed_at.ToString()));
@@ -60,7 +60,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
                                 Tps = double.Parse(block.transactions_number.ToString()) / currentBlockTime.Subtract(previousBlockTime).TotalSeconds,
                                 Block = blockNumber
                             };
-                            _context.Tpsdata.Add(data);
+                            _context.TPSData.Add(data);
                             _context.SaveChanges();
                             _logger.LogInformation($"{Name}: {data.Tps}TPS");
                             break;

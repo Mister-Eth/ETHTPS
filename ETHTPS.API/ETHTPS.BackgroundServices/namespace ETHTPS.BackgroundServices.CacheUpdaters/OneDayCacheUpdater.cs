@@ -30,7 +30,7 @@ namespace ETHTPS.BackgroundServices.CacheUpdaters
                 newestEntryDate = last.Date; //Get last entry date
             }
 
-            var newEntries = context.Tpsdata.AsEnumerable().Where(x => x.Provider.Value == providerID && x.Date > newestEntryDate).OrderBy(x => x.Date);
+            var newEntries = context.TPSData.AsEnumerable().Where(x => x.Provider.Value == providerID && x.Date > newestEntryDate).OrderBy(x => x.Date);
             var groups = newEntries.GroupBy(x => x.Date.Value.Hour);
             var list = new List<TPSResponseModel>();
             foreach (var group in groups)

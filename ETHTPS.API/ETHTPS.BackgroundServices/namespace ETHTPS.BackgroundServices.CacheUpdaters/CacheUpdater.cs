@@ -26,7 +26,7 @@ namespace ETHTPS.BackgroundServices.CacheUpdaters
             var entries = new List<TPSData>();
             foreach (var id in latestEntryIDs)
             {
-                entries.Add(context.Tpsdata.First(x => x.Id == id));
+                entries.Add(context.TPSData.First(x => x.Id == id));
             }
             var result = entries.Select(x => new TPSResponseModel()
             {

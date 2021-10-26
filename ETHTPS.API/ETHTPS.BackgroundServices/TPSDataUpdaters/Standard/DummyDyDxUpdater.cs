@@ -60,7 +60,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
                 Provider = provider.Id,
                 Tps = tps //block time
             };
-            _context.Tpsdata.Add(data);
+            _context.TPSData.Add(data);
             await _context.SaveChangesAsync();
             _logger.LogInformation($"{Name}: {data.Tps}TPS");
             return data;

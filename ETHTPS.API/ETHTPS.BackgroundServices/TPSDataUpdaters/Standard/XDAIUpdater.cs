@@ -55,7 +55,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
                     Provider = provider.Id,
                     Tps = (double)n1 / 5.2 //block time
                 };
-                _context.Tpsdata.Add(data);
+                _context.TPSData.Add(data);
                 _context.SaveChanges();
                 _logger.LogInformation($"{Name}: {data.Tps}TPS");
             }

@@ -56,6 +56,18 @@ Table LatestEntries{
   Entry int
 }
 
+Ref: LatestEntries.Provider > Providers.ID
+Ref: LatestEntries.Entry > TPSData.ID
+
+Table MaxTPSEntries{
+  ID int [pk, increment]
+  Provider int
+  Entry int
+}
+
+Ref: MaxTPSEntries.Provider > Providers.ID
+Ref: MaxTPSEntries.Entry > TPSData.ID
+
 Table TaskPerformanceMetrics{
   ID int [pk, increment]
   Machine int
@@ -73,5 +85,3 @@ Table MachineConfigurations{
   TotalRAM int
 }
 
-Ref: LatestEntries.Provider > Providers.ID
-Ref: LatestEntries.Entry > TPSData.ID

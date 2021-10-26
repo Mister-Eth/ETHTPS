@@ -26,13 +26,14 @@ namespace ETHTPS.Data.Database
         public virtual DbSet<AccesStat> AccesStats { get; set; }
         public virtual DbSet<Provider> Providers { get; set; }
         public virtual DbSet<ProviderType> ProviderTypes { get; set; }
-        public virtual DbSet<TPSData> Tpsdata { get; set; }
+        public virtual DbSet<TPSData> TPSData { get; set; }
         public virtual DbSet<Network> Networks { get; set; }
         public virtual DbSet<CachedResponse> CachedResponses { get; set; }
         public virtual DbSet<ProviderProperty> ProviderProperties { get; set; }
         public virtual DbSet<LatestEntry> LatestEntries { get; set; }
         public virtual DbSet<MachineConfiguration> MachineConfigurations { get; set; }
         public virtual DbSet<TaskPerformanceMetric> TaskPerformanceMetrics { get; set; }
+        public virtual DbSet<MaxTPSEntry> MaxTPSEntries { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -136,6 +137,13 @@ namespace ETHTPS.Data.Database
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.TaskName).HasMaxLength(255);
+            });
+
+            modelBuilder.Entity<MaxTPSEntry>(entity =>
+            {
+                entity.ToTable("MaxTPSEntries");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
             });
             OnModelCreatingPartial(modelBuilder);
         }

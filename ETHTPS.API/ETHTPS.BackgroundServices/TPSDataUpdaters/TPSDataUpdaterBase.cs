@@ -30,7 +30,9 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters
                 var data = await LogDataAsync();
                 if (data != null)
                 {
-                    await AddLatestEntryAsync(data);
+                    AddLatestEntry(data);
+                    UpdateMaxTPSEntry(data);
+                    await _context.SaveChangesAsync();
                 }
             }
             catch (Exception e)
@@ -39,7 +41,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters
             }
         }
 
-        public async Task AddLatestEntryAsync(TPSData entry)
+        public void AddLatestEntry(TPSData entry)
         {
             if (!_context.LatestEntries.Any(x => x.Provider == entry.Provider))
             {
@@ -55,7 +57,27 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters
                 targetEntry.Entry = entry.Id;
                 _context.LatestEntries.Update(targetEntry);
             }
-            await _context.SaveChangesAsync();
+        }
+
+        public void UpdateMaxTPSEntry(TPSData entry)
+        {
+            if (!_context.MaxTPSEntries.Any(x => x.Provider == entry.Provider))
+            {
+                _context.MaxTPSEntries.Add(new MaxTPSEntry()
+                {
+                    Entry = entry.Id,
+                    Provider = entry.Provider
+                });
+            }
+            else
+            {
+                var targetEntry = _context.MaxTPSEntries.First(x => x.Provider == entry.Provider);
+                if (entry.Tps > _context.TPSData.First(x => x.Id == targetEntry.Entry).Tps)
+                {
+                    targetEntry.Entry = entry.Id;
+                    _context.MaxTPSEntries.Update(targetEntry);
+                }
+            }
         }
     }
 }

@@ -74,6 +74,19 @@ CREATE TABLE [MachineConfigurations] (
 )
 GO
 
+CREATE TABLE [MaxTPSEntries] (
+  [ID] int PRIMARY KEY IDENTITY(1, 1),
+  [Provider] int,
+  [Entry] int
+)
+GO
+
+ALTER TABLE [MaxTPSEntries] ADD FOREIGN KEY ([Provider]) REFERENCES [Providers] ([ID])
+GO
+
+ALTER TABLE [MaxTPSEntries] ADD FOREIGN KEY ([Entry]) REFERENCES [TPSData] ([ID])
+GO
+
 ALTER TABLE [Providers] ADD FOREIGN KEY ([Type]) REFERENCES [ProviderTypes] ([ID])
 GO
 

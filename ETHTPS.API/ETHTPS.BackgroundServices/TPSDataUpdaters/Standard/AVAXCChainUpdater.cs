@@ -79,7 +79,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
                     Provider = provider.Id,
                     Tps = (float)latestBlock.TransactionCount / (float)(latestBlock.Time.Subtract(secondLatestBlock.Time).TotalSeconds)
                 };
-                _context.Tpsdata.Add(data);
+                _context.TPSData.Add(data);
                 _context.SaveChanges();
                 _logger.LogInformation($"{Name}: {data.Tps}TPS");
                 
