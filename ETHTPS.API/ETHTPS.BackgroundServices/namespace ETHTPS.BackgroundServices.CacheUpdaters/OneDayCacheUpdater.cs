@@ -12,32 +12,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ETHTPS.BackgroundServices.IntervalDataUpdaters
+namespace ETHTPS.BackgroundServices.CacheUpdaters
 {
-    public class OneWeekDataUpdater : IntervalDataUpdaterBase
+    public class OneDayCacheUpdater : CacheUpdaterBase
     {
-        public OneWeekDataUpdater(ILogger<HangfireBackgroundService> logger, ETHTPSContext context) : base("OneWeek", logger, context)
+        public OneDayCacheUpdater(ILogger<HangfireBackgroundService> logger, ETHTPSContext context) : base("OneDay", logger, context)
         {
         }
 
         public override Task<IEnumerable<TPSResponseModel>> RunAsync(ETHTPSContext context, int providerID, List<TPSResponseModel> currentCachedResponse)
         {
-            currentCachedResponse = currentCachedResponse.OrderBy(x => x.Date).Where(x => x.Date > DateTime.Now.Subtract(TimeSpan.FromDays(7))).ToList(); //Filter out entries older than 1w
-            var newestEntryDate = DateTime.Now.Subtract(TimeSpan.FromDays(7));
+            currentCachedResponse = currentCachedResponse.OrderBy(x => x.Date).Where(x => x.Date > DateTime.Now.Subtract(TimeSpan.FromDays(1))).ToList(); //Filter out entries older than 1d
+            var newestEntryDate = DateTime.Now.Subtract(TimeSpan.FromDays(1));
             if (currentCachedResponse.Count >= 1)
             {
                 var last = currentCachedResponse.TakeLast(1).First();
                 newestEntryDate = last.Date; //Get last entry date
             }
 
-            var entries = context.Tpsdata.AsEnumerable().Where(x => x.Provider.Value == providerID && x.Date > newestEntryDate).OrderBy(x => x.Date);
-            var groups = entries.GroupBy(x => x.Date.Value.Day);
+            var newEntries = context.Tpsdata.AsEnumerable().Where(x => x.Provider.Value == providerID && x.Date > newestEntryDate).OrderBy(x => x.Date);
+            var groups = newEntries.GroupBy(x => x.Date.Value.Hour);
             var list = new List<TPSResponseModel>();
             foreach (var group in groups)
             {
                 list.Add(new TPSResponseModel()
                 {
-                    Date = group.First().Date.Value.Subtract(TimeSpan.FromSeconds(group.First().Date.Value.Second)).Subtract(TimeSpan.FromMilliseconds(group.First().Date.Value.Millisecond)).Subtract(TimeSpan.FromMinutes(group.First().Date.Value.Minute)).Subtract(TimeSpan.FromHours(group.First().Date.Value.Hour)),
+                    Date = group.First().Date.Value.Subtract(TimeSpan.FromSeconds(group.First().Date.Value.Second)).Subtract(TimeSpan.FromMilliseconds(group.First().Date.Value.Millisecond)).Subtract(TimeSpan.FromMinutes(group.First().Date.Value.Minute)),
                     TPS = group.Average(x => x.Tps.Value)
                 });
             }

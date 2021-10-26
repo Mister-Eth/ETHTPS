@@ -12,11 +12,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ETHTPS.BackgroundServices.IntervalDataUpdaters
+namespace ETHTPS.BackgroundServices.CacheUpdaters
 {
-    public class OneMonthDataUpdater : IntervalDataUpdaterBase
+    public class OneMonthCacheUpdater : CacheUpdaterBase
     {
-        public OneMonthDataUpdater(ILogger<HangfireBackgroundService> logger, ETHTPSContext context) : base("OneMonth", logger, context)
+        public OneMonthCacheUpdater(ILogger<HangfireBackgroundService> logger, ETHTPSContext context) : base("OneMonth", logger, context)
         {
         }
 

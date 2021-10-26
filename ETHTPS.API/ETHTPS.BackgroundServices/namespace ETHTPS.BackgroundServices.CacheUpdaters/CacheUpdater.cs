@@ -12,11 +12,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ETHTPS.BackgroundServices.IntervalDataUpdaters
+namespace ETHTPS.BackgroundServices.CacheUpdaters
 {
-    public class InstantDataUpdater : IntervalDataUpdaterBase
+    public class InstantCacheUpdater : CacheUpdaterBase
     {
-        public InstantDataUpdater(ILogger<HangfireBackgroundService> logger, ETHTPSContext context) : base("Instant", logger, context)
+        public InstantCacheUpdater(ILogger<HangfireBackgroundService> logger, ETHTPSContext context) : base("Instant", logger, context)
         {
         }
 

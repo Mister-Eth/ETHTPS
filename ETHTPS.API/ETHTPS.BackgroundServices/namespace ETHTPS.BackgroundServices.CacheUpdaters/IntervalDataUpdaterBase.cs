@@ -17,13 +17,13 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ETHTPS.BackgroundServices.IntervalDataUpdaters
+namespace ETHTPS.BackgroundServices.CacheUpdaters
 {
-    public abstract class IntervalDataUpdaterBase : HangfireBackgroundService
+    public abstract class CacheUpdaterBase : HangfireBackgroundService
     {
         protected readonly string _interval;
 
-        protected IntervalDataUpdaterBase(string interval, ILogger<HangfireBackgroundService> logger, ETHTPSContext context) : base($"IntervalDataUpdaterBase {interval}", logger, context)
+        protected CacheUpdaterBase(string interval, ILogger<HangfireBackgroundService> logger, ETHTPSContext context) : base($"IntervalDataUpdaterBase {interval}", logger, context)
         {
             _interval = interval;
         }
