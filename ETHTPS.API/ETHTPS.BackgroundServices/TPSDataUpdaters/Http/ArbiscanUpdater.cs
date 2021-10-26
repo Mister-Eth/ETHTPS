@@ -1,5 +1,5 @@
 ﻿using ETHTPS.BackgroundServices.TPSDataUpdaters;
-
+using ETHTPS.Data.Database;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,7 +15,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Http
 {
     public class ArbiscanUpdater : HTTPUpdaterBase
     {
-        public ArbiscanUpdater(IServiceScopeFactory scopeFactory, ILogger<BackgroundServiceBase> logger, IConfiguration configuration) : base("Arbitrum One", scopeFactory, logger, configuration)
+        public ArbiscanUpdater(ETHTPSContext context, ILogger<HangfireBackgroundService> logger, IConfiguration configuration) : base("Arbitrum One", context, logger, configuration)
         {
         }
     }

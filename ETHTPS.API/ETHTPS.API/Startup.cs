@@ -2,10 +2,16 @@ using EtherscanApi.Net.Interfaces;
 
 
 using ETHTPS.API.Middlewares;
+using ETHTPS.BackgroundServices;
+using ETHTPS.BackgroundServices.Activators;
 using ETHTPS.BackgroundServices.IntervalDataUpdaters;
 using ETHTPS.BackgroundServices.TPSDataUpdaters.Http;
 using ETHTPS.BackgroundServices.TPSDataUpdaters.Standard;
 using ETHTPS.Data.Database;
+
+using Hangfire;
+using Hangfire.Common;
+using Hangfire.SqlServer;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -19,6 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ETHTPS.API
@@ -36,6 +43,7 @@ namespace ETHTPS.API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var defaultConnectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddCors(options =>
             {
                 options.AddPolicy(name: MyAllowSpecificOrigins,
@@ -49,8 +57,11 @@ namespace ETHTPS.API
 
             services.AddControllers().AddNewtonsoftJson().AddJsonOptions(options => { options.JsonSerializerOptions.IgnoreNullValues = true; });
             services.AddSwaggerGen();
-            services.AddDbContext<ETHTPSContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ETHTPSContext>(options => options.UseSqlServer(defaultConnectionString));
             services.AddMemoryCache();
+            InitializeHangFire(defaultConnectionString);
+            services.AddHangfire(x => x.UseSqlServerStorage(defaultConnectionString));
+            services.AddHangfireServer();
             if (Configuration.GetValue<bool>("AddDataUpdaters"))
             {
                 AddDataUpdaters(services);
@@ -61,30 +72,50 @@ namespace ETHTPS.API
             }
         }
 
+        public static void InitializeHangFire(string connectionString)
+        {
+            var sqlStorage = new SqlServerStorage(connectionString);
+            JobStorage.Current = sqlStorage;
+        }
+
         private void AddTPSDataUpdaters(IServiceCollection services)
         {
-            services.AddHostedService<ArbiscanUpdater>();
-            services.AddHostedService<EtherscanUpdater>();
-            services.AddHostedService<OptimismUpdater>();
-            services.AddHostedService<PolygonscanUpdater>();
-            services.AddHostedService<XDAIUpdater>();
-            services.AddHostedService<ZKSwapUpdater>();
-            services.AddHostedService<ZKSyncUpdater>();
-            services.AddHostedService<AVAXCChainUpdater>();
-            //services.AddHostedService<DummyDyDxUpdater>();
+            services.AddScoped<ArbiscanUpdater>();
+            RecurringJob.AddOrUpdate<ArbiscanUpdater>("ArbiscanUpdater", x => x.RunAsync(), CronConstants.Every5s);
+            services.AddScoped<EtherscanUpdater>();
+            RecurringJob.AddOrUpdate<EtherscanUpdater>("EtherscanUpdater", x => x.RunAsync(), CronConstants.Every10s);
+            services.AddScoped<OptimismUpdater>();
+            RecurringJob.AddOrUpdate<OptimismUpdater>("OptimismUpdater", x => x.RunAsync(), CronConstants.Every5s);
+            services.AddScoped<PolygonscanUpdater>();
+            RecurringJob.AddOrUpdate<PolygonscanUpdater>("PolygonscanUpdater", x => x.RunAsync(), CronConstants.Every5s);
+            services.AddScoped<XDAIUpdater>();
+            RecurringJob.AddOrUpdate<XDAIUpdater>("XDAIUpdater", x => x.RunAsync(), CronConstants.Every5s);
+            services.AddScoped<ZKSwapUpdater>();
+            RecurringJob.AddOrUpdate<ZKSwapUpdater>("ZKSwapUpdater", x => x.RunAsync(), CronConstants.EveryMinute);
+            services.AddScoped<ZKSyncUpdater>();
+            RecurringJob.AddOrUpdate<ZKSyncUpdater>("ZKSyncUpdater", x => x.RunAsync(), CronConstants.EveryMinute);
+            services.AddScoped<AVAXCChainUpdater>();
+            RecurringJob.AddOrUpdate<AVAXCChainUpdater>("AVAXCChainUpdater", x => x.RunAsync(), CronConstants.Every5s);
+            //services.AddScoped<DummyDyDxUpdater>();
+
         }
 
         private void AddDataUpdaters(IServiceCollection services)
         {
-            services.AddHostedService<InstantDataUpdater>();
-            services.AddHostedService<OneHourDataUpdater>();
-            services.AddHostedService<OneDayDataUpdater>();
-            services.AddHostedService<OneWeekDataUpdater>();
-            services.AddHostedService<OneMonthDataUpdater>();
+            services.AddScoped<InstantDataUpdater>();
+            RecurringJob.AddOrUpdate<InstantDataUpdater>("InstantDataUpdater", x => x.RunAsync(), CronConstants.Every5s);
+            services.AddScoped<OneHourDataUpdater>();
+            RecurringJob.AddOrUpdate<OneHourDataUpdater>("OneHourDataUpdater", x => x.RunAsync(), CronConstants.Every5Minutes);
+            services.AddScoped<OneDayDataUpdater>();
+            RecurringJob.AddOrUpdate<OneDayDataUpdater>("OneDayDataUpdater", x => x.RunAsync(), CronConstants.EveryHour);
+            services.AddScoped<OneWeekDataUpdater>();
+            RecurringJob.AddOrUpdate<OneWeekDataUpdater>("OneWeekDataUpdater", x => x.RunAsync(), CronConstants.EveryMidnight);
+            services.AddScoped<OneMonthDataUpdater>();
+            RecurringJob.AddOrUpdate<OneMonthDataUpdater>("OneMonthDataUpdater", x => x.RunAsync(), CronConstants.EveryMidnight);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -95,6 +126,12 @@ namespace ETHTPS.API
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
             app.UseMiddleware<AccesStatsMiddleware>();
+           // GlobalConfiguration.Configuration.UseActivator(new HangfireActivator(serviceProvider));
+            app.UseHangfireServer();
+            if (Configuration.GetValue<bool>("ShowHangfire"))
+            {
+                app.UseHangfireDashboard();
+            }
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

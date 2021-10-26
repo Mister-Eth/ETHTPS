@@ -15,19 +15,18 @@ using System.Threading.Tasks;
 
 namespace ETHTPS.BackgroundServices
 {
-    public abstract class BackgroundServiceBase : IHostedService, IDisposable
+    [Obsolete("This class is obsolete. Use HangfireBackgroundService instead.", error:true)]
+    public abstract class RecurringBackgroundServiceBase : IHostedService, IDisposable
     {
         protected string Name { get; private set; }
         protected readonly TimeSpan _updateEvery;
         protected Timer _timer;
         protected readonly IServiceScopeFactory _scopeFactory;
-        protected readonly ILogger<BackgroundServiceBase> _logger;
+        protected readonly ILogger<HangfireBackgroundService> _logger;
 
-        protected BackgroundServiceBase(string name, IServiceScopeFactory scopeFactory, ILogger<BackgroundServiceBase> logger, TimeSpan updateEvery)
+        protected RecurringBackgroundServiceBase(string name, ETHTPSContext context, ILogger<HangfireBackgroundService> logger)
         {
             Name = name;
-            _updateEvery = updateEvery;
-            _scopeFactory = scopeFactory;
             _logger = logger;
         }
 

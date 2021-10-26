@@ -17,7 +17,7 @@ namespace ETHTPS.BackgroundServices.IntervalDataUpdaters
 {
     public class OneHourDataUpdater : IntervalDataUpdaterBase
     {
-        public OneHourDataUpdater(ILogger<BackgroundServiceBase> logger, IServiceScopeFactory serviceScopeFactory) : base(logger, serviceScopeFactory, "OneHour", TimeSpan.FromMinutes(5))
+        public OneHourDataUpdater(ILogger<HangfireBackgroundService> logger, ETHTPSContext context) : base("OneHour", logger, context)
         {
         }
 

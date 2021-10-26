@@ -1,6 +1,6 @@
 ﻿
 using ETHTPS.BackgroundServices.TPSDataUpdaters;
-
+using ETHTPS.Data.Database;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,7 +16,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Http
 {
     public class EtherscanUpdater : HTTPUpdaterBase
     {
-        public EtherscanUpdater(IServiceScopeFactory scopeFactory, ILogger<BackgroundServiceBase> logger, IConfiguration configuration) : base("Ethereum", scopeFactory, logger, configuration)
+        public EtherscanUpdater(ETHTPSContext context, ILogger<HangfireBackgroundService> logger, IConfiguration configuration) : base("Ethereum", context, logger, configuration)
         {
         }
     }

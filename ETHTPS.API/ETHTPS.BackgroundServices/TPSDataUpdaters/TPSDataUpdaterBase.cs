@@ -15,28 +15,28 @@ using System.Threading.Tasks;
 
 namespace ETHTPS.BackgroundServices.TPSDataUpdaters
 {
-    public abstract class TPSDataUpdaterBase : BackgroundServiceBase
+    public abstract class TPSDataUpdaterBase : HangfireBackgroundService
     {
-        public TPSDataUpdaterBase(string name, IServiceScopeFactory scopeFactory, ILogger<BackgroundServiceBase> logger, TimeSpan updateEvery) : base(name, scopeFactory, logger, updateEvery)
+        protected TPSDataUpdaterBase(string name, ILogger<HangfireBackgroundService> logger, ETHTPSContext context) : base(name, logger, context)
         {
-
         }
-        public abstract Task<TPSData> LogDataAsync(ETHTPSContext context);
 
-        public override async Task RunAsync(ETHTPSContext context)
+        public abstract Task<TPSData> LogDataAsync();
+
+        public override async Task RunAsync()
         {
-            var data = await LogDataAsync(context);
+            var data = await LogDataAsync();
             if (data != null)
             {
-                await AddLatestEntryAsync(data, context);
+                await AddLatestEntryAsync(data);
             }
         }
 
-        public async Task AddLatestEntryAsync(TPSData entry, ETHTPSContext context)
+        public async Task AddLatestEntryAsync(TPSData entry)
         {
-            if (!context.LatestEntries.Any(x => x.Provider == entry.Provider))
+            if (!_context.LatestEntries.Any(x => x.Provider == entry.Provider))
             {
-                context.LatestEntries.Add(new LatestEntry()
+                _context.LatestEntries.Add(new LatestEntry()
                 {
                     Entry = entry.Id,
                     Provider = entry.Provider
@@ -44,11 +44,11 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters
             }
             else
             {
-                var targetEntry = context.LatestEntries.First(x => x.Provider == entry.Provider);
+                var targetEntry = _context.LatestEntries.First(x => x.Provider == entry.Provider);
                 targetEntry.Entry = entry.Id;
-                context.LatestEntries.Update(targetEntry);
+                _context.LatestEntries.Update(targetEntry);
             }
-            await context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
     }
 }
