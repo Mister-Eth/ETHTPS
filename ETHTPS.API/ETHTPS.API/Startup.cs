@@ -2,6 +2,7 @@ using EtherscanApi.Net.Interfaces;
 
 
 using ETHTPS.API.Middlewares;
+using ETHTPS.BackgroundServices;
 using ETHTPS.BackgroundServices.Activators;
 using ETHTPS.BackgroundServices.IntervalDataUpdaters;
 using ETHTPS.BackgroundServices.TPSDataUpdaters.Http;
@@ -9,6 +10,7 @@ using ETHTPS.BackgroundServices.TPSDataUpdaters.Standard;
 using ETHTPS.Data.Database;
 
 using Hangfire;
+using Hangfire.Common;
 using Hangfire.SqlServer;
 
 using Microsoft.AspNetCore.Builder;
@@ -79,26 +81,37 @@ namespace ETHTPS.API
         private void AddTPSDataUpdaters(IServiceCollection services)
         {
             services.AddScoped<ArbiscanUpdater>();
-#pragma warning disable CS0618 // Type or member is obsolete
-            RecurringJob.AddOrUpdate<ArbiscanUpdater>("", x => x.RunAsync(), Cron.Se(5));
-#pragma warning restore CS0618 // Type or member is obsolete
+            RecurringJob.AddOrUpdate<ArbiscanUpdater>("ArbiscanUpdater", x => x.RunAsync(), CronConstants.Every5s);
             services.AddScoped<EtherscanUpdater>();
+            RecurringJob.AddOrUpdate<EtherscanUpdater>("EtherscanUpdater", x => x.RunAsync(), CronConstants.Every10s);
             services.AddScoped<OptimismUpdater>();
+            RecurringJob.AddOrUpdate<OptimismUpdater>("OptimismUpdater", x => x.RunAsync(), CronConstants.Every5s);
             services.AddScoped<PolygonscanUpdater>();
+            RecurringJob.AddOrUpdate<PolygonscanUpdater>("PolygonscanUpdater", x => x.RunAsync(), CronConstants.Every5s);
             services.AddScoped<XDAIUpdater>();
+            RecurringJob.AddOrUpdate<XDAIUpdater>("XDAIUpdater", x => x.RunAsync(), CronConstants.Every5s);
             services.AddScoped<ZKSwapUpdater>();
+            RecurringJob.AddOrUpdate<ZKSwapUpdater>("ZKSwapUpdater", x => x.RunAsync(), CronConstants.EveryMinute);
             services.AddScoped<ZKSyncUpdater>();
+            RecurringJob.AddOrUpdate<ZKSyncUpdater>("ZKSyncUpdater", x => x.RunAsync(), CronConstants.EveryMinute);
             services.AddScoped<AVAXCChainUpdater>();
+            RecurringJob.AddOrUpdate<AVAXCChainUpdater>("AVAXCChainUpdater", x => x.RunAsync(), CronConstants.Every5s);
             //services.AddScoped<DummyDyDxUpdater>();
+
         }
 
         private void AddDataUpdaters(IServiceCollection services)
         {
             services.AddScoped<InstantDataUpdater>();
+            RecurringJob.AddOrUpdate<InstantDataUpdater>("InstantDataUpdater", x => x.RunAsync(), CronConstants.Every5s);
             services.AddScoped<OneHourDataUpdater>();
+            RecurringJob.AddOrUpdate<OneHourDataUpdater>("OneHourDataUpdater", x => x.RunAsync(), CronConstants.Every5Minutes);
             services.AddScoped<OneDayDataUpdater>();
+            RecurringJob.AddOrUpdate<OneDayDataUpdater>("OneDayDataUpdater", x => x.RunAsync(), CronConstants.EveryHour);
             services.AddScoped<OneWeekDataUpdater>();
+            RecurringJob.AddOrUpdate<OneWeekDataUpdater>("OneWeekDataUpdater", x => x.RunAsync(), CronConstants.EveryMidnight);
             services.AddScoped<OneMonthDataUpdater>();
+            RecurringJob.AddOrUpdate<OneMonthDataUpdater>("OneMonthDataUpdater", x => x.RunAsync(), CronConstants.EveryMidnight);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -115,7 +128,10 @@ namespace ETHTPS.API
             app.UseMiddleware<AccesStatsMiddleware>();
            // GlobalConfiguration.Configuration.UseActivator(new HangfireActivator(serviceProvider));
             app.UseHangfireServer();
-            app.UseHangfireDashboard();
+            if (Configuration.GetValue<bool>("ShowHangfire"))
+            {
+                app.UseHangfireDashboard();
+            }
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
