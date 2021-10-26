@@ -72,9 +72,13 @@ namespace ETHTPS.API.Controllers
                 }
                 else
                 {
-                    ;
+                    _context.MaxTPSEntries.Add(new MaxTPSEntry()
+                    {
+                        Provider = provider.Id
+                    });
                 }
             }
+            _context.SaveChanges();
             return "ok";
         }
 
