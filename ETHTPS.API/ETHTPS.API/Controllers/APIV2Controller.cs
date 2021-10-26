@@ -107,12 +107,15 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<TPSResponseModel>> TPS(string provider, string interval, string network, bool includeSidechains)
+        public async Task<IEnumerable<TPSResponseModel>> TPS(string provider, string interval, string network, bool includeSidechains = true)
         {
             var response = await _context.GetOrAddCachedResponseAsync<IEnumerable<TPSResponseModel>>(provider, interval);
-            if (!includeSidechains) 
+            if (provider.ToUpper() == "ANY")
             {
-                response = response.Where(x => !IsSidechain(x.Provider));
+                if (!includeSidechains)
+                {
+                    response = response.Where(x => !IsSidechain(x.Provider));
+                }
             }
             foreach(var x in response)
             {
