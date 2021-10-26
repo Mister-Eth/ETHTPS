@@ -3,6 +3,7 @@
 using ETHTPS.API.Middlewares;
 using ETHTPS.BackgroundServices;
 using ETHTPS.BackgroundServices.CacheUpdaters;
+using ETHTPS.BackgroundServices.Infrastructure.Extensions;
 using ETHTPS.BackgroundServices.TPSDataUpdaters.Http;
 using ETHTPS.BackgroundServices.TPSDataUpdaters.Standard;
 using ETHTPS.Data.Database;
@@ -33,7 +34,7 @@ namespace ETHTPS.API
         }
 
         public IConfiguration Configuration { get; }
-        public string[] Queues => Configuration.GetSection("Hangfire").GetSection("Queues").Get<string[]>();
+        public string[] ConfigurationQueues => Configuration.GetSection("Hangfire").GetSection("Queues").Get<string[]>();
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -57,8 +58,6 @@ namespace ETHTPS.API
             services.AddHangfire(x => x.UseSqlServerStorage(defaultConnectionString));
             services.AddHangfireServer();
             AddCacheUpdaters(services);
-            services.AddScoped<BobaNetworkUpdater>();
-            RecurringJob.AddOrUpdate<BobaNetworkUpdater>("BobaNetworkUpdater", x => x.RunAsync(), CronConstants.EveryMinute, queue: TPSUPDATERQUEUE);
             AddTPSDataUpdaters(services);
         }
 
@@ -71,61 +70,34 @@ namespace ETHTPS.API
         private const string TPSUPDATERQUEUE = "tpsdata";
         private const string CACHEUPDATERQUEUE = "cache";
 
-#pragma warning disable CS0618
         private void AddTPSDataUpdaters(IServiceCollection services)
         {
-            if (Queues.Contains(TPSUPDATERQUEUE))
+            if (ConfigurationQueues.Contains(TPSUPDATERQUEUE))
             {
-                services.AddScoped<ArbiscanUpdater>();
-                RecurringJob.AddOrUpdate<ArbiscanUpdater>("ArbiscanUpdater", x => x.RunAsync(), CronConstants.Every5s, queue: TPSUPDATERQUEUE);
-                
-                services.AddScoped<EtherscanUpdater>();
-                RecurringJob.AddOrUpdate<EtherscanUpdater>("EtherscanUpdater", x => x.RunAsync(), CronConstants.Every10s, queue: TPSUPDATERQUEUE);
-                
-                services.AddScoped<OptimismUpdater>();
-                RecurringJob.AddOrUpdate<OptimismUpdater>("OptimismUpdater", x => x.RunAsync(), CronConstants.Every5s, queue: TPSUPDATERQUEUE);
-                
-                services.AddScoped<PolygonscanUpdater>();
-                RecurringJob.AddOrUpdate<PolygonscanUpdater>("PolygonscanUpdater", x => x.RunAsync(), CronConstants.Every5s, queue: TPSUPDATERQUEUE);
-                
-                services.AddScoped<XDAIUpdater>();
-                RecurringJob.AddOrUpdate<XDAIUpdater>("XDAIUpdater", x => x.RunAsync(), CronConstants.Every5s, queue: TPSUPDATERQUEUE);
-                
-                services.AddScoped<ZKSwapUpdater>();
-                RecurringJob.AddOrUpdate<ZKSwapUpdater>("ZKSwapUpdater", x => x.RunAsync(), CronConstants.EveryMinute, queue: TPSUPDATERQUEUE);
-                
-                services.AddScoped<ZKSyncUpdater>();
-                RecurringJob.AddOrUpdate<ZKSyncUpdater>("ZKSyncUpdater", x => x.RunAsync(), CronConstants.EveryMinute, queue: TPSUPDATERQUEUE);
-                
-                services.AddScoped<AVAXCChainUpdater>();
-                RecurringJob.AddOrUpdate<AVAXCChainUpdater>("AVAXCChainUpdater", x => x.RunAsync(), CronConstants.Every5s, queue: TPSUPDATERQUEUE);
-                
-                
-                services.AddScoped<InstantCacheUpdater>();
-                RecurringJob.AddOrUpdate<InstantCacheUpdater>("InstantDataUpdater", x => x.RunAsync(), CronConstants.Every5s, queue: TPSUPDATERQUEUE);
-                //services.AddScoped<DummyDyDxUpdater>();
+                services.RegisterHangfireBackgroundService<ArbiscanUpdater>(CronConstants.Every5s, TPSUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<EtherscanUpdater>(CronConstants.Every10s, TPSUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<OptimismUpdater>(CronConstants.Every5s, TPSUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<PolygonscanUpdater>(CronConstants.Every5s, TPSUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<XDAIUpdater>(CronConstants.Every5s, TPSUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<ZKSwapUpdater>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<ZKSyncUpdater>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<AVAXCChainUpdater>(CronConstants.Every5s, TPSUPDATERQUEUE);
+
+                services.RegisterHangfireBackgroundService<InstantCacheUpdater>(CronConstants.Every5s, TPSUPDATERQUEUE);
             }
         }
 
         private void AddCacheUpdaters(IServiceCollection services)
         {
-            if (Queues.Contains(CACHEUPDATERQUEUE))
+            if (ConfigurationQueues.Contains(CACHEUPDATERQUEUE))
             {
-                services.AddScoped<OneHourCacheUpdater>();
-                RecurringJob.AddOrUpdate<OneHourCacheUpdater>("OneHourDataUpdater", x => x.RunAsync(), CronConstants.Every15Minutes, queue: CACHEUPDATERQUEUE);
-                
-                services.AddScoped<OneDayCacheUpdater>();
-                RecurringJob.AddOrUpdate<OneDayCacheUpdater>("OneDayDataUpdater", x => x.RunAsync(), CronConstants.EveryHour, queue: CACHEUPDATERQUEUE);
-                
-                services.AddScoped<OneWeekCacheUpdater>();
-                RecurringJob.AddOrUpdate<OneWeekCacheUpdater>("OneWeekDataUpdater", x => x.RunAsync(), CronConstants.EveryMidnight, queue: CACHEUPDATERQUEUE);
-                
-                services.AddScoped<OneMonthCacheUpdater>();
-                RecurringJob.AddOrUpdate<OneMonthCacheUpdater>("OneMonthDataUpdater", x => x.RunAsync(), CronConstants.EveryMidnight, queue: CACHEUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<OneHourCacheUpdater>(CronConstants.Every15Minutes, CACHEUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<OneDayCacheUpdater>(CronConstants.EveryHour, CACHEUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<OneWeekCacheUpdater>(CronConstants.EveryMidnight, CACHEUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<OneMonthCacheUpdater>(CronConstants.EveryMidnight, CACHEUPDATERQUEUE);
             }
         }
 
-#pragma warning restore CS0618
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
@@ -142,7 +114,7 @@ namespace ETHTPS.API
 
             app.UseHangfireServer(options: new BackgroundJobServerOptions()
             {
-                Queues = Queues ?? new string[] { "default" }
+                Queues = ConfigurationQueues ?? new string[] { "default" }
             });
             if (Configuration.GetSection("Hangfire").GetValue<bool>("Show"))
             {

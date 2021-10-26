@@ -81,7 +81,7 @@ class ProviderTable extends React.Component {
               </TableCell>
               <TableCell align="left">
               <div className={'l1'}>
-                {(row.maxTPS < row.tps)?row.tps:row.maxTPS}
+                {row.maxTPS}
               </div>
               </TableCell>
               <TableCell align="left">
