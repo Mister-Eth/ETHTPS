@@ -33,14 +33,19 @@ function App() {
     <center>
       <TPSStat></TPSStat>
     </center>
-
-    <div>
-      <TPSChart></TPSChart>
-    </div>
     
+    <div className={''}>
     <div className={"container"}>
      <ProviderTable/>
     </div>
+
+    <div className={"container"}>
+      <h3>TPS overview</h3>
+      <TPSChart></TPSChart>
+    </div>
+    
+    </div>
+    
    <br></br>
    <div className={"container"}>
     <p>

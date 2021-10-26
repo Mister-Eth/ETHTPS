@@ -27,7 +27,6 @@ class TPSChart extends React.Component {
     render(){
         return <>
         <ThemeProvider theme={theme}>
-           <div className={"container"}>
                 <div className={"flex-right"}>
                     <IntervalSelector onIntervalChanged={(e) => { this.onIntervalChanged(e) }}></IntervalSelector>
                 </div>
@@ -37,7 +36,6 @@ class TPSChart extends React.Component {
                 <div className={"flex-right"}>
                     <ScaleSelector onScaleChanged={(e) => { this.onScaleChanged(e) }}></ScaleSelector>
                 </div>
-           </div>
         </ThemeProvider>
         </>;
     }

@@ -117,6 +117,15 @@ ul {
   padding: 10px;
   margin:10px;
   border-radius: 10px;
+  max-width: 600px;
+  min-width: 400px;
+}
+
+.flex-container{
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 canvas {
