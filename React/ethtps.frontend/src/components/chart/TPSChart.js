@@ -12,7 +12,7 @@ class TPSChart extends React.Component {
 
         this.state = {
             scale: "LOG",
-            interval: "1d"
+            interval: "1w"
         }
     }
 
