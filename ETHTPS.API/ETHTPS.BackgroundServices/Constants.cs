@@ -12,6 +12,7 @@ namespace ETHTPS.BackgroundServices
         public const string Every10s = "*/10 * * * * *";
         public const string EveryMinute = "* * * * *";
         public const string Every5Minutes = "*/5 * * * *";
+        public const string Every15Minutes = "*/15 * * * *";
         public const string EveryHour = "0 * * * *";
         public const string EveryMidnight = "0 0 * * *";
     }

@@ -95,7 +95,7 @@ namespace ETHTPS.API
             services.AddScoped<InstantCacheUpdater>();
             RecurringJob.AddOrUpdate<InstantCacheUpdater>("InstantDataUpdater", x => x.RunAsync(), CronConstants.Every5s, queue: CACHEUPDATERQUEUE);
             services.AddScoped<OneHourCacheUpdater>();
-            RecurringJob.AddOrUpdate<OneHourCacheUpdater>("OneHourDataUpdater", x => x.RunAsync(), CronConstants.Every5Minutes, queue: CACHEUPDATERQUEUE);
+            RecurringJob.AddOrUpdate<OneHourCacheUpdater>("OneHourDataUpdater", x => x.RunAsync(), CronConstants.Every15Minutes, queue: CACHEUPDATERQUEUE);
             services.AddScoped<OneDayCacheUpdater>();
             RecurringJob.AddOrUpdate<OneDayCacheUpdater>("OneDayDataUpdater", x => x.RunAsync(), CronConstants.EveryHour, queue: CACHEUPDATERQUEUE);
             services.AddScoped<OneWeekCacheUpdater>();
