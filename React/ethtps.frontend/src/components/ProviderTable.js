@@ -161,6 +161,11 @@ class ProviderTable extends React.Component {
         this.setState({rows: rows});
     }
 
+    async updateTPS(){
+        let data = await globalApi.getTPS('Any', 'Instant', 'Mainnet', true);
+        liveTPSObservable.triggerCallbacks(data);
+    }
+
     async componentDidMount(){
         let providers = await globalApi.getProviders();
         this.setState({rows: providers.map(this.createRow)});
@@ -169,6 +174,7 @@ class ProviderTable extends React.Component {
         providerExclusionList.registerOnProviderExcluded(this.onProviderExcluded.bind(this));
         providerExclusionList.registerOnProviderIncluded(this.onProviderIncluded.bind(this));
         await this.updateMaxTPS();
+        await this.updateTPS();
      }
 }    
 
