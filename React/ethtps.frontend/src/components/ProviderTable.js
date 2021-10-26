@@ -71,7 +71,11 @@ class ProviderTable extends React.Component {
               </TableCell>
               <TableCell align="left">
                 <div className={'l1'}>
-                  {row.tps}
+                  {(row.tps == 0)?
+                  <div class="tooltip red">0
+                  <span class="tooltiptext">This network is doing less than 0.01 TPS</span>
+                </div>
+                  :row.tps}
                   </div>
               </TableCell>
               <TableCell align="left">
