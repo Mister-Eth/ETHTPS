@@ -28,7 +28,7 @@ namespace ETHTPS.BackgroundServices.IntervalDataUpdaters
             _interval = interval;
         }
 
-        public abstract Task<IEnumerable<TPSResponseModel>> RunAsync(ETHTPSContext _context, int providerID, List<TPSResponseModel> currentCachedResponse);
+        public abstract Task<IEnumerable<TPSResponseModel>> RunAsync(ETHTPSContext context, int providerID, List<TPSResponseModel> currentCachedResponse);
 
         public override async Task RunAsync()
         {
@@ -51,9 +51,9 @@ namespace ETHTPS.BackgroundServices.IntervalDataUpdaters
                     });
                     _context.SaveChanges();
                 }
-                var entry = context.CachedResponses.First(x => x.Name == name);
-                var targetProvider = context.Providers.First(x => x.Name.ToUpper() == provider.ToUpper());
-                result = await RunAsync(context, targetProvider.Id, JsonConvert.DeserializeObject<List<TPSResponseModel>>(entry.Json));
+                var entry = _context.CachedResponses.First(x => x.Name == name);
+                var targetProvider = _context.Providers.First(x => x.Name.ToUpper() == provider.ToUpper());
+                result = await RunAsync(_context, targetProvider.Id, JsonConvert.DeserializeObject<List<TPSResponseModel>>(entry.Json));
                 if (result?.Count() > 0)
                 {
                     entry.Json = JsonConvert.SerializeObject(result);
@@ -62,8 +62,8 @@ namespace ETHTPS.BackgroundServices.IntervalDataUpdaters
                 {
                     entry.Json = "[]";
                 }
-                context.Update(entry);
-                context.SaveChanges();
+                _context.Update(entry);
+                _context.SaveChanges();
 
                 _logger.LogInformation($"Updated {provider}-{_interval}");
                 if (timeInterval == TimeInterval.Instant)

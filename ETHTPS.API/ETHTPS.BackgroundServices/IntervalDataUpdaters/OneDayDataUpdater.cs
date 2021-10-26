@@ -20,7 +20,7 @@ namespace ETHTPS.BackgroundServices.IntervalDataUpdaters
         {
         }
 
-        public override Task<IEnumerable<TPSResponseModel>> RunAsync(ETHTPSContext _context, int providerID, List<TPSResponseModel> currentCachedResponse)
+        public override Task<IEnumerable<TPSResponseModel>> RunAsync(ETHTPSContext context, int providerID, List<TPSResponseModel> currentCachedResponse)
         {
             currentCachedResponse = currentCachedResponse.OrderBy(x => x.Date).Where(x => x.Date > DateTime.Now.Subtract(TimeSpan.FromDays(1))).ToList(); //Filter out entries older than 1d
             var newestEntryDate = DateTime.Now.Subtract(TimeSpan.FromDays(1));
