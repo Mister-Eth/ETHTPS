@@ -29,10 +29,26 @@ class ProviderTable extends React.Component {
       <Table sx={{ minWidth: 300 }} size={"small"} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell width={10} align="left">No. </TableCell>
-            <TableCell width={150} align="left">Name</TableCell>
-            <TableCell width={10} align="left">TPS</TableCell>
-            <TableCell width={150} align="left">Type</TableCell>
+            <TableCell width={10} align="left">
+                <div className={'l1 b'}>
+                    No.
+                </div>
+            </TableCell>
+            <TableCell width={150} align="left">
+                <div className={'l1 b'}>
+                    Name
+                </div>
+            </TableCell>
+            <TableCell width={10} align="left">
+                <div className={'l1 b'}>
+                    TPS
+                </div>
+            </TableCell>
+            <TableCell width={150} align="left">
+                <div className={'l1 b'}>
+                    Type
+                </div>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -41,15 +57,28 @@ class ProviderTable extends React.Component {
               key={row.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell align="left">{row.no}</TableCell>
               <TableCell align="left">
-                    <a href={`/${row.name}`}>
-                        <img className={'provider-icon'} src={`/provider-icons/${row.name}.png`} />
-                        {row.name}
-                    </a>
+              <div className={'l1'}></div>
+                  {row.no}
               </TableCell>
-              <TableCell align="left">{row.tps}</TableCell>
-              <TableCell align="left">{row.type}</TableCell>
+              <TableCell align="left">
+                    <div className={'l1'}>
+                        <a href={`/${row.name}`}>
+                            <img className={'provider-icon'} src={`/provider-icons/${row.name}.png`} />
+                            {row.name}
+                        </a>
+                    </div>
+              </TableCell>
+              <TableCell align="left">
+                <div className={'l1'}>
+                  {row.tps}
+                  </div>
+              </TableCell>
+              <TableCell align="left">
+                <div className={'l1'}>
+                  {row.type}
+                </div>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

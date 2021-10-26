@@ -124,8 +124,8 @@ canvas {
 }
 
 .provider-icon{
-  width: 25x;
-  height: 25px;
+  width: 18px;
+  height: 18px;
   margin-right: 5px;
 }
 
@@ -145,4 +145,12 @@ a:active { color: #000000; text-decoration: none}
 .td > provider-icon,
 .td > a{
   display: inline-block;
+}
+
+.l1{
+  font-size: 18px;
+}
+
+.b{
+  font-weight: 600;
 }

@@ -76,22 +76,33 @@ namespace ETHTPS.API
             {
                 services.AddScoped<ArbiscanUpdater>();
                 RecurringJob.AddOrUpdate<ArbiscanUpdater>("ArbiscanUpdater", x => x.RunAsync(), CronConstants.Every5s, queue: TPSUPDATERQUEUE);
+                
                 services.AddScoped<EtherscanUpdater>();
                 RecurringJob.AddOrUpdate<EtherscanUpdater>("EtherscanUpdater", x => x.RunAsync(), CronConstants.Every10s, queue: TPSUPDATERQUEUE);
+                
                 services.AddScoped<OptimismUpdater>();
                 RecurringJob.AddOrUpdate<OptimismUpdater>("OptimismUpdater", x => x.RunAsync(), CronConstants.Every5s, queue: TPSUPDATERQUEUE);
+                
                 services.AddScoped<PolygonscanUpdater>();
                 RecurringJob.AddOrUpdate<PolygonscanUpdater>("PolygonscanUpdater", x => x.RunAsync(), CronConstants.Every5s, queue: TPSUPDATERQUEUE);
+                
                 services.AddScoped<XDAIUpdater>();
                 RecurringJob.AddOrUpdate<XDAIUpdater>("XDAIUpdater", x => x.RunAsync(), CronConstants.Every5s, queue: TPSUPDATERQUEUE);
+                
                 services.AddScoped<ZKSwapUpdater>();
                 RecurringJob.AddOrUpdate<ZKSwapUpdater>("ZKSwapUpdater", x => x.RunAsync(), CronConstants.EveryMinute, queue: TPSUPDATERQUEUE);
+                
                 services.AddScoped<ZKSyncUpdater>();
                 RecurringJob.AddOrUpdate<ZKSyncUpdater>("ZKSyncUpdater", x => x.RunAsync(), CronConstants.EveryMinute, queue: TPSUPDATERQUEUE);
+                
                 services.AddScoped<AVAXCChainUpdater>();
                 RecurringJob.AddOrUpdate<AVAXCChainUpdater>("AVAXCChainUpdater", x => x.RunAsync(), CronConstants.Every5s, queue: TPSUPDATERQUEUE);
+                
+                services.AddScoped<BobaNetworkUpdater>();
+                RecurringJob.AddOrUpdate<BobaNetworkUpdater>("BobaNetworkUpdater", x => x.RunAsync(), CronConstants.Every5Minutes, queue: TPSUPDATERQUEUE);
+                
                 services.AddScoped<InstantCacheUpdater>();
-                RecurringJob.AddOrUpdate<InstantCacheUpdater>("InstantDataUpdater", x => x.RunAsync(), CronConstants.Every5s, queue: TPSUPDATERQUEUE);
+                RecurringJob.AddOrUpdate<InstantCacheUpdater>("InstantDataUpdater", x => x.RunAsync(), CronConstants.Every5Minutes, queue: TPSUPDATERQUEUE);
                 //services.AddScoped<DummyDyDxUpdater>();
             }
         }
@@ -102,10 +113,13 @@ namespace ETHTPS.API
             {
                 services.AddScoped<OneHourCacheUpdater>();
                 RecurringJob.AddOrUpdate<OneHourCacheUpdater>("OneHourDataUpdater", x => x.RunAsync(), CronConstants.Every15Minutes, queue: CACHEUPDATERQUEUE);
+                
                 services.AddScoped<OneDayCacheUpdater>();
                 RecurringJob.AddOrUpdate<OneDayCacheUpdater>("OneDayDataUpdater", x => x.RunAsync(), CronConstants.EveryHour, queue: CACHEUPDATERQUEUE);
+                
                 services.AddScoped<OneWeekCacheUpdater>();
                 RecurringJob.AddOrUpdate<OneWeekCacheUpdater>("OneWeekDataUpdater", x => x.RunAsync(), CronConstants.EveryMidnight, queue: CACHEUPDATERQUEUE);
+                
                 services.AddScoped<OneMonthCacheUpdater>();
                 RecurringJob.AddOrUpdate<OneMonthCacheUpdater>("OneMonthDataUpdater", x => x.RunAsync(), CronConstants.EveryMidnight, queue: CACHEUPDATERQUEUE);
             }
