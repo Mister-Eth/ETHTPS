@@ -1,6 +1,12 @@
 import * as React from 'react';
 import { globalApi, providerExclusionList, liveTPSObservable } from '../services/common';
-import { DataGrid } from '@mui/x-data-grid';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 class ProviderTable extends React.Component {
     constructor(props){
@@ -11,35 +17,55 @@ class ProviderTable extends React.Component {
         }
     }
 
-    columns = [
-        { field: 'providerName', headerName: 'Name', width: 120 },
-        { field: 'type', headerName: 'Type', width: 120 },
-        {
-          field: 'tps',
-          headerName: 'TPS',
-          type: 'number',
-          width: 130,
-        }
-      ];
+    createData(name, calories, fat, carbs, protein) {
+        return { name, calories, fat, carbs, protein };
+      }
 
     render(){
         return <>
-        <h4>Overview</h4>
+        <h4>Projects</h4>
         <div style={{ height: 400, width: '100%' }}>
-      <DataGrid
-        disableColumnMenu={true}
-        rows={this.state.rows}
-        columns={this.columns}
-        ptpsSize={15}
-        rowsPerPageOptions={[]}
-        paging={false}
-      />
+        <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} size={"small"} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell align="left">No. </TableCell>
+            <TableCell align="left">Name</TableCell>
+            <TableCell align="left">TPS</TableCell>
+            <TableCell align="left">Type</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {this.state.rows.map((row) => (
+            <TableRow
+              key={row.name}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell align="left">{row.no}</TableCell>
+              <TableCell align="left">{row.name}</TableCell>
+              <TableCell align="left">{row.tps}</TableCell>
+              <TableCell align="left">{row.type}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
     </div>
         </>;
     }
 
     createRow(x, i){
-        return  { id: i, type: x.type, providerName: x.name, tps: 0 };
+        return  { no: (i + 1) + ".", name: x.name, type: x.type, tps: 0 };
+    }
+
+    
+    getTPS(data, provider) {
+        for(let tpsEntry of data){
+            if (tpsEntry.provider === provider){
+                return tpsEntry.tps;
+            }
+        }
+        return 0;
     }
 
     async componentDidMount(){
@@ -48,15 +74,11 @@ class ProviderTable extends React.Component {
 
         liveTPSObservable.registerOnTPSChanged(x => {
             let rows = this.state.rows;
-            let getTPS = (provider) => {
-                for(let tpsEntry of x){
-                    if (tpsEntry.provider == provider){
-                        return tpsEntry.tps;
-                    }
-                }
-            }
             for(let row of rows) {
-                row.tps = getTPS(row.providerName);
+                let tps = Math.round(this.getTPS(x, row.name) * 100) / 100;
+                tps = tps.toString();
+                tps = tps.substr(0, tps.indexOf('.') + 3);
+                row.tps = tps;
             }
             this.setState({rows: rows});
         });
