@@ -6,6 +6,7 @@ import ProviderTable from './components/ProviderTable';
 import githubIcon from './assets/600px-Octicons-mark-github.svg - inv.png';
 import twitterIcon from './assets/1486053611-twitter_79195.png';
 import discordIcon from './assets/discord-mascot.png';
+import logo200 from './assets/logo200.png'
 
 function App() {
   return (
