@@ -1,16 +1,13 @@
-using EtherscanApi.Net.Interfaces;
 
 
 using ETHTPS.API.Middlewares;
 using ETHTPS.BackgroundServices;
-using ETHTPS.BackgroundServices.Activators;
 using ETHTPS.BackgroundServices.CacheUpdaters;
 using ETHTPS.BackgroundServices.TPSDataUpdaters.Http;
 using ETHTPS.BackgroundServices.TPSDataUpdaters.Standard;
 using ETHTPS.Data.Database;
 
 using Hangfire;
-using Hangfire.Common;
 using Hangfire.SqlServer;
 
 using Microsoft.AspNetCore.Builder;
@@ -22,11 +19,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace ETHTPS.API
 {
@@ -127,7 +119,7 @@ namespace ETHTPS.API
             app.UseMiddleware<AccesStatsMiddleware>();
             // GlobalConfiguration.Configuration.UseActivator(new HangfireActivator(serviceProvider));
 
-            var queues = Configuration.GetSection("Hangfire").GetValue<string[]>("Queues");
+            var queues = Configuration.GetSection("Hangfire").GetSection("Queues").Get<string[]>();
             app.UseHangfireServer(options: new BackgroundJobServerOptions()
             {
                 Queues = queues?? new string[] { "default" }
