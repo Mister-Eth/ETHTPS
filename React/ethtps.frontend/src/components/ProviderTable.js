@@ -21,8 +21,8 @@ class ProviderTable extends React.Component {
         return <>
         <h3>Projects</h3>
         <div style={{ width: '100%' }}>
-        <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 300 }} size={"small"} aria-label="simple table">
+        <TableContainer  style={{ minWidth: 570 }}  component={Paper}>
+      <Table size={"small"} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell width={10} align="left">

@@ -132,8 +132,8 @@ canvas {
 }
 
 .provider-icon{
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   margin-right: 5px;
 }
 
@@ -156,7 +156,7 @@ a:active { color: #000000; text-decoration: none}
 }
 
 .l1{
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .b{
@@ -189,6 +189,8 @@ a:active { color: #000000; text-decoration: none}
   /* Position the tooltip */
   position: absolute;
   z-index: 1;
+  left: -150px;
+  top: -60px;
 }
 
 .tooltip:hover .tooltiptext {
