@@ -13,7 +13,8 @@ class ProviderTable extends React.Component {
         super(props);
 
         this.state = {
-            rows: []
+            rows: [],
+            colorDict:{}
         }
     }
 
@@ -64,7 +65,7 @@ class ProviderTable extends React.Component {
               </TableCell>
               <TableCell align="left">
                     <div className={'l1'}>
-                        <a href={`/${row.name}`}>
+                        <a style={{color: this.state.colorDict[row.name]}} href={`/${row.name}`}>
                             <img className={'provider-icon'} src={`/provider-icons/${row.name}.png`} />
                             {row.name}
                         </a>
@@ -168,6 +169,7 @@ class ProviderTable extends React.Component {
 
     async componentDidMount(){
         let providers = await globalApi.getProviders();
+        this.setState({colorDict: await globalApi.getColorDict()});
         this.setState({rows: providers.map(this.createRow)});
 
         liveTPSObservable.registerOnTPSChanged(this.updateTable.bind(this));
