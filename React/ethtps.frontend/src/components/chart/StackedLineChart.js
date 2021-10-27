@@ -59,7 +59,7 @@ class StackedLineChart extends React.Component {
         }
     };
 
-    buildDataPoint(x){
+    buildDataPoint(x, color){
         let 
     
         createPoint = (x) => {
@@ -69,14 +69,14 @@ class StackedLineChart extends React.Component {
             }
         }
         return {
-            label: x[0].provider,
+            label: x.provider,
             fill: true,
-            borderColor: x[0].color,
+            borderColor: color,
             //backgroundColor: x[0].color,
-            pointBackgroundColor: x[0].color,
-            pointHighlightStroke: x[0].color,
+            pointBackgroundColor: color,
+            pointHighlightStroke: color,
             borderCapStyle: 'butt',
-            data: x.map(y=>y.tps),//x.map(createPoint),
+            data: x.data.map(y=>y.tps),//x.map(createPoint),
             tension: 0.3,
             pointRadius: 2,
             backgroundColor: 'transparent',
@@ -92,9 +92,10 @@ class StackedLineChart extends React.Component {
     
     async buildDatasets(interval){
         let data = await globalApi.getAllTPS(globalApi.toLongName(interval), 'Mainnet', true);
-        let datasets = data.filter(x => x.length > 0).map(this.buildDataPoint);
+        let colorDict = await globalApi.getColorDict();
+        let datasets = data.filter(x => x.data.length > 0).map(x => this.buildDataPoint(x, colorDict[x.provider]));
         //this.setMinAndMax(data);
-        this.setState({xData: data[0].map(x => x.date)});
+        this.setState({xData: data[0].data.map(x => x.date)});
         this.setState({datasets: datasets});
         this.setState({loadingPercentage: 0});
     }

@@ -24,9 +24,7 @@ class API{
     async getAllTPS(interval, network, includeSidechains){
          let key = interval + network + includeSidechains;
         if (this.tpsDictionary[key] === undefined){
-            let providers = await this.getProviders();
-            let fetchobj = providers.map(x => fetch(this.buildTPSPath(x.name, interval, network, includeSidechains)).then(response => response.json()));
-            this.tpsDictionary[key] = await Promise.all(fetchobj);
+            this.tpsDictionary[key] = await fetch(this.buildTPSPath('All', interval, network, includeSidechains)).then(response => response.json());
         }
         return this.tpsDictionary[key];
     }
