@@ -28,7 +28,8 @@ namespace ETHTPS.API.Controllers
             return _context.Providers.ToList().Select(x => new ProviderResponseModel()
             {
                 Name = x.Name,
-                Type = _context.ProviderTypes.First(y => y.Id == x.Type.Value).Name
+                Type = _context.ProviderTypes.First(y => y.Id == x.Type.Value).Name,
+                Color = _context.ProviderProperties.FirstOrDefault(y => y.Name == "Color" && y.Provider == x.Id)?.Value
             });
         }
 

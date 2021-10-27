@@ -1,6 +1,6 @@
 import React from 'react';
 import { Doughnut, Chart } from 'react-chartjs-2';
-
+import { globalApi } from '../services/common';
 
 class DoughnutChart extends React.Component{
 
@@ -87,17 +87,18 @@ class DoughnutChart extends React.Component{
       width: window.innerWidth
     });
   }
-    componentDidMount(){
+
+    async componentDidMount(){
       window.addEventListener("resize", this.updateDimensions);
-      this.update();
+      await this.update();
     }
 
     componentWillUnmount() {
       window.removeEventListener("resize", this.updateDimensions);
     }
 
-    shouldComponentUpdate(nextProps, nextState){
-        this.update();
+    async shouldComponentUpdate(nextProps, nextState){
+        await this.update();
         return true;
     }
 
@@ -105,14 +106,14 @@ class DoughnutChart extends React.Component{
         return a.tps-b.tps;
       }
 
-    update(){
+    async update(){
         if (this.props.tpsData.length === 0){
             return;
         }
 
         //Order ascending by tps
         //this.props.tpsData.sort(this.tpsComparator);
-
+        let colorDict = await globalApi.getColorDict();
         this.data = {
             options:{
                 cutout:40,
@@ -121,8 +122,8 @@ class DoughnutChart extends React.Component{
             labels: this.props.tpsData.map(x => x.provider),
             datasets: [
               {
-                data: this.props.tpsData.map(x => x.tps),
-                backgroundColor: this.props.tpsData.map(x => x.color),
+                data: this.props.tpsData.map(x => x.data[0].tps),
+                backgroundColor: this.props.tpsData.map(x => colorDict[x.provider]),
                 borderColor: [
                   'black',
                 ],

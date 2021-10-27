@@ -60,7 +60,7 @@ class TPSStat extends React.Component{
   }
 
   async updateTPS(includeSidechains){
-    let tpsData = await this.api.getTPS("Any", "Instant", "Mainnet", includeSidechains);
+    let tpsData = await this.api.getInstantTPS(includeSidechains);
     liveTPSObservable.tpsChanged(tpsData);
     this.setState({tpsData: tpsData})
     let totalTPS = tpsData.map(x => (Math.round(x.tps * 100) / 100)).reduce((a,b) => a+b);

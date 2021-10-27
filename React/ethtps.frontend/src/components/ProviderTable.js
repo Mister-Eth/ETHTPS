@@ -106,7 +106,7 @@ class ProviderTable extends React.Component {
     getTPS(data, provider) {
         for(let tpsEntry of data){
             if (tpsEntry.provider === provider){
-                return tpsEntry.tps;
+                return tpsEntry.data[0].tps;
             }
         }
         return 0;
@@ -154,7 +154,7 @@ class ProviderTable extends React.Component {
             let tps = 0;
             let entries = maxTPS.filter(x => x.provider == row.name);
             if (entries != null && entries.length > 0){
-                tps = entries[0].tps;
+                tps = entries[0].data[0].tps;
             }
             row.maxTPS = this.to2DecimalPlaces(tps);
         }

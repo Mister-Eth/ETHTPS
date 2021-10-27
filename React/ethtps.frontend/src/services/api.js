@@ -11,6 +11,10 @@ class API{
         return await fetch(`${this.endpoint}/MaxTPS?provider=${provider}`).then(response => response.json());
     }
 
+    async getInstantTPS(includeSidechains) {
+        return await fetch(`${this.endpoint}/InstantTPS?includeSidechains=${includeSidechains}`).then(response => response.json());
+    }
+
     buildTPSPath(provider, interval, network, includeSidechains){
         return `${this.endpoint}/TPS?provider=${provider}&interval=${interval}&network=${network}&includeSidechains=${includeSidechains}`;
     }
@@ -28,29 +32,39 @@ class API{
     }
 
     async getProviders(){
-        if (this.providers == null){
-            await fetch(`${this.endpoint}/Providers`).then(response => response.json()).then(x => this.providers = x);
+        if (this.providers === undefined){
+            this.providers = await fetch(`${this.endpoint}/Providers`).then(response => response.json());
         }
         return this.providers;
     }
 
+    async getColorDict(){
+        if (this.colorDict === undefined){
+            this.colorDict = {};
+            for(let p of await this.getProviders()){
+                this.colorDict[p.name] = p.color;
+            }
+        }
+        return this.colorDict;
+    }
+
     async getProviderTypes(){
-        if (this.providerTypes == null){
-            await fetch(`${this.endpoint}/ProviderTypes`).then(response => response.json()).then(x => this.providerTypes = x);
+        if (this.providerTypes === undefined){
+            this.providerTypes = await fetch(`${this.endpoint}/ProviderTypes`).then(response => response.json());
         }
         return this.providerTypes;
     }
 
     async getNetworks(){
-        if (this.networks == null){
-            await fetch(`${this.endpoint}/Networks`).then(response => response.json()).then(x => this.networks = x);
+        if (this.networks === undefined){
+            this.networks = await fetch(`${this.endpoint}/Networks`).then(response => response.json());
         }
         return this.networks;
     }
 
     async getIntervals(){
-        if (this.intervals == null){
-            await fetch(`${this.endpoint}/Intervals`).then(response => response.json()).then(x => this.intervals = x);
+        if (this.intervals === undefined){
+            this.intervals = await fetch(`${this.endpoint}/Intervals`).then(response => response.json());
         }
         return this.intervals.map(this.toShortName);
     }
