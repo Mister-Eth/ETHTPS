@@ -148,26 +148,25 @@ namespace ETHTPS.Data.Database
             OnModelCreatingPartial(modelBuilder);
         }
 
-        public async Task<T> GetOrAddCachedResponseAsync<T>(params object[] args)
+        public async Task<T> GetCachedResponseAsync<T>(params object[] args)
         {
             var name = StringExtensions.AggregateToLowercase(args);
-            if (!await CachedResponses.AnyAsync(x=>x.Name == name))
+
+            if (await CachedResponses.AnyAsync(x => x.Name == name))
             {
-                await CachedResponses.AddAsync(new CachedResponse()
+                var json = (await CachedResponses.FirstAsync(x => x.Name == name)).Json;
+                if (string.IsNullOrWhiteSpace(json))
                 {
-                    Name = name,
-                    Json = null
-                });
-                await this.SaveChangesAsync();
-            }
-            var json = (await CachedResponses.FirstAsync(x => x.Name == name)).Json;
-            if (string.IsNullOrWhiteSpace(json))
-            {
-                return default(T);
+                    return default(T);
+                }
+                else
+                {
+                    return JsonConvert.DeserializeObject<T>(json);
+                }
             }
             else
             {
-                return JsonConvert.DeserializeObject<T>(json);
+                return default(T);
             }
         }
 

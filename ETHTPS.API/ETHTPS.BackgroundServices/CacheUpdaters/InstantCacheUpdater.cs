@@ -14,13 +14,13 @@ using System.Threading.Tasks;
 
 namespace ETHTPS.BackgroundServices.CacheUpdaters
 {
-    public class InstantCacheUpdater : CacheUpdaterBase
+    public class InstantCacheUpdater : CacheUpdaterBase<List<TPSResponseModel>>
     {
         public InstantCacheUpdater(ILogger<HangfireBackgroundService> logger, ETHTPSContext context) : base("Instant", logger, context)
         {
         }
 
-        public override Task<IEnumerable<TPSResponseModel>> RunAsync(ETHTPSContext context, int providerID, List<TPSResponseModel> currentCachedResponse)
+        public override Task<List<TPSResponseModel>> RunAsync(ETHTPSContext context, Provider provider, List<TPSResponseModel> currentCachedResponse)
         {
             var latestEntryIDs = context.LatestEntries.Select(x => x.Entry).ToList();
             var entries = new List<TPSData>();
@@ -30,10 +30,16 @@ namespace ETHTPS.BackgroundServices.CacheUpdaters
             }
             var result = entries.Select(x => new TPSResponseModel()
             {
-                Date = x.Date.Value,
-                TPS = x.Tps.Value,
-                Provider = context.Providers.First(y => y.Id == x.Provider).Name
-            }).ToList().AsEnumerable();
+                Provider = _context.Providers.First(y => y.Id == x.Provider).Name,
+                Data = new List<TPSDataPoint>()
+                {
+                    new TPSDataPoint()
+                    {
+                        Date = x.Date.Value,
+                        TPS = x.Tps.Value
+                    }
+                }
+            }).ToList();
             return Task.FromResult(result);
         }
     }

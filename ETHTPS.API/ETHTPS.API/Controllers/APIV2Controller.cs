@@ -61,7 +61,7 @@ namespace ETHTPS.API.Controllers
         [HttpGet]
         public string RecalculateMaxTPS()
         {
-            foreach(var provider in _context.Providers.ToList())
+            foreach (var provider in _context.Providers.ToList())
             {
                 var maxTPS = _context.TPSData.Where(x => x.Provider == provider.Id).Max(x => x.Tps);
                 if (_context.MaxTPSEntries.Any(x => x.Provider == provider.Id))
@@ -89,7 +89,7 @@ namespace ETHTPS.API.Controllers
         {
             var result = new List<TPSResponseModel>();
             var providers = (provider.ToUpper() == "ALL") ? _context.Providers.AsEnumerable() : new Provider[] { _context.Providers.First(x => x.Name.ToUpper() == provider.ToUpper()) };
-            foreach(var p in providers.ToArray())
+            foreach (var p in providers.ToArray())
             {
                 var entry = _context.MaxTPSEntries.FirstOrDefault(x => x.Provider == p.Id);
                 if (entry != null)
@@ -97,9 +97,15 @@ namespace ETHTPS.API.Controllers
                     var targetEntry = _context.TPSData.First(x => x.Id == entry.Entry);
                     result.Add(new TPSResponseModel()
                     {
-                        Date = targetEntry.Date.Value,
-                        TPS = targetEntry.Tps.Value,
-                        Provider = p.Name
+                        Provider = p.Name,
+                        Data = new List<TPSDataPoint>()
+                        {
+                            new TPSDataPoint()
+                            {
+                                Date = targetEntry.Date.Value,
+                                TPS = targetEntry.Tps.Value
+                            }
+                        }
                     });
                 }
             }
@@ -107,40 +113,39 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
+        public async Task<IEnumerable<TPSResponseModel>> InstantTPS(bool includeSidechains = true)
+        {
+            var result = await _context.GetCachedResponseAsync<IEnumerable<TPSResponseModel>>("All", "Instant");
+            if (!includeSidechains)
+            {
+                result = result.Where(x => !IsSidechain(x.Provider));
+            }
+            return result;
+        }
+
+        [HttpGet]
         public async Task<IEnumerable<TPSResponseModel>> TPS(string provider, string interval, string network, bool includeSidechains = true)
         {
-            var response = await _context.GetOrAddCachedResponseAsync<IEnumerable<TPSResponseModel>>(provider, interval);
-            if (provider.ToUpper() == "ANY")
+            var result = new List<TPSResponseModel>();
+            if (provider.ToUpper() == "ALL")
             {
-                if (!includeSidechains)
+                foreach(var p in _context.Providers.ToList())
                 {
-                    response = response.Where(x => !IsSidechain(x.Provider));
-                }
-            }
-            foreach(var x in response)
-            {
-                if (string.IsNullOrWhiteSpace(x.Color))
-                {
-                    if (string.IsNullOrWhiteSpace(x.Provider))
+                    if (!includeSidechains)
                     {
-                        x.Provider = provider;
+                        if (IsSidechain(p.Name))
+                        {
+                            continue;
+                        }
                     }
-                    var providerID = await _context.GetProviderIDAsync(x.Provider);
-                    x.Color = _context.ProviderProperties.First(y => y.Name == "Color" && y.Provider.Value == providerID).Value;
+                    result.Add(await _context.GetCachedResponseAsync<TPSResponseModel>(p.Name, interval));
                 }
             }
-            var responseList = response.ToList();
-            /*if (provider.ToUpper() == "ANY")
+            else
             {
-                responseList.Add(new TPSResponseModel() //Add a filler response equal to the sum of all providers in order to disprlay half a doughnut chart
-                {
-                    Color = "#000000",
-                    Date = DateTime.Now,
-                    Provider = "All",
-                    TPS = response.Sum(x => x.TPS)
-                });
-            }*/
-            return responseList;
+                result.Add(await _context.GetCachedResponseAsync<TPSResponseModel>(provider, interval));
+            }
+            return result;
         }
 
         private bool IsSidechain(string provider)

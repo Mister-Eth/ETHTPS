@@ -15,36 +15,44 @@ using System.Threading.Tasks;
 
 namespace ETHTPS.BackgroundServices.CacheUpdaters
 {
-    public class OneHourCacheUpdater : CacheUpdaterBase
+    public class OneHourCacheUpdater : CacheUpdaterBase<TPSResponseModel>
     {
         public OneHourCacheUpdater(ILogger<HangfireBackgroundService> logger, ETHTPSContext context) : base("OneHour", logger, context)
         {
         }
 
-        public override Task<IEnumerable<TPSResponseModel>> RunAsync(ETHTPSContext context, int providerID, List<TPSResponseModel> currentCachedResponse)
+        public override Task<TPSResponseModel> RunAsync(ETHTPSContext context, Provider provider, TPSResponseModel currentCachedResponse)
         {
-            currentCachedResponse = currentCachedResponse.OrderBy(x => x.Date).Where(x => x.Date > DateTime.Now.Subtract(TimeSpan.FromHours(1))).ToList(); //Filter out entries older than 1h
             var newestEntryDate = DateTime.Now.Subtract(TimeSpan.FromHours(1));
-            if (currentCachedResponse.Count >= 1)
+            if (currentCachedResponse.Data?.Count >= 1)
             {
-                var last = currentCachedResponse.TakeLast(1).First();
+                currentCachedResponse.Data = currentCachedResponse.Data.OrderBy(x => x.Date).Where(x => x.Date > DateTime.Now.Subtract(TimeSpan.FromHours(1))).ToList(); //Filter out entries older than 1h
+                var last = currentCachedResponse.Data.TakeLast(1).First();
                 newestEntryDate = last.Date; //Get last entry date
             }
+            else
+            {
+                currentCachedResponse.Data = new List<TPSDataPoint>();
+            }
 
-            var newEntries = context.TPSData.AsEnumerable().Where(x => x.Provider.Value == providerID && x.Date > newestEntryDate).OrderBy(x => x.Date);
+            var newEntries = context.TPSData.Where(x => x.Provider.Value == provider.Id && x.Date > newestEntryDate).AsEnumerable().OrderBy(x => x.Date);
             var groups = newEntries.GroupBy(x => x.Date.Value.Minute);
-            var list = new List<TPSResponseModel>();
+            var list = new List<TPSDataPoint>();
             foreach (var group in groups)
             {
-                list.Add(new TPSResponseModel()
+                list.Add(new TPSDataPoint()
                 {
                     Date = group.First().Date.Value.Subtract(TimeSpan.FromSeconds(group.First().Date.Value.Second)).Subtract(TimeSpan.FromMilliseconds(group.First().Date.Value.Millisecond)).Subtract(TimeSpan.FromMilliseconds(group.First().Date.Value.Millisecond)),
                     TPS = group.Average(x => x.Tps.Value)
                 });
             }
-            currentCachedResponse.AddRange(list);
-            var result = currentCachedResponse.AsEnumerable();
-            return Task.FromResult(result.DistinctBy(x => x.Date));
+            currentCachedResponse.Data.AddRange(list);
+            var result = currentCachedResponse.Data.AsEnumerable();
+            return Task.FromResult(new TPSResponseModel()
+            {
+                Provider = provider.Name,
+                Data = result.DistinctBy(x => x.Date).ToList()
+            });
         }
     }
 }

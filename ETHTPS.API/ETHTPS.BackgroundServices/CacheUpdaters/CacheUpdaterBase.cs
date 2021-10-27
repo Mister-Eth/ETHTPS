@@ -19,7 +19,8 @@ using System.Threading.Tasks;
 
 namespace ETHTPS.BackgroundServices.CacheUpdaters
 {
-    public abstract class CacheUpdaterBase : HangfireBackgroundService
+    public abstract class CacheUpdaterBase<TCachedValue> : HangfireBackgroundService
+        where TCachedValue: new()
     {
         protected readonly string _interval;
 
@@ -28,44 +29,40 @@ namespace ETHTPS.BackgroundServices.CacheUpdaters
             _interval = interval;
         }
 
-        public abstract Task<IEnumerable<TPSResponseModel>> RunAsync(ETHTPSContext context, int providerID, List<TPSResponseModel> currentCachedResponse);
+        public abstract Task<TCachedValue> RunAsync(ETHTPSContext context, Provider provider, TCachedValue currentCachedResponse);
 
         public override async Task RunAsync()
         {
-            foreach (var provider in _context.Providers.Select(x => x.Name).ToArray())
+            foreach (var provider in _context.Providers.ToArray())
             {
-                _logger.LogInformation($"Updating {provider}-{_interval}");
+                _logger.LogInformation($"Updating {provider.Name}-{_interval}");
                 var timeInterval = Enum.Parse<TimeInterval>(_interval);
-                var name = StringExtensions.AggregateToLowercase(provider, _interval);
+                var name = StringExtensions.AggregateToLowercase(provider.Name, _interval);
                 if (timeInterval == TimeInterval.Instant)
                 {
-                    name = StringExtensions.AggregateToLowercase("Any", _interval);
+                    name = StringExtensions.AggregateToLowercase("All", _interval);
                 }
-                IEnumerable<TPSResponseModel> result = new List<TPSResponseModel>() { };
                 if (!_context.CachedResponses.Any(x => x.Name == name))
                 {
                     _context.CachedResponses.Add(new CachedResponse()
                     {
-                        Name = name,
-                        Json = "[]"
+                        Name = name
                     });
                     _context.SaveChanges();
                 }
                 var entry = _context.CachedResponses.First(x => x.Name == name);
-                var targetProvider = _context.Providers.First(x => x.Name.ToUpper() == provider.ToUpper());
-                result = await RunAsync(_context, targetProvider.Id, JsonConvert.DeserializeObject<List<TPSResponseModel>>(entry.Json));
-                if (result?.Count() > 0)
+                var currentCachedResponse = new TCachedValue();
+                try
                 {
-                    entry.Json = JsonConvert.SerializeObject(result);
+                    currentCachedResponse = JsonConvert.DeserializeObject<TCachedValue>(entry.Json);
                 }
-                else
-                {
-                    entry.Json = "[]";
-                }
+                catch { } //null values, type changes etc.
+                var result = await RunAsync(_context, provider, currentCachedResponse);
+                entry.Json = JsonConvert.SerializeObject(result);
                 _context.Update(entry);
                 _context.SaveChanges();
 
-                _logger.LogInformation($"Updated {provider}-{_interval}");
+                _logger.LogInformation($"Updated {provider.Name}-{_interval}");
                 if (timeInterval == TimeInterval.Instant)
                 {
                     break;
