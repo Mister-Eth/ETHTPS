@@ -69,7 +69,7 @@ position: absolute;
 
 
 
-jumpy {
+.jumpy {
     font-size: 40px;
     font-weight: 900;
     line-height: 1;
@@ -83,16 +83,16 @@ jumpy {
   user-select: none; 
 }
 
-jumpy:hover {
-    animation: text-shadow 1.5s ease-in-out infinite;
+.jumpy:hover {
+    animation: text-shadow 1s ease-in-out;
     cursor: default;
 }
 
-jumpy {
+.jumpy {
     color: #0f71b3;
 }
 
-jumpy:hover {
+.jumpy:hover {
     text-decoration: none;
 }
 
@@ -106,40 +106,13 @@ jumpy:hover {
             0 0 0 #fefc4b;
     }
 
-    20% {  
-        transform: translateY(-1em);
+    50% {  
+        transform: translateY(-0.5em);
         text-shadow: 
             0 0.125em 0 #0c2ffb, 
             0 0.25em 0 #2cfcfd, 
             0 -0.125em 0 #fb203b, 
             0 -0.25em 0 #fefc4b;
-    }
-
-    40% {  
-        transform: translateY(0.5em);
-        text-shadow: 
-            0 -0.0625em 0 #0c2ffb, 
-            0 -0.125em 0 #2cfcfd, 
-            0 0.0625em 0 #fb203b, 
-            0 0.125em 0 #fefc4b;
-    }
-    
-   60% {
-        transform: translateY(-0.25em);
-        text-shadow: 
-            0 0.03125em 0 #0c2ffb, 
-            0 0.0625em 0 #2cfcfd, 
-            0 -0.03125em 0 #fb203b, 
-            0 -0.0625em 0 #fefc4b;
-    }
-
-    80% {  
-        transform: translateY(0);
-        text-shadow: 
-            0 0 0 #0c2ffb, 
-            0 0 0 #2cfcfd, 
-            0 0 0 #fb203b, 
-            0 0 0 #fefc4b;
     }
 }
 
@@ -148,4 +121,19 @@ jumpy:hover {
       animation: none !important;
       transition: none !important;
     }
+}
+
+.modeSwitchToggle{
+  position: absolute;
+  right: 0px;
+}
+
+body.light-mode {
+  background-color: #fff;
+  color: #333;
+  transition: background-color 0.3s ease;
+}
+body.dark-mode {
+  background-color: #1a1919;
+  color: #999;
 }

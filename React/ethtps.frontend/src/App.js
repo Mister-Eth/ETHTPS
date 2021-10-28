@@ -6,20 +6,30 @@ import discordIcon from './assets/discord-mascot.png';
 import logo200 from './assets/logo200.png'
 import { globalApi } from './services/common';
 import React, { useState, useEffect } from "react";
+import DarkModeToggle from "react-dark-mode-toggle";
+import useDarkMode from 'use-dark-mode';
 
 function App() {
 
   var homePageModel = {};
   var network = "Mainnet";
-
+  /*
   useEffect(async() => {
     globalApi.aPIV2HomePageModelGet(network, (err,data,res) => console.log(data))
-  });
+  });*/
+  const [isDarkMode, setIsDarkMode] = useState(() => false);
+
   return (
     <>
+    <DarkModeToggle
+    className={'modeSwitchToggle'}
+      onChange={setIsDarkMode}
+      checked={isDarkMode}
+      size={80}
+    />
     <center>
     <br></br>
-    <jumpy className={"unselectable"}>ETHTPS.info</jumpy>
+    <div className={"jumpy unselectable"}>ETHTPS.info</div>
     <br></br>
     <br></br>
       <a href="https://github.com/WhoEvenAmI/ETHTPS">
