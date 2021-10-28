@@ -2,7 +2,8 @@ import logo from './logo.svg';
 import './App.css';
 import SidechainCheckbox from './components/SidechainCheckbox';
 import TPSChart from './components/chart/TPSChart';
-import TPSBar from './components/TPSBar'
+import TPSBar from './components/TPSBar';
+import TPSStat from './components/TPSStat';
 import ProviderTable from './components/ProviderTable';
 import githubIcon from './assets/600px-Octicons-mark-github.svg - inv.png';
 import twitterIcon from './assets/1486053611-twitter_79195.png';
@@ -33,7 +34,7 @@ function App() {
       </li>
     </ul>
     <center>
-      <TPSBar/>
+      <TPSStat/>
     <br></br>
       <SidechainCheckbox/>
     </center>

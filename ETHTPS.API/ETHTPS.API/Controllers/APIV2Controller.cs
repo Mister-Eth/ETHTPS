@@ -1,6 +1,7 @@
 ﻿using ETHTPS.Data;
 using ETHTPS.Data.Database;
 using ETHTPS.Data.ResponseModels;
+using ETHTPS.Data.ResponseModels.HomePage;
 
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -109,12 +110,27 @@ namespace ETHTPS.API.Controllers
                         }
                     });
                 }
+                else
+                {
+                    //No max TPS data recorded yet, return 0
+                    result.Add(new TPSResponseModel()
+                    {
+                        Provider = p.Name,
+                        Data = new List<TPSDataPoint>()
+                        {
+                            new TPSDataPoint()
+                            {
+                                TPS = 0
+                            }
+                        }
+                    });
+                }
             }
             return result;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<TPSResponseModel>> InstantTPS(bool includeSidechains = true)
+        public async Task<IEnumerable<TPSResponseModel>> InstantTPSAsync(bool includeSidechains = true)
         {
             var result = await _context.GetCachedResponseAsync<IEnumerable<TPSResponseModel>>("All", "Instant");
             if (!includeSidechains)
@@ -125,7 +141,7 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<TPSResponseModel>> TPS(string provider, string interval, string network, bool includeSidechains = true)
+        public async Task<IEnumerable<TPSResponseModel>> TPSAsync(string provider, string interval, string network, bool includeSidechains = true)
         {
             var result = new List<TPSResponseModel>();
             if (provider.ToUpper() == "ALL")
@@ -145,6 +161,39 @@ namespace ETHTPS.API.Controllers
             else
             {
                 result.Add(await _context.GetCachedResponseAsync<TPSResponseModel>(provider, interval));
+            }
+            return result;
+        }
+
+        [HttpGet]
+        public async Task<HomePageViewModel> HomePageModelAsync(string network = "Mainnet")
+        {
+            var x = Providers();
+            ;
+            return new HomePageViewModel()
+            {
+                InstantTPS = await InstantTPSAsync(),
+                ColorDictionary = Providers().ToDictionary(x => x.Name, x => x.Color),
+                ProviderData = Providers().Select(x => new ProviderInfo()
+                {
+                    Name = x.Name,
+                    MaxTPS = MaxTPS(x.Name).FirstOrDefault().Data.FirstOrDefault().TPS,
+                    Type = x.Type
+                }),
+                TPSData = await BuildTPSDataAsync(network)
+            };
+        }
+
+        private async Task<Dictionary<string, Dictionary<string, IEnumerable<TPSResponseModel>>>> BuildTPSDataAsync(string network)
+        {
+            var result = new Dictionary<string, Dictionary<string, IEnumerable<TPSResponseModel>>>();
+            foreach(var provider in Providers())
+            {
+                result[provider.Name] = new Dictionary<string, IEnumerable<TPSResponseModel>>();
+                foreach(var interval in Intervals())
+                {
+                    result[provider.Name][interval] = await TPSAsync(provider.Name, interval, network);
+                }
             }
             return result;
         }

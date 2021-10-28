@@ -163,7 +163,7 @@ class ProviderTable extends React.Component {
     }
 
     async updateTPS(){
-        let data = await globalApi.getTPS('Any', 'Instant', 'Mainnet', true);
+        let data = await globalApi.getInstantTPS(true);
         liveTPSObservable.triggerCallbacks(data);
     }
 

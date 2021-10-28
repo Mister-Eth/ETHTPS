@@ -55,19 +55,15 @@ class DoughnutChart extends React.Component{
     constructor(props){
         super(props);
         this.state = { 
-          height: window.innerHeight, 
-          width: window.innerWidth
+          data: []
         };
-        this.updateDimensions = this.updateDimensions.bind(this);
     }
 
-    top = -100;
-    animationDuration = 500;
     doughnut; 
 
     render(){
         return <>
-        <Doughnut ref={(input)=>{this.doughnut = input}} style={{top:this.top }} plugins={this.plugins} data={this.data} options={{
+        <Doughnut ref={(input)=>{this.doughnut = input}} plugins={this.plugins} data={this.data} options={{
            animation:{
               //duration: this.animationDuration
            },
@@ -81,30 +77,13 @@ class DoughnutChart extends React.Component{
         </>
     }
 
-  updateDimensions() {
-    this.setState({
-      height: window.innerHeight, 
-      width: window.innerWidth
-    });
-  }
-
-    async componentDidMount(){
-      window.addEventListener("resize", this.updateDimensions);
-      await this.update();
-    }
-
-    componentWillUnmount() {
-      window.removeEventListener("resize", this.updateDimensions);
-    }
-
-    async shouldComponentUpdate(nextProps, nextState){
-        await this.update();
-        return true;
-    }
-
     tpsComparator(a,b) {
         return a.tps-b.tps;
-      }
+    }
+
+    async componentDidMount(){
+      this.colorDict = await globalApi.getColorDict();
+    }
 
     async update(){
         if (this.props.tpsData.length === 0){
@@ -113,7 +92,6 @@ class DoughnutChart extends React.Component{
 
         //Order ascending by tps
         //this.props.tpsData.sort(this.tpsComparator);
-        let colorDict = await globalApi.getColorDict();
         this.data = {
             options:{
                 cutout:40,
@@ -123,7 +101,7 @@ class DoughnutChart extends React.Component{
             datasets: [
               {
                 data: this.props.tpsData.map(x => x.data[0].tps),
-                backgroundColor: this.props.tpsData.map(x => colorDict[x.provider]),
+                backgroundColor: this.props.tpsData.map(x => this.colorDict[x.provider]),
                 borderColor: [
                   'black',
                 ],
@@ -132,10 +110,6 @@ class DoughnutChart extends React.Component{
               },
             ],
           };
-          
-    if (this.doughnut === undefined)
-      return;
-   // this.top = -this.doughnut.height / 2;
     }
 }
 export default DoughnutChart;
