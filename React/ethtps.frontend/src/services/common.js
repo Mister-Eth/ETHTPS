@@ -1,8 +1,8 @@
-import API from '../services/api'
+import APIV2Api from './api-gen/api/APIV2Api'
 import ProviderExclusionList from '../components/ProviderExclusionList';
 import LiveTPSObservable from '../components/LiveTPSObservable';
 
-const globalApi = new API("http://localhost:10202/API/v2");
+const globalApi = new APIV2Api("http://localhost:10202/API/v2");
 export {globalApi};
 
 const providerExclusionList = new ProviderExclusionList();
