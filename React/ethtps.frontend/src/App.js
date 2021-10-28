@@ -8,6 +8,9 @@ import { globalApi } from './services/common';
 import React, { useState, useEffect } from "react";
 import DarkModeToggle from "react-dark-mode-toggle";
 import useDarkMode from 'use-dark-mode';
+import InstantTPSStat from './components/InstantTPSStat';
+import Timeline from './components/Timeline';
+import BarChart from './components/BarChart'
 
 function App() {
 
@@ -19,14 +22,17 @@ function App() {
   });*/
   const [isDarkMode, setIsDarkMode] = useState(() => false);
 
+  /*
+  
+  <DarkModeToggle
+  className={'modeSwitchToggle'}
+    onChange={setIsDarkMode}
+    checked={isDarkMode}
+    size={80}
+  />
+  */
   return (
     <>
-    <DarkModeToggle
-    className={'modeSwitchToggle'}
-      onChange={setIsDarkMode}
-      checked={isDarkMode}
-      size={80}
-    />
     <center>
     <br></br>
     <div className={"jumpy unselectable"}>ETHTPS.info</div>
@@ -45,6 +51,9 @@ function App() {
           </img>
         </a>
     </center>
+    <InstantTPSStat/>
+    <Timeline/>
+    <BarChart/>
     <footer>
       <div className={'inline'}>
       Brought to you by 
