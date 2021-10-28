@@ -10,16 +10,19 @@ import DarkModeToggle from "react-dark-mode-toggle";
 import useDarkMode from 'use-dark-mode';
 import InstantTPSStat from './components/InstantTPSStat';
 import Timeline from './components/Timeline';
-import BarChart from './components/BarChart'
+import HorizontalBarChart from './components/HorizontalBarChart'
 
 function App() {
 
   var homePageModel = {};
   var network = "Mainnet";
-  /*
+  
+  var instantData = [];
   useEffect(async() => {
-    globalApi.aPIV2HomePageModelGet(network, (err,data,res) => console.log(data))
-  });*/
+    globalApi.aPIV2HomePageModelGet(network, (err,data,res) => {
+      instantData = data.instantTPS
+    })
+  });
   const [isDarkMode, setIsDarkMode] = useState(() => false);
 
   /*
@@ -53,7 +56,7 @@ function App() {
     </center>
     <InstantTPSStat/>
     <Timeline/>
-    <BarChart/>
+    <HorizontalBarChart data={instantData}/>
     <footer>
       <div className={'inline'}>
       Brought to you by 

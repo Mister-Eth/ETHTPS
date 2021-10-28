@@ -1,9 +1,10 @@
 import { Component } from 'react';
 import { Bar } from 'react-chartjs-2';
 
-class BarChart extends Component{
+class HorizontalBarChart extends Component{
     constructor(props){
         super(props);
+        console.log(props)
     }
 
      labels = ["J", "F", "M", "A", "J", "J", "A"]
@@ -41,4 +42,4 @@ class BarChart extends Component{
     }
 }
 
-export default BarChart;
+export default HorizontalBarChart;
