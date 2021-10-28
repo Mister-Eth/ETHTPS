@@ -39,7 +39,7 @@ function App() {
     <footer>
       <div className={'inline'}>
       Brought to you by 
-      <div  style={{marginLeft:'5px'}} className={"tooltip"}>
+      <div style={{marginLeft:'5px'}} className={'trick'}>
         <span>
           Mister_Eth
         </span>

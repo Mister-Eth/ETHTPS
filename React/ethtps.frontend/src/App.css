@@ -37,26 +37,6 @@
   }
 }
 
-.tps-stat{
-  left: 50%;
-  width: 50%;
-  margin-top: 5px;
-  max-width: 250px;
-  min-width: 150px;
-}
-
-.small{
-  font-size:small;
-}
-
-.rotated90cw{
-  transform: rotate(90deg);
-}
-
-.rotated90acw{
-  transform: rotate(-90deg);
-}
-
 .small-img{
   display: inline;
   width: 35px;
@@ -75,32 +55,10 @@ position: absolute;
   display: inline-block;
 }
 
-.ul:hover{
-  text-decoration: underline;
-}
-
-.tooltip {
-  position: relative;
+.trick{
   display: inline-block;
-  border-bottom: 1px dotted black;
+  text-decoration: underline dotted red;
 }
 
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-
-  /* Position the tooltip */
-  position: absolute;
-  z-index: 1;
-  left: -75%;
-  top: -100%;
-}
-
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-}
+.trick:hover span{display: none;}
+.trick:hover::before{content: 'Ethereum';}
