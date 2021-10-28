@@ -18,11 +18,10 @@ function App() {
   return (
     <>
     <center>
-     <a href="/">
-      <p className={'site-logo'}>
-          ethtps.info
-      </p>
-      </a>
+    <br></br>
+    <jumpy>ETHTPS.info</jumpy>
+    <br></br>
+    <br></br>
       <a href="https://github.com/WhoEvenAmI/ETHTPS">
           <img className={"small-img"} src={githubIcon}>
           </img>
