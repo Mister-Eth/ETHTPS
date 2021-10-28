@@ -19,7 +19,7 @@ function App() {
     <>
     <center>
     <br></br>
-    <jumpy>ETHTPS.info</jumpy>
+    <jumpy className={"unselectable"}>ETHTPS.info</jumpy>
     <br></br>
     <br></br>
       <a href="https://github.com/WhoEvenAmI/ETHTPS">

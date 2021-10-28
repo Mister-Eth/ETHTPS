@@ -76,6 +76,13 @@ jumpy {
     margin-top: 30px;
 }
 
+.unselectable{
+  -webkit-user-select: none;      
+  -moz-user-select: none;
+  -ms-user-select: none; 
+  user-select: none; 
+}
+
 jumpy:hover {
     animation: text-shadow 1.5s ease-in-out infinite;
     cursor: default;
