@@ -46,7 +46,7 @@ function App() {
       </div>
       <br></br>
         Donate: 
-        <p className={'ul inline'} style={{marginLeft:'5px'}}>
+        <p className={'ul-hover inline'} style={{marginLeft:'5px'}}>
           0x466Ef24d68ac9b61670eeE7fC2E001B951aBf482
         </p>
       </div>

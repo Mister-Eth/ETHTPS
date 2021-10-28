@@ -57,8 +57,18 @@ position: absolute;
 
 .trick{
   display: inline-block;
-  text-decoration: underline dotted red;
+  text-decoration: underline dotted;
 }
 
 .trick:hover span{display: none;}
 .trick:hover::before{content: 'Ethereum';}
+
+.site-logo{
+  font-weight: bold;
+  font-size: 30px;
+  text-decoration: none;
+}
+
+.ul-hover:hover{
+  text-decoration: underline;
+}
