@@ -1,29 +1,26 @@
-import logo from './logo.svg';
 import './App.css';
 import githubIcon from './assets/600px-Octicons-mark-github.svg - inv.png';
 import twitterIcon from './assets/1486053611-twitter_79195.png';
 import discordIcon from './assets/discord-mascot.png';
-import logo200 from './assets/logo200.png'
 import { globalApi } from './services/common';
 import React, { useState, useEffect } from "react";
-import DarkModeToggle from "react-dark-mode-toggle";
-import useDarkMode from 'use-dark-mode';
 import InstantTPSStat from './components/InstantTPSStat';
 import Timeline from './components/Timeline';
 import HorizontalBarChart from './components/HorizontalBarChart'
+import { render } from 'react-dom';
 
-function App() {
+class App extends React.Component {
 
-  var homePageModel = {};
-  var network = "Mainnet";
+  constructor(props){
+    super(props);
+
+    this.state = {
+      homePageModel: {},
+      network: "Mainnet"
+    }
+  }
   
-  var instantData = [];
-  useEffect(async() => {
-    globalApi.aPIV2HomePageModelGet(network, (err,data,res) => {
-      instantData = data.instantTPS
-    })
-  });
-  const [isDarkMode, setIsDarkMode] = useState(() => false);
+  //const [isDarkMode, setIsDarkMode] = useState(() => false);
 
   /*
   
@@ -34,6 +31,14 @@ function App() {
     size={80}
   />
   */
+
+componentDidMount(){
+  globalApi.aPIV2HomePageModelGet(this.state.network, (err,data,res) => {
+     this.setState({homePageModel: data});
+  });
+}
+
+ render(){
   return (
     <>
     <center>
@@ -56,7 +61,7 @@ function App() {
     </center>
     <InstantTPSStat/>
     <Timeline/>
-    <HorizontalBarChart data={instantData}/>
+    <HorizontalBarChart data={this.state.homePageModel.instantTPS} colorDictionary={this.state.homePageModel.colorDictionary} providerData={this.state.homePageModel.providerData}/>
     <footer>
       <div className={'inline'}>
       Brought to you by 
@@ -75,5 +80,5 @@ function App() {
     </>
   );
 }
-
+}
 export default App;
