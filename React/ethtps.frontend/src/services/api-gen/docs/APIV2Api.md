@@ -63,7 +63,7 @@ No authorization required
 
 ## aPIV2InstantTPSGet
 
-> [TPSResponseModel] aPIV2InstantTPSGet(opts)
+> {String: [TPSDataPoint]} aPIV2InstantTPSGet(opts)
 
 
 
@@ -94,7 +94,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[TPSResponseModel]**](TPSResponseModel.md)
+**{String: [TPSDataPoint]}**
 
 ### Authorization
 

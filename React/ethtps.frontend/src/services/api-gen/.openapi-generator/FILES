@@ -1,6 +1,5 @@
 .babelrc
 .gitignore
-.openapi-generator-ignore
 .travis.yml
 README.md
 docs/APIApi.md
@@ -28,13 +27,3 @@ src/model/ProviderResponseModel.js
 src/model/ProviderType.js
 src/model/TPSDataPoint.js
 src/model/TPSResponseModel.js
-test/api/APIApi.spec.js
-test/api/APIV2Api.spec.js
-test/model/HomePageViewModel.spec.js
-test/model/Network.spec.js
-test/model/Provider.spec.js
-test/model/ProviderInfo.spec.js
-test/model/ProviderResponseModel.spec.js
-test/model/ProviderType.spec.js
-test/model/TPSDataPoint.spec.js
-test/model/TPSResponseModel.spec.js

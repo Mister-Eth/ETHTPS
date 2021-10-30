@@ -130,14 +130,14 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<TPSResponseModel>> InstantTPSAsync(bool includeSidechains = true)
+        public async Task<IDictionary<string, IEnumerable<TPSDataPoint>>> InstantTPSAsync(bool includeSidechains = true)
         {
             var result = await _context.GetCachedResponseAsync<IEnumerable<TPSResponseModel>>("All", "Instant");
             if (!includeSidechains)
             {
                 result = result.Where(x => !IsSidechain(x.Provider));
             }
-            return result;
+            return result.ToDictionary(x => x.Provider, x => x.Data.AsEnumerable());
         }
 
         [HttpGet]

@@ -7,12 +7,14 @@ class HorizontalBarChart extends Component{
 
         this.state = {
           labels: [],
+          data: []
         }
     }
 
     componentDidUpdate(previousProps, previousState){
       if (previousProps.providerData !== this.props.providerData){
         this.setState({labels: this.props.providerData.map(x => x.name)})
+        this.setState({data: this.props.providerData.filter(x=>this.props.data[x.name] !== undefined).map(x => this.props.data[x.name][0].tps)})
       }
     }
 
@@ -22,7 +24,7 @@ class HorizontalBarChart extends Component{
                 labels: this.state.labels,
                 datasets: [{
                   label: 'My First Dataset',
-                  data: [65, 59, 80, 81, 56, 55, 40],
+                  data: this.state.data,
                   backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(255, 159, 64, 0.2)',

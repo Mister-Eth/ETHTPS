@@ -15,7 +15,9 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      homePageModel: {},
+      homePageModel: {
+        instantTPS: {}
+      },
       network: "Mainnet"
     }
   }
@@ -34,6 +36,7 @@ class App extends React.Component {
 
 componentDidMount(){
   globalApi.aPIV2HomePageModelGet(this.state.network, (err,data,res) => {
+    console.log(data)
      this.setState({homePageModel: data});
   });
 }

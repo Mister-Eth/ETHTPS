@@ -16,6 +16,7 @@ import ApiClient from "../ApiClient";
 import HomePageViewModel from '../model/HomePageViewModel';
 import ProviderResponseModel from '../model/ProviderResponseModel';
 import TPSResponseModel from '../model/TPSResponseModel';
+import TPSDataPoint from "../model/TPSDataPoint";
 
 /**
 * APIV2 service.
@@ -79,7 +80,7 @@ export default class APIV2Api {
      * Callback function to receive the result of the aPIV2InstantTPSGet operation.
      * @callback module:api/APIV2Api~aPIV2InstantTPSGetCallback
      * @param {String} error Error message, if any.
-     * @param {Array.<module:model/TPSResponseModel>} data The data returned by the service call.
+     * @param {Object.<String, {String: [TPSDataPoint]}>} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -87,7 +88,7 @@ export default class APIV2Api {
      * @param {Object} opts Optional parameters
      * @param {Boolean} opts.includeSidechains  (default to true)
      * @param {module:api/APIV2Api~aPIV2InstantTPSGetCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link Array.<module:model/TPSResponseModel>}
+     * data is of type: {@link Object.<String, {String: [TPSDataPoint]}>}
      */
     aPIV2InstantTPSGet(opts, callback) {
       opts = opts || {};
@@ -106,7 +107,7 @@ export default class APIV2Api {
       let authNames = [];
       let contentTypes = [];
       let accepts = ['text/plain', 'application/json', 'text/json'];
-      let returnType = [TPSResponseModel];
+      let returnType = {'String': [TPSDataPoint]};
       return this.apiClient.callApi(
         '/API/v2/InstantTPS', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,

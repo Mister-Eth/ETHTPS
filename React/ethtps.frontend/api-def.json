@@ -460,25 +460,34 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TPSResponseModel"
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/TPSDataPoint"
+                    }
                   }
                 }
               },
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TPSResponseModel"
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/TPSDataPoint"
+                    }
                   }
                 }
               },
               "text/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TPSResponseModel"
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/TPSDataPoint"
+                    }
                   }
                 }
               }
@@ -602,9 +611,12 @@
         "type": "object",
         "properties": {
           "instantTPS": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TPSResponseModel"
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/TPSDataPoint"
+              }
             },
             "nullable": true
           },

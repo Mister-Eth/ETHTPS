@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**instantTPS** | [**[TPSResponseModel]**](TPSResponseModel.md) |  | [optional] 
+**instantTPS** | **{String: [TPSDataPoint]}** |  | [optional] 
 **providerData** | [**[ProviderInfo]**](ProviderInfo.md) |  | [optional] 
 **colorDictionary** | **{String: String}** |  | [optional] 
 **tpsData** | **{String: {String: [TPSResponseModel]}}** |  | [optional] 

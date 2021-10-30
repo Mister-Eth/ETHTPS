@@ -13,6 +13,7 @@
 
 import ApiClient from '../ApiClient';
 import ProviderInfo from './ProviderInfo';
+import TPSDataPoint from './TPSDataPoint';
 import TPSResponseModel from './TPSResponseModel';
 
 /**
@@ -50,7 +51,7 @@ class HomePageViewModel {
             obj = obj || new HomePageViewModel();
 
             if (data.hasOwnProperty('instantTPS')) {
-                obj['instantTPS'] = ApiClient.convertToType(data['instantTPS'], [TPSResponseModel]);
+                obj['instantTPS'] = ApiClient.convertToType(data['instantTPS'], {'String': [TPSDataPoint]});
             }
             if (data.hasOwnProperty('providerData')) {
                 obj['providerData'] = ApiClient.convertToType(data['providerData'], [ProviderInfo]);
@@ -69,7 +70,7 @@ class HomePageViewModel {
 }
 
 /**
- * @member {Array.<module:model/TPSResponseModel>} instantTPS
+ * @member {Object.<String, Array.<module:model/TPSDataPoint>>} instantTPS
  */
 HomePageViewModel.prototype['instantTPS'] = undefined;
 
