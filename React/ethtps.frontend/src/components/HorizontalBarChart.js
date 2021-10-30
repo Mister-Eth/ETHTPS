@@ -31,7 +31,12 @@ class HorizontalBarChart extends Component{
                 }]
               }} 
               options={{
-                indexAxis: 'y'
+                indexAxis: 'y',
+                plugins:{
+                  legend:{
+                    display:false
+                  }
+                }
               }}/>
         </>;
     }
