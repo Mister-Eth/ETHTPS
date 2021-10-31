@@ -62,7 +62,7 @@ componentDidMount(){
           </img>
         </a>
     </center>
-    <InstantTPSStat/>
+    <InstantTPSStat data={this.state.homePageModel.instantTPS} colorDictionary={this.state.homePageModel.colorDictionary} providerData={this.state.homePageModel.providerData}/>
     <Timeline/>
     <HorizontalBarChart data={this.state.homePageModel.instantTPS} colorDictionary={this.state.homePageModel.colorDictionary} providerData={this.state.homePageModel.providerData}/>
     <footer>
