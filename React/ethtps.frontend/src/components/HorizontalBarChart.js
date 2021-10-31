@@ -13,7 +13,7 @@ class HorizontalBarChart extends Component{
     }
 
     componentDidUpdate(previousProps, previousState){
-      if (previousProps.providerData !== this.props.providerData){
+      if (previousProps.data !== this.props.data){
         this.setState({labels: this.props.providerData.map(x => x.name)})
         this.setState({data: this.props.providerData.filter(x=>this.props.data[x.name] !== undefined).map(x => this.props.data[x.name][0].tps)})
         this.setState({backgroundColors: this.props.providerData.map(x => this.props.colorDictionary[x.name])})

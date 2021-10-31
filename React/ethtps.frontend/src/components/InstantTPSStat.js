@@ -24,19 +24,27 @@ class InstantTPSStat extends Component{
     }
 
     componentDidUpdate(previousProps, previousState){
-        if (previousProps.providerData !== this.props.providerData){
+        if (previousProps.data !== this.props.data){
             this.setState({labels: this.props.providerData.map(x => x.name)})
-            this.setState({datasets: this.props.providerData.filter(x=>this.props.data[x.name] !== undefined).map(x => this.createDataset(x))})
+            let datasets = this.props.providerData.filter(x=>this.props.data[x.name] !== undefined).map(x => this.createDataset(x));
+            this.setState({datasets: datasets})
             this.setState({backgroundColors: this.props.providerData.map(x => this.props.colorDictionary[x.name])})
+            this.setState({max: datasets.map(x=>x.data[0]).reduce((a, b) => a + b)})
         }
       }
 
     render(){
         return <>
+        <center>
+            <p>
+                Ethereum currently does {parseFloat(this.state.max.toString()).toFixed(2)} TPS
+            </p>
+        </center>
         <Bar data={{
                 labels: ["TPS"],
                 datasets: this.state.datasets
               }} 
+              height={50}
               options={{
                 indexAxis: 'y',
                 plugins:{
@@ -47,11 +55,20 @@ class InstantTPSStat extends Component{
                 scales: {
                   x: {
                     stacked: true,
-                    max: this.state.datasets.map(x=>x.data[0]).reduce((a, b) => a + b)
+                    max: this.state.max,
+                    ticks:{
+                        display:false
+                    },
+                    grid:{
+                        display:false
+                    }
                   },
                   y: {
                     stacked: true,
                     ticks:{
+                        display:false
+                    },
+                    grid:{
                         display:false
                     }
                   }

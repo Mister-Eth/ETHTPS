@@ -16,7 +16,8 @@ class App extends React.Component {
 
     this.state = {
       homePageModel: {
-        instantTPS: {}
+        instantTPS: {},
+        colorDictionary: {}
       },
       network: "Mainnet"
     }
@@ -36,8 +37,17 @@ class App extends React.Component {
 
 componentDidMount(){
   globalApi.aPIV2HomePageModelGet(this.state.network, (err,data,res) => {
-    console.log(data)
      this.setState({homePageModel: data});
+  });
+
+  setInterval(this.updateInstantTPS.bind(this), 5000);
+}
+
+updateInstantTPS(){
+  globalApi.aPIV2InstantTPSGet(true, (err, data, res)=>{
+    let homePageModel = this.state.homePageModel;
+    homePageModel.instantTPS = data;
+    this.setState({homePageModel: homePageModel});
   });
 }
 

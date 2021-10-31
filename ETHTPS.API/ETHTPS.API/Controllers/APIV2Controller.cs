@@ -130,6 +130,7 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IDictionary<string, IEnumerable<TPSDataPoint>>> InstantTPSAsync(bool includeSidechains = true)
         {
             var result = await _context.GetCachedResponseAsync<IEnumerable<TPSResponseModel>>("All", "Instant");
