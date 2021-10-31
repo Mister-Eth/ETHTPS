@@ -72,9 +72,26 @@ updateInstantTPS(){
           </img>
         </a>
     </center>
-    <InstantTPSStat data={this.state.homePageModel.instantTPS} colorDictionary={this.state.homePageModel.colorDictionary} providerData={this.state.homePageModel.providerData}/>
-    <Timeline/>
-    <HorizontalBarChart data={this.state.homePageModel.instantTPS} colorDictionary={this.state.homePageModel.colorDictionary} providerData={this.state.homePageModel.providerData}/>
+    <div className={"container"}>
+      <hr/>
+      <h3>
+        Current TPS overview
+      </h3>
+      <p>
+        Each section of the bar below represents a network. We're working on adding icons to it.
+      </p>
+      <InstantTPSStat data={this.state.homePageModel.instantTPS} colorDictionary={this.state.homePageModel.colorDictionary} providerData={this.state.homePageModel.providerData}/>
+      <hr/>
+      <h3>
+        Current TPS distribution
+      </h3>
+      <p>
+        This is an ordered bar chart of all networks' throughput.
+      </p>
+      <Timeline/>
+      <HorizontalBarChart data={this.state.homePageModel.instantTPS} colorDictionary={this.state.homePageModel.colorDictionary} providerData={this.state.homePageModel.providerData}/>
+    <hr/>
+    </div>
     <footer>
       <div className={'inline'}>
       Brought to you by 

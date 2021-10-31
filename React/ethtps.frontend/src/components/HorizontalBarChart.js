@@ -14,10 +14,32 @@ class HorizontalBarChart extends Component{
 
     componentDidUpdate(previousProps, previousState){
       if (previousProps.data !== this.props.data){
-        this.setState({labels: this.props.providerData.map(x => x.name)})
-        this.setState({data: this.props.providerData.filter(x=>this.props.data[x.name] !== undefined).map(x => this.props.data[x.name][0].tps)})
+        let [labels, data] = this.orderDataDescending(this.props.providerData.map(x => x.name), this.props.providerData.filter(x=>this.props.data[x.name] !== undefined).map(x => this.props.data[x.name][0].tps));
+        this.setState({labels: labels})
+        this.setState({data: data})
         this.setState({backgroundColors: this.props.providerData.map(x => this.props.colorDictionary[x.name])})
       }
+    }
+
+    orderDataDescending(arrayLabel, arrayData){
+      let arrayOfObj = arrayLabel.map(function(d, i) {
+        return {
+          label: d,
+          data: arrayData[i] || 0
+        };
+      });
+      
+      let sortedArrayOfObj = arrayOfObj.sort(function(a, b) {
+        return b.data>a.data;
+      });
+      
+      let newArrayLabel = [];
+      let newArrayData = [];
+      sortedArrayOfObj.forEach(function(d){
+        newArrayLabel.push(d.label);
+        newArrayData.push(d.data);
+      });
+      return [newArrayLabel, newArrayData];
     }
 
     render(){

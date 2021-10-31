@@ -36,15 +36,16 @@ class InstantTPSStat extends Component{
     render(){
         return <>
         <center>
-            <p>
+            <h4 className={'tooltip'}>
                 Ethereum currently does {parseFloat(this.state.max.toString()).toFixed(2)} TPS
-            </p>
+                <span class="tooltiptext">This includes L2s, sidechains (if the box below is checked), validiums etc.</span>
+            </h4>
         </center>
         <Bar data={{
                 labels: ["TPS"],
                 datasets: this.state.datasets
               }} 
-              height={50}
+              height={25}
               options={{
                 indexAxis: 'y',
                 plugins:{
