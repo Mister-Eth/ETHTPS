@@ -7,7 +7,10 @@ import React, { useState, useEffect } from "react";
 import InstantTPSStat from './components/InstantTPSStat';
 import Timeline from './components/Timeline';
 import HorizontalBarChart from './components/HorizontalBarChart'
-import { render } from 'react-dom';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import ProviderTable from './components/ProviderTable';
 
 class App extends React.Component {
 
@@ -19,7 +22,8 @@ class App extends React.Component {
         instantTPS: {},
         colorDictionary: {}
       },
-      network: "Mainnet"
+      network: "Mainnet",
+      excludeSidechains: false
     }
   }
   
@@ -43,6 +47,12 @@ componentDidMount(){
   setInterval(this.updateInstantTPS.bind(this), 5000);
 }
 
+handleInputChange(event){
+  const target = event.target;
+  const value = target.type === 'checkbox' ? target.checked : target.value;
+  this.setState({excludeSidechains : value});
+}
+
 updateInstantTPS(){
   globalApi.aPIV2InstantTPSGet(true, (err, data, res)=>{
     let homePageModel = this.state.homePageModel;
@@ -50,7 +60,6 @@ updateInstantTPS(){
     this.setState({homePageModel: homePageModel});
   });
 }
-
  render(){
   return (
     <>
@@ -80,16 +89,43 @@ updateInstantTPS(){
       <p>
         Each section of the bar below represents a network. We're working on adding icons to it.
       </p>
-      <InstantTPSStat data={this.state.homePageModel.instantTPS} colorDictionary={this.state.homePageModel.colorDictionary} providerData={this.state.homePageModel.providerData}/>
+      <InstantTPSStat 
+        data={this.state.homePageModel.instantTPS} 
+        colorDictionary={this.state.homePageModel.colorDictionary} 
+        providerData={this.state.homePageModel.providerData}/>
+   
+      <label className={"small"}>
+      <input
+            ref={ref=>this.excludeSidechainsCheckBox = ref}
+            name="excludeSidechains" type="checkbox"
+            checked={this.state.excludeSidechains}
+            onChange={this.handleInputChange.bind(this)}/>
+            Exclude sidechains?
+      </label>
+
       <hr/>
+      
+
+    <h3>
+      Networks
+    </h3>
+    <ProviderTable
+      instantTPSData={this.state.homePageModel.instantTPS} 
+      colorDictionary={this.state.homePageModel.colorDictionary} 
+      providerData={this.state.homePageModel.providerData}
+      excludeSidechains={this.state.excludeSidechains}/>
       <h3>
         Current TPS distribution
       </h3>
       <p>
-        This is an ordered bar chart of all networks' throughput.
+        This is an ordered bar chart of each network's throughput.
       </p>
       <Timeline/>
-      <HorizontalBarChart data={this.state.homePageModel.instantTPS} colorDictionary={this.state.homePageModel.colorDictionary} providerData={this.state.homePageModel.providerData}/>
+      <HorizontalBarChart 
+        data={this.state.homePageModel.instantTPS} 
+        colorDictionary={this.state.homePageModel.colorDictionary} 
+        providerData={this.state.homePageModel.providerData}
+        excludeSidechains={this.state.excludeSidechains}/>
     <hr/>
     </div>
     <footer>

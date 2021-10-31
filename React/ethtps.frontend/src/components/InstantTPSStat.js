@@ -38,7 +38,7 @@ class InstantTPSStat extends Component{
         <center>
             <h4 className={'tooltip'}>
                 Ethereum currently does {parseFloat(this.state.max.toString()).toFixed(2)} TPS
-                <span class="tooltiptext">This includes L2s, sidechains (if the box below is checked), validiums etc.</span>
+                <span className={'tooltiptext'}>This includes L2s, sidechains (if the box below is unchecked), validiums etc.</span>
             </h4>
         </center>
         <Bar data={{

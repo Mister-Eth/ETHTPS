@@ -45,10 +45,11 @@
 }
 
 footer{
-left:10px;
+margin-top: 20px;
+margin-left:10px;
 bottom:0;
+overflow: hidden;
 font-size: small;
-position: absolute;
 }
 
 .inline{
@@ -179,3 +180,26 @@ h3 {
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
+
+.l1{
+  font-size: 18px;
+}
+
+.b{
+  font-weight: 600;
+}
+
+.provider-icon{
+  width: 18px;
+  height: 18px;
+  margin-right: 5px;
+}
+
+
+a{
+  color:black;
+}
+a:link { color: #000000; text-decoration: none}
+a:visited { color: #000000; text-decoration: none}
+a:hover { color: #000000; text-decoration: underline}
+a:active { color: #000000; text-decoration: none}
