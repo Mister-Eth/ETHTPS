@@ -1,5 +1,6 @@
 ﻿using ETHTPS.BackgroundServices.TPSDataUpdaters;
 using ETHTPS.Data.Database;
+using ETHTPS.Data.Extensions;
 
 using Fizzler.Systems.HtmlAgilityPack;
 
@@ -27,12 +28,6 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
             _httpClient = new HttpClient();
         }
 
-        private static readonly DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
-        private static DateTime FromUnixTime(long unixTime)
-        {
-            return epoch.AddSeconds(unixTime);
-        }
 
         public override async Task<TPSData> LogDataAsync()
         {
@@ -51,8 +46,8 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
                         if (!_context.TPSData.Any(x => x.Block == blockNumber && x.Provider == providerID))
                         {
                             var provider = _context.Providers.First(x => x.Name == Name);
-                            DateTime currentBlockTime = FromUnixTime(long.Parse(block.committed_at.ToString()));
-                            DateTime previousBlockTime = FromUnixTime(long.Parse(previousBlock.committed_at.ToString()));
+                            DateTime currentBlockTime = DateTimeExtensions.FromUnixTime(long.Parse(block.committed_at.ToString()));
+                            DateTime previousBlockTime = DateTimeExtensions.FromUnixTime(long.Parse(previousBlock.committed_at.ToString()));
                             data = new TPSData()
                             {
                                 Date = currentBlockTime,

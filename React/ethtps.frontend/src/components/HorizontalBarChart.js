@@ -102,6 +102,7 @@ class HorizontalBarChart extends Component{
     render(){
         return <>
             <Bar data={this.createChartData(this.state)} 
+            height={200}
               options={{
                 indexAxis: 'y',
                 plugins:{

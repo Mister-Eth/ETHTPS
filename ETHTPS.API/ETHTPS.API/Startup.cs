@@ -82,6 +82,7 @@ namespace ETHTPS.API
                 services.RegisterHangfireBackgroundService<ZKSwapUpdater>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
                 services.RegisterHangfireBackgroundService<ZKSyncUpdater>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
                 services.RegisterHangfireBackgroundService<AVAXCChainUpdater>(CronConstants.Every5s, TPSUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<LoopringUpdater>(CronConstants.Every5s, TPSUPDATERQUEUE);
 
                 services.RegisterHangfireBackgroundService<InstantCacheUpdater>(CronConstants.Every5s, TPSUPDATERQUEUE);
             }

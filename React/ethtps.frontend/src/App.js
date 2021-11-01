@@ -110,7 +110,7 @@ getProviderData(state){
         Current TPS overview
       </h3>
       <p>
-        Each section of the bar below represents a network. We're working on adding icons to it.
+        Each section of the bar below represents a network. Data gets updated automatically.
       </p>
       <InstantTPSStat 
         data={this.state.homePageModel.instantTPS} 

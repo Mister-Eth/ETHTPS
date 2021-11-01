@@ -45,7 +45,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
             return int.Parse(new string(targetString.Where(char.IsDigit).ToArray()));
         }
 
-        private Task<AVAXBlockInfo> GetBlockInfoAsync(int block)
+        private Task<BlockInfo> GetBlockInfoAsync(int block)
         {
             HtmlWeb web = new HtmlWeb();
             HtmlDocument doc = web.Load($"https://cchain.explorer.avax.network/block/{block}/transactions");
@@ -54,7 +54,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
 
             var dateNode = doc.DocumentNode.QuerySelectorAll(_dateSelector);
             var date = string.Join(" ", dateNode.Select(x => x.Attributes["data-from-now"].Value));
-            return Task.FromResult(new AVAXBlockInfo()
+            return Task.FromResult(new BlockInfo()
             {
                 TransactionCount = int.Parse(txCount),
                 Time = DateTime.Parse(date)
@@ -89,13 +89,6 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
                 _logger.LogError($"{Name}: {e.Message}");
             }
             return data;
-        }
-
-        private class AVAXBlockInfo
-        {
-            public int TransactionCount { get; set; }
-
-            public DateTime Time { get; set; }
         }
     }
 }
