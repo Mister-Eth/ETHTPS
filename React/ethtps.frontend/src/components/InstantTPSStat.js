@@ -11,7 +11,8 @@ class InstantTPSStat extends Component{
                 data: [1]
             }],
             backgroundColors: [],
-            max: 1
+            max: 1,
+            data: []
           }
     }
 
@@ -30,7 +31,14 @@ class InstantTPSStat extends Component{
             this.setState({datasets: datasets})
             this.setState({backgroundColors: this.props.providerData.map(x => this.props.colorDictionary[x.name])})
             this.setState({max: datasets.map(x=>x.data[0]).reduce((a, b) => a + b)})
+            this.setState({data: this.props.data})
         }
+        if (previousProps.colorDictionary !== this.props.colorDictionary){
+            this.setState({colorDictionary: this.props.colorDictionary});
+        }
+          if (previousProps.excludeSidechains !== this.props.excludeSidechains){
+            this.setState({excludeSidechains: this.props.excludeSidechains});
+          }
       }
 
     render(){
@@ -38,7 +46,7 @@ class InstantTPSStat extends Component{
         <center>
             <h4 className={'tooltip'}>
                 Ethereum currently does {parseFloat(this.state.max.toString()).toFixed(2)} TPS
-                <span className={'tooltiptext'}>This includes L2s, sidechains (if the box below is unchecked), validiums etc.</span>
+                <span className={'tooltiptext'}>This includes L2s, sidechains (if the box below is unchecked), ZK rollups, validiums etc.</span>
             </h4>
         </center>
         <Bar data={{

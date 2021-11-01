@@ -8,16 +8,29 @@ class HorizontalBarChart extends Component{
         this.state = {
           labels: [],
           data: [],
-          backgroundColors: []
+          backgroundColors: [],
+          colorDictionary: {},
+          providerData: []
         }
     }
-
-    componentDidUpdate(previousProps, previousState){
-      if (previousProps.data !== this.props.data){
+    /*
+    
         let [labels, data] = this.orderDataDescending(this.props.providerData.map(x => x.name), this.props.providerData.filter(x=>this.props.data[x.name] !== undefined).map(x => this.props.data[x.name][0].tps));
         this.setState({labels: labels})
-        this.setState({data: data})
+    */
+    componentDidUpdate(previousProps, previousState){
+      if (previousProps.data !== this.props.data){
+        this.setState({data: this.props.data})
+      }
+      if (previousProps.colorDictionary !== this.props.colorDictionary){
+        this.setState({colorDictionary: this.props.colorDictionary});
         this.setState({backgroundColors: this.props.providerData.map(x => this.props.colorDictionary[x.name])})
+      }
+      if (previousProps.excludeSidechains !== this.props.excludeSidechains){
+        this.setState({excludeSidechains: this.props.excludeSidechains});
+      }
+      if (previousProps.providerData !== this.props.providerData){
+        this.setState({providerData: this.props.providerData});
       }
     }
 
@@ -42,16 +55,47 @@ class HorizontalBarChart extends Component{
       return [newArrayLabel, newArrayData];
     }
 
-    render(){
-        return <>
-            <Bar data={{
+    /**
+     * 
+     * @param {{
                 labels: this.state.labels,
                 datasets: [{
                   label: 'Current TPS',
                   data: this.state.data,
                   backgroundColor: this.state.backgroundColors
                 }]
-              }} 
+              }} state 
+     */
+    createChartData(state){
+      if (state.data.length == 0) return {};
+
+      let labels = state.providerData.map(x => x.name);
+      let data = [];
+      for(let label of labels){
+        console.log(state.data)
+        let t = state.data[label];
+        if (t === undefined)
+          continue;
+        data.push(t[0].tps);
+      }
+      let [orderedLabels, orderedData] = this.orderDataDescending(labels, data);
+      let colors = [];
+      for(let label of orderedLabels){
+        colors.push(state.colorDictionary[label]);
+      }
+      return {
+        labels: orderedLabels,
+        datasets: [{
+          label: 'Current TPS',
+          data: orderedData,
+          backgroundColor: colors
+        }]
+      };
+    }
+
+    render(){
+        return <>
+            <Bar data={this.createChartData(this.state)} 
               options={{
                 indexAxis: 'y',
                 plugins:{

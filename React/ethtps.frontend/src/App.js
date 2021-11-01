@@ -20,10 +20,12 @@ class App extends React.Component {
     this.state = {
       homePageModel: {
         instantTPS: {},
-        colorDictionary: {}
+        colorDictionary: {},
+        providerData: []
       },
       network: "Mainnet",
-      excludeSidechains: false
+      excludeSidechains: false,
+      modifiedInstantTPS: {}
     }
   }
   
@@ -42,6 +44,7 @@ class App extends React.Component {
 componentDidMount(){
   globalApi.aPIV2HomePageModelGet(this.state.network, (err,data,res) => {
      this.setState({homePageModel: data});
+     this.setState({modifiedInstantTPS: data.instantTPS});
   });
 
   setInterval(this.updateInstantTPS.bind(this), 5000);
@@ -51,6 +54,9 @@ handleInputChange(event){
   const target = event.target;
   const value = target.type === 'checkbox' ? target.checked : target.value;
   this.setState({excludeSidechains : value});
+  if (value){
+    let filteredInstantTPSData
+  }
 }
 
 updateInstantTPS(){
@@ -60,6 +66,11 @@ updateInstantTPS(){
     this.setState({homePageModel: homePageModel});
   });
 }
+
+getProviderData(state){
+  return (state.excludeSidechains)?state.homePageModel.providerData.filter(x=>x.type !== "Sidechain"):state.homePageModel.providerData
+}
+
  render(){
   return (
     <>
@@ -90,9 +101,9 @@ updateInstantTPS(){
         Each section of the bar below represents a network. We're working on adding icons to it.
       </p>
       <InstantTPSStat 
-        data={this.state.homePageModel.instantTPS} 
+        data={this.state.modifiedInstantTPS} 
         colorDictionary={this.state.homePageModel.colorDictionary} 
-        providerData={this.state.homePageModel.providerData}/>
+        providerData={this.getProviderData(this.state)}/>
    
       <label className={"small"}>
       <input
@@ -110,10 +121,10 @@ updateInstantTPS(){
       Networks
     </h3>
     <ProviderTable
-      instantTPSData={this.state.homePageModel.instantTPS} 
+      instantTPSData={this.state.modifiedInstantTPS} 
       colorDictionary={this.state.homePageModel.colorDictionary} 
-      providerData={this.state.homePageModel.providerData}
-      excludeSidechains={this.state.excludeSidechains}/>
+      providerData={this.getProviderData(this.state)}/>
+      <hr/>
       <h3>
         Current TPS distribution
       </h3>
@@ -122,10 +133,9 @@ updateInstantTPS(){
       </p>
       <Timeline/>
       <HorizontalBarChart 
-        data={this.state.homePageModel.instantTPS} 
+        data={this.state.modifiedInstantTPS} 
         colorDictionary={this.state.homePageModel.colorDictionary} 
-        providerData={this.state.homePageModel.providerData}
-        excludeSidechains={this.state.excludeSidechains}/>
+        providerData={this.getProviderData(this.state)}/>
     <hr/>
     </div>
     <footer>

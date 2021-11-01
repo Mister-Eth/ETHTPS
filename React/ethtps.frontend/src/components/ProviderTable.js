@@ -15,7 +15,6 @@ class ProviderTable extends React.Component {
         this.state = {
             rows: [],
             instantTPSData:[],
-            excludeSidechains: false,
             providerData: []
         }
     }
@@ -55,7 +54,7 @@ class ProviderTable extends React.Component {
           </TableRow>
         </TableHead>
         <TableBody>
-          {this.state.rows.filter(x => (this.state.excludeSidechains)?this.state.providerData.filter(y=>y.name===x.name && y.type === "Sidechain").length === 0:true).map((row) => (
+          {this.state.rows.map((row) => (
             <TableRow
               key={row.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
