@@ -42,6 +42,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
                 };
                 _context.TPSData.Add(data);
                 await _context.SaveChangesAsync();
+                _logger.LogInformation($"{Name}: {data.Tps}TPS");
             }
             var secondToLastBlock = await GetBlockInfo(latestBlockHeight - 1);
 
