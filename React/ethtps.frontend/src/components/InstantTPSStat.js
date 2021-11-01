@@ -40,7 +40,7 @@ class InstantTPSStat extends Component{
 
     createDatasets(state){
         if (state.providerData.length === 0 || state.data.length === 0)
-            return;
+            return [{}];
         let datasets = state.providerData.filter(x=>state.data[x.name] !== undefined).map(x => this.createDataset(x, state.data, state.colorDictionary));
         return datasets;
     }

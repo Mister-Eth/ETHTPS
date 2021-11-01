@@ -66,7 +66,15 @@ class HorizontalBarChart extends Component{
               }} state 
      */
     createChartData(state){
-      if (state.data.length == 0) return {};
+      if (state.data.length == 0) 
+        return {
+          labels: [],
+          datasets: [{
+            label: 'Current TPS',
+            data: [],
+            backgroundColor: []
+          }]
+        }
 
       let labels = state.providerData.map(x => x.name);
       let data = [];
