@@ -20,15 +20,10 @@ class InstantTPSStat extends Component{
 
     componentDidUpdate(previousProps, previousState){
         if (previousProps.data !== this.props.data){
-            this.setState({labels: this.props.providerData.map(x => x.name)})
-            this.setState({backgroundColors: this.props.providerData.map(x => this.props.colorDictionary[x.name])})
             this.setState({data: this.props.data})
         }
         if (previousProps.colorDictionary !== this.props.colorDictionary){
             this.setState({colorDictionary: this.props.colorDictionary});
-        }
-          if (previousProps.excludeSidechains !== this.props.excludeSidechains){
-            this.setState({excludeSidechains: this.props.excludeSidechains});
         }
         if (previousProps.providerData !== this.props.providerData){
             this.setState({providerData: this.props.providerData});
@@ -46,9 +41,7 @@ class InstantTPSStat extends Component{
     createDatasets(state){
         if (state.providerData.length === 0 || state.data.length === 0)
             return;
-        console.log(state.data)
         let datasets = state.providerData.filter(x=>state.data[x.name] !== undefined).map(x => this.createDataset(x, state.data, state.colorDictionary));
-        console.log(datasets)
         return datasets;
     }
 

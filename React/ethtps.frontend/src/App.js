@@ -19,7 +19,7 @@ class App extends React.Component {
 
     this.state = {
       homePageModel: {
-        instantTPS: {},
+        instantTPS: [],
         colorDictionary: {},
         providerData: []
       },
@@ -54,8 +54,20 @@ handleInputChange(event){
   const target = event.target;
   const value = target.type === 'checkbox' ? target.checked : target.value;
   this.setState({excludeSidechains : value});
-  if (value){
-    let filteredInstantTPSData
+}
+
+getFilteredInstantTPSData(state){
+  if (state.excludeSidechains){
+    let filteredInstantTPSData = {};
+    for(let p of state.homePageModel.providerData){
+      if (state.homePageModel.providerData.filter(x => x.name == p.name && x.type !== 'Sidechain')){
+        filteredInstantTPSData[p.name] = state.homePageModel.instantTPS[p.name];
+      }
+    }
+    return filteredInstantTPSData;
+  }
+  else {
+    return state.homePageModel.instantTPSData;
   }
 }
 
@@ -101,7 +113,7 @@ getProviderData(state){
         Each section of the bar below represents a network. We're working on adding icons to it.
       </p>
       <InstantTPSStat 
-        data={this.state.modifiedInstantTPS} 
+        data={this.state.homePageModel.instantTPS} 
         colorDictionary={this.state.homePageModel.colorDictionary} 
         providerData={this.getProviderData(this.state)}/>
    
@@ -121,7 +133,7 @@ getProviderData(state){
       Networks
     </h3>
     <ProviderTable
-      instantTPSData={this.state.modifiedInstantTPS} 
+      instantTPSData={this.state.homePageModel.instantTPS} 
       colorDictionary={this.state.homePageModel.colorDictionary} 
       providerData={this.getProviderData(this.state)}/>
       <hr/>
@@ -133,7 +145,7 @@ getProviderData(state){
       </p>
       <Timeline/>
       <HorizontalBarChart 
-        data={this.state.modifiedInstantTPS} 
+        data={this.state.homePageModel.instantTPS} 
         colorDictionary={this.state.homePageModel.colorDictionary} 
         providerData={this.getProviderData(this.state)}/>
     <hr/>

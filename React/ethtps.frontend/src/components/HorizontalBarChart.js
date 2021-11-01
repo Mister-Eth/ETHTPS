@@ -24,7 +24,6 @@ class HorizontalBarChart extends Component{
       }
       if (previousProps.colorDictionary !== this.props.colorDictionary){
         this.setState({colorDictionary: this.props.colorDictionary});
-        this.setState({backgroundColors: this.props.providerData.map(x => this.props.colorDictionary[x.name])})
       }
       if (previousProps.excludeSidechains !== this.props.excludeSidechains){
         this.setState({excludeSidechains: this.props.excludeSidechains});

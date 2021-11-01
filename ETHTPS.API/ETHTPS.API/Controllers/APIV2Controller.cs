@@ -181,7 +181,7 @@ namespace ETHTPS.API.Controllers
                     MaxTPS = MaxTPS(x.Name).FirstOrDefault().Data.FirstOrDefault().TPS,
                     Type = x.Type
                 }),
-                TPSData = await BuildTPSDataAsync(network)
+                //TPSData = await BuildTPSDataAsync(network)
             };
         }
 
