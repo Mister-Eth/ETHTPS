@@ -72,7 +72,6 @@ class HorizontalBarChart extends Component{
       let labels = state.providerData.map(x => x.name);
       let data = [];
       for(let label of labels){
-        console.log(state.data)
         let t = state.data[label];
         if (t === undefined)
           continue;

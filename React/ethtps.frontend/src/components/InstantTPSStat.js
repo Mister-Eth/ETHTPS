@@ -12,25 +12,16 @@ class InstantTPSStat extends Component{
             }],
             backgroundColors: [],
             max: 1,
-            data: []
+            data: [],
+            providerData: []
           }
     }
 
-    createDataset(x){
-        return{
-            label: x.name,
-            data: [this.props.data[x.name][0].tps],
-            backgroundColor: this.props.colorDictionary[x.name],
-        }
-    }
 
     componentDidUpdate(previousProps, previousState){
         if (previousProps.data !== this.props.data){
             this.setState({labels: this.props.providerData.map(x => x.name)})
-            let datasets = this.props.providerData.filter(x=>this.props.data[x.name] !== undefined).map(x => this.createDataset(x));
-            this.setState({datasets: datasets})
             this.setState({backgroundColors: this.props.providerData.map(x => this.props.colorDictionary[x.name])})
-            this.setState({max: datasets.map(x=>x.data[0]).reduce((a, b) => a + b)})
             this.setState({data: this.props.data})
         }
         if (previousProps.colorDictionary !== this.props.colorDictionary){
@@ -38,20 +29,48 @@ class InstantTPSStat extends Component{
         }
           if (previousProps.excludeSidechains !== this.props.excludeSidechains){
             this.setState({excludeSidechains: this.props.excludeSidechains});
-          }
+        }
+        if (previousProps.providerData !== this.props.providerData){
+            this.setState({providerData: this.props.providerData});
+        }
       }
+
+    createDataset(x, data, colorDictionary){
+        return{
+            label: x.name,
+            data: [data[x.name][0].tps],
+            backgroundColor: colorDictionary[x.name],
+        }
+    }
+
+    createDatasets(state){
+        if (state.providerData.length === 0 || state.data.length === 0)
+            return;
+        console.log(state.data)
+        let datasets = state.providerData.filter(x=>state.data[x.name] !== undefined).map(x => this.createDataset(x, state.data, state.colorDictionary));
+        console.log(datasets)
+        return datasets;
+    }
+
+    calculateTotalTPS(state){
+        if (state.data === undefined || state.data.length === 0)
+            return 20;
+        
+        let t = state.providerData.filter(x=>state.data[x.name] !== undefined).map(x=>state.data[x.name][0].tps);
+        return t.reduce((a, b) => a + b);
+    }
 
     render(){
         return <>
         <center>
             <h4 className={'tooltip'}>
-                Ethereum currently does {parseFloat(this.state.max.toString()).toFixed(2)} TPS
+                Ethereum currently does {parseFloat(this.calculateTotalTPS(this.state).toString()).toFixed(2)} TPS
                 <span className={'tooltiptext'}>This includes L2s, sidechains (if the box below is unchecked), ZK rollups, validiums etc.</span>
             </h4>
         </center>
         <Bar data={{
                 labels: ["TPS"],
-                datasets: this.state.datasets
+                datasets: this.createDatasets(this.state)
               }} 
               height={25}
               options={{
@@ -64,7 +83,7 @@ class InstantTPSStat extends Component{
                 scales: {
                   x: {
                     stacked: true,
-                    max: this.state.max,
+                    max: this.calculateTotalTPS(this.state),
                     ticks:{
                         display:false
                     },
