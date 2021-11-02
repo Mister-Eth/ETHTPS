@@ -1,4 +1,5 @@
 ﻿using ETHTPS.Data.Database;
+using ETHTPS.Data.Database.Extensions;
 using ETHTPS.Data.Extensions;
 
 using Microsoft.Extensions.Logging;

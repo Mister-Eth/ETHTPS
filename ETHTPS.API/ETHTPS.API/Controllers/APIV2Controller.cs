@@ -1,5 +1,6 @@
 ﻿using ETHTPS.Data;
 using ETHTPS.Data.Database;
+using ETHTPS.Data.Database.Extensions;
 using ETHTPS.Data.ResponseModels;
 using ETHTPS.Data.ResponseModels.HomePage;
 
