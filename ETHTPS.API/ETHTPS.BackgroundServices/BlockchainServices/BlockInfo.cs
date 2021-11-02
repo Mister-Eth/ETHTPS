@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ETHTPS.Services.TPSDataUpdaters.Standard
+namespace ETHTPS.Services.BlockchainServices
 {
     public class BlockInfo
     {
+        public int BlockNumber { get; set; }
         public int TransactionCount { get; set; }
-
-        public DateTime Time { get; set; }
+        public int GasUsed { get; set; }
     }
 }

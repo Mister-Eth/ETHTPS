@@ -1,4 +1,4 @@
-﻿using ETHTPS.BackgroundServices.TPSDataUpdaters;
+﻿using ETHTPS.Services.TPSDataUpdaters;
 using ETHTPS.Data.Database;
 using ETHTPS.Data.Extensions.StringExtensions;
 
@@ -19,7 +19,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
+namespace ETHTPS.Services.TPSDataUpdaters.Standard
 {
     public class AVAXCChainUpdater : TPSDataUpdaterBase
     {

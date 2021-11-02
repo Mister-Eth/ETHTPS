@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ETHTPS.API.Infrastructure.BackgroundServices.TPSDataUpdaters
+namespace ETHTPS.API.Infrastructure.Services.TPSDataUpdaters
 {
     public interface ITPSDataUpdater
     {

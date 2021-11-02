@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ETHTPS.BackgroundServices.Infrastructure.Performance.Tasks.Extensions
+namespace ETHTPS.Services.Infrastructure.Performance.Tasks.Extensions
 {
     public static class TaskPerformanceExtensions
     {

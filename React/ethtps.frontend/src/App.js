@@ -111,14 +111,14 @@ getProviderData(state){
         Current TPS overview
       </h3>
       <p>
-        Each section of the bar below represents a network. Data gets updated automatically.
+        Each section of the bar below represents the throughput of a network. Data gets updated automatically.
       </p>
       <InstantTPSStat 
         data={this.state.homePageModel.instantTPS} 
         colorDictionary={this.state.homePageModel.colorDictionary} 
         providerData={this.getProviderData(this.state)}/>
     <p>
-        Each section of the bar below represents a network type.
+        Each section of the bar below represents the throughput of a network type.
       </p>
       <TypeTPSStat 
         data={this.state.homePageModel.instantTPS} 

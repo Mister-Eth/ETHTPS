@@ -1,4 +1,4 @@
-﻿using ETHTPS.BackgroundServices.TPSDataUpdaters;
+﻿using ETHTPS.Services.TPSDataUpdaters;
 using ETHTPS.Data.Database;
 
 using Microsoft.Extensions.Configuration;
@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Http
+namespace ETHTPS.Services.TPSDataUpdaters.Http
 {
     public class OptimismUpdater : HTTPUpdaterBase
     {

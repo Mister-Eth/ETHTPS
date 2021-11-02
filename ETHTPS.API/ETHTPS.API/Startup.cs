@@ -1,11 +1,12 @@
 
 
 using ETHTPS.API.Middlewares;
-using ETHTPS.BackgroundServices;
-using ETHTPS.BackgroundServices.CacheUpdaters;
-using ETHTPS.BackgroundServices.Infrastructure.Extensions;
-using ETHTPS.BackgroundServices.TPSDataUpdaters.Http;
-using ETHTPS.BackgroundServices.TPSDataUpdaters.Standard;
+using ETHTPS.Services;
+using ETHTPS.Services.CacheUpdaters;
+using ETHTPS.Services.CacheUpdaters.ChartCache;
+using ETHTPS.Services.Infrastructure.Extensions;
+using ETHTPS.Services.TPSDataUpdaters.Http;
+using ETHTPS.Services.TPSDataUpdaters.Standard;
 using ETHTPS.Data.Database;
 
 using Hangfire;
@@ -92,10 +93,10 @@ namespace ETHTPS.API
         {
             if (ConfigurationQueues.Contains(CACHEUPDATERQUEUE))
             {
-                services.RegisterHangfireBackgroundService<OneHourCacheUpdater>(CronConstants.Every15Minutes, CACHEUPDATERQUEUE);
-                services.RegisterHangfireBackgroundService<OneDayCacheUpdater>(CronConstants.EveryHour, CACHEUPDATERQUEUE);
-                services.RegisterHangfireBackgroundService<OneWeekCacheUpdater>(CronConstants.EveryMidnight, CACHEUPDATERQUEUE);
-                services.RegisterHangfireBackgroundService<OneMonthCacheUpdater>(CronConstants.EveryMidnight, CACHEUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<OneHourChartCacheUpdater>(CronConstants.Every15Minutes, CACHEUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<OneDayChartCacheUpdater>(CronConstants.EveryHour, CACHEUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<OneWeekChartCacheUpdater>(CronConstants.EveryMidnight, CACHEUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<OneMonthChartCacheUpdater>(CronConstants.EveryMidnight, CACHEUPDATERQUEUE);
             }
         }
 

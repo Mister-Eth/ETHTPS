@@ -17,7 +17,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ETHTPS.BackgroundServices.CacheUpdaters
+namespace ETHTPS.Services.CacheUpdaters.ChartCache
 {
     public abstract class CacheUpdaterBase<TCachedValue> : HangfireBackgroundService
         where TCachedValue: new()

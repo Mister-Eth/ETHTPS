@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ETHTPS.BackgroundServices.Activators
+namespace ETHTPS.Services.Activators
 {
     public class HangfireActivator : JobActivator
     {

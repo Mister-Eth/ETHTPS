@@ -44,7 +44,6 @@ class TypeTPSStat extends Component{
             }
             datasets.filter(x => x.label === p.type)[0].data[0] += state.data[p.name][0].tps;
         }
-        console.log(state.data)
         return datasets;
     }
 
@@ -60,8 +59,7 @@ class TypeTPSStat extends Component{
         return <>
         <Bar data={{
                 labels: ["Network type"],
-                datasets: this.createDatasets(this.state),
-                backgroundColors:['']
+                datasets: this.createDatasets(this.state)
               }} 
               height={25}
               options={{

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -32,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ETHTPS.BackgroundServices\ETHTPS.BackgroundServices.csproj" />
+    <ProjectReference Include="..\ETHTPS.BackgroundServices\ETHTPS.Services.csproj" />
     <ProjectReference Include="..\ETHTPS.Data\ETHTPS.Data.csproj" />
   </ItemGroup>
 

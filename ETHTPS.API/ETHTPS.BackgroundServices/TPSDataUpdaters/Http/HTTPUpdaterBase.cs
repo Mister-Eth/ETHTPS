@@ -1,4 +1,4 @@
-﻿using ETHTPS.BackgroundServices.TPSDataUpdaters;
+﻿using ETHTPS.Services.TPSDataUpdaters;
 using ETHTPS.Data.Database;
 
 using Fizzler.Systems.HtmlAgilityPack;
@@ -21,7 +21,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Http
+namespace ETHTPS.Services.TPSDataUpdaters.Http
 {
     public abstract class HTTPUpdaterBase : TPSDataUpdaterBase
     {

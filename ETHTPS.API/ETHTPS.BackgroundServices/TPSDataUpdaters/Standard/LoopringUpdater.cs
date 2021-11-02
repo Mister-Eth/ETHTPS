@@ -14,7 +14,7 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
+namespace ETHTPS.Services.TPSDataUpdaters.Standard
 {
     public class LoopringUpdater : TPSDataUpdaterBase
     {

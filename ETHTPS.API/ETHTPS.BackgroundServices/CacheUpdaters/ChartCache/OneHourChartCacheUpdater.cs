@@ -1,5 +1,6 @@
 ﻿
 
+using ETHTPS.Data;
 using ETHTPS.Data.Database;
 using ETHTPS.Data.Extensions;
 using ETHTPS.Data.ResponseModels;
@@ -12,20 +13,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ETHTPS.BackgroundServices.CacheUpdaters
+namespace ETHTPS.Services.CacheUpdaters.ChartCache
 {
-    public class OneDayCacheUpdater : CacheUpdaterBase<TPSResponseModel>
+    public class OneHourChartCacheUpdater : CacheUpdaterBase<TPSResponseModel>
     {
-        public OneDayCacheUpdater(ILogger<HangfireBackgroundService> logger, ETHTPSContext context) : base("OneDay", logger, context)
+        public OneHourChartCacheUpdater(ILogger<HangfireBackgroundService> logger, ETHTPSContext context) : base("OneHour", logger, context)
         {
         }
 
         public override Task<TPSResponseModel> RunAsync(ETHTPSContext context, Provider provider, TPSResponseModel currentCachedResponse)
         {
-            var newestEntryDate = DateTime.Now.Subtract(TimeSpan.FromDays(1));
+            var newestEntryDate = DateTime.Now.Subtract(TimeSpan.FromHours(1));
             if (currentCachedResponse.Data?.Count >= 1)
             {
-                currentCachedResponse.Data = currentCachedResponse.Data.OrderBy(x => x.Date).Where(x => x.Date > DateTime.Now.Subtract(TimeSpan.FromDays(1))).ToList(); //Filter out entries older than 1d
+                currentCachedResponse.Data = currentCachedResponse.Data.OrderBy(x => x.Date).Where(x => x.Date > DateTime.Now.Subtract(TimeSpan.FromHours(1))).ToList(); //Filter out entries older than 1h
                 var last = currentCachedResponse.Data.TakeLast(1).First();
                 newestEntryDate = last.Date; //Get last entry date
             }
@@ -35,13 +36,13 @@ namespace ETHTPS.BackgroundServices.CacheUpdaters
             }
 
             var newEntries = context.Tpsdata.Where(x => x.Provider.Value == provider.Id && x.Date > newestEntryDate).AsEnumerable().OrderBy(x => x.Date);
-            var groups = newEntries.GroupBy(x => x.Date.Value.Hour);
+            var groups = newEntries.GroupBy(x => x.Date.Value.Minute);
             var list = new List<TPSDataPoint>();
             foreach (var group in groups)
             {
                 list.Add(new TPSDataPoint()
                 {
-                    Date = group.First().Date.Value.Subtract(TimeSpan.FromSeconds(group.First().Date.Value.Second)).Subtract(TimeSpan.FromMilliseconds(group.First().Date.Value.Millisecond)).Subtract(TimeSpan.FromMinutes(group.First().Date.Value.Minute)),
+                    Date = group.First().Date.Value.Subtract(TimeSpan.FromSeconds(group.First().Date.Value.Second)).Subtract(TimeSpan.FromMilliseconds(group.First().Date.Value.Millisecond)).Subtract(TimeSpan.FromMilliseconds(group.First().Date.Value.Millisecond)),
                     TPS = group.Average(x => x.Tps.Value)
                 });
             }

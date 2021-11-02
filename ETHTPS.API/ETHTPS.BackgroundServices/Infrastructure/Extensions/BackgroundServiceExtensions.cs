@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ETHTPS.BackgroundServices.Infrastructure.Extensions
+namespace ETHTPS.Services.Infrastructure.Extensions
 {
     public static class BackgroundServiceExtensions
     {

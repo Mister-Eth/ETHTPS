@@ -21,7 +21,7 @@ GO
 
 CREATE TABLE [TPSData] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
-  [Network] ID,
+  [Network] int,
   [Provider] int,
   [Date] datetime,
   [Block] nvarchar(255),
@@ -83,7 +83,7 @@ GO
 
 CREATE TABLE [TPSData_Hour] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
-  [Network] ID,
+  [Network] int,
   [Provider] int,
   [StartDate] datetime,
   [AverageTPS] float,
@@ -99,7 +99,7 @@ GO
 
 CREATE TABLE [TPSData_Day] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
-  [Network] ID,
+  [Network] int,
   [Provider] int,
   [StartDate] datetime,
   [AverageTPS] float,
@@ -115,7 +115,7 @@ GO
 
 CREATE TABLE [TPSData_Week] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
-  [Network] ID,
+  [Network] int,
   [Provider] int,
   [StartDate] datetime,
   [AverageTPS] float,
@@ -131,7 +131,7 @@ GO
 
 CREATE TABLE [TPSData_Month] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
-  [Network] ID,
+  [Network] int,
   [Provider] int,
   [StartDate] datetime,
   [AverageTPS] float,

@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
+namespace ETHTPS.Services.TPSDataUpdaters.Standard
 {
     public class DummyDyDxUpdater : TPSDataUpdaterBase
     {

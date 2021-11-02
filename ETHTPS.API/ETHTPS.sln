@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETHTPS.API", "ETHTPS.API\ETHTPS.API.csproj", "{B0C857E2-7DCF-420A-B2A6-9E5FAB5BA12E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETHTPS.BackgroundServices", "ETHTPS.BackgroundServices\ETHTPS.BackgroundServices.csproj", "{32D92193-BB0B-4FF9-A874-0E50688B45D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETHTPS.Services", "ETHTPS.BackgroundServices\ETHTPS.Services.csproj", "{32D92193-BB0B-4FF9-A874-0E50688B45D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETHTPS.Data", "ETHTPS.Data\ETHTPS.Data.csproj", "{96B06C95-AAFC-4EBB-8694-12A4EC782FD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETHTPS.Data", "ETHTPS.Data\ETHTPS.Data.csproj", "{96B06C95-AAFC-4EBB-8694-12A4EC782FD4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

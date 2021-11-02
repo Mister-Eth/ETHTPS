@@ -1,4 +1,4 @@
-﻿using ETHTPS.BackgroundServices.Infrastructure.Performance.Tasks.Extensions;
+﻿using ETHTPS.Services.Infrastructure.Performance.Tasks.Extensions;
 using ETHTPS.Data.Database;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ETHTPS.BackgroundServices.TPSDataUpdaters
+namespace ETHTPS.Services.TPSDataUpdaters
 {
     public abstract class TPSDataUpdaterBase : HangfireBackgroundService
     {
