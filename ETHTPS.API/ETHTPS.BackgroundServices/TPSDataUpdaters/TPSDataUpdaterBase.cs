@@ -21,7 +21,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters
         {
         }
 
-        public abstract Task<TPSData> GetDataAsync();
+        public abstract Task<Tpsdatum> GetDataAsync();
 
         public override async Task RunAsync()
         {
@@ -37,24 +37,30 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters
 
                     AddEntry(data);
                     RegisterLatestEntry(data);
-                    UpdateMaxTPSEntry(data);
+                    UpdateMaxTpsentry(data);
+
+                    AddOrUpdateHourTPSEntry(data);
+                    AddOrUpdateDayTPSEntry(data);
+                    AddOrUpdateWeekTPSEntry(data);
+                    AddOrUpdateMonthTPSEntry(data);
+
                     await _context.SaveChangesAsync();
                 }
             }
             catch (Exception e)
             {
-                _logger.LogError("TPSDataUpdaterBase", e);
+                _logger.LogError($"{Name} TPSDataUpdaterBase", e);
             }
         }
 
-        public void AddEntry(TPSData entry)
+        public void AddEntry(Tpsdatum entry)
         {
-            _context.TPSData.Add(entry);
+            _context.Tpsdata.Add(entry);
             _context.SaveChanges();
             _logger.LogInformation($"{Name}: {entry.Tps}TPS");
         }
 
-        public void RegisterLatestEntry(TPSData entry)
+        public void RegisterLatestEntry(Tpsdatum entry)
         {
             if (!_context.LatestEntries.Any(x => x.Provider == entry.Provider))
             {
@@ -72,11 +78,11 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters
             }
         }
 
-        public void UpdateMaxTPSEntry(TPSData entry)
+        public void UpdateMaxTpsentry(Tpsdatum entry)
         {
-            if (!_context.MaxTPSEntries.Any(x => x.Provider == entry.Provider))
+            if (!_context.MaxTpsentries.Any(x => x.Provider == entry.Provider))
             {
-                _context.MaxTPSEntries.Add(new MaxTPSEntry()
+                _context.MaxTpsentries.Add(new MaxTpsentry()
                 {
                     Entry = entry.Id,
                     Provider = entry.Provider
@@ -84,21 +90,152 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters
             }
             else
             {
-                var targetEntry = _context.MaxTPSEntries.First(x => x.Provider == entry.Provider);
-                if (entry.Tps > _context.TPSData.First(x => x.Id == targetEntry.Entry).Tps)
+                var targetEntry = _context.MaxTpsentries.First(x => x.Provider == entry.Provider);
+                if (entry.Tps > _context.Tpsdata.First(x => x.Id == targetEntry.Entry).Tps)
                 {
                     targetEntry.Entry = entry.Id;
-                    _context.MaxTPSEntries.Update(targetEntry);
+                    _context.MaxTpsentries.Update(targetEntry);
                 }
             }
         }
 
-        public void AddOrUpdateHourTPSEntry(TPSData entry)
+        public void AddOrUpdateHourTPSEntry(Tpsdatum entry)
         {
-            Func<HourTPSData, bool> selector = x => x.Network == entry.Network && x.Provider == x.Provider && x.StartDate.Value.Minute == entry.Date.Value.Minute;
-            if (!_context.HourTPSData.Any(selector))
+            var targetDate = entry.Date.Value
+                .Subtract(TimeSpan.FromSeconds(entry.Date.Value.Second))
+                .Subtract(TimeSpan.FromMilliseconds(entry.Date.Value.Millisecond));
+            Func<TpsdataHour, bool> selector = x => x.Network == entry.Network && x.Provider == entry.Provider && x.StartDate.Value.Minute == targetDate.Minute;
+            if (!_context.TpsdataHours.Any(selector))
             {
+                _context.TpsdataHours.Add(new TpsdataHour()
+                {
+                    Network = entry.Network,
+                    AverageTps = entry.Tps,
+                    Provider = entry.Provider,
+                    StartDate = targetDate,
+                    ReadingsCount = 1
+                });
+            }
+            else
+            {
+                var x = _context.TpsdataHours.First(selector);
+                if (x.StartDate.Value.Hour == targetDate.Hour)
+                {
+                    x.AverageTps = ((x.AverageTps * x.ReadingsCount) + entry.Tps) / ++x.ReadingsCount;
+                }
+                else
+                {
+                    x.AverageTps = entry.Tps;
+                    x.ReadingsCount = 1;
+                    x.StartDate = entry.Date;
+                }
+                _context.TpsdataHours.Update(x);
+            }
+        }
 
+        public void AddOrUpdateDayTPSEntry(Tpsdatum entry)
+        {
+            var targetDate = entry.Date.Value
+                .Subtract(TimeSpan.FromSeconds(entry.Date.Value.Second))
+                .Subtract(TimeSpan.FromMilliseconds(entry.Date.Value.Millisecond))
+                .Subtract(TimeSpan.FromMinutes(entry.Date.Value.Minute));
+            Func<TpsdataDay, bool> selector = x => x.Network == entry.Network && x.Provider == entry.Provider && x.StartDate.Value.Hour == targetDate.Hour;
+            if (!_context.TpsdataDays.Any(selector))
+            {
+                _context.TpsdataDays.Add(new TpsdataDay()
+                {
+                    Network = entry.Network,
+                    AverageTps = entry.Tps,
+                    Provider = entry.Provider,
+                    StartDate = targetDate,
+                    ReadingsCount = 1
+                });
+            }
+            else
+            {
+                var x = _context.TpsdataDays.First(selector);
+                if (x.StartDate.Value.Day == targetDate.Day)
+                {
+                    x.AverageTps = ((x.AverageTps * x.ReadingsCount) + entry.Tps) / ++x.ReadingsCount;
+                }
+                else
+                {
+                    x.AverageTps = entry.Tps;
+                    x.ReadingsCount = 1;
+                    x.StartDate = entry.Date;
+                }
+                _context.TpsdataDays.Update(x);
+            }
+        }
+
+        public void AddOrUpdateWeekTPSEntry(Tpsdatum entry)
+        {
+            var targetDate = entry.Date.Value
+                .Subtract(TimeSpan.FromSeconds(entry.Date.Value.Second))
+                .Subtract(TimeSpan.FromMilliseconds(entry.Date.Value.Millisecond))
+                .Subtract(TimeSpan.FromMinutes(entry.Date.Value.Minute));
+            Func<TpsdataWeek, bool> selector = x => x.Network == entry.Network && x.Provider == entry.Provider && x.StartDate.Value.Hour == targetDate.Hour && x.StartDate.Value.DayOfWeek == targetDate.DayOfWeek;
+            if (!_context.TpsdataWeeks.Any(selector))
+            {
+                _context.TpsdataWeeks.Add(new TpsdataWeek()
+                {
+                    Network = entry.Network,
+                    AverageTps = entry.Tps,
+                    Provider = entry.Provider,
+                    StartDate = targetDate,
+                    ReadingsCount = 1
+                });
+            }
+            else
+            {
+                var x = _context.TpsdataWeeks.First(selector);
+                if (x.StartDate.Value.Day == targetDate.Day)
+                {
+                    x.AverageTps = ((x.AverageTps * x.ReadingsCount) + entry.Tps) / ++x.ReadingsCount;
+                }
+                else
+                {
+                    x.AverageTps = entry.Tps;
+                    x.ReadingsCount = 1;
+                    x.StartDate = entry.Date;
+                }
+                _context.TpsdataWeeks.Update(x);
+            }
+        }
+
+        public void AddOrUpdateMonthTPSEntry(Tpsdatum entry)
+        {
+            var targetDate = entry.Date.Value
+                .Subtract(TimeSpan.FromSeconds(entry.Date.Value.Second))
+                .Subtract(TimeSpan.FromMilliseconds(entry.Date.Value.Millisecond))
+                .Subtract(TimeSpan.FromMinutes(entry.Date.Value.Minute))
+                .Subtract(TimeSpan.FromHours(entry.Date.Value.Hour));
+            Func<TpsdataMonth, bool> selector = x => x.Network == entry.Network && x.Provider == entry.Provider && x.StartDate.Value.Day == targetDate.Day;
+            if (!_context.TpsdataMonths.Any(selector))
+            {
+                _context.TpsdataMonths.Add(new TpsdataMonth()
+                {
+                    Network = entry.Network,
+                    AverageTps = entry.Tps,
+                    Provider = entry.Provider,
+                    StartDate = targetDate,
+                    ReadingsCount = 1
+                });
+            }
+            else
+            {
+                var x = _context.TpsdataMonths.First(selector);
+                if (x.StartDate.Value.Month == targetDate.Month)
+                {
+                    x.AverageTps = ((x.AverageTps * x.ReadingsCount) + entry.Tps) / ++x.ReadingsCount;
+                }
+                else
+                {
+                    x.AverageTps = entry.Tps;
+                    x.ReadingsCount = 1;
+                    x.StartDate = entry.Date;
+                }
+                _context.TpsdataMonths.Update(x);
             }
         }
     }

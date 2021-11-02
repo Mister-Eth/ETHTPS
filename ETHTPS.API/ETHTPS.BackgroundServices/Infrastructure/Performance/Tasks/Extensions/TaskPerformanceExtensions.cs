@@ -17,10 +17,10 @@ namespace ETHTPS.BackgroundServices.Infrastructure.Performance.Tasks.Extensions
                 var currentMachineConfiguration = new MachineConfiguration()
                 {
                     Name = Environment.MachineName,
-                    CPUCoreCount = Environment.ProcessorCount,
+                    CpucoreCount = Environment.ProcessorCount,
                     TotalRam = (int)GetTotalVisibleMemory()
                 };
-                Func<MachineConfiguration, bool> filter = x => x.Name == currentMachineConfiguration.Name && x.TotalRam == currentMachineConfiguration.TotalRam && x.CPUCoreCount == currentMachineConfiguration.CPUCoreCount;
+                Func<MachineConfiguration, bool> filter = x => x.Name == currentMachineConfiguration.Name && x.TotalRam == currentMachineConfiguration.TotalRam && x.CpucoreCount == currentMachineConfiguration.CpucoreCount;
                 if (!context.MachineConfigurations.Any(filter))
                 {
                     context.MachineConfigurations.Add(currentMachineConfiguration);

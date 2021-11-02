@@ -19,7 +19,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
 
         }
 
-        public override Task<TPSData> GetDataAsync()
+        public override Task<Tpsdatum> GetDataAsync()
         {
             var value = _random.Next(100);
             //Random values inspired by https://pbs.twimg.com/media/FAZmFInUcAUBJ4d?format=png&name=small
@@ -54,7 +54,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
                 tps = _random.Next(0, 2);
             }
             var provider = _context.Providers.First(x => x.Name == Name);
-            var data = new TPSData()
+            var data = new Tpsdatum()
             {
                 Date = DateTime.Now,
                 Provider = provider.Id,

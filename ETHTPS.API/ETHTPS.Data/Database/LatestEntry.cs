@@ -10,5 +10,8 @@ namespace ETHTPS.Data.Database
         public int Id { get; set; }
         public int? Provider { get; set; }
         public int? Entry { get; set; }
+
+        public virtual Tpsdatum EntryNavigation { get; set; }
+        public virtual Provider ProviderNavigation { get; set; }
     }
 }

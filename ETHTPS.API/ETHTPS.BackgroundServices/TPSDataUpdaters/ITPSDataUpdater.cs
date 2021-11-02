@@ -12,6 +12,6 @@ namespace ETHTPS.API.Infrastructure.BackgroundServices.TPSDataUpdaters
 {
     public interface ITPSDataUpdater
     {
-        Task<TPSData> LogDataAsync();
+        Task<Tpsdatum> LogDataAsync();
     }
 }

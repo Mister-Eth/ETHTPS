@@ -61,9 +61,9 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
             });
         }
 
-        public override async Task<TPSData> GetDataAsync()
+        public override async Task<Tpsdatum> GetDataAsync()
         {
-            var data = default(TPSData);
+            var data = default(Tpsdatum);
             try
             {
                 var obj = JsonConvert.DeserializeObject<dynamic>(await _httpClient.GetStringAsync("https://blockexplorer.boba.network/blocks?type=JSON"));
@@ -73,7 +73,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
                 var secondLatestBlock = await GetBlockInfoAsync(GetBlockNumber(secondLatest));
                 
                 var provider = _context.Providers.First(x => x.Name == Name);
-                data = new TPSData()
+                data = new Tpsdatum()
                 {
                     Date = DateTime.Now,
                     Provider = provider.Id,

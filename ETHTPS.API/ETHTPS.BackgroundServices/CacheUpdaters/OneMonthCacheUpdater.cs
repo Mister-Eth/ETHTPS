@@ -34,7 +34,7 @@ namespace ETHTPS.BackgroundServices.CacheUpdaters
                 currentCachedResponse.Data = new List<TPSDataPoint>();
             }
 
-            var entries = context.TPSData.Where(x => x.Provider.Value == provider.Id && x.Date > newestEntryDate).AsEnumerable().OrderBy(x => x.Date);
+            var entries = context.Tpsdata.Where(x => x.Provider.Value == provider.Id && x.Date > newestEntryDate).AsEnumerable().OrderBy(x => x.Date);
             var groups = entries.GroupBy(x => x.Date.Value.Day * 100 + x.Date.Value.Month);
             var list = new List<TPSDataPoint>();
             foreach (var group in groups)

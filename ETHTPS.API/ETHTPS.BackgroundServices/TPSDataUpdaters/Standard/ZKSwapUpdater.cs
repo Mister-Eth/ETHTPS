@@ -29,9 +29,9 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
         }
 
 
-        public override async Task<TPSData> GetDataAsync()
+        public override async Task<Tpsdatum> GetDataAsync()
         {
-            var data = default(TPSData);
+            var data = default(Tpsdatum);
             try
             {
                 var blocks = JsonConvert.DeserializeObject<dynamic>(await _httpClient.GetStringAsync("https://api.zkswap.info/v2/blocks?start=0&limit=50"));
@@ -43,12 +43,12 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
                         var previousBlock = blocks.data.data[i + 1];
                         string blockNumber = block.number.ToString();
                         var providerID = _context.Providers.First(x => x.Name == Name).Id;
-                        if (!_context.TPSData.Any(x => x.Block == blockNumber && x.Provider == providerID))
+                        if (!_context.Tpsdata.Any(x => x.Block == blockNumber && x.Provider == providerID))
                         {
                             var provider = _context.Providers.First(x => x.Name == Name);
                             DateTime currentBlockTime = DateTimeExtensions.FromUnixTime(long.Parse(block.committed_at.ToString()));
                             DateTime previousBlockTime = DateTimeExtensions.FromUnixTime(long.Parse(previousBlock.committed_at.ToString()));
-                            data = new TPSData()
+                            data = new Tpsdatum()
                             {
                                 Date = currentBlockTime,
                                 Provider = provider.Id,

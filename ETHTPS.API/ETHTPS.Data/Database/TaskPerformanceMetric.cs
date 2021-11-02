@@ -12,5 +12,7 @@ namespace ETHTPS.Data.Database
         public string TaskName { get; set; }
         public int? RunCount { get; set; }
         public double? AverageRunTime { get; set; }
+
+        public virtual MachineConfiguration MachineNavigation { get; set; }
     }
 }

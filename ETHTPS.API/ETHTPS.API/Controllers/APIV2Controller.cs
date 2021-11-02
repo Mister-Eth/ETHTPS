@@ -66,16 +66,16 @@ namespace ETHTPS.API.Controllers
         {
             foreach (var provider in _context.Providers.ToList())
             {
-                var maxTPS = _context.TPSData.Where(x => x.Provider == provider.Id).Max(x => x.Tps);
-                if (_context.MaxTPSEntries.Any(x => x.Provider == provider.Id))
+                var maxTPS = _context.Tpsdata.Where(x => x.Provider == provider.Id).Max(x => x.Tps);
+                if (_context.MaxTpsentries.Any(x => x.Provider == provider.Id))
                 {
-                    var entry = _context.MaxTPSEntries.First(x => x.Provider == provider.Id);
-                    entry.Entry = _context.TPSData.First(x => x.Provider == provider.Id && x.Tps == maxTPS).Id;
-                    _context.MaxTPSEntries.Update(entry);
+                    var entry = _context.MaxTpsentries.First(x => x.Provider == provider.Id);
+                    entry.Entry = _context.Tpsdata.First(x => x.Provider == provider.Id && x.Tps == maxTPS).Id;
+                    _context.MaxTpsentries.Update(entry);
                 }
                 else
                 {
-                    _context.MaxTPSEntries.Add(new MaxTPSEntry()
+                    _context.MaxTpsentries.Add(new MaxTpsentry()
                     {
                         Provider = provider.Id
                     });
@@ -94,10 +94,10 @@ namespace ETHTPS.API.Controllers
             var providers = (provider.ToUpper() == "ALL") ? _context.Providers.AsEnumerable() : new Provider[] { _context.Providers.First(x => x.Name.ToUpper() == provider.ToUpper()) };
             foreach (var p in providers.ToArray())
             {
-                var entry = _context.MaxTPSEntries.FirstOrDefault(x => x.Provider == p.Id);
+                var entry = _context.MaxTpsentries.FirstOrDefault(x => x.Provider == p.Id);
                 if (entry != null)
                 {
-                    var targetEntry = _context.TPSData.First(x => x.Id == entry.Entry);
+                    var targetEntry = _context.Tpsdata.First(x => x.Id == entry.Entry);
                     result.Add(new TPSResponseModel()
                     {
                         Provider = p.Name,

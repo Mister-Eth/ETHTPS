@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+#nullable disable
 
 namespace ETHTPS.Data.Database
 {
-    public abstract class TimedTPSData
+    public partial class TpsdataMonth
     {
         public int Id { get; set; }
         public int? Network { get; set; }
@@ -14,10 +13,8 @@ namespace ETHTPS.Data.Database
         public DateTime? StartDate { get; set; }
         public double? AverageTps { get; set; }
         public int? ReadingsCount { get; set; }
-    }
 
-    public partial class DayTPSData : TimedTPSData {    }
-    public partial class TpsdataHours: TimedTPSData {    }
-    public partial class WeekTPSData : TimedTPSData {    }
-    public partial class MonthTPSData : TimedTPSData {    }
+        public virtual Network NetworkNavigation { get; set; }
+        public virtual Provider ProviderNavigation { get; set; }
+    }
 }

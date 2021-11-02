@@ -39,9 +39,9 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
             return int.Parse(targetString);
         }
 
-        public override async Task<TPSData> GetDataAsync()
+        public override async Task<Tpsdatum> GetDataAsync()
         {
-            var data = default(TPSData);
+            var data = default(Tpsdatum);
             try
             {
                 var obj = JsonConvert.DeserializeObject<dynamic>(await _httpClient.GetStringAsync("https://blockscout.com/xdai/mainnet/blocks?type=JSON"));
@@ -49,7 +49,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
                 var secondLatest = obj.items[1].ToString();
                 var n1 = GetTransactionCount(latest);
                 var provider = _context.Providers.First(x => x.Name == Name);
-                data = new TPSData()
+                data = new Tpsdatum()
                 {
                     Date = DateTime.Now,
                     Provider = provider.Id,

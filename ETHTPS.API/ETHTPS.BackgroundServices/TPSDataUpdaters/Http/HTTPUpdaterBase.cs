@@ -37,9 +37,9 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Http
             _httpClient = new HttpClient();
         }
 
-        public override Task<TPSData> GetDataAsync()
+        public override Task<Tpsdatum> GetDataAsync()
         {
-            var data = default(TPSData);
+            var data = default(Tpsdatum);
             try
             {
                 HtmlWeb web = new HtmlWeb();
@@ -48,7 +48,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Http
                 var nodes = doc.DocumentNode.QuerySelectorAll(_targetElementSelector);
                 var x = new string(nodes.First().InnerText.Where(c => char.IsNumber(c) || c == '.').ToArray());
                 var provider = _context.Providers.First(x => x.Name == Name);
-                data = new TPSData()
+                data = new Tpsdatum()
                 {
                     Date = DateTime.Now,
                     Provider = provider.Id,

@@ -23,10 +23,10 @@ namespace ETHTPS.BackgroundServices.CacheUpdaters
         public override Task<List<TPSResponseModel>> RunAsync(ETHTPSContext context, Provider provider, List<TPSResponseModel> currentCachedResponse)
         {
             var latestEntryIDs = context.LatestEntries.Select(x => x.Entry).ToList();
-            var entries = new List<TPSData>();
+            var entries = new List<Tpsdatum>();
             foreach (var id in latestEntryIDs)
             {
-                entries.Add(context.TPSData.First(x => x.Id == id));
+                entries.Add(context.Tpsdata.First(x => x.Id == id));
             }
             var result = entries.Select(x => new TPSResponseModel()
             {
