@@ -37,7 +37,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Http
             _httpClient = new HttpClient();
         }
 
-        public override async Task<TPSData> LogDataAsync()
+        public override Task<TPSData> GetDataAsync()
         {
             var data = default(TPSData);
             try
@@ -54,15 +54,12 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Http
                     Provider = provider.Id,
                     Tps = float.Parse(x)
                 };
-                _context.TPSData.Add(data);
-                await _context.SaveChangesAsync();
-                _logger.LogInformation($"{Name}: {x}TPS");
             }
             catch (Exception e)
             {
                 _logger.LogError($"{Name}: {e.Message}");
             }
-            return data;
+            return Task.FromResult(data);
         }
     }
 }

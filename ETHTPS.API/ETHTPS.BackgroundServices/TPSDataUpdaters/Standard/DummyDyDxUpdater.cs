@@ -19,7 +19,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
 
         }
 
-        public override async Task<TPSData> LogDataAsync()
+        public override Task<TPSData> GetDataAsync()
         {
             var value = _random.Next(100);
             //Random values inspired by https://pbs.twimg.com/media/FAZmFInUcAUBJ4d?format=png&name=small
@@ -60,10 +60,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
                 Provider = provider.Id,
                 Tps = tps //block time
             };
-            _context.TPSData.Add(data);
-            await _context.SaveChangesAsync();
-            _logger.LogInformation($"{Name}: {data.Tps}TPS");
-            return data;
+            return Task.FromResult(data);
         }
     }
 }

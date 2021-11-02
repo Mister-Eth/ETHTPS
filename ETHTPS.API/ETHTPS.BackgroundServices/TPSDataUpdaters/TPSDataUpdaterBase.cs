@@ -21,16 +21,17 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters
         {
         }
 
-        public abstract Task<TPSData> LogDataAsync();
+        public abstract Task<TPSData> GetDataAsync();
 
         public override async Task RunAsync()
         {
             try
             {
-                var data = await LogDataAsync();
+                var data = await GetDataAsync();
                 if (data != null)
                 {
-                    AddLatestEntry(data);
+                    AddEntry(data);
+                    RegisterLatestEntry(data);
                     UpdateMaxTPSEntry(data);
                     await _context.SaveChangesAsync();
                 }
@@ -41,7 +42,14 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters
             }
         }
 
-        public void AddLatestEntry(TPSData entry)
+        public void AddEntry(TPSData entry)
+        {
+            _context.TPSData.Add(entry);
+            _context.SaveChanges();
+            _logger.LogInformation($"{Name}: {entry.Tps}TPS");
+        }
+
+        public void RegisterLatestEntry(TPSData entry)
         {
             if (!_context.LatestEntries.Any(x => x.Provider == entry.Provider))
             {

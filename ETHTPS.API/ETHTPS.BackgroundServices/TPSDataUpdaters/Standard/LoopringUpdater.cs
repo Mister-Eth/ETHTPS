@@ -24,7 +24,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
             _httpClient.BaseAddress = new Uri("https://api.thegraph.com/subgraphs/name/loopring/loopring");
         }
 
-        public override async Task<TPSData> LogDataAsync()
+        public override async Task<TPSData> GetDataAsync()
         {
             var data = default(TPSData);
             var latestBlockHeight = await GetLatestBlockHeightAsync();
@@ -40,9 +40,6 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
                     Provider = providerID,
                     Tps = (float)latestBlock.TransactionCount / (float)latestBlock.Time.Subtract(secondToLatestBlock.Time).TotalSeconds
                 };
-                _context.TPSData.Add(data);
-                await _context.SaveChangesAsync();
-                _logger.LogInformation($"{Name}: {data.Tps}TPS");
             }
             var secondToLastBlock = await GetBlockInfo(latestBlockHeight - 1);
 

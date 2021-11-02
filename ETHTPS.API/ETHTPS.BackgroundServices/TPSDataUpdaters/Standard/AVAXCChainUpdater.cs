@@ -61,7 +61,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
             });
         }
 
-        public override async Task<TPSData> LogDataAsync()
+        public override async Task<TPSData> GetDataAsync()
         {
             var data = default(TPSData);
             try
@@ -79,9 +79,6 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
                     Provider = provider.Id,
                     Tps = (float)latestBlock.TransactionCount / (float)(latestBlock.Time.Subtract(secondLatestBlock.Time).TotalSeconds)
                 };
-                _context.TPSData.Add(data);
-                _context.SaveChanges();
-                _logger.LogInformation($"{Name}: {data.Tps}TPS");
                 
             }
             catch (Exception e)

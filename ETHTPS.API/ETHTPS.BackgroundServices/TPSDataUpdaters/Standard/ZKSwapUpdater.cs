@@ -29,7 +29,7 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
         }
 
 
-        public override async Task<TPSData> LogDataAsync()
+        public override async Task<TPSData> GetDataAsync()
         {
             var data = default(TPSData);
             try
@@ -55,9 +55,6 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters.Standard
                                 Tps = double.Parse(block.transactions_number.ToString()) / currentBlockTime.Subtract(previousBlockTime).TotalSeconds,
                                 Block = blockNumber
                             };
-                            _context.TPSData.Add(data);
-                            _context.SaveChanges();
-                            _logger.LogInformation($"{Name}: {data.Tps}TPS");
                             break;
                         }
                     }
