@@ -30,6 +30,11 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters
                 var data = await GetDataAsync();
                 if (data != null)
                 {
+                    if (data.Network.GetValueOrDefault() == 0)
+                    {
+                        data.Network = 1;
+                    }
+
                     AddEntry(data);
                     RegisterLatestEntry(data);
                     UpdateMaxTPSEntry(data);
@@ -85,6 +90,15 @@ namespace ETHTPS.BackgroundServices.TPSDataUpdaters
                     targetEntry.Entry = entry.Id;
                     _context.MaxTPSEntries.Update(targetEntry);
                 }
+            }
+        }
+
+        public void AddOrUpdateHourTPSEntry(TPSData entry)
+        {
+            Func<HourTPSData, bool> selector = x => x.Network == entry.Network && x.Provider == x.Provider && x.StartDate.Value.Minute == entry.Date.Value.Minute;
+            if (!_context.HourTPSData.Any(selector))
+            {
+
             }
         }
     }

@@ -34,10 +34,10 @@ namespace ETHTPS.Data.Database
         public virtual DbSet<MachineConfiguration> MachineConfigurations { get; set; }
         public virtual DbSet<TaskPerformanceMetric> TaskPerformanceMetrics { get; set; }
         public virtual DbSet<MaxTPSEntry> MaxTPSEntries { get; set; }
-        public virtual DbSet<DayTPSData> TpsdataDays { get; set; }
-        public virtual DbSet<HourTPSData> TpsdataHours { get; set; }
-        public virtual DbSet<MonthTPSData> TpsdataMonths { get; set; }
-        public virtual DbSet<WeekTPSData> TpsdataWeeks { get; set; }
+        public virtual DbSet<DayTPSData> DayTPSData { get; set; }
+        public virtual DbSet<HourTPSData> HourTPSData { get; set; }
+        public virtual DbSet<MonthTPSData> MonthTPSData { get; set; }
+        public virtual DbSet<WeekTPSData> WeekTPSData { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
