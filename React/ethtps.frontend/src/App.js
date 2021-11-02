@@ -5,6 +5,7 @@ import discordIcon from './assets/discord-mascot.png';
 import { globalApi } from './services/common';
 import React, { useState, useEffect } from "react";
 import InstantTPSStat from './components/InstantTPSStat';
+import TypeTPSStat from './components/TypeTPSStat';
 import Timeline from './components/Timeline';
 import HorizontalBarChart from './components/HorizontalBarChart'
 import FormGroup from '@mui/material/FormGroup';
@@ -116,7 +117,14 @@ getProviderData(state){
         data={this.state.homePageModel.instantTPS} 
         colorDictionary={this.state.homePageModel.colorDictionary} 
         providerData={this.getProviderData(this.state)}/>
-   
+    <p>
+        Each section of the bar below represents a network type.
+      </p>
+      <TypeTPSStat 
+        data={this.state.homePageModel.instantTPS} 
+        colorDictionary={this.state.homePageModel.colorDictionary} 
+        providerData={this.getProviderData(this.state)}/>
+
       <label className={"small"}>
       <input
             ref={ref=>this.excludeSidechainsCheckBox = ref}

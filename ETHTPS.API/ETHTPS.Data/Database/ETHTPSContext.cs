@@ -34,6 +34,10 @@ namespace ETHTPS.Data.Database
         public virtual DbSet<MachineConfiguration> MachineConfigurations { get; set; }
         public virtual DbSet<TaskPerformanceMetric> TaskPerformanceMetrics { get; set; }
         public virtual DbSet<MaxTPSEntry> MaxTPSEntries { get; set; }
+        public virtual DbSet<DayTPSData> TpsdataDays { get; set; }
+        public virtual DbSet<HourTPSData> TpsdataHours { get; set; }
+        public virtual DbSet<MonthTPSData> TpsdataMonths { get; set; }
+        public virtual DbSet<WeekTPSData> TpsdataWeeks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -145,6 +149,51 @@ namespace ETHTPS.Data.Database
 
                 entity.Property(e => e.Id).HasColumnName("ID");
             });
+
+            modelBuilder.Entity<DayTPSData>(entity =>
+            {
+                entity.ToTable("TPSData_Day");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.AverageTps).HasColumnName("AverageTPS");
+
+                entity.Property(e => e.StartDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<HourTPSData>(entity =>
+            {
+                entity.ToTable("TPSData_Hour");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.AverageTps).HasColumnName("AverageTPS");
+
+                entity.Property(e => e.StartDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<MonthTPSData>(entity =>
+            {
+                entity.ToTable("TPSData_Month");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.AverageTps).HasColumnName("AverageTPS");
+
+                entity.Property(e => e.StartDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<WeekTPSData>(entity =>
+            {
+                entity.ToTable("TPSData_Week");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.AverageTps).HasColumnName("AverageTPS");
+
+                entity.Property(e => e.StartDate).HasColumnType("datetime");
+            });
+
             OnModelCreatingPartial(modelBuilder);
         }
 

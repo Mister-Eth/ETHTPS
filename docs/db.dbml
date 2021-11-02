@@ -22,11 +22,11 @@ Ref: ProviderProperties.Provider > Providers.ID
 
 Table TPSData{
   ID int [pk, increment]
-  Network ID
+  Network int
   Provider int
   Date datetime
   Block varchar
-  TPS double
+  TPS float
 }
 
 Ref: TPSData.Provider > Providers.ID
@@ -37,6 +37,8 @@ Table AccesStats{
   Project varchar
   Path varchar
   Count int
+  AverageRequestTimeMs float
+  ExternalCount int
 }
 
 Table CachedResponses{
@@ -85,3 +87,52 @@ Table MachineConfigurations{
   TotalRAM int
 }
 
+Table TPSData_Hour{
+  ID int [pk, increment]
+  Network int
+  Provider int
+  StartDate datetime
+  AverageTPS float
+  ReadingsCount int
+}
+
+Ref: TPSData_Hour.Provider > Providers.ID
+Ref: TPSData_Hour.Network > Networks.ID
+
+
+Table TPSData_Day{
+  ID int [pk, increment]
+  Network int
+  Provider int
+  StartDate datetime
+  AverageTPS float
+  ReadingsCount int
+}
+
+Ref: TPSData_Day.Provider > Providers.ID
+Ref: TPSData_Day.Network > Networks.ID
+
+
+Table TPSData_Week{
+  ID int [pk, increment]
+  Network int
+  Provider int
+  StartDate datetime
+  AverageTPS float
+  ReadingsCount int
+}
+
+Ref: TPSData_Week.Provider > Providers.ID
+Ref: TPSData_Week.Network > Networks.ID
+
+Table TPSData_Month{
+  ID int [pk, increment]
+  Network int
+  Provider int
+  StartDate datetime
+  AverageTPS float
+  ReadingsCount int
+}
+
+Ref: TPSData_Month.Provider > Providers.ID
+Ref: TPSData_Month.Network > Networks.ID

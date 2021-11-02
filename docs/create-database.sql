@@ -25,7 +25,7 @@ CREATE TABLE [TPSData] (
   [Provider] int,
   [Date] datetime,
   [Block] nvarchar(255),
-  [TPS] double
+  [TPS] float
 )
 GO
 
@@ -79,6 +79,70 @@ CREATE TABLE [MaxTPSEntries] (
   [Provider] int,
   [Entry] int
 )
+GO
+
+CREATE TABLE [TPSData_Hour] (
+  [ID] int PRIMARY KEY IDENTITY(1, 1),
+  [Network] ID,
+  [Provider] int,
+  [StartDate] datetime,
+  [AverageTPS] float,
+  [ReadingsCount] int
+)
+GO
+
+ALTER TABLE [TPSData_Hour] ADD FOREIGN KEY ([Provider]) REFERENCES [Providers] ([ID])
+GO
+
+ALTER TABLE [TPSData_Hour] ADD FOREIGN KEY ([Network]) REFERENCES [Networks] ([ID])
+GO
+
+CREATE TABLE [TPSData_Day] (
+  [ID] int PRIMARY KEY IDENTITY(1, 1),
+  [Network] ID,
+  [Provider] int,
+  [StartDate] datetime,
+  [AverageTPS] float,
+  [ReadingsCount] int
+)
+GO
+
+ALTER TABLE [TPSData_Day] ADD FOREIGN KEY ([Provider]) REFERENCES [Providers] ([ID])
+GO
+
+ALTER TABLE [TPSData_Day] ADD FOREIGN KEY ([Network]) REFERENCES [Networks] ([ID])
+GO
+
+CREATE TABLE [TPSData_Week] (
+  [ID] int PRIMARY KEY IDENTITY(1, 1),
+  [Network] ID,
+  [Provider] int,
+  [StartDate] datetime,
+  [AverageTPS] float,
+  [ReadingsCount] int
+)
+GO
+
+ALTER TABLE [TPSData_Week] ADD FOREIGN KEY ([Provider]) REFERENCES [Providers] ([ID])
+GO
+
+ALTER TABLE [TPSData_Week] ADD FOREIGN KEY ([Network]) REFERENCES [Networks] ([ID])
+GO
+
+CREATE TABLE [TPSData_Month] (
+  [ID] int PRIMARY KEY IDENTITY(1, 1),
+  [Network] ID,
+  [Provider] int,
+  [StartDate] datetime,
+  [AverageTPS] float,
+  [ReadingsCount] int
+)
+GO
+
+ALTER TABLE [TPSData_Month] ADD FOREIGN KEY ([Provider]) REFERENCES [Providers] ([ID])
+GO
+
+ALTER TABLE [TPSData_Month] ADD FOREIGN KEY ([Network]) REFERENCES [Networks] ([ID])
 GO
 
 ALTER TABLE [MaxTPSEntries] ADD FOREIGN KEY ([Provider]) REFERENCES [Providers] ([ID])
