@@ -53,6 +53,7 @@ GO
 CREATE TABLE [TPSAndGasData_Latest] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Provider] int NOT NULL,
+  [Network] int NOT NULL,
   [TPS] float NOT NULL,
   [GPS] float NOT NULL
 )
@@ -61,6 +62,8 @@ GO
 CREATE TABLE [TPSAndGasData_Max] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Provider] int NOT NULL,
+  [Network] int NOT NULL,
+  [Date] datetime NOT NULL,
   [MaxTPS] float NOT NULL,
   [MaxGPS] float NOT NULL
 )
@@ -119,10 +122,16 @@ GO
 ALTER TABLE [ProviderProperties] ADD FOREIGN KEY ([Provider]) REFERENCES [Providers] ([ID])
 GO
 
-ALTER TABLE [TPSAndGasData_Latest] ADD FOREIGN KEY ([Provider]) REFERENCES [TPSAndGasData_Latest] ([ID])
+ALTER TABLE [TPSAndGasData_Latest] ADD FOREIGN KEY ([Provider]) REFERENCES [Providers] ([ID])
 GO
 
-ALTER TABLE [TPSAndGasData_Max] ADD FOREIGN KEY ([Provider]) REFERENCES [TPSAndGasData_Latest] ([ID])
+ALTER TABLE [TPSAndGasData_Latest] ADD FOREIGN KEY ([Network]) REFERENCES [Networks] ([ID])
+GO
+
+ALTER TABLE [TPSAndGasData_Max] ADD FOREIGN KEY ([Provider]) REFERENCES [Providers] ([ID])
+GO
+
+ALTER TABLE [TPSAndGasData_Max] ADD FOREIGN KEY ([Network]) REFERENCES [Networks] ([ID])
 GO
 
 ALTER TABLE [TPSAndGasData_Hour] ADD FOREIGN KEY ([Provider]) REFERENCES [Providers] ([ID])

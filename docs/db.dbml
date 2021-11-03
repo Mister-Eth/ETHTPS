@@ -50,14 +50,30 @@ Table Networks{
   Name varchar [unique, not null]
 }
 
-Table LatestEntries {
+Table TPSAndGasData_Latest {
   ID int [pk, increment]
   Provider int [not null]
-  TPS double [not null]
-  GPS gouble [not null]
+  Network int [not null]
+  TPS float [not null]
+  GPS float [not null]
 }
 
-Ref: LatestEntries.Provider > Providers.ID
+Ref: TPSAndGasData_Latest.Provider > Providers.ID
+Ref: TPSAndGasData_Latest.Network > Networks.ID
+
+
+Table TPSAndGasData_Max {
+  ID int [pk, increment]
+  Provider int [not null]
+  Network int [not null]
+  Date datetime [not null]
+  MaxTPS float [not null]
+  MaxGPS float [not null]
+}
+
+Ref: TPSAndGasData_Max.Provider > Providers.ID
+Ref: TPSAndGasData_Max.Network > Networks.ID
+
 
 Table TPSAndGasData_Hour{
   ID int [pk, increment]
