@@ -10,11 +10,13 @@ namespace ETHTPS.Data.Database
     {
         public ETHTPSContext()
         {
+
         }
 
         public ETHTPSContext(DbContextOptions<ETHTPSContext> options)
             : base(options)
         {
+
         }
 
         public virtual DbSet<AccesStat> AccesStats { get; set; }
@@ -30,6 +32,12 @@ namespace ETHTPS.Data.Database
         public virtual DbSet<TpsandGasDataMax> TpsandGasDataMaxes { get; set; }
         public virtual DbSet<TpsandGasDataMonth> TpsandGasDataMonths { get; set; }
         public virtual DbSet<TpsandGasDataWeek> TpsandGasDataWeeks { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseLazyLoadingProxies();
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

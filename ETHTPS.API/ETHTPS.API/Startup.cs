@@ -48,7 +48,10 @@ namespace ETHTPS.API
             });
 
             services.AddControllers().AddNewtonsoftJson().AddJsonOptions(options => { options.JsonSerializerOptions.IgnoreNullValues = true; });
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c=>
+            {
+                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+            });
             services.AddDbContext<ETHTPSContext>(options => options.UseSqlServer(defaultConnectionString));
             services.AddMemoryCache();
             InitializeHangFire(defaultConnectionString);
