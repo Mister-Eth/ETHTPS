@@ -2,11 +2,7 @@
 
 using ETHTPS.API.Middlewares;
 using ETHTPS.Services;
-using ETHTPS.Services.CacheUpdaters;
-using ETHTPS.Services.CacheUpdaters.ChartCache;
 using ETHTPS.Services.Infrastructure.Extensions;
-using ETHTPS.Services.TPSDataUpdaters.Http;
-using ETHTPS.Services.TPSDataUpdaters.Standard;
 using ETHTPS.Data.Database;
 
 using Hangfire;
@@ -58,8 +54,6 @@ namespace ETHTPS.API
             InitializeHangFire(defaultConnectionString);
             services.AddHangfire(x => x.UseSqlServerStorage(defaultConnectionString));
             services.AddHangfireServer();
-            AddCacheUpdaters(services);
-            AddTPSDataUpdaters(services);
         }
 
         public static void InitializeHangFire(string connectionString)
@@ -70,36 +64,6 @@ namespace ETHTPS.API
 
         private const string TPSUPDATERQUEUE = "tpsdata";
         private const string CACHEUPDATERQUEUE = "cache";
-
-        private void AddTPSDataUpdaters(IServiceCollection services)
-        {
-            if (ConfigurationQueues.Contains(TPSUPDATERQUEUE))
-            {
-                services.RegisterHangfireBackgroundService<ArbiscanUpdater>(CronConstants.Every5s, TPSUPDATERQUEUE);
-                services.RegisterHangfireBackgroundService<EtherscanUpdater>(CronConstants.Every10s, TPSUPDATERQUEUE);
-                services.RegisterHangfireBackgroundService<OptimismUpdater>(CronConstants.Every5s, TPSUPDATERQUEUE);
-                services.RegisterHangfireBackgroundService<PolygonscanUpdater>(CronConstants.Every5s, TPSUPDATERQUEUE);
-                services.RegisterHangfireBackgroundService<XDAIUpdater>(CronConstants.Every5s, TPSUPDATERQUEUE);
-                services.RegisterHangfireBackgroundService<ZKSwapUpdater>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
-                services.RegisterHangfireBackgroundService<ZKSyncUpdater>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
-                services.RegisterHangfireBackgroundService<AVAXCChainUpdater>(CronConstants.Every5s, TPSUPDATERQUEUE);
-                services.RegisterHangfireBackgroundService<LoopringUpdater>(CronConstants.Every5Minutes, TPSUPDATERQUEUE);
-
-                services.RegisterHangfireBackgroundService<InstantCacheUpdater>(CronConstants.Every5s, TPSUPDATERQUEUE);
-            }
-        }
-
-        private void AddCacheUpdaters(IServiceCollection services)
-        {
-            if (ConfigurationQueues.Contains(CACHEUPDATERQUEUE))
-            {
-                services.RegisterHangfireBackgroundService<OneHourChartCacheUpdater>(CronConstants.Every15Minutes, CACHEUPDATERQUEUE);
-                services.RegisterHangfireBackgroundService<OneDayChartCacheUpdater>(CronConstants.EveryHour, CACHEUPDATERQUEUE);
-                services.RegisterHangfireBackgroundService<OneWeekChartCacheUpdater>(CronConstants.EveryMidnight, CACHEUPDATERQUEUE);
-                services.RegisterHangfireBackgroundService<OneMonthChartCacheUpdater>(CronConstants.EveryMidnight, CACHEUPDATERQUEUE);
-            }
-        }
-
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {

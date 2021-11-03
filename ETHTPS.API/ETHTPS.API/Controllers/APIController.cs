@@ -1,5 +1,4 @@
-﻿using ETHTPS.API.Infrastructure;
-using ETHTPS.Data;
+﻿using ETHTPS.Data;
 using ETHTPS.Data.Database;
 using ETHTPS.Data.Database.Extensions;
 using ETHTPS.Data.ResponseModels;

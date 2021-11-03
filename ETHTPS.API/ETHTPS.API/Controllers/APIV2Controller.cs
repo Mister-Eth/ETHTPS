@@ -30,7 +30,7 @@ namespace ETHTPS.API.Controllers
             return _context.Providers.ToList().Select(x => new ProviderResponseModel()
             {
                 Name = x.Name,
-                Type = _context.ProviderTypes.First(y => y.Id == x.Type.Value).Name,
+                Type = _context.ProviderTypes.First(y => y.Id == x.Type).Name,
                 Color = _context.ProviderProperties.FirstOrDefault(y => y.Name == "Color" && y.Provider == x.Id)?.Value
             });
         }
@@ -59,45 +59,17 @@ namespace ETHTPS.API.Controllers
             }
         }
 
-#if DEBUG
 
         [HttpGet]
-        public string RecalculateMaxTPS()
-        {
-            foreach (var provider in _context.Providers.ToList())
-            {
-                var maxTPS = _context.Tpsdata.Where(x => x.Provider == provider.Id).Max(x => x.Tps);
-                if (_context.MaxTpsentries.Any(x => x.Provider == provider.Id))
-                {
-                    var entry = _context.MaxTpsentries.First(x => x.Provider == provider.Id);
-                    entry.Entry = _context.Tpsdata.First(x => x.Provider == provider.Id && x.Tps == maxTPS).Id;
-                    _context.MaxTpsentries.Update(entry);
-                }
-                else
-                {
-                    _context.MaxTpsentries.Add(new MaxTpsentry()
-                    {
-                        Provider = provider.Id
-                    });
-                }
-            }
-            _context.SaveChanges();
-            return "ok";
-        }
-
-#endif
-
-        [HttpGet]
-        public IEnumerable<TPSResponseModel> MaxTPS(string provider)
+        public IEnumerable<TPSResponseModel> MaxTPS(string provider, string network = "Mainnet")
         {
             var result = new List<TPSResponseModel>();
             var providers = (provider.ToUpper() == "ALL") ? _context.Providers.AsEnumerable() : new Provider[] { _context.Providers.First(x => x.Name.ToUpper() == provider.ToUpper()) };
             foreach (var p in providers.ToArray())
             {
-                var entry = _context.MaxTpsentries.FirstOrDefault(x => x.Provider == p.Id);
+                var entry = _context.TpsandGasDataMaxes.FirstOrDefault(x => x.Provider == p.Id && x.NetworkNavigation.Name == network);
                 if (entry != null)
                 {
-                    var targetEntry = _context.Tpsdata.First(x => x.Id == entry.Entry);
                     result.Add(new TPSResponseModel()
                     {
                         Provider = p.Name,
@@ -105,8 +77,8 @@ namespace ETHTPS.API.Controllers
                         {
                             new TPSDataPoint()
                             {
-                                Date = targetEntry.Date.Value,
-                                TPS = targetEntry.Tps.Value
+                                Date = entry.Date,
+                                TPS = entry.MaxTps
                             }
                         }
                     });

@@ -9,20 +9,22 @@ namespace ETHTPS.Data.Database
     {
         public Network()
         {
-            Tpsdata = new HashSet<Tpsdatum>();
-            TpsdataDays = new HashSet<TpsdataDay>();
-            TpsdataHours = new HashSet<TpsdataHour>();
-            TpsdataMonths = new HashSet<TpsdataMonth>();
-            TpsdataWeeks = new HashSet<TpsdataWeek>();
+            TpsandGasDataDays = new HashSet<TpsandGasDataDay>();
+            TpsandGasDataHours = new HashSet<TpsandGasDataHour>();
+            TpsandGasDataLatests = new HashSet<TpsandGasDataLatest>();
+            TpsandGasDataMaxes = new HashSet<TpsandGasDataMax>();
+            TpsandGasDataMonths = new HashSet<TpsandGasDataMonth>();
+            TpsandGasDataWeeks = new HashSet<TpsandGasDataWeek>();
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public virtual ICollection<Tpsdatum> Tpsdata { get; set; }
-        public virtual ICollection<TpsdataDay> TpsdataDays { get; set; }
-        public virtual ICollection<TpsdataHour> TpsdataHours { get; set; }
-        public virtual ICollection<TpsdataMonth> TpsdataMonths { get; set; }
-        public virtual ICollection<TpsdataWeek> TpsdataWeeks { get; set; }
+        public virtual ICollection<TpsandGasDataDay> TpsandGasDataDays { get; set; }
+        public virtual ICollection<TpsandGasDataHour> TpsandGasDataHours { get; set; }
+        public virtual ICollection<TpsandGasDataLatest> TpsandGasDataLatests { get; set; }
+        public virtual ICollection<TpsandGasDataMax> TpsandGasDataMaxes { get; set; }
+        public virtual ICollection<TpsandGasDataMonth> TpsandGasDataMonths { get; set; }
+        public virtual ICollection<TpsandGasDataWeek> TpsandGasDataWeeks { get; set; }
     }
 }

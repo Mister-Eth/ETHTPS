@@ -5,12 +5,13 @@ using System.Collections.Generic;
 
 namespace ETHTPS.Data.Database
 {
-    public partial class JobParameter
+    public partial class ProviderTypeProperty
     {
-        public long JobId { get; set; }
+        public int Id { get; set; }
+        public int ProviderType { get; set; }
         public string Name { get; set; }
         public string Value { get; set; }
 
-        public virtual Job Job { get; set; }
+        public virtual ProviderType ProviderTypeNavigation { get; set; }
     }
 }

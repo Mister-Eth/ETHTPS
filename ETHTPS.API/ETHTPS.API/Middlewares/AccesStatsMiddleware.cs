@@ -47,14 +47,7 @@ namespace ETHTPS.API.Middlewares
                 var target = dbContext.AccesStats.First(x => x.Path == entry.Path && x.Project == entry.Project);
                 target.Count++;
 
-                if (target.AverageRequestTimeMs is null)
-                {
-                    target.AverageRequestTimeMs = 0;
-                }
-                else
-                {
-                    target.AverageRequestTimeMs = (target.AverageRequestTimeMs * target.Count + stopwatch.Elapsed.TotalMilliseconds) / (target.Count + 1);
-                }
+                target.AverageRequestTimeMs = (target.AverageRequestTimeMs * target.Count + stopwatch.Elapsed.TotalMilliseconds) / (target.Count + 1);
                 dbContext.AccesStats.Update(target);
             }
             dbContext.SaveChanges();
