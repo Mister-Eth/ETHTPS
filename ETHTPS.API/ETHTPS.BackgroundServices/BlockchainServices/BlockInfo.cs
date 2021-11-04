@@ -12,5 +12,16 @@ namespace ETHTPS.Services.BlockchainServices
         public int TransactionCount { get; set; }
         public double GasUsed { get; set; }
         public DateTime Date { get; set; }
+
+        public static TPSGPSInfo operator -(BlockInfo a, BlockInfo b)
+        {
+            return new TPSGPSInfo()
+            {
+                Date = a.Date,
+                BlockNumber = a.BlockNumber,
+                TPS = (a.TransactionCount) / (a.Date.Subtract(b.Date).TotalSeconds),
+                GPS = (a.GasUsed) / (a.Date.Subtract(b.Date).TotalSeconds),
+            };
+        }
     }
 }

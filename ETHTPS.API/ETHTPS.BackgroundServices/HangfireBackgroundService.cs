@@ -12,13 +12,11 @@ namespace ETHTPS.Services
 {
     public abstract class HangfireBackgroundService
     {
-        public string Name { get; private set; }
         protected readonly ILogger<HangfireBackgroundService> _logger;
         protected readonly ETHTPSContext _context;
 
-        protected HangfireBackgroundService(string name, ILogger<HangfireBackgroundService> logger, ETHTPSContext context)
+        protected HangfireBackgroundService(ILogger<HangfireBackgroundService> logger, ETHTPSContext context)
         {
-            Name = name;
             _logger = logger;
             _context = context;
         }

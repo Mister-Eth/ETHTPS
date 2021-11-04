@@ -19,6 +19,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Linq;
 using ETHTPS.Services.BlockchainServices.Scan.Implementations;
+using ETHTPS.Services.BlockchainServices;
 
 namespace ETHTPS.API
 {
@@ -58,7 +59,14 @@ namespace ETHTPS.API
             InitializeHangFire(defaultConnectionString);
             services.AddHangfire(x => x.UseSqlServerStorage(defaultConnectionString));
             services.AddHangfireServer();
-            services.AddScoped<EtherscanBlockInfoProvider>();
+            AddTPSDataUpdaters(services);
+        }
+        private void AddTPSDataUpdaters(IServiceCollection services)
+        {
+            if (ConfigurationQueues.Contains(TPSUPDATERQUEUE))
+            {
+                services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<EtherscanBlockInfoProvider>, EtherscanBlockInfoProvider>(CronConstants.Every10s, TPSUPDATERQUEUE);
+            }
         }
 
         public static void InitializeHangFire(string connectionString)

@@ -75,16 +75,18 @@ namespace ETHTPS.Services.BlockchainServices.Scan
 
         public async Task<BlockInfo> GetBlockInfoAsync(DateTime time)
         {
-            var blockNumberRequest = await _httpClient.GetAsync(_requestModelFactory.CreateGetBlockNumberByTimestampRequest(time).ToQueryString());
-            string blockNumber = JsonConvert.DeserializeObject<dynamic>(await blockNumberRequest.Content.ReadAsStringAsync()).result.ToString();
-            return await GetBlockInfoAsync(int.Parse(blockNumber));
+            var requestModel = _requestModelFactory.CreateGetBlockNumberByTimestampRequest(time);
+            var requestString = requestModel.ToQueryString();
+            var blockNumberRequest = await _httpClient.GetAsync(requestString);
+            string blockNumberString = JsonConvert.DeserializeObject<dynamic>(await blockNumberRequest.Content.ReadAsStringAsync()).result.ToString();
+            int blockNumber;
+            if (!int.TryParse(blockNumberString, out blockNumber))
+            {
+                throw new ArgumentException($"Error parsing block number\r\nDetails: \"{blockNumberString}\"");
+            }
+            return await GetBlockInfoAsync(blockNumber);
         }
 
-        public async Task<BlockInfo> GetLatestBlockInfoAsync() => await GetBlockInfoAsync(DateTime.Now);
-
-        private async Task GetBlockNumberByTimestamp()
-        {
-
-        }
+        public async Task<BlockInfo> GetLatestBlockInfoAsync() => await GetBlockInfoAsync(DateTime.Now.ToUniversalTime());
     }
 }
