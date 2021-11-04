@@ -65,7 +65,7 @@ namespace ETHTPS.API
         {
             if (ConfigurationQueues.Contains(TPSUPDATERQUEUE))
             {
-                services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<EtherscanBlockInfoProvider>, EtherscanBlockInfoProvider>(CronConstants.Every10s, TPSUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<EtherscanBlockInfoProvider>, EtherscanBlockInfoProvider>(CronConstants.Every14s, TPSUPDATERQUEUE);
             }
         }
 

@@ -38,6 +38,11 @@ namespace ETHTPS.Services.BlockchainServices
                 {
                     var delta = latestBlock - secondToLatestBlock;
                     UpdateMaxEntry(delta);
+
+                    AddOrUpdateHourTPSEntry(delta);
+                    AddOrUpdateDayTPSEntry(delta);
+                    AddOrUpdateWeekTPSEntry(delta);
+                    AddOrUpdateMonthTPSEntry(delta);
                     await _context.SaveChangesAsync();
 
                     _logger.LogInformation($"{_provider}: {delta.TPS}TPS {delta.GPS}GPS");
@@ -76,6 +81,155 @@ namespace ETHTPS.Services.BlockchainServices
                     targetEntry.MaxGps = entry.GPS;
                 }
                 _context.TpsandGasDataMaxes.Update(targetEntry);
+            }
+        }
+
+        public void AddOrUpdateHourTPSEntry(TPSGPSInfo entry)
+        {
+            var targetDate = entry.Date
+                .Subtract(TimeSpan.FromSeconds(entry.Date.Second))
+                .Subtract(TimeSpan.FromMilliseconds(entry.Date.Millisecond));
+            Func<TpsandGasDataHour, bool> selector = x => x.NetworkNavigation.Name == "Mainnet" && x.Provider == _providerID && x.StartDate.Minute == targetDate.Minute;
+            if (!_context.TpsandGasDataHours.Any(selector))
+            {
+                _context.TpsandGasDataHours.Add(new TpsandGasDataHour()
+                {
+                    Network = 1,
+                    AverageTps = entry.TPS,
+                    AverageGps = entry.GPS,
+                    Provider = _providerID,
+                    StartDate = targetDate,
+                    ReadingsCount = 1
+                });
+            }
+            else
+            {
+                var x = _context.TpsandGasDataHours.First(selector);
+                if (x.StartDate.Hour == targetDate.Hour)
+                {
+                    x.AverageTps = ((x.AverageTps * x.ReadingsCount) + entry.TPS) / ++x.ReadingsCount;
+                    x.AverageGps = ((x.AverageGps * x.ReadingsCount) + entry.GPS) / ++x.ReadingsCount;
+                }
+                else
+                {
+                    x.AverageTps = entry.TPS;
+                    x.AverageGps = entry.GPS;
+                    x.ReadingsCount = 1;
+                    x.StartDate = entry.Date;
+                }
+                _context.TpsandGasDataHours.Update(x);
+            }
+        }
+        public void AddOrUpdateDayTPSEntry(TPSGPSInfo entry)
+        {
+            var targetDate = entry.Date
+                .Subtract(TimeSpan.FromSeconds(entry.Date.Second))
+                .Subtract(TimeSpan.FromMilliseconds(entry.Date.Millisecond))
+                .Subtract(TimeSpan.FromMinutes(entry.Date.Minute));
+            Func<TpsandGasDataDay, bool> selector = x => x.NetworkNavigation.Name == "Mainnet" && x.Provider == _providerID && x.StartDate.Hour == targetDate.Hour;
+            if (!_context.TpsandGasDataDays.Any(selector))
+            {
+                _context.TpsandGasDataDays.Add(new TpsandGasDataDay()
+                {
+                    Network = 1,
+                    AverageTps = entry.TPS,
+                    AverageGps = entry.GPS,
+                    Provider = _providerID,
+                    StartDate = targetDate,
+                    ReadingsCount = 1
+                });
+            }
+            else
+            {
+                var x = _context.TpsandGasDataDays.First(selector);
+                if (x.StartDate.Day == targetDate.Day)
+                {
+                    x.AverageTps = ((x.AverageTps * x.ReadingsCount) + entry.TPS) / ++x.ReadingsCount;
+                    x.AverageGps = ((x.AverageGps * x.ReadingsCount) + entry.GPS) / ++x.ReadingsCount;
+                }
+                else
+                {
+                    x.AverageTps = entry.TPS;
+                    x.AverageGps = entry.GPS;
+                    x.ReadingsCount = 1;
+                    x.StartDate = entry.Date;
+                }
+                _context.TpsandGasDataDays.Update(x);
+            }
+        }
+        public void AddOrUpdateWeekTPSEntry(TPSGPSInfo entry)
+        {
+            var targetDate = entry.Date
+                .Subtract(TimeSpan.FromSeconds(entry.Date.Second))
+                .Subtract(TimeSpan.FromMilliseconds(entry.Date.Millisecond))
+                .Subtract(TimeSpan.FromMinutes(entry.Date.Minute));
+            Func<TpsandGasDataWeek, bool> selector = x => x.NetworkNavigation.Name == "Mainnet" && x.Provider == _providerID && x.StartDate.Hour == targetDate.Hour && x.StartDate.DayOfWeek == targetDate.DayOfWeek;
+            if (!_context.TpsandGasDataWeeks.Any(selector))
+            {
+                _context.TpsandGasDataWeeks.Add(new TpsandGasDataWeek()
+                {
+                    Network = 1,
+                    AverageTps = entry.TPS,
+                    AverageGps = entry.GPS,
+                    Provider = _providerID,
+                    StartDate = targetDate,
+                    ReadingsCount = 1
+                });
+            }
+            else
+            {
+                var x = _context.TpsandGasDataWeeks.First(selector);
+                if (x.StartDate.Day == targetDate.Day)
+                {
+                    x.AverageTps = ((x.AverageTps * x.ReadingsCount) + entry.TPS) / ++x.ReadingsCount;
+                    x.AverageGps = ((x.AverageGps * x.ReadingsCount) + entry.GPS) / ++x.ReadingsCount;
+                }
+                else
+                {
+                    x.AverageTps = entry.TPS;
+                    x.AverageGps = entry.GPS;
+                    x.ReadingsCount = 1;
+                    x.StartDate = entry.Date;
+                }
+                _context.TpsandGasDataWeeks.Update(x);
+            }
+        }
+        public void AddOrUpdateMonthTPSEntry(TPSGPSInfo entry)
+        {
+            var targetDate = entry.Date
+                .Subtract(TimeSpan.FromSeconds(entry.Date.Second))
+                .Subtract(TimeSpan.FromMilliseconds(entry.Date.Millisecond))
+                .Subtract(TimeSpan.FromMinutes(entry.Date.Minute))
+                .Subtract(TimeSpan.FromHours(entry.Date.Hour));
+            Func<TpsandGasDataMonth, bool> selector = x => x.NetworkNavigation.Name == "Mainnet" && x.Provider == _providerID && x.StartDate.Day == targetDate.Day;
+            if (!_context.TpsandGasDataMonths.Any(selector))
+            {
+                _context.TpsandGasDataMonths.Add(new TpsandGasDataMonth()
+                {
+                    Network = 1,
+                    AverageTps = entry.TPS,
+                    AverageGps = entry.GPS,
+                    Provider = _providerID,
+                    StartDate = targetDate,
+                    ReadingsCount = 1
+                });
+            }
+            else
+            {
+                var x = _context.TpsandGasDataMonths.First(selector);
+                if (x.StartDate.Month == targetDate.Month)
+                {
+                    x.AverageTps = ((x.AverageTps * x.ReadingsCount) + entry.TPS) / ++x.ReadingsCount;
+                    x.AverageGps = ((x.AverageGps * x.ReadingsCount) + entry.GPS) / ++x.ReadingsCount;
+                }
+                else
+                {
+                    x.AverageTps = entry.TPS;
+                    x.AverageGps = entry.GPS;
+                    x.ReadingsCount = 1;
+                    x.StartDate = entry.Date;
+                }
+                _context.TpsandGasDataMonths.Update(x);
             }
         }
     }
