@@ -28,7 +28,6 @@ namespace ETHTPS.Data.Database
         public virtual DbSet<ProviderTypeProperty> ProviderTypeProperties { get; set; }
         public virtual DbSet<TpsandGasDataDay> TpsandGasDataDays { get; set; }
         public virtual DbSet<TpsandGasDataHour> TpsandGasDataHours { get; set; }
-        public virtual DbSet<TpsandGasDataLatest> TpsandGasDataLatests { get; set; }
         public virtual DbSet<TpsandGasDataMax> TpsandGasDataMaxes { get; set; }
         public virtual DbSet<TpsandGasDataMonth> TpsandGasDataMonths { get; set; }
         public virtual DbSet<TpsandGasDataWeek> TpsandGasDataWeeks { get; set; }
@@ -200,29 +199,6 @@ namespace ETHTPS.Data.Database
                     .HasForeignKey(d => d.Provider)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__TPSAndGas__Provi__45F365D3");
-            });
-
-            modelBuilder.Entity<TpsandGasDataLatest>(entity =>
-            {
-                entity.ToTable("TPSAndGasData_Latest");
-
-                entity.Property(e => e.Id).HasColumnName("ID");
-
-                entity.Property(e => e.Gps).HasColumnName("GPS");
-
-                entity.Property(e => e.Tps).HasColumnName("TPS");
-
-                entity.HasOne(d => d.NetworkNavigation)
-                    .WithMany(p => p.TpsandGasDataLatests)
-                    .HasForeignKey(d => d.Network)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__TPSAndGas__Netwo__4316F928");
-
-                entity.HasOne(d => d.ProviderNavigation)
-                    .WithMany(p => p.TpsandGasDataLatests)
-                    .HasForeignKey(d => d.Provider)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__TPSAndGas__Provi__4222D4EF");
             });
 
             modelBuilder.Entity<TpsandGasDataMax>(entity =>

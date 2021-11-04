@@ -10,6 +10,7 @@ namespace ETHTPS.Services.BlockchainServices
     {
         public int BlockNumber { get; set; }
         public int TransactionCount { get; set; }
-        public int GasUsed { get; set; }
+        public double GasUsed { get; set; }
+        public DateTime Date { get; set; }
     }
 }

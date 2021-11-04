@@ -11,7 +11,6 @@ namespace ETHTPS.Data.Database
         {
             TpsandGasDataDays = new HashSet<TpsandGasDataDay>();
             TpsandGasDataHours = new HashSet<TpsandGasDataHour>();
-            TpsandGasDataLatests = new HashSet<TpsandGasDataLatest>();
             TpsandGasDataMaxes = new HashSet<TpsandGasDataMax>();
             TpsandGasDataMonths = new HashSet<TpsandGasDataMonth>();
             TpsandGasDataWeeks = new HashSet<TpsandGasDataWeek>();
@@ -22,7 +21,6 @@ namespace ETHTPS.Data.Database
 
         public virtual ICollection<TpsandGasDataDay> TpsandGasDataDays { get; set; }
         public virtual ICollection<TpsandGasDataHour> TpsandGasDataHours { get; set; }
-        public virtual ICollection<TpsandGasDataLatest> TpsandGasDataLatests { get; set; }
         public virtual ICollection<TpsandGasDataMax> TpsandGasDataMaxes { get; set; }
         public virtual ICollection<TpsandGasDataMonth> TpsandGasDataMonths { get; set; }
         public virtual ICollection<TpsandGasDataWeek> TpsandGasDataWeeks { get; set; }

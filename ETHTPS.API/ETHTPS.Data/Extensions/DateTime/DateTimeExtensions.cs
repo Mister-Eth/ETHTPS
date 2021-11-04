@@ -14,5 +14,7 @@ namespace ETHTPS.Data.Extensions
         {
             return epoch.AddSeconds(unixTime);
         }
+
+        public static long ToUnixTime(this DateTime time) => ((DateTimeOffset)time).ToUnixTimeSeconds();
     }
 }

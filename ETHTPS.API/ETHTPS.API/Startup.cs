@@ -18,6 +18,7 @@ using Microsoft.Extensions.Hosting;
 
 using System;
 using System.Linq;
+using ETHTPS.Services.BlockchainServices.Scan.Implementations;
 
 namespace ETHTPS.API
 {
@@ -57,6 +58,7 @@ namespace ETHTPS.API
             InitializeHangFire(defaultConnectionString);
             services.AddHangfire(x => x.UseSqlServerStorage(defaultConnectionString));
             services.AddHangfireServer();
+            services.AddScoped<EtherscanBlockInfoProvider>();
         }
 
         public static void InitializeHangFire(string connectionString)

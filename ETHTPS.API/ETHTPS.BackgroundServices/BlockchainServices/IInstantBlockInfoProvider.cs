@@ -9,8 +9,12 @@ namespace ETHTPS.Services.BlockchainServices
     /// <summary>
     /// Provides information about blocks.
     /// </summary>
-    public interface IBlockInfoProvider : IInstantBlockInfoProvider, IHistoricalBlockInfoProvider
+    public interface IInstantBlockInfoProvider
     {
-
+        /// <summary>
+        /// Gets information about the latest block asynchronously.
+        /// </summary>
+        /// <returns></returns>
+        Task<BlockInfo> GetLatestBlockInfoAsync();
     }
 }
