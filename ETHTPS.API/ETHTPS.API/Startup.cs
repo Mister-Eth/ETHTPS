@@ -20,6 +20,7 @@ using System;
 using System.Linq;
 using ETHTPS.Services.BlockchainServices.Scan.Implementations;
 using ETHTPS.Services.BlockchainServices;
+using ETHTPS.Services.BlockchainServices.Scan;
 
 namespace ETHTPS.API
 {
@@ -66,6 +67,7 @@ namespace ETHTPS.API
             if (ConfigurationQueues.Contains(TPSUPDATERQUEUE))
             {
                 services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<EtherscanBlockInfoProvider>, EtherscanBlockInfoProvider>(CronConstants.Every14s, TPSUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<AVAXCChainBlockInfoProvider>, AVAXCChainBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
             }
         }
 

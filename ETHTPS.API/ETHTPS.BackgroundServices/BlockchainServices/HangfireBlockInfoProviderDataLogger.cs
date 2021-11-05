@@ -32,26 +32,66 @@ namespace ETHTPS.Services.BlockchainServices
         {
             try
             {
-                var latestBlock = await _instance.GetLatestBlockInfoAsync();
-                var secondToLatestBlock = await _instance.GetBlockInfoAsync(latestBlock.BlockNumber - 1);
-                if (latestBlock != null && secondToLatestBlock != null)
-                {
-                    var delta = latestBlock - secondToLatestBlock;
-                    UpdateMaxEntry(delta);
+                var delta = await CalculateTPSGPSAsync();
+                UpdateMaxEntry(delta);
 
-                    AddOrUpdateHourTPSEntry(delta);
-                    AddOrUpdateDayTPSEntry(delta);
-                    AddOrUpdateWeekTPSEntry(delta);
-                    AddOrUpdateMonthTPSEntry(delta);
-                    await _context.SaveChangesAsync();
+                AddOrUpdateHourTPSEntry(delta);
+                AddOrUpdateDayTPSEntry(delta);
+                AddOrUpdateWeekTPSEntry(delta);
+                AddOrUpdateMonthTPSEntry(delta);
+                await _context.SaveChangesAsync();
 
-                    _logger.LogInformation($"{_provider}: {delta.TPS}TPS {delta.GPS}GPS");
-                }
+                _logger.LogInformation($"{_provider}: {delta.TPS}TPS {delta.GPS}GPS");
             }
             catch (Exception e)
             {
                 _logger.LogError("TPSDataUpdaterBase", e);
                 throw;
+            }
+        }
+
+        private async Task<TPSGPSInfo> CalculateTPSGPSAsync()
+        {
+            var latestBlock = await _instance.GetLatestBlockInfoAsync();
+            if (_instance.BlockTimeSeconds > 0)
+            {
+                return new TPSGPSInfo()
+                {
+                    BlockNumber = latestBlock.BlockNumber,
+                    Date = latestBlock.Date,
+                    GPS = latestBlock.GasUsed / _instance.BlockTimeSeconds,
+                    TPS = latestBlock.TransactionCount / _instance.BlockTimeSeconds
+                };
+            }
+            else //Add up all blocks submitted at the same time
+            {
+                var result = new TPSGPSInfo() 
+                {
+                    Date = latestBlock.Date
+                };
+                BlockInfo secondToLatestBlock;
+                int count = 0;
+                do
+                {
+                    result.TPS += latestBlock.TransactionCount;
+                    result.GPS += latestBlock.GasUsed;
+
+                    secondToLatestBlock = await _instance.GetBlockInfoAsync(latestBlock.BlockNumber - 1);
+                    if (secondToLatestBlock.Date.Subtract(latestBlock.Date).TotalSeconds != 0)
+                    {
+                        result.TPS /= Math.Abs(secondToLatestBlock.Date.Subtract(result.Date).TotalSeconds);
+                        result.GPS /= Math.Abs(secondToLatestBlock.Date.Subtract(result.Date).TotalSeconds);
+                        break;
+                    }
+                    latestBlock = secondToLatestBlock;
+
+                    if (++count == 10)
+                    {
+                        throw new Exception("Possible infinite loop");
+                    }
+                }
+                while (true);
+                return result;
             }
         }
 

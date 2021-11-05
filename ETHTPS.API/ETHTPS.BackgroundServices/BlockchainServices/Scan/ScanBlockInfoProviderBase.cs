@@ -41,7 +41,13 @@ namespace ETHTPS.Services.BlockchainServices.Scan
             _txCountSelector = config.GetValue<string>("TXCountSelector");
             _gasUsedSelector = config.GetValue<string>("GasUsedSelector");
             _dateSelector = config.GetValue<string>("DateSelector");
+            if (config.GetSection("BlockTime").Exists())
+            {
+                BlockTimeSeconds = config.GetValue<double>("BlockTime");
+            }
         }
+
+        public double BlockTimeSeconds { get; set; }
 
         public Task<BlockInfo> GetBlockInfoAsync(int blockNumber)
         {

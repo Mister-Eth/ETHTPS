@@ -21,7 +21,7 @@ namespace ETHTPS.Services.Infrastructure.Extensions
         {
             services.AddScoped<V>();
             services.AddScoped<T>();
-            RecurringJob.AddOrUpdate<T>(typeof(T).Name, x => x.RunAsync(), cronExpression, queue: queue);
+            RecurringJob.AddOrUpdate<T>(typeof(V).Name, x => x.RunAsync(), cronExpression, queue: queue);
         }
 
 #pragma warning restore CS0618

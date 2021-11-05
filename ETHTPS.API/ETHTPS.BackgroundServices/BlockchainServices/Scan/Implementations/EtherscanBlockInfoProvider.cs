@@ -13,6 +13,7 @@ namespace ETHTPS.Services.BlockchainServices.Scan.Implementations
     {
         public EtherscanBlockInfoProvider(IConfiguration configuration) : base(configuration, "Etherscan")
         {
+
         }
     }
 }

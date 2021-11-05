@@ -11,6 +11,6 @@ namespace ETHTPS.Services.BlockchainServices
     /// </summary>
     public interface IBlockInfoProvider : IInstantBlockInfoProvider, IHistoricalBlockInfoProvider
     {
-
+        public double BlockTimeSeconds { get; set; }
     }
 }
