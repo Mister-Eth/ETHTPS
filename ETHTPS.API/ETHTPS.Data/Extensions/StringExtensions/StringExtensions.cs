@@ -41,7 +41,7 @@ namespace ETHTPS.Data.Extensions.StringExtensions
 
         public static string BetweenParantheses(this string source) => Between(source, "(", ")");
 
-        public static string Between(string STR, string FirstString, string LastString)
+        public static string Between(this string STR, string FirstString, string LastString)
         {
             string FinalString;
             int Pos1 = STR.IndexOf(FirstString) + FirstString.Length;
