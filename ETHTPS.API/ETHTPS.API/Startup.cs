@@ -21,6 +21,7 @@ using System.Linq;
 using ETHTPS.Services.BlockchainServices.Scan.Implementations;
 using ETHTPS.Services.BlockchainServices;
 using ETHTPS.Services.BlockchainServices.Scan;
+using ETHTPS.Data.Database.HistoricalDataProviders;
 
 namespace ETHTPS.API
 {
@@ -62,6 +63,7 @@ namespace ETHTPS.API
             services.AddHangfireServer();
             AddTPSDataUpdaters(services);
             AddCacheUpdaters(services);
+            AddHistoricalDataProviders(services);
         }
         private void AddTPSDataUpdaters(IServiceCollection services)
         {
@@ -83,6 +85,14 @@ namespace ETHTPS.API
             {
 
             }
+        }
+
+        private void AddHistoricalDataProviders(IServiceCollection services)
+        {
+            services.AddScoped<IHistoricalDataProvider, OneHourHistoricalDataProvider>();
+            services.AddScoped<IHistoricalDataProvider, OneDayHistoricalDataProvider>();
+            services.AddScoped<IHistoricalDataProvider, OneWeekHistoricalDataProvider>();
+            services.AddScoped<IHistoricalDataProvider, OneMonthHistoricalDataProvider>();
         }
 
         public static void InitializeHangFire(string connectionString)

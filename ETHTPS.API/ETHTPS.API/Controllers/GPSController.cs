@@ -64,7 +64,7 @@ namespace ETHTPS.API.Controllers
 
         [HttpGet]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public async Task<IDictionary<string, IEnumerable<GPSDataPoint>>> InstantAsync(bool includeSidechains = true)
+        public IDictionary<string, IEnumerable<GPSDataPoint>> InstantAsync(bool includeSidechains = true)
         {
             var result = new List<GPSResponseModel>();
             foreach (var p in Context.Providers.ToList())

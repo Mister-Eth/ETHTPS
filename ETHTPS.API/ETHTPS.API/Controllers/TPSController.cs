@@ -109,7 +109,7 @@ namespace ETHTPS.API.Controllers
 
         [HttpGet]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public async Task<IDictionary<string, IEnumerable<TPSDataPoint>>> InstantAsync(bool includeSidechains = true)
+        public IDictionary<string, IEnumerable<TPSDataPoint>> InstantAsync(bool includeSidechains = true)
         {
             var result = new List<TPSResponseModel>();
             foreach (var p in Context.Providers.ToList())

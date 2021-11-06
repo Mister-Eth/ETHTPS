@@ -12,9 +12,6 @@ namespace ETHTPS.Data.Database
         public double AverageTps { get; set; }
         public double AverageGps { get; set; }
         public int ReadingsCount { get; set; }
-
-        public virtual Network NetworkNavigation { get; set; }
-        public virtual Provider ProviderNavigation { get; set; }
     }
 
     public class TpsandGasDataDay : TimedTPSAndGasData { }
