@@ -46,6 +46,7 @@ namespace ETHTPS.API
                                   builder =>
                                   {
                                       builder.WithOrigins("https://ethtps.info");
+                                      builder.WithOrigins("https://ultrasound.money/");
                                       builder.WithOrigins("http://localhost:3007");
                                       builder.AllowAnyHeader();
                                   });

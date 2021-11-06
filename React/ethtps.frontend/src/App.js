@@ -144,11 +144,6 @@ getProviderData(state){
     <p>
         Each section of the bar below represents the throughput of a network type.
       </p>
-      <TypeTPSStat 
-        data={this.state.homePageModel.instantTPS} 
-        colorDictionary={this.state.homePageModel.providerTypeColorDictionary} 
-        providerData={this.getProviderData(this.state)}/>
-
       <label className={"small"}>
       <input
             ref={ref=>this.excludeSidechainsCheckBox = ref}
