@@ -31,7 +31,7 @@ class TypeTPSStat extends Component{
       }
 
     createDatasets(state){
-        if (state.providerData.length === 0 || state.data.length === 0)
+        if (state.providerData.length === 0 || state.data.length === 0 || state.colorDictionary === undefined)
             return [{}];
         let datasets = [];
         for(let p of state.providerData.filter(x=>state.data[x.name] !== undefined)){
