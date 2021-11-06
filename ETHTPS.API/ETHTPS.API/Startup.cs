@@ -129,11 +129,13 @@ namespace ETHTPS.API
                 app.UseHangfireDashboard();
             }
             app.UseSwagger();
+#if DEBUG
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "ETHTPS API V1");
                 c.RoutePrefix = string.Empty;
             });
+#endif
             app.UseRouting();
             app.UseCors(MyAllowSpecificOrigins);
             app.UseEndpoints(endpoints =>
