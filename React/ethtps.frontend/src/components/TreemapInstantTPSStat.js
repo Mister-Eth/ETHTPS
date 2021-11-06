@@ -81,6 +81,7 @@ export default class TreemapInstantTPSStat extends React.Component {
     componentDidUpdate(previousProps, previousState){
         if (previousProps.data !== this.props.data){      
             this.setState({data: this.props.data})
+            this.tryUpdateColors();
         }
         if (previousProps.colorDictionary !== this.props.colorDictionary){
             this.setState({colorDictionary: this.props.colorDictionary});

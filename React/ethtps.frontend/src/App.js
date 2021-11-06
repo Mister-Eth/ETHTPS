@@ -13,6 +13,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import ProviderTable from './components/ProviderTable';
 import TreemapInstantTPSStat from './components/TreemapInstantTPSStat';
+import {BrowserView, MobileView} from 'react-device-detect';
 
 class App extends React.Component {
 
@@ -138,10 +139,18 @@ getProviderData(state){
       <p>
         Each section of the bar below represents the throughput of a network. Data gets updated automatically.
       </p>
-      <TreemapInstantTPSStat
-       data={this.state.homePageModel.instantTPS} 
-       colorDictionary={this.state.homePageModel.colorDictionary} 
-       providerData={this.getProviderData(this.state)}/>
+      <MobileView>
+          <InstantTPSStat
+          data={this.state.homePageModel.instantTPS} 
+          colorDictionary={this.state.homePageModel.colorDictionary} 
+          providerData={this.getProviderData(this.state)}/>  
+      </MobileView>
+      <BrowserView>
+          <TreemapInstantTPSStat
+              data={this.state.homePageModel.instantTPS} 
+              colorDictionary={this.state.homePageModel.colorDictionary} 
+              providerData={this.getProviderData(this.state)}/>  
+      </BrowserView>
       <label className={"small"}>
       <input
             ref={ref=>this.excludeSidechainsCheckBox = ref}
