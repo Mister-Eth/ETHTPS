@@ -100,11 +100,8 @@ class ProviderTable extends React.Component {
         </>;
     }
 
-    to2DecimalPlaces(number){
-        let value = Math.round(number * 100) / 100;
-        value = value.toString();
-        value = value.substr(0, value.indexOf('.') + 3);
-        return value;
+    to2DecimalPlaces(num){
+       return Math.round((num + Number.EPSILON) * 100) / 100
     }
 
     createRow(x, i){

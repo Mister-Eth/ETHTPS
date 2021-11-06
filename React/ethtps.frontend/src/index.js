@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import TreemapInstantTPSStat from './components/TreemapInstantTPSStat';
 ReactDOM.render(
   <React.StrictMode>
     <App />

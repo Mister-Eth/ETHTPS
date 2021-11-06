@@ -3,7 +3,7 @@ import githubIcon from './assets/600px-Octicons-mark-github.svg - inv.png';
 import twitterIcon from './assets/1486053611-twitter_79195.png';
 import discordIcon from './assets/discord-mascot.png';
 import { globalGeneralApi, globalGPSApi, globalTPSApi } from './services/common';
-import React, { useState, useEffect } from "react";
+import React, { ReactDOM, useState, useEffect } from "react";
 import InstantTPSStat from './components/InstantTPSStat';
 import TypeTPSStat from './components/TypeTPSStat';
 import Timeline from './components/Timeline';
@@ -12,6 +12,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import ProviderTable from './components/ProviderTable';
+import TreemapInstantTPSStat from './components/TreemapInstantTPSStat';
 
 class App extends React.Component {
 
@@ -137,13 +138,10 @@ getProviderData(state){
       <p>
         Each section of the bar below represents the throughput of a network. Data gets updated automatically.
       </p>
-      <InstantTPSStat 
-        data={this.state.homePageModel.instantTPS} 
-        colorDictionary={this.state.homePageModel.colorDictionary} 
-        providerData={this.getProviderData(this.state)}/>
-    <p>
-        Each section of the bar below represents the throughput of a network type.
-      </p>
+      <TreemapInstantTPSStat
+       data={this.state.homePageModel.instantTPS} 
+       colorDictionary={this.state.homePageModel.colorDictionary} 
+       providerData={this.getProviderData(this.state)}/>
       <label className={"small"}>
       <input
             ref={ref=>this.excludeSidechainsCheckBox = ref}
@@ -154,7 +152,6 @@ getProviderData(state){
       </label>
 
       <hr/>
-      
 
     <h3>
       Networks
