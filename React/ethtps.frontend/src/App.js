@@ -22,6 +22,7 @@ class App extends React.Component {
       homePageModel: {
         instantTPS: [],
         colorDictionary: {},
+        providerTypeColorDictionary:{},
         providerData: [],
         maxTPS: []
       },
@@ -57,6 +58,13 @@ componentDidMount(){
     homePageModel.colorDictionary = data;
     this.setState({homePageModel: homePageModel});
   });
+
+  globalGeneralApi.aPIV2ProviderTypesColorDictionaryGet((err, data, res) => {
+    let homePageModel = this.state.homePageModel;
+    homePageModel.providerTypeColorDictionary = data;
+    this.setState({homePageModel: homePageModel});
+  });
+
   globalTPSApi.aPITPSMaxGet({provider: 'All', network: this.state.network}, (err, data, res) => {
     let homePageModel = this.state.homePageModel;
     homePageModel.maxTPS = data;
@@ -138,7 +146,7 @@ getProviderData(state){
       </p>
       <TypeTPSStat 
         data={this.state.homePageModel.instantTPS} 
-        colorDictionary={this.state.homePageModel.colorDictionary} 
+        colorDictionary={this.state.homePageModel.providerTypeColorDictionary} 
         providerData={this.getProviderData(this.state)}/>
 
       <label className={"small"}>

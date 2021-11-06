@@ -39,7 +39,7 @@ class TypeTPSStat extends Component{
                 datasets.push({
                     label: p.type,
                     data: [0],
-                    backgroundColor: state.colorDictionary[p.name]
+                    backgroundColor: state.colorDictionary[p.type]
                 });
             }
             datasets.filter(x => x.label === p.type)[0].data[0] += state.data[p.name][0].tps;
