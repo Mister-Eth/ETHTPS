@@ -8,10 +8,9 @@ using System.Threading.Tasks;
 
 namespace ETHTPS.Data.Database.HistoricalDataProviders
 {
-    [HistoricalDataProvider("OneMonth")]
     public class OneMonthHistoricalDataProvider : HistoricalDataProviderBase<TpsandGasDataMonth>
     {
-        public OneMonthHistoricalDataProvider(ETHTPSContext context) : base(context, x => x.TpsandGasDataMonths)
+        public OneMonthHistoricalDataProvider(ETHTPSContext context) : base("OneMonth", context, x => x.TpsandGasDataMonths)
         {
 
         }

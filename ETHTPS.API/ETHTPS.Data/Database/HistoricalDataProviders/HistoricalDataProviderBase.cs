@@ -14,11 +14,14 @@ namespace ETHTPS.Data.Database.HistoricalDataProviders
         private readonly ETHTPSContext _context;
         private readonly Func<ETHTPSContext, DbSet<TTargetHistoricalData>> _dataSelector;
 
-        protected HistoricalDataProviderBase(ETHTPSContext context, Func<ETHTPSContext, DbSet<TTargetHistoricalData>> dataSelector)
+        protected HistoricalDataProviderBase(string interval, ETHTPSContext context, Func<ETHTPSContext, DbSet<TTargetHistoricalData>> dataSelector)
         {
+            Interval = interval;
             _context = context;
             _dataSelector = dataSelector;
         }
+
+        public string Interval { get; private set; }
 
         public IEnumerable<TimedTPSAndGasData> GetData(string provider, string network) => _dataSelector(_context).Where(x => x.NetworkNavigation.Name == network && x.ProviderNavigation.Name == provider).OrderBy(x => x.StartDate);
     }

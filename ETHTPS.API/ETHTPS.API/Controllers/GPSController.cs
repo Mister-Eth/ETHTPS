@@ -1,5 +1,6 @@
 ﻿using ETHTPS.Data.Database;
 using ETHTPS.Data.Database.Extensions;
+using ETHTPS.Data.Database.HistoricalDataProviders;
 using ETHTPS.Data.ResponseModels;
 
 using Microsoft.AspNetCore.Mvc;
@@ -12,11 +13,10 @@ using System.Threading.Tasks;
 namespace ETHTPS.API.Controllers
 {
     [Route("API/GPS/[action]")]
-    public class GPSController : APIControllerBase
+    public class GPSController : APIControllerWithHistoricalMethodsBase
     {
-        public GPSController(ETHTPSContext context) : base(context)
+        public GPSController(ETHTPSContext context, IEnumerable<IHistoricalDataProvider> historicalDataProviders) : base(context, historicalDataProviders)
         {
-
         }
 
         [HttpGet]
@@ -84,7 +84,7 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<GPSResponseModel>> GetAsync(string provider, string interval, string network = "Mainnet", bool includeSidechains = true)
+        public Task<IEnumerable<GPSResponseModel>> GetAsync(string provider, string interval, string network = "Mainnet", bool includeSidechains = true)
         {
             var result = new List<GPSResponseModel>();
             if (provider.ToUpper() == "ALL")
@@ -98,14 +98,26 @@ namespace ETHTPS.API.Controllers
                             continue;
                         }
                     }
-                    result.Add(await Context.GetCachedResponseAsync<GPSResponseModel>("GPS", network, p.Name, interval));
+                    result.AddRange(GetHistoricalData(interval, p.Name, network).Select(x => new GPSResponseModel()
+                    {
+                        Data = new List<GPSDataPoint>()
+                        {
+                            { new GPSDataPoint(){GPS = x.AverageGps, Date = x.StartDate} }
+                        }
+                    }));
                 }
             }
             else
             {
-                result.Add(await Context.GetCachedResponseAsync<GPSResponseModel>("GPS", network, provider, interval));
+                result.AddRange(GetHistoricalData(interval, provider, network).Select(x => new GPSResponseModel()
+                {
+                    Data = new List<GPSDataPoint>()
+                        {
+                            { new GPSDataPoint(){GPS = x.AverageGps, Date = x.StartDate} }
+                        }
+                }));
             }
-            return result;
+            return Task.FromResult(result.AsEnumerable());
         }
     }
 }

@@ -9,5 +9,6 @@ namespace ETHTPS.Data.Database.HistoricalDataProviders
     public interface IHistoricalDataProvider
     {
         public IEnumerable<TimedTPSAndGasData> GetData(string provider, string network);
+        public string Interval { get; }
     }
 }

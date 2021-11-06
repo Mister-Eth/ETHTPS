@@ -1,5 +1,6 @@
 ﻿using ETHTPS.Data.Database;
 using ETHTPS.Data.Database.Extensions;
+using ETHTPS.Data.Database.HistoricalDataProviders;
 using ETHTPS.Data.ResponseModels;
 
 using Microsoft.AspNetCore.Mvc;
@@ -12,9 +13,9 @@ using System.Threading.Tasks;
 namespace ETHTPS.API.Controllers
 {
     [Route("API/TPS/[action]")]
-    public class TPSController : APIControllerBase
+    public class TPSController : APIControllerWithHistoricalMethodsBase
     {
-        public TPSController(ETHTPSContext context) : base(context)
+        public TPSController(ETHTPSContext context, IEnumerable<IHistoricalDataProvider> historicalDataProviders) : base(context, historicalDataProviders)
         {
         }
 
@@ -63,7 +64,7 @@ namespace ETHTPS.API.Controllers
 
 
         [HttpGet]
-        public async Task<IEnumerable<TPSResponseModel>> GetAsync(string provider, string interval, string network = "Mainnet", bool includeSidechains = true)
+        public Task<IEnumerable<TPSResponseModel>> GetAsync(string provider, string interval, string network = "Mainnet", bool includeSidechains = true)
         {
             var result = new List<TPSResponseModel>();
             if (provider.ToUpper() == "ALL")
@@ -77,18 +78,26 @@ namespace ETHTPS.API.Controllers
                             continue;
                         }
                     }
-                    var entry = Context.TpsandGasDataLatests.First(x => x.ProviderNavigation.Name == p.Name && x.NetworkNavigation.Name == network);
-                   /* result.Add(new TPSResponseModel() 
+                    result.AddRange(GetHistoricalData(interval, p.Name, network).Select(x => new TPSResponseModel()
                     {
-                       Data = entry.
-                    });*/
+                        Data = new List<TPSDataPoint>()
+                        {
+                            { new TPSDataPoint(){TPS = x.AverageTps, Date = x.StartDate} }
+                        }
+                    }));
                 }
             }
             else
             {
-                result.Add(await Context.GetCachedResponseAsync<TPSResponseModel>("TPS", network, provider, interval));
+                result.AddRange(GetHistoricalData(interval, provider, network).Select(x => new TPSResponseModel()
+                {
+                    Data = new List<TPSDataPoint>()
+                        {
+                            { new TPSDataPoint(){TPS = x.AverageTps, Date = x.StartDate} }
+                        }
+                }));
             }
-            return result;
+            return Task.FromResult(result.AsEnumerable());
         }
 
         private async Task<Dictionary<string, Dictionary<string, IEnumerable<TPSResponseModel>>>> BuildTPSDataAsync(string network = "Mainnet")
