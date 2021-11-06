@@ -28,7 +28,7 @@
   var instance;
 
   beforeEach(function() {
-    instance = new EthtpsApi.APIV2Api();
+    instance = new EthtpsApi.GeneralApi();
   });
 
   var getProperty = function(object, getter, property) {
@@ -47,41 +47,11 @@
       object[property] = value;
   }
 
-  describe('APIV2Api', function() {
-    describe('aPIV2HomePageModelGet', function() {
-      it('should call aPIV2HomePageModelGet successfully', function(done) {
-        //uncomment below and update the code to test aPIV2HomePageModelGet
-        //instance.aPIV2HomePageModelGet(function(error) {
-        //  if (error) throw error;
-        //expect().to.be();
-        //});
-        done();
-      });
-    });
-    describe('aPIV2InstantTPSGet', function() {
-      it('should call aPIV2InstantTPSGet successfully', function(done) {
-        //uncomment below and update the code to test aPIV2InstantTPSGet
-        //instance.aPIV2InstantTPSGet(function(error) {
-        //  if (error) throw error;
-        //expect().to.be();
-        //});
-        done();
-      });
-    });
+  describe('GeneralApi', function() {
     describe('aPIV2IntervalsGet', function() {
       it('should call aPIV2IntervalsGet successfully', function(done) {
         //uncomment below and update the code to test aPIV2IntervalsGet
         //instance.aPIV2IntervalsGet(function(error) {
-        //  if (error) throw error;
-        //expect().to.be();
-        //});
-        done();
-      });
-    });
-    describe('aPIV2MaxTPSGet', function() {
-      it('should call aPIV2MaxTPSGet successfully', function(done) {
-        //uncomment below and update the code to test aPIV2MaxTPSGet
-        //instance.aPIV2MaxTPSGet(function(error) {
         //  if (error) throw error;
         //expect().to.be();
         //});
@@ -98,40 +68,10 @@
         done();
       });
     });
-    describe('aPIV2ProviderTypesGet', function() {
-      it('should call aPIV2ProviderTypesGet successfully', function(done) {
-        //uncomment below and update the code to test aPIV2ProviderTypesGet
-        //instance.aPIV2ProviderTypesGet(function(error) {
-        //  if (error) throw error;
-        //expect().to.be();
-        //});
-        done();
-      });
-    });
     describe('aPIV2ProvidersGet', function() {
       it('should call aPIV2ProvidersGet successfully', function(done) {
         //uncomment below and update the code to test aPIV2ProvidersGet
         //instance.aPIV2ProvidersGet(function(error) {
-        //  if (error) throw error;
-        //expect().to.be();
-        //});
-        done();
-      });
-    });
-    describe('aPIV2RecalculateMaxTPSGet', function() {
-      it('should call aPIV2RecalculateMaxTPSGet successfully', function(done) {
-        //uncomment below and update the code to test aPIV2RecalculateMaxTPSGet
-        //instance.aPIV2RecalculateMaxTPSGet(function(error) {
-        //  if (error) throw error;
-        //expect().to.be();
-        //});
-        done();
-      });
-    });
-    describe('aPIV2TPSGet', function() {
-      it('should call aPIV2TPSGet successfully', function(done) {
-        //uncomment below and update the code to test aPIV2TPSGet
-        //instance.aPIV2TPSGet(function(error) {
         //  if (error) throw error;
         //expect().to.be();
         //});

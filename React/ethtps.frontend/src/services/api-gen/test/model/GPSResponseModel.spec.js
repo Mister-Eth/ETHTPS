@@ -28,7 +28,7 @@
   var instance;
 
   beforeEach(function() {
-    instance = new EthtpsApi.ProviderType();
+    instance = new EthtpsApi.GPSResponseModel();
   });
 
   var getProperty = function(object, getter, property) {
@@ -47,28 +47,22 @@
       object[property] = value;
   }
 
-  describe('ProviderType', function() {
-    it('should create an instance of ProviderType', function() {
-      // uncomment below and update the code to test ProviderType
-      //var instance = new EthtpsApi.ProviderType();
-      //expect(instance).to.be.a(EthtpsApi.ProviderType);
+  describe('GPSResponseModel', function() {
+    it('should create an instance of GPSResponseModel', function() {
+      // uncomment below and update the code to test GPSResponseModel
+      //var instance = new EthtpsApi.GPSResponseModel();
+      //expect(instance).to.be.a(EthtpsApi.GPSResponseModel);
     });
 
-    it('should have the property id (base name: "id")', function() {
-      // uncomment below and update the code to test the property id
-      //var instance = new EthtpsApi.ProviderType();
+    it('should have the property data (base name: "data")', function() {
+      // uncomment below and update the code to test the property data
+      //var instance = new EthtpsApi.GPSResponseModel();
       //expect(instance).to.be();
     });
 
-    it('should have the property name (base name: "name")', function() {
-      // uncomment below and update the code to test the property name
-      //var instance = new EthtpsApi.ProviderType();
-      //expect(instance).to.be();
-    });
-
-    it('should have the property providers (base name: "providers")', function() {
-      // uncomment below and update the code to test the property providers
-      //var instance = new EthtpsApi.ProviderType();
+    it('should have the property provider (base name: "provider")', function() {
+      // uncomment below and update the code to test the property provider
+      //var instance = new EthtpsApi.GPSResponseModel();
       //expect(instance).to.be();
     });
 

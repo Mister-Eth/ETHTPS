@@ -28,7 +28,7 @@
   var instance;
 
   beforeEach(function() {
-    instance = new EthtpsApi.Provider();
+    instance = new EthtpsApi.BlockInfo();
   });
 
   var getProperty = function(object, getter, property) {
@@ -47,34 +47,34 @@
       object[property] = value;
   }
 
-  describe('Provider', function() {
-    it('should create an instance of Provider', function() {
-      // uncomment below and update the code to test Provider
-      //var instance = new EthtpsApi.Provider();
-      //expect(instance).to.be.a(EthtpsApi.Provider);
+  describe('BlockInfo', function() {
+    it('should create an instance of BlockInfo', function() {
+      // uncomment below and update the code to test BlockInfo
+      //var instance = new EthtpsApi.BlockInfo();
+      //expect(instance).to.be.a(EthtpsApi.BlockInfo);
     });
 
-    it('should have the property id (base name: "id")', function() {
-      // uncomment below and update the code to test the property id
-      //var instance = new EthtpsApi.Provider();
+    it('should have the property blockNumber (base name: "blockNumber")', function() {
+      // uncomment below and update the code to test the property blockNumber
+      //var instance = new EthtpsApi.BlockInfo();
       //expect(instance).to.be();
     });
 
-    it('should have the property name (base name: "name")', function() {
-      // uncomment below and update the code to test the property name
-      //var instance = new EthtpsApi.Provider();
+    it('should have the property transactionCount (base name: "transactionCount")', function() {
+      // uncomment below and update the code to test the property transactionCount
+      //var instance = new EthtpsApi.BlockInfo();
       //expect(instance).to.be();
     });
 
-    it('should have the property type (base name: "type")', function() {
-      // uncomment below and update the code to test the property type
-      //var instance = new EthtpsApi.Provider();
+    it('should have the property gasUsed (base name: "gasUsed")', function() {
+      // uncomment below and update the code to test the property gasUsed
+      //var instance = new EthtpsApi.BlockInfo();
       //expect(instance).to.be();
     });
 
-    it('should have the property typeNavigation (base name: "typeNavigation")', function() {
-      // uncomment below and update the code to test the property typeNavigation
-      //var instance = new EthtpsApi.Provider();
+    it('should have the property date (base name: "date")', function() {
+      // uncomment below and update the code to test the property date
+      //var instance = new EthtpsApi.BlockInfo();
       //expect(instance).to.be();
     });
 

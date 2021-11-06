@@ -1,10 +1,10 @@
-# EthtpsApi.Network
+# EthtpsApi.GPSDataPoint
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **Number** |  | [optional] 
-**name** | **String** |  | [optional] 
+**date** | **Date** |  | [optional] 
+**gps** | **Number** |  | [optional] 
 
 

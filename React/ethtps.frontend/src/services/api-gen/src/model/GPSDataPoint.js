@@ -14,18 +14,18 @@
 import ApiClient from '../ApiClient';
 
 /**
- * The Network model module.
- * @module model/Network
+ * The GPSDataPoint model module.
+ * @module model/GPSDataPoint
  * @version 1.0
  */
-class Network {
+class GPSDataPoint {
     /**
-     * Constructs a new <code>Network</code>.
-     * @alias module:model/Network
+     * Constructs a new <code>GPSDataPoint</code>.
+     * @alias module:model/GPSDataPoint
      */
     constructor() { 
         
-        Network.initialize(this);
+        GPSDataPoint.initialize(this);
     }
 
     /**
@@ -37,21 +37,21 @@ class Network {
     }
 
     /**
-     * Constructs a <code>Network</code> from a plain JavaScript object, optionally creating a new instance.
+     * Constructs a <code>GPSDataPoint</code> from a plain JavaScript object, optionally creating a new instance.
      * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
      * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @param {module:model/Network} obj Optional instance to populate.
-     * @return {module:model/Network} The populated <code>Network</code> instance.
+     * @param {module:model/GPSDataPoint} obj Optional instance to populate.
+     * @return {module:model/GPSDataPoint} The populated <code>GPSDataPoint</code> instance.
      */
     static constructFromObject(data, obj) {
         if (data) {
-            obj = obj || new Network();
+            obj = obj || new GPSDataPoint();
 
-            if (data.hasOwnProperty('id')) {
-                obj['id'] = ApiClient.convertToType(data['id'], 'Number');
+            if (data.hasOwnProperty('date')) {
+                obj['date'] = ApiClient.convertToType(data['date'], 'Date');
             }
-            if (data.hasOwnProperty('name')) {
-                obj['name'] = ApiClient.convertToType(data['name'], 'String');
+            if (data.hasOwnProperty('gps')) {
+                obj['gps'] = ApiClient.convertToType(data['gps'], 'Number');
             }
         }
         return obj;
@@ -61,19 +61,19 @@ class Network {
 }
 
 /**
- * @member {Number} id
+ * @member {Date} date
  */
-Network.prototype['id'] = undefined;
+GPSDataPoint.prototype['date'] = undefined;
 
 /**
- * @member {String} name
+ * @member {Number} gps
  */
-Network.prototype['name'] = undefined;
+GPSDataPoint.prototype['gps'] = undefined;
 
 
 
 
 
 
-export default Network;
+export default GPSDataPoint;
 

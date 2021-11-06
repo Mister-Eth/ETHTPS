@@ -1,0 +1,128 @@
+# EthtpsApi.GeneralApi
+
+All URIs are relative to *http://localhost*
+
+Method | HTTP request | Description
+------------- | ------------- | -------------
+[**aPIV2IntervalsGet**](GeneralApi.md#aPIV2IntervalsGet) | **GET** /API/v2/Intervals | 
+[**aPIV2NetworksGet**](GeneralApi.md#aPIV2NetworksGet) | **GET** /API/v2/Networks | 
+[**aPIV2ProvidersGet**](GeneralApi.md#aPIV2ProvidersGet) | **GET** /API/v2/Providers | 
+
+
+
+## aPIV2IntervalsGet
+
+> [String] aPIV2IntervalsGet()
+
+
+
+### Example
+
+```javascript
+import EthtpsApi from 'ethtps_api';
+
+let apiInstance = new EthtpsApi.GeneralApi();
+apiInstance.aPIV2IntervalsGet((error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+});
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+**[String]**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: text/plain, application/json, text/json
+
+
+## aPIV2NetworksGet
+
+> [String] aPIV2NetworksGet()
+
+
+
+### Example
+
+```javascript
+import EthtpsApi from 'ethtps_api';
+
+let apiInstance = new EthtpsApi.GeneralApi();
+apiInstance.aPIV2NetworksGet((error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+});
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+**[String]**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: text/plain, application/json, text/json
+
+
+## aPIV2ProvidersGet
+
+> [ProviderResponseModel] aPIV2ProvidersGet()
+
+
+
+### Example
+
+```javascript
+import EthtpsApi from 'ethtps_api';
+
+let apiInstance = new EthtpsApi.GeneralApi();
+apiInstance.aPIV2ProvidersGet((error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+});
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**[ProviderResponseModel]**](ProviderResponseModel.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: text/plain, application/json, text/json
+

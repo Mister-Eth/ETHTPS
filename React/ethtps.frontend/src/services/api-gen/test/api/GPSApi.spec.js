@@ -28,7 +28,7 @@
   var instance;
 
   beforeEach(function() {
-    instance = new EthtpsApi.APIApi();
+    instance = new EthtpsApi.GPSApi();
   });
 
   var getProperty = function(object, getter, property) {
@@ -47,51 +47,31 @@
       object[property] = value;
   }
 
-  describe('APIApi', function() {
-    describe('aPIGetTPSGet', function() {
-      it('should call aPIGetTPSGet successfully', function(done) {
-        //uncomment below and update the code to test aPIGetTPSGet
-        //instance.aPIGetTPSGet(function(error) {
+  describe('GPSApi', function() {
+    describe('aPIGPSGetGet', function() {
+      it('should call aPIGPSGetGet successfully', function(done) {
+        //uncomment below and update the code to test aPIGPSGetGet
+        //instance.aPIGPSGetGet(function(error) {
         //  if (error) throw error;
         //expect().to.be();
         //});
         done();
       });
     });
-    describe('aPIIntervalsGet', function() {
-      it('should call aPIIntervalsGet successfully', function(done) {
-        //uncomment below and update the code to test aPIIntervalsGet
-        //instance.aPIIntervalsGet(function(error) {
+    describe('aPIGPSInstantGet', function() {
+      it('should call aPIGPSInstantGet successfully', function(done) {
+        //uncomment below and update the code to test aPIGPSInstantGet
+        //instance.aPIGPSInstantGet(function(error) {
         //  if (error) throw error;
         //expect().to.be();
         //});
         done();
       });
     });
-    describe('aPINetworksGet', function() {
-      it('should call aPINetworksGet successfully', function(done) {
-        //uncomment below and update the code to test aPINetworksGet
-        //instance.aPINetworksGet(function(error) {
-        //  if (error) throw error;
-        //expect().to.be();
-        //});
-        done();
-      });
-    });
-    describe('aPIProviderTypesGet', function() {
-      it('should call aPIProviderTypesGet successfully', function(done) {
-        //uncomment below and update the code to test aPIProviderTypesGet
-        //instance.aPIProviderTypesGet(function(error) {
-        //  if (error) throw error;
-        //expect().to.be();
-        //});
-        done();
-      });
-    });
-    describe('aPIProvidersGet', function() {
-      it('should call aPIProvidersGet successfully', function(done) {
-        //uncomment below and update the code to test aPIProvidersGet
-        //instance.aPIProvidersGet(function(error) {
+    describe('aPIGPSMaxGet', function() {
+      it('should call aPIGPSMaxGet successfully', function(done) {
+        //uncomment below and update the code to test aPIGPSMaxGet
+        //instance.aPIGPSMaxGet(function(error) {
         //  if (error) throw error;
         //expect().to.be();
         //});

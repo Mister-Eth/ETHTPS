@@ -28,7 +28,7 @@
   var instance;
 
   beforeEach(function() {
-    instance = new EthtpsApi.HomePageViewModel();
+    instance = new EthtpsApi.TPSApi();
   });
 
   var getProperty = function(object, getter, property) {
@@ -47,37 +47,37 @@
       object[property] = value;
   }
 
-  describe('HomePageViewModel', function() {
-    it('should create an instance of HomePageViewModel', function() {
-      // uncomment below and update the code to test HomePageViewModel
-      //var instance = new EthtpsApi.HomePageViewModel();
-      //expect(instance).to.be.a(EthtpsApi.HomePageViewModel);
+  describe('TPSApi', function() {
+    describe('aPITPSGetGet', function() {
+      it('should call aPITPSGetGet successfully', function(done) {
+        //uncomment below and update the code to test aPITPSGetGet
+        //instance.aPITPSGetGet(function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
     });
-
-    it('should have the property instantTPS (base name: "instantTPS")', function() {
-      // uncomment below and update the code to test the property instantTPS
-      //var instance = new EthtpsApi.HomePageViewModel();
-      //expect(instance).to.be();
+    describe('aPITPSInstantGet', function() {
+      it('should call aPITPSInstantGet successfully', function(done) {
+        //uncomment below and update the code to test aPITPSInstantGet
+        //instance.aPITPSInstantGet(function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
     });
-
-    it('should have the property providerData (base name: "providerData")', function() {
-      // uncomment below and update the code to test the property providerData
-      //var instance = new EthtpsApi.HomePageViewModel();
-      //expect(instance).to.be();
+    describe('aPITPSMaxGet', function() {
+      it('should call aPITPSMaxGet successfully', function(done) {
+        //uncomment below and update the code to test aPITPSMaxGet
+        //instance.aPITPSMaxGet(function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
     });
-
-    it('should have the property colorDictionary (base name: "colorDictionary")', function() {
-      // uncomment below and update the code to test the property colorDictionary
-      //var instance = new EthtpsApi.HomePageViewModel();
-      //expect(instance).to.be();
-    });
-
-    it('should have the property tpsData (base name: "tpsData")', function() {
-      // uncomment below and update the code to test the property tpsData
-      //var instance = new EthtpsApi.HomePageViewModel();
-      //expect(instance).to.be();
-    });
-
   });
 
 }));

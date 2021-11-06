@@ -2,7 +2,7 @@ import './App.css';
 import githubIcon from './assets/600px-Octicons-mark-github.svg - inv.png';
 import twitterIcon from './assets/1486053611-twitter_79195.png';
 import discordIcon from './assets/discord-mascot.png';
-import { globalApi } from './services/common';
+import { globalGeneralApi, globalGPSApi, globalTPSApi } from './services/common';
 import React, { useState, useEffect } from "react";
 import InstantTPSStat from './components/InstantTPSStat';
 import TypeTPSStat from './components/TypeTPSStat';
@@ -43,12 +43,16 @@ class App extends React.Component {
   */
 
 componentDidMount(){
+  globalGeneralApi.aPIV2ProvidersGet((err, data, res) => {
+
+  });
+  /*
   globalApi.aPIV2HomePageModelGet(this.state.network, (err,data,res) => {
      this.setState({homePageModel: data});
      this.setState({modifiedInstantTPS: data.instantTPS});
   });
-
   setInterval(this.updateInstantTPS.bind(this), 5000);
+*/
 }
 
 handleInputChange(event){
@@ -71,7 +75,7 @@ getFilteredInstantTPSData(state){
     return state.homePageModel.instantTPSData;
   }
 }
-
+/*
 updateInstantTPS(){
   globalApi.aPIV2InstantTPSGet(true, (err, data, res)=>{
     let homePageModel = this.state.homePageModel;
@@ -79,7 +83,7 @@ updateInstantTPS(){
     this.setState({homePageModel: homePageModel});
   });
 }
-
+*/
 getProviderData(state){
   return (state.excludeSidechains)?state.homePageModel.providerData.filter(x=>x.type !== "Sidechain"):state.homePageModel.providerData
 }

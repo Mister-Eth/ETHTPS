@@ -28,7 +28,7 @@
   var instance;
 
   beforeEach(function() {
-    instance = new EthtpsApi.Network();
+    instance = new EthtpsApi.TestApi();
   });
 
   var getProperty = function(object, getter, property) {
@@ -47,25 +47,17 @@
       object[property] = value;
   }
 
-  describe('Network', function() {
-    it('should create an instance of Network', function() {
-      // uncomment below and update the code to test Network
-      //var instance = new EthtpsApi.Network();
-      //expect(instance).to.be.a(EthtpsApi.Network);
+  describe('TestApi', function() {
+    describe('aPITestGetBlockInfoGet', function() {
+      it('should call aPITestGetBlockInfoGet successfully', function(done) {
+        //uncomment below and update the code to test aPITestGetBlockInfoGet
+        //instance.aPITestGetBlockInfoGet(function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
     });
-
-    it('should have the property id (base name: "id")', function() {
-      // uncomment below and update the code to test the property id
-      //var instance = new EthtpsApi.Network();
-      //expect(instance).to.be();
-    });
-
-    it('should have the property name (base name: "name")', function() {
-      // uncomment below and update the code to test the property name
-      //var instance = new EthtpsApi.Network();
-      //expect(instance).to.be();
-    });
-
   });
 
 }));

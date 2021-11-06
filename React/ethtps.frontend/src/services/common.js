@@ -1,5 +1,8 @@
-import APIV2Api from './api-gen/src/api/APIV2Api';
+import { GeneralApi, GPSApi, TPSApi } from './api-gen/src/index';
 import ApiClient from './api-gen/src/ApiClient';
 
-const globalApi = new APIV2Api(new ApiClient('https://api.ethtps.info'));
-export {globalApi};
+const client = new ApiClient('http://localhost:10202');
+const globalGeneralApi = new GeneralApi(client);
+const globalGPSApi = new GPSApi(client);
+const globalTPSApi = new TPSApi(client);
+export { globalGeneralApi, globalGPSApi, globalTPSApi };

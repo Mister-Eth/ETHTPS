@@ -13,16 +13,16 @@
 
 
 import ApiClient from './ApiClient';
-import HomePageViewModel from './model/HomePageViewModel';
-import Network from './model/Network';
-import Provider from './model/Provider';
-import ProviderInfo from './model/ProviderInfo';
+import BlockInfo from './model/BlockInfo';
+import GPSDataPoint from './model/GPSDataPoint';
+import GPSResponseModel from './model/GPSResponseModel';
 import ProviderResponseModel from './model/ProviderResponseModel';
-import ProviderType from './model/ProviderType';
 import TPSDataPoint from './model/TPSDataPoint';
 import TPSResponseModel from './model/TPSResponseModel';
-import APIApi from './api/APIApi';
-import APIV2Api from './api/APIV2Api';
+import GPSApi from './api/GPSApi';
+import GeneralApi from './api/GeneralApi';
+import TPSApi from './api/TPSApi';
+import TestApi from './api/TestApi';
 
 
 /**
@@ -64,40 +64,28 @@ export {
     ApiClient,
 
     /**
-     * The HomePageViewModel model constructor.
-     * @property {module:model/HomePageViewModel}
+     * The BlockInfo model constructor.
+     * @property {module:model/BlockInfo}
      */
-    HomePageViewModel,
+    BlockInfo,
 
     /**
-     * The Network model constructor.
-     * @property {module:model/Network}
+     * The GPSDataPoint model constructor.
+     * @property {module:model/GPSDataPoint}
      */
-    Network,
+    GPSDataPoint,
 
     /**
-     * The Provider model constructor.
-     * @property {module:model/Provider}
+     * The GPSResponseModel model constructor.
+     * @property {module:model/GPSResponseModel}
      */
-    Provider,
-
-    /**
-     * The ProviderInfo model constructor.
-     * @property {module:model/ProviderInfo}
-     */
-    ProviderInfo,
+    GPSResponseModel,
 
     /**
      * The ProviderResponseModel model constructor.
      * @property {module:model/ProviderResponseModel}
      */
     ProviderResponseModel,
-
-    /**
-     * The ProviderType model constructor.
-     * @property {module:model/ProviderType}
-     */
-    ProviderType,
 
     /**
      * The TPSDataPoint model constructor.
@@ -112,14 +100,26 @@ export {
     TPSResponseModel,
 
     /**
-    * The APIApi service constructor.
-    * @property {module:api/APIApi}
+    * The GPSApi service constructor.
+    * @property {module:api/GPSApi}
     */
-    APIApi,
+    GPSApi,
 
     /**
-    * The APIV2Api service constructor.
-    * @property {module:api/APIV2Api}
+    * The GeneralApi service constructor.
+    * @property {module:api/GeneralApi}
     */
-    APIV2Api
+    GeneralApi,
+
+    /**
+    * The TPSApi service constructor.
+    * @property {module:api/TPSApi}
+    */
+    TPSApi,
+
+    /**
+    * The TestApi service constructor.
+    * @property {module:api/TestApi}
+    */
+    TestApi
 };

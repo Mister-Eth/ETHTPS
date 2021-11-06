@@ -101,10 +101,12 @@ Please follow the [installation](#installation) instruction and execute the foll
 var EthtpsApi = require('ethtps_api');
 
 
-var api = new EthtpsApi.APIApi()
+var api = new EthtpsApi.GPSApi()
 var opts = {
   'provider': "provider_example", // {String} 
-  'interval': "interval_example" // {String} 
+  'interval': "interval_example", // {String} 
+  'network': "'Mainnet'", // {String} 
+  'includeSidechains': true // {Boolean} 
 };
 var callback = function(error, data, response) {
   if (error) {
@@ -113,7 +115,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.aPIGetTPSGet(opts, callback);
+api.aPIGPSGetGet(opts, callback);
 
 ```
 
@@ -123,30 +125,24 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*EthtpsApi.APIApi* | [**aPIGetTPSGet**](docs/APIApi.md#aPIGetTPSGet) | **GET** /API/GetTPS | 
-*EthtpsApi.APIApi* | [**aPIIntervalsGet**](docs/APIApi.md#aPIIntervalsGet) | **GET** /API/Intervals | 
-*EthtpsApi.APIApi* | [**aPINetworksGet**](docs/APIApi.md#aPINetworksGet) | **GET** /API/Networks | 
-*EthtpsApi.APIApi* | [**aPIProviderTypesGet**](docs/APIApi.md#aPIProviderTypesGet) | **GET** /API/ProviderTypes | 
-*EthtpsApi.APIApi* | [**aPIProvidersGet**](docs/APIApi.md#aPIProvidersGet) | **GET** /API/Providers | 
-*EthtpsApi.APIV2Api* | [**aPIV2HomePageModelGet**](docs/APIV2Api.md#aPIV2HomePageModelGet) | **GET** /API/v2/HomePageModel | 
-*EthtpsApi.APIV2Api* | [**aPIV2InstantTPSGet**](docs/APIV2Api.md#aPIV2InstantTPSGet) | **GET** /API/v2/InstantTPS | 
-*EthtpsApi.APIV2Api* | [**aPIV2IntervalsGet**](docs/APIV2Api.md#aPIV2IntervalsGet) | **GET** /API/v2/Intervals | 
-*EthtpsApi.APIV2Api* | [**aPIV2MaxTPSGet**](docs/APIV2Api.md#aPIV2MaxTPSGet) | **GET** /API/v2/MaxTPS | 
-*EthtpsApi.APIV2Api* | [**aPIV2NetworksGet**](docs/APIV2Api.md#aPIV2NetworksGet) | **GET** /API/v2/Networks | 
-*EthtpsApi.APIV2Api* | [**aPIV2ProviderTypesGet**](docs/APIV2Api.md#aPIV2ProviderTypesGet) | **GET** /API/v2/ProviderTypes | 
-*EthtpsApi.APIV2Api* | [**aPIV2ProvidersGet**](docs/APIV2Api.md#aPIV2ProvidersGet) | **GET** /API/v2/Providers | 
-*EthtpsApi.APIV2Api* | [**aPIV2RecalculateMaxTPSGet**](docs/APIV2Api.md#aPIV2RecalculateMaxTPSGet) | **GET** /API/v2/RecalculateMaxTPS | 
-*EthtpsApi.APIV2Api* | [**aPIV2TPSGet**](docs/APIV2Api.md#aPIV2TPSGet) | **GET** /API/v2/TPS | 
+*EthtpsApi.GPSApi* | [**aPIGPSGetGet**](docs/GPSApi.md#aPIGPSGetGet) | **GET** /API/GPS/Get | 
+*EthtpsApi.GPSApi* | [**aPIGPSInstantGet**](docs/GPSApi.md#aPIGPSInstantGet) | **GET** /API/GPS/Instant | 
+*EthtpsApi.GPSApi* | [**aPIGPSMaxGet**](docs/GPSApi.md#aPIGPSMaxGet) | **GET** /API/GPS/Max | 
+*EthtpsApi.GeneralApi* | [**aPIV2IntervalsGet**](docs/GeneralApi.md#aPIV2IntervalsGet) | **GET** /API/v2/Intervals | 
+*EthtpsApi.GeneralApi* | [**aPIV2NetworksGet**](docs/GeneralApi.md#aPIV2NetworksGet) | **GET** /API/v2/Networks | 
+*EthtpsApi.GeneralApi* | [**aPIV2ProvidersGet**](docs/GeneralApi.md#aPIV2ProvidersGet) | **GET** /API/v2/Providers | 
+*EthtpsApi.TPSApi* | [**aPITPSGetGet**](docs/TPSApi.md#aPITPSGetGet) | **GET** /API/TPS/Get | 
+*EthtpsApi.TPSApi* | [**aPITPSInstantGet**](docs/TPSApi.md#aPITPSInstantGet) | **GET** /API/TPS/Instant | 
+*EthtpsApi.TPSApi* | [**aPITPSMaxGet**](docs/TPSApi.md#aPITPSMaxGet) | **GET** /API/TPS/Max | 
+*EthtpsApi.TestApi* | [**aPITestGetBlockInfoGet**](docs/TestApi.md#aPITestGetBlockInfoGet) | **GET** /API/Test/GetBlockInfo | 
 
 
 ## Documentation for Models
 
- - [EthtpsApi.HomePageViewModel](docs/HomePageViewModel.md)
- - [EthtpsApi.Network](docs/Network.md)
- - [EthtpsApi.Provider](docs/Provider.md)
- - [EthtpsApi.ProviderInfo](docs/ProviderInfo.md)
+ - [EthtpsApi.BlockInfo](docs/BlockInfo.md)
+ - [EthtpsApi.GPSDataPoint](docs/GPSDataPoint.md)
+ - [EthtpsApi.GPSResponseModel](docs/GPSResponseModel.md)
  - [EthtpsApi.ProviderResponseModel](docs/ProviderResponseModel.md)
- - [EthtpsApi.ProviderType](docs/ProviderType.md)
  - [EthtpsApi.TPSDataPoint](docs/TPSDataPoint.md)
  - [EthtpsApi.TPSResponseModel](docs/TPSResponseModel.md)
 

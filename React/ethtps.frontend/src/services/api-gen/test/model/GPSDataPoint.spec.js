@@ -28,7 +28,7 @@
   var instance;
 
   beforeEach(function() {
-    instance = new EthtpsApi.ProviderInfo();
+    instance = new EthtpsApi.GPSDataPoint();
   });
 
   var getProperty = function(object, getter, property) {
@@ -47,28 +47,22 @@
       object[property] = value;
   }
 
-  describe('ProviderInfo', function() {
-    it('should create an instance of ProviderInfo', function() {
-      // uncomment below and update the code to test ProviderInfo
-      //var instance = new EthtpsApi.ProviderInfo();
-      //expect(instance).to.be.a(EthtpsApi.ProviderInfo);
+  describe('GPSDataPoint', function() {
+    it('should create an instance of GPSDataPoint', function() {
+      // uncomment below and update the code to test GPSDataPoint
+      //var instance = new EthtpsApi.GPSDataPoint();
+      //expect(instance).to.be.a(EthtpsApi.GPSDataPoint);
     });
 
-    it('should have the property maxTPS (base name: "maxTPS")', function() {
-      // uncomment below and update the code to test the property maxTPS
-      //var instance = new EthtpsApi.ProviderInfo();
+    it('should have the property date (base name: "date")', function() {
+      // uncomment below and update the code to test the property date
+      //var instance = new EthtpsApi.GPSDataPoint();
       //expect(instance).to.be();
     });
 
-    it('should have the property name (base name: "name")', function() {
-      // uncomment below and update the code to test the property name
-      //var instance = new EthtpsApi.ProviderInfo();
-      //expect(instance).to.be();
-    });
-
-    it('should have the property type (base name: "type")', function() {
-      // uncomment below and update the code to test the property type
-      //var instance = new EthtpsApi.ProviderInfo();
+    it('should have the property gps (base name: "gps")', function() {
+      // uncomment below and update the code to test the property gps
+      //var instance = new EthtpsApi.GPSDataPoint();
       //expect(instance).to.be();
     });
 
