@@ -27,9 +27,11 @@ namespace ETHTPS.Services.BlockchainServices.Scan
         private readonly string _txCountSelector;
         private readonly string _gasUsedSelector;
         private readonly string _dateSelector;
+        private readonly string _providerName;
 
         protected ScanBlockInfoProviderBase(IConfiguration configuration, string providerName)
         {
+            _providerName = providerName;
             var config = configuration.GetSection("BlockInfoProviders").GetSection(providerName);
             _httpClient = new HttpClient()
             {
@@ -54,12 +56,16 @@ namespace ETHTPS.Services.BlockchainServices.Scan
 
             HtmlWeb web = new HtmlWeb();
             HtmlDocument doc = web.Load(_blockInfoEndpointBase + blockNumber);
-
+            if (_providerName == "Optimistic Ethereum") {; }
             var txCountNode = doc.DocumentNode.QuerySelectorAll(_txCountSelector);
             var txCount = new string(txCountNode.First().InnerText.RemoveAllNonNumericCharacters());
 
-            var gasUsedNode = doc.DocumentNode.QuerySelectorAll(_gasUsedSelector);
-            var gasUsed = new string(gasUsedNode.First().InnerText.UntilParanthesis().RemoveAllNonNumericCharacters());
+            string gasUsed = "0";
+            if (!string.IsNullOrWhiteSpace(_gasUsedSelector))
+            {
+                var gasUsedNode = doc.DocumentNode.QuerySelectorAll(_gasUsedSelector);
+                gasUsed = new string(gasUsedNode.First().InnerText.UntilParanthesis().RemoveAllNonNumericCharacters());
+            }
 
             var dateNode = doc.DocumentNode.QuerySelectorAll(_dateSelector);
             var dateString = dateNode.First().InnerText.BetweenParantheses().Replace(" +UTC", "");
@@ -93,6 +99,6 @@ namespace ETHTPS.Services.BlockchainServices.Scan
             return await GetBlockInfoAsync(blockNumber);
         }
 
-        public async Task<BlockInfo> GetLatestBlockInfoAsync() => await GetBlockInfoAsync(DateTime.Now.ToUniversalTime());
+        public virtual async Task<BlockInfo> GetLatestBlockInfoAsync() => await GetBlockInfoAsync(DateTime.Now.ToUniversalTime());
     }
 }

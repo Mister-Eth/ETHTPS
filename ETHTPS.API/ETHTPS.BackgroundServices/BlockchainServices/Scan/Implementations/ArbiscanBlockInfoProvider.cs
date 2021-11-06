@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace ETHTPS.Services.BlockchainServices.Scan.Implementations
 {
-    [Provider("Arbitrum One")]
-    public class ArbiscanBlockInfoProvider : ScanBlockInfoProviderBase
+    [Provider("Polygon")]
+    public class PolygonScanBlockInfoProvider : ScanBlockInfoProviderBase
     {
-        public ArbiscanBlockInfoProvider(IConfiguration configuration) : base(configuration, "Arbiscan")
+        public PolygonScanBlockInfoProvider(IConfiguration configuration) : base(configuration, "Polygonscan")
         {
         }
     }
