@@ -66,10 +66,19 @@ namespace ETHTPS.API.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IDictionary<string, IEnumerable<GPSDataPoint>>> InstantAsync(bool includeSidechains = true)
         {
-            var result = await Context.GetCachedResponseAsync<IEnumerable<GPSResponseModel>>("All", "GPS", "Instant");
-            if (!includeSidechains)
+            var result = new List<GPSResponseModel>();
+            foreach (var p in Context.Providers.ToList())
             {
-                result = result.Where(x => !IsSidechain(x.Provider));
+                if (Context.TpsandGasDataLatests.Any(x => x.Provider == p.Id))
+                {
+                    var entry = Context.TpsandGasDataLatests.First(x => x.Provider == p.Id);
+                    result.Add(new GPSResponseModel()
+                    {
+                        Provider = p.Name,
+                        Data = new List<GPSDataPoint>() {{ new GPSDataPoint() { GPS = entry.Gps} }
+                    }
+                    });
+                }
             }
             return result.ToDictionary(x => x.Provider, x => x.Data.AsEnumerable());
         }

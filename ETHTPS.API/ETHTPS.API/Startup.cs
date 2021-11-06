@@ -61,6 +61,7 @@ namespace ETHTPS.API
             services.AddHangfire(x => x.UseSqlServerStorage(defaultConnectionString));
             services.AddHangfireServer();
             AddTPSDataUpdaters(services);
+            AddCacheUpdaters(services);
         }
         private void AddTPSDataUpdaters(IServiceCollection services)
         {
@@ -73,6 +74,14 @@ namespace ETHTPS.API
                 services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<XDAIBlockInfoProvider>, XDAIBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
                 services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<ZKSwapBlockInfoProvider>, ZKSwapBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
                 services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<ZKSsyncBlockInfoProvider>, ZKSsyncBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
+            }
+        }
+
+        private void AddCacheUpdaters(IServiceCollection services)
+        {
+            if (ConfigurationQueues.Contains(CACHEUPDATERQUEUE))
+            {
+
             }
         }
 

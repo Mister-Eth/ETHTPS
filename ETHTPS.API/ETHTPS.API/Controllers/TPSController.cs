@@ -77,7 +77,11 @@ namespace ETHTPS.API.Controllers
                             continue;
                         }
                     }
-                    result.Add(await Context.GetCachedResponseAsync<TPSResponseModel>("TPS", network, p.Name, interval));
+                    var entry = Context.TpsandGasDataLatests.First(x => x.ProviderNavigation.Name == p.Name && x.NetworkNavigation.Name == network);
+                   /* result.Add(new TPSResponseModel() 
+                    {
+                       Data = entry.
+                    });*/
                 }
             }
             else
@@ -107,10 +111,21 @@ namespace ETHTPS.API.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IDictionary<string, IEnumerable<TPSDataPoint>>> InstantAsync(bool includeSidechains = true)
         {
-            var result = await Context.GetCachedResponseAsync<IEnumerable<TPSResponseModel>>("All", "TPS", "Instant");
-            if (!includeSidechains)
+            var result = new List<TPSResponseModel>();
+            foreach (var p in Context.Providers.ToList())
             {
-                result = result.Where(x => !IsSidechain(x.Provider));
+                if (Context.TpsandGasDataLatests.Any(x => x.Provider == p.Id))
+                {
+                    var entry = Context.TpsandGasDataLatests.First(x => x.Provider == p.Id);
+                    result.Add(new TPSResponseModel()
+                    {
+                        Provider = p.Name,
+                        Data = new List<TPSDataPoint>()
+                    {
+                        { new TPSDataPoint() { TPS = entry.Tps} }
+                    }
+                    });
+                }
             }
             return result.ToDictionary(x => x.Provider, x => x.Data.AsEnumerable());
         }

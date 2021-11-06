@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-
-#nullable disable
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ETHTPS.Data.Database
 {
-    public partial class TpsandGasDataDay
+    public abstract class TimedTPSAndGasData : TPSAndGasDataBase
     {
-        public int Id { get; set; }
-        public int Network { get; set; }
-        public int Provider { get; set; }
         public DateTime StartDate { get; set; }
         public double AverageTps { get; set; }
         public double AverageGps { get; set; }
@@ -18,4 +16,9 @@ namespace ETHTPS.Data.Database
         public virtual Network NetworkNavigation { get; set; }
         public virtual Provider ProviderNavigation { get; set; }
     }
+
+    public class TpsandGasDataDay : TimedTPSAndGasData { }
+    public class TpsandGasDataHour : TimedTPSAndGasData { }
+    public class TpsandGasDataWeek : TimedTPSAndGasData { }
+    public class TpsandGasDataMonth : TimedTPSAndGasData { }
 }

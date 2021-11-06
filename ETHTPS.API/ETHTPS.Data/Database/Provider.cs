@@ -15,6 +15,7 @@ namespace ETHTPS.Data.Database
             TpsandGasDataMaxes = new HashSet<TpsandGasDataMax>();
             TpsandGasDataMonths = new HashSet<TpsandGasDataMonth>();
             TpsandGasDataWeeks = new HashSet<TpsandGasDataWeek>();
+            TpsandGasDataLatests = new HashSet<TpsandGasDataLatest>();
         }
 
         public int Id { get; set; }
@@ -28,5 +29,6 @@ namespace ETHTPS.Data.Database
         public virtual ICollection<TpsandGasDataMax> TpsandGasDataMaxes { get; set; }
         public virtual ICollection<TpsandGasDataMonth> TpsandGasDataMonths { get; set; }
         public virtual ICollection<TpsandGasDataWeek> TpsandGasDataWeeks { get; set; }
+        public virtual ICollection<TpsandGasDataLatest> TpsandGasDataLatests { get; set; }
     }
 }

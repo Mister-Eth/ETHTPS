@@ -34,6 +34,7 @@ namespace ETHTPS.Services.BlockchainServices
             {
                 var delta = await CalculateTPSGPSAsync();
                 UpdateMaxEntry(delta);
+                UpdateLatestEntries(delta);
 
                 AddOrUpdateHourTPSEntry(delta);
                 AddOrUpdateDayTPSEntry(delta);
@@ -47,6 +48,28 @@ namespace ETHTPS.Services.BlockchainServices
             {
                 _logger.LogError("TPSDataUpdaterBase", e);
                 throw;
+            }
+        }
+
+        private void UpdateLatestEntries(TPSGPSInfo entry)
+        {
+            Func<TpsandGasDataLatest, bool> selector = x => x.NetworkNavigation.Name == "Mainnet" && x.ProviderNavigation.Name == _provider;
+            if (!_context.TpsandGasDataLatests.Any(selector))
+            {
+                _context.TpsandGasDataLatests.Add(new TpsandGasDataLatest()
+                {
+                    Gps = entry.GPS,
+                    Tps = entry.TPS,
+                    Network = 1,
+                    Provider = _providerID
+                });
+            }
+            else
+            {
+                var x = _context.TpsandGasDataLatests.First(selector);
+                x.Tps = entry.TPS;
+                x.Gps = entry.GPS;
+                _context.TpsandGasDataLatests.Update(x);
             }
         }
 
