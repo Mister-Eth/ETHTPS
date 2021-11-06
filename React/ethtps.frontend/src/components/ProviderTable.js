@@ -20,6 +20,9 @@ class ProviderTable extends React.Component {
     }
 
     render(){
+      if (this.state.colorDictionary === undefined){
+        return <></>
+      }
         return <>
         <div>
         <TableContainer component={Paper} style={{overflowX:'auto'}}>
@@ -42,8 +45,9 @@ class ProviderTable extends React.Component {
                 </div>
             </TableCell>
             <TableCell width={10} align="left">
-                <div className={'l1 b'}>
+                <div className={'l1 b tooltip'}>
                     Max TPS
+                    <span className={'tooltiptext'}>This number represents the maximum recorded TPS</span>
                 </div>
             </TableCell>
             <TableCell width={150} align="left">

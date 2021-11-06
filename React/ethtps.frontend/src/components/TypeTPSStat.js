@@ -52,6 +52,9 @@ class TypeTPSStat extends Component{
             return 20;
         
         let t = state.providerData.filter(x=>state.data[x.name] !== undefined).map(x=>state.data[x.name][0].tps);
+        if (t.length === 0){
+            return 0;
+        }
         return t.reduce((a, b) => a + b);
     }
 

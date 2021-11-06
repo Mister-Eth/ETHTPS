@@ -13,9 +13,8 @@
 
 
 import ApiClient from "../ApiClient";
-import TPSResponseModel from '../model/TPSResponseModel';
 import TPSDataPoint from '../model/TPSDataPoint';
-
+import { TPSResponseModel } from "..";
 /**
 * TPS service.
 * @module api/TPSApi
@@ -39,7 +38,7 @@ export default class TPSApi {
      * Callback function to receive the result of the aPITPSGetGet operation.
      * @callback module:api/TPSApi~aPITPSGetGetCallback
      * @param {String} error Error message, if any.
-     * @param {Array.<module:model/TPSResponseModel>} data The data returned by the service call.
+     * @param {Object.<String, {String: [TPSResponseModel]}>} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -50,7 +49,7 @@ export default class TPSApi {
      * @param {String} opts.network  (default to 'Mainnet')
      * @param {Boolean} opts.includeSidechains  (default to true)
      * @param {module:api/TPSApi~aPITPSGetGetCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link Array.<module:model/TPSResponseModel>}
+     * data is of type: {@link Object.<String, {String: [TPSResponseModel]}>}
      */
     aPITPSGetGet(opts, callback) {
       opts = opts || {};
@@ -72,7 +71,7 @@ export default class TPSApi {
       let authNames = [];
       let contentTypes = [];
       let accepts = ['text/plain', 'application/json', 'text/json'];
-      let returnType = [TPSResponseModel];
+      let returnType = {'String': [TPSResponseModel]};
       return this.apiClient.callApi(
         '/API/TPS/Get', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
@@ -123,7 +122,7 @@ export default class TPSApi {
      * Callback function to receive the result of the aPITPSMaxGet operation.
      * @callback module:api/TPSApi~aPITPSMaxGetCallback
      * @param {String} error Error message, if any.
-     * @param {Array.<module:model/TPSResponseModel>} data The data returned by the service call.
+     * @param {Object.<String, module:model/{String: TPSDataPoint}>} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -132,7 +131,7 @@ export default class TPSApi {
      * @param {String} opts.provider 
      * @param {String} opts.network  (default to 'Mainnet')
      * @param {module:api/TPSApi~aPITPSMaxGetCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link Array.<module:model/TPSResponseModel>}
+     * data is of type: {@link Object.<String, module:model/{String: TPSDataPoint}>}
      */
     aPITPSMaxGet(opts, callback) {
       opts = opts || {};
@@ -152,7 +151,7 @@ export default class TPSApi {
       let authNames = [];
       let contentTypes = [];
       let accepts = ['text/plain', 'application/json', 'text/json'];
-      let returnType = [TPSResponseModel];
+      let returnType = {'String': TPSDataPoint};
       return this.apiClient.callApi(
         '/API/TPS/Max', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,

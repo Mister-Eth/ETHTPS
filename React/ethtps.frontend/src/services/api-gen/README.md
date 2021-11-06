@@ -128,8 +128,10 @@ Class | Method | HTTP request | Description
 *EthtpsApi.GPSApi* | [**aPIGPSGetGet**](docs/GPSApi.md#aPIGPSGetGet) | **GET** /API/GPS/Get | 
 *EthtpsApi.GPSApi* | [**aPIGPSInstantGet**](docs/GPSApi.md#aPIGPSInstantGet) | **GET** /API/GPS/Instant | 
 *EthtpsApi.GPSApi* | [**aPIGPSMaxGet**](docs/GPSApi.md#aPIGPSMaxGet) | **GET** /API/GPS/Max | 
+*EthtpsApi.GeneralApi* | [**aPIV2ColorDictionaryGet**](docs/GeneralApi.md#aPIV2ColorDictionaryGet) | **GET** /API/v2/ColorDictionary | 
 *EthtpsApi.GeneralApi* | [**aPIV2IntervalsGet**](docs/GeneralApi.md#aPIV2IntervalsGet) | **GET** /API/v2/Intervals | 
 *EthtpsApi.GeneralApi* | [**aPIV2NetworksGet**](docs/GeneralApi.md#aPIV2NetworksGet) | **GET** /API/v2/Networks | 
+*EthtpsApi.GeneralApi* | [**aPIV2ProviderTypesColorDictionaryGet**](docs/GeneralApi.md#aPIV2ProviderTypesColorDictionaryGet) | **GET** /API/v2/ProviderTypesColorDictionary | 
 *EthtpsApi.GeneralApi* | [**aPIV2ProvidersGet**](docs/GeneralApi.md#aPIV2ProvidersGet) | **GET** /API/v2/Providers | 
 *EthtpsApi.TPSApi* | [**aPITPSGetGet**](docs/TPSApi.md#aPITPSGetGet) | **GET** /API/TPS/Get | 
 *EthtpsApi.TPSApi* | [**aPITPSInstantGet**](docs/TPSApi.md#aPITPSInstantGet) | **GET** /API/TPS/Instant | 

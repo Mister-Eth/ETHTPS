@@ -39,7 +39,7 @@ class InstantTPSStat extends Component{
     }
 
     createDatasets(state){
-        if (state.providerData.length === 0 || state.data.length === 0)
+        if (state.providerData.length === 0 || state.data.length === 0 || state.colorDictionary === undefined)
             return [{}];
         let datasets = state.providerData.filter(x=>state.data[x.name] !== undefined).map(x => this.createDataset(x, state.data, state.colorDictionary));
         return datasets;
@@ -50,10 +50,16 @@ class InstantTPSStat extends Component{
             return 20;
         
         let t = state.providerData.filter(x=>state.data[x.name] !== undefined).map(x=>state.data[x.name][0].tps);
+        if (t.length === 0){
+            return 0;
+        }
         return t.reduce((a, b) => a + b);
     }
 
     render(){
+        if (this.state.data === null){
+            return<></>
+        }
         return <>
         <center>
             <h4 className={'tooltip'}>

@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 ## aPIGPSGetGet
 
-> [GPSResponseModel] aPIGPSGetGet(opts)
+> {String: [GPSResponseModel]} aPIGPSGetGet(opts)
 
 
 
@@ -49,7 +49,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[GPSResponseModel]**](GPSResponseModel.md)
+**{String: [GPSResponseModel]}**
 
 ### Authorization
 
@@ -108,7 +108,7 @@ No authorization required
 
 ## aPIGPSMaxGet
 
-> [GPSResponseModel] aPIGPSMaxGet(opts)
+> {String: GPSDataPoint} aPIGPSMaxGet(opts)
 
 
 
@@ -141,7 +141,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[GPSResponseModel]**](GPSResponseModel.md)
+[**{String: GPSDataPoint}**](GPSDataPoint.md)
 
 ### Authorization
 

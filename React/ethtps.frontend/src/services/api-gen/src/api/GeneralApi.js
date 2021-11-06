@@ -35,6 +35,41 @@ export default class GeneralApi {
 
 
     /**
+     * Callback function to receive the result of the aPIV2ColorDictionaryGet operation.
+     * @callback module:api/GeneralApi~aPIV2ColorDictionaryGetCallback
+     * @param {String} error Error message, if any.
+     * @param {Object.<String, {String: String}>} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {module:api/GeneralApi~aPIV2ColorDictionaryGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link Object.<String, {String: String}>}
+     */
+    aPIV2ColorDictionaryGet(callback) {
+      let postBody = null;
+
+      let pathParams = {
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = ['text/plain', 'application/json', 'text/json'];
+      let returnType = {'String': 'String'};
+      return this.apiClient.callApi(
+        '/API/v2/ColorDictionary', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
      * Callback function to receive the result of the aPIV2IntervalsGet operation.
      * @callback module:api/GeneralApi~aPIV2IntervalsGetCallback
      * @param {String} error Error message, if any.
@@ -99,6 +134,41 @@ export default class GeneralApi {
       let returnType = ['String'];
       return this.apiClient.callApi(
         '/API/v2/Networks', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the aPIV2ProviderTypesColorDictionaryGet operation.
+     * @callback module:api/GeneralApi~aPIV2ProviderTypesColorDictionaryGetCallback
+     * @param {String} error Error message, if any.
+     * @param {Object.<String, {String: String}>} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {module:api/GeneralApi~aPIV2ProviderTypesColorDictionaryGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link Object.<String, {String: String}>}
+     */
+    aPIV2ProviderTypesColorDictionaryGet(callback) {
+      let postBody = null;
+
+      let pathParams = {
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = ['text/plain', 'application/json', 'text/json'];
+      let returnType = {'String': 'String'};
+      return this.apiClient.callApi(
+        '/API/v2/ProviderTypesColorDictionary', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, null, callback
       );

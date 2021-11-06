@@ -13,14 +13,14 @@ using System.Threading.Tasks;
 namespace ETHTPS.API.Controllers
 {
     [Route("API/GPS/[action]")]
-    public class GPSController : APIControllerWithHistoricalMethodsBase
+    public class GPSController : APIControllerWithHistoricalMethodsBase,  IPSController<GPSDataPoint, GPSResponseModel>
     {
         public GPSController(ETHTPSContext context, IEnumerable<IHistoricalDataProvider> historicalDataProviders) : base(context, historicalDataProviders)
         {
         }
 
         [HttpGet]
-        public IEnumerable<GPSResponseModel> Max(string provider, string network = "Mainnet")
+        public IDictionary<string, GPSDataPoint> Max(string provider, string network = "Mainnet")
         {
             var result = new List<GPSResponseModel>();
             var providers = (provider.ToUpper() == "ALL") ? Context.Providers.AsEnumerable() : new Provider[] { Context.Providers.First(x => x.Name.ToUpper() == provider.ToUpper()) };
@@ -58,13 +58,13 @@ namespace ETHTPS.API.Controllers
                     });
                 }
             }
-            return result;
+            return result.ToDictionary(x => x.Provider, x => x.Data.First());
         }
 
 
         [HttpGet]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IDictionary<string, IEnumerable<GPSDataPoint>> InstantAsync(bool includeSidechains = true)
+        public IDictionary<string, IEnumerable<GPSDataPoint>> Instant(bool includeSidechains = true)
         {
             var result = new List<GPSResponseModel>();
             foreach (var p in Context.Providers.ToList())
@@ -84,9 +84,9 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
-        public Task<IEnumerable<GPSResponseModel>> GetAsync(string provider, string interval, string network = "Mainnet", bool includeSidechains = true)
+        public IDictionary<string, IEnumerable<GPSResponseModel>> Get(string provider, string interval, string network = "Mainnet", bool includeSidechains = true)
         {
-            var result = new List<GPSResponseModel>();
+            var result = new Dictionary<string, IEnumerable<GPSResponseModel>>();
             if (provider.ToUpper() == "ALL")
             {
                 foreach (var p in Context.Providers.ToList())
@@ -98,26 +98,26 @@ namespace ETHTPS.API.Controllers
                             continue;
                         }
                     }
-                    result.AddRange(GetHistoricalData(interval, p.Name, network).Select(x => new GPSResponseModel()
+                    result[p.Name] =  GetHistoricalData(interval, p.Name, network).Select(x => new GPSResponseModel()
                     {
                         Data = new List<GPSDataPoint>()
                         {
                             { new GPSDataPoint(){GPS = x.AverageGps, Date = x.StartDate} }
                         }
-                    }));
+                    });
                 }
             }
             else
             {
-                result.AddRange(GetHistoricalData(interval, provider, network).Select(x => new GPSResponseModel()
+                result[provider] = GetHistoricalData(interval, provider, network).Select(x => new GPSResponseModel()
                 {
                     Data = new List<GPSDataPoint>()
                         {
                             { new GPSDataPoint(){GPS = x.AverageGps, Date = x.StartDate} }
                         }
-                }));
+                });
             }
-            return Task.FromResult(result.AsEnumerable());
+            return result;
         }
     }
 }

@@ -4,10 +4,51 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**aPIV2ColorDictionaryGet**](GeneralApi.md#aPIV2ColorDictionaryGet) | **GET** /API/v2/ColorDictionary | 
 [**aPIV2IntervalsGet**](GeneralApi.md#aPIV2IntervalsGet) | **GET** /API/v2/Intervals | 
 [**aPIV2NetworksGet**](GeneralApi.md#aPIV2NetworksGet) | **GET** /API/v2/Networks | 
+[**aPIV2ProviderTypesColorDictionaryGet**](GeneralApi.md#aPIV2ProviderTypesColorDictionaryGet) | **GET** /API/v2/ProviderTypesColorDictionary | 
 [**aPIV2ProvidersGet**](GeneralApi.md#aPIV2ProvidersGet) | **GET** /API/v2/Providers | 
 
+
+
+## aPIV2ColorDictionaryGet
+
+> {String: String} aPIV2ColorDictionaryGet()
+
+
+
+### Example
+
+```javascript
+import EthtpsApi from 'ethtps_api';
+
+let apiInstance = new EthtpsApi.GeneralApi();
+apiInstance.aPIV2ColorDictionaryGet((error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+});
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+**{String: String}**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: text/plain, application/json, text/json
 
 
 ## aPIV2IntervalsGet
@@ -77,6 +118,45 @@ This endpoint does not need any parameter.
 ### Return type
 
 **[String]**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: text/plain, application/json, text/json
+
+
+## aPIV2ProviderTypesColorDictionaryGet
+
+> {String: String} aPIV2ProviderTypesColorDictionaryGet()
+
+
+
+### Example
+
+```javascript
+import EthtpsApi from 'ethtps_api';
+
+let apiInstance = new EthtpsApi.GeneralApi();
+apiInstance.aPIV2ProviderTypesColorDictionaryGet((error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+});
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+**{String: String}**
 
 ### Authorization
 

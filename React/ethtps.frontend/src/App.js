@@ -22,11 +22,13 @@ class App extends React.Component {
       homePageModel: {
         instantTPS: [],
         colorDictionary: {},
-        providerData: []
+        providerData: [],
+        maxTPS: []
       },
       network: "Mainnet",
       excludeSidechains: false,
-      modifiedInstantTPS: {}
+      modifiedInstantTPS: {},
+      mode: "TPS"
     }
   }
   
@@ -43,16 +45,24 @@ class App extends React.Component {
   */
 
 componentDidMount(){
+
   globalGeneralApi.aPIV2ProvidersGet((err, data, res) => {
+    let homePageModel = this.state.homePageModel;
+    homePageModel.providerData = data;
+    this.setState({homePageModel: homePageModel});
+  });
+
+  globalGeneralApi.aPIV2ColorDictionaryGet((err, data, res) => {
+    let homePageModel = this.state.homePageModel;
+    homePageModel.colorDictionary = data;
+    this.setState({homePageModel: homePageModel});
+  });
+  globalTPSApi.aPITPSMaxGet((err, data, res) => {
 
   });
-  /*
-  globalApi.aPIV2HomePageModelGet(this.state.network, (err,data,res) => {
-     this.setState({homePageModel: data});
-     this.setState({modifiedInstantTPS: data.instantTPS});
-  });
+  this.updateInstantTPS();
   setInterval(this.updateInstantTPS.bind(this), 5000);
-*/
+
 }
 
 handleInputChange(event){
@@ -75,15 +85,15 @@ getFilteredInstantTPSData(state){
     return state.homePageModel.instantTPSData;
   }
 }
-/*
+
 updateInstantTPS(){
-  globalApi.aPIV2InstantTPSGet(true, (err, data, res)=>{
+  globalTPSApi.aPITPSInstantGet(true, (err, data, res)=>{
     let homePageModel = this.state.homePageModel;
     homePageModel.instantTPS = data;
     this.setState({homePageModel: homePageModel});
   });
 }
-*/
+
 getProviderData(state){
   return (state.excludeSidechains)?state.homePageModel.providerData.filter(x=>x.type !== "Sidechain"):state.homePageModel.providerData
 }

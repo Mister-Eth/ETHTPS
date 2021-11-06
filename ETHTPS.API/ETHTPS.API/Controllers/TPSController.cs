@@ -13,14 +13,14 @@ using System.Threading.Tasks;
 namespace ETHTPS.API.Controllers
 {
     [Route("API/TPS/[action]")]
-    public class TPSController : APIControllerWithHistoricalMethodsBase
+    public class TPSController : APIControllerWithHistoricalMethodsBase, IPSController<TPSDataPoint, TPSResponseModel>
     {
         public TPSController(ETHTPSContext context, IEnumerable<IHistoricalDataProvider> historicalDataProviders) : base(context, historicalDataProviders)
         {
         }
 
         [HttpGet]
-        public IEnumerable<TPSResponseModel> Max(string provider, string network = "Mainnet")
+        public IDictionary<string, TPSDataPoint> Max(string provider, string network = "Mainnet")
         {
             var result = new List<TPSResponseModel>();
             var providers = (provider.ToUpper() == "ALL") ? Context.Providers.AsEnumerable() : new Provider[] { Context.Providers.First(x => x.Name.ToUpper() == provider.ToUpper()) };
@@ -58,15 +58,15 @@ namespace ETHTPS.API.Controllers
                     });
                 }
             }
-            return result;
+            return result.ToDictionary(x => x.Provider, x => x.Data.First());
         }
 
 
 
         [HttpGet]
-        public Task<IEnumerable<TPSResponseModel>> GetAsync(string provider, string interval, string network = "Mainnet", bool includeSidechains = true)
+        public IDictionary<string, IEnumerable<TPSResponseModel>> Get(string provider, string interval, string network = "Mainnet", bool includeSidechains = true)
         {
-            var result = new List<TPSResponseModel>();
+            var result = new Dictionary<string, IEnumerable<TPSResponseModel>>();
             if (provider.ToUpper() == "ALL")
             {
                 foreach (var p in Context.Providers.ToList())
@@ -78,47 +78,31 @@ namespace ETHTPS.API.Controllers
                             continue;
                         }
                     }
-                    result.AddRange(GetHistoricalData(interval, p.Name, network).Select(x => new TPSResponseModel()
+                    result[p.Name] = GetHistoricalData(interval, p.Name, network).Select(x => new TPSResponseModel()
                     {
                         Data = new List<TPSDataPoint>()
                         {
                             { new TPSDataPoint(){TPS = x.AverageTps, Date = x.StartDate} }
                         }
-                    }));
+                    });
                 }
             }
             else
             {
-                result.AddRange(GetHistoricalData(interval, provider, network).Select(x => new TPSResponseModel()
+                result[provider] = GetHistoricalData(interval, provider, network).Select(x => new TPSResponseModel()
                 {
                     Data = new List<TPSDataPoint>()
                         {
                             { new TPSDataPoint(){TPS = x.AverageTps, Date = x.StartDate} }
                         }
-                }));
-            }
-            return Task.FromResult(result.AsEnumerable());
-        }
-
-        private async Task<Dictionary<string, Dictionary<string, IEnumerable<TPSResponseModel>>>> BuildTPSDataAsync(string network = "Mainnet")
-        {
-            var result = new Dictionary<string, Dictionary<string, IEnumerable<TPSResponseModel>>>();
-            foreach (var provider in Context.Providers)
-            {
-                result[provider.Name] = new Dictionary<string, IEnumerable<TPSResponseModel>>();
-                foreach (var interval in TimeIntervals())
-                {
-                    result[provider.Name][interval] = await GetAsync(provider.Name, interval, network);
-                }
+                });
             }
             return result;
         }
 
-
-
         [HttpGet]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IDictionary<string, IEnumerable<TPSDataPoint>> InstantAsync(bool includeSidechains = true)
+        public IDictionary<string, IEnumerable<TPSDataPoint>> Instant(bool includeSidechains = true)
         {
             var result = new List<TPSResponseModel>();
             foreach (var p in Context.Providers.ToList())

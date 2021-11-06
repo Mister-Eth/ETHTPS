@@ -48,6 +48,16 @@
   }
 
   describe('GeneralApi', function() {
+    describe('aPIV2ColorDictionaryGet', function() {
+      it('should call aPIV2ColorDictionaryGet successfully', function(done) {
+        //uncomment below and update the code to test aPIV2ColorDictionaryGet
+        //instance.aPIV2ColorDictionaryGet(function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
     describe('aPIV2IntervalsGet', function() {
       it('should call aPIV2IntervalsGet successfully', function(done) {
         //uncomment below and update the code to test aPIV2IntervalsGet
@@ -62,6 +72,16 @@
       it('should call aPIV2NetworksGet successfully', function(done) {
         //uncomment below and update the code to test aPIV2NetworksGet
         //instance.aPIV2NetworksGet(function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
+    describe('aPIV2ProviderTypesColorDictionaryGet', function() {
+      it('should call aPIV2ProviderTypesColorDictionaryGet successfully', function(done) {
+        //uncomment below and update the code to test aPIV2ProviderTypesColorDictionaryGet
+        //instance.aPIV2ProviderTypesColorDictionaryGet(function(error) {
         //  if (error) throw error;
         //expect().to.be();
         //});

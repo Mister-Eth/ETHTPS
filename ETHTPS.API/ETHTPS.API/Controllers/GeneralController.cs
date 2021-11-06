@@ -42,6 +42,12 @@ namespace ETHTPS.API.Controllers
             });
         }
 
+        [HttpGet]
+        public IDictionary<string, string> ColorDictionary() => Context.ProviderProperties.Where(x => x.Name == "Color").ToDictionary(x => x.ProviderNavigation.Name, x => x.Value);
+
+        [HttpGet]
+        public IDictionary<string, string> ProviderTypesColorDictionary() => Context.ProviderTypeProperties.Where(x => x.Name == "Color").ToDictionary(x => x.ProviderTypeNavigation.Name, x => x.Value);
+
         /*
         [HttpGet]
         public async Task<HomePageViewModel> HomePageModelAsync(string network = "Mainnet")

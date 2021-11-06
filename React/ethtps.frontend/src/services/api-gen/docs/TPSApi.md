@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 ## aPITPSGetGet
 
-> [TPSResponseModel] aPITPSGetGet(opts)
+> {String: [TPSResponseModel]} aPITPSGetGet(opts)
 
 
 
@@ -49,7 +49,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[TPSResponseModel]**](TPSResponseModel.md)
+**{String: [TPSResponseModel]}**
 
 ### Authorization
 
@@ -108,7 +108,7 @@ No authorization required
 
 ## aPITPSMaxGet
 
-> [TPSResponseModel] aPITPSMaxGet(opts)
+> {String: TPSDataPoint} aPITPSMaxGet(opts)
 
 
 
@@ -141,7 +141,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[TPSResponseModel]**](TPSResponseModel.md)
+[**{String: TPSDataPoint}**](TPSDataPoint.md)
 
 ### Authorization
 
