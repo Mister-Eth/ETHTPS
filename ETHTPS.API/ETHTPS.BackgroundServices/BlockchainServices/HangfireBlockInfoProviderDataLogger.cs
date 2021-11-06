@@ -42,11 +42,11 @@ namespace ETHTPS.Services.BlockchainServices
                 AddOrUpdateMonthTPSEntry(delta);
                 await _context.SaveChangesAsync();
 
-                _logger.LogInformation($"{_provider}: {delta.TPS}TPS {delta.GPS}GPS");
+                _logger.LogDebug($"{_provider}: {delta.TPS}TPS {delta.GPS}GPS");
             }
             catch (Exception e)
             {
-                _logger.LogError("TPSDataUpdaterBase", e);
+                _logger.LogDebug("TPSDataUpdaterBase", e);
                 throw;
             }
         }
