@@ -57,8 +57,10 @@ componentDidMount(){
     homePageModel.colorDictionary = data;
     this.setState({homePageModel: homePageModel});
   });
-  globalTPSApi.aPITPSMaxGet((err, data, res) => {
-
+  globalTPSApi.aPITPSMaxGet({provider: 'All', network: this.state.network}, (err, data, res) => {
+    let homePageModel = this.state.homePageModel;
+    homePageModel.maxTPS = data;
+    this.setState({homePageModel: homePageModel});
   });
   this.updateInstantTPS();
   setInterval(this.updateInstantTPS.bind(this), 5000);
@@ -157,6 +159,7 @@ getProviderData(state){
     <ProviderTable
       instantTPSData={this.state.homePageModel.instantTPS} 
       colorDictionary={this.state.homePageModel.colorDictionary} 
+      maxTPS={this.state.homePageModel.maxTPS}
       providerData={this.getProviderData(this.state)}/>
       <hr/>
       <h3>

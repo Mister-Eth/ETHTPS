@@ -15,7 +15,8 @@ class ProviderTable extends React.Component {
         this.state = {
             rows: [],
             instantTPSData:[],
-            providerData: []
+            providerData: [],
+            maxTPS:{}
         }
     }
 
@@ -82,7 +83,7 @@ class ProviderTable extends React.Component {
               </TableCell>
               <TableCell align="left">
               <div className={'l1'}>
-                {(row.maxTPS < row.tps)?row.tps:row.maxTPS}
+                {(this.state.maxTPS === undefined || this.state.maxTPS[row.name] === undefined)?0:this.to2DecimalPlaces(this.state.maxTPS[row.name].tps)}
               </div>
               </TableCell>
               <TableCell align="left">
@@ -107,7 +108,7 @@ class ProviderTable extends React.Component {
     }
 
     createRow(x, i){
-        return  { no: (i + 1) + ".", name: x.name, type: x.type, maxTPS: this.to2DecimalPlaces(x.maxTPS) };
+        return  { no: (i + 1) + ".", name: x.name, type: x.type };
     }
 
     componentDidUpdate(previousProps, previousState){
@@ -125,6 +126,9 @@ class ProviderTable extends React.Component {
         }
         if (previousProps.excludeSidechains !== this.props.excludeSidechains){
             this.setState({excludeSidechains: this.props.excludeSidechains});
+        }
+        if (previousProps.maxTPS !== this.props.maxTPS){
+          this.setState({maxTPS: this.props.maxTPS});
         }
       }
 }    
