@@ -22,11 +22,11 @@ class App extends React.Component {
 
     this.state = {
       homePageModel: {
-        instantTPS: [],
-        colorDictionary: {},
-        providerTypeColorDictionary:{},
-        providerData: [],
-        maxTPS: []
+        instantTPS: JSON.parse('{"Ethereum":[{"date":"0001-01-01T00:00:00","tps":14.379562043795621}],"Arbitrum One":[{"date":"0001-01-01T00:00:00","tps":0.4117647058823529}],"Optimism":[{"date":"0001-01-01T00:00:00","tps":0.2}],"Polygon":[{"date":"0001-01-01T00:00:00","tps":24.09090909090909}],"XDAI":[{"date":"0001-01-01T00:00:00","tps":1.346153846153846}],"ZKSwap":[{"date":"0001-01-01T00:00:00","tps":0.00019286403085824494}],"ZKSync":[{"date":"0001-01-01T00:00:00","tps":0.12750205648478202}],"AVAX C-chain":[{"date":"0001-01-01T00:00:00","tps":2.5}],"Boba Network":[{"date":"0001-01-01T00:00:00","tps":0.002074688796680498}],"Loopring":[{"date":"0001-01-01T00:00:00","tps":0.191904047976012}]}'),
+        colorDictionary: JSON.parse('{"Ethereum":"#490092","Arbitrum One":"#920000","Optimism":"#006ddb","Polygon":"#004949","XDAI":"#ff6db6","ZKSwap":"#c29a2d","ZKSync":"#db6d00","AVAX C-chain":"#22cf22","Boba Network":"#171723","Loopring":"#4a1173"}'),
+        providerTypeColorDictionary:JSON.parse('{"Mainnet":"#4a1173","Optimistic rollup":" #3a7311","ZK rollup":"#116b73","Application-specific rollup":"#8ae5d6","Sidechain":"#002d4d"}'),
+        providerData: JSON.parse('[{"name":"Ethereum","color":"#490092","type":"Mainnet"},{"name":"Arbitrum One","color":"#920000","type":"Optimistic rollup"},{"name":"Optimism","color":"#006ddb","type":"Optimistic rollup"},{"name":"Polygon","color":"#004949","type":"Sidechain"},{"name":"XDAI","color":"#ff6db6","type":"Sidechain"},{"name":"ZKSwap","color":"#c29a2d","type":"ZK rollup"},{"name":"ZKSync","color":"#db6d00","type":"ZK rollup"},{"name":"AVAX C-chain","color":"#22cf22","type":"Sidechain"},{"name":"Boba Network","color":"#171723","type":"Optimistic rollup"},{"name":"Loopring","color":"#4a1173","type":"ZK rollup"}]'),
+        maxTPS: JSON.parse('[{"name":"Ethereum","color":"#490092","type":"Mainnet"},{"name":"Arbitrum One","color":"#920000","type":"Optimistic rollup"},{"name":"Optimism","color":"#006ddb","type":"Optimistic rollup"},{"name":"Polygon","color":"#004949","type":"Sidechain"},{"name":"XDAI","color":"#ff6db6","type":"Sidechain"},{"name":"ZKSwap","color":"#c29a2d","type":"ZK rollup"},{"name":"ZKSync","color":"#db6d00","type":"ZK rollup"},{"name":"AVAX C-chain","color":"#22cf22","type":"Sidechain"},{"name":"Boba Network","color":"#171723","type":"Optimistic rollup"},{"name":"Loopring","color":"#4a1173","type":"ZK rollup"}]')
       },
       network: "Mainnet",
       excludeSidechains: false,

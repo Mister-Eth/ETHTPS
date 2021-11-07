@@ -10,7 +10,7 @@ namespace ETHTPS.Services
     {
         public const string Every5s = "*/5 * * * * *";
         public const string Every10s = "*/10 * * * * *";
-        public const string Every14s = "*/14 * * * * *";
+        public const string Every13s = "*/13 * * * * *";
         public const string EveryMinute = "* * * * *";
         public const string Every5Minutes = "*/5 * * * *";
         public const string Every15Minutes = "*/15 * * * *";
