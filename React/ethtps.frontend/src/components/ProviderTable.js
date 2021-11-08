@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Link } from "react-router-dom";
 
 class ProviderTable extends React.Component {
     constructor(props){
@@ -69,11 +70,11 @@ class ProviderTable extends React.Component {
                   {row.no}
               </TableCell>
               <TableCell align="left">
-                    <div className={'l1'}>
-                        <a style={{color: this.state.colorDictionary[row.name]}} href={`/${row.name}`}>
-                            <img className={'provider-icon'} src={`/provider-icons/${row.name}.png`} />
-                            {row.name}
-                        </a>
+                    <div className={'l1 box'}>
+                      <Link style={{color: this.state.colorDictionary[row.name]}} to={`/Network?name=${row.name}`}>
+                       <img className={'provider-icon'} src={`/provider-icons/${row.name}.png`} />
+                         {row.name}
+                      </Link>
                     </div>
               </TableCell>
               <TableCell align="left">

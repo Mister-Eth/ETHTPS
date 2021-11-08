@@ -113,7 +113,6 @@ getProviderData(state){
  render(){
   return (
     <>
-    <hr/>
       <h3>
         Current TPS overview
       </h3>

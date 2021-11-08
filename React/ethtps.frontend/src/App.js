@@ -36,6 +36,7 @@ class App extends React.Component {
           </img>
         </a>
     </center>
+    <hr/>
     <div className={"container"}>
       <Main/>
     </div>

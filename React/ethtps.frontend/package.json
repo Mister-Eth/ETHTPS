@@ -21,6 +21,7 @@
     "d3-simple-gauge": "^1.3.5",
     "material-ui-icons": "^1.0.0-beta.36",
     "mui": "0.0.1",
+    "query-string": "^7.0.1",
     "querystring": "^0.2.1",
     "react": "^17.0.2",
     "react-apexcharts": "^1.3.9",
