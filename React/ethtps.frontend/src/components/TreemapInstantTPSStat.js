@@ -6,9 +6,9 @@ export default class TreemapInstantTPSStat extends React.Component {
     super(props);
 
     this.state = {
-            data:[],
-            providerData:[],
-            colorDictionary:{},
+            data:props.data,
+            providerData:props.providerData,
+            colorDictionary:props.colorDictionary,
             series:[],
             options: {
               legend: {
