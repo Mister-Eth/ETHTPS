@@ -30,12 +30,11 @@ export default class NetworkPage extends PageWithQueryString {
         'ZKSWap': <ZKSwapDetails/>,
         'ZKSync': <ZKSyncDetails/>,
     }
-
     render(){
         if (this.state !== null)
         return <>
-        <a href={''} style={{float:'right', display:'inline'}}>
-            Edit
+        <a href={`https://github.com/WhoEvenAmI/ETHTPS/edit/dev/React/ethtps.frontend/src/components/pages/networks/details/${this.state.name}Details.js`} style={{float:'right', display:'inline'}}>
+            [Edit]
         </a>
             <div>
                 <h1 className={'box'}>
