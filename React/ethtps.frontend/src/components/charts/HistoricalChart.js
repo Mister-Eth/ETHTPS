@@ -1,44 +1,51 @@
 import * as React from "react";
-import { GeneralApi } from "../../services/api-gen/src";
+import { TPSApi, GPSApi } from "../../services/api-gen/src";
+import IntervalSelector from "./IntervalSelector";
+import InfoTypeSelector from './InfoTypeSelector';
+import ScaleSelector from './ScaleSelector';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import { Line } from "react-chartjs-2";
 
-export default function HistoricalChart() {
-    const [intervalAlignment, setIntervalAlignment] = React.useState('1w');
-    const [scaleAlignment, setScaleAlignment] = React.useState('log');
+export default class HistoricalChart extends React.Component {
 
-    const handleIntervalChange = (event, newAlignment) => {
-        setIntervalAlignment(newAlignment);
-    };
+    constructor(props){
+        super(props);
+    }
 
-    const handleScaleChange = (event, newAlignment) => {
-        setScaleAlignment(newAlignment);
-    };
-    
-      return (
-        <div>
-            <div style={{float:"right"}}>
-            <ToggleButtonGroup
-                color="primary"
-                value={intervalAlignment}
-                exclusive
-                onChange={handleIntervalChange}>
-          <ToggleButton value="1h">1h</ToggleButton>
-          <ToggleButton value="1d">1d</ToggleButton>
-          <ToggleButton value="1w">1w</ToggleButton>
-          <ToggleButton value="1m">1m</ToggleButton>
-        </ToggleButtonGroup>
+    data = {
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+        datasets: [
+          {
+            label: "First dataset",
+            data: [33, 53, 85, 41, 44, 65],
+            fill: true,
+            backgroundColor: "rgba(75,192,192,0.2)",
+            borderColor: "rgba(75,192,192,1)"
+          },
+          {
+            label: "Second dataset",
+            data: [33, 25, 35, 51, 54, 76],
+            fill: false,
+            borderColor: "#742774"
+          }
+        ]
+      };
+
+     render(){
+        return (
+            <div>
+                <div style={{float:"right"}}>
+                    <IntervalSelector/>
+                </div>
+            <div>
+                <Line height={100} data={this.data} />
             </div>
+           <InfoTypeSelector/>
             <div style={{float:"right"}}>
-            <ToggleButtonGroup
-                color="primary"
-                value={scaleAlignment}
-                exclusive
-                onChange={handleScaleChange}>
-          <ToggleButton value="log">log</ToggleButton>
-          <ToggleButton value="lin">lin</ToggleButton>
-        </ToggleButtonGroup>
+                <ScaleSelector/>
             </div>
-        </div>
-      );
+            </div>
+          );
+     }
 }
