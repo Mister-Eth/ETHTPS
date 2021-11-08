@@ -40,6 +40,22 @@ class App extends React.Component {
     <div className={"container"}>
       <Main/>
     </div>
+    <hr/>
+    <footer>
+      <div className={'inline'}>
+      Brought to you by 
+      <div style={{marginLeft:'5px'}} className={'trick'}>
+        <span>
+          Mister_Eth
+        </span>
+      </div>
+      <br></br>
+        Donate: 
+        <p className={'ul-hover inline'} style={{marginLeft:'5px'}}>
+          0x466Ef24d68ac9b61670eeE7fC2E001B951aBf482
+        </p>
+      </div>
+    </footer>
     </>
   );
 }

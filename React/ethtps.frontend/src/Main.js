@@ -1,6 +1,6 @@
 import App from './App';
 import MainPage from './components/pages/MainPage';
-import NetworkPage from './components/pages/NetworkPage';
+import NetworkPage from './components/pages/networks/NetworkPage';
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 

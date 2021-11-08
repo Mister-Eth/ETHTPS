@@ -14,6 +14,7 @@ import Checkbox from '@mui/material/Checkbox';
 import ProviderTable from '../ProviderTable';
 import TreemapInstantTPSStat from '../TreemapInstantTPSStat';
 import {BrowserView, MobileView} from 'react-device-detect';
+import { useHistory } from 'react-router';
 
 class MainPage extends React.Component {
 
@@ -46,69 +47,70 @@ class MainPage extends React.Component {
     size={80}
   />
   */
+  intervalRef = -1;
+  componentDidMount(){
 
-componentDidMount(){
+    globalGeneralApi.aPIV2ProvidersGet((err, data, res) => {
+      let homePageModel = this.state.homePageModel;
+      homePageModel.providerData = data;
+      this.setState({homePageModel: homePageModel});
+    });
 
-  globalGeneralApi.aPIV2ProvidersGet((err, data, res) => {
-    let homePageModel = this.state.homePageModel;
-    homePageModel.providerData = data;
-    this.setState({homePageModel: homePageModel});
-  });
+    globalGeneralApi.aPIV2ColorDictionaryGet((err, data, res) => {
+      let homePageModel = this.state.homePageModel;
+      homePageModel.colorDictionary = data;
+      this.setState({homePageModel: homePageModel});
+    });
 
-  globalGeneralApi.aPIV2ColorDictionaryGet((err, data, res) => {
-    let homePageModel = this.state.homePageModel;
-    homePageModel.colorDictionary = data;
-    this.setState({homePageModel: homePageModel});
-  });
+    globalGeneralApi.aPIV2ProviderTypesColorDictionaryGet((err, data, res) => {
+      let homePageModel = this.state.homePageModel;
+      homePageModel.providerTypeColorDictionary = data;
+      this.setState({homePageModel: homePageModel});
+    });
 
-  globalGeneralApi.aPIV2ProviderTypesColorDictionaryGet((err, data, res) => {
-    let homePageModel = this.state.homePageModel;
-    homePageModel.providerTypeColorDictionary = data;
-    this.setState({homePageModel: homePageModel});
-  });
-
-  globalTPSApi.aPITPSMaxGet({provider: 'All', network: this.state.network}, (err, data, res) => {
-    let homePageModel = this.state.homePageModel;
-    homePageModel.maxTPS = data;
-    this.setState({homePageModel: homePageModel});
-  });
-  this.updateInstantTPS();
-  setInterval(this.updateInstantTPS.bind(this), 5000);
-
-}
-
-handleInputChange(event){
-  const target = event.target;
-  const value = target.type === 'checkbox' ? target.checked : target.value;
-  this.setState({excludeSidechains : value});
-}
-
-getFilteredInstantTPSData(state){
-  if (state.excludeSidechains){
-    let filteredInstantTPSData = {};
-    for(let p of state.homePageModel.providerData){
-      if (state.homePageModel.providerData.filter(x => x.name == p.name && x.type !== 'Sidechain')){
-        filteredInstantTPSData[p.name] = state.homePageModel.instantTPS[p.name];
-      }
+    globalTPSApi.aPITPSMaxGet({provider: 'All', network: this.state.network}, (err, data, res) => {
+      let homePageModel = this.state.homePageModel;
+      homePageModel.maxTPS = data;
+      this.setState({homePageModel: homePageModel});
+    });
+    this.updateInstantTPS();
+    if (this.intervalRef === -1){
+      this.intervalRef = setInterval(this.updateInstantTPS.bind(this), 5000);
     }
-    return filteredInstantTPSData;
   }
-  else {
-    return state.homePageModel.instantTPSData;
+  
+  handleInputChange(event){
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    this.setState({excludeSidechains : value});
   }
-}
 
-updateInstantTPS(){
-  globalTPSApi.aPITPSInstantGet(true, (err, data, res)=>{
-    let homePageModel = this.state.homePageModel;
-    homePageModel.instantTPS = data;
-    this.setState({homePageModel: homePageModel});
-  });
-}
+  getFilteredInstantTPSData(state){
+    if (state.excludeSidechains){
+      let filteredInstantTPSData = {};
+      for(let p of state.homePageModel.providerData){
+        if (state.homePageModel.providerData.filter(x => x.name == p.name && x.type !== 'Sidechain')){
+          filteredInstantTPSData[p.name] = state.homePageModel.instantTPS[p.name];
+        }
+      }
+      return filteredInstantTPSData;
+    }
+    else {
+      return state.homePageModel.instantTPSData;
+    }
+  }
 
-getProviderData(state){
-  return (state.excludeSidechains)?state.homePageModel.providerData.filter(x=>x.type !== "Sidechain"):state.homePageModel.providerData
-}
+  updateInstantTPS(){
+    globalTPSApi.aPITPSInstantGet(true, (err, data, res)=>{
+      let homePageModel = this.state.homePageModel;
+      homePageModel.instantTPS = data;
+      this.setState({homePageModel: homePageModel});
+    });
+  }
+
+  getProviderData(state){
+    return (state.excludeSidechains)?state.homePageModel.providerData.filter(x=>x.type !== "Sidechain"):state.homePageModel.providerData
+  }
 
  render(){
   return (
