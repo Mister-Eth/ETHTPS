@@ -1,24 +1,35 @@
 import * as React from "react";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import { render } from "@testing-library/react";
 
-export default function InfoTypeSelector(){
-    let infoType = 'tps';
-    const [infoTypeAlignment, setInfoTypelignment] = React.useState(infoType);
+export default class InfoTypeSelector extends React.Component {
 
-    const handleInfoTypeChange = (event, newAlignment) => {
+    constructor(props){
+        super(props);
+        
+        this.state = {
+            infoType: 'tps'
+        }
+    }
+
+    handleInfoTypeChange = (event, newAlignment) => {
         if (newAlignment !== null){
-            infoType = newAlignment;
-            setInfoTypelignment(newAlignment);
+            this.setState({infoType: newAlignment})
+            if (this.props.onChange !== undefined){
+                this.props.onChange(newAlignment);
+            }
         }
     };
 
-    return  <ToggleButtonGroup
-        color="primary"
-        value={infoTypeAlignment}
-        exclusive
-        onChange={handleInfoTypeChange}>
-        <ToggleButton value="tps">tps</ToggleButton>
-        <ToggleButton value="gps">gps</ToggleButton>
-    </ToggleButtonGroup>
+    render(){
+        return <ToggleButtonGroup
+            color="primary"
+            value={this.state.infoType}
+            exclusive
+            onChange={this.handleInfoTypeChange}>
+            <ToggleButton value="tps">tps</ToggleButton>
+            <ToggleButton value="gps">gps</ToggleButton>
+        </ToggleButtonGroup>
+    }
 }

@@ -2,23 +2,32 @@ import * as React from "react";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
-export default function ScaleSelector(){
-    let scale = 'lin';
-    const [scaleAlignment, setScaleAlignment] = React.useState(scale);
+export default class ScaleSelector extends React.Component {
+    constructor(props){
+        super(props);
+        
+        this.state = {
+            scale: props.scale
+        }
+    }
 
-    const handleScaleChange = (event, newAlignment) => {
+    handleScaleChange = (event, newAlignment) => {
         if (newAlignment !== null){
-            scale = newAlignment;
-            setScaleAlignment(newAlignment);
+            this.setState({scale: newAlignment});
+            if (this.props.onChange !== undefined){
+                this.props.onChange(newAlignment);
+            }
         }
     };
 
-    return <ToggleButtonGroup
-        color="primary"
-        value={scaleAlignment}
-        exclusive
-        onChange={handleScaleChange}>
-        <ToggleButton value="log">log</ToggleButton>
-        <ToggleButton value="lin">lin</ToggleButton>
-    </ToggleButtonGroup>
+    render(){
+        return <ToggleButtonGroup
+            color="primary"
+            value={this.state.scale}
+            exclusive
+            onChange={this.handleScaleChange}>
+            <ToggleButton value="log">log</ToggleButton>
+            <ToggleButton value="lin">lin</ToggleButton>
+        </ToggleButtonGroup>
+    }
 }

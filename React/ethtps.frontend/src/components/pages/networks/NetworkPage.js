@@ -27,9 +27,10 @@ export default class NetworkPage extends PageWithQueryString {
         'Optimism': <OptimismDetails/>,
         'Polygon': <PolygonDetails/>,
         'XDAI': <XDAIDetails/>,
-        'ZKSWap': <ZKSwapDetails/>,
+        'ZKSwap': <ZKSwapDetails/>,
         'ZKSync': <ZKSyncDetails/>,
     }
+    
     render(){
         if (this.state !== null)
         return <>
@@ -42,7 +43,7 @@ export default class NetworkPage extends PageWithQueryString {
                     {this.state.name}
                 </h1>
             </div>
-            <HistoricalChart/>
+            <HistoricalChart provider={this.state.name} interval={'1d'} infoType={'tps'} scale={'lin'} network={'Mainnet'}/>
             {this.components[this.state.name]}
         </>
         else return <></>
