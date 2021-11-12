@@ -3,7 +3,6 @@ import githubIcon from './assets/600px-Octicons-mark-github.svg - inv.png';
 import twitterIcon from './assets/1486053611-twitter_79195.png';
 import discordIcon from './assets/discord-mascot.png';
 import React, { ReactDOM, useState, useEffect } from "react";
-import MainPage from './components/pages/MainPage';
 import { Link } from "react-router-dom";
 import Main from './Main';
 

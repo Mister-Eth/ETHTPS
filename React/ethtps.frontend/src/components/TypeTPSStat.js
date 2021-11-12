@@ -12,8 +12,9 @@ class TypeTPSStat extends Component{
             }],
             backgroundColors: [],
             max: 1,
-            data: [],
-            providerData: []
+            data: props.data,
+            providerData: props.providerData,
+            colorDictionary: props.colorDictionary
           }
     }
 

@@ -110,7 +110,7 @@ namespace ETHTPS.Services.BlockchainServices
 
                     if (++count == 10)
                     {
-                        throw new Exception("Possible infinite loop");
+                        throw new Exception($"Possible infinite loop {(typeof(T))}");
                     }
                 }
                 while (true);

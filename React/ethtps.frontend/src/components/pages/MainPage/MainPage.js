@@ -1,20 +1,10 @@
-import '../../App.css';
-import githubIcon from '../../assets/600px-Octicons-mark-github.svg - inv.png';
-import twitterIcon from '../../assets/1486053611-twitter_79195.png';
-import discordIcon from '../../assets/discord-mascot.png';
-import { globalGeneralApi, globalGPSApi, globalTPSApi } from '../../services/common';
+import '../../..//App.css';
+import { globalGeneralApi, globalGPSApi, globalTPSApi } from '../../../services/common';
 import React, { ReactDOM, useState, useEffect } from "react";
-import InstantTPSStat from '../InstantTPSStat';
-import TypeTPSStat from '../TypeTPSStat';
-import Timeline from '../Timeline';
-import HorizontalBarChart from '../HorizontalBarChart'
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import ProviderTable from '../ProviderTable';
-import TreemapInstantTPSStat from '../TreemapInstantTPSStat';
-import {BrowserView, MobileView} from 'react-device-detect';
-import { useHistory } from 'react-router';
+import Timeline from '../../Timeline';
+import HorizontalBarChart from '../../HorizontalBarChart'
+import ProviderTable from '../../ProviderTable';
+import TPSStatByType from './TPSStatByType';
 
 class MainPage extends React.Component {
 
@@ -35,18 +25,7 @@ class MainPage extends React.Component {
       mode: "TPS"
     }
   }
-  
-  //const [isDarkMode, setIsDarkMode] = useState(() => false);
 
-  /*
-  
-  <DarkModeToggle
-  className={'modeSwitchToggle'}
-    onChange={setIsDarkMode}
-    checked={isDarkMode}
-    size={80}
-  />
-  */
   intervalRef = -1;
   componentDidMount(){
 
@@ -118,21 +97,14 @@ class MainPage extends React.Component {
       <h3>
         Current TPS overview
       </h3>
-      <p>
-        Each section of the bar below represents the throughput of a network. Data gets updated automatically.
-      </p>
-      <MobileView>
-          <InstantTPSStat
-          data={this.state.homePageModel.instantTPS} 
-          colorDictionary={this.state.homePageModel.colorDictionary} 
-          providerData={this.getProviderData(this.state)}/>  
-      </MobileView>
-      <BrowserView>
-          <TreemapInstantTPSStat
-              data={this.state.homePageModel.instantTPS} 
-              colorDictionary={this.state.homePageModel.colorDictionary} 
-              providerData={this.getProviderData(this.state)}/>  
-      </BrowserView>
+        <TPSStatByType 
+            excludeSidechains={this.state.excludeSidechains}
+            colorDictionary={this.state.homePageModel.colorDictionary}
+            instantTPS={this.state.homePageModel.instantTPS}
+            providerData={this.getProviderData(this.state)}
+            providerTypeColorDictionary={this.state.homePageModel.providerTypeColorDictionary}
+            split="network"/>
+      <br/>
       <label className={"small"}>
       <input
             ref={ref=>this.excludeSidechainsCheckBox = ref}
@@ -141,7 +113,6 @@ class MainPage extends React.Component {
             onChange={this.handleInputChange.bind(this)}/>
             Exclude sidechains?
       </label>
-
       <hr/>
 
     <h3>

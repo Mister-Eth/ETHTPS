@@ -1,5 +1,5 @@
 import App from './App';
-import MainPage from './components/pages/MainPage';
+import MainPage from './components/pages/MainPage/MainPage';
 import NetworkPage from './components/pages/networks/NetworkPage';
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';

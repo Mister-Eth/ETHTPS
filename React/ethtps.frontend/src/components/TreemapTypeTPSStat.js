@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactApexChart from "react-apexcharts"
 
-export default class TreemapInstantTPSStat extends React.Component {
+export default class TreemapTypeTPSStat extends React.Component {
     constructor(props) {
     super(props);
 
@@ -49,7 +49,7 @@ export default class TreemapInstantTPSStat extends React.Component {
         
     createDataPoint(x, state){
         return {
-            x: x.name,
+            x: x.type,
             y: this.to2DecimalPlaces(state.data[x.name][0].tps)
         }
     }
@@ -58,9 +58,20 @@ export default class TreemapInstantTPSStat extends React.Component {
         if (state.providerData === undefined || state.data === undefined || state.options.colors.length === 0){
             return [{data:[]}];
         }
+        let datasets = [];
+        for(let p of state.providerData.filter(x=>state.data[x.name] !== undefined)){
+            if (datasets.filter(x => x.x === p.type).length == 0){
+                datasets.push({
+                    x: p.type,
+                    y: 0,
+                    fillColor:state.colorDictionary[p.type]
+                });
+            }
+            datasets.filter(x => x.x === p.type)[0].y += state.data[p.name][0].tps;
+        }
         return [
                 {
-                    data: state.providerData.filter(x => state.data[x.name] !== undefined).map(x => this.createDataPoint(x, state))
+                    data: datasets
                 }
             ];
     }
@@ -84,7 +95,7 @@ export default class TreemapInstantTPSStat extends React.Component {
     }
     
     getColors(props){
-        let colors = props.providerData.filter(x => props.data[x.name] !== undefined).map(x => props.colorDictionary[x.name]);
+        let colors = props.providerData.filter(x => props.data[x.name] !== undefined).map(x => props.colorDictionary[x.type]);
         return colors;
     }
 

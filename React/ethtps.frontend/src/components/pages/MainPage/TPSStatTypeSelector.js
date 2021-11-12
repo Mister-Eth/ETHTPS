@@ -1,21 +1,19 @@
 import * as React from "react";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import { render } from "@testing-library/react";
 
-export default class InfoTypeSelector extends React.Component {
-
+export default class TPSStatTypeSelector extends React.Component {
     constructor(props){
         super(props);
         
         this.state = {
-            infoType: props.infoType
+            split: props.split
         }
     }
 
-    handleInfoTypeChange = (event, newAlignment) => {
+    onStatChanged = (event, newAlignment) => {
         if (newAlignment !== null){
-            this.setState({infoType: newAlignment})
+            this.setState({split: newAlignment});
             if (this.props.onChange !== undefined){
                 this.props.onChange(newAlignment);
             }
@@ -25,11 +23,12 @@ export default class InfoTypeSelector extends React.Component {
     render(){
         return <ToggleButtonGroup
             color="primary"
-            value={this.state.infoType}
+            value={this.state.split}
             exclusive
-            onChange={this.handleInfoTypeChange}>
-            <ToggleButton value="tps">tps</ToggleButton>
-            <ToggleButton value="gps">gps</ToggleButton>
+            onChange={this.onStatChanged}>
+            <ToggleButton value="network">Split by network</ToggleButton>
+            <ToggleButton value="networkType">Split by network type</ToggleButton>
+            <ToggleButton value="gasAdjustedTPS">Gas-adjusted TPS</ToggleButton>
         </ToggleButtonGroup>
     }
 }
