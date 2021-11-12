@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 namespace ETHTPS.Services.BlockchainServices
 {
     [Provider("AVAX C-chain")]
+    [Obsolete("This implementation is obsolete. Please use SnowtraceBlockInfoProvider.",error: true)]
     public class AVAXCChainBlockInfoProvider : IBlockInfoProvider
     {
         private const string NAME = "AVAX C-chain";
