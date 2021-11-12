@@ -73,7 +73,7 @@ export default class HistoricalChart extends React.Component {
         case 'gps':
           globalGPSApi.aPIGPSGetGet({provider: provider, interval: this.transformIntervalName(interval), network: network}, (err,data,res)=>{
             let d = data[provider];
-            this.setState({labels: d.map(x => x.data[0].date)});
+            this.setState({labels: d.map(x => x.data[0].date.toLocaleString())});
             this.setState({data: d.map(x => x.data[0].gps)});
           });
           break;
@@ -109,7 +109,8 @@ export default class HistoricalChart extends React.Component {
                       data: this.state.data,
                       fill: true,
                       backgroundColor: this.state.backgroundColor,
-                      borderColor: this.state.color
+                      borderColor: this.state.color,
+                      pointHitRadius: 20
                     }
                   ]
                 }} 
@@ -122,11 +123,17 @@ export default class HistoricalChart extends React.Component {
                   elements:{
                     line:{
                       tension: 0.3
+                    },
+                    point:{
+                      radius: 0
                     }
                   },
                   scales:{
                     x:{
                       ticks:{
+                        display: false
+                      },
+                      grid:{
                         display: false
                       }
                     },
