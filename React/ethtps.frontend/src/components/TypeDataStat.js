@@ -1,7 +1,8 @@
 import { Component } from 'react';
 import { Bar } from 'react-chartjs-2';
+import TotalDataSummaryStat from './TotalDataSummaryStat';
 
-class TypeTPSStat extends Component{
+class TypeDataStat extends Component{
     constructor(props){
         super(props);
 
@@ -13,6 +14,7 @@ class TypeTPSStat extends Component{
             backgroundColors: [],
             max: 1,
             data: props.data,
+            mode: props.mode,
             providerData: props.providerData,
             colorDictionary: props.colorDictionary
           }
@@ -28,6 +30,9 @@ class TypeTPSStat extends Component{
         }
         if (previousProps.providerData !== this.props.providerData){
             this.setState({providerData: this.props.providerData});
+        }
+        if (previousProps.mode !== this.props.mode){
+            this.setState({mode: this.props.mode});
         }
       }
 
@@ -99,4 +104,4 @@ class TypeTPSStat extends Component{
     }
 }
 
-export default TypeTPSStat;
+export default TypeDataStat;

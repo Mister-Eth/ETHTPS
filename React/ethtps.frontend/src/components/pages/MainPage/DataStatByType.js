@@ -1,14 +1,15 @@
 import * as React from "react";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import TreemapInstantTPSStat from '../../TreemapInstantTPSStat';
+import TreemapInstantDataStat from '../../TreemapInstantDataStat';
 import { BrowserView, MobileView } from 'react-device-detect';
-import TPSStatTypeSelector from './TPSStatTypeSelector';
-import InstantTPSStat from '../../InstantTPSStat';
-import TypeTPSStat from '../../TypeTPSStat';
-import TreemapTypeTPSStat from "../../TreemapTypeTPSStat";
+import StatTypeSelector from './StatTypeSelector';
+import InstantDataStat from '../../InstantDataStat';
+import TypeDataStat from '../../TypeDataStat';
+import TreemapTypeDataStat from "../../TreemapTypeDataStat";
+import TotalDataSummaryStat from "../../TotalDataSummaryStat";
 
-export default class TPSStatByType extends React.Component {
+export default class DataStatByType extends React.Component {
     constructor(props){
         super(props);
         
@@ -19,6 +20,7 @@ export default class TPSStatByType extends React.Component {
             instantTPS: props.instantTPS,
             providerData: props.providerData,
             stat: 'network',
+            mode: props.mode,
             providerTypeColorDictionary: props.providerTypeColorDictionary
         }
     }
@@ -42,6 +44,9 @@ export default class TPSStatByType extends React.Component {
         if (previousProps.providerTypeColorDictionary !== this.props.providerTypeColorDictionary){      
             this.setState({providerTypeColorDictionary: this.props.providerTypeColorDictionary})
         }
+        if (previousProps.mode !== this.props.mode){
+            this.setState({mode: this.props.mode});
+        }
     }
 
     onStatChanged(stat){
@@ -55,33 +60,37 @@ export default class TPSStatByType extends React.Component {
             case 'network':
                 title = 'Each section of the chart below represents the throughput of a network. Data gets updated automatically.';
                 stat = <>
-                <MobileView>
-                    <InstantTPSStat
-                        data={this.state.instantTPS} 
-                        colorDictionary={this.state.colorDictionary} 
-                        providerData={this.state.providerData}/>  
-                </MobileView>
                 <BrowserView>
-                    <TreemapInstantTPSStat
+                    <InstantDataStat
                         data={this.state.instantTPS} 
                         colorDictionary={this.state.colorDictionary} 
+                        mode={this.state.mode}
+                        providerData={this.state.providerData}/>  
+                </BrowserView>
+                <BrowserView>
+                    <TreemapInstantDataStat
+                        data={this.state.instantTPS} 
+                        colorDictionary={this.state.colorDictionary} 
+                        mode={this.state.mode}
                         providerData={this.state.providerData}/>  
                 </BrowserView>
                 </>
                 break;
             case 'networkType':
-                title = 'Each section of the chart below represents the total throughput of networks of a certain type. Data gets updated automatically.';
+                title = 'Each section of the chart below represents the total throughput of all networks of a certain type. Data gets updated automatically.';
                 stat = <>
-                <MobileView>
-                    <TypeTPSStat
-                        data={this.state.instantTPS} 
-                        colorDictionary={this.state.providerTypeColorDictionary} 
-                        providerData={this.state.providerData}/>  
-                </MobileView>
                 <BrowserView>
-                    <TreemapTypeTPSStat
+                    <TypeDataStat
                         data={this.state.instantTPS} 
                         colorDictionary={this.state.providerTypeColorDictionary} 
+                        mode={this.state.mode}
+                        providerData={this.state.providerData}/>  
+                </BrowserView>
+                <BrowserView>
+                    <TreemapTypeDataStat
+                        data={this.state.instantTPS} 
+                        colorDictionary={this.state.providerTypeColorDictionary} 
+                        mode={this.state.mode}
                         providerData={this.state.providerData}/>  
                 </BrowserView>
                 </>
@@ -91,10 +100,14 @@ export default class TPSStatByType extends React.Component {
                 break;
         }
         return <>
+        <TotalDataSummaryStat
+             providerData={this.state.providerData}
+             mode={this.state.mode}
+             data={this.state.instantTPS}/>
         <p>
             Click one of the buttons below to change the chart type
         </p>
-        <TPSStatTypeSelector onChange={this.onStatChanged.bind(this)} split={this.state.split}/>
+        <StatTypeSelector onChange={this.onStatChanged.bind(this)} split={this.state.split}/>
         <p>
             {title}
         </p>

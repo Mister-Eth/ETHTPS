@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import ReactApexChart from "react-apexcharts"
+import ReactApexChart from "react-apexcharts";
+import TotalDataSummaryStat from "./TotalDataSummaryStat";
 
-export default class TreemapInstantTPSStat extends React.Component {
+export default class TreemapInstantDataStat extends React.Component {
     constructor(props) {
     super(props);
 
@@ -10,6 +11,7 @@ export default class TreemapInstantTPSStat extends React.Component {
             providerData:props.providerData,
             colorDictionary:props.colorDictionary,
             series:[],
+            mode: props.mode,
             options: {
               legend: {
                 show: false
@@ -80,7 +82,9 @@ export default class TreemapInstantTPSStat extends React.Component {
         if (previousProps.providerData !== this.props.providerData){
             this.setState({providerData: this.props.providerData});
         }
-
+        if (previousProps.mode !== this.props.mode){
+            this.setState({mode: this.props.mode});
+        }
     }
     
     getColors(props){
@@ -90,12 +94,6 @@ export default class TreemapInstantTPSStat extends React.Component {
 
     render() {
         return <>
-        <center>
-            <h4 className={'tooltip'}>
-                Ethereum currently does {parseFloat(this.calculateTotalTPS(this.state).toString()).toFixed(2)} TPS
-                <span className={'tooltiptext'}>This includes L2s, sidechains (if the box below is unchecked), ZK rollups, validiums etc.</span>
-            </h4>
-        </center>
         <div id="chart">
             <ReactApexChart options={this.state.options} series={this.createSeries(this.state)} type="treemap" height={350} />
         </div>

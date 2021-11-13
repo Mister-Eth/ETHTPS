@@ -1,10 +1,8 @@
 import * as React from "react";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import './TPSStatTypeSelector.css';
-import { makeStyles } from "@material-ui/core/styles";
 
-export default class TPSStatTypeSelector extends React.Component {
+export default class StatTypeSelector extends React.Component {
     constructor(props){
         super(props);
         

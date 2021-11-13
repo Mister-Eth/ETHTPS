@@ -4,9 +4,8 @@ import React, { ReactDOM, useState, useEffect } from "react";
 import Timeline from '../../Timeline';
 import HorizontalBarChart from '../../HorizontalBarChart'
 import ProviderTable from '../../ProviderTable';
-import TPSStatByType from './TPSStatByType';
-import gasIcon from '../../../assets/gas.png';
-import numberIcon from '../../../assets/number_two_icon_178223.png';
+import DataStatByType from './DataStatByType';
+import ModeSelector from '../../ModeSelector';
 
 class MainPage extends React.Component {
 
@@ -88,18 +87,24 @@ class MainPage extends React.Component {
     return (state.excludeSidechains)?state.homePageModel.providerData.filter(x=>x.type !== "Sidechain"):state.homePageModel.providerData
   }
 
+  modeChanged(mode){
+    this.setState({mode: mode});
+  }
+
  render(){
   return (
     <>
+      <ModeSelector defaultMode={this.state.mode} onChange={this.modeChanged.bind(this)}/>
       <h3>
-        Current TPS overview
+        Current {this.state.mode.toUpperCase()} overview
       </h3>
-        <TPSStatByType 
+        <DataStatByType 
             excludeSidechains={this.state.excludeSidechains}
             colorDictionary={this.state.homePageModel.colorDictionary}
             instantTPS={this.state.homePageModel.instantTPS}
             providerData={this.getProviderData(this.state)}
             providerTypeColorDictionary={this.state.homePageModel.providerTypeColorDictionary}
+            mode={this.state.mode}
             split="network"/>
       <br/>
       <label className={"small"}>
@@ -119,10 +124,11 @@ class MainPage extends React.Component {
       instantTPSData={this.state.homePageModel.instantTPS} 
       colorDictionary={this.state.homePageModel.colorDictionary} 
       maxTPS={this.state.homePageModel.maxTPS}
+      mode={this.state.mode}
       providerData={this.getProviderData(this.state)}/>
       <hr/>
       <h3>
-        Current TPS distribution
+        Current {this.state.mode.toUpperCase()} distribution
       </h3>
       <p>
         This is an ordered bar chart of each network's throughput.
@@ -131,6 +137,7 @@ class MainPage extends React.Component {
       <HorizontalBarChart 
         data={this.state.homePageModel.instantTPS} 
         colorDictionary={this.state.homePageModel.colorDictionary} 
+        mode={this.state.mode}
         providerData={this.getProviderData(this.state)}/>
     </>
   );

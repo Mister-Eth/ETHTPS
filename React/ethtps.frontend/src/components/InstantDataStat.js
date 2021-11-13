@@ -1,7 +1,8 @@
 import { Component } from 'react';
 import { Bar } from 'react-chartjs-2';
+import TotalDataSummaryStat from './TotalDataSummaryStat';
 
-class InstantTPSStat extends Component{
+class InstantDataStat extends Component{
     constructor(props){
         super(props);
 
@@ -14,6 +15,7 @@ class InstantTPSStat extends Component{
             max: 1,
             data: props.data,
             providerData: props.providerData,
+            mode: props.mode,
             colorDictionary: props.colorDictionary
           }
     }
@@ -28,6 +30,9 @@ class InstantTPSStat extends Component{
         }
         if (previousProps.providerData !== this.props.providerData){
             this.setState({providerData: this.props.providerData});
+        } 
+        if (previousProps.mode !== this.props.mode){
+            this.setState({mode: this.props.mode});
         }
       }
 
@@ -56,18 +61,12 @@ class InstantTPSStat extends Component{
         }
         return t.reduce((a, b) => a + b);
     }
-
+    
     render(){
         if (this.state.data === null){
             return<></>
         }
         return <>
-        <center>
-            <h4 className={'tooltip'}>
-                Ethereum currently does {parseFloat(this.calculateTotalTPS(this.state).toString()).toFixed(2)} TPS
-                <span className={'tooltiptext'}>This includes L2s, sidechains (if the box below is unchecked), ZK rollups, validiums etc.</span>
-            </h4>
-        </center>
         <Bar data={{
                 labels: ["TPS"],
                 datasets: this.createDatasets(this.state)
@@ -106,4 +105,4 @@ class InstantTPSStat extends Component{
     }
 }
 
-export default InstantTPSStat;
+export default InstantDataStat;

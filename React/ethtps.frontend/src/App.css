@@ -44,6 +44,14 @@
   margin-left: 5px;
 }
 
+.small-img:hover{
+  cursor: pointer;
+}
+
+.top-right{
+  float:right
+}
+
 footer{
 margin-top: 20px;
 margin-left:10px;
