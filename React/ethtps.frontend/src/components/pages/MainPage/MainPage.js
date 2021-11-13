@@ -94,12 +94,19 @@ class MainPage extends React.Component {
     globalInstantDataService.getAndCallbackInstantData();
   }
  render(){
+  let optionalGasAdjustedText = "";
+  if (this.state.mode === "gasAdjustedTPS"){
+    optionalGasAdjustedText = "The gas-adjusted TPS value of a network is calculated by dividing the total gas used by the network at any time by 21,000 gas (the gas cost of a simple ETH transfer). In other words, this value represents the theoretical number of transactions per second a network were to do if all transactions were simple ETH transfers.";
+  }
   return (
     <>
       <ModeSelector defaultMode={this.state.mode} onChange={this.modeChanged.bind(this)}/>
       <h3>
         Current {formatModeName(this.state.mode)} overview
       </h3>
+      <p>
+      {optionalGasAdjustedText}
+      </p>
         <DataStatByType 
             excludeSidechains={this.state.excludeSidechains}
             colorDictionary={this.state.homePageModel.colorDictionary}
