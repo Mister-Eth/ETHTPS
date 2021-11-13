@@ -29,7 +29,7 @@ export default class ModeSelector extends React.Component {
                 image = <img className={'small-img top-right'} title={'Gas mode'} src={gasIcon} onClick={this.gpsSelected.bind(this)}/>;
                 break;
             default:
-                image = <img className={'small-img top-right'} title={'TPS mode'} src={numberIcon} onClick={this.tpsSelected.bind(this)}/>;
+                image = <img className={'small-img top-right'} title={'TPS mode'} src={numberIcon} onClick={this.valueSelected.bind(this)}/>;
                 break;
         }
         return <>

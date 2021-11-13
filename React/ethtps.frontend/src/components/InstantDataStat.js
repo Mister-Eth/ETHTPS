@@ -39,7 +39,7 @@ class InstantDataStat extends Component{
     createDataset(x, data, colorDictionary){
         return{
             label: x.name,
-            data: [data[x.name][0].tps],
+            data: [data[x.name][0].value],
             backgroundColor: colorDictionary[x.name],
         }
     }
@@ -55,7 +55,7 @@ class InstantDataStat extends Component{
         if (state.data === undefined || state.data.length === 0)
             return 20;
         
-        let t = state.providerData.filter(x=>state.data[x.name] !== undefined).map(x=>state.data[x.name][0].tps);
+        let t = state.providerData.filter(x=>state.data[x.name] !== undefined).map(x=>state.data[x.name][0].value);
         if (t.length === 0){
             return 0;
         }

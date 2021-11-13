@@ -13,8 +13,8 @@
 
 
 import ApiClient from "../ApiClient";
-import GPSDataPoint from '../model/GPSDataPoint';
-import { GPSResponseModel } from "..";
+import DataPoint from '../model/DataPoint';
+import { DataResponseModel } from "..";
 
 /**
 * GPS service.
@@ -39,7 +39,7 @@ export default class GPSApi {
      * Callback function to receive the result of the aPIGPSGetGet operation.
      * @callback module:api/GPSApi~aPIGPSGetGetCallback
      * @param {String} error Error message, if any.
-     * @param {Object.<String, {String: [GPSResponseModel]}>} data The data returned by the service call.
+     * @param {Object.<String, {String: [DataResponseModel]}>} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -50,7 +50,7 @@ export default class GPSApi {
      * @param {String} opts.network  (default to 'Mainnet')
      * @param {Boolean} opts.includeSidechains  (default to true)
      * @param {module:api/GPSApi~aPIGPSGetGetCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link Object.<String, {String: [GPSResponseModel]}>}
+     * data is of type: {@link Object.<String, {String: [DataResponseModel]}>}
      */
     aPIGPSGetGet(opts, callback) {
       opts = opts || {};
@@ -72,7 +72,7 @@ export default class GPSApi {
       let authNames = [];
       let contentTypes = [];
       let accepts = ['text/plain', 'application/json', 'text/json'];
-      let returnType = {'String': [GPSResponseModel]};
+      let returnType = {'String': [DataResponseModel]};
       return this.apiClient.callApi(
         '/API/GPS/Get', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
@@ -84,7 +84,7 @@ export default class GPSApi {
      * Callback function to receive the result of the aPIGPSInstantGet operation.
      * @callback module:api/GPSApi~aPIGPSInstantGetCallback
      * @param {String} error Error message, if any.
-     * @param {Object.<String, {String: [GPSDataPoint]}>} data The data returned by the service call.
+     * @param {Object.<String, {String: [DataPoint]}>} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -92,7 +92,7 @@ export default class GPSApi {
      * @param {Object} opts Optional parameters
      * @param {Boolean} opts.includeSidechains  (default to true)
      * @param {module:api/GPSApi~aPIGPSInstantGetCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link Object.<String, {String: [GPSDataPoint]}>}
+     * data is of type: {@link Object.<String, {String: [DataPoint]}>}
      */
     aPIGPSInstantGet(opts, callback) {
       opts = opts || {};
@@ -111,7 +111,7 @@ export default class GPSApi {
       let authNames = [];
       let contentTypes = [];
       let accepts = ['text/plain', 'application/json', 'text/json'];
-      let returnType = {'String': [GPSDataPoint]};
+      let returnType = {'String': [DataPoint]};
       return this.apiClient.callApi(
         '/API/GPS/Instant', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
@@ -123,7 +123,7 @@ export default class GPSApi {
      * Callback function to receive the result of the aPIGPSMaxGet operation.
      * @callback module:api/GPSApi~aPIGPSMaxGetCallback
      * @param {String} error Error message, if any.
-     * @param {Object.<String, module:model/{String: GPSDataPoint}>} data The data returned by the service call.
+     * @param {Object.<String, module:model/{String: DataPoint}>} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -132,7 +132,7 @@ export default class GPSApi {
      * @param {String} opts.provider 
      * @param {String} opts.network  (default to 'Mainnet')
      * @param {module:api/GPSApi~aPIGPSMaxGetCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link Object.<String, module:model/{String: GPSDataPoint}>}
+     * data is of type: {@link Object.<String, module:model/{String: DataPoint}>}
      */
     aPIGPSMaxGet(opts, callback) {
       opts = opts || {};
@@ -152,7 +152,7 @@ export default class GPSApi {
       let authNames = [];
       let contentTypes = [];
       let accepts = ['text/plain', 'application/json', 'text/json'];
-      let returnType = {'String': GPSDataPoint};
+      let returnType = {'String': DataPoint};
       return this.apiClient.callApi(
         '/API/GPS/Max', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,

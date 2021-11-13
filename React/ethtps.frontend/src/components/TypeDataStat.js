@@ -48,7 +48,7 @@ class TypeDataStat extends Component{
                     backgroundColor: state.colorDictionary[p.type]
                 });
             }
-            datasets.filter(x => x.label === p.type)[0].data[0] += state.data[p.name][0].tps;
+            datasets.filter(x => x.label === p.type)[0].data[0] += state.data[p.name][0].value;
         }
         return datasets;
     }
@@ -57,7 +57,7 @@ class TypeDataStat extends Component{
         if (state.data === undefined || state.data.length === 0)
             return 20;
         
-        let t = state.providerData.filter(x=>state.data[x.name] !== undefined).map(x=>state.data[x.name][0].tps);
+        let t = state.providerData.filter(x=>state.data[x.name] !== undefined).map(x=>state.data[x.name][0].value);
         if (t.length === 0){
             return 0;
         }

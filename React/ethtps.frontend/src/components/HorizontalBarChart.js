@@ -15,7 +15,7 @@ class HorizontalBarChart extends Component{
     }
     /*
     
-        let [labels, data] = this.orderDataDescending(this.props.providerData.map(x => x.name), this.props.providerData.filter(x=>this.props.data[x.name] !== undefined).map(x => this.props.data[x.name][0].tps));
+        let [labels, data] = this.orderDataDescending(this.props.providerData.map(x => x.name), this.props.providerData.filter(x=>this.props.data[x.name] !== undefined).map(x => this.props.data[x.name][0].value));
         this.setState({labels: labels})
     */
     componentDidUpdate(previousProps, previousState){
@@ -82,7 +82,7 @@ class HorizontalBarChart extends Component{
         let t = state.data[label];
         if (t === undefined)
           continue;
-        data.push(t[0].tps);
+        data.push(t[0].value);
       }
       let [orderedLabels, orderedData] = this.orderDataDescending(labels, data);
       let colors = [];

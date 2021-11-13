@@ -143,11 +143,9 @@ Class | Method | HTTP request | Description
 ## Documentation for Models
 
  - [EthtpsApi.BlockInfo](docs/BlockInfo.md)
- - [EthtpsApi.GPSDataPoint](docs/GPSDataPoint.md)
- - [EthtpsApi.GPSResponseModel](docs/GPSResponseModel.md)
+ - [EthtpsApi.DataPoint](docs/DataPoint.md)
+ - [EthtpsApi.DataResponseModel](docs/DataResponseModel.md)
  - [EthtpsApi.ProviderResponseModel](docs/ProviderResponseModel.md)
- - [EthtpsApi.TPSDataPoint](docs/TPSDataPoint.md)
- - [EthtpsApi.TPSResponseModel](docs/TPSResponseModel.md)
 
 
 ## Documentation for Authorization

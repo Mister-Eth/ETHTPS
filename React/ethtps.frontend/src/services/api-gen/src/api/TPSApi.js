@@ -13,8 +13,9 @@
 
 
 import ApiClient from "../ApiClient";
-import TPSDataPoint from '../model/TPSDataPoint';
-import { TPSResponseModel } from "..";
+import DataPoint from '../model/DataPoint';
+import { DataResponseModel } from "..";
+
 /**
 * TPS service.
 * @module api/TPSApi
@@ -38,7 +39,7 @@ export default class TPSApi {
      * Callback function to receive the result of the aPITPSGetGet operation.
      * @callback module:api/TPSApi~aPITPSGetGetCallback
      * @param {String} error Error message, if any.
-     * @param {Object.<String, {String: [TPSResponseModel]}>} data The data returned by the service call.
+     * @param {Object.<String, {String: [DataResponseModel]}>} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -49,7 +50,7 @@ export default class TPSApi {
      * @param {String} opts.network  (default to 'Mainnet')
      * @param {Boolean} opts.includeSidechains  (default to true)
      * @param {module:api/TPSApi~aPITPSGetGetCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link Object.<String, {String: [TPSResponseModel]}>}
+     * data is of type: {@link Object.<String, {String: [DataResponseModel]}>}
      */
     aPITPSGetGet(opts, callback) {
       opts = opts || {};
@@ -71,7 +72,7 @@ export default class TPSApi {
       let authNames = [];
       let contentTypes = [];
       let accepts = ['text/plain', 'application/json', 'text/json'];
-      let returnType = {'String': [TPSResponseModel]};
+      let returnType = {'String': [DataResponseModel]};
       return this.apiClient.callApi(
         '/API/TPS/Get', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
@@ -83,7 +84,7 @@ export default class TPSApi {
      * Callback function to receive the result of the aPITPSInstantGet operation.
      * @callback module:api/TPSApi~aPITPSInstantGetCallback
      * @param {String} error Error message, if any.
-     * @param {Object.<String, {String: [TPSDataPoint]}>} data The data returned by the service call.
+     * @param {Object.<String, {String: [DataPoint]}>} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -91,7 +92,7 @@ export default class TPSApi {
      * @param {Object} opts Optional parameters
      * @param {Boolean} opts.includeSidechains  (default to true)
      * @param {module:api/TPSApi~aPITPSInstantGetCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link Object.<String, {String: [TPSDataPoint]}>}
+     * data is of type: {@link Object.<String, {String: [DataPoint]}>}
      */
     aPITPSInstantGet(opts, callback) {
       opts = opts || {};
@@ -110,7 +111,7 @@ export default class TPSApi {
       let authNames = [];
       let contentTypes = [];
       let accepts = ['text/plain', 'application/json', 'text/json'];
-      let returnType = {'String': [TPSDataPoint]};
+      let returnType = {'String': [DataPoint]};
       return this.apiClient.callApi(
         '/API/TPS/Instant', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
@@ -122,7 +123,7 @@ export default class TPSApi {
      * Callback function to receive the result of the aPITPSMaxGet operation.
      * @callback module:api/TPSApi~aPITPSMaxGetCallback
      * @param {String} error Error message, if any.
-     * @param {Object.<String, module:model/{String: TPSDataPoint}>} data The data returned by the service call.
+     * @param {Object.<String, module:model/{String: DataPoint}>} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -131,7 +132,7 @@ export default class TPSApi {
      * @param {String} opts.provider 
      * @param {String} opts.network  (default to 'Mainnet')
      * @param {module:api/TPSApi~aPITPSMaxGetCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link Object.<String, module:model/{String: TPSDataPoint}>}
+     * data is of type: {@link Object.<String, module:model/{String: DataPoint}>}
      */
     aPITPSMaxGet(opts, callback) {
       opts = opts || {};
@@ -151,7 +152,7 @@ export default class TPSApi {
       let authNames = [];
       let contentTypes = [];
       let accepts = ['text/plain', 'application/json', 'text/json'];
-      let returnType = {'String': TPSDataPoint};
+      let returnType = {'String': DataPoint};
       return this.apiClient.callApi(
         '/API/TPS/Max', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,

@@ -267,7 +267,7 @@
                 "schema": {
                   "type": "object",
                   "additionalProperties": {
-                    "$ref": "#/components/schemas/GPSDataPoint"
+                    "$ref": "#/components/schemas/DataPoint"
                   }
                 }
               },
@@ -275,7 +275,7 @@
                 "schema": {
                   "type": "object",
                   "additionalProperties": {
-                    "$ref": "#/components/schemas/GPSDataPoint"
+                    "$ref": "#/components/schemas/DataPoint"
                   }
                 }
               },
@@ -283,7 +283,7 @@
                 "schema": {
                   "type": "object",
                   "additionalProperties": {
-                    "$ref": "#/components/schemas/GPSDataPoint"
+                    "$ref": "#/components/schemas/DataPoint"
                   }
                 }
               }
@@ -317,7 +317,7 @@
                   "additionalProperties": {
                     "type": "array",
                     "items": {
-                      "$ref": "#/components/schemas/GPSDataPoint"
+                      "$ref": "#/components/schemas/DataPoint"
                     }
                   }
                 }
@@ -328,7 +328,7 @@
                   "additionalProperties": {
                     "type": "array",
                     "items": {
-                      "$ref": "#/components/schemas/GPSDataPoint"
+                      "$ref": "#/components/schemas/DataPoint"
                     }
                   }
                 }
@@ -339,7 +339,7 @@
                   "additionalProperties": {
                     "type": "array",
                     "items": {
-                      "$ref": "#/components/schemas/GPSDataPoint"
+                      "$ref": "#/components/schemas/DataPoint"
                     }
                   }
                 }
@@ -396,7 +396,7 @@
                   "additionalProperties": {
                     "type": "array",
                     "items": {
-                      "$ref": "#/components/schemas/GPSResponseModel"
+                      "$ref": "#/components/schemas/DataResponseModel"
                     }
                   }
                 }
@@ -407,7 +407,7 @@
                   "additionalProperties": {
                     "type": "array",
                     "items": {
-                      "$ref": "#/components/schemas/GPSResponseModel"
+                      "$ref": "#/components/schemas/DataResponseModel"
                     }
                   }
                 }
@@ -418,7 +418,7 @@
                   "additionalProperties": {
                     "type": "array",
                     "items": {
-                      "$ref": "#/components/schemas/GPSResponseModel"
+                      "$ref": "#/components/schemas/DataResponseModel"
                     }
                   }
                 }
@@ -497,7 +497,7 @@
                 "schema": {
                   "type": "object",
                   "additionalProperties": {
-                    "$ref": "#/components/schemas/TPSDataPoint"
+                    "$ref": "#/components/schemas/DataPoint"
                   }
                 }
               },
@@ -505,7 +505,7 @@
                 "schema": {
                   "type": "object",
                   "additionalProperties": {
-                    "$ref": "#/components/schemas/TPSDataPoint"
+                    "$ref": "#/components/schemas/DataPoint"
                   }
                 }
               },
@@ -513,7 +513,7 @@
                 "schema": {
                   "type": "object",
                   "additionalProperties": {
-                    "$ref": "#/components/schemas/TPSDataPoint"
+                    "$ref": "#/components/schemas/DataPoint"
                   }
                 }
               }
@@ -569,7 +569,7 @@
                   "additionalProperties": {
                     "type": "array",
                     "items": {
-                      "$ref": "#/components/schemas/TPSResponseModel"
+                      "$ref": "#/components/schemas/DataResponseModel"
                     }
                   }
                 }
@@ -580,7 +580,7 @@
                   "additionalProperties": {
                     "type": "array",
                     "items": {
-                      "$ref": "#/components/schemas/TPSResponseModel"
+                      "$ref": "#/components/schemas/DataResponseModel"
                     }
                   }
                 }
@@ -591,7 +591,7 @@
                   "additionalProperties": {
                     "type": "array",
                     "items": {
-                      "$ref": "#/components/schemas/TPSResponseModel"
+                      "$ref": "#/components/schemas/DataResponseModel"
                     }
                   }
                 }
@@ -626,7 +626,7 @@
                   "additionalProperties": {
                     "type": "array",
                     "items": {
-                      "$ref": "#/components/schemas/TPSDataPoint"
+                      "$ref": "#/components/schemas/DataPoint"
                     }
                   }
                 }
@@ -637,7 +637,7 @@
                   "additionalProperties": {
                     "type": "array",
                     "items": {
-                      "$ref": "#/components/schemas/TPSDataPoint"
+                      "$ref": "#/components/schemas/DataPoint"
                     }
                   }
                 }
@@ -648,7 +648,7 @@
                   "additionalProperties": {
                     "type": "array",
                     "items": {
-                      "$ref": "#/components/schemas/TPSDataPoint"
+                      "$ref": "#/components/schemas/DataPoint"
                     }
                   }
                 }
@@ -683,27 +683,27 @@
         },
         "additionalProperties": false
       },
-      "GPSDataPoint": {
+      "DataPoint": {
         "type": "object",
         "properties": {
           "date": {
             "type": "string",
             "format": "date-time"
           },
-          "gps": {
+          "value": {
             "type": "number",
             "format": "double"
           }
         },
         "additionalProperties": false
       },
-      "GPSResponseModel": {
+      "DataResponseModel": {
         "type": "object",
         "properties": {
           "data": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/GPSDataPoint"
+              "$ref": "#/components/schemas/DataPoint"
             },
             "nullable": true
           },
@@ -726,37 +726,6 @@
             "nullable": true
           },
           "type": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "TPSDataPoint": {
-        "type": "object",
-        "properties": {
-          "date": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "tps": {
-            "type": "number",
-            "format": "double"
-          }
-        },
-        "additionalProperties": false
-      },
-      "TPSResponseModel": {
-        "type": "object",
-        "properties": {
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TPSDataPoint"
-            },
-            "nullable": true
-          },
-          "provider": {
             "type": "string",
             "nullable": true
           }

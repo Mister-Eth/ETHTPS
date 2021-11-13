@@ -67,7 +67,7 @@ export default class HistoricalChart extends React.Component {
             globalTPSApi.aPITPSGetGet({provider: provider, interval: this.transformIntervalName(interval), network: network}, (err,data,res)=>{
               let d = data[provider];
               this.setState({labels: d.map(x => x.data[0].date)});
-              this.setState({data: d.map(x => x.data[0].tps)});
+              this.setState({data: d.map(x => x.data[0].value)});
             });
           break;
         case 'gps':

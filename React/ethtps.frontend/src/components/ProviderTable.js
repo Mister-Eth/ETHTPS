@@ -79,12 +79,12 @@ class ProviderTable extends React.Component {
               </TableCell>
               <TableCell align="left">
                 <div className={'l1'}>
-                  {(this.state.instantTPSData[row.name] !== undefined)?this.to2DecimalPlaces(this.state.instantTPSData[row.name][0].tps):0}
+                  {(this.state.instantTPSData[row.name] !== undefined)?this.to2DecimalPlaces(this.state.instantTPSData[row.name][0].value):0}
                   </div>
               </TableCell>
               <TableCell align="left">
               <div className={'l1'}>
-                {(this.state.maxTPS === undefined || this.state.maxTPS[row.name] === undefined)?0:this.to2DecimalPlaces(this.state.maxTPS[row.name].tps)}
+                {(this.state.maxTPS === undefined || this.state.maxTPS[row.name] === undefined)?0:this.to2DecimalPlaces(this.state.maxTPS[row.name].value)}
               </div>
               </TableCell>
               <TableCell align="left">

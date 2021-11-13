@@ -38,7 +38,7 @@ export default class TreemapInstantDataStat extends React.Component {
         if (state.data === undefined || state.data.length === 0)
             return 20;
         
-        let t = state.providerData.filter(x=>state.data[x.name] !== undefined).map(x=>state.data[x.name][0].tps);
+        let t = state.providerData.filter(x=>state.data[x.name] !== undefined).map(x=>state.data[x.name][0].value);
         if (t.length === 0){
             return 0;
         }
@@ -52,7 +52,7 @@ export default class TreemapInstantDataStat extends React.Component {
     createDataPoint(x, state){
         return {
             x: x.name,
-            y: this.to2DecimalPlaces(state.data[x.name][0].tps)
+            y: this.to2DecimalPlaces(state.data[x.name][0].value)
         }
     }
 

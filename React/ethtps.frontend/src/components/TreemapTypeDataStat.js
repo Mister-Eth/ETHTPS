@@ -38,7 +38,7 @@ export default class TreemapTypeDataStat extends React.Component {
         if (state.data === undefined || state.data.length === 0)
             return 20;
         
-        let t = state.providerData.filter(x=>state.data[x.name] !== undefined).map(x=>state.data[x.name][0].tps);
+        let t = state.providerData.filter(x=>state.data[x.name] !== undefined).map(x=>state.data[x.name][0].value);
         if (t.length === 0){
             return 0;
         }
@@ -52,7 +52,7 @@ export default class TreemapTypeDataStat extends React.Component {
     createDataPoint(x, state){
         return {
             x: x.type,
-            y: this.to2DecimalPlaces(state.data[x.name][0].tps)
+            y: this.to2DecimalPlaces(state.data[x.name][0].value)
         }
     }
 
@@ -69,7 +69,7 @@ export default class TreemapTypeDataStat extends React.Component {
                     fillColor:state.colorDictionary[p.type]
                 });
             }
-            datasets.filter(x => x.x === p.type)[0].y += state.data[p.name][0].tps;
+            datasets.filter(x => x.x === p.type)[0].y += state.data[p.name][0].value;
         }
         return [
                 {

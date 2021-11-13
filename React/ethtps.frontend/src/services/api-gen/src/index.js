@@ -14,11 +14,9 @@
 
 import ApiClient from './ApiClient';
 import BlockInfo from './model/BlockInfo';
-import GPSDataPoint from './model/GPSDataPoint';
-import GPSResponseModel from './model/GPSResponseModel';
+import DataPoint from './model/DataPoint';
+import DataResponseModel from './model/DataResponseModel';
 import ProviderResponseModel from './model/ProviderResponseModel';
-import TPSDataPoint from './model/TPSDataPoint';
-import TPSResponseModel from './model/TPSResponseModel';
 import GPSApi from './api/GPSApi';
 import GeneralApi from './api/GeneralApi';
 import TPSApi from './api/TPSApi';
@@ -70,34 +68,22 @@ export {
     BlockInfo,
 
     /**
-     * The GPSDataPoint model constructor.
-     * @property {module:model/GPSDataPoint}
+     * The DataPoint model constructor.
+     * @property {module:model/DataPoint}
      */
-    GPSDataPoint,
+    DataPoint,
 
     /**
-     * The GPSResponseModel model constructor.
-     * @property {module:model/GPSResponseModel}
+     * The DataResponseModel model constructor.
+     * @property {module:model/DataResponseModel}
      */
-    GPSResponseModel,
+    DataResponseModel,
 
     /**
      * The ProviderResponseModel model constructor.
      * @property {module:model/ProviderResponseModel}
      */
     ProviderResponseModel,
-
-    /**
-     * The TPSDataPoint model constructor.
-     * @property {module:model/TPSDataPoint}
-     */
-    TPSDataPoint,
-
-    /**
-     * The TPSResponseModel model constructor.
-     * @property {module:model/TPSResponseModel}
-     */
-    TPSResponseModel,
 
     /**
     * The GPSApi service constructor.
