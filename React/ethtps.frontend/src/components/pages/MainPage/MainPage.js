@@ -6,6 +6,7 @@ import HorizontalBarChart from '../../HorizontalBarChart'
 import ProviderTable from '../../ProviderTable';
 import DataStatByType from './DataStatByType';
 import ModeSelector from '../../ModeSelector';
+import * as qs from 'query-string';
 
 class MainPage extends React.Component {
 
@@ -25,6 +26,12 @@ class MainPage extends React.Component {
       excludeSidechains: false,
       modifiedInstantTPS: {},
       mode: "tps"
+    }
+    let queryStringMode =  qs.parse(window.location.search).mode;
+    if (queryStringMode !== undefined){
+      if (queryStringMode === "gps" || queryStringMode === "tps" || queryStringMode === "gasAdjustedTPS"){
+        this.state.mode = queryStringMode;
+      }
     }
   }
 
