@@ -1,5 +1,5 @@
 import '../../..//App.css';
-import { globalGeneralApi, globalGPSApi, globalTPSApi, globalInstantDataService } from '../../../services/common';
+import { globalGeneralApi, formatModeName, globalInstantDataService } from '../../../services/common';
 import React, { ReactDOM, useState, useEffect } from "react";
 import Timeline from '../../Timeline';
 import HorizontalBarChart from '../../HorizontalBarChart'
@@ -14,7 +14,8 @@ class MainPage extends React.Component {
 
     this.state = {
       homePageModel: {
-        instantTPS: JSON.parse('{"Ethereum":[{"date":"0001-01-01T00:00:00","value":11.167883211678832}],"Arbitrum One":[{"date":"0001-01-01T00:00:00","value":0.1875}],"Optimism":[{"date":"0001-01-01T00:00:00","value":0.2}],"Polygon":[{"date":"0001-01-01T00:00:00","value":130}],"XDAI":[{"date":"0001-01-01T00:00:00","value":1.7307692307692306}],"ZKSwap":[{"date":"0001-01-01T00:00:00","value":0.006600660066006601}],"ZKSync":[{"date":"0001-01-01T00:00:00","value":0.25096525096525096}],"AVAX C-chain":[{"date":"0001-01-01T00:00:00","value":0.3333333333333333}],"Boba Network":[{"date":"0001-01-01T00:00:00","value":0.034482758620689655}],"Loopring":[{"date":"0001-01-01T00:00:00","value":0.08059023836549375}]}'),
+        selectedInstantData: JSON.parse('{"Ethereum":[{"date":"0001-01-01T00:00:00","value":11.167883211678832}],"Arbitrum One":[{"date":"0001-01-01T00:00:00","value":0.1875}],"Optimism":[{"date":"0001-01-01T00:00:00","value":0.2}],"Polygon":[{"date":"0001-01-01T00:00:00","value":130}],"XDAI":[{"date":"0001-01-01T00:00:00","value":1.7307692307692306}],"ZKSwap":[{"date":"0001-01-01T00:00:00","value":0.006600660066006601}],"ZKSync":[{"date":"0001-01-01T00:00:00","value":0.25096525096525096}],"AVAX C-chain":[{"date":"0001-01-01T00:00:00","value":0.3333333333333333}],"Boba Network":[{"date":"0001-01-01T00:00:00","value":0.034482758620689655}],"Loopring":[{"date":"0001-01-01T00:00:00","value":0.08059023836549375}]}'),
+        allInstantData: JSON.parse('{"tps":{"Ethereum":[{"date":"0001-01-01T00:00:00","value":24.379562043795623}],"Arbitrum One":[{"date":"0001-01-01T00:00:00","value":0.14}],"Optimism":[{"date":"0001-01-01T00:00:00","value":0.2}],"Polygon":[{"date":"0001-01-01T00:00:00","value":23.636363636363633}],"XDAI":[{"date":"0001-01-01T00:00:00","value":2.3076923076923075}],"ZKSwap":[{"date":"0001-01-01T00:00:00","value":0.004329004329004329}],"ZKSync":[{"date":"0001-01-01T00:00:00","value":0.19850352112676056}],"AVAX C-chain":[{"date":"0001-01-01T00:00:00","value":0.3333333333333333}],"Boba Network":[{"date":"0001-01-01T00:00:00","value":0.00931098696461825}],"Loopring":[{"date":"0001-01-01T00:00:00","value":0.15157612340710933}]},"gps":{"Ethereum":[{"date":"0001-01-01T00:00:00","value":2184024.306569343}],"Arbitrum One":[{"date":"0001-01-01T00:00:00","value":30913.62}],"Optimism":[{"date":"0001-01-01T00:00:00","value":0}],"Polygon":[{"date":"0001-01-01T00:00:00","value":4319541.363636363}],"XDAI":[{"date":"0001-01-01T00:00:00","value":329834.42307692306}],"ZKSwap":[{"date":"0001-01-01T00:00:00","value":0}],"ZKSync":[{"date":"0001-01-01T00:00:00","value":0}],"AVAX C-chain":[{"date":"0001-01-01T00:00:00","value":84126}],"Boba Network":[{"date":"0001-01-01T00:00:00","value":953.2402234636871}],"Loopring":[{"date":"0001-01-01T00:00:00","value":2435.669349429913}]}}'),
         colorDictionary: JSON.parse('{"Ethereum":"#490092","Arbitrum One":"#920000","Optimism":"#006ddb","Polygon":"#004949","XDAI":"#ff6db6","ZKSwap":"#c29a2d","ZKSync":"#db6d00","AVAX C-chain":"#22cf22","Boba Network":"#171723","Loopring":"#4a1173"}'),
         providerTypeColorDictionary:JSON.parse('{"Mainnet":"#4a1173","Optimistic rollup":" #3a7311","ZK rollup":"#116b73","Application-specific rollup":"#8ae5d6","Sidechain":"#002d4d"}'),
         providerData: JSON.parse('[{"name":"Ethereum","color":"#490092","type":"Mainnet"},{"name":"Arbitrum One","color":"#920000","type":"Optimistic rollup"},{"name":"Optimism","color":"#006ddb","type":"Optimistic rollup"},{"name":"Polygon","color":"#004949","type":"Sidechain"},{"name":"XDAI","color":"#ff6db6","type":"Sidechain"},{"name":"ZKSwap","color":"#c29a2d","type":"ZK rollup"},{"name":"ZKSync","color":"#db6d00","type":"ZK rollup"},{"name":"AVAX C-chain","color":"#22cf22","type":"Sidechain"},{"name":"Boba Network","color":"#171723","type":"Optimistic rollup"},{"name":"Loopring","color":"#4a1173","type":"ZK rollup"}]'),
@@ -62,24 +63,25 @@ class MainPage extends React.Component {
     this.setState({excludeSidechains : value});
   }
 
-  getFilteredInstantTPSData(state){
+  getFilteredInstantData(state){
     if (state.excludeSidechains){
       let filteredInstantTPSData = {};
       for(let p of state.homePageModel.providerData){
         if (state.homePageModel.providerData.filter(x => x.name == p.name && x.type !== 'Sidechain')){
-          filteredInstantTPSData[p.name] = state.homePageModel.instantTPS[p.name];
+          filteredInstantTPSData[p.name] = state.homePageModel.selectedInstantData[p.name];
         }
       }
       return filteredInstantTPSData;
     }
     else {
-      return state.homePageModel.instantTPSData;
+      return state.homePageModel.selectedInstantData;
     }
   }
 
   updateInstantTPS(data){
     let homePageModel = this.state.homePageModel;
-    homePageModel.instantTPS = data[this.state.mode];
+    homePageModel.selectedInstantData = data[this.state.mode];
+    homePageModel.allInstantData = data;
     this.setState({homePageModel: homePageModel});
   }
 
@@ -91,18 +93,18 @@ class MainPage extends React.Component {
     this.setState({mode: mode});
     globalInstantDataService.getAndCallbackInstantData();
   }
-
  render(){
   return (
     <>
       <ModeSelector defaultMode={this.state.mode} onChange={this.modeChanged.bind(this)}/>
       <h3>
-        Current {this.state.mode.toUpperCase()} overview
+        Current {formatModeName(this.state.mode)} overview
       </h3>
         <DataStatByType 
             excludeSidechains={this.state.excludeSidechains}
             colorDictionary={this.state.homePageModel.colorDictionary}
-            instantTPS={this.state.homePageModel.instantTPS}
+            data={this.state.homePageModel.selectedInstantData}
+            allData={this.state.homePageModel.allInstantData}
             providerData={this.getProviderData(this.state)}
             providerTypeColorDictionary={this.state.homePageModel.providerTypeColorDictionary}
             mode={this.state.mode}
@@ -121,21 +123,22 @@ class MainPage extends React.Component {
       Networks
     </h3>
     <ProviderTable
-      instantTPSData={this.state.homePageModel.instantTPS} 
+      data={this.state.homePageModel.selectedInstantData} 
+      allData={this.state.homePageModel.allInstantData}
       colorDictionary={this.state.homePageModel.colorDictionary} 
       maxData={this.state.homePageModel.maxData[this.state.mode]}
       mode={this.state.mode}
       providerData={this.getProviderData(this.state)}/>
       <hr/>
       <h3>
-        Current {this.state.mode.toUpperCase()} distribution
+        Current {formatModeName(this.state.mode)} distribution
       </h3>
       <p>
         This is an ordered bar chart of each network's throughput.
       </p>
       <Timeline/>
       <HorizontalBarChart 
-        data={this.state.homePageModel.instantTPS} 
+        data={this.state.homePageModel.selectedInstantData} 
         colorDictionary={this.state.homePageModel.colorDictionary} 
         mode={this.state.mode}
         providerData={this.getProviderData(this.state)}/>

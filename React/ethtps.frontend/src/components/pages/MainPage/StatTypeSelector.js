@@ -28,7 +28,6 @@ export default class StatTypeSelector extends React.Component {
         onChange={this.onStatChanged}>
         <ToggleButton value="network">Split by network</ToggleButton>
         <ToggleButton value="networkType">Split by network type</ToggleButton>
-        <ToggleButton value="gasAdjustedTPS">Gas-adjusted TPS</ToggleButton>
     </ToggleButtonGroup>
     }
 }

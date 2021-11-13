@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { Bar } from 'react-chartjs-2';
+import { formatModeName } from '../services/common'
 
 class HorizontalBarChart extends Component{
     constructor(props){
@@ -74,7 +75,7 @@ class HorizontalBarChart extends Component{
         return {
           labels: [],
           datasets: [{
-            label: 'Current ' + this.state.mode.toUpperCase(),
+            label: 'Current ' + formatModeName(this.state.mode),
             data: [],
             backgroundColor: []
           }]
@@ -96,7 +97,7 @@ class HorizontalBarChart extends Component{
       return {
         labels: orderedLabels,
         datasets: [{
-          label: 'Current ' + this.state.mode.toUpperCase(),
+          label: 'Current ' + formatModeName(this.state.mode),
           data: orderedData,
           backgroundColor: colors
         }]

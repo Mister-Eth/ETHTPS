@@ -17,11 +17,12 @@ export default class DataStatByType extends React.Component {
             split: props.split,
             excludeSidechains: props.excludeSidechains,
             colorDictionary: props.colorDictionary,
-            instantTPS: props.instantTPS,
+            data: props.data,
             providerData: props.providerData,
             stat: 'network',
             mode: props.mode,
-            providerTypeColorDictionary: props.providerTypeColorDictionary
+            providerTypeColorDictionary: props.providerTypeColorDictionary,
+            allData: props.allData
         }
     }
 
@@ -35,8 +36,8 @@ export default class DataStatByType extends React.Component {
         if (previousProps.colorDictionary !== this.props.colorDictionary){      
             this.setState({colorDictionary: this.props.colorDictionary})
         }
-        if (previousProps.instantTPS !== this.props.instantTPS){      
-            this.setState({instantTPS: this.props.instantTPS})
+        if (previousProps.data !== this.props.data){      
+            this.setState({data: this.props.data})
         }
         if (previousProps.providerData !== this.props.providerData){      
             this.setState({providerData: this.props.providerData})
@@ -47,6 +48,9 @@ export default class DataStatByType extends React.Component {
         if (previousProps.mode !== this.props.mode){
             this.setState({mode: this.props.mode});
         }
+        if (previousProps.allData !== this.props.allData){
+            this.setState({allData: this.props.allData});
+          }
     }
 
     onStatChanged(stat){
@@ -60,16 +64,16 @@ export default class DataStatByType extends React.Component {
             case 'network':
                 title = 'Each section of the chart below represents the throughput of a network. Data gets updated automatically.';
                 stat = <>
-                <BrowserView>
+                <MobileView>
                     <InstantDataStat
-                        data={this.state.instantTPS} 
+                        data={this.state.data} 
                         colorDictionary={this.state.colorDictionary} 
                         mode={this.state.mode}
                         providerData={this.state.providerData}/>  
-                </BrowserView>
+                </MobileView>
                 <BrowserView>
                     <TreemapInstantDataStat
-                        data={this.state.instantTPS} 
+                        data={this.state.data} 
                         colorDictionary={this.state.colorDictionary} 
                         mode={this.state.mode}
                         providerData={this.state.providerData}/>  
@@ -79,31 +83,28 @@ export default class DataStatByType extends React.Component {
             case 'networkType':
                 title = 'Each section of the chart below represents the total throughput of all networks of a certain type. Data gets updated automatically.';
                 stat = <>
-                <BrowserView>
+                <MobileView>
                     <TypeDataStat
-                        data={this.state.instantTPS} 
+                        data={this.state.data} 
                         colorDictionary={this.state.providerTypeColorDictionary} 
                         mode={this.state.mode}
                         providerData={this.state.providerData}/>  
-                </BrowserView>
+                </MobileView>
                 <BrowserView>
                     <TreemapTypeDataStat
-                        data={this.state.instantTPS} 
+                        data={this.state.data} 
                         colorDictionary={this.state.providerTypeColorDictionary} 
                         mode={this.state.mode}
                         providerData={this.state.providerData}/>  
                 </BrowserView>
                 </>
                 break;
-            case 'gasAdjustedTPS':
-                title = "Each section of the chart below represents the gas-adjusted throughput of a network. This value is calculated by dividing the total gas used by the network at any time by 21,000 gas (the gas cost of a simple ETH transfer). In other words, each section represents the theoretical number of transactions per second a network were to do if all transactions were simple ETH transfers. Data gets updated automatically.";
-                break;
         }
         return <>
         <TotalDataSummaryStat
              providerData={this.state.providerData}
              mode={this.state.mode}
-             data={this.state.instantTPS}/>
+             data={this.state.data}/>
         <p>
             Click one of the buttons below to change the chart type
         </p>

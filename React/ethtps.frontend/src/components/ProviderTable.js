@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { globalApi, providerExclusionList, liveTPSObservable } from '../services/common';
+import { formatModeName } from '../services/common';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -15,11 +15,12 @@ class ProviderTable extends React.Component {
 
         this.state = {
             rows: props.providerData.map(this.createRow.bind(this)),
-            instantTPSData: props.instantTPSData,
+            data: props.data,
             providerData: props.providerData,
             maxData: props.maxData,
             mode: props.mode,
-            colorDictionary: props.colorDictionary
+            colorDictionary: props.colorDictionary,
+            allData: props.allData
         }
     }
 
@@ -45,13 +46,13 @@ class ProviderTable extends React.Component {
             </TableCell>
             <TableCell width={10} align="left">
                 <div className={'l1 b'}>
-                    {this.state.mode.toUpperCase()}
+                    {this.capitalizeFirstLetter(formatModeName(this.state.mode))}
                 </div>
             </TableCell>
             <TableCell width={10} align="left">
                 <div className={'l1 b tooltip'}>
-                    Max {this.state.mode.toUpperCase()}
-                    <span className={'tooltiptext'}>This number represents the maximum recorded {this.state.mode.toUpperCase()}</span>
+                    Max {formatModeName(this.state.mode)}
+                    <span className={'tooltiptext'}>This number represents the maximum recorded {formatModeName(this.state.mode)}</span>
                 </div>
             </TableCell>
             <TableCell width={150} align="left">
@@ -81,12 +82,12 @@ class ProviderTable extends React.Component {
               </TableCell>
               <TableCell align="left">
                 <div className={'l1'}>
-                  {(this.state.instantTPSData[row.name] !== undefined)?this.format(this.state.instantTPSData[row.name][0].value):0}
+                  {(this.state.data[row.name] !== undefined)?this.specialFormat(this.state.data[row.name][0].value):0}
                   </div>
               </TableCell>
               <TableCell align="left">
               <div className={'l1'}>
-                {(this.state.maxData === undefined || this.state.maxData[row.name] === undefined)?0:this.format(this.state.maxData[row.name].value)}
+                {(this.state.maxData === undefined || this.state.maxData[row.name] === undefined)?0:this.specialFormat(this.state.maxData[row.name].value)}
               </div>
               </TableCell>
               <TableCell align="left">
@@ -102,11 +103,30 @@ class ProviderTable extends React.Component {
     <p>
       Click on a network's name in the table above to visit a page showing more details about the project, including historical TPS and gas data.
     </p>
+    <p>
+      {(this.state.mode !== 'tps')?'Some projects don\'t provide gas data. In this case, a line is displayed in the table above.':""}
+    </p>
     </div>
         </>;
     }
 
+    capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    specialFormat(num){
+      let result = this.format(num);
+      if (num === 0 && this.state.mode !== 'tps'){
+        result = '-'
+      }
+      return result;
+    }
+
     format(num){
+      
+      if (num >= 1000) { //Don't show any decimals for numbers larger than 1,000; this improves readability
+        return (Math.round((num + Number.EPSILON))).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); 
+      }
        return (Math.round((num + Number.EPSILON) * 100) / 100).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
@@ -118,8 +138,8 @@ class ProviderTable extends React.Component {
         if (previousProps.providerData !== this.props.providerData){
             this.setState({providerData: this.props.providerData});
         }
-        if (previousProps.instantTPSData !== this.props.instantTPSData){
-            this.setState({instantTPSData: this.props.instantTPSData});
+        if (previousProps.data !== this.props.data){
+            this.setState({data: this.props.data});
         }
         if (previousProps.providerData !== this.props.providerData){
             this.setState({rows: this.props.providerData.map(this.createRow.bind(this))});
@@ -135,6 +155,9 @@ class ProviderTable extends React.Component {
         }
         if (previousProps.mode !== this.props.mode){
           this.setState({mode: this.props.mode});
+        }
+        if (previousProps.allData !== this.props.allData){
+          this.setState({allData: this.props.allData});
         }
       }
 }    

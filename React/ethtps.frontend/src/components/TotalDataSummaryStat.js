@@ -1,4 +1,5 @@
 import React from "react";
+import { formatModeName } from '../services/common';
 
 export default class TotalDataSummaryStat extends React.Component{
     constructor(props){
@@ -38,7 +39,7 @@ export default class TotalDataSummaryStat extends React.Component{
         return <>
         <center>
             <h4 className={'tooltip'}>
-                Ethereum currently does {parseFloat(this.calculateTotalData(this.state).toString()).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} {this.state.mode.toUpperCase()}
+                Ethereum currently does {parseFloat(this.calculateTotalData(this.state).toString()).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} {formatModeName(this.state.mode)}
                 <span className={'tooltiptext'}>This includes L2s, sidechains (if the box at the bottom of this section is unchecked), ZK rollups, validiums etc.</span>
             </h4>
         </center>
