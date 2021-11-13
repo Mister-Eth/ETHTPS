@@ -68,7 +68,7 @@ class InstantDataStat extends Component{
         }
         return <>
         <Bar data={{
-                labels: [capitalizeFirstLetter(formatModeName(this.state.mode))],
+                labels: [""],
                 datasets: this.createDatasets(this.state)
               }} 
               height={25}

@@ -67,7 +67,7 @@ class TypeDataStat extends Component{
     render(){
         return <>
         <Bar data={{
-                labels: [ capitalizeFirstLetter(formatModeName(this.state.mode)) + " per network type"],
+                labels: [""],
                 datasets: this.createDatasets(this.state)
               }} 
               height={25}
