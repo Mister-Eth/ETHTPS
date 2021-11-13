@@ -104,7 +104,7 @@ class ProviderTable extends React.Component {
       Click on a network's name in the table above to visit a page showing more details about the project, including historical TPS and gas data.
     </p>
     <p>
-      {(this.state.mode !== 'tps')?'Some projects don\'t provide gas data. In this case, a line is displayed in the table above.':""}
+      {(this.state.mode !== 'tps')?'Some projects don\'t provide gas data. In this case, missing max data is estimated.':""}
     </p>
     </div>
         </>;
