@@ -23,5 +23,3 @@ src/model/BlockInfo.js
 src/model/DataPoint.js
 src/model/DataResponseModel.js
 src/model/ProviderResponseModel.js
-test/model/DataPoint.spec.js
-test/model/DataResponseModel.spec.js

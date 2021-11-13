@@ -59,6 +59,17 @@ namespace ETHTPS.API.Controllers
             return result;
         }
 
+        [HttpGet]
+        public IDictionary<string, object> Max(string provider, string network = "Mainnet")
+        {
+            var result = new Dictionary<string, object>();
+            var tpsController = new TPSController(Context, null);
+            var gpsController = new GPSController(Context, null);
+            result.Add("tps", tpsController.Max(provider, network));
+            result.Add("gps", gpsController.Max(provider, network));
+            return result;
+        }
+
         /*
         [HttpGet]
         public async Task<HomePageViewModel> HomePageModelAsync(string network = "Mainnet")

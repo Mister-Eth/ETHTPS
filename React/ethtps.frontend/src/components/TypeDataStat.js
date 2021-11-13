@@ -53,7 +53,7 @@ class TypeDataStat extends Component{
         return datasets;
     }
 
-    calculateTotalTPS(state){
+    calculateTotalData(state){
         if (state.data === undefined || state.data.length === 0)
             return 20;
         
@@ -67,7 +67,7 @@ class TypeDataStat extends Component{
     render(){
         return <>
         <Bar data={{
-                labels: ["Network type"],
+                labels: [ this.state.mode.toUpperCase() + " per network type"],
                 datasets: this.createDatasets(this.state)
               }} 
               height={25}
@@ -81,7 +81,7 @@ class TypeDataStat extends Component{
                 scales: {
                   x: {
                     stacked: true,
-                    max: this.calculateTotalTPS(this.state),
+                    max: this.calculateTotalData(this.state),
                     ticks:{
                         display:false
                     },

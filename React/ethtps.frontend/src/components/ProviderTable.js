@@ -14,10 +14,12 @@ class ProviderTable extends React.Component {
         super(props);
 
         this.state = {
-            rows: [],
-            instantTPSData:[],
-            providerData: [],
-            maxTPS:{}
+            rows: props.providerData.map(this.createRow.bind(this)),
+            instantTPSData: props.instantTPSData,
+            providerData: props.providerData,
+            maxData: props.maxData,
+            mode: props.mode,
+            colorDictionary: props.colorDictionary
         }
     }
 
@@ -43,13 +45,13 @@ class ProviderTable extends React.Component {
             </TableCell>
             <TableCell width={10} align="left">
                 <div className={'l1 b'}>
-                    TPS
+                    {this.state.mode.toUpperCase()}
                 </div>
             </TableCell>
             <TableCell width={10} align="left">
                 <div className={'l1 b tooltip'}>
-                    Max TPS
-                    <span className={'tooltiptext'}>This number represents the maximum recorded TPS</span>
+                    Max {this.state.mode.toUpperCase()}
+                    <span className={'tooltiptext'}>This number represents the maximum recorded {this.state.mode.toUpperCase()}</span>
                 </div>
             </TableCell>
             <TableCell width={150} align="left">
@@ -79,12 +81,12 @@ class ProviderTable extends React.Component {
               </TableCell>
               <TableCell align="left">
                 <div className={'l1'}>
-                  {(this.state.instantTPSData[row.name] !== undefined)?this.to2DecimalPlaces(this.state.instantTPSData[row.name][0].value):0}
+                  {(this.state.instantTPSData[row.name] !== undefined)?this.format(this.state.instantTPSData[row.name][0].value):0}
                   </div>
               </TableCell>
               <TableCell align="left">
               <div className={'l1'}>
-                {(this.state.maxTPS === undefined || this.state.maxTPS[row.name] === undefined)?0:this.to2DecimalPlaces(this.state.maxTPS[row.name].value)}
+                {(this.state.maxData === undefined || this.state.maxData[row.name] === undefined)?0:this.format(this.state.maxData[row.name].value)}
               </div>
               </TableCell>
               <TableCell align="left">
@@ -104,8 +106,8 @@ class ProviderTable extends React.Component {
         </>;
     }
 
-    to2DecimalPlaces(num){
-       return Math.round((num + Number.EPSILON) * 100) / 100
+    format(num){
+       return (Math.round((num + Number.EPSILON) * 100) / 100).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
     createRow(x, i){
@@ -128,8 +130,11 @@ class ProviderTable extends React.Component {
         if (previousProps.excludeSidechains !== this.props.excludeSidechains){
             this.setState({excludeSidechains: this.props.excludeSidechains});
         }
-        if (previousProps.maxTPS !== this.props.maxTPS){
-          this.setState({maxTPS: this.props.maxTPS});
+        if (previousProps.maxData !== this.props.maxData){
+          this.setState({maxData: this.props.maxData});
+        }
+        if (previousProps.mode !== this.props.mode){
+          this.setState({mode: this.props.mode});
         }
       }
 }    

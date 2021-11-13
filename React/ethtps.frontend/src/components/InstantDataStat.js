@@ -51,7 +51,7 @@ class InstantDataStat extends Component{
         return datasets;
     }
 
-    calculateTotalTPS(state){
+    calculateTotalData(state){
         if (state.data === undefined || state.data.length === 0)
             return 20;
         
@@ -68,7 +68,7 @@ class InstantDataStat extends Component{
         }
         return <>
         <Bar data={{
-                labels: ["TPS"],
+                labels: [this.state.mode.toUpperCase()],
                 datasets: this.createDatasets(this.state)
               }} 
               height={25}
@@ -82,7 +82,7 @@ class InstantDataStat extends Component{
                 scales: {
                   x: {
                     stacked: true,
-                    max: this.calculateTotalTPS(this.state),
+                    max: this.calculateTotalData(this.state),
                     ticks:{
                         display:false
                     },

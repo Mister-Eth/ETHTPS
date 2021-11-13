@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**aPIV2ColorDictionaryGet**](GeneralApi.md#aPIV2ColorDictionaryGet) | **GET** /API/v2/ColorDictionary | 
 [**aPIV2InstantDataGet**](GeneralApi.md#aPIV2InstantDataGet) | **GET** /API/v2/InstantData | 
 [**aPIV2IntervalsGet**](GeneralApi.md#aPIV2IntervalsGet) | **GET** /API/v2/Intervals | 
+[**aPIV2MaxGet**](GeneralApi.md#aPIV2MaxGet) | **GET** /API/v2/Max | 
 [**aPIV2NetworksGet**](GeneralApi.md#aPIV2NetworksGet) | **GET** /API/v2/Networks | 
 [**aPIV2ProviderTypesColorDictionaryGet**](GeneralApi.md#aPIV2ProviderTypesColorDictionaryGet) | **GET** /API/v2/ProviderTypesColorDictionary | 
 [**aPIV2ProvidersGet**](GeneralApi.md#aPIV2ProvidersGet) | **GET** /API/v2/Providers | 
@@ -125,6 +126,53 @@ This endpoint does not need any parameter.
 ### Return type
 
 **[String]**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: text/plain, application/json, text/json
+
+
+## aPIV2MaxGet
+
+> {String: Object} aPIV2MaxGet(opts)
+
+
+
+### Example
+
+```javascript
+import EthtpsApi from 'ethtps_api';
+
+let apiInstance = new EthtpsApi.GeneralApi();
+let opts = {
+  'provider': "provider_example", // String | 
+  'network': "'Mainnet'" // String | 
+};
+apiInstance.aPIV2MaxGet(opts, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+});
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **provider** | **String**|  | [optional] 
+ **network** | **String**|  | [optional] [default to &#39;Mainnet&#39;]
+
+### Return type
+
+**{String: Object}**
 
 ### Authorization
 

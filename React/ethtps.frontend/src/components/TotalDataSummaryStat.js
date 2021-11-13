@@ -23,7 +23,7 @@ export default class TotalDataSummaryStat extends React.Component{
         } 
       }
 
-    calculateTotalTPS(state){
+    calculateTotalData(state){
         if (state.data === undefined || state.data.length === 0)
             return 20;
         
@@ -38,7 +38,7 @@ export default class TotalDataSummaryStat extends React.Component{
         return <>
         <center>
             <h4 className={'tooltip'}>
-                Ethereum currently does {parseFloat(this.calculateTotalTPS(this.state).toString()).toFixed(2)} {this.state.mode.toUpperCase()}
+                Ethereum currently does {parseFloat(this.calculateTotalData(this.state).toString()).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} {this.state.mode.toUpperCase()}
                 <span className={'tooltiptext'}>This includes L2s, sidechains (if the box at the bottom of this section is unchecked), ZK rollups, validiums etc.</span>
             </h4>
         </center>

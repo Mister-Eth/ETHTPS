@@ -7,10 +7,11 @@ class HorizontalBarChart extends Component{
 
         this.state = {
           labels: [],
-          data: [],
+          data: props.data,
           backgroundColors: [],
-          colorDictionary: {},
-          providerData: []
+          colorDictionary: props.colorDictionary,
+          providerData: props.providerData,
+          mode: props.mode
         }
     }
     /*
@@ -30,6 +31,9 @@ class HorizontalBarChart extends Component{
       }
       if (previousProps.providerData !== this.props.providerData){
         this.setState({providerData: this.props.providerData});
+      }
+      if (previousProps.mode !== this.props.mode){
+        this.setState({mode: this.props.mode});
       }
     }
 
@@ -70,7 +74,7 @@ class HorizontalBarChart extends Component{
         return {
           labels: [],
           datasets: [{
-            label: 'Current TPS',
+            label: 'Current ' + this.state.mode.toUpperCase(),
             data: [],
             backgroundColor: []
           }]
@@ -92,7 +96,7 @@ class HorizontalBarChart extends Component{
       return {
         labels: orderedLabels,
         datasets: [{
-          label: 'Current TPS',
+          label: 'Current ' + this.state.mode.toUpperCase(),
           data: orderedData,
           backgroundColor: colors
         }]

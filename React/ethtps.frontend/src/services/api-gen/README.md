@@ -131,6 +131,7 @@ Class | Method | HTTP request | Description
 *EthtpsApi.GeneralApi* | [**aPIV2ColorDictionaryGet**](docs/GeneralApi.md#aPIV2ColorDictionaryGet) | **GET** /API/v2/ColorDictionary | 
 *EthtpsApi.GeneralApi* | [**aPIV2InstantDataGet**](docs/GeneralApi.md#aPIV2InstantDataGet) | **GET** /API/v2/InstantData | 
 *EthtpsApi.GeneralApi* | [**aPIV2IntervalsGet**](docs/GeneralApi.md#aPIV2IntervalsGet) | **GET** /API/v2/Intervals | 
+*EthtpsApi.GeneralApi* | [**aPIV2MaxGet**](docs/GeneralApi.md#aPIV2MaxGet) | **GET** /API/v2/Max | 
 *EthtpsApi.GeneralApi* | [**aPIV2NetworksGet**](docs/GeneralApi.md#aPIV2NetworksGet) | **GET** /API/v2/Networks | 
 *EthtpsApi.GeneralApi* | [**aPIV2ProviderTypesColorDictionaryGet**](docs/GeneralApi.md#aPIV2ProviderTypesColorDictionaryGet) | **GET** /API/v2/ProviderTypesColorDictionary | 
 *EthtpsApi.GeneralApi* | [**aPIV2ProvidersGet**](docs/GeneralApi.md#aPIV2ProvidersGet) | **GET** /API/v2/Providers | 

@@ -34,7 +34,7 @@ export default class TreemapTypeDataStat extends React.Component {
           };
         }
 
-   calculateTotalTPS(state){
+   calculateTotalData(state){
         if (state.data === undefined || state.data.length === 0)
             return 20;
         
