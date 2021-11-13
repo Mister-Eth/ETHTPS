@@ -13,10 +13,18 @@ class MainPage extends React.Component {
   constructor(props){
     super(props);
 
+    let queryStringMode =  qs.parse(window.location.search).mode;
+    let mode = 'tps';
+    if (queryStringMode !== undefined){
+      if (queryStringMode === "gps" || queryStringMode === "tps" || queryStringMode === "gasAdjustedTPS"){
+        mode = queryStringMode;
+      }
+    }
+    let allinstantData = JSON.parse('{"tps":{"Ethereum":[{"date":"0001-01-01T00:00:00","value":17.08029197080292}],"Arbitrum One":[{"date":"0001-01-01T00:00:00","value":0.3157894736842105}],"Optimism":[{"date":"0001-01-01T00:00:00","value":0.2}],"Polygon":[{"date":"0001-01-01T00:00:00","value":27.727272727272727}],"XDAI":[{"date":"0001-01-01T00:00:00","value":1.7307692307692306}],"ZKSwap":[{"date":"0001-01-01T00:00:00","value":0.0004657661853749418}],"ZKSync":[{"date":"0001-01-01T00:00:00","value":0.23072100313479624}],"AVAX C-chain":[{"date":"0001-01-01T00:00:00","value":1}],"Boba Network":[{"date":"0001-01-01T00:00:00","value":0.003952569169960474}],"Loopring":[{"date":"0001-01-01T00:00:00","value":0.09375}]},"gps":{"Ethereum":[{"date":"0001-01-01T00:00:00","value":1758634.890510949}],"Arbitrum One":[{"date":"0001-01-01T00:00:00","value":50167.15789473684}],"Optimism":[{"date":"0001-01-01T00:00:00","value":0}],"Polygon":[{"date":"0001-01-01T00:00:00","value":5823853.636363636}],"XDAI":[{"date":"0001-01-01T00:00:00","value":362137.8846153846}],"ZKSwap":[{"date":"0001-01-01T00:00:00","value":0}],"ZKSync":[{"date":"0001-01-01T00:00:00","value":0}],"AVAX C-chain":[{"date":"0001-01-01T00:00:00","value":77815}],"Boba Network":[{"date":"0001-01-01T00:00:00","value":664.8498023715415}],"Loopring":[{"date":"0001-01-01T00:00:00","value":2659.1458333333335}]},"gasAdjustedTPS":{"Ethereum":[{"date":"0001-01-01T00:00:00","value":83.74451859575947}],"Arbitrum One":[{"date":"0001-01-01T00:00:00","value":2.388912280701754}],"Optimism":[{"date":"0001-01-01T00:00:00","value":0}],"Polygon":[{"date":"0001-01-01T00:00:00","value":277.3263636363636}],"XDAI":[{"date":"0001-01-01T00:00:00","value":17.244661172161173}],"ZKSwap":[{"date":"0001-01-01T00:00:00","value":0}],"ZKSync":[{"date":"0001-01-01T00:00:00","value":0}],"AVAX C-chain":[{"date":"0001-01-01T00:00:00","value":3.7054761904761904}],"Boba Network":[{"date":"0001-01-01T00:00:00","value":0.03165951439864483}],"Loopring":[{"date":"0001-01-01T00:00:00","value":0.12662599206349207}]}}');
     this.state = {
       homePageModel: {
-        selectedInstantData: JSON.parse('{"Ethereum":[{"date":"0001-01-01T00:00:00","value":11.167883211678832}],"Arbitrum One":[{"date":"0001-01-01T00:00:00","value":0.1875}],"Optimism":[{"date":"0001-01-01T00:00:00","value":0.2}],"Polygon":[{"date":"0001-01-01T00:00:00","value":130}],"XDAI":[{"date":"0001-01-01T00:00:00","value":1.7307692307692306}],"ZKSwap":[{"date":"0001-01-01T00:00:00","value":0.006600660066006601}],"ZKSync":[{"date":"0001-01-01T00:00:00","value":0.25096525096525096}],"AVAX C-chain":[{"date":"0001-01-01T00:00:00","value":0.3333333333333333}],"Boba Network":[{"date":"0001-01-01T00:00:00","value":0.034482758620689655}],"Loopring":[{"date":"0001-01-01T00:00:00","value":0.08059023836549375}]}'),
-        allInstantData: JSON.parse('{"tps":{"Ethereum":[{"date":"0001-01-01T00:00:00","value":24.379562043795623}],"Arbitrum One":[{"date":"0001-01-01T00:00:00","value":0.14}],"Optimism":[{"date":"0001-01-01T00:00:00","value":0.2}],"Polygon":[{"date":"0001-01-01T00:00:00","value":23.636363636363633}],"XDAI":[{"date":"0001-01-01T00:00:00","value":2.3076923076923075}],"ZKSwap":[{"date":"0001-01-01T00:00:00","value":0.004329004329004329}],"ZKSync":[{"date":"0001-01-01T00:00:00","value":0.19850352112676056}],"AVAX C-chain":[{"date":"0001-01-01T00:00:00","value":0.3333333333333333}],"Boba Network":[{"date":"0001-01-01T00:00:00","value":0.00931098696461825}],"Loopring":[{"date":"0001-01-01T00:00:00","value":0.15157612340710933}]},"gps":{"Ethereum":[{"date":"0001-01-01T00:00:00","value":2184024.306569343}],"Arbitrum One":[{"date":"0001-01-01T00:00:00","value":30913.62}],"Optimism":[{"date":"0001-01-01T00:00:00","value":0}],"Polygon":[{"date":"0001-01-01T00:00:00","value":4319541.363636363}],"XDAI":[{"date":"0001-01-01T00:00:00","value":329834.42307692306}],"ZKSwap":[{"date":"0001-01-01T00:00:00","value":0}],"ZKSync":[{"date":"0001-01-01T00:00:00","value":0}],"AVAX C-chain":[{"date":"0001-01-01T00:00:00","value":84126}],"Boba Network":[{"date":"0001-01-01T00:00:00","value":953.2402234636871}],"Loopring":[{"date":"0001-01-01T00:00:00","value":2435.669349429913}]}}'),
+        selectedInstantData: allinstantData[mode],
+        allInstantData: allinstantData,
         colorDictionary: JSON.parse('{"Ethereum":"#490092","Arbitrum One":"#920000","Optimism":"#006ddb","Polygon":"#004949","XDAI":"#ff6db6","ZKSwap":"#c29a2d","ZKSync":"#db6d00","AVAX C-chain":"#22cf22","Boba Network":"#171723","Loopring":"#4a1173"}'),
         providerTypeColorDictionary:JSON.parse('{"Mainnet":"#4a1173","Optimistic rollup":" #3a7311","ZK rollup":"#116b73","Application-specific rollup":"#8ae5d6","Sidechain":"#002d4d"}'),
         providerData: JSON.parse('[{"name":"Ethereum","color":"#490092","type":"Mainnet"},{"name":"Arbitrum One","color":"#920000","type":"Optimistic rollup"},{"name":"Optimism","color":"#006ddb","type":"Optimistic rollup"},{"name":"Polygon","color":"#004949","type":"Sidechain"},{"name":"XDAI","color":"#ff6db6","type":"Sidechain"},{"name":"ZKSwap","color":"#c29a2d","type":"ZK rollup"},{"name":"ZKSync","color":"#db6d00","type":"ZK rollup"},{"name":"AVAX C-chain","color":"#22cf22","type":"Sidechain"},{"name":"Boba Network","color":"#171723","type":"Optimistic rollup"},{"name":"Loopring","color":"#4a1173","type":"ZK rollup"}]'),
@@ -25,13 +33,7 @@ class MainPage extends React.Component {
       network: "Mainnet",
       excludeSidechains: false,
       modifiedInstantTPS: {},
-      mode: "tps"
-    }
-    let queryStringMode =  qs.parse(window.location.search).mode;
-    if (queryStringMode !== undefined){
-      if (queryStringMode === "gps" || queryStringMode === "tps" || queryStringMode === "gasAdjustedTPS"){
-        this.state.mode = queryStringMode;
-      }
+      mode: mode
     }
   }
 

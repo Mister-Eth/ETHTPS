@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ETHTPS.Services.BlockchainServices.Scan.Implementations
 {
-    [Provider("AVAX C-Chain")]
+    [Provider("AVAX C-chain")]
     public class SnowTraceBlockInfoProvider : ScanBlockInfoProviderBase
     {
         public SnowTraceBlockInfoProvider(IConfiguration configuration) : base(configuration, "Snowtrace")
