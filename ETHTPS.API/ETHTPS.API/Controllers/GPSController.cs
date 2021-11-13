@@ -13,31 +13,31 @@ using System.Threading.Tasks;
 namespace ETHTPS.API.Controllers
 {
     [Route("API/GPS/[action]")]
-    public class GPSController : APIControllerWithHistoricalMethodsBase,  IPSController<GPSDataPoint, GPSResponseModel>
+    public class GPSController : APIControllerWithHistoricalMethodsBase,  IPSController<DataPoint, DataResponseModel>
     {
         public GPSController(ETHTPSContext context, IEnumerable<IHistoricalDataProvider> historicalDataProviders) : base(context, historicalDataProviders)
         {
         }
 
         [HttpGet]
-        public IDictionary<string, GPSDataPoint> Max(string provider, string network = "Mainnet")
+        public IDictionary<string, DataPoint> Max(string provider, string network = "Mainnet")
         {
-            var result = new List<GPSResponseModel>();
+            var result = new List<DataResponseModel>();
             var providers = (provider.ToUpper() == "ALL") ? Context.Providers.AsEnumerable() : new Provider[] { Context.Providers.First(x => x.Name.ToUpper() == provider.ToUpper()) };
             foreach (var p in providers.ToArray())
             {
                 var entry = Context.TpsandGasDataMaxes.FirstOrDefault(x => x.Provider == p.Id && x.NetworkNavigation.Name == network);
                 if (entry != null)
                 {
-                    result.Add(new GPSResponseModel()
+                    result.Add(new DataResponseModel()
                     {
                         Provider = p.Name,
-                        Data = new List<GPSDataPoint>()
+                        Data = new List<DataPoint>()
                         {
-                            new GPSDataPoint()
+                            new DataPoint()
                             {
                                 Date = entry.Date,
-                                GPS = entry.MaxGps
+                                Value = entry.MaxGps
                             }
                         }
                     });
@@ -45,14 +45,14 @@ namespace ETHTPS.API.Controllers
                 else
                 {
                     //No max TPS data recorded yet, return 0
-                    result.Add(new GPSResponseModel()
+                    result.Add(new DataResponseModel()
                     {
                         Provider = p.Name,
-                        Data = new List<GPSDataPoint>()
+                        Data = new List<DataPoint>()
                         {
-                            new GPSDataPoint()
+                            new DataPoint()
                             {
-                                GPS = 0
+                                Value = 0
                             }
                         }
                     });
@@ -64,18 +64,18 @@ namespace ETHTPS.API.Controllers
 
         [HttpGet]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IDictionary<string, IEnumerable<GPSDataPoint>> Instant(bool includeSidechains = true)
+        public IDictionary<string, IEnumerable<DataPoint>> Instant(bool includeSidechains = true)
         {
-            var result = new List<GPSResponseModel>();
+            var result = new List<DataResponseModel>();
             foreach (var p in Context.Providers.ToList())
             {
                 if (Context.TpsandGasDataLatests.Any(x => x.Provider == p.Id))
                 {
                     var entry = Context.TpsandGasDataLatests.First(x => x.Provider == p.Id);
-                    result.Add(new GPSResponseModel()
+                    result.Add(new DataResponseModel()
                     {
                         Provider = p.Name,
-                        Data = new List<GPSDataPoint>() {{ new GPSDataPoint() { GPS = entry.Gps} }
+                        Data = new List<DataPoint>() {{ new DataPoint() { Value = entry.Gps} }
                     }
                     });
                 }
@@ -84,9 +84,9 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
-        public IDictionary<string, IEnumerable<GPSResponseModel>> Get(string provider, string interval, string network = "Mainnet", bool includeSidechains = true)
+        public IDictionary<string, IEnumerable<DataResponseModel>> Get(string provider, string interval, string network = "Mainnet", bool includeSidechains = true)
         {
-            var result = new Dictionary<string, IEnumerable<GPSResponseModel>>();
+            var result = new Dictionary<string, IEnumerable<DataResponseModel>>();
             if (provider.ToUpper() == "ALL")
             {
                 foreach (var p in Context.Providers.ToList())
@@ -98,22 +98,22 @@ namespace ETHTPS.API.Controllers
                             continue;
                         }
                     }
-                    result[p.Name] =  GetHistoricalData(interval, p.Name, network).Select(x => new GPSResponseModel()
+                    result[p.Name] =  GetHistoricalData(interval, p.Name, network).Select(x => new DataResponseModel()
                     {
-                        Data = new List<GPSDataPoint>()
+                        Data = new List<DataPoint>()
                         {
-                            { new GPSDataPoint(){GPS = x.AverageGps, Date = x.StartDate} }
+                            { new DataPoint(){Value = x.AverageGps, Date = x.StartDate} }
                         }
                     });
                 }
             }
             else
             {
-                result[provider] = GetHistoricalData(interval, provider, network).Select(x => new GPSResponseModel()
+                result[provider] = GetHistoricalData(interval, provider, network).Select(x => new DataResponseModel()
                 {
-                    Data = new List<GPSDataPoint>()
+                    Data = new List<DataPoint>()
                         {
-                            { new GPSDataPoint(){GPS = x.AverageGps, Date = x.StartDate} }
+                            { new DataPoint(){Value = x.AverageGps, Date = x.StartDate} }
                         }
                 });
             }

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace ETHTPS.Data.ResponseModels
 {
-    public class TPSDataPoint
+    public class DataPoint
     {
         public DateTime Date { get; set; }
-        public double TPS { get; set; }
+        public double Value { get; set; }
     }
 }
