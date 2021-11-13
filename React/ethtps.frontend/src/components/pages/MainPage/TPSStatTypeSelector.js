@@ -1,6 +1,8 @@
 import * as React from "react";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import './TPSStatTypeSelector.css';
+import { makeStyles } from "@material-ui/core/styles";
 
 export default class TPSStatTypeSelector extends React.Component {
     constructor(props){
@@ -22,13 +24,13 @@ export default class TPSStatTypeSelector extends React.Component {
 
     render(){
         return <ToggleButtonGroup
-            color="primary"
-            value={this.state.split}
-            exclusive
-            onChange={this.onStatChanged}>
-            <ToggleButton value="network">Split by network</ToggleButton>
-            <ToggleButton value="networkType">Split by network type</ToggleButton>
-            <ToggleButton value="gasAdjustedTPS">Gas-adjusted TPS</ToggleButton>
-        </ToggleButtonGroup>
+        color="primary"
+        value={this.state.split}
+        exclusive
+        onChange={this.onStatChanged}>
+        <ToggleButton value="network">Split by network</ToggleButton>
+        <ToggleButton value="networkType">Split by network type</ToggleButton>
+        <ToggleButton value="gasAdjustedTPS">Gas-adjusted TPS</ToggleButton>
+    </ToggleButtonGroup>
     }
 }

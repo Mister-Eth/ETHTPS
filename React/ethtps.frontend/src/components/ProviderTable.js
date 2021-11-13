@@ -97,6 +97,9 @@ class ProviderTable extends React.Component {
         </TableBody>
       </Table>
     </TableContainer>
+    <p>
+      Click on a network's name in the table above to visit a page showing more details about the project, including historical TPS and gas data.
+    </p>
     </div>
         </>;
     }

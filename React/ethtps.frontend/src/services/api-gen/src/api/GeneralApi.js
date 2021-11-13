@@ -70,6 +70,45 @@ export default class GeneralApi {
     }
 
     /**
+     * Callback function to receive the result of the aPIV2InstantDataGet operation.
+     * @callback module:api/GeneralApi~aPIV2InstantDataGetCallback
+     * @param {String} error Error message, if any.
+     * @param {Object.<String, {String: Object}>} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Object} opts Optional parameters
+     * @param {Boolean} opts.includeSidechains  (default to true)
+     * @param {module:api/GeneralApi~aPIV2InstantDataGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link Object.<String, {String: Object}>}
+     */
+    aPIV2InstantDataGet(opts, callback) {
+      opts = opts || {};
+      let postBody = null;
+
+      let pathParams = {
+      };
+      let queryParams = {
+        'includeSidechains': opts['includeSidechains']
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = ['text/plain', 'application/json', 'text/json'];
+      let returnType = {'String': Object};
+      return this.apiClient.callApi(
+        '/API/v2/InstantData', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
      * Callback function to receive the result of the aPIV2IntervalsGet operation.
      * @callback module:api/GeneralApi~aPIV2IntervalsGetCallback
      * @param {String} error Error message, if any.

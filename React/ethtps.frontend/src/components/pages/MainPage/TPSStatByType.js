@@ -53,7 +53,7 @@ export default class TPSStatByType extends React.Component {
         let stat = <></>;
         switch(this.state.stat){
             case 'network':
-                title = 'Each section of the bar below represents the throughput of a network. Data gets updated automatically.';
+                title = 'Each section of the chart below represents the throughput of a network. Data gets updated automatically.';
                 stat = <>
                 <MobileView>
                     <InstantTPSStat
@@ -70,7 +70,7 @@ export default class TPSStatByType extends React.Component {
                 </>
                 break;
             case 'networkType':
-                title = 'Each section of the bar below represents the throughput of a network type. Data gets updated automatically.';
+                title = 'Each section of the chart below represents the total throughput of networks of a certain type. Data gets updated automatically.';
                 stat = <>
                 <MobileView>
                     <TypeTPSStat
@@ -87,18 +87,18 @@ export default class TPSStatByType extends React.Component {
                 </>
                 break;
             case 'gasAdjustedTPS':
-
+                title = "Each section of the chart below represents the gas-adjusted throughput of a network. This value is calculated by dividing the total gas used by the network at any time by 21,000 gas (the gas cost of a simple ETH transfer). In other words, each section represents the theoretical number of transactions per second a network were to do if all transactions were simple ETH transfers. Data gets updated automatically.";
                 break;
         }
         return <>
         <p>
+            Click one of the buttons below to change the chart type
+        </p>
+        <TPSStatTypeSelector onChange={this.onStatChanged.bind(this)} split={this.state.split}/>
+        <p>
             {title}
         </p>
         {stat}
-      <p>
-        Show:
-      </p>
-            <TPSStatTypeSelector onChange={this.onStatChanged.bind(this)} split={this.state.split}/>
         </>
     }
 }

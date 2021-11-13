@@ -1,10 +1,12 @@
 import '../../..//App.css';
-import { globalGeneralApi, globalGPSApi, globalTPSApi } from '../../../services/common';
+import { globalGeneralApi, globalGPSApi, globalTPSApi, globalInstantDataService } from '../../../services/common';
 import React, { ReactDOM, useState, useEffect } from "react";
 import Timeline from '../../Timeline';
 import HorizontalBarChart from '../../HorizontalBarChart'
 import ProviderTable from '../../ProviderTable';
 import TPSStatByType from './TPSStatByType';
+import gasIcon from '../../../assets/gas.png';
+import numberIcon from '../../../assets/number_two_icon_178223.png';
 
 class MainPage extends React.Component {
 
@@ -22,7 +24,7 @@ class MainPage extends React.Component {
       network: "Mainnet",
       excludeSidechains: false,
       modifiedInstantTPS: {},
-      mode: "TPS"
+      mode: "tps"
     }
   }
 
@@ -52,10 +54,7 @@ class MainPage extends React.Component {
       homePageModel.maxTPS = data;
       this.setState({homePageModel: homePageModel});
     });
-    this.updateInstantTPS();
-    if (this.intervalRef === -1){
-      this.intervalRef = setInterval(this.updateInstantTPS.bind(this), 5000);
-    }
+    globalInstantDataService.periodicallyGetInstantDataForPage('MainPage', this.updateInstantTPS.bind(this));
   }
   
   handleInputChange(event){
@@ -79,12 +78,10 @@ class MainPage extends React.Component {
     }
   }
 
-  updateInstantTPS(){
-    globalTPSApi.aPITPSInstantGet(true, (err, data, res)=>{
-      let homePageModel = this.state.homePageModel;
-      homePageModel.instantTPS = data;
-      this.setState({homePageModel: homePageModel});
-    });
+  updateInstantTPS(data){
+    let homePageModel = this.state.homePageModel;
+    homePageModel.instantTPS = data[this.state.mode];
+    this.setState({homePageModel: homePageModel});
   }
 
   getProviderData(state){

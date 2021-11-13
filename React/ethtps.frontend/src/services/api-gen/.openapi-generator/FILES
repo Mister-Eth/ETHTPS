@@ -1,6 +1,5 @@
 .babelrc
 .gitignore
-.openapi-generator-ignore
 .travis.yml
 README.md
 docs/BlockInfo.md
@@ -28,13 +27,3 @@ src/model/GPSResponseModel.js
 src/model/ProviderResponseModel.js
 src/model/TPSDataPoint.js
 src/model/TPSResponseModel.js
-test/api/GPSApi.spec.js
-test/api/GeneralApi.spec.js
-test/api/TPSApi.spec.js
-test/api/TestApi.spec.js
-test/model/BlockInfo.spec.js
-test/model/GPSDataPoint.spec.js
-test/model/GPSResponseModel.spec.js
-test/model/ProviderResponseModel.spec.js
-test/model/TPSDataPoint.spec.js
-test/model/TPSResponseModel.spec.js

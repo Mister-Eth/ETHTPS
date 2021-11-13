@@ -48,6 +48,17 @@ namespace ETHTPS.API.Controllers
         [HttpGet]
         public IDictionary<string, string> ProviderTypesColorDictionary() => Context.ProviderTypeProperties.Where(x => x.Name == "Color").ToDictionary(x => x.ProviderTypeNavigation.Name, x => x.Value);
 
+        [HttpGet]
+        public IDictionary<string, object> InstantData(bool includeSidechains = true)
+        {
+            var result = new Dictionary<string, object>();
+            var tpsController = new TPSController(Context, null);
+            var gpsController = new GPSController(Context, null);
+            result.Add("tps", tpsController.Instant(includeSidechains));
+            result.Add("gps", gpsController.Instant(includeSidechains));
+            return result;
+        }
+
         /*
         [HttpGet]
         public async Task<HomePageViewModel> HomePageModelAsync(string network = "Mainnet")
