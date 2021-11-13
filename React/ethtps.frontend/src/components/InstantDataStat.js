@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { Bar } from 'react-chartjs-2';
-import TotalDataSummaryStat from './TotalDataSummaryStat';
+import { formatModeName, capitalizeFirstLetter } from '../services/common';
 
 class InstantDataStat extends Component{
     constructor(props){
@@ -68,7 +68,7 @@ class InstantDataStat extends Component{
         }
         return <>
         <Bar data={{
-                labels: [this.state.mode.toUpperCase()],
+                labels: [capitalizeFirstLetter(formatModeName(this.state.mode))],
                 datasets: this.createDatasets(this.state)
               }} 
               height={25}

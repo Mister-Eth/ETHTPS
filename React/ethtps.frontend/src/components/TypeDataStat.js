@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { Bar } from 'react-chartjs-2';
-import TotalDataSummaryStat from './TotalDataSummaryStat';
+import { formatModeName, capitalizeFirstLetter } from '../services/common';
 
 class TypeDataStat extends Component{
     constructor(props){
@@ -67,7 +67,7 @@ class TypeDataStat extends Component{
     render(){
         return <>
         <Bar data={{
-                labels: [ this.state.mode.toUpperCase() + " per network type"],
+                labels: [ capitalizeFirstLetter(formatModeName(this.state.mode)) + " per network type"],
                 datasets: this.createDatasets(this.state)
               }} 
               height={25}

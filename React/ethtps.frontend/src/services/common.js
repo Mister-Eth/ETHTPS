@@ -2,7 +2,7 @@ import { GeneralApi, GPSApi, TPSApi } from './api-gen/src/index';
 import ApiClient from './api-gen/src/ApiClient';
 import InstantDataService from './InstantDataService';
 
-const client = new ApiClient('https://api.ethtps.info/');
+const client = new ApiClient('http://localhost:10202/');
 const globalGeneralApi = new GeneralApi(client);
 const globalGPSApi = new GPSApi(client);
 const globalTPSApi = new TPSApi(client);
@@ -15,4 +15,9 @@ const formatModeName = function(mode) {
       return "gas-adjusted TPS"
     }
   }
-export { globalGeneralApi, globalGPSApi, globalTPSApi, globalInstantDataService, formatModeName };
+
+const capitalizeFirstLetter = function(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+export { globalGeneralApi, globalGPSApi, globalTPSApi, globalInstantDataService, formatModeName, capitalizeFirstLetter };

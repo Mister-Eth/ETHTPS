@@ -142,7 +142,7 @@ class MainPage extends React.Component {
       data={this.state.homePageModel.selectedInstantData} 
       allData={this.state.homePageModel.allInstantData}
       colorDictionary={this.state.homePageModel.colorDictionary} 
-      maxData={this.state.homePageModel.maxData[this.state.mode]}
+      allMaxData={this.state.homePageModel.maxData}
       mode={this.state.mode}
       providerData={this.getProviderData(this.state)}/>
       <hr/>

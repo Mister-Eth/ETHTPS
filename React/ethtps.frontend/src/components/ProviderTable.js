@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { formatModeName } from '../services/common';
+import { formatModeName, capitalizeFirstLetter } from '../services/common';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -17,7 +17,7 @@ class ProviderTable extends React.Component {
             rows: props.providerData.map(this.createRow.bind(this)),
             data: props.data,
             providerData: props.providerData,
-            maxData: props.maxData,
+            allMaxData: props.allMaxData,
             mode: props.mode,
             colorDictionary: props.colorDictionary,
             allData: props.allData
@@ -46,7 +46,7 @@ class ProviderTable extends React.Component {
             </TableCell>
             <TableCell width={10} align="left">
                 <div className={'l1 b'}>
-                    {this.capitalizeFirstLetter(formatModeName(this.state.mode))}
+                    {capitalizeFirstLetter(formatModeName(this.state.mode))}
                 </div>
             </TableCell>
             <TableCell width={10} align="left">
@@ -82,12 +82,12 @@ class ProviderTable extends React.Component {
               </TableCell>
               <TableCell align="left">
                 <div className={'l1'}>
-                  {(this.state.data[row.name] !== undefined)?this.specialFormat(this.state.data[row.name][0].value):0}
+                  {(this.state.data[row.name] !== undefined)?this.format(this.state.data[row.name][0].value):0}
                   </div>
               </TableCell>
               <TableCell align="left">
               <div className={'l1'}>
-                {(this.state.maxData === undefined || this.state.maxData[row.name] === undefined)?0:this.specialFormat(this.state.maxData[row.name].value)}
+                {this.getMaxRow(this.state.allMaxData[this.state.mode][row.name].value, row.name)}
               </div>
               </TableCell>
               <TableCell align="left">
@@ -110,16 +110,24 @@ class ProviderTable extends React.Component {
         </>;
     }
 
+    getMaxRow(value, name){
+      if (value === 0 && this.state.mode === 'gps'){
+        return <div className={'l1 tooltip'} style={{color:'#ff3300'}}>
+          {this.format(this.state.allMaxData['tps'][name].value * 21000)}
+          <span className={'tooltiptext'}>This number is estimated</span>
+          </div>
+      }
+      else if (value === 0 && this.state.mode === 'gasAdjustedTPS'){
+        return <div className={'l1 tooltip'} style={{color:'#ff3300'}}>
+          {this.format(this.state.allMaxData['tps'][name].value)}
+          <span className={'tooltiptext'}>This number is estimated</span>
+          </div>
+      }
+      return this.format(value);
+    }
+    
     capitalizeFirstLetter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
-    }
-
-    specialFormat(num){
-      let result = this.format(num);
-      if (num === 0 && this.state.mode !== 'tps'){
-        result = '-'
-      }
-      return result;
     }
 
     format(num){
@@ -150,8 +158,8 @@ class ProviderTable extends React.Component {
         if (previousProps.excludeSidechains !== this.props.excludeSidechains){
             this.setState({excludeSidechains: this.props.excludeSidechains});
         }
-        if (previousProps.maxData !== this.props.maxData){
-          this.setState({maxData: this.props.maxData});
+        if (previousProps.allMaxData !== this.props.allMaxData){
+          this.setState({allMaxData: this.props.allMaxData});
         }
         if (previousProps.mode !== this.props.mode){
           this.setState({mode: this.props.mode});
