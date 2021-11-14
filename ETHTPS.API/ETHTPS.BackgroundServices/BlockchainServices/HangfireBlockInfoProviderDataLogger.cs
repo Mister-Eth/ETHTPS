@@ -107,8 +107,8 @@ namespace ETHTPS.Services.BlockchainServices
                         break;
                     }
                     latestBlock = secondToLatestBlock;
-
-                    if (++count == 10)
+                    await Task.Delay(200);
+                    if (++count == 100)
                     {
                         throw new Exception($"Possible infinite loop {(typeof(T))}");
                     }
