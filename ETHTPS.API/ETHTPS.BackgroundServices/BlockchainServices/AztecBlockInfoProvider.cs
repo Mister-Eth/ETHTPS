@@ -45,7 +45,7 @@ namespace ETHTPS.Services.BlockchainServices
                 var obj = JsonConvert.DeserializeObject<dynamic>(str);
                 return new BlockInfo()
                 {
-                    BlockNumber = int.Parse(obj.data.block.id.ToString()),
+                    BlockNumber = blockNumber,
                     TransactionCount = obj.data.block.txs.Count,
                     Date = DateTime.Parse(obj.data.block.created.ToString()),
                     Settled = obj.data.block.mined != null
