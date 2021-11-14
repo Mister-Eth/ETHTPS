@@ -91,7 +91,7 @@ class ProviderTable extends React.Component {
               </div>
               </TableCell>
               <TableCell align="left">
-                <div className={((row.type == "Sidechain")?'l1':'l1 green')}>
+                <div className={((row.type == "Sidechain" || row.type === "Validium")?'l1':'l1 green')}>
                   {row.type}
                 </div>
               </TableCell>
