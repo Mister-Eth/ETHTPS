@@ -85,12 +85,35 @@ namespace ETHTPS.Services.BlockchainServices
                 {
                     TransactionCount = lastMinuteItems.Count(),
                     Date = DateTime.Now.Subtract(TimeSpan.FromSeconds(DateTime.Now.Second)).Subtract(TimeSpan.FromMilliseconds(DateTime.Now.Millisecond)),
-                    GasUsed = 0
+                    GasUsed = CalculateGasCost(lastMinuteItems)
                 };
             }
             return null;
         }
 
+        private double CalculateGasCost(IEnumerable<Item> items)
+        {
+            double sum = 0;
+            foreach(var item in items)
+            {
+                switch (item.txn_type)
+                {
+                    case "mint":
+                        sum += 150000;
+                        break;
+                    case "transfer":
+                        sum += 25000;
+                        break;
+                    case "withdrawal":
+                        sum += 21000;
+                        break;
+                    case "trade":
+                        sum += 46000;
+                        break;
+                }
+            }
+            return sum;
+        }
 
         public class Rootobject
         {
