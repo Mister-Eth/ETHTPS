@@ -1,0 +1,130 @@
+Table Providers{
+  ID int [pk, increment]
+  Name varchar [unique, not null]
+  Type int [not null]
+}
+
+Ref: Providers.Type > ProviderTypes.ID
+
+Table ProviderTypes{
+  ID int [pk, increment]
+  Name varchar [unique, not null]
+}
+
+Table ProviderTypeProperties{
+  ID int [pk, increment]
+  ProviderType int [not null]
+  Name varchar [not null]
+  Value varchar [not null]
+}
+
+Ref: ProviderTypeProperties.ProviderType > ProviderTypes.ID
+
+
+Table ProviderProperties{
+  ID int [pk, increment]
+  Provider int [not null]
+  Name varchar [not null]
+  Value varchar [not null]
+}
+
+Ref: ProviderProperties.Provider > Providers.ID
+
+Table AccesStats{
+  ID int [pk, increment]
+  Project varchar [not null]
+  Path varchar [not null]
+  Count int [not null]
+  AverageRequestTimeMs float [not null]
+  ExternalCount int [not null]
+}
+
+Table CachedResponses{
+  ID int [pk, increment]
+  Name varchar [unique, not null]
+  JSON varchar(max) 
+}
+
+Table Networks{
+  ID int [pk, increment]
+  Name varchar [unique, not null]
+}
+
+Table TPSAndGasData_Latest {
+  ID int [pk, increment]
+  Provider int [not null]
+  Network int [not null]
+  TPS float [not null]
+  GPS float [not null]
+}
+
+Ref: TPSAndGasData_Latest.Provider > Providers.ID
+Ref: TPSAndGasData_Latest.Network > Networks.ID
+
+
+Table TPSAndGasData_Max {
+  ID int [pk, increment]
+  Provider int [not null]
+  Network int [not null]
+  Date datetime [not null]
+  MaxTPS float [not null]
+  MaxGPS float [not null]
+}
+
+Ref: TPSAndGasData_Max.Provider > Providers.ID
+Ref: TPSAndGasData_Max.Network > Networks.ID
+
+
+Table TPSAndGasData_Hour{
+  ID int [pk, increment]
+  Network int [not null]
+  Provider int [not null]
+  StartDate datetime [not null]
+  AverageTPS float [not null]
+  AverageGPS float [not null]
+  ReadingsCount int [not null]
+}
+
+Ref: TPSAndGasData_Hour.Provider > Providers.ID
+Ref: TPSAndGasData_Hour.Network > Networks.ID
+
+
+Table TPSAndGasData_Day{
+  ID int [pk, increment]
+  Network int [not null]
+  Provider int [not null]
+  StartDate datetime [not null]
+  AverageTPS float [not null]
+  AverageGPS float [not null]
+  ReadingsCount int [not null]
+}
+
+Ref: TPSAndGasData_Day.Provider > Providers.ID
+Ref: TPSAndGasData_Day.Network > Networks.ID
+
+
+Table TPSAndGasData_Week{
+  ID int [pk, increment]
+  Network int [not null]
+  Provider int [not null]
+  StartDate datetime [not null]
+  AverageTPS float [not null]
+  AverageGPS float [not null]
+  ReadingsCount int [not null]
+}
+
+Ref: TPSAndGasData_Week.Provider > Providers.ID
+Ref: TPSAndGasData_Week.Network > Networks.ID
+
+Table TPSAndGasData_Month{
+  ID int [pk, increment]
+  Network int [not null]
+  Provider int [not null]
+  StartDate datetime [not null]
+  AverageTPS float [not null]
+  AverageGPS float [not null]
+  ReadingsCount int [not null]
+}
+
+Ref: TPSAndGasData_Month.Provider > Providers.ID
+Ref: TPSAndGasData_Month.Network > Networks.ID
