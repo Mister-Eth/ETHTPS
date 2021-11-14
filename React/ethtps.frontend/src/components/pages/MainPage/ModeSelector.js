@@ -1,9 +1,9 @@
-import gasIcon from '../assets/gas.png'
-import numberIcon from '../assets/number_two_icon_178223.png';
-import gasAdjustedIcon from '../assets/gas-adj.png';
+import gasIcon from '../../../assets/gas.png'
+import numberIcon from '../../../assets/number_two_icon_178223.png';
+import gasAdjustedIcon from '../../../assets/gas-adj.png';
 import React from 'react';
-import '../App.css';
-import { formatModeName, capitalizeFirstLetter } from '../services/common'
+import '../../../App.css';
+import { formatModeName, capitalizeFirstLetter } from '../../../services/common'
 
 export default class ModeSelector extends React.Component {
     constructor(props){

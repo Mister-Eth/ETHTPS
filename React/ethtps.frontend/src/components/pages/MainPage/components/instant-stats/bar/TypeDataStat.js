@@ -1,8 +1,8 @@
 import { Component } from 'react';
 import { Bar } from 'react-chartjs-2';
-import { formatModeName, capitalizeFirstLetter } from '../services/common';
+import { formatModeName, capitalizeFirstLetter } from '../../../../../../services/common';
 
-class InstantDataStat extends Component{
+class TypeDataStat extends Component{
     constructor(props){
         super(props);
 
@@ -14,8 +14,8 @@ class InstantDataStat extends Component{
             backgroundColors: [],
             max: 1,
             data: props.data,
-            providerData: props.providerData,
             mode: props.mode,
+            providerData: props.providerData,
             colorDictionary: props.colorDictionary
           }
     }
@@ -30,24 +30,26 @@ class InstantDataStat extends Component{
         }
         if (previousProps.providerData !== this.props.providerData){
             this.setState({providerData: this.props.providerData});
-        } 
+        }
         if (previousProps.mode !== this.props.mode){
             this.setState({mode: this.props.mode});
         }
       }
 
-    createDataset(x, data, colorDictionary){
-        return{
-            label: x.name,
-            data: [data[x.name][0].value],
-            backgroundColor: colorDictionary[x.name],
-        }
-    }
-
     createDatasets(state){
         if (state.providerData.length === 0 || state.data.length === 0 || state.colorDictionary === undefined)
             return [{}];
-        let datasets = state.providerData.filter(x=>state.data[x.name] !== undefined).map(x => this.createDataset(x, state.data, state.colorDictionary));
+        let datasets = [];
+        for(let p of state.providerData.filter(x=>state.data[x.name] !== undefined)){
+            if (datasets.filter(x => x.label === p.type).length == 0){
+                datasets.push({
+                    label: p.type,
+                    data: [0],
+                    backgroundColor: state.colorDictionary[p.type]
+                });
+            }
+            datasets.filter(x => x.label === p.type)[0].data[0] += state.data[p.name][0].value;
+        }
         return datasets;
     }
 
@@ -61,11 +63,8 @@ class InstantDataStat extends Component{
         }
         return t.reduce((a, b) => a + b);
     }
-    
+
     render(){
-        if (this.state.data === null){
-            return<></>
-        }
         return <>
         <Bar data={{
                 labels: [""],
@@ -105,4 +104,4 @@ class InstantDataStat extends Component{
     }
 }
 
-export default InstantDataStat;
+export default TypeDataStat;

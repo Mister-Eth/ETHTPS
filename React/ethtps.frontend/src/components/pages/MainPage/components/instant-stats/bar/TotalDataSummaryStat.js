@@ -1,5 +1,5 @@
 import React from "react";
-import { formatModeName } from '../services/common';
+import { formatModeName } from '../../../../../../services/common'
 
 export default class TotalDataSummaryStat extends React.Component{
     constructor(props){

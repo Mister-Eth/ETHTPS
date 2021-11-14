@@ -2,10 +2,10 @@ import '../../..//App.css';
 import { globalGeneralApi, formatModeName, globalInstantDataService } from '../../../services/common';
 import React, { ReactDOM, useState, useEffect } from "react";
 import Timeline from '../../Timeline';
-import HorizontalBarChart from '../../HorizontalBarChart'
-import ProviderTable from '../../ProviderTable';
-import DataStatByType from './DataStatByType';
-import ModeSelector from '../../ModeSelector';
+import HorizontalBarChart from '../../HorizontalBarChart';
+import ProviderTable from './components/ProviderTable';
+import DataStatByType from './components/instant-stats/DataStatByType';
+import ModeSelector from './ModeSelector';
 import * as qs from 'query-string';
 
 class MainPage extends React.Component {

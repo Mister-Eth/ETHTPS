@@ -1,13 +1,13 @@
 import * as React from "react";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import TreemapInstantDataStat from '../../TreemapInstantDataStat';
+import TreemapInstantDataStat from './treemaps/TreemapInstantDataStat';
 import { BrowserView, MobileView } from 'react-device-detect';
 import StatTypeSelector from './StatTypeSelector';
-import InstantDataStat from '../../InstantDataStat';
-import TypeDataStat from '../../TypeDataStat';
-import TreemapTypeDataStat from "../../TreemapTypeDataStat";
-import TotalDataSummaryStat from "../../TotalDataSummaryStat";
+import InstantDataStat from './bar/InstantDataStat'
+import TypeDataStat from './bar/TypeDataStat';
+import TreemapTypeDataStat from "./treemaps/TreemapTypeDataStat";
+import TotalDataSummaryStat from "./bar/TotalDataSummaryStat";
 
 export default class DataStatByType extends React.Component {
     constructor(props){

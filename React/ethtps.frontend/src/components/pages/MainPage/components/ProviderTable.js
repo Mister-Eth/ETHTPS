@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { formatModeName, capitalizeFirstLetter } from '../services/common';
+import { formatModeName, capitalizeFirstLetter } from '../../../../services/common';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';

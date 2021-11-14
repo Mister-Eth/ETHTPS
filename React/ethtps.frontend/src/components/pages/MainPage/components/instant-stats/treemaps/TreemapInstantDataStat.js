@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ReactApexChart from "react-apexcharts";
-import TotalDataSummaryStat from "./TotalDataSummaryStat";
+import TotalDataSummaryStat from "../bar/TotalDataSummaryStat";
 
 export default class TreemapInstantDataStat extends React.Component {
     constructor(props) {
