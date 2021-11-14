@@ -159,7 +159,7 @@ export default class HistoricalChart extends React.Component {
                     <IntervalSelector interval={this.state.interval} onChange={this.onIntervalChanged.bind(this)}/>
                 </div>
             <div>
-                <Line height={150} data={{
+                <Line height={this.props.height} data={{
                   labels: this.state.labels,
                   datasets: this.state.datasets
                 }} 

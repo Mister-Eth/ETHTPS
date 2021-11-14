@@ -52,6 +52,7 @@ export default class NetworkPage extends PageWithQueryString {
             </div>
 
             <HistoricalChart 
+                height={150}
                 provider={this.state.name} 
                 colorDictionary={this.state.colorDictionary}
                 interval={'1d'} 

@@ -155,6 +155,7 @@ class MainPage extends React.Component {
       </p>
       <Timeline/>
       <HistoricalChart 
+        height={200}
         interval="1h"
         mode={this.state.mode}
         colorDictionary={this.state.homePageModel.colorDictionary} 
