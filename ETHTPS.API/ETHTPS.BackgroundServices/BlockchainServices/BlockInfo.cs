@@ -12,6 +12,7 @@ namespace ETHTPS.Services.BlockchainServices
         public int TransactionCount { get; set; }
         public double GasUsed { get; set; }
         public DateTime Date { get; set; }
+        public bool Settled { get; set; } = true;
 
         public static TPSGPSInfo operator -(BlockInfo a, BlockInfo b)
         {

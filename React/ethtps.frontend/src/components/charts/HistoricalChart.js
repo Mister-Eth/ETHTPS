@@ -128,7 +128,7 @@ export default class HistoricalChart extends React.Component {
           label: key,
           data: d.map(x => x.data[0].value),
           borderColor: this.state.colorDictionary[key],
-          backgroundColor: this.state.colorDictionary[key] + "33",
+          backgroundColor: this.state.colorDictionary[key] + "11",
           fill:true,
           showLine:true,
           pointHitRadius: 20

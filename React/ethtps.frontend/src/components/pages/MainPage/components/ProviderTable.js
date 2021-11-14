@@ -87,7 +87,7 @@ class ProviderTable extends React.Component {
               </TableCell>
               <TableCell align="left">
               <div className={'l1'}>
-                {this.getMaxRow(this.state.allMaxData[this.state.mode][row.name].value, row.name)}
+                {(this.state.allMaxData[this.state.mode][row.name] !== undefined)?this.getMaxRow(this.state.allMaxData[this.state.mode][row.name].value, row.name):0}
               </div>
               </TableCell>
               <TableCell align="left">
