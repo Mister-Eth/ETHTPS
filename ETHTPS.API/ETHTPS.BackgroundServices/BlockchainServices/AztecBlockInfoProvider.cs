@@ -43,13 +43,20 @@ namespace ETHTPS.Services.BlockchainServices
             {
                 var str = await response.Content.ReadAsStringAsync();
                 var obj = JsonConvert.DeserializeObject<dynamic>(str);
-                return new BlockInfo()
+                try
                 {
-                    BlockNumber = blockNumber,
-                    TransactionCount = obj.data.block.txs.Count,
-                    Date = DateTime.Parse(obj.data.block.created.ToString()),
-                    Settled = obj.data.block.mined != null
-                };
+                    return new BlockInfo()
+                    {
+                        BlockNumber = blockNumber,
+                        TransactionCount = obj.data.block.txs.Count,
+                        Date = DateTime.Parse(obj.data.block.created.ToString()).ToLocalTime(),
+                        Settled = obj.data.block.mined != null
+                    };
+                }
+                catch
+                {
+
+                }
             }
             return null;
         }
@@ -77,7 +84,7 @@ namespace ETHTPS.Services.BlockchainServices
             {
                 var obj = JsonConvert.DeserializeObject<BlockCountRootObject>(await response.Content.ReadAsStringAsync());
                 var block = await GetBlockInfoAsync(obj.data.totalBlocks);
-                while (!block.Settled)
+                while (block == null || !block.Settled)
                 {
                     block = await GetBlockInfoAsync(--obj.data.totalBlocks);
                 }
