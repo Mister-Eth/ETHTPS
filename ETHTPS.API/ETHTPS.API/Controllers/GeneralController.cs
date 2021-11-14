@@ -1,6 +1,7 @@
 ﻿using ETHTPS.Data;
 using ETHTPS.Data.Database;
 using ETHTPS.Data.Database.Extensions;
+using ETHTPS.Data.Database.HistoricalDataProviders;
 using ETHTPS.Data.ResponseModels;
 using ETHTPS.Data.ResponseModels.HomePage;
 
@@ -15,9 +16,9 @@ using System.Threading.Tasks;
 namespace ETHTPS.API.Controllers
 {
     [Route("API/v2/[action]")]
-    public class GeneralController : APIControllerBase
+    public class GeneralController : APIControllerWithHistoricalMethodsBase
     {
-        public GeneralController(ETHTPSContext context) : base(context)
+        public GeneralController(ETHTPSContext context, IEnumerable<IHistoricalDataProvider> historicalDataProviders) : base(context, historicalDataProviders)
         {
         }
 
@@ -52,24 +53,13 @@ namespace ETHTPS.API.Controllers
         public IDictionary<string, object> InstantData(bool includeSidechains = true)
         {
             var result = new Dictionary<string, object>();
-            var tpsController = new TPSController(Context, null);
-            var gpsController = new GPSController(Context, null);
+            var tpsController = new TPSController(Context, HistoricalDataProviders);
+            var gpsController = new GPSController(Context, HistoricalDataProviders);
+            var gasAdjustedTPSController = new GasAdjustedTPSController(Context, HistoricalDataProviders);
             var instantGPS = gpsController.Instant(includeSidechains);
             result.Add("tps", tpsController.Instant(includeSidechains));
             result.Add("gps", instantGPS);
-            Dictionary<string, List<DataPoint>> gasAdjustedTPS = new();
-            foreach (var entry in instantGPS)
-            {
-                gasAdjustedTPS.Add(entry.Key, new List<DataPoint>()
-                {
-                    new DataPoint()
-                {
-                    Date = instantGPS[entry.Key].First().Date,
-                    Value = instantGPS[entry.Key].First().Value / 21000
-                }
-                });
-            }
-            result.Add("gasAdjustedTPS", gasAdjustedTPS);
+            result.Add("gasAdjustedTPS", gasAdjustedTPSController.Instant(includeSidechains));
             return result;
         }
 
@@ -77,21 +67,13 @@ namespace ETHTPS.API.Controllers
         public IDictionary<string, object> Max(string provider, string network = "Mainnet")
         {
             var result = new Dictionary<string, object>();
-            var tpsController = new TPSController(Context, null);
-            var gpsController = new GPSController(Context, null);
+            var tpsController = new TPSController(Context, HistoricalDataProviders);
+            var gpsController = new GPSController(Context, HistoricalDataProviders);
             var maxGPS = gpsController.Max(provider, network);
             result.Add("tps", tpsController.Max(provider, network));
             result.Add("gps", maxGPS);
-            Dictionary<string, DataPoint> gasAdjustedTPS = new();
-            foreach(var entry in maxGPS)
-            {
-                gasAdjustedTPS.Add(entry.Key, new DataPoint()
-                {
-                    Date = maxGPS[entry.Key].Date,
-                    Value = maxGPS[entry.Key].Value / 21000
-                });
-            }
-            result.Add("gasAdjustedTPS", gasAdjustedTPS);
+            var gasAdjustedTPSController = new GasAdjustedTPSController(Context, HistoricalDataProviders);
+            result.Add("gasAdjustedTPS", gasAdjustedTPSController.Max(provider, network));
             return result;
         }
 

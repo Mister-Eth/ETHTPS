@@ -5,6 +5,197 @@
     "version": "1.0"
   },
   "paths": {
+    "/API/GasAdjustedTPS/Get": {
+      "get": {
+        "tags": [
+          "GasAdjustedTPS"
+        ],
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "interval",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "network",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": "Mainnet"
+            }
+          },
+          {
+            "name": "includeSidechains",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/DataResponseModel"
+                    }
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/DataResponseModel"
+                    }
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/DataResponseModel"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/API/GasAdjustedTPS/Instant": {
+      "get": {
+        "tags": [
+          "GasAdjustedTPS"
+        ],
+        "parameters": [
+          {
+            "name": "includeSidechains",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/DataPoint"
+                    }
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/DataPoint"
+                    }
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/DataPoint"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/API/GasAdjustedTPS/Max": {
+      "get": {
+        "tags": [
+          "GasAdjustedTPS"
+        ],
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "network",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": "Mainnet"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/DataPoint"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/DataPoint"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/DataPoint"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/API/v2/Networks": {
       "get": {
         "tags": [

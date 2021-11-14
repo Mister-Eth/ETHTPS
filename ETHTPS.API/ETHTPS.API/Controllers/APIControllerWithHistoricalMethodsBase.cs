@@ -10,7 +10,7 @@ namespace ETHTPS.API.Controllers
 {
     public abstract class APIControllerWithHistoricalMethodsBase : APIControllerBase
     {
-        private IEnumerable<IHistoricalDataProvider> HistoricalDataProviders { get; set; }
+        protected IEnumerable<IHistoricalDataProvider> HistoricalDataProviders { get; set; }
         protected APIControllerWithHistoricalMethodsBase(ETHTPSContext context, IEnumerable<IHistoricalDataProvider> historicalDataProviders) : base(context)
         {
             HistoricalDataProviders = historicalDataProviders;

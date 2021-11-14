@@ -18,6 +18,7 @@ import DataPoint from './model/DataPoint';
 import DataResponseModel from './model/DataResponseModel';
 import ProviderResponseModel from './model/ProviderResponseModel';
 import GPSApi from './api/GPSApi';
+import GasAdjustedTPSApi from './api/GasAdjustedTPSApi';
 import GeneralApi from './api/GeneralApi';
 import TPSApi from './api/TPSApi';
 import TestApi from './api/TestApi';
@@ -90,6 +91,12 @@ export {
     * @property {module:api/GPSApi}
     */
     GPSApi,
+
+    /**
+    * The GasAdjustedTPSApi service constructor.
+    * @property {module:api/GasAdjustedTPSApi}
+    */
+    GasAdjustedTPSApi,
 
     /**
     * The GeneralApi service constructor.

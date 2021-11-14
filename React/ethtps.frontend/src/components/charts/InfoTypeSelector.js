@@ -9,27 +9,34 @@ export default class InfoTypeSelector extends React.Component {
         super(props);
         
         this.state = {
-            infoType: props.infoType
+            mode: props.mode
         }
     }
 
     handleInfoTypeChange = (event, newAlignment) => {
         if (newAlignment !== null){
-            this.setState({infoType: newAlignment})
+            this.setState({mode: newAlignment})
             if (this.props.onChange !== undefined){
                 this.props.onChange(newAlignment);
             }
         }
     };
 
+    componentDidUpdate(previousProps, previousState){
+        if (previousProps.mode !== this.props.mode){     
+            this.setState({mode: this.props.mode});
+        }
+    }
+
     render(){
         return <ToggleButtonGroup
             color="primary"
-            value={this.state.infoType}
+            value={this.state.mode}
             exclusive
             onChange={this.handleInfoTypeChange}>
             <ToggleButton value="tps">tps</ToggleButton>
             <ToggleButton value="gps">gps</ToggleButton>
+            <ToggleButton value="gasAdjustedTPS">G~TPS</ToggleButton>
         </ToggleButtonGroup>
     }
 }

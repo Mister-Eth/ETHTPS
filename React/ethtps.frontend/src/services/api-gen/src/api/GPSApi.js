@@ -15,7 +15,6 @@
 import ApiClient from "../ApiClient";
 import DataPoint from '../model/DataPoint';
 import { DataResponseModel } from "..";
-
 /**
 * GPS service.
 * @module api/GPSApi

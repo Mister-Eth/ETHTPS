@@ -7,7 +7,7 @@ export default class IntervalSelector extends React.Component{
         super(props);
         
         this.state = {
-            interval: '1d'
+            interval: props.interval
         }
     }
 

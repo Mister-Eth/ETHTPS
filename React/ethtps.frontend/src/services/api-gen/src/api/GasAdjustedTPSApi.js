@@ -16,15 +16,15 @@ import ApiClient from "../ApiClient";
 import DataPoint from '../model/DataPoint';
 import { DataResponseModel } from "..";
 /**
-* TPS service.
-* @module api/TPSApi
+* GasAdjustedTPS service.
+* @module api/GasAdjustedTPSApi
 * @version 1.0
 */
-export default class TPSApi {
+export default class GasAdjustedTPSApi {
 
     /**
-    * Constructs a new TPSApi. 
-    * @alias module:api/TPSApi
+    * Constructs a new GasAdjustedTPSApi. 
+    * @alias module:api/GasAdjustedTPSApi
     * @class
     * @param {module:ApiClient} [apiClient] Optional API client implementation to use,
     * default to {@link module:ApiClient#instance} if unspecified.
@@ -35,8 +35,8 @@ export default class TPSApi {
 
 
     /**
-     * Callback function to receive the result of the aPITPSGetGet operation.
-     * @callback module:api/TPSApi~aPITPSGetGetCallback
+     * Callback function to receive the result of the aPIGasAdjustedTPSGetGet operation.
+     * @callback module:api/GasAdjustedTPSApi~aPIGasAdjustedTPSGetGetCallback
      * @param {String} error Error message, if any.
      * @param {Object.<String, {String: [DataResponseModel]}>} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -48,10 +48,10 @@ export default class TPSApi {
      * @param {String} opts.interval 
      * @param {String} opts.network  (default to 'Mainnet')
      * @param {Boolean} opts.includeSidechains  (default to true)
-     * @param {module:api/TPSApi~aPITPSGetGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/GasAdjustedTPSApi~aPIGasAdjustedTPSGetGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Object.<String, {String: [DataResponseModel]}>}
      */
-    aPITPSGetGet(opts, callback) {
+    aPIGasAdjustedTPSGetGet(opts, callback) {
       opts = opts || {};
       let postBody = null;
 
@@ -73,15 +73,15 @@ export default class TPSApi {
       let accepts = ['text/plain', 'application/json', 'text/json'];
       let returnType = {'String': [DataResponseModel]};
       return this.apiClient.callApi(
-        '/API/TPS/Get', 'GET',
+        '/API/GasAdjustedTPS/Get', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, null, callback
       );
     }
 
     /**
-     * Callback function to receive the result of the aPITPSInstantGet operation.
-     * @callback module:api/TPSApi~aPITPSInstantGetCallback
+     * Callback function to receive the result of the aPIGasAdjustedTPSInstantGet operation.
+     * @callback module:api/GasAdjustedTPSApi~aPIGasAdjustedTPSInstantGetCallback
      * @param {String} error Error message, if any.
      * @param {Object.<String, {String: [DataPoint]}>} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -90,10 +90,10 @@ export default class TPSApi {
     /**
      * @param {Object} opts Optional parameters
      * @param {Boolean} opts.includeSidechains  (default to true)
-     * @param {module:api/TPSApi~aPITPSInstantGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/GasAdjustedTPSApi~aPIGasAdjustedTPSInstantGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Object.<String, {String: [DataPoint]}>}
      */
-    aPITPSInstantGet(opts, callback) {
+    aPIGasAdjustedTPSInstantGet(opts, callback) {
       opts = opts || {};
       let postBody = null;
 
@@ -112,15 +112,15 @@ export default class TPSApi {
       let accepts = ['text/plain', 'application/json', 'text/json'];
       let returnType = {'String': [DataPoint]};
       return this.apiClient.callApi(
-        '/API/TPS/Instant', 'GET',
+        '/API/GasAdjustedTPS/Instant', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, null, callback
       );
     }
 
     /**
-     * Callback function to receive the result of the aPITPSMaxGet operation.
-     * @callback module:api/TPSApi~aPITPSMaxGetCallback
+     * Callback function to receive the result of the aPIGasAdjustedTPSMaxGet operation.
+     * @callback module:api/GasAdjustedTPSApi~aPIGasAdjustedTPSMaxGetCallback
      * @param {String} error Error message, if any.
      * @param {Object.<String, module:model/{String: DataPoint}>} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -130,10 +130,10 @@ export default class TPSApi {
      * @param {Object} opts Optional parameters
      * @param {String} opts.provider 
      * @param {String} opts.network  (default to 'Mainnet')
-     * @param {module:api/TPSApi~aPITPSMaxGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/GasAdjustedTPSApi~aPIGasAdjustedTPSMaxGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Object.<String, module:model/{String: DataPoint}>}
      */
-    aPITPSMaxGet(opts, callback) {
+    aPIGasAdjustedTPSMaxGet(opts, callback) {
       opts = opts || {};
       let postBody = null;
 
@@ -153,7 +153,7 @@ export default class TPSApi {
       let accepts = ['text/plain', 'application/json', 'text/json'];
       let returnType = {'String': DataPoint};
       return this.apiClient.callApi(
-        '/API/TPS/Max', 'GET',
+        '/API/GasAdjustedTPS/Max', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, null, callback
       );

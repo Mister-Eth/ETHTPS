@@ -7,6 +7,7 @@ import ProviderTable from './components/ProviderTable';
 import DataStatByType from './components/instant-stats/DataStatByType';
 import ModeSelector from './ModeSelector';
 import * as qs from 'query-string';
+import HistoricalChart from '../../charts/HistoricalChart';
 
 class MainPage extends React.Component {
 
@@ -147,17 +148,26 @@ class MainPage extends React.Component {
       providerData={this.getProviderData(this.state)}/>
       <hr/>
       <h3>
-        Current {formatModeName(this.state.mode)} distribution
+        Historical {formatModeName(this.state.mode)} distribution
       </h3>
       <p>
-        This is an ordered bar chart of each network's throughput.
+        This is a stacked line chart of all networks' historical throughput.
       </p>
       <Timeline/>
+      <HistoricalChart 
+        interval="1h"
+        mode={this.state.mode}
+        colorDictionary={this.state.homePageModel.colorDictionary} 
+        provider="All"
+        scale="lin"
+        network={this.state.network} />
+      {/*
       <HorizontalBarChart 
         data={this.state.homePageModel.selectedInstantData} 
         colorDictionary={this.state.homePageModel.colorDictionary} 
         mode={this.state.mode}
         providerData={this.getProviderData(this.state)}/>
+      */}
     </>
   );
 }

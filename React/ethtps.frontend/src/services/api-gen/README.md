@@ -128,6 +128,9 @@ Class | Method | HTTP request | Description
 *EthtpsApi.GPSApi* | [**aPIGPSGetGet**](docs/GPSApi.md#aPIGPSGetGet) | **GET** /API/GPS/Get | 
 *EthtpsApi.GPSApi* | [**aPIGPSInstantGet**](docs/GPSApi.md#aPIGPSInstantGet) | **GET** /API/GPS/Instant | 
 *EthtpsApi.GPSApi* | [**aPIGPSMaxGet**](docs/GPSApi.md#aPIGPSMaxGet) | **GET** /API/GPS/Max | 
+*EthtpsApi.GasAdjustedTPSApi* | [**aPIGasAdjustedTPSGetGet**](docs/GasAdjustedTPSApi.md#aPIGasAdjustedTPSGetGet) | **GET** /API/GasAdjustedTPS/Get | 
+*EthtpsApi.GasAdjustedTPSApi* | [**aPIGasAdjustedTPSInstantGet**](docs/GasAdjustedTPSApi.md#aPIGasAdjustedTPSInstantGet) | **GET** /API/GasAdjustedTPS/Instant | 
+*EthtpsApi.GasAdjustedTPSApi* | [**aPIGasAdjustedTPSMaxGet**](docs/GasAdjustedTPSApi.md#aPIGasAdjustedTPSMaxGet) | **GET** /API/GasAdjustedTPS/Max | 
 *EthtpsApi.GeneralApi* | [**aPIV2ColorDictionaryGet**](docs/GeneralApi.md#aPIV2ColorDictionaryGet) | **GET** /API/v2/ColorDictionary | 
 *EthtpsApi.GeneralApi* | [**aPIV2InstantDataGet**](docs/GeneralApi.md#aPIV2InstantDataGet) | **GET** /API/v2/InstantData | 
 *EthtpsApi.GeneralApi* | [**aPIV2IntervalsGet**](docs/GeneralApi.md#aPIV2IntervalsGet) | **GET** /API/v2/Intervals | 
