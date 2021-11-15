@@ -30,7 +30,7 @@ class ProviderTable extends React.Component {
       }
         return <>
         <div>
-        <TableContainer component={Paper} style={{overflowX:'auto'}}>
+        <TableContainer className={'inverted'} component={Paper} style={{overflowX:'auto'}}>
       <Table size={"small"} style={{minWidth: '550px'}} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -75,7 +75,7 @@ class ProviderTable extends React.Component {
               <TableCell align="left">
                     <div className={'l1 box'}>
                       <Link style={{color: this.state.colorDictionary[row.name]}} to={`/Network?name=${row.name}`}>
-                       <img className={'provider-icon'} src={`/provider-icons/${row.name}.png`} />
+                       <img className={'provider-icon inverted'} src={`/provider-icons/${row.name}.png`} />
                          {row.name}
                       </Link>
                     </div>

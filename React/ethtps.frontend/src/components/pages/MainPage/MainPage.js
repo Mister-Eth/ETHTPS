@@ -111,7 +111,7 @@ class MainPage extends React.Component {
   return (
     <>
       <ModeSelector defaultMode={this.state.mode} onChange={this.modeChanged.bind(this)}/>
-      <h3>
+      <h3  theme={'main'}>
         Current {formatModeName(this.state.mode)} overview
       </h3>
       <p>

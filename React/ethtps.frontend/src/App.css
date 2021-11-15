@@ -222,3 +222,15 @@ img{
   display: flex;
   align-items:center;
 }
+
+.c{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.float-right{
+  position: absolute;
+  float: right;
+  margin: 0 10px 10px 0; display: inline;
+}
