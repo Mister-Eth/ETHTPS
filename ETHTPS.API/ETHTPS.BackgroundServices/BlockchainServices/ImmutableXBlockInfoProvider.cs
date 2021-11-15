@@ -54,7 +54,7 @@ namespace ETHTPS.Services.BlockchainServices
             }
             while(block.TransactionCount == txLimit) //Increase the limit until we get all transactions
             {
-                txLimit += 500;
+                txLimit *= 2; //An exponential increase will reduce the number of calls
                 block = await GenerateFakeBlockAsync(txLimit);
             }
             return block;
