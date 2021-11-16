@@ -5,7 +5,7 @@ export default class ImmutableXDetails extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            upgradePlans: "",
+            name: props.name,
             details: {
                 description:
                   'Immutable X claims to be the first Layer 2 for NFTs on Ethereum. It promises zero gas fees, instant trades and scalability for games, applications, marketplaces, without compromise.',
@@ -21,8 +21,7 @@ export default class ImmutableXDetails extends React.Component {
                     'https://twitter.com/Immutable',
                   ],
                 }
-            },
-        name: props.name
+            }
     }
 }
     
