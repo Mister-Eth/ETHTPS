@@ -88,7 +88,6 @@ export default class HistoricalChart extends React.Component {
     }
 
     updateChartFromModel(provider, interval, network, mode){
-      console.log(mode)
       switch(mode){
         case 'tps':
             globalTPSApi.aPITPSGetGet({provider: provider, interval: this.transformIntervalName(interval), network: network}, (err,data,res)=>{

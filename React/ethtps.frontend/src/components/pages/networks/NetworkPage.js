@@ -12,6 +12,7 @@ import PolygonDetails from './details/PolygonDetails';
 import XDAIDetails from './details/XDAIDetails';
 import ZKSwapDetails from './details/ZKSwapDetails';
 import ZKSyncDetails from './details/ZKSyncDetails';
+import ImmutableXDetails from './details/ImmutableXDetails';
 import { globalGeneralApi } from '../../../services/common';
 
 export default class NetworkPage extends PageWithQueryString {
@@ -20,16 +21,17 @@ export default class NetworkPage extends PageWithQueryString {
     }
 
     components = {
-        'Ethereum': <EthereumDetails/>,
-        'Arbitrum One': <ArbitrumDetails/>,
-        'AVAX C-chain': <AVAXCChainDetails/>,
-        'Boba Network': <BobaNetworkDetails/>,
-        'Loopring': <LoopringDetails/>,
-        'Optimism': <OptimismDetails/>,
-        'Polygon': <PolygonDetails/>,
-        'XDAI': <XDAIDetails/>,
-        'ZKSwap': <ZKSwapDetails/>,
-        'ZKSync': <ZKSyncDetails/>,
+        'Ethereum': <EthereumDetails name={this.state.name}/>,
+        'Arbitrum One': <ArbitrumDetails name={this.state.name}/>,
+        'AVAX C-chain': <AVAXCChainDetails name={this.state.name}/>,
+        'Boba Network': <BobaNetworkDetails name={this.state.name}/>,
+        'Loopring': <LoopringDetails name={this.state.name}/>,
+        'Optimism': <OptimismDetails name={this.state.name}/>,
+        'Polygon': <PolygonDetails name={this.state.name}/>,
+        'XDAI': <XDAIDetails name={this.state.name}/>,
+        'ZKSwap': <ZKSwapDetails name={this.state.name}/>,
+        'ZKSync': <ZKSyncDetails name={this.state.name}/>,
+        'Immutable X': <ImmutableXDetails name={this.state.name}/>,
     }
 
     componentDidMount(){
