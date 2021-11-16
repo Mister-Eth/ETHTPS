@@ -26,7 +26,7 @@ class App extends React.Component {
     </Link>
     <br></br>
     <br></br>
-      <a href="https://github.com/WhoEvenAmI/ETHTPS">
+      <a href="https://github.com/Mister-Eth/ETHTPS">
           <img className={"small-img"} src={githubIcon}>
           </img>
         </a>
