@@ -16,10 +16,25 @@ import ZKSyncDetails from './details/ZKSyncDetails';
 import ImmutableXDetails from './details/ImmutableXDetails';
 import AztecDetails from './details/AztecDetails';
 import { globalGeneralApi, globalInstantDataService, to2DecimalPlaces } from '../../../services/common';
+import * as qs from 'query-string';
 
 export default class NetworkPage extends PageWithQueryString {
     constructor(props){
         super(props);
+
+        let state = this.state;
+        state.instantTPS = 0;
+        state.interval = '1d';
+        state.mode = 'tps';
+        let q = qs.parse(window.location.search);
+        if (q.interval !== undefined){
+            state.interval = q.interval; 
+        }
+        if (q.mode !== undefined){
+            state.mode = q.mode;
+
+        }
+        this.state = state;
     }
 
     components = {
@@ -68,8 +83,8 @@ export default class NetworkPage extends PageWithQueryString {
                 height={150}
                 provider={this.state.name} 
                 colorDictionary={this.state.colorDictionary}
-                interval={'1d'} 
-                mode={'tps'} 
+                interval={this.state.interval} 
+                mode={this.state.mode} 
                 scale={'lin'} 
                 network={'Mainnet'}/>
             <hr/>
