@@ -2,6 +2,7 @@ import { GeneralApi, GPSApi, TPSApi, GasAdjustedTPSApi } from './api-gen/src/ind
 import ApiClient from './api-gen/src/ApiClient';
 import InstantDataService from './InstantDataService';
 
+const client = new ApiClient('https://api.ethtps.info/');
 const globalGeneralApi = new GeneralApi(client);
 const globalGPSApi = new GPSApi(client);
 const globalTPSApi = new TPSApi(client);
