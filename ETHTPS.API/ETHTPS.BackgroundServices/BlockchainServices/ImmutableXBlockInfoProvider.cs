@@ -110,6 +110,9 @@ namespace ETHTPS.Services.BlockchainServices
                     case "trade":
                         sum += 46000;
                         break;
+                    case "deposit":
+                        sum += 21000;
+                        break;
                 }
             }
             return sum;

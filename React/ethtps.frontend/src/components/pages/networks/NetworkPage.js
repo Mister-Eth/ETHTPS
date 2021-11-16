@@ -1,7 +1,8 @@
 import PageWithQueryString from '../../pages/PageWithQueryString';
 import HistoricalChart from '../../charts/HistoricalChart';
-import './NetworkPage.css'
-import React from 'react';
+import './NetworkPage.css';
+import '../../../App.css';
+import React, {setState} from 'react';
 import EthereumDetails from './details/EthereumDetails';
 import ArbitrumDetails from './details/ArbitrumDetails';
 import AVAXCChainDetails from './details/AVAXCChainDetails';
@@ -13,7 +14,7 @@ import XDAIDetails from './details/XDAIDetails';
 import ZKSwapDetails from './details/ZKSwapDetails';
 import ZKSyncDetails from './details/ZKSyncDetails';
 import ImmutableXDetails from './details/ImmutableXDetails';
-import { globalGeneralApi } from '../../../services/common';
+import { globalGeneralApi, globalInstantDataService, to2DecimalPlaces } from '../../../services/common';
 
 export default class NetworkPage extends PageWithQueryString {
     constructor(props){
@@ -34,10 +35,16 @@ export default class NetworkPage extends PageWithQueryString {
         'Immutable X': <ImmutableXDetails name={this.state.name}/>,
     }
 
+    updateInstantTPS(data){
+        this.setState({instantTPS: data['tps'][this.state.name][0].value});
+    }
+
     componentDidMount(){
         globalGeneralApi.aPIV2ColorDictionaryGet((err,data,res) => {
             this.setState({colorDictionary:data});
         });
+        globalInstantDataService.periodicallyGetInstantDataForPage(this.state.name, this.updateInstantTPS.bind(this));
+        globalInstantDataService.getAndCallbackInstantData();
     }
     
     render(){
@@ -47,12 +54,14 @@ export default class NetworkPage extends PageWithQueryString {
             [Edit]
         </a>
             <div>
-                <h1 className={'box'}>
+                <h1  style={{display: 'inline'}} className={'box'}>
                     <img className={'large'} src={`/provider-icons/${this.state.name}.png`} />
                     {this.state.name}
                 </h1>
             </div>
-
+                <h4 style={{display: 'inline', color: "darkgray", verticalAlign:"middle", top: '-100%'}}>
+                    {this.state.instantTPS !== undefined? `${to2DecimalPlaces(this.state.instantTPS)} TPS`:<></>} 
+                </h4>
             <HistoricalChart 
                 height={150}
                 provider={this.state.name} 
@@ -61,7 +70,7 @@ export default class NetworkPage extends PageWithQueryString {
                 mode={'tps'} 
                 scale={'lin'} 
                 network={'Mainnet'}/>
-
+            <hr/>
             {this.components[this.state.name]}
         </>
         else return <></>

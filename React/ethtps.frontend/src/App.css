@@ -70,7 +70,9 @@ font-size: small;
 }
 
 .trick:hover span{display: none;}
-.trick:hover::before{content: 'Ethereum';}
+.trick:hover::before { 
+  content: 'Ethereum';
+}
 
 .ul-hover:hover{
   text-decoration: underline;

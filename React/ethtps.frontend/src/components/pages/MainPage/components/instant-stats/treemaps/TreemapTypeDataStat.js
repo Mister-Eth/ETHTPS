@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactApexChart from "react-apexcharts";
 import TotalDataSummaryStat from "../bar/TotalDataSummaryStat";
+import { to2DecimalPlaces } from "../../../../../../services/common";
 
 export default class TreemapTypeDataStat extends React.Component {
     constructor(props) {
@@ -45,14 +46,10 @@ export default class TreemapTypeDataStat extends React.Component {
         return t.reduce((a, b) => a + b);
     }
 
-    to2DecimalPlaces(num){
-        return Math.round((num + Number.EPSILON) * 100) / 100
-     }
-        
     createDataPoint(x, state){
         return {
             x: x.type,
-            y: this.to2DecimalPlaces(state.data[x.name][0].value)
+            y: to2DecimalPlaces(state.data[x.name][0].value)
         }
     }
 
