@@ -2,7 +2,6 @@ import { GeneralApi, GPSApi, TPSApi, GasAdjustedTPSApi } from './api-gen/src/ind
 import ApiClient from './api-gen/src/ApiClient';
 import InstantDataService from './InstantDataService';
 
-const client = new ApiClient('https://api.ethtps.info/');
 const globalGeneralApi = new GeneralApi(client);
 const globalGPSApi = new GPSApi(client);
 const globalTPSApi = new TPSApi(client);
@@ -21,4 +20,8 @@ const capitalizeFirstLetter = function(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-export { globalGeneralApi, globalGPSApi, globalTPSApi, globalInstantDataService, globalGasAdjustedTPSApi, formatModeName, capitalizeFirstLetter };
+const to2DecimalPlaces = function(num){
+    return Math.round((num + Number.EPSILON) * 100) / 100
+ }
+
+export { globalGeneralApi, globalGPSApi, globalTPSApi, globalInstantDataService, globalGasAdjustedTPSApi, to2DecimalPlaces, formatModeName, capitalizeFirstLetter };
