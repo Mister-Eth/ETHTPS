@@ -20,8 +20,4 @@
     <ProjectReference Include="..\ETHTPS.Data\ETHTPS.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="CacheUpdaters\ChartCache\" />
-  </ItemGroup>
-
 </Project>
