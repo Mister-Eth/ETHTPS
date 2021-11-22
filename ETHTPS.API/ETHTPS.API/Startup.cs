@@ -22,9 +22,6 @@ using ETHTPS.Services.BlockchainServices.Scan.Implementations;
 using ETHTPS.Services.BlockchainServices;
 using ETHTPS.Services.BlockchainServices.Scan;
 using ETHTPS.Data.Database.HistoricalDataProviders;
-using ETHTPS.Services.HistoricalDataLoggers.ChartLoggers;
-using ETHTPS.Services.HistoricalDataLoggers.SpecialLoggers;
-using ETHTPS.Services.HistoricalDataLoggers.Aggregation;
 
 namespace ETHTPS.API
 {
@@ -68,7 +65,6 @@ namespace ETHTPS.API
             AddTPSDataUpdaters(services);
             AddCacheUpdaters(services);
             AddHistoricalDataProviders(services);
-            AddDataLoggers(services);
         }
         private void AddTPSDataUpdaters(IServiceCollection services)
         {
@@ -103,27 +99,6 @@ namespace ETHTPS.API
             services.AddScoped<IHistoricalDataProvider, OneDayHistoricalDataProvider>();
             services.AddScoped<IHistoricalDataProvider, OneWeekHistoricalDataProvider>();
             services.AddScoped<IHistoricalDataProvider, OneMonthHistoricalDataProvider>();
-        }
-
-        private void AddDataLoggers(IServiceCollection services)
-        {
-            AddChartLoggers(services);
-            AddSpecialLoggers(services);
-            services.AddScoped<AggregatedDataLogger>();
-        }
-
-        private void AddChartLoggers(IServiceCollection services)
-        {
-            services.AddScoped<OneHourChartDataLogger>();
-            services.AddScoped<OneDayChartLogger>();
-            services.AddScoped<OneWeekChartDataLogger>();
-            services.AddScoped<OneMonthChartDataLogger>();
-        }
-
-        private void AddSpecialLoggers(IServiceCollection services)
-        {
-            services.AddScoped<LatestEntryDataLogger>();
-            services.AddScoped<MaxEntryDataLogger>();
         }
 
         public static void InitializeHangFire(string connectionString)
