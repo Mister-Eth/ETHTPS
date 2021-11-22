@@ -86,7 +86,7 @@ export default class EthereumDetails extends React.Component {
                 <h1>
                 The Scalability Trilemma
                 </h1>
-                <img width={450} src={triangle}/>
+                <img width={400} src={triangle}/>
                 <p>
                 The Scalability Trilemma claims that blockchain systems can only, at most, have two of the following three properties:
                 </p>
