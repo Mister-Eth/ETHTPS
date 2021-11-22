@@ -2,6 +2,7 @@ import './App.css';
 import githubIcon from './assets/600px-Octicons-mark-github.svg - inv.png';
 import twitterIcon from './assets/1486053611-twitter_79195.png';
 import discordIcon from './assets/discord-mascot.png';
+import blackDiscordIcon from './assets/discord-black-icon-703937.jpg';
 import React, { ReactDOM, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Main from './Main';
@@ -21,6 +22,16 @@ class App extends React.Component {
     <>
     <center>
     <br></br>
+    <center>
+        <div  style={{backgroundColor: '#7289da', borderRadius:5, marginBottom: '10px'}}>
+        <img className={"small-img"} src={blackDiscordIcon}></img>
+        <a style={{color:'white', fontWeight: 'bold', fontSize: 15}} href={'https://discord.gg/jWPcsTzpCT'}>
+          Click here to join our Discord channel
+        </a>
+        <img className={"small-img"} src={blackDiscordIcon}></img>
+        </div>
+      </center>
+
     <Link to="/">
       <div className={"jumpy unselectable"}>ETHTPS.info</div>
     </Link>
