@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ETHTPS.Data.Extensions;
+
+using Microsoft.EntityFrameworkCore;
 
 using System;
 using System.Collections.Generic;
@@ -23,6 +25,6 @@ namespace ETHTPS.Data.Database.HistoricalDataProviders
 
         public string Interval { get; private set; }
 
-        public IEnumerable<TimedTPSAndGasData> GetData(string provider, string network) => _dataSelector(_context).Where(x => x.NetworkNavigation.Name == network && x.ProviderNavigation.Name == provider).OrderBy(x => x.StartDate);
+        public IEnumerable<TimedTPSAndGasData> GetData(string provider, string network) => _dataSelector(_context).Where(x => x.NetworkNavigation.Name == network && x.ProviderNavigation.Name == provider).DistinctBy(x=>x.StartDate).OrderBy(x => x.StartDate);
     }
 }

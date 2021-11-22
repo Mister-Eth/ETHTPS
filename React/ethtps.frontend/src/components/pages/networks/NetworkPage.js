@@ -80,7 +80,7 @@ export default class NetworkPage extends PageWithQueryString {
                     {this.state.instantTPS !== undefined? `${to2DecimalPlaces(this.state.instantTPS)} TPS`:<></>} 
                 </h4>
             <HistoricalChart 
-                height={150}
+                height={250}
                 provider={this.state.name} 
                 colorDictionary={this.state.colorDictionary}
                 interval={this.state.interval} 
