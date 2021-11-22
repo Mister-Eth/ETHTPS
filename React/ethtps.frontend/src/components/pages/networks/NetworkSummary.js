@@ -7,7 +7,8 @@ export default class NetworkSummary extends React.Component {
 
         this.state = {
             details: props.details,
-            name: props.name
+            name: props.name,
+            hidel2BeatReference: props.hidel2BeatReference
         }
     }
 
@@ -50,9 +51,9 @@ export default class NetworkSummary extends React.Component {
                         </>)}
                     </tbody>
                 </table>
-                <center>
+                {(this.state.hidel2BeatReference)?<></>:<center>
                     Summary data provided by <a style={{color:'darkblue'}} href="https://l2beat.com?ref=https://ethtps.info">l2beat.com</a>
-                </center>
+                </center>}
             </div>
         </>
     }

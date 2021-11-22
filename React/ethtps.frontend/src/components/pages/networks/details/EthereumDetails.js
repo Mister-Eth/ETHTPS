@@ -27,7 +27,7 @@ export default class EthereumDetails extends React.Component {
         return <>
            <div className={'fcontainer'}>
                 <div className={'fitem'} style={{float:'right'}}>
-                    <NetworkSummary name={this.state.name} details={this.state.details.links}/>
+                    <NetworkSummary name={this.state.name} details={this.state.details.links} hidel2BeatReference={true}/>
                 </div>
                 <div className={'fitem s-padding'}>
                     <h1>Description</h1>

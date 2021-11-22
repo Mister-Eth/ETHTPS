@@ -13,7 +13,7 @@ export default class Main extends React.Component {
     return (
       <Switch> 
         <Route exact path='/' component={MainPage}></Route>
-        <Route exact path='/Network' component={NetworkPage}></Route>
+        <Route path='/Network/' component={NetworkPage}></Route>
       </Switch>
     );
   }

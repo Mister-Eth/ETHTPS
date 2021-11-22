@@ -74,7 +74,7 @@ class ProviderTable extends React.Component {
               </TableCell>
               <TableCell align="left">
                     <div className={'l1 box'}>
-                      <Link style={{color: this.state.colorDictionary[row.name]}} to={`/Network?name=${row.name}`}>
+                      <Link style={{color: this.state.colorDictionary[row.name]}} to={`/Network/${row.name}`}>
                        <img className={'provider-icon'} src={`/provider-icons/${row.name}.png`} />
                          {row.name}
                       </Link>
