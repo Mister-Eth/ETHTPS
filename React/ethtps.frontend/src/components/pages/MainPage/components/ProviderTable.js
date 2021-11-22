@@ -31,32 +31,36 @@ class ProviderTable extends React.Component {
         return <>
         <div>
         <TableContainer component={Paper} style={{overflowX:'auto'}}>
-      <Table size={"small"} style={{minWidth: '550px'}} aria-label="simple table">
+      <Table size={"small"} style={{minWidth: '750px'}} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell width={10} align="left">
-                <div className={'l1 b'}>
+                <div className={'lh b'}>
                     No.
                 </div>
             </TableCell>
             <TableCell width={150} align="left">
-                <div className={'l1 b'}>
+                <div className={'lh b'}>
                     Name
                 </div>
             </TableCell>
             <TableCell width={10} align="left">
-                <div className={'l1 b'}>
+                <div className={'lh b'}>
                     {capitalizeFirstLetter(formatModeName(this.state.mode))}
                 </div>
             </TableCell>
-            <TableCell width={10} align="left">
-                <div className={'l1 b tooltip'}>
-                    Max {formatModeName(this.state.mode)}
-                    <span className={'tooltiptext'}>This number represents the maximum recorded {formatModeName(this.state.mode)}</span>
+            <TableCell width={100} align="left">
+                <div className={'lh b'}>
+                    Max recorded {formatModeName(this.state.mode)}
+                </div>
+            </TableCell>
+            <TableCell width={20} align="left">
+                <div className={'lh b'}>
+                    Theoretical max TPS
                 </div>
             </TableCell>
             <TableCell width={150} align="left">
-                <div className={'l1 b'}>
+                <div className={'lh b'}>
                     Type
                 </div>
             </TableCell>
@@ -88,6 +92,11 @@ class ProviderTable extends React.Component {
               <TableCell align="left">
               <div className={'l1'}>
                 {(this.state.allMaxData[this.state.mode][row.name] !== undefined)?this.getMaxRow(this.state.allMaxData[this.state.mode][row.name].value, row.name):0}
+              </div>
+              </TableCell>
+              <TableCell align="left">
+              <div className={'l1'}>
+                {this.format(row.theoreticalMaxTPS)}
               </div>
               </TableCell>
               <TableCell align="left">
@@ -139,7 +148,7 @@ class ProviderTable extends React.Component {
     }
 
     createRow(x, i){
-        return  { no: (i + 1) + ".", name: x.name, type: x.type };
+        return  { no: (i + 1) + ".", name: x.name, type: x.type, theoreticalMaxTPS: x.theoreticalMaxTPS };
     }
 
     componentDidUpdate(previousProps, previousState){

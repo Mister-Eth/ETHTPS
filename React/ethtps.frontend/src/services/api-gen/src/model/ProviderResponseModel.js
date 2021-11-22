@@ -53,6 +53,9 @@ class ProviderResponseModel {
             if (data.hasOwnProperty('color')) {
                 obj['color'] = ApiClient.convertToType(data['color'], 'String');
             }
+            if (data.hasOwnProperty('theoreticalMaxTPS')) {
+                obj['theoreticalMaxTPS'] = ApiClient.convertToType(data['theoreticalMaxTPS'], 'Number');
+            }
             if (data.hasOwnProperty('type')) {
                 obj['type'] = ApiClient.convertToType(data['type'], 'String');
             }
@@ -72,6 +75,11 @@ ProviderResponseModel.prototype['name'] = undefined;
  * @member {String} color
  */
 ProviderResponseModel.prototype['color'] = undefined;
+
+/**
+ * @member {Number} theoreticalMaxTPS
+ */
+ProviderResponseModel.prototype['theoreticalMaxTPS'] = undefined;
 
 /**
  * @member {String} type

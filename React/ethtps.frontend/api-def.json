@@ -919,6 +919,9 @@
           "date": {
             "type": "string",
             "format": "date-time"
+          },
+          "settled": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -964,6 +967,10 @@
           "color": {
             "type": "string",
             "nullable": true
+          },
+          "theoreticalMaxTPS": {
+            "type": "integer",
+            "format": "int32"
           },
           "type": {
             "type": "string",

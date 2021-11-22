@@ -39,7 +39,8 @@ namespace ETHTPS.API.Controllers
             {
                 Name = x.Name,
                 Type = x.TypeNavigation.Name,
-                Color = x.ProviderProperties.First(x => x.Name == "Color").Value
+                Color = x.ProviderProperties.First(x => x.Name == "Color").Value,
+                TheoreticalMaxTPS = int.Parse(x.ProviderProperties.First(x => x.Name == "TheoreticalMaxTPS").Value)
             });
         }
 

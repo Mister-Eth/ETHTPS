@@ -8,5 +8,6 @@ Name | Type | Description | Notes
 **transactionCount** | **Number** |  | [optional] 
 **gasUsed** | **Number** |  | [optional] 
 **date** | **Date** |  | [optional] 
+**settled** | **Boolean** |  | [optional] 
 
 
