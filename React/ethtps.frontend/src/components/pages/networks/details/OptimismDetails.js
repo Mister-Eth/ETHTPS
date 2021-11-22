@@ -66,6 +66,7 @@ Since there is a window of time where verifiers run fraud proofs to check on seq
     <br/><br/>
 Dapps on Optimism cannot interact with other Dapps deployed on Ethereum or other Layer 2 scaling solutions in the same transaction. But since every application on Ethereum can be copied onto Optimism easily, there may be not much need for cross-chain composability. That said, Connext Network will be tackling this issue.  
                     </p>
+                    <a href={'https://zerocap.com/optimism-the-new-solution-for-ethereum/'}>Source</a>
                 </div>
            </div>
         </>
