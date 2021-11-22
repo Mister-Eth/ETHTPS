@@ -1,5 +1,5 @@
 import PageWithQueryString from '../../pages/PageWithQueryString';
-import HistoricalChart from '../../charts/HistoricalChart';
+import HistoricalLineChart from '../../charts/HistoricalLineChart';
 import './NetworkPage.css';
 import '../../../App.css';
 import React, {setState} from 'react';
@@ -15,7 +15,8 @@ import ZKSwapDetails from './details/ZKSwapDetails';
 import ZKSyncDetails from './details/ZKSyncDetails';
 import ImmutableXDetails from './details/ImmutableXDetails';
 import AztecDetails from './details/AztecDetails';
-import { globalGeneralApi, globalInstantDataService, to2DecimalPlaces } from '../../../services/common';
+import HistoricalCandleChart from '../../charts/HistoricalCandleChart';
+import { globalGeneralApi, globalOCLHApi, globalInstantDataService, to2DecimalPlaces } from '../../../services/common';
 import * as qs from 'query-string';
 
 export default class NetworkPage extends PageWithQueryString {
@@ -65,6 +66,15 @@ export default class NetworkPage extends PageWithQueryString {
     }
     
     render(){
+        let candleChart = 
+        <HistoricalCandleChart 
+            height={150}
+            provider={this.state.name} 
+            colorDictionary={this.state.colorDictionary}
+            interval={this.state.interval} 
+            mode={this.state.mode} 
+            scale={'lin'} 
+            network={'Mainnet'}/>;
         if (this.state !== null && this.state.colorDictionary !== undefined)
         return <>
         <a href={`https://github.com/WhoEvenAmI/ETHTPS/edit/dev/React/ethtps.frontend/src/components/pages/networks/details/${this.state.name}Details.js`} style={{float:'right', display:'inline'}}>
@@ -79,7 +89,7 @@ export default class NetworkPage extends PageWithQueryString {
                 <h4 style={{display: 'inline', color: "darkgray", verticalAlign:"middle", top: '-100%'}}>
                     {this.state.instantTPS !== undefined? `${to2DecimalPlaces(this.state.instantTPS)} TPS`:<></>} 
                 </h4>
-            <HistoricalChart 
+            <HistoricalLineChart 
                 height={150}
                 provider={this.state.name} 
                 colorDictionary={this.state.colorDictionary}

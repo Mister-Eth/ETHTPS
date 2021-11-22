@@ -18,7 +18,7 @@ namespace ETHTPS.Services.HistoricalDataLoggers.ChartLoggers
                 .Subtract(TimeSpan.FromSeconds(x.Second))
                 .Subtract(TimeSpan.FromMilliseconds(x.Millisecond)),
             targetEntryPartialSelector: (a, b) => a.StartDate.Minute == b.Minute, 
-            updateEntryIf: (a, b) => a.StartDate.Minute == b.Minute,
+            updateEntryIf: (a, b) => a.StartDate.Hour == b.Hour,
              network)
         {
         }

@@ -668,6 +668,67 @@
         }
       }
     },
+    "/API/OCLH/OCLH": {
+      "get": {
+        "tags": [
+          "OCLH"
+        ],
+        "parameters": [
+          {
+            "name": "interval",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "provider",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "network",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TPSGPSOCLH"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TPSGPSOCLH"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TPSGPSOCLH"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/API/Test/GetBlockInfo": {
       "get": {
         "tags": [
@@ -919,6 +980,9 @@
           "date": {
             "type": "string",
             "format": "date-time"
+          },
+          "settled": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -954,6 +1018,28 @@
         },
         "additionalProperties": false
       },
+      "OCLH": {
+        "type": "object",
+        "properties": {
+          "open": {
+            "type": "number",
+            "format": "double"
+          },
+          "close": {
+            "type": "number",
+            "format": "double"
+          },
+          "low": {
+            "type": "number",
+            "format": "double"
+          },
+          "high": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
       "ProviderResponseModel": {
         "type": "object",
         "properties": {
@@ -968,6 +1054,18 @@
           "type": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TPSGPSOCLH": {
+        "type": "object",
+        "properties": {
+          "tps": {
+            "$ref": "#/components/schemas/OCLH"
+          },
+          "gps": {
+            "$ref": "#/components/schemas/OCLH"
           }
         },
         "additionalProperties": false

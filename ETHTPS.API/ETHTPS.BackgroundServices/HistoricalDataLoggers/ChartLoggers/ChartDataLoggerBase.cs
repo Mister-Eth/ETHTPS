@@ -1,6 +1,9 @@
 ﻿using ETHTPS.Data.Database;
+using ETHTPS.Data.Models;
 
 using Microsoft.EntityFrameworkCore;
+
+using Newtonsoft.Json;
 
 using System;
 using System.Collections.Generic;
@@ -32,9 +35,9 @@ namespace ETHTPS.Services.HistoricalDataLoggers.ChartLoggers
         public void AddOrUpdateEntry(TPSGPSInfo entry, int providerID)
         {
             var dbSet = _dataSelector(_context);
-            var targetDate = _targetDateGenerator(entry.Date);
+            var targetDate = _targetDateGenerator(entry.Date.ToUniversalTime());
             Func<TTargetHistoricalData, bool> targetEntrySelector = x => _targetEntryPartialSelector(x, targetDate) && x.Network == _networkID && x.Provider == providerID;
-            if (!dbSet.Any(targetEntrySelector))
+            void addNewEntry()
             {
                 dbSet.Add(new TTargetHistoricalData()
                 {
@@ -43,8 +46,16 @@ namespace ETHTPS.Services.HistoricalDataLoggers.ChartLoggers
                     AverageGps = entry.GPS,
                     Provider = providerID,
                     StartDate = targetDate,
-                    ReadingsCount = 1
+                    ReadingsCount = 1,
+                    OclhJson = JsonConvert.SerializeObject(new TPSGPSOCLH(entry.TPS, entry.GPS)
+                    {
+                        Date = targetDate
+                    })
                 });
+            };
+            if (!dbSet.Any(targetEntrySelector))
+            {
+                addNewEntry();
             }
             else
             {
@@ -54,14 +65,42 @@ namespace ETHTPS.Services.HistoricalDataLoggers.ChartLoggers
                     x.AverageTps = ((x.AverageTps * x.ReadingsCount) + entry.TPS) / (x.ReadingsCount + 1);
                     x.AverageGps = ((x.AverageGps * x.ReadingsCount) + entry.GPS) / (x.ReadingsCount + 1);
                     x.ReadingsCount++;
+
+                    if (!string.IsNullOrWhiteSpace(x.OclhJson))
+                    {
+                        var oclh = JsonConvert.DeserializeObject<TPSGPSOCLH>(x.OclhJson);
+                        oclh.GPS.Close = entry.GPS;
+                        oclh.TPS.Close = entry.TPS;
+                        if (oclh.TPS.High < entry.TPS)
+                        {
+                            oclh.TPS.High = entry.TPS;
+                        }
+                        if (oclh.TPS.Low > entry.TPS)
+                        {
+                            oclh.TPS.Low = entry.TPS;
+                        }
+
+                        if (oclh.GPS.High < entry.GPS)
+                        {
+                            oclh.GPS.High = entry.GPS;
+                        }
+                        if (oclh.GPS.Low > entry.GPS)
+                        {
+                            oclh.GPS.Low = entry.GPS;
+                        }
+
+                        x.OclhJson = JsonConvert.SerializeObject(oclh);
+                    }
+                    else
+                    {
+                        x.OclhJson = JsonConvert.SerializeObject(new TPSGPSOCLH(x.AverageTps, x.AverageGps));
+                    }
                 }
                 else
                 {
-                    x.AverageTps = entry.TPS;
-                    x.AverageGps = entry.GPS;
-                    x.ReadingsCount = 1;
-                    x.StartDate = targetDate;
+                    addNewEntry();
                 }
+
                 dbSet.Update(x);
             }
         }

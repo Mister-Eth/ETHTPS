@@ -16,10 +16,13 @@ import ApiClient from './ApiClient';
 import BlockInfo from './model/BlockInfo';
 import DataPoint from './model/DataPoint';
 import DataResponseModel from './model/DataResponseModel';
+import OCLH from './model/OCLH';
 import ProviderResponseModel from './model/ProviderResponseModel';
+import TPSGPSOCLH from './model/TPSGPSOCLH';
 import GPSApi from './api/GPSApi';
 import GasAdjustedTPSApi from './api/GasAdjustedTPSApi';
 import GeneralApi from './api/GeneralApi';
+import OCLHApi from './api/OCLHApi';
 import TPSApi from './api/TPSApi';
 import TestApi from './api/TestApi';
 
@@ -81,10 +84,22 @@ export {
     DataResponseModel,
 
     /**
+     * The OCLH model constructor.
+     * @property {module:model/OCLH}
+     */
+    OCLH,
+
+    /**
      * The ProviderResponseModel model constructor.
      * @property {module:model/ProviderResponseModel}
      */
     ProviderResponseModel,
+
+    /**
+     * The TPSGPSOCLH model constructor.
+     * @property {module:model/TPSGPSOCLH}
+     */
+    TPSGPSOCLH,
 
     /**
     * The GPSApi service constructor.
@@ -103,6 +118,12 @@ export {
     * @property {module:api/GeneralApi}
     */
     GeneralApi,
+
+    /**
+    * The OCLHApi service constructor.
+    * @property {module:api/OCLHApi}
+    */
+    OCLHApi,
 
     /**
     * The TPSApi service constructor.

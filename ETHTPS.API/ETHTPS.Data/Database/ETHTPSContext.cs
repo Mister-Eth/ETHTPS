@@ -187,6 +187,8 @@ namespace ETHTPS.Data.Database
 
                 entity.Property(e => e.StartDate).HasColumnType("datetime");
 
+                entity.Property(e => e.OclhJson).IsUnicode(false).HasColumnName("OCLH_JSON");
+
                 entity.HasOne(d => d.NetworkNavigation)
                     .WithMany(p => p.TpsandGasDataDays)
                     .HasForeignKey(d => d.Network)
@@ -211,6 +213,8 @@ namespace ETHTPS.Data.Database
                 entity.Property(e => e.AverageTps).HasColumnName("AverageTPS");
 
                 entity.Property(e => e.StartDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OclhJson).IsUnicode(false).HasColumnName("OCLH_JSON");
 
                 entity.HasOne(d => d.NetworkNavigation)
                     .WithMany(p => p.TpsandGasDataHours)
@@ -262,6 +266,8 @@ namespace ETHTPS.Data.Database
 
                 entity.Property(e => e.StartDate).HasColumnType("datetime");
 
+                entity.Property(e => e.OclhJson).IsUnicode(false).HasColumnName("OCLH_JSON");
+
                 entity.HasOne(d => d.NetworkNavigation)
                     .WithMany(p => p.TpsandGasDataMonths)
                     .HasForeignKey(d => d.Network)
@@ -286,6 +292,8 @@ namespace ETHTPS.Data.Database
                 entity.Property(e => e.AverageTps).HasColumnName("AverageTPS");
 
                 entity.Property(e => e.StartDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OclhJson).IsUnicode(false).HasColumnName("OCLH_JSON");
 
                 entity.HasOne(d => d.NetworkNavigation)
                     .WithMany(p => p.TpsandGasDataWeeks)

@@ -59,6 +59,9 @@ class BlockInfo {
             if (data.hasOwnProperty('date')) {
                 obj['date'] = ApiClient.convertToType(data['date'], 'Date');
             }
+            if (data.hasOwnProperty('settled')) {
+                obj['settled'] = ApiClient.convertToType(data['settled'], 'Boolean');
+            }
         }
         return obj;
     }
@@ -85,6 +88,11 @@ BlockInfo.prototype['gasUsed'] = undefined;
  * @member {Date} date
  */
 BlockInfo.prototype['date'] = undefined;
+
+/**
+ * @member {Boolean} settled
+ */
+BlockInfo.prototype['settled'] = undefined;
 
 
 

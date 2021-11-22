@@ -7,7 +7,7 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { Line } from "react-chartjs-2";
 
-export default class HistoricalChart extends React.Component {
+export default class HistoricalLineChart extends React.Component {
 
     constructor(props){
         super(props);

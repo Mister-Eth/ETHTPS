@@ -138,6 +138,7 @@ Class | Method | HTTP request | Description
 *EthtpsApi.GeneralApi* | [**aPIV2NetworksGet**](docs/GeneralApi.md#aPIV2NetworksGet) | **GET** /API/v2/Networks | 
 *EthtpsApi.GeneralApi* | [**aPIV2ProviderTypesColorDictionaryGet**](docs/GeneralApi.md#aPIV2ProviderTypesColorDictionaryGet) | **GET** /API/v2/ProviderTypesColorDictionary | 
 *EthtpsApi.GeneralApi* | [**aPIV2ProvidersGet**](docs/GeneralApi.md#aPIV2ProvidersGet) | **GET** /API/v2/Providers | 
+*EthtpsApi.OCLHApi* | [**aPIOCLHOCLHGet**](docs/OCLHApi.md#aPIOCLHOCLHGet) | **GET** /API/OCLH/OCLH | 
 *EthtpsApi.TPSApi* | [**aPITPSGetGet**](docs/TPSApi.md#aPITPSGetGet) | **GET** /API/TPS/Get | 
 *EthtpsApi.TPSApi* | [**aPITPSInstantGet**](docs/TPSApi.md#aPITPSInstantGet) | **GET** /API/TPS/Instant | 
 *EthtpsApi.TPSApi* | [**aPITPSMaxGet**](docs/TPSApi.md#aPITPSMaxGet) | **GET** /API/TPS/Max | 
@@ -149,7 +150,9 @@ Class | Method | HTTP request | Description
  - [EthtpsApi.BlockInfo](docs/BlockInfo.md)
  - [EthtpsApi.DataPoint](docs/DataPoint.md)
  - [EthtpsApi.DataResponseModel](docs/DataResponseModel.md)
+ - [EthtpsApi.OCLH](docs/OCLH.md)
  - [EthtpsApi.ProviderResponseModel](docs/ProviderResponseModel.md)
+ - [EthtpsApi.TPSGPSOCLH](docs/TPSGPSOCLH.md)
 
 
 ## Documentation for Authorization

@@ -1,4 +1,4 @@
-import { GeneralApi, GPSApi, TPSApi, GasAdjustedTPSApi } from './api-gen/src/index';
+import { GeneralApi, GPSApi, TPSApi, GasAdjustedTPSApi, OCLHApi } from './api-gen/src/index';
 import ApiClient from './api-gen/src/ApiClient';
 import InstantDataService from './InstantDataService';
 
@@ -7,6 +7,7 @@ const globalGeneralApi = new GeneralApi(client);
 const globalGPSApi = new GPSApi(client);
 const globalTPSApi = new TPSApi(client);
 const globalGasAdjustedTPSApi = new GasAdjustedTPSApi(client);
+const globalOCLHApi = new OCLHApi(client);
 const globalInstantDataService = new InstantDataService(); 
 const formatModeName = function(mode) {
     if (mode !== "gasAdjustedTPS"){
@@ -25,4 +26,4 @@ const to2DecimalPlaces = function(num){
     return Math.round((num + Number.EPSILON) * 100) / 100
  }
 
-export { globalGeneralApi, globalGPSApi, globalTPSApi, globalInstantDataService, globalGasAdjustedTPSApi, to2DecimalPlaces, formatModeName, capitalizeFirstLetter };
+export { globalGeneralApi, globalGPSApi, globalTPSApi, globalInstantDataService, globalGasAdjustedTPSApi, globalOCLHApi, to2DecimalPlaces, formatModeName, capitalizeFirstLetter };

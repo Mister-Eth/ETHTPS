@@ -7,7 +7,7 @@ import ProviderTable from './components/ProviderTable';
 import DataStatByType from './components/instant-stats/DataStatByType';
 import ModeSelector from './ModeSelector';
 import * as qs from 'query-string';
-import HistoricalChart from '../../charts/HistoricalChart';
+import HistoricalLineChart from '../../charts/HistoricalLineChart';
 
 class MainPage extends React.Component {
 
@@ -154,7 +154,7 @@ class MainPage extends React.Component {
         This is a stacked line chart of all networks' historical throughput.
       </p>
       <Timeline/>
-      <HistoricalChart 
+      <HistoricalLineChart 
         height={200}
         interval="1h"
         mode={this.state.mode}
