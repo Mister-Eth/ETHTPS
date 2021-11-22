@@ -50,15 +50,17 @@ class ProviderTable extends React.Component {
                 </div>
             </TableCell>
             <TableCell width={100} align="left">
-                <div className={'lh b'}>
-                    Max recorded {formatModeName(this.state.mode)}
-                </div>
-            </TableCell>
+                  <div className={'lh b'}>
+                      Max recorded {formatModeName(this.state.mode)}
+                  </div>
+              </TableCell>
+            {(this.state.mode === 'tps')?<> 
             <TableCell width={20} align="left">
                 <div className={'lh b'}>
                     Theoretical max TPS
                 </div>
             </TableCell>
+            </>:<></>}
             <TableCell width={150} align="left">
                 <div className={'lh b'}>
                     Type
@@ -94,11 +96,14 @@ class ProviderTable extends React.Component {
                 {(this.state.allMaxData[this.state.mode][row.name] !== undefined)?this.getMaxRow(this.state.allMaxData[this.state.mode][row.name].value, row.name):0}
               </div>
               </TableCell>
-              <TableCell align="left">
-              <div className={'l1'}>
-                {this.format(row.theoreticalMaxTPS)}
-              </div>
-              </TableCell>
+              {(this.state.mode === 'tps')?<>
+                <TableCell align="left">
+                  <div className={'l1'}>
+                    {this.format(row.theoreticalMaxTPS)}
+                  </div>
+                </TableCell>
+              </>:<></>}
+        
               <TableCell align="left">
                 <div className={((row.type == "Sidechain" || row.type === "Validium")?'l1':'l1 green')}>
                   {row.type}
