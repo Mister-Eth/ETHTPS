@@ -23,7 +23,7 @@ class App extends React.Component {
     <center>
     <br></br>
     <center>
-        <div  style={{backgroundColor: '#7289da', borderRadius:5, marginBottom: '10px'}}>
+        <div  style={{backgroundColor: '#7289da', borderRadius:1, marginBottom: '10px'}}>
         <img className={"small-img"} src={blackDiscordIcon}></img>
         <a style={{color:'white', fontWeight: 'bold', fontSize: 15}} href={'https://discord.gg/jWPcsTzpCT'}>
           Click here to join our Discord channel
