@@ -197,6 +197,11 @@ h3 {
   font-size: 16px;
 }
 
+.invisible{
+  position: absolute;
+  color: transparent;
+}
+
 .b{
   font-weight: 600;
 }
