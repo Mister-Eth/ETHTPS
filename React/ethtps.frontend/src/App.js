@@ -18,6 +18,16 @@ class App extends React.Component {
   }
 
  render(){
+  let main = "Loading..."; 
+  try{
+      main = <Main/>;
+   }
+   catch {
+     setTimeout(() => {
+        window.location.reload(false);
+     }, 2000);
+   }
+   
   return (
     <>
     <center>
@@ -52,9 +62,11 @@ class App extends React.Component {
     </center>
     <hr/>
     <div className={"container"}>
-      <Main/>
+      {main}
     </div>
     <hr/>
+    <h1 className={'invisible inline'}>ETHTPS</h1>
+    <h1 className={'invisible inline'}>ETHTPS.info</h1>
     <footer>
       <div className={'inline'}>
       Brought to you by 
