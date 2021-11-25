@@ -24,28 +24,59 @@ class ProviderTable extends React.Component {
             allData: props.allData,
             sort:{
               asc: true,
-              columnName: 'No'
+              columnName: 'no'
             }
         }
     }
 
-    sortTableBy(columnName){
+    dynamicSort(property) {
+      var sortOrder = (this.state.sort.asc?1:-1);
+      switch(property){
+        case 'max':
+          return function (a,b) {
+            //this.state.allMaxData[this.state.mode][row.name].value
+            let x = this.state.allMaxData[this.state.mode][a.name].value;
+            let y = this.state.allMaxData[this.state.mode][b.name].value;
+            var result = (x < y) ? -1 : (x > y) ? 1 : 0;
+            return result * sortOrder;
+        }
+        case 'value':
+          return function (a,b) {
+            let x = this.state.data[a.name][0].value;
+            let y = this.state.data[b.name][0].value;
+            var result = (x < y) ? -1 : (x > y) ? 1 : 0;
+            return result * sortOrder;
+        }
+        case 'no':
+          return function (a,b) {
+            var result = (parseInt(a[property]) < parseInt(b[property])) ? -1 : (parseInt(a[property]) > parseInt(b[property])) ? 1 : 0;
+            return result * sortOrder;
+        }
+        default:
+          return function (a,b) {
+            var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+            return result * sortOrder;
+        }
+      }
+  }
+
+    sortTableBy(columnName, noSwitch = false){
       let state = this.state;
       if (columnName !== state.sort.columnName){
         state.sort.columnName = columnName;
         state.sort.asc = true;
       }
-      else{
+      else if (!noSwitch){
         state.sort.asc = !state.sort.asc;
       }
       this.setState(state);
-      console.log(`${columnName} ${state.sort.asc}`);
     }
 
     render(){
       if (this.state.colorDictionary === undefined){
         return <></>
       }
+      
         return <>
         <div>
         <TableContainer component={Paper} style={{overflowX:'auto'}}>
@@ -54,9 +85,9 @@ class ProviderTable extends React.Component {
           <TableRow>
             <TableCell width={10} align="left">
             <TableSortLabel
-                active={this.state.sort.columnName === 'No'}
+                active={this.state.sort.columnName === 'no'}
                 direction={(this.state.sort.asc?'asc':'desc')}
-                onClick={()=>this.sortTableBy('No')}>
+                onClick={()=>this.sortTableBy('no')}>
                 <div className={'lh b'}>
                     No.
                 </div>
@@ -64,9 +95,9 @@ class ProviderTable extends React.Component {
             </TableCell>
             <TableCell width={150} align="left">
             <TableSortLabel
-                active={this.state.sort.columnName === 'Name'}
+                active={this.state.sort.columnName === 'name'}
                 direction={(this.state.sort.asc?'asc':'desc')}
-                onClick={()=>this.sortTableBy('Name')}>
+                onClick={()=>this.sortTableBy('name')}>
                 <div className={'lh b'}>
                     Name
                 </div>
@@ -74,9 +105,9 @@ class ProviderTable extends React.Component {
             </TableCell>
             <TableCell width={10} align="left">
             <TableSortLabel
-                active={this.state.sort.columnName === 'Value'}
+                active={this.state.sort.columnName === 'value'}
                 direction={(this.state.sort.asc?'asc':'desc')}
-                onClick={()=>this.sortTableBy('Value')}>
+                onClick={()=>this.sortTableBy('value')}>
                 <div className={'lh b'}>
                     {capitalizeFirstLetter(formatModeName(this.state.mode))}
                 </div>
@@ -84,9 +115,9 @@ class ProviderTable extends React.Component {
             </TableCell>
             <TableCell width={80} align="left">
             <TableSortLabel
-                active={this.state.sort.columnName === 'Max'}
+                active={this.state.sort.columnName === 'max'}
                 direction={(this.state.sort.asc?'asc':'desc')}
-                onClick={()=>this.sortTableBy('Max')}>
+                onClick={()=>this.sortTableBy('max')}>
                   <div className={'lh b'}>
                       Max recorded {formatModeName(this.state.mode)}
                   </div>
@@ -95,9 +126,9 @@ class ProviderTable extends React.Component {
             {(this.state.mode === 'tps')?<> 
             <TableCell width={20} align="left">
             <TableSortLabel
-                active={this.state.sort.columnName === 'TheoreticalMax'}
+                active={this.state.sort.columnName === 'theoreticalMaxTPS'}
                 direction={(this.state.sort.asc?'asc':'desc')}
-                onClick={()=>this.sortTableBy('TheoreticalMax')}>
+                onClick={()=>this.sortTableBy('theoreticalMaxTPS')}>
                 <div className={'lh b'}>
                     Theoretical max TPS
                 </div>
@@ -106,9 +137,9 @@ class ProviderTable extends React.Component {
             </>:<></>}
             <TableCell width={150} align="left">
             <TableSortLabel
-                active={this.state.sort.columnName === 'Type'}
+                active={this.state.sort.columnName === 'type'}
                 direction={(this.state.sort.asc?'asc':'desc')}
-                onClick={()=>this.sortTableBy('Type')}>
+                onClick={()=>this.sortTableBy('type')}>
                 <div className={'lh b'}>
                     Type
                 </div>
@@ -117,7 +148,7 @@ class ProviderTable extends React.Component {
           </TableRow>
         </TableHead>
         <TableBody>
-          {this.state.rows.map((row) => (
+          {this.state.rows.sort(this.dynamicSort(this.state.sort.columnName).bind(this)).map((row) => (
             <TableRow
               key={row.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -201,7 +232,14 @@ class ProviderTable extends React.Component {
     }
 
     createRow(x, i){
-        return  { no: (i + 1) + ".", name: x.name, type: x.type, theoreticalMaxTPS: x.theoreticalMaxTPS };
+        return  { 
+            no: (i + 1) + ".", 
+            name: x.name, 
+            type: x.type, 
+            theoreticalMaxTPS: x.theoreticalMaxTPS,
+            value: 0,
+            max: 0
+          };
     }
 
     componentDidUpdate(previousProps, previousState){
