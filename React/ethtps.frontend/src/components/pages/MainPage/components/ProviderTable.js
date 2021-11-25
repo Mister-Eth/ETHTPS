@@ -23,8 +23,8 @@ class ProviderTable extends React.Component {
             colorDictionary: props.colorDictionary,
             allData: props.allData,
             sort:{
-              asc: true,
-              columnName: 'no'
+              asc: false,
+              columnName: 'value'
             }
         }
     }
