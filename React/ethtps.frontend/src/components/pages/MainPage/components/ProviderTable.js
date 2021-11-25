@@ -8,6 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Link } from "react-router-dom";
+import { TableSortLabel } from '@mui/material';
 
 class ProviderTable extends React.Component {
     constructor(props){
@@ -20,8 +21,25 @@ class ProviderTable extends React.Component {
             allMaxData: props.allMaxData,
             mode: props.mode,
             colorDictionary: props.colorDictionary,
-            allData: props.allData
+            allData: props.allData,
+            sort:{
+              asc: true,
+              columnName: 'No'
+            }
         }
+    }
+
+    sortTableBy(columnName){
+      let state = this.state;
+      if (columnName !== state.sort.columnName){
+        state.sort.columnName = columnName;
+        state.sort.asc = true;
+      }
+      else{
+        state.sort.asc = !state.sort.asc;
+      }
+      this.setState(state);
+      console.log(`${columnName} ${state.sort.asc}`);
     }
 
     render(){
@@ -35,36 +53,66 @@ class ProviderTable extends React.Component {
         <TableHead>
           <TableRow>
             <TableCell width={10} align="left">
+            <TableSortLabel
+                active={this.state.sort.columnName === 'No'}
+                direction={(this.state.sort.asc?'asc':'desc')}
+                onClick={()=>this.sortTableBy('No')}>
                 <div className={'lh b'}>
                     No.
                 </div>
+            </TableSortLabel>
             </TableCell>
             <TableCell width={150} align="left">
+            <TableSortLabel
+                active={this.state.sort.columnName === 'Name'}
+                direction={(this.state.sort.asc?'asc':'desc')}
+                onClick={()=>this.sortTableBy('Name')}>
                 <div className={'lh b'}>
                     Name
                 </div>
+            </TableSortLabel>
             </TableCell>
             <TableCell width={10} align="left">
+            <TableSortLabel
+                active={this.state.sort.columnName === 'Value'}
+                direction={(this.state.sort.asc?'asc':'desc')}
+                onClick={()=>this.sortTableBy('Value')}>
                 <div className={'lh b'}>
                     {capitalizeFirstLetter(formatModeName(this.state.mode))}
                 </div>
+            </TableSortLabel>
             </TableCell>
-            <TableCell width={100} align="left">
+            <TableCell width={80} align="left">
+            <TableSortLabel
+                active={this.state.sort.columnName === 'Max'}
+                direction={(this.state.sort.asc?'asc':'desc')}
+                onClick={()=>this.sortTableBy('Max')}>
                   <div className={'lh b'}>
                       Max recorded {formatModeName(this.state.mode)}
                   </div>
+                  </TableSortLabel>
               </TableCell>
             {(this.state.mode === 'tps')?<> 
             <TableCell width={20} align="left">
+            <TableSortLabel
+                active={this.state.sort.columnName === 'TheoreticalMax'}
+                direction={(this.state.sort.asc?'asc':'desc')}
+                onClick={()=>this.sortTableBy('TheoreticalMax')}>
                 <div className={'lh b'}>
                     Theoretical max TPS
                 </div>
+                </TableSortLabel>
             </TableCell>
             </>:<></>}
             <TableCell width={150} align="left">
+            <TableSortLabel
+                active={this.state.sort.columnName === 'Type'}
+                direction={(this.state.sort.asc?'asc':'desc')}
+                onClick={()=>this.sortTableBy('Type')}>
                 <div className={'lh b'}>
                     Type
                 </div>
+                </TableSortLabel>
             </TableCell>
           </TableRow>
         </TableHead>
