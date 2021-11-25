@@ -3,6 +3,7 @@
 using ETHTPS.Data.Database;
 
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 using System;
@@ -24,7 +25,7 @@ namespace ETHTPS.API.Middlewares
             _next = next;
         }
 
-        public async Task InvokeAsync(HttpContext context, ETHTPSContext dbContext, ILogger<AccesStatsMiddleware> logger)
+        public async Task InvokeAsync(HttpContext context, ETHTPSContext dbContext, ILogger<AccesStatsMiddleware> logger, IConfiguration configuration)
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -32,6 +33,28 @@ namespace ETHTPS.API.Middlewares
             stopwatch.Stop();
 
             logger.LogInformation($"{context.Connection.Id}: {context.Request.Path}{context.Request.QueryString} ({stopwatch.Elapsed.TotalMilliseconds}ms)");
+
+            try
+            {
+                var section = configuration.GetSection("Telegram");
+                if (section != null)
+                {
+                    if (context.Request.Method == "GET")
+                    {
+                        if (context.Request.Path.ToString().Contains("API/v2/Providers"))
+                        {
+                            var bot = new NetTelegramBotApi.TelegramBot(section.GetValue<string>("Token"), new System.Net.Http.HttpClient());
+                            var message = new NetTelegramBotApi.Requests.SendMessage(section.GetValue<long>("ChatID"), $"[{context.Connection.RemoteIpAddress.MapToIPv4()}] - New user");
+                            await bot.MakeRequestAsync(message);
+                        }
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                logger.LogError("Error sending Telegram message", e);
+            }
+
             var entry = new AccesStat()
             {
                 Count = 1,
