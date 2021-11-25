@@ -34,6 +34,7 @@ namespace ETHTPS.API.Middlewares
 
             logger.LogInformation($"{context.Connection.Id}: {context.Request.Path}{context.Request.QueryString} ({stopwatch.Elapsed.TotalMilliseconds}ms)");
 
+#if RELEASE
             try
             {
                 var section = configuration.GetSection("Telegram");
@@ -56,6 +57,7 @@ namespace ETHTPS.API.Middlewares
             {
                 logger.LogError("Error sending Telegram message", e);
             }
+#endif
 
             var entry = new AccesStat()
             {

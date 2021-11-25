@@ -41,29 +41,35 @@ class MainPage extends React.Component {
   intervalRef = -1;
   componentDidMount(){
 
-    globalGeneralApi.aPIV2ProvidersGet((err, data, res) => {
-      let homePageModel = this.state.homePageModel;
-      homePageModel.providerData = data;
-      this.setState({homePageModel: homePageModel});
-    });
+    try{
+      globalGeneralApi.aPIV2ProvidersGet((err, data, res) => {
+        let homePageModel = this.state.homePageModel;
+        homePageModel.providerData = data;
+        this.setState({homePageModel: homePageModel});
+      });
+  
+      globalGeneralApi.aPIV2ColorDictionaryGet((err, data, res) => {
+        let homePageModel = this.state.homePageModel;
+        homePageModel.colorDictionary = data;
+        this.setState({homePageModel: homePageModel});
+      });
+  
+      globalGeneralApi.aPIV2ProviderTypesColorDictionaryGet((err, data, res) => {
+        let homePageModel = this.state.homePageModel;
+        homePageModel.providerTypeColorDictionary = data;
+        this.setState({homePageModel: homePageModel});
+      });
+  
+      globalGeneralApi.aPIV2MaxGet({provider: 'All', network: this.state.network}, (err, data, res) => {
+        let homePageModel = this.state.homePageModel;
+        homePageModel.maxData = data;
+        this.setState({homePageModel: homePageModel});
+      });
+    }
+    catch{
+      window.location.reload();
+    }
 
-    globalGeneralApi.aPIV2ColorDictionaryGet((err, data, res) => {
-      let homePageModel = this.state.homePageModel;
-      homePageModel.colorDictionary = data;
-      this.setState({homePageModel: homePageModel});
-    });
-
-    globalGeneralApi.aPIV2ProviderTypesColorDictionaryGet((err, data, res) => {
-      let homePageModel = this.state.homePageModel;
-      homePageModel.providerTypeColorDictionary = data;
-      this.setState({homePageModel: homePageModel});
-    });
-
-    globalGeneralApi.aPIV2MaxGet({provider: 'All', network: this.state.network}, (err, data, res) => {
-      let homePageModel = this.state.homePageModel;
-      homePageModel.maxData = data;
-      this.setState({homePageModel: homePageModel});
-    });
     globalInstantDataService.periodicallyGetInstantDataForPage('MainPage', this.updateInstantTPS.bind(this));
   }
   
@@ -89,10 +95,15 @@ class MainPage extends React.Component {
   }
 
   updateInstantTPS(data){
-    let homePageModel = this.state.homePageModel;
-    homePageModel.selectedInstantData = data[this.state.mode];
-    homePageModel.allInstantData = data;
-    this.setState({homePageModel: homePageModel});
+    try{
+      let homePageModel = this.state.homePageModel;
+      homePageModel.selectedInstantData = data[this.state.mode];
+      homePageModel.allInstantData = data;
+      this.setState({homePageModel: homePageModel});
+    }
+    catch{
+      window.location.reload();
+    }
   }
 
   getProviderData(state){

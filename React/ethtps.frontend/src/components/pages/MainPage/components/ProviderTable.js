@@ -23,10 +23,12 @@ class ProviderTable extends React.Component {
             colorDictionary: props.colorDictionary,
             allData: props.allData,
             sort:{
-              asc: false,
-              columnName: 'value'
+              asc: true,
+              columnName: 'no'
             }
         }
+
+
     }
 
     dynamicSort(property) {
