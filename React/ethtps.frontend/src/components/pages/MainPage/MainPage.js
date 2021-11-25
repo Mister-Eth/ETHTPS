@@ -102,7 +102,7 @@ class MainPage extends React.Component {
       this.setState({homePageModel: homePageModel});
     }
     catch{
-      window.location.reload();
+      
     }
   }
 
