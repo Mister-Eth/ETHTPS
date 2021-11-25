@@ -44,8 +44,10 @@ namespace ETHTPS.API.Middlewares
                         if (context.Request.Path.ToString().Contains("API/v2/Providers"))
                         {
                             var bot = new NetTelegramBotApi.TelegramBot(section.GetValue<string>("Token"), new System.Net.Http.HttpClient());
-                            var message = new NetTelegramBotApi.Requests.SendMessage(section.GetValue<long>("ChatID"), $"[{context.Connection.RemoteIpAddress.MapToIPv4()}] - New user");
-                            await bot.MakeRequestAsync(message);
+                            var message = new NetTelegramBotApi.Requests.SendMessage(section.GetValue<long>("ChatID"), $"{context.Request.Headers["X-Forwarded-For"]} New user");
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                            Task.Run(() => bot.MakeRequestAsync(message));
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                         }
                     }
                 }
