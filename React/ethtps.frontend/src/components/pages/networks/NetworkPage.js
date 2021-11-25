@@ -71,14 +71,14 @@ export default class NetworkPage extends PageWithQueryString {
         if (this.state !== null && this.state.colorDictionary !== undefined)
         return <>
         <div style={{display:'inline-box'}}>
-            <div className={'box'}>
+            <div style={{display:'inline'}}>
                 <p style={{display:'inline', marginRight:'5px'}}>
                 ←
                </p>
                 <img className={'provider-icon'} src={`/provider-icons/${previous}.png`}/>
                 <a href={previous}>{previous}</a>
             </div>
-            <div className={'box'} style={{float:'right', marginTop: '-3.75vh'}}>
+            <div style={{float:'right', display:'inline'}}>
                 <img className={'provider-icon'} src={`/provider-icons/${next}.png`}/>
                 <a href={next}>{next}</a>
                 <p style={{display:'inline', marginLeft:'5px'}}>
