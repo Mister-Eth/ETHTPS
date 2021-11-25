@@ -58,7 +58,7 @@ namespace ETHTPS.API.Middlewares
                 logger.LogError("Error sending Telegram message", e);
             }
 #endif
-
+            return;
             var entry = new AccesStat()
             {
                 Count = 1,
