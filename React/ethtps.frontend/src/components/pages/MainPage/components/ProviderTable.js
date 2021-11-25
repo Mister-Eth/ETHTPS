@@ -64,7 +64,6 @@ class ProviderTable extends React.Component {
       let state = this.state;
       if (columnName !== state.sort.columnName){
         state.sort.columnName = columnName;
-        state.sort.asc = true;
       }
       else if (!noSwitch){
         state.sort.asc = !state.sort.asc;
