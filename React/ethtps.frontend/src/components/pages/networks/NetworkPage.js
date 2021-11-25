@@ -65,8 +65,28 @@ export default class NetworkPage extends PageWithQueryString {
     }
     
     render(){
+        let index = Object.keys(this.components).indexOf(this.state.name);
+        let previous = (index === 0)? Object.keys(this.components)[Object.keys(this.components).length - 1] :Object.keys(this.components)[(index - 1)];
+        let next = (index === Object.keys(this.components).length - 1)? Object.keys(this.components)[0] :Object.keys(this.components)[(index + 1)];
         if (this.state !== null && this.state.colorDictionary !== undefined)
         return <>
+        <div style={{display:'inline-box'}}>
+            <div className={'box'}>
+                <p style={{display:'inline', marginRight:'5px'}}>
+                ←
+               </p>
+                <img className={'provider-icon'} src={`/provider-icons/${previous}.png`}/>
+                <a href={previous}>{previous}</a>
+            </div>
+            <div className={'box'} style={{float:'right', marginTop: '-3.75vh'}}>
+                <img className={'provider-icon'} src={`/provider-icons/${next}.png`}/>
+                <a href={next}>{next}</a>
+                <p style={{display:'inline', marginLeft:'5px'}}>
+                →
+                </p>
+            </div>
+        </div>
+        <hr/>
         <a href={`https://github.com/WhoEvenAmI/ETHTPS/edit/dev/React/ethtps.frontend/src/components/pages/networks/details/${this.state.name}Details.js`} style={{float:'right', display:'inline'}}>
             [Edit]
         </a>
