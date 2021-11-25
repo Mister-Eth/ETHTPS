@@ -57,7 +57,7 @@ namespace ETHTPS.API.Controllers
         [HttpGet]
         public IDictionary<string, object> InstantData(bool includeSidechains = true)
         {
-            if (DateTime.Now.Subtract(_lastInstantDataGetTime).TotalSeconds > 5)
+            if (DateTime.Now.Subtract(_lastInstantDataGetTime).TotalSeconds > 3)
             {
                 var result = new Dictionary<string, object>();
                 var tpsController = new TPSController(Context, HistoricalDataProviders);

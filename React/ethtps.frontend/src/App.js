@@ -43,7 +43,7 @@ class App extends React.Component {
         
         <div  style={{backgroundColor: 'yellow', borderRadius:1, marginBottom: '10px'}}>
           <p style={{color:'black', fontWeight: 'bold', fontSize: 15}}>
-            Sorry for the possible poor performance of the website, we did not expect this surge of users
+            Sorry for the eventual poor performance of the website, we did not expect this surge of users
           </p>
         </div>
       </center>

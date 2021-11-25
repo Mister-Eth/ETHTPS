@@ -10,13 +10,13 @@ namespace ETHTPS.Data.Database
     {
         public ETHTPSContext()
         {
-
+            Database.SetCommandTimeout(TimeSpan.FromSeconds(10));
         }
 
         public ETHTPSContext(DbContextOptions<ETHTPSContext> options)
             : base(options)
         {
-
+            Database.SetCommandTimeout(TimeSpan.FromSeconds(10));
         }
 
         public virtual DbSet<AccesStat> AccesStats { get; set; }
