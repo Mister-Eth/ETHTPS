@@ -50,18 +50,29 @@ namespace ETHTPS.API.Controllers
         [HttpGet]
         public IDictionary<string, string> ProviderTypesColorDictionary() => Context.ProviderTypeProperties.Where(x => x.Name == "Color").ToDictionary(x => x.ProviderTypeNavigation.Name, x => x.Value);
 
+
+        private static Dictionary<string, object> _lastInstantData;
+        private static DateTime _lastInstantDataGetTime = DateTime.MinValue;
+
         [HttpGet]
         public IDictionary<string, object> InstantData(bool includeSidechains = true)
         {
-            var result = new Dictionary<string, object>();
-            var tpsController = new TPSController(Context, HistoricalDataProviders);
-            var gpsController = new GPSController(Context, HistoricalDataProviders);
-            var gasAdjustedTPSController = new GasAdjustedTPSController(Context, HistoricalDataProviders);
-            var instantGPS = gpsController.Instant(includeSidechains);
-            result.Add("tps", tpsController.Instant(includeSidechains));
-            result.Add("gps", instantGPS);
-            result.Add("gasAdjustedTPS", gasAdjustedTPSController.Instant(includeSidechains));
-            return result;
+            if (DateTime.Now.Subtract(_lastInstantDataGetTime).TotalSeconds > 5)
+            {
+                var result = new Dictionary<string, object>();
+                var tpsController = new TPSController(Context, HistoricalDataProviders);
+                var gpsController = new GPSController(Context, HistoricalDataProviders);
+                var gasAdjustedTPSController = new GasAdjustedTPSController(Context, HistoricalDataProviders);
+                var instantGPS = gpsController.Instant(includeSidechains);
+                result.Add("tps", tpsController.Instant(includeSidechains));
+                result.Add("gps", instantGPS);
+                result.Add("gasAdjustedTPS", gasAdjustedTPSController.Instant(includeSidechains));
+
+                _lastInstantDataGetTime = DateTime.Now;
+                _lastInstantData = result;
+                Console.WriteLine("Updated instant data");
+            }
+            return _lastInstantData;
         }
 
         [HttpGet]
