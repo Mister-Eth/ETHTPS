@@ -59,18 +59,25 @@ namespace ETHTPS.API.Controllers
         {
             if (DateTime.Now.Subtract(_lastInstantDataGetTime).TotalSeconds > 3)
             {
-                var result = new Dictionary<string, object>();
-                var tpsController = new TPSController(Context, HistoricalDataProviders);
-                var gpsController = new GPSController(Context, HistoricalDataProviders);
-                var gasAdjustedTPSController = new GasAdjustedTPSController(Context, HistoricalDataProviders);
-                var instantGPS = gpsController.Instant(includeSidechains);
-                result.Add("tps", tpsController.Instant(includeSidechains));
-                result.Add("gps", instantGPS);
-                result.Add("gasAdjustedTPS", gasAdjustedTPSController.Instant(includeSidechains));
+                try
+                {
+                    var result = new Dictionary<string, object>();
+                    var tpsController = new TPSController(Context, HistoricalDataProviders);
+                    var gpsController = new GPSController(Context, HistoricalDataProviders);
+                    var gasAdjustedTPSController = new GasAdjustedTPSController(Context, HistoricalDataProviders);
+                    var instantGPS = gpsController.Instant(includeSidechains);
+                    result.Add("tps", tpsController.Instant(includeSidechains));
+                    result.Add("gps", instantGPS);
+                    result.Add("gasAdjustedTPS", gasAdjustedTPSController.Instant(includeSidechains));
 
-                _lastInstantDataGetTime = DateTime.Now;
-                _lastInstantData = result;
-                Console.WriteLine("Updated instant data");
+                    _lastInstantDataGetTime = DateTime.Now;
+                    _lastInstantData = result;
+                    Console.WriteLine("Updated instant data");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
             }
             return _lastInstantData;
         }
