@@ -6,8 +6,19 @@ export default class IntervalSelector extends React.Component{
     constructor(props){
         super(props);
         
+        let allIntervals = ['1h', '1d', '1w', '1m', '1y', 'All']
+        if (props.allIntervals !== null){
+            allIntervals = props.allIntervals;
+        }
         this.state = {
-            interval: props.interval
+            interval: props.interval,
+            allIntervals: allIntervals
+        }
+    }
+
+    componentDidUpdate(previousProps, previousState){
+        if (previousProps.allIntervals !== this.props.allIntervals){
+            this.setState({allIntervals: this.props.allIntervals});
         }
     }
 
@@ -26,12 +37,7 @@ export default class IntervalSelector extends React.Component{
             value={this.state.interval}
             exclusive
             onChange={this.handleIntervalChange}>
-            <ToggleButton value="1h">1h</ToggleButton>
-            <ToggleButton value="1d">1d</ToggleButton>
-            <ToggleButton value="1w">1w</ToggleButton>
-            <ToggleButton value="1m">1m</ToggleButton>
-            <ToggleButton value="1y">1y</ToggleButton>
-            <ToggleButton value="All">All</ToggleButton>
+            {this.state.allIntervals.map(x => <ToggleButton value={x}>{x}</ToggleButton>)}
         </ToggleButtonGroup>
     }
 }

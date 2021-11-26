@@ -1,5 +1,5 @@
 import * as React from "react";
-import { globalGPSApi, globalTPSApi, globalGasAdjustedTPSApi } from '../../services/common'
+import { globalGPSApi, globalTPSApi, globalGasAdjustedTPSApi, globalGeneralApi } from '../../services/common'
 import IntervalSelector from "./IntervalSelector";
 import InfoTypeSelector from './InfoTypeSelector';
 import ScaleSelector from './ScaleSelector';
@@ -30,7 +30,8 @@ export default class HistoricalChart extends React.Component {
               fill: true,
               pointHitRadius: 20
             }
-          ]
+          ],
+          allIntervals: []
         }
     }
 
@@ -83,8 +84,32 @@ export default class HistoricalChart extends React.Component {
       }
     }
 
+    reverseTransformIntervalName(interval){
+      switch(interval){
+        case 'OneHour':
+          return '1h';
+        case 'OneDay':
+          return '1d';
+        case 'OneWeek':
+          return '1w';
+        case 'OneMonth':
+          return '1m';
+        case 'OneYear':
+          return '1y';
+        case 'All':
+          return 'All';
+        default:
+          return 'OneMonth';
+      }
+    }
+
     componentDidMount(){
       this.updateChart(this.state);
+      globalGeneralApi.aPIV2GetIntervalsWithDataGet({provider: this.state.provider}, (err,data,res) => {
+        if (data != null){
+          this.setState({allIntervals: data.map(this.reverseTransformIntervalName)});
+        }
+      });
     }
 
     updateChart(state){
@@ -173,7 +198,7 @@ export default class HistoricalChart extends React.Component {
         return (
             <div>
                 <div style={{float:"right"}}>
-                    <IntervalSelector interval={this.state.interval} onChange={this.onIntervalChanged.bind(this)}/>
+                    <IntervalSelector allIntervals={this.state.allIntervals} interval={this.state.interval} onChange={this.onIntervalChanged.bind(this)}/>
                 </div>
             <div>
                 <Line height={this.props.height} data={{
