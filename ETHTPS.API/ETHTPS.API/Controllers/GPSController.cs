@@ -83,6 +83,18 @@ namespace ETHTPS.API.Controllers
             return result.ToDictionary(x => x.Provider, x => x.Data.AsEnumerable());
         }
 
+
+        [HttpGet]
+        public IDictionary<string, IEnumerable<DataResponseModel>> GeMonthlyDataByYear(string provider, int year, string network = "Mainnet", bool includeSidechains = true)
+        {
+            var data = Get(provider, "All", network, includeSidechains);
+            foreach (var key in data.Keys)
+            {
+                data[key] = data[key].Where(x => x.Data.First().Date.Year == year);
+            }
+            return data;
+        }
+
         [HttpGet]
         public IDictionary<string, IEnumerable<DataResponseModel>> Get(string provider, string interval, string network = "Mainnet", bool includeSidechains = true)
         {

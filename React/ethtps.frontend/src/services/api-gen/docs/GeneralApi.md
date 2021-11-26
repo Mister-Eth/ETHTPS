@@ -5,6 +5,8 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**aPIV2ColorDictionaryGet**](GeneralApi.md#aPIV2ColorDictionaryGet) | **GET** /API/v2/ColorDictionary | 
+[**aPIV2GetIntervalsWithDataGet**](GeneralApi.md#aPIV2GetIntervalsWithDataGet) | **GET** /API/v2/GetIntervalsWithData | 
+[**aPIV2GetUniqueDataYearsGet**](GeneralApi.md#aPIV2GetUniqueDataYearsGet) | **GET** /API/v2/GetUniqueDataYears | 
 [**aPIV2InstantDataGet**](GeneralApi.md#aPIV2InstantDataGet) | **GET** /API/v2/InstantData | 
 [**aPIV2IntervalsGet**](GeneralApi.md#aPIV2IntervalsGet) | **GET** /API/v2/Intervals | 
 [**aPIV2MaxGet**](GeneralApi.md#aPIV2MaxGet) | **GET** /API/v2/Max | 
@@ -42,6 +44,100 @@ This endpoint does not need any parameter.
 ### Return type
 
 **{String: String}**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: text/plain, application/json, text/json
+
+
+## aPIV2GetIntervalsWithDataGet
+
+> [String] aPIV2GetIntervalsWithDataGet(opts)
+
+
+
+### Example
+
+```javascript
+import EthtpsApi from 'ethtps_api';
+
+let apiInstance = new EthtpsApi.GeneralApi();
+let opts = {
+  'provider': "provider_example", // String | 
+  'network': "'Mainnet'" // String | 
+};
+apiInstance.aPIV2GetIntervalsWithDataGet(opts, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+});
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **provider** | **String**|  | [optional] 
+ **network** | **String**|  | [optional] [default to &#39;Mainnet&#39;]
+
+### Return type
+
+**[String]**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: text/plain, application/json, text/json
+
+
+## aPIV2GetUniqueDataYearsGet
+
+> [String] aPIV2GetUniqueDataYearsGet(opts)
+
+
+
+### Example
+
+```javascript
+import EthtpsApi from 'ethtps_api';
+
+let apiInstance = new EthtpsApi.GeneralApi();
+let opts = {
+  'provider': "provider_example", // String | 
+  'network': "'Mainnet'" // String | 
+};
+apiInstance.aPIV2GetUniqueDataYearsGet(opts, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+});
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **provider** | **String**|  | [optional] 
+ **network** | **String**|  | [optional] [default to &#39;Mainnet&#39;]
+
+### Return type
+
+**[String]**
 
 ### Authorization
 

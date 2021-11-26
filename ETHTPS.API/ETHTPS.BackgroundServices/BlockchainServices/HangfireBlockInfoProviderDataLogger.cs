@@ -345,7 +345,7 @@ namespace ETHTPS.Services.BlockchainServices
                 .Subtract(TimeSpan.FromMinutes(entry.Date.Minute))
                 .Subtract(TimeSpan.FromHours(entry.Date.Hour))
                 .Subtract(TimeSpan.FromDays(entry.Date.Day));
-            Func<TpsandGasDataAll, bool> selector = x => x.NetworkNavigation.Name == "Mainnet" && x.Provider == _providerID && x.StartDate.Month == targetDate.Month;
+            Func<TpsandGasDataAll, bool> selector = x => x.NetworkNavigation.Name == "Mainnet" && x.Provider == _providerID && x.StartDate.Month == targetDate.Month && x.StartDate.Year == targetDate.Year;
             if (!_context.TpsandGasDataAlls.Any(selector))
             {
                 _context.TpsandGasDataAlls.Add(new TpsandGasDataAll()

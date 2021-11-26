@@ -35,6 +35,51 @@ export default class GasAdjustedTPSApi {
 
 
     /**
+     * Callback function to receive the result of the aPIGasAdjustedTPSGeMonthlyDataByYearGet operation.
+     * @callback module:api/GasAdjustedTPSApi~aPIGasAdjustedTPSGeMonthlyDataByYearGetCallback
+     * @param {String} error Error message, if any.
+     * @param {Object.<String, {String: [DataResponseModel]}>} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Object} opts Optional parameters
+     * @param {String} opts.provider 
+     * @param {Number} opts.year 
+     * @param {String} opts.network  (default to 'Mainnet')
+     * @param {Boolean} opts.includeSidechains  (default to true)
+     * @param {module:api/GasAdjustedTPSApi~aPIGasAdjustedTPSGeMonthlyDataByYearGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link Object.<String, {String: [DataResponseModel]}>}
+     */
+    aPIGasAdjustedTPSGeMonthlyDataByYearGet(opts, callback) {
+      opts = opts || {};
+      let postBody = null;
+
+      let pathParams = {
+      };
+      let queryParams = {
+        'provider': opts['provider'],
+        'year': opts['year'],
+        'network': opts['network'],
+        'includeSidechains': opts['includeSidechains']
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = ['text/plain', 'application/json', 'text/json'];
+      let returnType = {'String': [DataResponseModel]};
+      return this.apiClient.callApi(
+        '/API/GasAdjustedTPS/GeMonthlyDataByYear', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
      * Callback function to receive the result of the aPIGasAdjustedTPSGetGet operation.
      * @callback module:api/GasAdjustedTPSApi~aPIGasAdjustedTPSGetGetCallback
      * @param {String} error Error message, if any.

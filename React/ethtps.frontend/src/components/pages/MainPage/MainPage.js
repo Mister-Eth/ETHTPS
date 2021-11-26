@@ -43,6 +43,7 @@ class MainPage extends React.Component {
   componentDidMount(){
 
     try{
+      /*
       globalGeneralApi.aPIV2ProvidersGet((err, data, res) => {
         if (data !== null){
           let homePageModel = this.state.homePageModel;
@@ -66,7 +67,7 @@ class MainPage extends React.Component {
           this.setState({homePageModel: homePageModel});
         }
       });
-  
+  */
       globalGeneralApi.aPIV2MaxGet({provider: 'All', network: this.state.network}, (err, data, res) => {
         if (data !== null){
           let homePageModel = this.state.homePageModel;

@@ -101,6 +101,17 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
+        public IDictionary<string, IEnumerable<DataResponseModel>> GeMonthlyDataByYear(string provider, int year, string network = "Mainnet", bool includeSidechains = true)
+        {
+            var data = Get(provider, "All", network, includeSidechains);
+            foreach (var key in data.Keys)
+            {
+                data[key] = data[key].Where(x => x.Data.First().Date.Year == year);
+            }
+            return data;
+        }
+
+        [HttpGet]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IDictionary<string, IEnumerable<DataPoint>> Instant(bool includeSidechains = true)
         {

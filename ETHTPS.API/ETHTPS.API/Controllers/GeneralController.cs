@@ -96,6 +96,38 @@ namespace ETHTPS.API.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Used for displaying chart buttons.
+        /// </summary>
+        [HttpGet]
+        public IEnumerable<string> GetIntervalsWithData(string provider, string network = "Mainnet")
+        {
+            var tpsController = new TPSController(Context, HistoricalDataProviders);
+            List<string> result = new();
+            foreach (var interval in TimeIntervals())
+            {
+                var count = tpsController.Get(provider, interval, network, true)[provider].Count();
+                if (count > 1)
+                {
+                    if (interval == "All" && count < 12)
+                        continue;
+                    if (interval == "OneMonth" && count < 7 * 24)
+                        continue;
+
+                    result.Add(interval);
+                }
+            }
+            return result;
+        }
+
+        [HttpGet]
+        public IEnumerable<string> GetUniqueDataYears(string provider, string network = "Mainnet")
+        {
+            var tpsController = new TPSController(Context, HistoricalDataProviders);
+            var entries = tpsController.Get(provider, "All", network, true)[provider]?.Select(x => x.Data.First()?.Date.Year.ToString())?.OrderBy(x => x).Distinct();
+            return entries;
+        }
+
         /*
         [HttpGet]
         public async Task<HomePageViewModel> HomePageModelAsync(string network = "Mainnet")
