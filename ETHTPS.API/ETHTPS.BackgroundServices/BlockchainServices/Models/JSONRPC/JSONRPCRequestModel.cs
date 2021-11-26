@@ -22,6 +22,6 @@ namespace ETHTPS.Services.BlockchainServices.Models.JSONRPC
 
         [JsonProperty("params", DefaultValueHandling = DefaultValueHandling.Populate)]
         [DefaultValue("[]")]
-        public List<string> Params { get; set; }
+        public List<object> Params { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using ETHTPS.Services.BlockchainServices.Models.JSONRPC;
+﻿using ETHTPS.Data.Extensions;
+using ETHTPS.Services.BlockchainServices.Models.JSONRPC;
 using ETHTPS.Services.Infrastructure.Serialization;
 
 using Microsoft.Extensions.Configuration;
@@ -30,9 +31,31 @@ namespace ETHTPS.Services.BlockchainServices
 
         public double BlockTimeSeconds { get; set; } = 13.7;
 
-        public Task<BlockInfo> GetBlockInfoAsync(int blockNumber)
+        public async Task<BlockInfo> GetBlockInfoAsync(int blockNumber)
         {
-            throw new NotImplementedException();
+            var requestModel = JSONRPCRequestFactory.CreateGetBlockByBlockNumberRequest("0x" + blockNumber.ToString("X"));
+            var json = requestModel.SerializeAsJsonWithEmptyArray();
+            var message = new HttpRequestMessage()
+            {
+                Content = new StringContent(json, Encoding.UTF8, "application/json"),
+                Method = HttpMethod.Post
+            };
+            var response = await _httpClient.SendAsync(message);
+            if (response.IsSuccessStatusCode)
+            {
+                var responseString = await response.Content.ReadAsStringAsync();
+                var responseObject = JsonConvert.DeserializeObject<JSONRPCGetBlockByNumberResponseModel>(responseString);
+                var result = new BlockInfo()
+                {
+                    BlockNumber = blockNumber,
+                    Date = DateTimeExtensions.FromUnixTime(Convert.ToInt64(responseObject.result.timestamp, 16)),
+                    TransactionCount = responseObject.result.transactions.Length,
+                    Settled = true,
+                    GasUsed = Convert.ToInt64(responseObject.result.gasUsed, 16)
+                };
+                return result;
+            }
+            return null;
         }
 
         public Task<BlockInfo> GetBlockInfoAsync(DateTime time)
@@ -55,23 +78,7 @@ namespace ETHTPS.Services.BlockchainServices
                 var responseString = await response.Content.ReadAsStringAsync();
                 var responseObject = JsonConvert.DeserializeObject<JSONRPCResponseModel>(responseString);
                 var blockNumber = Convert.ToInt32(responseObject.Result, 16);
-                requestModel = JSONRPCRequestFactory.CreateGetTransactionCountByBlockNumberRequest(responseObject.Result);
-                json = requestModel.SerializeAsJsonWithEmptyArray();
-                message = new HttpRequestMessage()
-                {
-                    Content = new StringContent(json, Encoding.UTF8, "application/json"),
-                    Method = HttpMethod.Post
-                };
-                response = await _httpClient.SendAsync(message);
-                responseString = await response.Content.ReadAsStringAsync();
-                responseObject = JsonConvert.DeserializeObject<JSONRPCResponseModel>(responseString);
-                return new BlockInfo()
-                {
-                    Date = DateTime.Now,
-                    TransactionCount = Convert.ToInt32(responseObject.Result, 16),
-                    Settled = true,
-                    BlockNumber = blockNumber
-                };
+                return await GetBlockInfoAsync(blockNumber);
             }
             return null;
         }
