@@ -29,6 +29,7 @@ namespace ETHTPS.Services.Infrastructure.Extensions
            where T : HangfireHistoricalBlockInfoProviderDataLogger<V>
         {
             services.AddScoped<T>();
+            services.AddScoped<V>();
             RecurringJob.AddOrUpdate<T>("Historical" + typeof(V).Name, x => x.RunAsync(), cronExpression, queue: queue);
         }
 

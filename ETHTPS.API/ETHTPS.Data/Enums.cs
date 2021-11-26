@@ -5,5 +5,5 @@ using System.Threading.Tasks;
 
 namespace ETHTPS.Data
 {
-    public enum TimeInterval { Instant, Latest, OneHour, OneDay, OneWeek, OneMonth }
+    public enum TimeInterval { Instant, Latest, OneHour, OneDay, OneWeek, OneMonth, OneYear, All }
 }

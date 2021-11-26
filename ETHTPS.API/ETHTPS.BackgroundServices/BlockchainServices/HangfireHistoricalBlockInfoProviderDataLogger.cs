@@ -44,6 +44,9 @@ namespace ETHTPS.Services.BlockchainServices
             {
                 try
                 {
+                    var stopwatch = new System.Diagnostics.Stopwatch();
+                    stopwatch.Start();
+
                     var delta = await CalculateTPSGPSAsync(oldestEntry.OldestBlock);
                     UpdateMaxEntry(delta);
 
@@ -68,7 +71,10 @@ namespace ETHTPS.Services.BlockchainServices
                         AddOrUpdateYearTPSEntry(delta);
                     }
                     AddOrUpdateAllTPSEntry(delta);
-                    _logger.LogInformation($"{_provider} [{oldestEntry.OldestBlock}]: {delta.TPS}TPS {delta.GPS}GPS");
+
+                    stopwatch.Stop();
+                    var eta = TimeSpan.FromMilliseconds(oldestEntry.OldestBlock * (stopwatch.Elapsed.TotalMilliseconds + 1000)/ step);
+                    _logger.LogInformation($"{_provider} [{oldestEntry.OldestBlock}] ETA: [{eta}] {delta.TPS}TPS {delta.GPS}GPS");
                     await Task.Delay(1000);
                 }
                 catch(Exception e)

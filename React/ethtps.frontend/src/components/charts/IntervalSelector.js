@@ -30,6 +30,8 @@ export default class IntervalSelector extends React.Component{
             <ToggleButton value="1d">1d</ToggleButton>
             <ToggleButton value="1w">1w</ToggleButton>
             <ToggleButton value="1m">1m</ToggleButton>
+            <ToggleButton value="1y">1y</ToggleButton>
+            <ToggleButton value="All">All</ToggleButton>
         </ToggleButtonGroup>
     }
 }

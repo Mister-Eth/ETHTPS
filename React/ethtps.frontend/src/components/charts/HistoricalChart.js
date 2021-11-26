@@ -74,6 +74,10 @@ export default class HistoricalChart extends React.Component {
           return 'OneWeek';
         case '1m':
           return 'OneMonth';
+        case '1y':
+          return 'OneYear';
+        case 'All':
+          return 'All';
         default:
           return 'OneMonth';
       }

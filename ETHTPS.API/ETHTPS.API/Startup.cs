@@ -121,6 +121,8 @@ namespace ETHTPS.API
             services.AddScoped<IHistoricalDataProvider, OneDayHistoricalDataProvider>();
             services.AddScoped<IHistoricalDataProvider, OneWeekHistoricalDataProvider>();
             services.AddScoped<IHistoricalDataProvider, OneMonthHistoricalDataProvider>();
+            services.AddScoped<IHistoricalDataProvider, OneYearHistoricalDataProvider>();
+            services.AddScoped<IHistoricalDataProvider, AllHistoricalDataProvider>();
         }
 
         public static void InitializeHangFire(string connectionString)
