@@ -227,7 +227,7 @@ export default class HistoricalChart extends React.Component {
                         display: false
                       },
                       grid:{
-                        display: false
+                        display: true
                       }
                     },
                     y:{
