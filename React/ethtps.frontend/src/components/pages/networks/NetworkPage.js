@@ -55,7 +55,12 @@ export default class NetworkPage extends PageWithQueryString {
     }
 
     updateInstantTPS(data){
-        this.setState({instantTPS: data['tps'][this.state.name][0].value});
+        try{
+            this.setState({instantTPS: data['tps'][this.state.name][0].value});
+        }
+        catch{
+            
+        }
     }
 
     componentDidMount(){

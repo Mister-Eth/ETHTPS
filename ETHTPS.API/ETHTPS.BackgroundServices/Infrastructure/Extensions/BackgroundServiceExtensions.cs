@@ -24,6 +24,14 @@ namespace ETHTPS.Services.Infrastructure.Extensions
             RecurringJob.AddOrUpdate<T>(typeof(V).Name, x => x.RunAsync(), cronExpression, queue: queue);
         }
 
+        public static void RegisterHistoricalHangfireBackgroundService<T, V>(this IServiceCollection services, string cronExpression, string queue)
+           where V : class, IBlockInfoProvider
+           where T : HangfireHistoricalBlockInfoProviderDataLogger<V>
+        {
+            services.AddScoped<T>();
+            RecurringJob.AddOrUpdate<T>("Historical" + typeof(V).Name, x => x.RunAsync(), cronExpression, queue: queue);
+        }
+
         public static void RegisterHangfireBackgroundService<T>(this IServiceCollection services, string cronExpression, string queue)
             where T : HangfireBackgroundService
         {

@@ -32,6 +32,9 @@ namespace ETHTPS.Data.Database
         public virtual DbSet<TpsandGasDataMonth> TpsandGasDataMonths { get; set; }
         public virtual DbSet<TpsandGasDataWeek> TpsandGasDataWeeks { get; set; }
         public virtual DbSet<TpsandGasDataLatest> TpsandGasDataLatests { get; set; }
+        public virtual DbSet<OldestLoggedHistoricalEntry> OldestLoggedHistoricalEntries { get; set; }
+        public virtual DbSet<TpsandGasDataYear> TpsandGasDataYears { get; set; }
+        public virtual DbSet<TpsandGasDataAll> TpsandGasDataAlls { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -42,6 +45,73 @@ namespace ETHTPS.Data.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+
+            modelBuilder.Entity<OldestLoggedHistoricalEntry>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.HasOne(d => d.NetworkNavigation)
+                    .WithMany(p => p.OldestLoggedHistoricalEntries)
+                    .HasForeignKey(d => d.Network)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__OldestLog__Netwo__02084FDA");
+
+                entity.HasOne(d => d.ProviderNavigation)
+                    .WithMany(p => p.OldestLoggedHistoricalEntries)
+                    .HasForeignKey(d => d.Provider)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__OldestLog__Provi__01142BA1");
+            });
+
+            modelBuilder.Entity<TpsandGasDataYear>(entity =>
+            {
+                entity.ToTable("TPSAndGasData_Year");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.AverageGps).HasColumnName("AverageGPS");
+
+                entity.Property(e => e.AverageTps).HasColumnName("AverageTPS");
+
+                entity.Property(e => e.StartDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.NetworkNavigation)
+                    .WithMany(p => p.TpsandGasDataYears)
+                    .HasForeignKey(d => d.Network)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__TPSAndGas__Netwo__7C4F7684");
+
+                entity.HasOne(d => d.ProviderNavigation)
+                    .WithMany(p => p.TpsandGasDataYears)
+                    .HasForeignKey(d => d.Provider)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__TPSAndGas__Provi__7B5B524B");
+            });
+
+            modelBuilder.Entity<TpsandGasDataAll>(entity =>
+            {
+                entity.ToTable("TPSAndGasData_All");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.AverageGps).HasColumnName("AverageGPS");
+
+                entity.Property(e => e.AverageTps).HasColumnName("AverageTPS");
+
+                entity.Property(e => e.StartDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.NetworkNavigation)
+                    .WithMany(p => p.TpsandGasDataAlls)
+                    .HasForeignKey(d => d.Network)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__TPSAndGas__Netwo__7E37BEF6");
+
+                entity.HasOne(d => d.ProviderNavigation)
+                    .WithMany(p => p.TpsandGasDataAlls)
+                    .HasForeignKey(d => d.Provider)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__TPSAndGas__Provi__7D439ABD");
+            });
 
             modelBuilder.Entity<AccesStat>(entity =>
             {

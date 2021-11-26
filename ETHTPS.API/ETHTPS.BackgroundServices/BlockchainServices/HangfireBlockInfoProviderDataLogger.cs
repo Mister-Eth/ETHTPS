@@ -16,9 +16,9 @@ namespace ETHTPS.Services.BlockchainServices
     public class HangfireBlockInfoProviderDataLogger<T> : HangfireBackgroundService
         where T : IBlockInfoProvider
     {
-        private readonly T _instance;
-        private readonly string _provider;
-        private readonly int _providerID;
+        protected readonly T _instance;
+        protected readonly string _provider;
+        protected readonly int _providerID;
 
         public HangfireBlockInfoProviderDataLogger(T instance, ILogger<HangfireBackgroundService> logger, ETHTPSContext context) : base(logger, context)
         {
@@ -40,6 +40,8 @@ namespace ETHTPS.Services.BlockchainServices
                 AddOrUpdateDayTPSEntry(delta);
                 AddOrUpdateWeekTPSEntry(delta);
                 AddOrUpdateMonthTPSEntry(delta);
+                AddOrUpdateYearTPSEntry(delta);
+                AddOrUpdateAllTPSEntry(delta);
                 await _context.SaveChangesAsync();
 
                 _logger.LogDebug($"{_provider}: {delta.TPS}TPS {delta.GPS}GPS");
@@ -72,10 +74,10 @@ namespace ETHTPS.Services.BlockchainServices
                 _context.TpsandGasDataLatests.Update(x);
             }
         }
-
-        private async Task<TPSGPSInfo> CalculateTPSGPSAsync()
+        protected async Task<TPSGPSInfo> CalculateTPSGPSAsync() => await CalculateTPSGPSAsync(await _instance.GetLatestBlockInfoAsync());
+        protected async Task<TPSGPSInfo> CalculateTPSGPSAsync(int blockNumber) => await CalculateTPSGPSAsync(await _instance.GetBlockInfoAsync(blockNumber));
+        protected async Task<TPSGPSInfo> CalculateTPSGPSAsync(BlockInfo latestBlock)
         {
-            var latestBlock = await _instance.GetLatestBlockInfoAsync();
             if (_instance.BlockTimeSeconds > 0)
             {
                 return new TPSGPSInfo()
@@ -88,7 +90,7 @@ namespace ETHTPS.Services.BlockchainServices
             }
             else //Add up all blocks submitted at the same time
             {
-                var result = new TPSGPSInfo() 
+                var result = new TPSGPSInfo()
                 {
                     Date = latestBlock.Date
                 };
@@ -117,8 +119,7 @@ namespace ETHTPS.Services.BlockchainServices
                 return result;
             }
         }
-
-        public void UpdateMaxEntry(TPSGPSInfo entry)
+        protected void UpdateMaxEntry(TPSGPSInfo entry)
         {
             Func<TpsandGasDataMax, bool> selector = x => x.ProviderNavigation.Name == _provider && x.NetworkNavigation.Name == "Mainnet";
             if (!_context.TpsandGasDataMaxes.Any(selector))
@@ -147,7 +148,7 @@ namespace ETHTPS.Services.BlockchainServices
             }
         }
 
-        public void AddOrUpdateHourTPSEntry(TPSGPSInfo entry)
+        protected void AddOrUpdateHourTPSEntry(TPSGPSInfo entry)
         {
             var targetDate = entry.Date
                 .Subtract(TimeSpan.FromSeconds(entry.Date.Second))
@@ -183,7 +184,7 @@ namespace ETHTPS.Services.BlockchainServices
                 _context.TpsandGasDataHours.Update(x);
             }
         }
-        public void AddOrUpdateDayTPSEntry(TPSGPSInfo entry)
+        protected void AddOrUpdateDayTPSEntry(TPSGPSInfo entry)
         {
             var targetDate = entry.Date
                 .Subtract(TimeSpan.FromSeconds(entry.Date.Second))
@@ -220,7 +221,7 @@ namespace ETHTPS.Services.BlockchainServices
                 _context.TpsandGasDataDays.Update(x);
             }
         }
-        public void AddOrUpdateWeekTPSEntry(TPSGPSInfo entry)
+        protected void AddOrUpdateWeekTPSEntry(TPSGPSInfo entry)
         {
             var targetDate = entry.Date
                 .Subtract(TimeSpan.FromSeconds(entry.Date.Second))
@@ -257,7 +258,7 @@ namespace ETHTPS.Services.BlockchainServices
                 _context.TpsandGasDataWeeks.Update(x);
             }
         }
-        public void AddOrUpdateMonthTPSEntry(TPSGPSInfo entry)
+        protected void AddOrUpdateMonthTPSEntry(TPSGPSInfo entry)
         {
             var targetDate = entry.Date
                 .Subtract(TimeSpan.FromSeconds(entry.Date.Second))
@@ -293,6 +294,76 @@ namespace ETHTPS.Services.BlockchainServices
                     x.StartDate = entry.Date;
                 }
                 _context.TpsandGasDataMonths.Update(x);
+            }
+        }
+
+        protected void AddOrUpdateYearTPSEntry(TPSGPSInfo entry)
+        {
+            var targetDate = entry.Date
+                .Subtract(TimeSpan.FromSeconds(entry.Date.Second))
+                .Subtract(TimeSpan.FromMilliseconds(entry.Date.Millisecond))
+                .Subtract(TimeSpan.FromMinutes(entry.Date.Minute))
+                .Subtract(TimeSpan.FromHours(entry.Date.Hour))
+                .Subtract(TimeSpan.FromDays(entry.Date.Day));
+            Func<TpsandGasDataYear, bool> selector = x => x.NetworkNavigation.Name == "Mainnet" && x.Provider == _providerID && x.StartDate.Month == targetDate.Month;
+            if (!_context.TpsandGasDataYears.Any(selector))
+            {
+                _context.TpsandGasDataYears.Add(new TpsandGasDataYear()
+                {
+                    Network = 1,
+                    AverageTps = entry.TPS,
+                    AverageGps = entry.GPS,
+                    Provider = _providerID,
+                    StartDate = targetDate,
+                    ReadingsCount = 1
+                });
+            }
+            else
+            {
+                var x = _context.TpsandGasDataYears.First(selector);
+                if (x.StartDate.Year == targetDate.Year)
+                {
+                    x.AverageTps = ((x.AverageTps * x.ReadingsCount) + entry.TPS) / ++x.ReadingsCount;
+                    x.AverageGps = ((x.AverageGps * x.ReadingsCount) + entry.GPS) / ++x.ReadingsCount;
+                }
+                else
+                {
+                    x.AverageTps = entry.TPS;
+                    x.AverageGps = entry.GPS;
+                    x.ReadingsCount = 1;
+                    x.StartDate = entry.Date;
+                }
+                _context.TpsandGasDataYears.Update(x);
+            }
+        }
+
+        protected void AddOrUpdateAllTPSEntry(TPSGPSInfo entry)
+        {
+            var targetDate = entry.Date
+                .Subtract(TimeSpan.FromSeconds(entry.Date.Second))
+                .Subtract(TimeSpan.FromMilliseconds(entry.Date.Millisecond))
+                .Subtract(TimeSpan.FromMinutes(entry.Date.Minute))
+                .Subtract(TimeSpan.FromHours(entry.Date.Hour))
+                .Subtract(TimeSpan.FromDays(entry.Date.Day));
+            Func<TpsandGasDataAll, bool> selector = x => x.NetworkNavigation.Name == "Mainnet" && x.Provider == _providerID && x.StartDate.Month == targetDate.Month;
+            if (!_context.TpsandGasDataAlls.Any(selector))
+            {
+                _context.TpsandGasDataAlls.Add(new TpsandGasDataAll()
+                {
+                    Network = 1,
+                    AverageTps = entry.TPS,
+                    AverageGps = entry.GPS,
+                    Provider = _providerID,
+                    StartDate = targetDate,
+                    ReadingsCount = 1
+                });
+            }
+            else
+            {
+                var x = _context.TpsandGasDataAlls.First(selector);
+                x.AverageTps = ((x.AverageTps * x.ReadingsCount) + entry.TPS) / ++x.ReadingsCount;
+                x.AverageGps = ((x.AverageGps * x.ReadingsCount) + entry.GPS) / ++x.ReadingsCount;
+                _context.TpsandGasDataAlls.Update(x);
             }
         }
     }
