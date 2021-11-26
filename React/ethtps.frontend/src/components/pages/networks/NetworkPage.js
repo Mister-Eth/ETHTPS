@@ -33,7 +33,6 @@ export default class NetworkPage extends PageWithQueryString {
         }
         if (q.mode !== undefined){
             state.mode = q.mode;
-
         }
         this.state = state;
     }
