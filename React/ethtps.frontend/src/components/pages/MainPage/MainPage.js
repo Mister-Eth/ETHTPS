@@ -34,7 +34,8 @@ class MainPage extends React.Component {
       network: "Mainnet",
       excludeSidechains: false,
       modifiedInstantTPS: {},
-      mode: mode
+      mode: mode,
+      offline: false
     }
   }
 
@@ -108,9 +109,14 @@ class MainPage extends React.Component {
       homePageModel.selectedInstantData = data[this.state.mode];
       homePageModel.allInstantData = data;
       this.setState({homePageModel: homePageModel});
+      if (this.state.offline){
+        this.setState({offline: false});
+      }
     }
     catch{
-      
+      if (!this.state.offline){
+        this.setState({offline: true});
+      }
     }
   }
 
@@ -127,12 +133,20 @@ class MainPage extends React.Component {
   if (this.state.mode === "gasAdjustedTPS"){
     optionalGasAdjustedText = "The gas-adjusted TPS value of a network is calculated by dividing the total gas used by the network at any time by 21,000 gas (the gas cost of a simple ETH transfer). In other words, this value represents the theoretical number of transactions per second a network were to do if all transactions were simple ETH transfers.";
   }
+  let offlineCircle =   <div style={{marginLeft: '10px'}} className={'dot tooltip'}>
+  <span className={'tooltiptext'}>
+    Live updates are currently unavailable
+  </span>
+  </div>;
   return (
     <>
       <ModeSelector defaultMode={this.state.mode} onChange={this.modeChanged.bind(this)}/>
-      <h3>
-        Current {formatModeName(this.state.mode)} overview
-      </h3>
+      <div style={{display:'inline-block'}}>
+        <h3 style={{display:'inline'}}>
+          Current {formatModeName(this.state.mode)} overview
+        </h3>
+        {(this.state.offline?offlineCircle:<></>)}
+      </div>
       <p>
       {optionalGasAdjustedText}
       </p>

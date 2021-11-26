@@ -92,17 +92,23 @@ export default class HistoricalChart extends React.Component {
         switch(mode){
           case 'tps':
               globalTPSApi.aPITPSGetGet({provider: provider, interval: this.transformIntervalName(interval), network: network}, (err,data,res)=>{
-                this.buildDatasets(data);
+                if (data !== null){
+                  this.buildDatasets(data);
+                }
               });
             break;
           case 'gps':
             globalGPSApi.aPIGPSGetGet({provider: provider, interval: this.transformIntervalName(interval), network: network}, (err,data,res)=>{
-              this.buildDatasets(data);
+              if (data !== null){
+                this.buildDatasets(data);
+              }
             });
             break;
           case 'gasAdjustedTPS':
             globalGasAdjustedTPSApi.aPIGasAdjustedTPSGetGet({provider: provider, interval: this.transformIntervalName(interval), network: network}, (err,data,res)=>{
-              this.buildDatasets(data);
+              if (data !== null){
+                this.buildDatasets(data);
+              }
             });
             break;
         }
