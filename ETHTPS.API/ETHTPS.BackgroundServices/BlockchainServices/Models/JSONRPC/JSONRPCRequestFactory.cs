@@ -14,5 +14,16 @@ namespace ETHTPS.Services.BlockchainServices.Models.JSONRPC
             JsonRPC = "2.0",
             Method = "eth_blockNumber",
         };
+
+        public static JSONRPCRequestModel CreateGetTransactionCountByBlockNumberRequest(string block) => new JSONRPCRequestModel()
+        {
+            ID = 0,
+            JsonRPC = "2.0",
+            Method = "eth_getBlockTransactionCountByNumber",
+            Params = new List<string>()
+            {
+                block
+            }
+        };
     }
 }
