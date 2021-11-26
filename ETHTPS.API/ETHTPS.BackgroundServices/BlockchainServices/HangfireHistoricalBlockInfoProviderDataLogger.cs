@@ -73,9 +73,9 @@ namespace ETHTPS.Services.BlockchainServices
                     AddOrUpdateAllTPSEntry(delta);
 
                     stopwatch.Stop();
-                    var eta = TimeSpan.FromMilliseconds(oldestEntry.OldestBlock * (stopwatch.Elapsed.TotalMilliseconds + 1000)/ step);
-                    _logger.LogInformation($"{_provider} [{oldestEntry.OldestBlock}] ETA: [{eta}] {delta.TPS}TPS {delta.GPS}GPS");
-                    await Task.Delay(1000);
+                    var eta = TimeSpan.FromMilliseconds(oldestEntry.OldestBlock * (stopwatch.Elapsed.TotalMilliseconds + 350)/ step);
+                    _logger.LogInformation($"{_provider} [{oldestEntry.OldestBlock}] @{delta.Date} ETA: [{eta}] {delta.TPS}TPS {delta.GPS}GPS");
+                    await Task.Delay(350);
                 }
                 catch(Exception e)
                 {
