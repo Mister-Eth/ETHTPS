@@ -15,6 +15,7 @@ import ZKSwapDetails from './details/ZKSwapDetails';
 import ZKSyncDetails from './details/ZKSyncDetails';
 import ImmutableXDetails from './details/ImmutableXDetails';
 import AztecDetails from './details/AztecDetails';
+import MetisDetails from './details/MetisDetails';
 import { globalGeneralApi, globalInstantDataService, to2DecimalPlaces } from '../../../services/common';
 import * as qs from 'query-string';
 
@@ -50,6 +51,7 @@ export default class NetworkPage extends PageWithQueryString {
         'ZKSync': <ZKSyncDetails name={this.state.name}/>,
         'Immutable X': <ImmutableXDetails name={this.state.name}/>,
         'Aztec': <AztecDetails name={this.state.name}/>,
+        'Metis': <MetisDetails name={this.state.name}/>
     }
 
     updateInstantTPS(data){

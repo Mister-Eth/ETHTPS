@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="CacheUpdaters\**" />
+    <EmbeddedResource Remove="CacheUpdaters\**" />
+    <None Remove="CacheUpdaters\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Fizzler.Systems.HtmlAgilityPack" Version="1.2.1" />
     <PackageReference Include="Hangfire" Version="1.8.0-beta3" />
     <PackageReference Include="Hangfire.AspNetCore" Version="1.8.0-beta3" />
@@ -14,14 +20,11 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ETHTPS.Data\ETHTPS.Data.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="CacheUpdaters\ChartCache\" />
   </ItemGroup>
 
 </Project>
