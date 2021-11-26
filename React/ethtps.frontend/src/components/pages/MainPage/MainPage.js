@@ -43,27 +43,35 @@ class MainPage extends React.Component {
 
     try{
       globalGeneralApi.aPIV2ProvidersGet((err, data, res) => {
-        let homePageModel = this.state.homePageModel;
-        homePageModel.providerData = data;
-        this.setState({homePageModel: homePageModel});
+        if (data !== null){
+          let homePageModel = this.state.homePageModel;
+          homePageModel.providerData = data;
+          this.setState({homePageModel: homePageModel});
+        }
       });
   
       globalGeneralApi.aPIV2ColorDictionaryGet((err, data, res) => {
-        let homePageModel = this.state.homePageModel;
-        homePageModel.colorDictionary = data;
-        this.setState({homePageModel: homePageModel});
+        if (data !== null){
+          let homePageModel = this.state.homePageModel;
+          homePageModel.colorDictionary = data;
+          this.setState({homePageModel: homePageModel});
+        }
       });
   
       globalGeneralApi.aPIV2ProviderTypesColorDictionaryGet((err, data, res) => {
-        let homePageModel = this.state.homePageModel;
-        homePageModel.providerTypeColorDictionary = data;
-        this.setState({homePageModel: homePageModel});
+        if (data !== null){
+          let homePageModel = this.state.homePageModel;
+          homePageModel.providerTypeColorDictionary = data;
+          this.setState({homePageModel: homePageModel});
+        }
       });
   
       globalGeneralApi.aPIV2MaxGet({provider: 'All', network: this.state.network}, (err, data, res) => {
-        let homePageModel = this.state.homePageModel;
-        homePageModel.maxData = data;
-        this.setState({homePageModel: homePageModel});
+        if (data !== null){
+          let homePageModel = this.state.homePageModel;
+          homePageModel.maxData = data;
+          this.setState({homePageModel: homePageModel});
+        }
       });
     }
     catch{

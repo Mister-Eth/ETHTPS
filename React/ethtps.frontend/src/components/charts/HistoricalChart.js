@@ -88,22 +88,27 @@ export default class HistoricalChart extends React.Component {
     }
 
     updateChartFromModel(provider, interval, network, mode){
-      switch(mode){
-        case 'tps':
-            globalTPSApi.aPITPSGetGet({provider: provider, interval: this.transformIntervalName(interval), network: network}, (err,data,res)=>{
+      try{
+        switch(mode){
+          case 'tps':
+              globalTPSApi.aPITPSGetGet({provider: provider, interval: this.transformIntervalName(interval), network: network}, (err,data,res)=>{
+                this.buildDatasets(data);
+              });
+            break;
+          case 'gps':
+            globalGPSApi.aPIGPSGetGet({provider: provider, interval: this.transformIntervalName(interval), network: network}, (err,data,res)=>{
               this.buildDatasets(data);
             });
-          break;
-        case 'gps':
-          globalGPSApi.aPIGPSGetGet({provider: provider, interval: this.transformIntervalName(interval), network: network}, (err,data,res)=>{
-            this.buildDatasets(data);
-          });
-          break;
-        case 'gasAdjustedTPS':
-          globalGasAdjustedTPSApi.aPIGasAdjustedTPSGetGet({provider: provider, interval: this.transformIntervalName(interval), network: network}, (err,data,res)=>{
-            this.buildDatasets(data);
-          });
-          break;
+            break;
+          case 'gasAdjustedTPS':
+            globalGasAdjustedTPSApi.aPIGasAdjustedTPSGetGet({provider: provider, interval: this.transformIntervalName(interval), network: network}, (err,data,res)=>{
+              this.buildDatasets(data);
+            });
+            break;
+        }
+      }
+      catch(e){
+        console.log(e);
       }
     }
 
@@ -115,6 +120,9 @@ export default class HistoricalChart extends React.Component {
     }
 
     buildDatasets(data){
+      if (data === null)
+        return;
+      
       let labels = [];
       let datasets = [];
       for(let key of Object.keys(data)){

@@ -27,8 +27,6 @@ class ProviderTable extends React.Component {
               columnName: 'no'
             }
         }
-
-
     }
 
     dynamicSort(property) {
