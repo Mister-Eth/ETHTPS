@@ -105,11 +105,13 @@ export default class HistoricalChart extends React.Component {
 
     componentDidMount(){
       this.updateChart(this.state);
-      globalGeneralApi.aPIV2GetIntervalsWithDataGet({provider: this.state.provider}, (err,data,res) => {
-        if (data != null){
-          this.setState({allIntervals: data.map(this.reverseTransformIntervalName)});
-        }
-      });
+      if (this.state.provider !== "All"){
+        globalGeneralApi.aPIV2GetIntervalsWithDataGet({provider: this.state.provider}, (err,data,res) => {
+          if (data != null){
+            this.setState({allIntervals: data.map(this.reverseTransformIntervalName)});
+          }
+        });
+      } 
     }
 
     updateChart(state){

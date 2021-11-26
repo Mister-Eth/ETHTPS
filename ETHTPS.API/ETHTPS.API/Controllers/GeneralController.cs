@@ -111,8 +111,6 @@ namespace ETHTPS.API.Controllers
                 {
                     if (interval == "All" && count < 12)
                         continue;
-                    if (interval == "OneMonth" && count < 7 * 24)
-                        continue;
 
                     result.Add(interval);
                 }

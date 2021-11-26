@@ -7,7 +7,7 @@ export default class IntervalSelector extends React.Component{
         super(props);
         
         let allIntervals = ['1h', '1d', '1w', '1m', '1y', 'All']
-        if (props.allIntervals !== null){
+        if (props.allIntervals === null || props.allIntervals === undefined){
             allIntervals = props.allIntervals;
         }
         this.state = {
