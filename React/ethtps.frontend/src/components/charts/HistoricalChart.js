@@ -156,6 +156,31 @@ export default class HistoricalChart extends React.Component {
       }
     }
 
+    monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
+    extractLabel(x){
+      switch(this.state.interval){
+        case '1h':
+          return x.getHours() + ":" + ((x.getMinutes() < 10)?("0" + x.getMinutes()): x.getMinutes());
+        case '1d':
+            return x.getHours() + ":00";
+        case '1w':
+            return x.getHours() + ":00";
+        case '1w':
+            return this.monthNames[x.getMonth()].substr(0, 3) + " " + (x.getDay() + 1) + " " + x.getHours() + ":00";
+        case '1m':
+            return this.monthNames[x.getMonth()].substr(0, 3) + " " + (x.getDay() + 1);
+        case '1y':
+            return this.monthNames[x.getMonth()].substr(0, 3)+ " " + x.getFullYear();
+        case 'All':
+            return this.monthNames[x.getMonth()].substr(0, 3) + " " + x.getFullYear();
+        default:
+          return x;
+      }
+    }
+
     buildDatasets(data){
       if (data === null)
         return;
@@ -164,7 +189,7 @@ export default class HistoricalChart extends React.Component {
       let datasets = [];
       for(let key of Object.keys(data)){
         let d = data[key];
-        let l = d.map(x => x.data[0].date);
+        let l = d.map(x => this.extractLabel(x.data[0].date));
         if (l.length > labels.length){
           labels = l;
         }
@@ -224,7 +249,7 @@ export default class HistoricalChart extends React.Component {
                   scales:{
                     x:{
                       ticks:{
-                        display: false
+                        display: true
                       },
                       grid:{
                         display: true
