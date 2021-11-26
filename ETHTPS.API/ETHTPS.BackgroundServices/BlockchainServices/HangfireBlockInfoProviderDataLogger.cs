@@ -44,11 +44,11 @@ namespace ETHTPS.Services.BlockchainServices
                 AddOrUpdateAllTPSEntry(delta);
                 await _context.SaveChangesAsync();
 
-                _logger.LogDebug($"{_provider}: {delta.TPS}TPS {delta.GPS}GPS");
+                _logger.LogInformation($"{_provider}: {delta.TPS}TPS {delta.GPS}GPS");
             }
             catch (Exception e)
             {
-                _logger.LogDebug("TPSDataUpdaterBase", e);
+                _logger.LogError("TPSDataUpdaterBase", e);
                 throw;
             }
         }
