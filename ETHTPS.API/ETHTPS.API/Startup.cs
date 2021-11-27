@@ -22,6 +22,8 @@ using ETHTPS.Services.BlockchainServices.Scan.Implementations;
 using ETHTPS.Services.BlockchainServices;
 using ETHTPS.Services.BlockchainServices.Scan;
 using ETHTPS.Data.Database.HistoricalDataProviders;
+using ETHTPS.API.Infrastructure.Services;
+using ETHTPS.API.Infrastructure.Services.Implementations;
 
 namespace ETHTPS.API
 {
@@ -62,10 +64,19 @@ namespace ETHTPS.API
             InitializeHangFire(defaultConnectionString);
             services.AddHangfire(x => x.UseSqlServerStorage(defaultConnectionString));
             services.AddHangfireServer();
+            AddServices(services);
             AddTPSDataUpdaters(services);
             AddCacheUpdaters(services);
             AddHistoricalDataProviders(services);
             AddHistoricalBlockInfoDataUpdaters(services);
+        }
+
+        private void AddServices(IServiceCollection services)
+        {
+            services.AddScoped<TPSService>();
+            services.AddScoped<GPSService>();
+            services.AddScoped<GasAdjustedTPSService>();
+            services.AddScoped<GeneralService>();
         }
 
         private void AddHistoricalBlockInfoDataUpdaters(IServiceCollection services)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ETHTPS.API.Controllers
+namespace ETHTPS.API.Infrastructure.Services
 {
     /// <summary>
     /// Represents a (p)er-(s)econd controller. This interface is used for making sure both TPS and GPS controller methods always return the same types.
