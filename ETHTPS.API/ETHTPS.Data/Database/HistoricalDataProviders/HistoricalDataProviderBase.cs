@@ -25,6 +25,14 @@ namespace ETHTPS.Data.Database.HistoricalDataProviders
 
         public string Interval { get; private set; }
 
-        public IEnumerable<TimedTPSAndGasData> GetData(string provider, string network) => _dataSelector(_context).Where(x => x.NetworkNavigation.Name == network && x.ProviderNavigation.Name == provider).DistinctBy(x=>x.StartDate).OrderBy(x => x.StartDate);
+        public IEnumerable<TimedTPSAndGasData> GetData(string provider, string network)
+        {
+            IEnumerable<TimedTPSAndGasData> result;
+            lock (_context.LockObj)
+            {
+                result = _dataSelector(_context).Where(x => x.NetworkNavigation.Name == network && x.ProviderNavigation.Name == provider).DistinctBy(x => x.StartDate).OrderBy(x => x.StartDate);
+            }
+            return result;
+        }
     }
 }

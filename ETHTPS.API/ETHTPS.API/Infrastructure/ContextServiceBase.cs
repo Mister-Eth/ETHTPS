@@ -17,7 +17,15 @@ namespace ETHTPS.API.Infrastructure
             Context = context;
         }
 
-        protected bool IsSidechain(string provider) => Context.Providers.First(x => x.Name == provider).TypeNavigation.Name == "Sidechain";
+        protected bool IsSidechain(string provider)
+        {
+            bool result = false;
+            lock (Context.LockObj)
+            {
+                result = Context.Providers.First(x => x.Name == provider).TypeNavigation.Name == "Sidechain";
+            }
+            return result;
+        }
 
         protected IEnumerable<string> TimeIntervals()
         {

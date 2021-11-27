@@ -28,7 +28,12 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
 
         public IEnumerable<string> Networks()
         {
-            return Context.Networks.Select(x => x.Name);
+            IEnumerable<string> result;
+            lock (Context.LockObj)
+            {
+                result = Context.Networks.Select(x => x.Name);
+            }
+            return result;
         }
 
         
@@ -38,20 +43,41 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
         
         public IEnumerable<ProviderResponseModel> Providers()
         {
-            return Context.Providers.ToList().Select(x => new ProviderResponseModel()
+            IEnumerable<ProviderResponseModel> result;
+            lock (Context.LockObj)
             {
-                Name = x.Name,
-                Type = x.TypeNavigation.Name,
-                Color = x.ProviderProperties.First(x => x.Name == "Color").Value,
-                TheoreticalMaxTPS = int.Parse(x.ProviderProperties.First(x => x.Name == "TheoreticalMaxTPS").Value)
-            });
+                result = Context.Providers.ToList().Select(x => new ProviderResponseModel()
+                {
+                    Name = x.Name,
+                    Type = x.TypeNavigation.Name,
+                    Color = x.ProviderProperties.First(x => x.Name == "Color").Value,
+                    TheoreticalMaxTPS = int.Parse(x.ProviderProperties.First(x => x.Name == "TheoreticalMaxTPS").Value)
+                });
+            }
+            return result;
         }
 
         
-        public IDictionary<string, string> ColorDictionary() => Context.ProviderProperties.Where(x => x.Name == "Color").ToDictionary(x => x.ProviderNavigation.Name, x => x.Value);
+        public IDictionary<string, string> ColorDictionary()
+        {
+            IDictionary<string, string> result;
+            lock (Context.LockObj)
+            {
+                result = Context.ProviderProperties.Where(x => x.Name == "Color").ToDictionary(x => x.ProviderNavigation.Name, x => x.Value);
+            }
+            return result;
+        }
 
         
-        public IDictionary<string, string> ProviderTypesColorDictionary() => Context.ProviderTypeProperties.Where(x => x.Name == "Color").ToDictionary(x => x.ProviderTypeNavigation.Name, x => x.Value);
+        public IDictionary<string, string> ProviderTypesColorDictionary()
+        {
+            IDictionary<string, string> result;
+            lock (Context.LockObj)
+            {
+                result = Context.ProviderTypeProperties.Where(x => x.Name == "Color").ToDictionary(x => x.ProviderTypeNavigation.Name, x => x.Value);
+            }
+            return result;
+        }
 
 
         private static Dictionary<string, object> _lastInstantData;
@@ -72,7 +98,6 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
 
                     _lastInstantDataGetTime = DateTime.Now;
                     _lastInstantData = result;
-                    Console.WriteLine("Updated instant data");
                 }
                 catch (Exception e)
                 {
@@ -86,10 +111,13 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
         public IDictionary<string, object> Max(string provider, string network = "Mainnet")
         {
             var result = new Dictionary<string, object>();
-            var maxGPS = _gpsService.Max(provider, network);
-            result.Add("tps", _tpsService.Max(provider, network));
-            result.Add("gps", maxGPS);
-            result.Add("gasAdjustedTPS", _gasAdjustedTPSService.Max(provider, network));
+            lock (Context.LockObj)
+            {
+                var maxGPS = _gpsService.Max(provider, network);
+                result.Add("tps", _tpsService.Max(provider, network));
+                result.Add("gps", maxGPS);
+                result.Add("gasAdjustedTPS", _gasAdjustedTPSService.Max(provider, network));
+            }
             return result;
         }
 

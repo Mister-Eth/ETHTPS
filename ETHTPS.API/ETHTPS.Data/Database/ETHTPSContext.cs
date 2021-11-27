@@ -8,6 +8,7 @@ namespace ETHTPS.Data.Database
 {
     public partial class ETHTPSContext : DbContext
     {
+        public readonly object LockObj = new object();
         public ETHTPSContext()
         {
             Database.SetCommandTimeout(TimeSpan.FromSeconds(10));
