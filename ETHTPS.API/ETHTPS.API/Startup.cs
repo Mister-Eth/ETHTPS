@@ -59,7 +59,7 @@ namespace ETHTPS.API
             {
                 c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             });
-            services.AddDbContext<ETHTPSContext>(options => options.UseSqlServer(defaultConnectionString));
+            services.AddDbContext<ETHTPSContext>(options => options.UseSqlServer(defaultConnectionString), ServiceLifetime.Transient);
             services.AddMemoryCache();
             InitializeHangFire(defaultConnectionString);
             services.AddHangfire(x => x.UseSqlServerStorage(defaultConnectionString));

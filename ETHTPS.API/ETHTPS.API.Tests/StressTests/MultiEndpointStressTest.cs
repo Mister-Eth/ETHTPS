@@ -35,7 +35,7 @@ namespace ETHTPS.API.Tests.StressTests
             {
                 BaseAddress = new Uri(_endpoint)
             };
-            _maxConcurrentRequests = 100;
+            _maxConcurrentRequests = 150;
         }
 
         [Test]
@@ -48,6 +48,7 @@ namespace ETHTPS.API.Tests.StressTests
             Assert.DoesNotThrowAsync(async() =>
             {
                 await Task.WhenAll(requests);
+                Assert.That(requests.All(x => x.IsCompletedSuccessfully));
             });
         }
     }
