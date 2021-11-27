@@ -61,15 +61,16 @@ namespace ETHTPS.API
             });
             services.AddDbContext<ETHTPSContext>(options => options.UseSqlServer(defaultConnectionString), ServiceLifetime.Transient);
             services.AddMemoryCache();
+
+            AddServices(services);
+            AddHistoricalDataProviders(services);
             if (ConfigurationQueues?.Length > 0)
             {
                 InitializeHangFire(defaultConnectionString);
                 services.AddHangfire(x => x.UseSqlServerStorage(defaultConnectionString));
                 services.AddHangfireServer();
-                AddServices(services);
                 AddTPSDataUpdaters(services);
                 AddCacheUpdaters(services);
-                AddHistoricalDataProviders(services);
                 AddHistoricalBlockInfoDataUpdaters(services);
             }
            
