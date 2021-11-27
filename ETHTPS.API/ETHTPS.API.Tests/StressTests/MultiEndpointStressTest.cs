@@ -24,7 +24,12 @@ namespace ETHTPS.API.Tests.StressTests
             {
                 "/API/v2/InstantData?includeSidechains=true",
                 "/API/TPS/Get?provider=All&interval=OneHour&network=Mainnet&includeSidechains=true",
-                "/API/GPS/Get?provider=All&interval=OneHour&network=Mainnet&includeSidechains=true"
+                "/API/GPS/Get?provider=All&interval=OneHour&network=Mainnet&includeSidechains=true",
+                "/API/v2/ProviderTypesColorDictionary",
+                "/API/v2/ColorDictionary",
+                "/API/v2/Networks",
+                "/API/v2/Intervals",
+                "/API/v2/Providers",
             };
             _httpClient = new HttpClient() 
             {
@@ -36,7 +41,7 @@ namespace ETHTPS.API.Tests.StressTests
         [Test]
         public void StressTest()
         {
-            var requests = _stressTestPaths.SelectMany(path => Enumerable.Range(0, _maxConcurrentRequests).Select(x => Task.Run(async () =>
+            var requests = _stressTestPaths.SelectMany(path => Enumerable.Range(0, _maxConcurrentRequests / _stressTestPaths.Length).Select(x => Task.Run(async () =>
             {
                 await _httpClient.GetAsync(path);
             })));
