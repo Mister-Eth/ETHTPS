@@ -35,7 +35,7 @@ namespace ETHTPS.API.Tests.StressTests
             {
                 BaseAddress = new Uri(_endpoint)
             };
-            _maxConcurrentRequests = 150;
+            _maxConcurrentRequests = 50;
         }
 
         [Test]
@@ -43,12 +43,13 @@ namespace ETHTPS.API.Tests.StressTests
         {
             var requests = _stressTestPaths.SelectMany(path => Enumerable.Range(0, _maxConcurrentRequests / _stressTestPaths.Length).Select(x => Task.Run(async () =>
             {
-                await _httpClient.GetAsync(path);
+                var response = await _httpClient.GetAsync(path);
+                Assert.That(response.IsSuccessStatusCode, $"Failed with {response.StatusCode}");
             })));
             Assert.DoesNotThrowAsync(async() =>
             {
                 await Task.WhenAll(requests);
-                Assert.That(requests.All(x => x.IsCompletedSuccessfully));
+                //Assert.That(requests.All(x => x.Status == TaskStatus.RanToCompletion), $"Failed: {requests.Count(x => x.Status != TaskStatus.RanToCompletion)}");
             });
         }
     }

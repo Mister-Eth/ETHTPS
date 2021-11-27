@@ -61,14 +61,18 @@ namespace ETHTPS.API
             });
             services.AddDbContext<ETHTPSContext>(options => options.UseSqlServer(defaultConnectionString), ServiceLifetime.Transient);
             services.AddMemoryCache();
-            InitializeHangFire(defaultConnectionString);
-            services.AddHangfire(x => x.UseSqlServerStorage(defaultConnectionString));
-            services.AddHangfireServer();
-            AddServices(services);
-            AddTPSDataUpdaters(services);
-            AddCacheUpdaters(services);
-            AddHistoricalDataProviders(services);
-            AddHistoricalBlockInfoDataUpdaters(services);
+            if (ConfigurationQueues?.Length > 0)
+            {
+                InitializeHangFire(defaultConnectionString);
+                services.AddHangfire(x => x.UseSqlServerStorage(defaultConnectionString));
+                services.AddHangfireServer();
+                AddServices(services);
+                AddTPSDataUpdaters(services);
+                AddCacheUpdaters(services);
+                AddHistoricalDataProviders(services);
+                AddHistoricalBlockInfoDataUpdaters(services);
+            }
+           
         }
 
         private void AddServices(IServiceCollection services)
@@ -160,14 +164,16 @@ namespace ETHTPS.API
             });
             app.UseMiddleware<AccesStatsMiddleware>();
             // GlobalConfiguration.Configuration.UseActivator(new HangfireActivator(serviceProvider));
-
-            app.UseHangfireServer(options: new BackgroundJobServerOptions()
+            if (ConfigurationQueues?.Length > 0)
             {
-                Queues = ConfigurationQueues ?? new string[] { "default" }
-            });
-            if (Configuration.GetSection("Hangfire").GetValue<bool>("Show"))
-            {
-                app.UseHangfireDashboard();
+                app.UseHangfireServer(options: new BackgroundJobServerOptions()
+                {
+                    Queues = ConfigurationQueues ?? new string[] { "default" }
+                });
+                if (Configuration.GetSection("Hangfire").GetValue<bool>("Show"))
+                {
+                    app.UseHangfireDashboard();
+                }
             }
             app.UseSwagger();
             app.UseSwaggerUI(c =>
