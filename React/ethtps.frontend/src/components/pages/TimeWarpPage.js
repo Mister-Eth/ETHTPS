@@ -65,19 +65,23 @@ export default class TimeWarpPage extends React.Component{
 
       marks = [
         {
-          value: 1,
+            value: 1,
+            label: 'Realtime',
+        },
+        {
+          value: 20,
           label: '1 min/s',
         },
         {
-          value: 25,
+          value: 40,
           label: '1 h/s',
         },
         {
-            value: 50,
+            value: 60,
             label: '1 d/s',
         },
         {
-            value: 75,
+            value: 80,
             label: '1 w/s',
         },
         {
