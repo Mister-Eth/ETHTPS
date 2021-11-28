@@ -35,10 +35,11 @@ export default class TimeWarpPage extends React.Component{
             this.setState({offline: false});
           }
         }
-        catch{
+        catch (e){
           if (!this.state.offline){
             this.setState({offline: true});
           }
+          console.log(e)
         }
       }
 
@@ -64,7 +65,7 @@ export default class TimeWarpPage extends React.Component{
         return <>
             <div style={{display:'inline-block'}}>
                 <h2 style={{display:'inline'}}>
-                    {capitalizeFirstLetter(formatModeName(this.state.mode))} overview
+                    {capitalizeFirstLetter(formatModeName(this.state.mode))} time warp
                 </h2>
             </div>
             <ModeSelector defaultMode={this.state.mode} onChange={this.modeChanged.bind(this)}/>
