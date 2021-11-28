@@ -65,10 +65,6 @@ class App extends React.Component {
       {main}
     </div>
     <hr/>
-    <h1 className={'invisible'}>ETHTPS</h1>
-    <h1 className={'invisible'}>ETHTPS.info</h1>
-    <h1 className={'invisible'}>Live Ethereum ETH TPS data</h1>
-    <h1 className={'invisible'}>transactions per second</h1>
     <footer>
       <div className={'inline'}>
       Brought to you by 

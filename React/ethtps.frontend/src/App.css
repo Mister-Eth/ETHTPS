@@ -200,6 +200,7 @@ h3 {
 .invisible{
   position: absolute;
   right:0;
+  font-size: 0;
   color: transparent;
   float: right;
 }

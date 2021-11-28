@@ -143,7 +143,7 @@ export default class TimeWarpPage extends React.Component{
                 />
             </center>
             <p>
-                This is an experimental feature. I don't even know how you got here.
+                This is an experimental feature. How did you even get here?
             </p>
 
         </>;
