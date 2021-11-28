@@ -50,7 +50,7 @@ export default class IntervalSelector extends React.Component{
             yearToggles = <>
             <ToggleButtonGroup
             color="primary"
-            style={{display:"inline", float: 'left'}}
+            style={{}}
             value={this.state.interval}
             exclusive
             onChange={this.handleYearChange}>
@@ -59,15 +59,17 @@ export default class IntervalSelector extends React.Component{
             </>
         }
         return <>
+        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap'}}>
         {yearToggles}
         <ToggleButtonGroup
             color="primary"
-            style={{display:"inline", float: 'right'}}
+            style={{}}
             value={this.state.interval}
             exclusive
             onChange={this.handleIntervalChange}>
             {this.state.allIntervals.map(x => <ToggleButton value={x}>{x}</ToggleButton>)}
         </ToggleButtonGroup>
+        </div>
         </>
     }
 }
