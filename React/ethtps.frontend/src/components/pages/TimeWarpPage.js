@@ -3,6 +3,9 @@ import HorizontalBarChart from '../HorizontalBarChart';
 import { globalInstantDataService, formatModeName, capitalizeFirstLetter } from '../../services/common';
 import { allInstantData, colorDictionary, providerData } from '../../services/defaultData';
 import ModeSelector from './MainPage/ModeSelector';
+import Box from '@mui/material/Box';
+import Slider from '@mui/material/Slider';
+import { Helmet } from 'react-helmet';
 
 export default class TimeWarpPage extends React.Component{
     constructor(props){
@@ -63,6 +66,11 @@ export default class TimeWarpPage extends React.Component{
 
     render(){
         return <>
+            <Helmet>
+                <title>
+                    ETHTPS.info - Time warp
+                </title>
+            </Helmet>
             <div style={{display:'inline-block'}}>
                 <h2 style={{display:'inline'}}>
                     {capitalizeFirstLetter(formatModeName(this.state.mode))} time warp
