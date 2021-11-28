@@ -117,6 +117,7 @@ export default class NetworkPage extends PageWithQueryString {
                 interval={this.state.interval} 
                 mode={this.state.mode} 
                 scale={'lin'} 
+                showYears={true}
                 network={'Mainnet'}/>
             <hr/>
             {this.components[this.state.name]}

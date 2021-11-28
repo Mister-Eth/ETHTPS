@@ -31,7 +31,9 @@ export default class HistoricalChart extends React.Component {
               pointHitRadius: 20
             }
           ],
-          allIntervals: []
+          allIntervals: [],
+          years: [],
+          selectedYear: 0
         }
     }
 
@@ -112,35 +114,69 @@ export default class HistoricalChart extends React.Component {
           }
         });
       } 
+      globalGeneralApi.aPIV2GetUniqueDataYearsGet({provider: this.state.provider, network: this.state.network}, (err, data, res) => {
+        if (data != null){
+          if (data.length > 1){
+            this.setState({years: data});
+          }
+        }
+      });
     }
 
     updateChart(state){
-      this.updateChartFromModel(state.provider, state.interval, state.network, state.mode);
+      this.updateChartFromModel(state.provider, state.interval, state.selectedYear, state.network, state.mode);
     }
 
-    updateChartFromModel(provider, interval, network, mode){
+    updateChartFromModel(provider, interval, year, network, mode){
       try{
         switch(mode){
           case 'tps':
-              globalTPSApi.aPITPSGetGet({provider: provider, interval: this.transformIntervalName(interval), network: network}, (err,data,res)=>{
+              if (year !== 0){
+                globalTPSApi.aPITPSGeMonthlyDataByYearGet({provider: provider, year: year, network: network}, (err, data, res)=>{
+                  if (data !== null){
+                    this.buildDatasets(data);
+                  }
+                });
+              }
+              else{
+                globalTPSApi.aPITPSGetGet({provider: provider, interval: this.transformIntervalName(interval), network: network}, (err,data,res)=>{
+                  if (data !== null){
+                    this.buildDatasets(data);
+                  }
+                });
+              }
+            break;
+          case 'gps':
+            if (year !== 0){
+              globalGPSApi.aPIGPSGeMonthlyDataByYearGet({provider: provider, year: year, network: network}, (err, data, res)=>{
                 if (data !== null){
                   this.buildDatasets(data);
                 }
               });
-            break;
-          case 'gps':
-            globalGPSApi.aPIGPSGetGet({provider: provider, interval: this.transformIntervalName(interval), network: network}, (err,data,res)=>{
-              if (data !== null){
-                this.buildDatasets(data);
-              }
-            });
+            }
+            else{
+              globalGPSApi.aPIGPSGetGet({provider: provider, interval: this.transformIntervalName(interval), network: network}, (err,data,res)=>{
+                if (data !== null){
+                  this.buildDatasets(data);
+                }
+              });
+            }
             break;
           case 'gasAdjustedTPS':
-            globalGasAdjustedTPSApi.aPIGasAdjustedTPSGetGet({provider: provider, interval: this.transformIntervalName(interval), network: network}, (err,data,res)=>{
-              if (data !== null){
-                this.buildDatasets(data);
-              }
-            });
+            if (year !== 0){
+              globalGasAdjustedTPSApi.aPIGasAdjustedTPSGeMonthlyDataByYearGet({provider: provider, year: year, network: network}, (err, data, res)=>{
+                if (data !== null){
+                  this.buildDatasets(data);
+                }
+              });
+            }
+            else{
+              globalGasAdjustedTPSApi.aPIGasAdjustedTPSGetGet({provider: provider, interval: this.transformIntervalName(interval), network: network}, (err,data,res)=>{
+                if (data !== null){
+                  this.buildDatasets(data);
+                }
+              });
+            }
             break;
         }
       }
@@ -161,6 +197,9 @@ export default class HistoricalChart extends React.Component {
 ];
 
     extractLabel(x){
+      if (this.state.selectedYear !== 0){
+        return this.monthNames[x.getMonth()].substr(0, 3) + " " + x.getFullYear();
+      }
       switch(this.state.interval){
         case '1h':
           return x.getHours() + ":" + ((x.getMinutes() < 10)?("0" + x.getMinutes()): x.getMinutes());
@@ -209,7 +248,7 @@ export default class HistoricalChart extends React.Component {
 
     onInfoTypeChanged(mode){
       this.setState({mode: mode});
-      this.updateChartFromModel(this.state.provider, this.state.interval, this.state.network, mode);
+      this.updateChartFromModel(this.state.provider, this.state.interval, this.state.selectedYear, this.state.network, mode);
     }
 
     onScaleChanged(scale){
@@ -218,14 +257,25 @@ export default class HistoricalChart extends React.Component {
 
     onIntervalChanged(interval){
       this.setState({interval: interval});
-      this.updateChartFromModel(this.state.provider, interval, this.state.network, this.state.mode);
+      this.setState({selectedYear: 0});
+      this.updateChartFromModel(this.state.provider, interval, this.state.selectedYear, this.state.network, this.state.mode);
+    }
+
+    onYearChanged(year){
+      this.setState({selectedYear: year});
+      this.updateChartFromModel(this.state.provider, "", year, this.state.network, this.state.mode);
     }
 
      render(){
         return (
             <div>
                 <div style={{float:"right"}}>
-                    <IntervalSelector allIntervals={this.state.allIntervals} interval={this.state.interval} onChange={this.onIntervalChanged.bind(this)}/>
+                    <IntervalSelector 
+                      allIntervals={this.state.allIntervals} 
+                      interval={this.state.interval} 
+                      onChange={this.onIntervalChanged.bind(this)}
+                      onYearChange={this.onYearChanged.bind(this)}
+                      years={this.state.years}/>
                 </div>
             <div>
                 <Line height={this.props.height} data={{
@@ -261,9 +311,9 @@ export default class HistoricalChart extends React.Component {
                   }
                 }}/>
             </div>
-           <InfoTypeSelector mode={this.state.mode} onChange={this.onInfoTypeChanged.bind(this)}/>
+              <InfoTypeSelector mode={this.state.mode} onChange={this.onInfoTypeChanged.bind(this)}/>
             <div style={{float:"right"}}>
-                <ScaleSelector scale={this.state.scale} onChange={this.onScaleChanged.bind(this)}/>
+              <ScaleSelector scale={this.state.scale} onChange={this.onScaleChanged.bind(this)}/>
             </div>
             </div>
           );
