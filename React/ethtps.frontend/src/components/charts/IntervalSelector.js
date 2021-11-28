@@ -47,10 +47,10 @@ export default class IntervalSelector extends React.Component{
     render(){
         let yearToggles = <></>;
         if (this.state.years !== undefined){
-            yearToggles = <> <br/> 
+            yearToggles = <>
             <ToggleButtonGroup
             color="primary"
-            style={{float:"right"}}
+            style={{display:"inline", float: 'left'}}
             value={this.state.interval}
             exclusive
             onChange={this.handleYearChange}>
@@ -60,14 +60,15 @@ export default class IntervalSelector extends React.Component{
             </>
         }
         return <>
+        {yearToggles}
         <ToggleButtonGroup
             color="primary"
+            style={{display:"inline", float: 'right'}}
             value={this.state.interval}
             exclusive
             onChange={this.handleIntervalChange}>
             {this.state.allIntervals.map(x => <ToggleButton value={x}>{x}</ToggleButton>)}
         </ToggleButtonGroup>
-        {yearToggles}
         </>
     }
 }

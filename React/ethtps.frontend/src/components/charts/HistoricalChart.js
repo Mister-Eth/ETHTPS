@@ -116,7 +116,7 @@ export default class HistoricalChart extends React.Component {
       } 
       globalGeneralApi.aPIV2GetUniqueDataYearsGet({provider: this.state.provider, network: this.state.network}, (err, data, res) => {
         if (data != null){
-          if (data.length > 1){
+          if (data.length > 0){
             this.setState({years: data});
           }
         }
@@ -269,7 +269,7 @@ export default class HistoricalChart extends React.Component {
      render(){
         return (
             <div>
-                <div style={{float:"right"}}>
+                <div>
                     <IntervalSelector 
                       allIntervals={this.state.allIntervals} 
                       interval={this.state.interval} 
