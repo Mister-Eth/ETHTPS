@@ -1,5 +1,6 @@
 import PageWithQueryString from '../../pages/PageWithQueryString';
 import HistoricalChart from '../../charts/HistoricalChart';
+import { colorDictionary } from '../../../services/defaultData';
 import './NetworkPage.css';
 import '../../../App.css';
 import React, {setState} from 'react';
@@ -27,6 +28,7 @@ export default class NetworkPage extends PageWithQueryString {
         state.instantTPS = 0;
         state.interval = '1d';
         state.mode = 'tps';
+        state.colorDictionary = colorDictionary;
         let q = qs.parse(window.location.search);
         if (q.interval !== undefined){
             state.interval = q.interval; 
@@ -63,9 +65,6 @@ export default class NetworkPage extends PageWithQueryString {
     }
 
     componentDidMount(){
-        globalGeneralApi.aPIV2ColorDictionaryGet((err,data,res) => {
-            this.setState({colorDictionary:data});
-        });
         globalInstantDataService.periodicallyGetInstantDataForPage(this.state.name, this.updateInstantTPS.bind(this));
         globalInstantDataService.getAndCallbackInstantData();
     }

@@ -6,13 +6,15 @@ class HorizontalBarChart extends Component{
     constructor(props){
         super(props);
 
+        let height = props.height;
         this.state = {
           labels: [],
           data: props.data,
           backgroundColors: [],
           colorDictionary: props.colorDictionary,
           providerData: props.providerData,
-          mode: props.mode
+          mode: props.mode,
+          height: (height !== undefined)?height:250
         }
     }
     /*
@@ -107,7 +109,7 @@ class HorizontalBarChart extends Component{
     render(){
         return <>
             <Bar data={this.createChartData(this.state)} 
-            height={200}
+            height={this.state.height}
               options={{
                 indexAxis: 'y',
                 plugins:{

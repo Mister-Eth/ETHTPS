@@ -17,7 +17,7 @@ namespace ETHTPS.Data.Database
         public ETHTPSContext(DbContextOptions<ETHTPSContext> options)
             : base(options)
         {
-            //Database.SetCommandTimeout(TimeSpan.FromSeconds(10));
+            //Database.SetCommandTimeout(TimeSpan.FromSeconds(60));
         }
 
         public virtual DbSet<AccesStat> AccesStats { get; set; }

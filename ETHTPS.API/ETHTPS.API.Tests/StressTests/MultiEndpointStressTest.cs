@@ -20,6 +20,7 @@ namespace ETHTPS.API.Tests.StressTests
         public MultiEndpointStressTest()  
         {
             _endpoint = "http://10.10.0.174:50023";
+            //_endpoint = "https://api.ethtps.info";
             _stressTestPaths = new string[]
             {
                 "/API/v2/InstantData?includeSidechains=true",

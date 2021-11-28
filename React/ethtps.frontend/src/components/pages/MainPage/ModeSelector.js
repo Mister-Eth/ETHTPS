@@ -50,8 +50,8 @@ export default class ModeSelector extends React.Component {
                 break;
         }
         return <>
-            <div className={'top-right box inline'} style={{backgroundColor:'#f1f2f2'}}>
-               
+            <div className={'top-right box inline'}>
+               Mode
                 {image}
             </div>
         </>;
