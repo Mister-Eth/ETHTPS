@@ -10,26 +10,34 @@ export default class ModeSelector extends React.Component {
         super(props);
         
         this.state = {
-            mode: props.defaultMode
+            mode: props.defaultMode,
+            showGradient: true
         }
     }
 
     gpsSelected(){
         this.props.onChange('gps');
         this.setState({mode: 'gps'});
+        this.hideGradient();
     }
 
     tpsSelected(){
         this.props.onChange('tps');
         this.setState({mode: 'tps'});
+        this.hideGradient();
     }
 
     gasAdjustedSelected(){
         this.props.onChange('gasAdjustedTPS');
         this.setState({mode: 'gasAdjustedTPS'});
+        this.hideGradient();
     }
 
-    
+    hideGradient(){
+        if (this.state.showGradient){
+            this.setState({showGradient: false})
+        }
+    }
 
     render(){
         let image = {};
@@ -51,7 +59,7 @@ export default class ModeSelector extends React.Component {
                 break;
         }
         return <>
-            <div style={style} className={'top-right box inline gradient-border'}>
+            <div style={style} className={'top-right box inline' + (this.state.showGradient?" gradient-border" : "")}>
                 {image}
             </div>
         </>;
