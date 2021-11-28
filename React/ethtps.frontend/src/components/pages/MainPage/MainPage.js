@@ -9,6 +9,7 @@ import DataStatByType from './components/instant-stats/DataStatByType';
 import ModeSelector from './ModeSelector';
 import * as qs from 'query-string';
 import HistoricalChart from '../../charts/HistoricalChart';
+import { Helmet } from 'react-helmet';
 
 class MainPage extends React.Component {
 
@@ -142,6 +143,11 @@ class MainPage extends React.Component {
   </div>;
   return (
     <>
+       <Helmet>
+          <title>
+            Live Ethereum TPS data
+        </title>
+      </Helmet>
       <ModeSelector defaultMode={this.state.mode} onChange={this.modeChanged.bind(this)}/>
       <div style={{display:'inline-block'}}>
         <h3 style={{display:'inline'}}>

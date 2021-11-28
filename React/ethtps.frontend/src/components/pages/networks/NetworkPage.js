@@ -19,6 +19,7 @@ import AztecDetails from './details/AztecDetails';
 import MetisDetails from './details/MetisDetails';
 import { globalGeneralApi, globalInstantDataService, to2DecimalPlaces } from '../../../services/common';
 import * as qs from 'query-string';
+import { Helmet } from 'react-helmet';
 
 export default class NetworkPage extends PageWithQueryString {
     constructor(props){
@@ -75,6 +76,11 @@ export default class NetworkPage extends PageWithQueryString {
         let next = (index === Object.keys(this.components).length - 1)? Object.keys(this.components)[0] :Object.keys(this.components)[(index + 1)];
         if (this.state !== null && this.state.colorDictionary !== undefined)
         return <>
+        <Helmet>
+            <title>
+                ETHTPS.info - {this.state.name}
+            </title>
+        </Helmet>
         <div style={{display:'inline-box'}}>
             <div style={{display:'inline'}}>
                 <p style={{display:'inline', marginRight:'5px'}}>
