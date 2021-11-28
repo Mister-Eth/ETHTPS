@@ -258,7 +258,7 @@ export default class HistoricalChart extends React.Component {
     onIntervalChanged(interval){
       this.setState({interval: interval});
       this.setState({selectedYear: 0});
-      this.updateChartFromModel(this.state.provider, interval, this.state.selectedYear, this.state.network, this.state.mode);
+      this.updateChartFromModel(this.state.provider, interval, 0, this.state.network, this.state.mode);
     }
 
     onYearChanged(year){
