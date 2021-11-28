@@ -54,8 +54,7 @@ export default class IntervalSelector extends React.Component{
             value={this.state.interval}
             exclusive
             onChange={this.handleYearChange}>
-                {this.state.years.map(x => <ToggleButton value={x}>{x}</ToggleButton>
-                )}
+                {this.state.years.map(x => <ToggleButton value={x}>{x}</ToggleButton>)}
             </ToggleButtonGroup>
             </>
         }

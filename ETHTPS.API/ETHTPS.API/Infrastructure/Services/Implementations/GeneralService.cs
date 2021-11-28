@@ -145,7 +145,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
         
         public IEnumerable<string> GetUniqueDataYears(string provider, string network = "Mainnet")
         {
-            var entries = _tpsService.Get(provider, "All", network, true)[provider]?.Select(x => x.Data.First()?.Date.Year.ToString())?.OrderBy(x => x).Distinct();
+            var entries = _tpsService.Get(provider, "All", network, true)[provider]?.Where(x => x.Data?.Count > 1).Select(x => x.Data.First()?.Date.Year.ToString())?.OrderBy(x => x).Distinct();
             return entries;
         }
 
