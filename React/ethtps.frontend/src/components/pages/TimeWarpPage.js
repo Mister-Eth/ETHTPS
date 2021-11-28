@@ -67,7 +67,7 @@ export default class TimeWarpPage extends React.Component{
       marks = [
         {
             value: 1,
-            label: 'Realtime',
+            label: '1x',
         },
         {
           value: 20,
@@ -112,16 +112,18 @@ export default class TimeWarpPage extends React.Component{
                 </h2>
             </div>
             <ModeSelector defaultMode={this.state.mode} onChange={this.modeChanged.bind(this)}/>
+              <center>
             <Box>
-                <Slider
+                    <Slider
                     aria-label="Temperature"
                     defaultValue={100}
-                    valueLabelDisplay="auto"
                     min={10}
                     max={100}
                 />
             </Box>
+              </center>
             <HorizontalBarChart 
+                height={350}
                 data={this.state.data} 
                 colorDictionary={this.state.colorDictionary} 
                 providerData={this.state.providerData}
@@ -129,16 +131,21 @@ export default class TimeWarpPage extends React.Component{
             <h5>
                 Speed
             </h5>
-            <Slider
-                aria-label="Restricted values"
-                defaultValue={1}
-                valueLabelFormat={this.valueLabelFormat.bind(this)}
-                getAriaValueText={this.valuetext.bind(this)}
-                step={null}
-                valueLabelDisplay="auto"
-                marks={this.marks}
-                max={100}
-            />
+            <center>
+                <Slider
+                    aria-label="Restricted values"
+                    defaultValue={1}
+                    valueLabelFormat={this.valueLabelFormat.bind(this)}
+                    getAriaValueText={this.valuetext.bind(this)}
+                    step={null}
+                    marks={this.marks}
+                    max={100}
+                />
+            </center>
+            <p>
+                This is an experimental feature. I don't even know how you got here.
+            </p>
+
         </>;
     }
 }

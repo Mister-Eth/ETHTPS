@@ -269,7 +269,7 @@ export default class HistoricalChart extends React.Component {
      render(){
         return (
             <div>
-                <div>
+                <div style={{marginTop: '5px'}}>
                     <IntervalSelector 
                       allIntervals={this.state.allIntervals} 
                       interval={this.state.interval} 
