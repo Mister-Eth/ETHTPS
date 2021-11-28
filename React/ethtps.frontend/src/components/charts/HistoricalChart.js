@@ -116,7 +116,7 @@ export default class HistoricalChart extends React.Component {
       } 
       globalGeneralApi.aPIV2GetUniqueDataYearsGet({provider: this.state.provider, network: this.state.network}, (err, data, res) => {
         if (data != null){
-          if (data.length > 0){
+          if (data.length > 1){
             this.setState({years: data});
           }
         }
