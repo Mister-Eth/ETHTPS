@@ -64,6 +64,41 @@ export default class TimeWarpPage extends React.Component{
         }
       }
 
+      marks = [
+        {
+            value: 1,
+            label: 'Realtime',
+        },
+        {
+          value: 20,
+          label: '1 min/s',
+        },
+        {
+          value: 40,
+          label: '1 h/s',
+        },
+        {
+            value: 60,
+            label: '1 d/s',
+        },
+        {
+            value: 80,
+            label: '1 w/s',
+        },
+        {
+            value: 100,
+            label: '1 m/s',
+        },
+      ];
+      
+      valuetext(value) {
+        return `${value}min/s`;
+      }
+      
+      valueLabelFormat(value) {
+        return this.marks.findIndex((mark) => mark.value === value) + 1;
+      }
+
     render(){
         return <>
             <Helmet>
@@ -77,11 +112,33 @@ export default class TimeWarpPage extends React.Component{
                 </h2>
             </div>
             <ModeSelector defaultMode={this.state.mode} onChange={this.modeChanged.bind(this)}/>
+            <Box>
+                <Slider
+                    aria-label="Temperature"
+                    defaultValue={100}
+                    valueLabelDisplay="auto"
+                    min={10}
+                    max={100}
+                />
+            </Box>
             <HorizontalBarChart 
                 data={this.state.data} 
                 colorDictionary={this.state.colorDictionary} 
                 providerData={this.state.providerData}
                 mode={this.state.mode}/>
+            <h5>
+                Speed
+            </h5>
+            <Slider
+                aria-label="Restricted values"
+                defaultValue={1}
+                valueLabelFormat={this.valueLabelFormat.bind(this)}
+                getAriaValueText={this.valuetext.bind(this)}
+                step={null}
+                valueLabelDisplay="auto"
+                marks={this.marks}
+                max={100}
+            />
         </>;
     }
 }
