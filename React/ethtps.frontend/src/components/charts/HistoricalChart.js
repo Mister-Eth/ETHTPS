@@ -319,7 +319,12 @@ export default class HistoricalChart extends React.Component {
                       }
                     },
                     y:{
-                      type: this.transformScaleName(this.state.scale)
+                      type: this.transformScaleName(this.state.scale),
+                      ticks: {
+                        callback: function (value) {
+                            return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        }
+                      }
                     }
                   }
                 }}/>
