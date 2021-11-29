@@ -208,9 +208,9 @@ export default class HistoricalChart extends React.Component {
         case '1w':
             return x.getHours() + ":00";
         case '1w':
-            return this.monthNames[x.getMonth()].substr(0, 3) + " " + (x.getDay() + 1) + " " + x.getHours() + ":00";
+            return this.monthNames[x.getMonth()].substr(0, 3) + " " + (x.getDate()) + " " + x.getHours() + ":00";
         case '1m':
-            return this.monthNames[x.getMonth()].substr(0, 3) + " " + (x.getDay() + 1);
+            return this.monthNames[x.getMonth()].substr(0, 3) + " " + (x.getDate());
         case '1y':
             return this.monthNames[x.getMonth()].substr(0, 3)+ " " + x.getFullYear();
         case 'All':
