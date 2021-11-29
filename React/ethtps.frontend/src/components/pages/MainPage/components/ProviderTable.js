@@ -23,14 +23,21 @@ class ProviderTable extends React.Component {
             colorDictionary: props.colorDictionary,
             allData: props.allData,
             sort:{
-              asc: true,
-              columnName: 'no'
+              asc: false,
+              columnName: (props.mode === 'tps')?'theoreticalMaxTPS':'max',
+              isMaxTheoreticalSelected: true
             }
         }
     }
 
     dynamicSort(property) {
       var sortOrder = (this.state.sort.asc?1:-1);
+      if (this.state.mode !== 'tps' && this.state.sort.columnName === 'theoreticalMaxTPS'){
+        this.state.sort.columnName = "max";
+      }
+      else if (this.state.mode === 'tps' && this.state.sort.isMaxTheoreticalSelected){
+        this.state.sort.columnName = "theoreticalMaxTPS";
+      }
       switch(property){
         case 'max':
           return function (a,b) {
@@ -62,6 +69,7 @@ class ProviderTable extends React.Component {
 
     sortTableBy(columnName, noSwitch = false){
       let state = this.state;
+      state.sort.isMaxTheoreticalSelected = columnName === 'theoreticalMaxTPS';
       if (columnName !== state.sort.columnName){
         state.sort.columnName = columnName;
       }
@@ -147,14 +155,14 @@ class ProviderTable extends React.Component {
           </TableRow>
         </TableHead>
         <TableBody>
-          {this.state.rows.sort(this.dynamicSort(this.state.sort.columnName).bind(this)).map((row) => (
+          {this.state.rows.sort(this.dynamicSort(this.state.sort.columnName).bind(this)).map((row, i) => (
             <TableRow
               key={row.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell align="left">
               <div className={'l1'}></div>
-                  {row.no}
+                  {i + 1}
               </TableCell>
               <TableCell align="left">
                     <div className={'l1 box'}>
