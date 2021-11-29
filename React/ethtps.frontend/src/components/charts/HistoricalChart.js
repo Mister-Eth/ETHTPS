@@ -224,10 +224,23 @@ export default class HistoricalChart extends React.Component {
       if (data === null)
         return;
       
+      let maxLength = Math.max(...Object.keys(data).map(key => data[key].length));
       let labels = [];
       let datasets = [];
       for(let key of Object.keys(data)){
         let d = data[key];
+        if (d.length < maxLength){
+          let dLength = maxLength - d.length;
+          for (let i = 0; i < dLength; i++){
+            d = [{
+              data: [{
+                date: new Date(),
+                value: 0
+              }
+              ]
+            }, ...d]
+          }
+        }
         let l = d.map(x => this.extractLabel(x.data[0].date));
         if (l.length > labels.length){
           labels = l;
