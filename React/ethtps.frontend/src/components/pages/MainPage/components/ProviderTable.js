@@ -87,7 +87,7 @@ class ProviderTable extends React.Component {
         return <>
         <div>
         <TableContainer component={Paper} style={{overflowX:'auto'}}>
-      <Table size={"small"} style={{minWidth: '750px'}} aria-label="simple table">
+      <Table size={"small"} style={{minWidth: '800px'}} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell width={10} align="left">
