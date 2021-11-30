@@ -10,7 +10,6 @@ export default class RoninDetails extends React.Component {
                   'Ronin is an Ethereum-linked sidechain made specifically for Axie Infinity.',
                 purpose: 'Universal',
                 links: {
-                  websites: ['https://arbitrum.io/', 'https://offchainlabs.com/'],
                   explorers: ['https://explorer.roninchain.com/'],
                   repositories: [
                     'https://github.com/axieinfinity',
