@@ -197,9 +197,7 @@ export default class HistoricalChart extends React.Component {
 ];
 
     extractLabel(x){
-      if (x === undefined){
-        return "";
-      }
+     try{
       if (this.state.selectedYear !== 0){
         return this.monthNames[x.getMonth()].substr(0, 3) + " " + x.getFullYear();
       }
@@ -221,6 +219,10 @@ export default class HistoricalChart extends React.Component {
         default:
           return x;
       }
+     }
+     catch{
+       return "";
+     }
     }
 
     buildDatasets(data){
