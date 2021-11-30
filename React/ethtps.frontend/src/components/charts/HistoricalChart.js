@@ -198,6 +198,7 @@ export default class HistoricalChart extends React.Component {
 
     extractLabel(x){
      try{
+      x = new Date(x.toString().replace(/-/g, "/"));
       if (this.state.selectedYear !== 0){
         return this.monthNames[x.getMonth()].substr(0, 3) + " " + x.getFullYear();
       }
