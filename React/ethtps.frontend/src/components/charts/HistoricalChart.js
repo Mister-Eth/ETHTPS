@@ -7,6 +7,8 @@ import ScaleSelector from './ScaleSelector';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { Line } from "react-chartjs-2";
+import CircularProgress from '@mui/material/CircularProgress';
+import LinearProgress from '@mui/material/LinearProgress';
 
 export default class HistoricalChart extends React.Component {
 
@@ -34,7 +36,8 @@ export default class HistoricalChart extends React.Component {
           ],
           allIntervals: [],
           years: [],
-          selectedYear: 0
+          selectedYear: 0,
+          loading: true
         }
     }
 
@@ -130,6 +133,7 @@ export default class HistoricalChart extends React.Component {
 
     updateChartFromModel(provider, interval, year, network, mode){
       try{
+        this.setState({loading: true});
         switch(mode){
           case 'tps':
               if (year !== 0){
@@ -263,6 +267,7 @@ export default class HistoricalChart extends React.Component {
       }
       this.setState({datasets: datasets});
       this.setState({labels: labels});
+      this.setState({loading: false});
     }
 
     onInfoTypeChanged(mode){
@@ -286,6 +291,10 @@ export default class HistoricalChart extends React.Component {
     }
 
      render(){
+       let linearProgress = <></>;
+       if (this.state.loading){
+         linearProgress = <LinearProgress />;
+       }
         return (
             <div>
                 <div>
@@ -297,6 +306,7 @@ export default class HistoricalChart extends React.Component {
                       years={this.state.years}/>
                 </div>
             <div>
+              <div>
                 <Line height={this.props.height} data={{
                   labels: this.state.labels,
                   datasets: this.state.datasets
@@ -334,6 +344,8 @@ export default class HistoricalChart extends React.Component {
                     }
                   }
                 }}/>
+                {linearProgress}
+                </div>
             </div>
               <InfoTypeSelector mode={this.state.mode} onChange={this.onInfoTypeChanged.bind(this)}/>
             <div style={{float:"right"}}>
