@@ -37,14 +37,15 @@ namespace ETHTPS.Services.BlockchainServices
             _gasSelector = config.GetValue<string>("GasUsedSelector");
             _httpClient = new HttpClient();
         }
-        public double BlockTimeSeconds { get; set; }
+        public double BlockTimeSeconds { get; set; } = 3;
 
         public Task<BlockInfo> GetBlockInfoAsync(int blockNumber)
         {
             HtmlWeb web = new HtmlWeb();
-            HtmlDocument doc = web.Load($"{_baseURL}/block/{blockNumber}");
+            //HtmlDocument doc = web.Load($"{_baseURL}/block/{blockNumber}");
 
-            var txCountNode = doc.DocumentNode.QuerySelectorAll(_transactionCountSelector);
+            var txPage = web.Load($"{_baseURL}/block/{blockNumber}/txs");
+            var txCountNode = txPage.DocumentNode.QuerySelectorAll(_transactionCountSelector);
             var txCount = new string(string.Join(" ", txCountNode.Select(x => x.InnerText)).Where(Char.IsNumber).ToArray());
 
             return Task.FromResult(new BlockInfo()
@@ -67,7 +68,9 @@ namespace ETHTPS.Services.BlockchainServices
             var blockHeightNode = doc.DocumentNode.QuerySelectorAll(_blockHeightSelector);
             var blockHeight = string.Join(" ", blockHeightNode.Select(x => x.InnerText));
 
-            return await GetBlockInfoAsync(int.Parse(blockHeight));
+            var result = await GetBlockInfoAsync(int.Parse(blockHeight) - 1);
+            result.Date = DateTime.Now;
+            return result;
         }
 
 

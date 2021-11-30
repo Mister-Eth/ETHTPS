@@ -17,6 +17,7 @@ import ZKSyncDetails from './details/ZKSyncDetails';
 import ImmutableXDetails from './details/ImmutableXDetails';
 import AztecDetails from './details/AztecDetails';
 import MetisDetails from './details/MetisDetails';
+import RoninDetails from './details/RoninDetails';
 import { globalGeneralApi, globalInstantDataService, to2DecimalPlaces } from '../../../services/common';
 import * as qs from 'query-string';
 import { Helmet } from 'react-helmet';
@@ -53,7 +54,8 @@ export default class NetworkPage extends PageWithQueryString {
         'ZKSync': <ZKSyncDetails name={this.state.name}/>,
         'Immutable X': <ImmutableXDetails name={this.state.name}/>,
         'Aztec': <AztecDetails name={this.state.name}/>,
-        'Metis': <MetisDetails name={this.state.name}/>
+        'Metis': <MetisDetails name={this.state.name}/>,
+        'Ronin': <RoninDetails name={this.state.name}/>
     }
 
     updateInstantTPS(data){
