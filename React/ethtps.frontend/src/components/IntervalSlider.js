@@ -76,7 +76,7 @@ export default class IntervalSlider extends React.Component{
                     onChange={this.onChange.bind(this)}
                     max={100}
                 />
-        </Box>;
+        </Box>
             </center>
     }
 }
