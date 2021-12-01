@@ -22,7 +22,8 @@ export default class DataStatByType extends React.Component {
             stat: 'network',
             mode: props.mode,
             providerTypeColorDictionary: props.providerTypeColorDictionary,
-            allData: props.allData
+            allData: props.allData,
+            smoothing: props.smoothing
         }
     }
 
@@ -49,8 +50,11 @@ export default class DataStatByType extends React.Component {
             this.setState({mode: this.props.mode});
         }
         if (previousProps.allData !== this.props.allData){
-            this.setState({allData: this.props.allData});
-          }
+           this.setState({allData: this.props.allData});
+        }
+        if (previousProps.smoothing !== this.props.smoothing){
+           this.setState({smoothing: this.props.smoothing});
+        }
     }
 
     onStatChanged(stat){
@@ -102,6 +106,7 @@ export default class DataStatByType extends React.Component {
         }
         return <>
         <TotalDataSummaryStat
+             smoothing={this.state.smoothing}
              providerData={this.state.providerData}
              mode={this.state.mode}
              data={this.state.data}/>

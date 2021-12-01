@@ -1,5 +1,6 @@
 import Slider from '@mui/material/Slider';
 import React from 'react';
+import { Box } from '@mui/system';
 
 export default class IntervalSlider extends React.Component{
     constructor(props){
@@ -64,15 +65,19 @@ export default class IntervalSlider extends React.Component{
     }
 
     render(){
-        return <Slider
-        aria-label="Restricted values"
-        defaultValue={1}
-        valueLabelFormat={this.valueLabelFormat.bind(this)}
-        getAriaValueText={this.valuetext.bind(this)}
-        step={null}
-        marks={this.marks}
-        onChange={this.onChange.bind(this)}
-        max={100}
-    />;
+        return <Box style={{width: '90%'}}>
+            <center>
+                <Slider
+                    aria-label="Restricted values"
+                    defaultValue={1}
+                    valueLabelFormat={this.valueLabelFormat.bind(this)}
+                    getAriaValueText={this.valuetext.bind(this)}
+                    step={null}
+                    marks={this.marks}
+                    onChange={this.onChange.bind(this)}
+                    max={100}
+                />
+            </center>
+        </Box>;
     }
 }

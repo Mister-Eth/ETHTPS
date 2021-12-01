@@ -8,7 +8,8 @@ export default class TotalDataSummaryStat extends React.Component{
         this.state = {
             mode: props.mode,
             data: props.data,
-            providerData: props.providerData
+            providerData: props.providerData,
+            smoothing: props.smoothing
         }
     }
 
@@ -21,6 +22,9 @@ export default class TotalDataSummaryStat extends React.Component{
         }
         if (previousProps.providerData !== this.props.providerData){
             this.setState({providerData: this.props.providerData});
+        } 
+        if (previousProps.smoothing !== this.props.smoothing){
+            this.setState({smoothing: this.props.smoothing});
         } 
       }
 
@@ -36,10 +40,14 @@ export default class TotalDataSummaryStat extends React.Component{
     }
 
     render(){
+        let titlePart = "Ethereum currently does ";
+        if (this.state.smoothing !== "Instant"){
+            titlePart = "Over the past " + this.state.smoothing.replace('One', '').toLowerCase() + ", Ethereum did an average of "
+        }
         return <>
         <center>
             <h4 className={'tooltip'}>
-                Ethereum currently does {parseFloat(this.calculateTotalData(this.state).toString()).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} {formatModeName(this.state.mode)}
+                 {titlePart + parseFloat(this.calculateTotalData(this.state).toString()).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} {formatModeName(this.state.mode)}
                 <span className={'tooltiptext'}>This includes L2s, sidechains (if the box at the bottom of this section is unchecked), ZK rollups, validiums etc.</span>
             </h4>
         </center>

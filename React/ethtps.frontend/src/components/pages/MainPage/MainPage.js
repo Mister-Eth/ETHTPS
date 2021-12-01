@@ -197,6 +197,7 @@ class MainPage extends React.Component {
             providerData={this.getProviderData(this.state)}
             providerTypeColorDictionary={this.state.homePageModel.providerTypeColorDictionary}
             mode={this.state.mode}
+            smoothing={this.state.smoothing}
             split="network"/>
             <IntervalSlider onChange={this.intervalSliderChanged.bind(this)}/>
       <label className={"small"}>
