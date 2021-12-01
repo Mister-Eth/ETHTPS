@@ -35,11 +35,12 @@ namespace ETHTPS.Services.BlockchainServices
             await _context.SaveChangesAsync();
             var oldestEntry = _context.OldestLoggedHistoricalEntries.First(x => x.Network == 1 && x.ProviderNavigation.Name == _provider);
             var step = 1;
-            if (_context.ProviderProperties.Any(x => x.Provider == _providerID && x.Name == "HistoricalAggregationDeltaBlock"))
+            
+            if (_context.Providers.Any(x => x.Id == _providerID && x.HistoricalAggregationDeltaBlock.HasValue))
             {
-                step = int.Parse(_context.ProviderProperties.First(x => x.Provider == _providerID && x.Name == "HistoricalAggregationDeltaBlock").Value);
+                step = _context.Providers.First(x => x.Id == _providerID).HistoricalAggregationDeltaBlock.Value;
             }
-
+            
             while (oldestEntry.OldestBlock > 0)
             {
                 try

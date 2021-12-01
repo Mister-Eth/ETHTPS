@@ -24,9 +24,7 @@ namespace ETHTPS.Data.Database
         public virtual DbSet<CachedResponse> CachedResponses { get; set; }
         public virtual DbSet<Network> Networks { get; set; }
         public virtual DbSet<Provider> Providers { get; set; }
-        public virtual DbSet<ProviderProperty> ProviderProperties { get; set; }
         public virtual DbSet<ProviderType> ProviderTypes { get; set; }
-        public virtual DbSet<ProviderTypeProperty> ProviderTypeProperties { get; set; }
         public virtual DbSet<TpsandGasDataDay> TpsandGasDataDays { get; set; }
         public virtual DbSet<TpsandGasDataHour> TpsandGasDataHours { get; set; }
         public virtual DbSet<TpsandGasDataMax> TpsandGasDataMaxes { get; set; }
@@ -185,34 +183,25 @@ namespace ETHTPS.Data.Database
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
+                entity.Property(e => e.Color)
+                    .IsRequired()
+                    .HasMaxLength(16)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('#')");
+
+                entity.Property(e => e.IsGeneralPurpose).HasDefaultValueSql("((0))");
+
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(255);
+
+                entity.Property(e => e.TheoreticalMaxTps).HasColumnName("TheoreticalMaxTPS");
 
                 entity.HasOne(d => d.TypeNavigation)
                     .WithMany(p => p.Providers)
                     .HasForeignKey(d => d.Type)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Providers__Type__3F466844");
-            });
-
-            modelBuilder.Entity<ProviderProperty>(entity =>
-            {
-                entity.Property(e => e.Id).HasColumnName("ID");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(255);
-
-                entity.Property(e => e.Value)
-                    .IsRequired()
-                    .HasMaxLength(255);
-
-                entity.HasOne(d => d.ProviderNavigation)
-                    .WithMany(p => p.ProviderProperties)
-                    .HasForeignKey(d => d.Provider)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__ProviderP__Provi__412EB0B6");
             });
 
             modelBuilder.Entity<ProviderType>(entity =>
@@ -222,28 +211,15 @@ namespace ETHTPS.Data.Database
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
+                entity.Property(e => e.Color)
+                    .IsRequired()
+                    .HasMaxLength(16)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('#')");
+
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(255);
-            });
-
-            modelBuilder.Entity<ProviderTypeProperty>(entity =>
-            {
-                entity.Property(e => e.Id).HasColumnName("ID");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(255);
-
-                entity.Property(e => e.Value)
-                    .IsRequired()
-                    .HasMaxLength(255);
-
-                entity.HasOne(d => d.ProviderTypeNavigation)
-                    .WithMany(p => p.ProviderTypeProperties)
-                    .HasForeignKey(d => d.ProviderType)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__ProviderT__Provi__403A8C7D");
             });
 
             modelBuilder.Entity<TpsandGasDataDay>(entity =>

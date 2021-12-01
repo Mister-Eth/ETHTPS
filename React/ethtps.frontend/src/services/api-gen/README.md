@@ -146,12 +146,10 @@ Class | Method | HTTP request | Description
 *EthtpsApi.TPSApi* | [**aPITPSGetGet**](docs/TPSApi.md#aPITPSGetGet) | **GET** /API/TPS/Get | 
 *EthtpsApi.TPSApi* | [**aPITPSInstantGet**](docs/TPSApi.md#aPITPSInstantGet) | **GET** /API/TPS/Instant | 
 *EthtpsApi.TPSApi* | [**aPITPSMaxGet**](docs/TPSApi.md#aPITPSMaxGet) | **GET** /API/TPS/Max | 
-*EthtpsApi.TestApi* | [**aPITestGetBlockInfoGet**](docs/TestApi.md#aPITestGetBlockInfoGet) | **GET** /API/Test/GetBlockInfo | 
 
 
 ## Documentation for Models
 
- - [EthtpsApi.BlockInfo](docs/BlockInfo.md)
  - [EthtpsApi.DataPoint](docs/DataPoint.md)
  - [EthtpsApi.DataResponseModel](docs/DataResponseModel.md)
  - [EthtpsApi.ProviderResponseModel](docs/ProviderResponseModel.md)

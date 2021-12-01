@@ -50,8 +50,9 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
                 {
                     Name = x.Name,
                     Type = x.TypeNavigation.Name,
-                    Color = x.ProviderProperties.First(x => x.Name == "Color").Value,
-                    TheoreticalMaxTPS = int.Parse(x.ProviderProperties.First(x => x.Name == "TheoreticalMaxTPS").Value)
+                    Color = x.Color,
+                    TheoreticalMaxTPS = x.TheoreticalMaxTps,
+                    IsGeneralPurpose = (x.IsGeneralPurpose.HasValue) ? x.IsGeneralPurpose.Value == 1 : x.TypeNavigation.IsGeneralPurpose == 1
                 });
             }
             return result;
@@ -63,7 +64,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             IDictionary<string, string> result;
             lock (Context.LockObj)
             {
-                result = Context.ProviderProperties.Where(x => x.Name == "Color").ToDictionary(x => x.ProviderNavigation.Name, x => x.Value);
+                result = Context.Providers.ToDictionary(x => x.Name, x => x.Color);
             }
             return result;
         }
@@ -74,7 +75,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             IDictionary<string, string> result;
             lock (Context.LockObj)
             {
-                result = Context.ProviderTypeProperties.Where(x => x.Name == "Color").ToDictionary(x => x.ProviderTypeNavigation.Name, x => x.Value);
+                result = Context.ProviderTypes.ToDictionary(x => x.Name, x => x.Color);
             }
             return result;
         }

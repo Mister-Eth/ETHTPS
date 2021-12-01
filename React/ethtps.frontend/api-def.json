@@ -5,6 +5,86 @@
     "version": "1.0"
   },
   "paths": {
+    "/API/GasAdjustedTPS/GeMonthlyDataByYear": {
+      "get": {
+        "tags": [
+          "GasAdjustedTPS"
+        ],
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "network",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": "Mainnet"
+            }
+          },
+          {
+            "name": "includeSidechains",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/DataResponseModel"
+                    }
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/DataResponseModel"
+                    }
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/DataResponseModel"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/API/GasAdjustedTPS/Get": {
       "get": {
         "tags": [
@@ -132,86 +212,6 @@
                     "type": "array",
                     "items": {
                       "$ref": "#/components/schemas/DataPoint"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/API/GasAdjustedTPS/GeMonthlyDataByYear": {
-      "get": {
-        "tags": [
-          "GasAdjustedTPS"
-        ],
-        "parameters": [
-          {
-            "name": "provider",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "year",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "network",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "default": "Mainnet"
-            }
-          },
-          {
-            "name": "includeSidechains",
-            "in": "query",
-            "schema": {
-              "type": "boolean",
-              "default": true
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/DataResponseModel"
-                    }
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/DataResponseModel"
-                    }
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/DataResponseModel"
                     }
                   }
                 }
@@ -667,118 +667,6 @@
         }
       }
     },
-    "/API/GPS/Max": {
-      "get": {
-        "tags": [
-          "GPS"
-        ],
-        "parameters": [
-          {
-            "name": "provider",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "network",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "default": "Mainnet"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "$ref": "#/components/schemas/DataPoint"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "$ref": "#/components/schemas/DataPoint"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "$ref": "#/components/schemas/DataPoint"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/API/GPS/Instant": {
-      "get": {
-        "tags": [
-          "GPS"
-        ],
-        "parameters": [
-          {
-            "name": "includeSidechains",
-            "in": "query",
-            "schema": {
-              "type": "boolean",
-              "default": true
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/DataPoint"
-                    }
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/DataPoint"
-                    }
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/DataPoint"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/API/GPS/GeMonthlyDataByYear": {
       "get": {
         "tags": [
@@ -938,18 +826,18 @@
         }
       }
     },
-    "/API/Test/GetBlockInfo": {
+    "/API/GPS/Instant": {
       "get": {
         "tags": [
-          "Test"
+          "GPS"
         ],
         "parameters": [
           {
-            "name": "blockNumber",
+            "name": "includeSidechains",
             "in": "query",
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "boolean",
+              "default": true
             }
           }
         ],
@@ -959,17 +847,35 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/BlockInfo"
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/DataPoint"
+                    }
+                  }
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BlockInfo"
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/DataPoint"
+                    }
+                  }
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BlockInfo"
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/DataPoint"
+                    }
+                  }
                 }
               }
             }
@@ -977,10 +883,10 @@
         }
       }
     },
-    "/API/TPS/Max": {
+    "/API/GPS/Max": {
       "get": {
         "tags": [
-          "TPS"
+          "GPS"
         ],
         "parameters": [
           {
@@ -1032,7 +938,7 @@
         }
       }
     },
-    "/API/TPS/Get": {
+    "/API/TPS/GeMonthlyDataByYear": {
       "get": {
         "tags": [
           "TPS"
@@ -1046,10 +952,11 @@
             }
           },
           {
-            "name": "interval",
+            "name": "year",
             "in": "query",
             "schema": {
-              "type": "string"
+              "type": "integer",
+              "format": "int32"
             }
           },
           {
@@ -1111,7 +1018,7 @@
         }
       }
     },
-    "/API/TPS/GeMonthlyDataByYear": {
+    "/API/TPS/Get": {
       "get": {
         "tags": [
           "TPS"
@@ -1125,11 +1032,10 @@
             }
           },
           {
-            "name": "year",
+            "name": "interval",
             "in": "query",
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
             }
           },
           {
@@ -1247,35 +1153,65 @@
           }
         }
       }
+    },
+    "/API/TPS/Max": {
+      "get": {
+        "tags": [
+          "TPS"
+        ],
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "network",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": "Mainnet"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/DataPoint"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/DataPoint"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/DataPoint"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
-      "BlockInfo": {
-        "type": "object",
-        "properties": {
-          "blockNumber": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "transactionCount": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "gasUsed": {
-            "type": "number",
-            "format": "double"
-          },
-          "date": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "settled": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
       "DataPoint": {
         "type": "object",
         "properties": {
@@ -1325,6 +1261,9 @@
           "type": {
             "type": "string",
             "nullable": true
+          },
+          "isGeneralPurpose": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false

@@ -10,7 +10,6 @@ namespace ETHTPS.Data.Database
         public Provider()
         {
             OldestLoggedHistoricalEntries = new HashSet<OldestLoggedHistoricalEntry>();
-            ProviderProperties = new HashSet<ProviderProperty>();
             TpsandGasDataAlls = new HashSet<TpsandGasDataAll>();
             TpsandGasDataDays = new HashSet<TpsandGasDataDay>();
             TpsandGasDataHours = new HashSet<TpsandGasDataHour>();
@@ -24,10 +23,13 @@ namespace ETHTPS.Data.Database
         public int Id { get; set; }
         public string Name { get; set; }
         public int Type { get; set; }
+        public string Color { get; set; }
+        public int TheoreticalMaxTps { get; set; }
+        public int? IsGeneralPurpose { get; set; }
+        public int? HistoricalAggregationDeltaBlock { get; set; }
 
         public virtual ProviderType TypeNavigation { get; set; }
         public virtual ICollection<OldestLoggedHistoricalEntry> OldestLoggedHistoricalEntries { get; set; }
-        public virtual ICollection<ProviderProperty> ProviderProperties { get; set; }
         public virtual ICollection<TpsandGasDataAll> TpsandGasDataAlls { get; set; }
         public virtual ICollection<TpsandGasDataDay> TpsandGasDataDays { get; set; }
         public virtual ICollection<TpsandGasDataHour> TpsandGasDataHours { get; set; }
