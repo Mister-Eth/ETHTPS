@@ -35,6 +35,7 @@ class MainPage extends React.Component {
       },
       network: "Mainnet",
       excludeSidechains: false,
+      excludeNonGeneralPurposeNetworks: false,
       modifiedInstantTPS: {},
       mode: mode,
       offline: false
@@ -85,13 +86,20 @@ class MainPage extends React.Component {
     globalInstantDataService.periodicallyGetInstantDataForPage('MainPage', this.updateInstantTPS.bind(this));
   }
   
-  handleInputChange(event){
+  handleExcludeSidechaisnInputChange(event){
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     this.setState({excludeSidechains : value});
   }
 
+  handleExcludeNonGeneralPurposeNetworksInputChange(event){
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    this.setState({excludeNonGeneralPurposeNetworks : value});
+  }
+
   getFilteredInstantData(state){
+    let result = state.homePageModel.selectedInstantData;
     if (state.excludeSidechains){
       let filteredInstantTPSData = {};
       for(let p of state.homePageModel.providerData){
@@ -99,11 +107,18 @@ class MainPage extends React.Component {
           filteredInstantTPSData[p.name] = state.homePageModel.selectedInstantData[p.name];
         }
       }
-      return filteredInstantTPSData;
+      result = filteredInstantTPSData;
     }
-    else {
-      return state.homePageModel.selectedInstantData;
+    if (state.excludeNonGeneralPurposeNetworks){
+      let filteredInstantTPSData = {};
+      for(let p of state.homePageModel.providerData){
+        if (state.homePageModel.providerData.filter(x => x.name == p.name && x.isGeneralPurpose)){
+          filteredInstantTPSData[p.name] = state.homePageModel.selectedInstantData[p.name];
+        }
+      }
+      result = filteredInstantTPSData;
     }
+    return result;
   }
 
   updateInstantTPS(data){
@@ -124,7 +139,14 @@ class MainPage extends React.Component {
   }
 
   getProviderData(state){
-    return (state.excludeSidechains)?state.homePageModel.providerData.filter(x=>x.type !== "Sidechain"):state.homePageModel.providerData
+    let result = state.homePageModel.providerData;
+    if (state.excludeSidechains){
+      result = result.filter(x => x.type !== "Sidechain");
+    }
+    if (state.excludeNonGeneralPurposeNetworks){
+      result = result.filter(x => x.isGeneralPurpose);
+    }
+    return result;
   }
 
   modeChanged(mode){
@@ -172,8 +194,17 @@ class MainPage extends React.Component {
             ref={ref=>this.excludeSidechainsCheckBox = ref}
             name="excludeSidechains" type="checkbox"
             checked={this.state.excludeSidechains}
-            onChange={this.handleInputChange.bind(this)}/>
-            Exclude sidechains?
+            onChange={this.handleExcludeSidechaisnInputChange.bind(this)}/>
+            Exclude sidechains
+      </label>
+      <br/>
+      <label className={"small"}>
+      <input
+            ref={ref=>this.excludeNonGeneralPurposeNetworksCheckBox = ref}
+            name="excludeNonGeneralPurposeNetworks" type="checkbox"
+            checked={this.state.excludeNonGeneralPurposeNetworks}
+            onChange={this.handleExcludeNonGeneralPurposeNetworksInputChange.bind(this)}/>
+            Exclude non-general purpose networks
       </label>
       <p>
         Should sidechains be excluded by default? <a style={{textDecoration: 'underline'}} href="https://twitter.com/ethtps/status/1465211997809745927?s=20">Answer the poll here</a>
