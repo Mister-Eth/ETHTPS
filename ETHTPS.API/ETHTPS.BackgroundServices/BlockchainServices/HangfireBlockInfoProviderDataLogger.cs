@@ -304,7 +304,8 @@ namespace ETHTPS.Services.BlockchainServices
                 .Subtract(TimeSpan.FromMilliseconds(entry.Date.Millisecond))
                 .Subtract(TimeSpan.FromMinutes(entry.Date.Minute))
                 .Subtract(TimeSpan.FromHours(entry.Date.Hour))
-                .Subtract(TimeSpan.FromDays(entry.Date.Day));
+                .Subtract(TimeSpan.FromDays(entry.Date.Day))
+                .Add(TimeSpan.FromDays(1));
             Func<TpsandGasDataYear, bool> selector = x => x.NetworkNavigation.Name == "Mainnet" && x.Provider == _providerID && x.StartDate.Month == targetDate.Month;
             if (!_context.TpsandGasDataYears.Any(selector))
             {
@@ -344,7 +345,8 @@ namespace ETHTPS.Services.BlockchainServices
                 .Subtract(TimeSpan.FromMilliseconds(entry.Date.Millisecond))
                 .Subtract(TimeSpan.FromMinutes(entry.Date.Minute))
                 .Subtract(TimeSpan.FromHours(entry.Date.Hour))
-                .Subtract(TimeSpan.FromDays(entry.Date.Day));
+                .Subtract(TimeSpan.FromDays(entry.Date.Day))
+                .Add(TimeSpan.FromDays(1));
             Func<TpsandGasDataAll, bool> selector = x => x.NetworkNavigation.Name == "Mainnet" && x.Provider == _providerID && x.StartDate.Month == targetDate.Month && x.StartDate.Year == targetDate.Year;
             if (!_context.TpsandGasDataAlls.Any(selector))
             {
