@@ -6,8 +6,9 @@ import { globalGeneralApi } from "./common";
 export default class InstantDataService {
     instantDataForPageCallbackDictionary = {};
     instantDataForPageIntervalRef = 0;
+    smooth = false;
     
-    periodicallyGetInstantDataForPage(pageName, callback){
+    periodicallyGetInstantDataForPage(pageName, callback, smooth = false){
         this.instantDataForPageCallbackDictionary[pageName] = callback;
         if (this.instantDataForPageIntervalRef === 0){
             this.instantDataForPageIntervalRef = setInterval((() => { this.getAndCallbackInstantData() } ).bind(this), 5000);
@@ -15,7 +16,7 @@ export default class InstantDataService {
     }
 
     getAndCallbackInstantData(){
-        globalGeneralApi.aPIV2InstantDataGet({includeSidechains: true}, (err, data, res) => {
+        globalGeneralApi.aPIV2InstantDataGet({includeSidechains: true, smooth: this.smooth}, (err, data, res) => {
             Object.entries(this.instantDataForPageCallbackDictionary).forEach(([key, value]) => {
                 value(data);
              });

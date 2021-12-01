@@ -38,7 +38,8 @@ class MainPage extends React.Component {
       excludeNonGeneralPurposeNetworks: false,
       modifiedInstantTPS: {},
       mode: mode,
-      offline: false
+      offline: false,
+      smooth: false
     }
   }
 
@@ -97,6 +98,15 @@ class MainPage extends React.Component {
     const value = target.type === 'checkbox' ? target.checked : target.value;
     this.setState({excludeNonGeneralPurposeNetworks : value});
   }
+
+  handleSmoothInputChange(event){
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    this.setState({smooth : value});
+    globalInstantDataService.smooth = value;
+    globalInstantDataService.getAndCallbackInstantData();
+  }
+
 
   getFilteredInstantData(state){
     let result = state.homePageModel.selectedInstantData;
@@ -189,6 +199,19 @@ class MainPage extends React.Component {
             providerTypeColorDictionary={this.state.homePageModel.providerTypeColorDictionary}
             mode={this.state.mode}
             split="network"/>
+       <label className={"small"}>
+      <input
+            ref={ref=>this.smoothCheckBox = ref}
+            name="smooth" type="checkbox"
+            checked={this.state.smooth}
+            onChange={this.handleSmoothInputChange.bind(this)}/>
+            <div className={'tooltip'}>
+              Smooth
+              <span className={'tooltiptext'}>
+                Show a 1-minute average instead of a per-block value
+              </span>
+            </div>
+      </label>
       <label className={"small"}>
       <input
             ref={ref=>this.excludeSidechainsCheckBox = ref}
@@ -197,7 +220,6 @@ class MainPage extends React.Component {
             onChange={this.handleExcludeSidechaisnInputChange.bind(this)}/>
             Exclude sidechains
       </label>
-      <br/>
       <label className={"small"}>
       <input
             ref={ref=>this.excludeNonGeneralPurposeNetworksCheckBox = ref}

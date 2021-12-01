@@ -176,12 +176,12 @@ h3 {
   text-align: center;
   padding: 5px 0;
   border-radius: 6px;
- font-size: 14px;
+  font-size: 14px;
   /* Position the tooltip text - see examples below! */
   position: absolute;
   z-index: 1;
   margin-left: -100%;
-  margin-top: -20%;
+  margin-top: 1.5rem;
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */

@@ -81,31 +81,54 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
         }
 
 
-        private static Dictionary<string, object> _lastInstantData;
-        private static DateTime _lastInstantDataGetTime = DateTime.MinValue;
+        private static Dictionary<string, object> _lastNonSmoothInstantData;
+        private static DateTime _lastNonSmoothInstantDataGetTime = DateTime.MinValue;
 
-        
-        public IDictionary<string, object> InstantData(bool includeSidechains = true)
+        private static Dictionary<string, object> _lastSmoothInstantData;
+        private static DateTime _lastSmoothInstantDataGetTime = DateTime.MinValue;
+
+        public IDictionary<string, object> InstantData(bool includeSidechains = true, bool smooth = false, string network = "Mainnet")
         {
-            if (DateTime.Now.Subtract(_lastInstantDataGetTime).TotalSeconds > 3)
+            if (!smooth)
             {
-                try
+                if (DateTime.Now.Subtract(_lastNonSmoothInstantDataGetTime).TotalSeconds > 3)
                 {
-                    var result = new Dictionary<string, object>();
-                    var instantGPS = _gpsService.Instant(includeSidechains);
-                    result.Add("tps", _tpsService.Instant(includeSidechains));
-                    result.Add("gps", instantGPS);
-                    result.Add("gasAdjustedTPS", _gasAdjustedTPSService.Instant(includeSidechains));
-
-                    _lastInstantDataGetTime = DateTime.Now;
-                    _lastInstantData = result;
+                    try
+                    {
+                        var result = new Dictionary<string, object>();
+                        result.Add("tps", _tpsService.Instant(includeSidechains));
+                        result.Add("gps", _gpsService.Instant(includeSidechains));
+                        result.Add("gasAdjustedTPS", _gasAdjustedTPSService.Instant(includeSidechains));
+                        _lastNonSmoothInstantDataGetTime = DateTime.Now;
+                        _lastNonSmoothInstantData = result;
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
                 }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
+                return _lastNonSmoothInstantData;
             }
-            return _lastInstantData;
+            else
+            {
+                if (DateTime.Now.Subtract(_lastSmoothInstantDataGetTime).TotalSeconds > 3)
+                {
+                    try
+                    {
+                        var result = new Dictionary<string, object>();
+                        result.Add("tps", _tpsService.Get("All", "OneHour", network, includeSidechains).ToDictionary(x => x.Key, x => new List<DataPoint>() { x.Value.Last().Data.First() }));
+                        result.Add("gps", _gpsService.Get("All", "OneHour", network, includeSidechains).ToDictionary(x => x.Key, x => new List<DataPoint>() { x.Value.Last().Data.First() }));
+                        result.Add("gasAdjustedTPS", _gasAdjustedTPSService.Get("All", "OneHour", network, includeSidechains).ToDictionary(x => x.Key, x => new List<DataPoint>() { x.Value.Last().Data.First() }));
+                        _lastSmoothInstantDataGetTime = DateTime.Now;
+                        _lastSmoothInstantData = result;
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
+                }
+                return _lastSmoothInstantData;
+            }
         }
 
         
