@@ -168,7 +168,8 @@ class MainPage extends React.Component {
   if (this.state.mode === "gasAdjustedTPS"){
     optionalGasAdjustedText = "The gas-adjusted TPS value of a network is calculated by dividing the total gas used by the network at any time by 21,000 gas (the gas cost of a simple ETH transfer). In other words, this value represents the theoretical number of transactions per second a network were to do if all transactions were simple ETH transfers.";
   }
-  let offlineCircle =   <div style={{marginLeft: '10px'}} className={'dot tooltip'}>
+  let offlineCircle =   <div style={{marginLeft: '10px', verticalAlign: 'center'}} className={'tooltip'}>
+    ⚠️
   <span className={'tooltiptext'}>
     Live updates are currently unavailable
   </span>
