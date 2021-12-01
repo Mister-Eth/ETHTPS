@@ -175,6 +175,9 @@ class MainPage extends React.Component {
             onChange={this.handleInputChange.bind(this)}/>
             Exclude sidechains?
       </label>
+      <p>
+        Should sidechans be excluded by default? <a style={{textDecoration: 'underline'}} href="https://twitter.com/ethtps/status/1465211997809745927?s=20">Answer the poll here</a>
+      </p>
       <hr/>
 
     <h3>
