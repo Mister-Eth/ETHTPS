@@ -80,57 +80,67 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             return result;
         }
 
+        private static Dictionary<(bool IncludeSidechains, string Network, string Smoothing), (Dictionary<string, object> LastData, DateTime LastGetTime)> _instantDataDictionary = new Dictionary<(bool IncludeSidechains, string Network, string Smoothing), (Dictionary<string, object> LastData, DateTime LastGetTime)>();
 
-        private static Dictionary<string, object> _lastNonSmoothInstantData;
-        private static DateTime _lastNonSmoothInstantDataGetTime = DateTime.MinValue;
-
-        private static Dictionary<string, object> _lastSmoothInstantData;
-        private static DateTime _lastSmoothInstantDataGetTime = DateTime.MinValue;
-
-        public IDictionary<string, object> InstantData(bool includeSidechains = true, bool smooth = false, string network = "Mainnet")
+        public IDictionary<string, object> InstantData(bool includeSidechains = true, string network = "Mainnet", string smoothing = "")
         {
-            if (!smooth)
+            var interval = TimeInterval.Instant;
+            if (!string.IsNullOrWhiteSpace(smoothing))
             {
-                if (DateTime.Now.Subtract(_lastNonSmoothInstantDataGetTime).TotalSeconds > 3)
-                {
-                    try
-                    {
-                        var result = new Dictionary<string, object>();
-                        result.Add("tps", _tpsService.Instant(includeSidechains));
-                        result.Add("gps", _gpsService.Instant(includeSidechains));
-                        result.Add("gasAdjustedTPS", _gasAdjustedTPSService.Instant(includeSidechains));
-                        _lastNonSmoothInstantDataGetTime = DateTime.Now;
-                        _lastNonSmoothInstantData = result;
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                    }
-                }
-                return _lastNonSmoothInstantData;
+                interval = Enum.Parse<TimeInterval>(smoothing);
             }
-            else
+            var key = (includeSidechains, network, interval.ToString());
+            if (!_instantDataDictionary.ContainsKey(key))
             {
-                if (DateTime.Now.Subtract(_lastSmoothInstantDataGetTime).TotalSeconds > 3)
-                {
-                    try
-                    {
-                        var result = new Dictionary<string, object>();
-                        result.Add("tps", _tpsService.Get("All", "OneHour", network, includeSidechains).ToDictionary(x => x.Key, x => new List<DataPoint>() { x.Value.Last().Data.First() }));
-                        result.Add("gps", _gpsService.Get("All", "OneHour", network, includeSidechains).ToDictionary(x => x.Key, x => new List<DataPoint>() { x.Value.Last().Data.First() }));
-                        result.Add("gasAdjustedTPS", _gasAdjustedTPSService.Get("All", "OneHour", network, includeSidechains).ToDictionary(x => x.Key, x => new List<DataPoint>() { x.Value.Last().Data.First() }));
-                        _lastSmoothInstantDataGetTime = DateTime.Now;
-                        _lastSmoothInstantData = result;
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                    }
-                }
-                return _lastSmoothInstantData;
+                _instantDataDictionary.Add(key, (new Dictionary<string, object>(), DateTime.Now.Subtract(TimeSpan.FromSeconds(5))));
             }
+            bool returnDefault = DateTime.Now.Subtract(_instantDataDictionary[key].LastGetTime).TotalSeconds < 3;
+            if (!returnDefault)
+            {
+                _instantDataDictionary[key] = (new Dictionary<string, object>(), DateTime.Now);
+                var result = _instantDataDictionary[key];
+                switch (interval)
+                {
+                    case TimeInterval.Instant:
+                        result.LastData.Add("tps", _tpsService.Instant(includeSidechains));
+                        result.LastData.Add("gps", _gpsService.Instant(includeSidechains));
+                        result.LastData.Add("gasAdjustedTPS", _gasAdjustedTPSService.Instant(includeSidechains));
+                        break;
+                    case TimeInterval.OneWeek:
+                        var nextInterval = TimeInterval.OneMonth;
+                        result.LastData.Add("tps", _tpsService.Get("All", nextInterval.ToString(), network, includeSidechains).ToDictionary(x => x.Key, x => new List<DataPoint>() { new DataPoint() { Value = x.Value.TakeLast(7).Average(x=>x.Data.First().Value) } }));
+
+                        result.LastData.Add("gps", _gpsService.Get("All", nextInterval.ToString(), network, includeSidechains).ToDictionary(x => x.Key, x => new List<DataPoint>() { new DataPoint() { Value = x.Value.TakeLast(7).Average(x=>x.Data.First().Value) } }));
+
+                        result.LastData.Add("gasAdjustedTPS", _gasAdjustedTPSService.Get("All", nextInterval.ToString(), network, includeSidechains).ToDictionary(x => x.Key, x => new List<DataPoint>() { new DataPoint() { Value = x.Value.TakeLast(7).Average(x=>x.Data.First().Value) } }));
+                        break;
+                    default:
+                        nextInterval = GetNextIntervalForInstantData(interval);
+                        result.LastData.Add("tps", _tpsService.Get("All", nextInterval.ToString(), network, includeSidechains).ToDictionary(x => x.Key, x => new List<DataPoint>() { x.Value.Last().Data.First() }));
+                        result.LastData.Add("gps", _gpsService.Get("All", nextInterval.ToString(), network, includeSidechains).ToDictionary(x => x.Key, x => new List<DataPoint>() { x.Value.Last().Data.First() }));
+                        result.LastData.Add("gasAdjustedTPS", _gasAdjustedTPSService.Get("All", nextInterval.ToString(), network, includeSidechains).ToDictionary(x => x.Key, x => new List<DataPoint>() { x.Value.Last().Data.First() }));
+                        break;
+                }
+            }
+            return _instantDataDictionary[key].LastData;
         }
 
+        private static TimeInterval GetNextIntervalForInstantData(TimeInterval interval)
+        {
+            switch (interval)
+            {
+                case TimeInterval.OneMinute:
+                    return TimeInterval.OneHour;
+                case TimeInterval.OneHour:
+                    return TimeInterval.OneDay;
+                case TimeInterval.OneDay:
+                    return TimeInterval.OneMonth;
+                case TimeInterval.OneMonth:
+                    return TimeInterval.OneYear;
+                default:
+                    return TimeInterval.OneDay;
+            }
+        }
         
         public IDictionary<string, object> Max(string provider, string network = "Mainnet")
         {

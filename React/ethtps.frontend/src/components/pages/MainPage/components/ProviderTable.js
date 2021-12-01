@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { formatModeName, capitalizeFirstLetter } from '../../../../services/common';
+import { formatModeName, capitalizeFirstLetter, formatSmoothingName } from '../../../../services/common';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -26,7 +26,8 @@ class ProviderTable extends React.Component {
               asc: false,
               columnName: (props.mode === 'tps')?'theoreticalMaxTPS':'max',
               isMaxTheoreticalSelected: true
-            }
+            },
+            smoothing: props.smoothing
         }
     }
 
@@ -83,8 +84,54 @@ class ProviderTable extends React.Component {
       if (this.state.colorDictionary === undefined){
         return <></>
       }
+      let tableBody = <></>
+      if (this.state.data !== undefined){
+        tableBody = <TableBody>
+        {this.state.rows.sort(this.dynamicSort(this.state.sort.columnName).bind(this)).map((row, i) => (
+          <TableRow
+            key={row.name}
+            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+          >
+            <TableCell align="left">
+            <div className={'l1'}></div>
+                {i + 1}
+            </TableCell>
+            <TableCell align="left">
+                  <div className={'l1 box'}>
+                    <Link style={{color: this.state.colorDictionary[row.name]}} to={`/Network/${row.name}`}>
+                     <img className={'provider-icon'} src={`/provider-icons/${row.name}.png`} />
+                       {row.name}
+                    </Link>
+                  </div>
+            </TableCell>
+            <TableCell align="left">
+              <div className={'l1'}>
+                {(this.state.data[row.name] !== undefined)?this.format(this.state.data[row.name][0].value):0}
+                </div>
+            </TableCell>
+            <TableCell align="left">
+            <div className={'l1'}>
+              {(this.state.allMaxData[this.state.mode][row.name] !== undefined)?this.getMaxRow(this.state.allMaxData[this.state.mode][row.name].value, row.name):0}
+            </div>
+            </TableCell>
+            {(this.state.mode === 'tps')?<>
+              <TableCell align="left">
+                <div className={'l1'}>
+                  {this.format(row.theoreticalMaxTPS)}
+                </div>
+              </TableCell>
+            </>:<></>}
       
-        return <>
+            <TableCell align="left">
+              <div className={((row.type == "Sidechain" || row.type === "Validium")?'l1':'l1 green')}>
+                {row.type}
+              </div>
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>;
+      }
+      return <>
         <div>
         <TableContainer component={Paper} style={{overflowX:'auto'}}>
       <Table size={"small"} style={{minWidth: '800px'}} aria-label="simple table">
@@ -116,7 +163,9 @@ class ProviderTable extends React.Component {
                 direction={(this.state.sort.asc?'asc':'desc')}
                 onClick={()=>this.sortTableBy('value')}>
                 <div className={'lh b'}>
-                    {capitalizeFirstLetter(formatModeName(this.state.mode))}
+                {(this.state.smoothing !== "Instant")?
+                "Average " + formatSmoothingName(this.state.smoothing) + " " + capitalizeFirstLetter(formatModeName(this.state.mode)) 
+                : capitalizeFirstLetter(formatModeName(this.state.mode))}
                 </div>
             </TableSortLabel>
             </TableCell>
@@ -154,50 +203,7 @@ class ProviderTable extends React.Component {
             </TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {this.state.rows.sort(this.dynamicSort(this.state.sort.columnName).bind(this)).map((row, i) => (
-            <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell align="left">
-              <div className={'l1'}></div>
-                  {i + 1}
-              </TableCell>
-              <TableCell align="left">
-                    <div className={'l1 box'}>
-                      <Link style={{color: this.state.colorDictionary[row.name]}} to={`/Network/${row.name}`}>
-                       <img className={'provider-icon'} src={`/provider-icons/${row.name}.png`} />
-                         {row.name}
-                      </Link>
-                    </div>
-              </TableCell>
-              <TableCell align="left">
-                <div className={'l1'}>
-                  {(this.state.data[row.name] !== undefined)?this.format(this.state.data[row.name][0].value):0}
-                  </div>
-              </TableCell>
-              <TableCell align="left">
-              <div className={'l1'}>
-                {(this.state.allMaxData[this.state.mode][row.name] !== undefined)?this.getMaxRow(this.state.allMaxData[this.state.mode][row.name].value, row.name):0}
-              </div>
-              </TableCell>
-              {(this.state.mode === 'tps')?<>
-                <TableCell align="left">
-                  <div className={'l1'}>
-                    {this.format(row.theoreticalMaxTPS)}
-                  </div>
-                </TableCell>
-              </>:<></>}
-        
-              <TableCell align="left">
-                <div className={((row.type == "Sidechain" || row.type === "Validium")?'l1':'l1 green')}>
-                  {row.type}
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
+        {tableBody}
       </Table>
     </TableContainer>
     <p>
@@ -273,6 +279,9 @@ class ProviderTable extends React.Component {
         }
         if (previousProps.allData !== this.props.allData){
           this.setState({allData: this.props.allData});
+        }
+        if (previousProps.smoothing !== this.props.smoothing){
+          this.setState({smoothing: this.props.smoothing});
         }
       }
 }    

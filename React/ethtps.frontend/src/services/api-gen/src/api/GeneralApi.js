@@ -162,8 +162,8 @@ export default class GeneralApi {
     /**
      * @param {Object} opts Optional parameters
      * @param {Boolean} opts.includeSidechains  (default to true)
-     * @param {Boolean} opts.smooth  (default to true)
      * @param {String} opts.network  (default to 'Mainnet')
+     * @param {String} opts.smoothing  (default to '')
      * @param {module:api/GeneralApi~aPIV2InstantDataGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Object.<String, {String: Object}>}
      */
@@ -175,8 +175,8 @@ export default class GeneralApi {
       };
       let queryParams = {
         'includeSidechains': opts['includeSidechains'],
-        'smooth': opts['smooth'],
-        'network': opts['network']
+        'network': opts['network'],
+        'smoothing': opts['smoothing']
       };
       let headerParams = {
       };

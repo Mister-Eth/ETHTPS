@@ -10,6 +10,7 @@ import ModeSelector from './ModeSelector';
 import * as qs from 'query-string';
 import HistoricalChart from '../../charts/HistoricalChart';
 import { Helmet } from 'react-helmet';
+import IntervalSlider from '../../IntervalSlider';
 
 class MainPage extends React.Component {
 
@@ -39,7 +40,7 @@ class MainPage extends React.Component {
       modifiedInstantTPS: {},
       mode: mode,
       offline: false,
-      smooth: false
+      smoothing: "Instant"
     }
   }
 
@@ -99,15 +100,6 @@ class MainPage extends React.Component {
     this.setState({excludeNonGeneralPurposeNetworks : value});
   }
 
-  handleSmoothInputChange(event){
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    this.setState({smooth : value});
-    globalInstantDataService.smooth = value;
-    globalInstantDataService.getAndCallbackInstantData();
-  }
-
-
   getFilteredInstantData(state){
     let result = state.homePageModel.selectedInstantData;
     if (state.excludeSidechains){
@@ -159,6 +151,12 @@ class MainPage extends React.Component {
     return result;
   }
 
+  intervalSliderChanged(interval){
+    this.setState({smoothing: interval});
+    globalInstantDataService.smoothing = interval;
+    globalInstantDataService.getAndCallbackInstantData();
+  }
+
   modeChanged(mode){
     this.setState({mode: mode});
     globalInstantDataService.getAndCallbackInstantData();
@@ -200,19 +198,7 @@ class MainPage extends React.Component {
             providerTypeColorDictionary={this.state.homePageModel.providerTypeColorDictionary}
             mode={this.state.mode}
             split="network"/>
-       <label className={"small"}>
-      <input
-            ref={ref=>this.smoothCheckBox = ref}
-            name="smooth" type="checkbox"
-            checked={this.state.smooth}
-            onChange={this.handleSmoothInputChange.bind(this)}/>
-            <div className={'tooltip'}>
-              Smooth
-              <span className={'tooltiptext'}>
-                Show a 1-minute average instead of a per-block value
-              </span>
-            </div>
-      </label>
+            <IntervalSlider onChange={this.intervalSliderChanged.bind(this)}/>
       <label className={"small"}>
       <input
             ref={ref=>this.excludeSidechainsCheckBox = ref}
@@ -230,6 +216,9 @@ class MainPage extends React.Component {
             Exclude non-general purpose networks
       </label>
       <p>
+        Drag the slider above to change the period of the chart and compare the historical {formatModeName(this.state.mode)} distribution.
+      </p>
+      <p>
         Should sidechains be excluded by default? <a style={{textDecoration: 'underline'}} href="https://twitter.com/ethtps/status/1465211997809745927?s=20">Answer the poll here</a>
       </p>
       <hr/>
@@ -243,6 +232,7 @@ class MainPage extends React.Component {
       colorDictionary={this.state.homePageModel.colorDictionary} 
       allMaxData={this.state.homePageModel.maxData}
       mode={this.state.mode}
+      smoothing={this.state.smoothing}
       providerData={this.getProviderData(this.state)}/>
       <hr/>
       <h3>

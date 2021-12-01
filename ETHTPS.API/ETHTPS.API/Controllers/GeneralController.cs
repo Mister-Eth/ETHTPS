@@ -58,9 +58,9 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
-        public IDictionary<string, object> InstantData(bool includeSidechains = true, bool smooth = false, string network = "Mainnet")
+        public IDictionary<string, object> InstantData(bool includeSidechains = true, string network = "Mainnet", string smoothing = "")
         {
-            return _generalService.InstantData(includeSidechains, smooth, network);
+            return _generalService.InstantData(includeSidechains, network, smoothing);
         }
 
         [HttpGet]

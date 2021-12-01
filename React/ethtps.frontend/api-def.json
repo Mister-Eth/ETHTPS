@@ -481,19 +481,19 @@
             }
           },
           {
-            "name": "smooth",
-            "in": "query",
-            "schema": {
-              "type": "boolean",
-              "default": true
-            }
-          },
-          {
             "name": "network",
             "in": "query",
             "schema": {
               "type": "string",
               "default": "Mainnet"
+            }
+          },
+          {
+            "name": "smoothing",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": ""
             }
           }
         ],
