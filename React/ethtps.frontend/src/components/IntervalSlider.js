@@ -65,7 +65,8 @@ export default class IntervalSlider extends React.Component{
     }
 
     render(){
-        return <Slider
+        return <center> <Box style={{width: '90%'}}>
+                <Slider
                     aria-label="Restricted values"
                     defaultValue={1}
                     valueLabelFormat={this.valueLabelFormat.bind(this)}
@@ -75,5 +76,7 @@ export default class IntervalSlider extends React.Component{
                     onChange={this.onChange.bind(this)}
                     max={100}
                 />
+        </Box>;
+            </center>
     }
 }
