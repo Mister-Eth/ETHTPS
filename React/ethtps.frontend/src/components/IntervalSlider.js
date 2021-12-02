@@ -5,6 +5,10 @@ import { Box } from '@mui/system';
 export default class IntervalSlider extends React.Component{
     constructor(props){
         super(props);
+
+        this.state = {
+            unit: props.unit
+        }
     }
 
     marks = [
@@ -73,6 +77,7 @@ export default class IntervalSlider extends React.Component{
                     getAriaValueText={this.valuetext.bind(this)}
                     step={null}
                     marks={this.marks}
+                    track={false}
                     onChange={this.onChange.bind(this)}
                     max={100}
                 />

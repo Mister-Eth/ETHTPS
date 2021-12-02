@@ -80,7 +80,7 @@ export default class TimeWarpPage extends React.Component{
             </div>
             <ModeSelector defaultMode={this.state.mode} onChange={this.modeChanged.bind(this)}/>
               <center>
-            <Box>
+            <Box style={{width: '90%'}}>
                     <Slider
                     aria-label="Temperature"
                     defaultValue={100}
