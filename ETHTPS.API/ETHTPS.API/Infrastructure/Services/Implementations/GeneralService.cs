@@ -164,14 +164,18 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             List<string> result = new();
             foreach (var interval in TimeIntervals())
             {
-                var count = _tpsService.Get(provider, interval, network, true)[provider].Count();
-                if (count > 1)
+                try
                 {
-                    if (interval == "All" && count < 12)
-                        continue;
+                    var count = _tpsService.Get(provider, interval, network, true)[provider].Count();
+                    if (count > 1)
+                    {
+                        if (interval == "All" && count < 12)
+                            continue;
 
-                    result.Add(interval);
+                        result.Add(interval);
+                    }
                 }
+                catch { }
             }
             return result;
         }
