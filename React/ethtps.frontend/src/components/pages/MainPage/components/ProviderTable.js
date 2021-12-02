@@ -24,8 +24,8 @@ class ProviderTable extends React.Component {
             allData: props.allData,
             sort:{
               asc: false,
-              columnName: (props.mode === 'tps')?'theoreticalMaxTPS':'max',
-              isMaxTheoreticalSelected: true
+              columnName: 'max',
+              isMaxTheoreticalSelected: false
             },
             smoothing: props.smoothing
         }
@@ -114,14 +114,6 @@ class ProviderTable extends React.Component {
               {(this.state.allMaxData[this.state.mode][row.name] !== undefined)?this.getMaxRow(this.state.allMaxData[this.state.mode][row.name].value, row.name):0}
             </div>
             </TableCell>
-            {(this.state.mode === 'tps')?<>
-              <TableCell align="left">
-                <div className={'l1'}>
-                  {this.format(row.theoreticalMaxTPS)}
-                </div>
-              </TableCell>
-            </>:<></>}
-      
             <TableCell align="left">
               <div className={((row.type == "Sidechain" || row.type === "Validium")?'l1':'l1 green')}>
                 {row.type}
@@ -179,18 +171,6 @@ class ProviderTable extends React.Component {
                   </div>
                   </TableSortLabel>
               </TableCell>
-            {(this.state.mode === 'tps')?<> 
-            <TableCell width={20} align="left">
-            <TableSortLabel
-                active={this.state.sort.columnName === 'theoreticalMaxTPS'}
-                direction={(this.state.sort.asc?'asc':'desc')}
-                onClick={()=>this.sortTableBy('theoreticalMaxTPS')}>
-                <div className={'lh b'}>
-                    Theoretical max TPS
-                </div>
-                </TableSortLabel>
-            </TableCell>
-            </>:<></>}
             <TableCell width={150} align="left">
             <TableSortLabel
                 active={this.state.sort.columnName === 'type'}
