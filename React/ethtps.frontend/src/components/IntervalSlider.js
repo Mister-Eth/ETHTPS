@@ -7,7 +7,7 @@ export default class IntervalSlider extends React.Component{
         super(props);
 
         this.state = {
-            unit: props.unit
+            isTimeWarp: props.isTimeWarp
         }
     }
 
@@ -37,6 +37,33 @@ export default class IntervalSlider extends React.Component{
           label: '1 month',
       },
     ];
+
+    timeWarpMarks = [
+        {
+            value: 1,
+            label: '1 block/s',
+        },
+        {
+          value: 20,
+          label: '1 minute/s',
+        },
+        {
+          value: 40,
+          label: '1 hour/s',
+        },
+        {
+            value: 60,
+            label: '1 day/s',
+        },
+        {
+            value: 80,
+            label: '1 week/s',
+        },
+        {
+            value: 100,
+            label: '1 month/s',
+        },
+      ];
 
     intervals = {
         1: "Instant",
@@ -76,7 +103,7 @@ export default class IntervalSlider extends React.Component{
                     valueLabelFormat={this.valueLabelFormat.bind(this)}
                     getAriaValueText={this.valuetext.bind(this)}
                     step={null}
-                    marks={this.marks}
+                    marks={(this.state.isTimeWarp)?this.timeWarpMarks:this.marks}
                     track={false}
                     onChange={this.onChange.bind(this)}
                     max={100}

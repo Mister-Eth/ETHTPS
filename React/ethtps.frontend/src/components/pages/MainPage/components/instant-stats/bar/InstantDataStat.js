@@ -45,7 +45,7 @@ class InstantDataStat extends Component{
     }
 
     createDatasets(state){
-        if (state.providerData.length === 0 || state.data.length === 0 || state.colorDictionary === undefined)
+        if (state.data === undefined || state.providerData === undefined ||state.providerData.length === 0 || state.data.length === 0 || state.colorDictionary === undefined)
             return [{}];
         let datasets = state.providerData.filter(x=>state.data[x.name] !== undefined).map(x => this.createDataset(x, state.data, state.colorDictionary));
         return datasets;

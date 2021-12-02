@@ -82,6 +82,7 @@ namespace ETHTPS.API
             services.AddScoped<GPSService>();
             services.AddScoped<GasAdjustedTPSService>();
             services.AddScoped<GeneralService>();
+            services.AddScoped<TimeWarpService>();
         }
 
         private void AddHistoricalBlockInfoDataUpdaters(IServiceCollection services)

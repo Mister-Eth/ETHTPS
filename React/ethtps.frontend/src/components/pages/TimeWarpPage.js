@@ -99,7 +99,7 @@ export default class TimeWarpPage extends React.Component{
                 Speed
             </h5>
             <center>
-               <IntervalSlider/>
+               <IntervalSlider isTimeWarp={true}/>
             </center>
             <p>
                 This is an experimental feature. How did you even get here?

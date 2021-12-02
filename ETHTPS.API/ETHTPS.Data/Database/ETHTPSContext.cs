@@ -34,7 +34,12 @@ namespace ETHTPS.Data.Database
         public virtual DbSet<OldestLoggedHistoricalEntry> OldestLoggedHistoricalEntries { get; set; }
         public virtual DbSet<TpsandGasDataYear> TpsandGasDataYears { get; set; }
         public virtual DbSet<TpsandGasDataAll> TpsandGasDataAlls { get; set; }
-
+        public virtual DbSet<TimeWarpDataDay> TimeWarpDataDays { get; set; }
+        public virtual DbSet<TimeWarpDataHour> TimeWarpDataHours { get; set; }
+        public virtual DbSet<TimeWarpDataMinute> TimeWarpDataMinutes { get; set; }
+        public virtual DbSet<TimeWarpDataWeek> TimeWarpDataWeeks { get; set; }
+       // public virtual DbSet<TimeWarpDatum> TimeWarpData { get; set; }
+        public virtual DbSet<OldestLoggedTimeWarpBlock> OldestLoggedTimeWarpBlocks { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -44,7 +49,148 @@ namespace ETHTPS.Data.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+            /*
+            modelBuilder.Entity<TimeWarpDataDay>(entity =>
+            {
+                entity.ToTable("TimeWarpData_Day");
 
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.AverageGps).HasColumnName("AverageGPS");
+
+                entity.Property(e => e.AverageTps).HasColumnName("AverageTPS");
+
+                entity.Property(e => e.StartDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.NetworkNavigation)
+                    .WithMany(p => p.TimeWarpDataDays)
+                    .HasForeignKey(d => d.Network)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__TimeWarpD__Netwo__31B762FC");
+
+                entity.HasOne(d => d.ProviderNavigation)
+                    .WithMany(p => p.TimeWarpDataDays)
+                    .HasForeignKey(d => d.Provider)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__TimeWarpD__Provi__30C33EC3");
+            });
+
+            modelBuilder.Entity<TimeWarpDataHour>(entity =>
+            {
+                entity.ToTable("TimeWarpData_Hour");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.AverageGps).HasColumnName("AverageGPS");
+
+                entity.Property(e => e.AverageTps).HasColumnName("AverageTPS");
+
+                entity.Property(e => e.StartDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.NetworkNavigation)
+                    .WithMany(p => p.TimeWarpDataHours)
+                    .HasForeignKey(d => d.Network)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__TimeWarpD__Netwo__2FCF1A8A");
+
+                entity.HasOne(d => d.ProviderNavigation)
+                    .WithMany(p => p.TimeWarpDataHours)
+                    .HasForeignKey(d => d.Provider)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__TimeWarpD__Provi__2EDAF651");
+            });
+
+            modelBuilder.Entity<TimeWarpDataMinute>(entity =>
+            {
+                entity.ToTable("TimeWarpData_Minute");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.AverageGps).HasColumnName("AverageGPS");
+
+                entity.Property(e => e.AverageTps).HasColumnName("AverageTPS");
+
+                entity.Property(e => e.StartDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.NetworkNavigation)
+                    .WithMany(p => p.TimeWarpDataMinutes)
+                    .HasForeignKey(d => d.Network)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__TimeWarpD__Netwo__2DE6D218");
+
+                entity.HasOne(d => d.ProviderNavigation)
+                    .WithMany(p => p.TimeWarpDataMinutes)
+                    .HasForeignKey(d => d.Provider)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__TimeWarpD__Provi__2CF2ADDF");
+            });
+
+            modelBuilder.Entity<TimeWarpDataWeek>(entity =>
+            {
+                entity.ToTable("TimeWarpData_Week");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.AverageGps).HasColumnName("AverageGPS");
+
+                entity.Property(e => e.AverageTps).HasColumnName("AverageTPS");
+
+                entity.Property(e => e.StartDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.NetworkNavigation)
+                    .WithMany(p => p.TimeWarpDataWeeks)
+                    .HasForeignKey(d => d.Network)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__TimeWarpD__Netwo__339FAB6E");
+
+                entity.HasOne(d => d.ProviderNavigation)
+                    .WithMany(p => p.TimeWarpDataWeeks)
+                    .HasForeignKey(d => d.Provider)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__TimeWarpD__Provi__32AB8735");
+            });
+
+            modelBuilder.Entity<TimeWarpDatum>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.AverageGps).HasColumnName("AverageGPS");
+
+                entity.Property(e => e.AverageTps).HasColumnName("AverageTPS");
+
+                entity.Property(e => e.StartDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.NetworkNavigation)
+                    .WithMany(p => p.TimeWarpData)
+                    .HasForeignKey(d => d.Network)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__TimeWarpD__Netwo__2BFE89A6");
+
+                entity.HasOne(d => d.ProviderNavigation)
+                    .WithMany(p => p.TimeWarpData)
+                    .HasForeignKey(d => d.Provider)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__TimeWarpD__Provi__2B0A656D");
+            });
+
+            
+            modelBuilder.Entity<OldestLoggedTimeWarpBlock>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.HasOne(d => d.NetworkNavigation)
+                    .WithMany(p => p.OldestLoggedTimeWarpBlocks)
+                    .HasForeignKey(d => d.Network)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__OldestLog__Netwo__3587F3E0");
+
+                entity.HasOne(d => d.ProviderNavigation)
+                    .WithMany(p => p.OldestLoggedTimeWarpBlocks)
+                    .HasForeignKey(d => d.Provider)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__OldestLog__Provi__3493CFA7");
+            });
+            */
             modelBuilder.Entity<OldestLoggedHistoricalEntry>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("ID");

@@ -18,9 +18,11 @@ export default class InstantDataService {
 
     getAndCallbackInstantData(){
         globalGeneralApi.aPIV2InstantDataGet({includeSidechains: true, smoothing: this.smoothing}, (err, data, res) => {
-            Object.entries(this.instantDataForPageCallbackDictionary).forEach(([key, value]) => {
-                value(data);
-             });
+            if (data !== null){
+                Object.entries(this.instantDataForPageCallbackDictionary).forEach(([key, value]) => {
+                    value(data);
+                 });
+            }
         });
     }
 }
