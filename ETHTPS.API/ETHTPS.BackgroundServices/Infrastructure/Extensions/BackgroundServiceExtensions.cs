@@ -32,6 +32,15 @@ namespace ETHTPS.Services.Infrastructure.Extensions
             services.AddScoped<V>();
             RecurringJob.AddOrUpdate<T>("Historical" + typeof(V).Name, x => x.RunAsync(), cronExpression, queue: queue);
         }
+        public static void RegisterTimeWarpHangfireBackgroundService<T, V>(this IServiceCollection services, string cronExpression, string queue)
+          where V : class, IBlockInfoProvider
+          where T : TimeWarpBlockInfoProviderDataLogger<V>
+        {
+            services.AddScoped<T>();
+            services.AddScoped<V>();
+            RecurringJob.AddOrUpdate<T>("TimeWarp" + typeof(V).Name, x => x.RunAsync(), cronExpression, queue: queue);
+        }
+
 
         public static void RegisterHangfireBackgroundService<T>(this IServiceCollection services, string cronExpression, string queue)
             where T : HangfireBackgroundService

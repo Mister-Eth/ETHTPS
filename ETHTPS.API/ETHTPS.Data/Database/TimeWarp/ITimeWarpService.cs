@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ETHTPS.API.Infrastructure.Services
+namespace ETHTPS.Data.Database.TimeWarp
 {
     public interface ITimeWarpService
     {

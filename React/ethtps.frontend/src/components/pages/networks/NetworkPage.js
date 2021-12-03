@@ -19,6 +19,7 @@ import AztecDetails from './details/AztecDetails';
 import MetisDetails from './details/MetisDetails';
 import RoninDetails from './details/RoninDetails';
 import StarknetDetails from './details/StarknetDetails';
+import Nahmii20Details from './details/Nahmii20Details';
 import { globalGeneralApi, globalInstantDataService, to2DecimalPlaces } from '../../../services/common';
 import * as qs from 'query-string';
 import { Helmet } from 'react-helmet';
@@ -57,7 +58,8 @@ export default class NetworkPage extends PageWithQueryString {
         'Aztec': <AztecDetails name={this.state.name}/>,
         'Metis': <MetisDetails name={this.state.name}/>,
         'Ronin': <RoninDetails name={this.state.name}/>,
-        "Starknet": <StarknetDetails name={this.state.name}/>
+        "Starknet": <StarknetDetails name={this.state.name}/>,
+        'Nahmii 2.0': <Nahmii20Details name={this.state.name}/>
     }
 
     updateInstantTPS(data){

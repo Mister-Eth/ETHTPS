@@ -3,6 +3,7 @@ using ETHTPS.API.Infrastructure.Services.Implementations;
 using ETHTPS.Data.Database;
 using ETHTPS.Data.Database.Extensions;
 using ETHTPS.Data.Database.HistoricalDataProviders;
+using ETHTPS.Data.Database.TimeWarp;
 using ETHTPS.Data.ResponseModels;
 
 using Microsoft.AspNetCore.Mvc;

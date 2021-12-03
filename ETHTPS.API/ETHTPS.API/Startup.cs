@@ -72,6 +72,7 @@ namespace ETHTPS.API
                 AddTPSDataUpdaters(services);
                 AddCacheUpdaters(services);
                 AddHistoricalBlockInfoDataUpdaters(services);
+                AddTimeWarpUpdaters(services);
             }
            
         }
@@ -126,6 +127,7 @@ namespace ETHTPS.API
                 services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<MetisBlockInfoProvider>, MetisBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
                 services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<RoninBlockInfoProvider>, RoninBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
                 services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<VoyagerBlockInfoProvider>, VoyagerBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<Nahmii20BlockInfoProvider>, Nahmii20BlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
             }
         }
 
@@ -134,6 +136,14 @@ namespace ETHTPS.API
             if (ConfigurationQueues.Contains(CACHEUPDATERQUEUE))
             {
                 
+            }
+        }
+
+        private void AddTimeWarpUpdaters(IServiceCollection services)
+        {
+            if (ConfigurationQueues.Contains(TIMEWARPUPDATERQUEUE))
+            {
+                services.RegisterTimeWarpHangfireBackgroundService<TimeWarpBlockInfoProviderDataLogger<InfuraBlockInfoProvider>, InfuraBlockInfoProvider>(CronConstants.EveryMidnight, TIMEWARPUPDATERQUEUE);
             }
         }
 
@@ -156,6 +166,7 @@ namespace ETHTPS.API
         private const string TPSUPDATERQUEUE = "tpsdata";
         private const string CACHEUPDATERQUEUE = "cache";
         private const string HISTORICALUPDATERQUEUE = "historical";
+        private const string TIMEWARPUPDATERQUEUE = "timewarp";
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {

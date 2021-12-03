@@ -38,7 +38,7 @@ namespace ETHTPS.Data.Database
         public virtual DbSet<TimeWarpDataHour> TimeWarpDataHours { get; set; }
         public virtual DbSet<TimeWarpDataMinute> TimeWarpDataMinutes { get; set; }
         public virtual DbSet<TimeWarpDataWeek> TimeWarpDataWeeks { get; set; }
-       // public virtual DbSet<TimeWarpDatum> TimeWarpData { get; set; }
+       public virtual DbSet<TimeWarpDatum> TimeWarpData { get; set; }
         public virtual DbSet<OldestLoggedTimeWarpBlock> OldestLoggedTimeWarpBlocks { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -49,7 +49,7 @@ namespace ETHTPS.Data.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
-            /*
+            
             modelBuilder.Entity<TimeWarpDataDay>(entity =>
             {
                 entity.ToTable("TimeWarpData_Day");
@@ -190,7 +190,7 @@ namespace ETHTPS.Data.Database
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__OldestLog__Provi__3493CFA7");
             });
-            */
+            
             modelBuilder.Entity<OldestLoggedHistoricalEntry>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("ID");

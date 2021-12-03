@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ETHTPS.Data.Database
 {
-    public partial class TimeWarpDataWeek
+    public abstract class TimeWarpDataBase
     {
         public int Id { get; set; }
         public int Network { get; set; }
@@ -18,4 +18,10 @@ namespace ETHTPS.Data.Database
         public virtual Network NetworkNavigation { get; set; }
         public virtual Provider ProviderNavigation { get; set; }
     }
+
+    public partial class TimeWarpDataWeek : TimeWarpDataBase { }
+    public partial class TimeWarpDataHour : TimeWarpDataBase { }
+    public partial class TimeWarpDataMinute : TimeWarpDataBase { }
+    public partial class TimeWarpDataDay: TimeWarpDataBase { }
+    public partial class TimeWarpDatum : TimeWarpDataBase { }
 }
