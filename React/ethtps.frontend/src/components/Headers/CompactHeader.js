@@ -10,10 +10,10 @@ export default class CompactHeader extends React.Component{
         super(props);
     }
 
-    elementSize = "30px";
+    elementSize = 30;
 
     render(){
-        let imageSize = {width: this.elementSize, height: this.elementSize};
+        let imageSize = {width: this.elementSize * 0.9, height: this.elementSize * 0.9};
         return <>
         <Link to="/">
             <br/>
