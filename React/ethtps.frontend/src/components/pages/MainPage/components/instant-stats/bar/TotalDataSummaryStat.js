@@ -32,7 +32,7 @@ export default class TotalDataSummaryStat extends React.Component{
         if (state.data === undefined || state.data.length === 0)
             return 20;
         
-        let t = state.providerData.filter(x=>state.data[x.name] !== undefined).map(x=>state.data[x.name][0].value);
+        let t = state.providerData.filter(x=>state.data[x.name] !== undefined && state.data[x.name][0] !== null).map(x=>state.data[x.name][0].value);
         if (t.length === 0){
             return 0;
         }
