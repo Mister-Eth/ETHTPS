@@ -32,7 +32,7 @@ namespace ETHTPS.Data.Database.HistoricalDataProviders
             IEnumerable<TimedTPSAndGasData> result;
             lock (_context.LockObj)
             {
-                result = _dataSelector(_context).Where(x => x.NetworkNavigation.Name == network && x.ProviderNavigation.Name == provider).DistinctBy(x => x.StartDate).OrderBy(x => x.StartDate).ToList().Where(x => DateTime.Now.Subtract(x.StartDate) <= _maxAge);
+                result = _dataSelector(_context).Where(x => x.NetworkNavigation.Name == network && x.ProviderNavigation.Name == provider).DistinctBy(x => x.StartDate).OrderBy(x => x.StartDate).ToList().Where(x => DateTime.Now.ToUniversalTime().Subtract(x.StartDate) <= _maxAge);
             }
             return result;
         }
