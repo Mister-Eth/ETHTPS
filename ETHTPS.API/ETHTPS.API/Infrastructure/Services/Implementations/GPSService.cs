@@ -68,6 +68,13 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             {
                 foreach (var p in Context.Providers.ToList())
                 {
+                    if (!includeSidechains)
+                    {
+                        if (p.TypeNavigation.Name == "Sidechain")
+                        {
+                            continue;
+                        }
+                    }
                     if (Context.TpsandGasDataLatests.Any(x => x.Provider == p.Id))
                     {
                         var entry = Context.TpsandGasDataLatests.First(x => x.Provider == p.Id);

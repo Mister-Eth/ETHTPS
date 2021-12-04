@@ -93,6 +93,8 @@ class MainPage extends React.Component {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     this.setState({excludeSidechains : value});
+    globalInstantDataService.includeSidechains = !value;
+    globalInstantDataService.getAndCallbackInstantData();
   }
 
   handleExcludeNonGeneralPurposeNetworksInputChange(event){
