@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import { Helmet } from 'react-helmet';
 import IntervalSlider from '../IntervalSlider';
 import Slider from '@mui/material/Slider';
+import CompactHeader from '../Headers/CompactHeader';
 
 export default class TimeWarpPage extends React.Component{
     constructor(props){
@@ -68,6 +69,7 @@ export default class TimeWarpPage extends React.Component{
 
     render(){
         return <>
+        <CompactHeader/>
             <Helmet>
                 <title>
                     ETHTPS.info - Time warp

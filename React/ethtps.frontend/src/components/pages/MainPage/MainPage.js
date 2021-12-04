@@ -11,6 +11,7 @@ import * as qs from 'query-string';
 import HistoricalChart from '../../charts/HistoricalChart';
 import { Helmet } from 'react-helmet';
 import IntervalSlider from '../../IntervalSlider';
+import LargeHeader from '../../Headers/LargeHeader';
 
 class MainPage extends React.Component {
 
@@ -174,6 +175,7 @@ class MainPage extends React.Component {
   </div>;
   return (
     <>
+    <LargeHeader/>
        <Helmet>
           <title>
             Live Ethereum TPS data

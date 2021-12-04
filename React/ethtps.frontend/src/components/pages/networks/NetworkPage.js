@@ -23,6 +23,7 @@ import Nahmii20Details from './details/Nahmii20Details';
 import { globalGeneralApi, globalInstantDataService, to2DecimalPlaces } from '../../../services/common';
 import * as qs from 'query-string';
 import { Helmet } from 'react-helmet';
+import CompactHeader from '../../Headers/CompactHeader';
 
 export default class NetworkPage extends PageWithQueryString {
     constructor(props){
@@ -82,6 +83,7 @@ export default class NetworkPage extends PageWithQueryString {
         let next = (index === Object.keys(this.components).length - 1)? Object.keys(this.components)[0] :Object.keys(this.components)[(index + 1)];
         if (this.state !== null && this.state.colorDictionary !== undefined)
         return <>
+        <CompactHeader/>
         <Helmet>
             <title>
                 ETHTPS.info - {this.state.name}
