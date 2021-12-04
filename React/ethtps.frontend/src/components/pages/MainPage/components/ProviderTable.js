@@ -106,7 +106,7 @@ class ProviderTable extends React.Component {
             </TableCell>
             <TableCell align="left">
               <div className={'l1'}>
-                {(this.state.data[row.name] !== undefined)?this.format(this.state.data[row.name][0].value):0}
+                {(this.state.data[row.name] !== undefined && this.state.data[row.name].length > 0)?this.format(this.state.data[row.name][0].value):0}
                 </div>
             </TableCell>
             <TableCell align="left">
