@@ -13,7 +13,7 @@ export default class PageWithQueryString extends React.Component {
             }
             name = window.location.href.substring(window.location.href.lastIndexOf("/") + 1, paramIndex);
         }
-        name = name.replace('%20', ' ');
+        name = name.replaceAll('%20', ' ');
         this.state = {
             name: name
         };

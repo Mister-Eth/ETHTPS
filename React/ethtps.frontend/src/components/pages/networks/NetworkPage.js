@@ -24,6 +24,7 @@ import { globalGeneralApi, globalInstantDataService, to2DecimalPlaces } from '..
 import * as qs from 'query-string';
 import { Helmet } from 'react-helmet';
 import CompactHeader from '../../Headers/CompactHeader';
+import BSCDetails from './details/BSCDetails';
 
 export default class NetworkPage extends PageWithQueryString {
     constructor(props){
@@ -60,7 +61,8 @@ export default class NetworkPage extends PageWithQueryString {
         'Metis': <MetisDetails name={this.state.name}/>,
         'Ronin': <RoninDetails name={this.state.name}/>,
         "Starknet": <StarknetDetails name={this.state.name}/>,
-        'Nahmii 2.0': <Nahmii20Details name={this.state.name}/>
+        'Nahmii 2.0': <Nahmii20Details name={this.state.name}/>,
+        'Binance Smart Chain': <BSCDetails name={this.state.name}/>
     }
 
     updateInstantTPS(data){
