@@ -46,7 +46,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             IEnumerable<ProviderResponseModel> result;
             lock (Context.LockObj)
             {
-                result = Context.Providers.ToList().Select(x => new ProviderResponseModel()
+                result = Context.Providers.ToList().Where(x => x.Enabled).Select(x => new ProviderResponseModel()
                 {
                     Name = x.Name,
                     Type = x.TypeNavigation.Name,
@@ -64,7 +64,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             IDictionary<string, string> result;
             lock (Context.LockObj)
             {
-                result = Context.Providers.ToDictionary(x => x.Name, x => x.Color);
+                result = Context.Providers.Where(x => x.Enabled).ToDictionary(x => x.Name, x => x.Color);
             }
             return result;
         }

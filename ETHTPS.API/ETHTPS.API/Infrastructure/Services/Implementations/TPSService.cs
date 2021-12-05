@@ -68,7 +68,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             {
                 if (provider.ToUpper() == "ALL")
                 {
-                    foreach (var p in Context.Providers.ToList())
+                    foreach (var p in Context.Providers.ToList().Where(x => x.Enabled))
                     {
                         if (!includeSidechains)
                         {
@@ -115,7 +115,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             var result = new List<DataResponseModel>();
             lock (Context.LockObj)
             {
-                foreach (var p in Context.Providers.ToList())
+                foreach (var p in Context.Providers.ToList().Where(x => x.Enabled))
                 {
                     if (!includeSidechains)
                     {

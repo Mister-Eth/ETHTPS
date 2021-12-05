@@ -33,6 +33,7 @@ namespace ETHTPS.Data.Database
         public int TheoreticalMaxTps { get; set; }
         public int? IsGeneralPurpose { get; set; }
         public int? HistoricalAggregationDeltaBlock { get; set; }
+        public bool Enabled { get; set; }
 
         public virtual ProviderType TypeNavigation { get; set; }
         public virtual ICollection<OldestLoggedHistoricalEntry> OldestLoggedHistoricalEntries { get; set; }
