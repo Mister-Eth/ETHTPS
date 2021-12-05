@@ -66,7 +66,10 @@ export default class TreemapTypeDataStat extends React.Component {
                     fillColor:state.colorDictionary[p.type]
                 });
             }
-            datasets.filter(x => x.x === p.type)[0].y += state.data[p.name][0].value;
+            try{
+                datasets.filter(x => x.x === p.type)[0].y += state.data[p.name][0].value;
+            }
+            catch{}
         }
         return [
                 {
