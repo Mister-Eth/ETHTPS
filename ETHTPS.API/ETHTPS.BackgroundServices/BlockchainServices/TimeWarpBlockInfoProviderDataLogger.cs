@@ -21,7 +21,7 @@ namespace ETHTPS.Services.BlockchainServices
 
         }
 
-        [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Delete)]
+        [AutomaticRetry(Attempts = 10, OnAttemptsExceeded = AttemptsExceededAction.Delete)]
         public override async Task RunAsync()
         {
             if (!_context.OldestLoggedTimeWarpBlocks.Any(x => x.Network == 1 && x.Provider == _providerID))
