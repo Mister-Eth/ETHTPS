@@ -25,9 +25,10 @@ import FuelDetails from './details/FuelDetails';
 import GluonDetails from './details/GluonDetails';
 import HabitatDetails from './details/HabitatDetails';
 import Layer2FinanceDetails from './details/Layer2FinanceDetails';
-import dYdXDetails from './details/dYdXDetails';
+import DYDXDetails from './details/DYDXDetails';
 import DiversiFiDetails from './details/DiversiFiDetails';
 import SorareDetails from './details/SorareDetails';
+import GazelleDetails from './details/GazelleDetails';
 import { globalGeneralApi, globalInstantDataService, to2DecimalPlaces } from '../../../services/common';
 import * as qs from 'query-string';
 import { Helmet } from 'react-helmet';
@@ -76,9 +77,10 @@ export default class NetworkPage extends PageWithQueryString {
         'Habitat': <HabitatDetails name={this.state.name}/>,
         'Fuel': <FuelDetails name={this.state.name}/>,
         'Layer2.Finance': <Layer2FinanceDetails name={this.state.name}/>,
-        'dYdX': <DiversiFiDetails name={this.state.name}/>,
+        'dYdX': <DYDXDetails name={this.state.name}/>,
         'Sorare': <SorareDetails name={this.state.name}/>,
         'DiversiFi': <DiversiFiDetails name={this.state.name}/>,
+        'Gazelle': <GazelleDetails name={this.state.name}/>,
     }
 
     updateInstantTPS(data){
