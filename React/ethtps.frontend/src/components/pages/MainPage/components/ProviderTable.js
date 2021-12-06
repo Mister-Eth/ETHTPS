@@ -108,7 +108,7 @@ class ProviderTable extends React.Component {
             
             </TableCell>
             <TableCell align="left">
-              <div className={'l1'}>
+              <div className={'l1 b'}>
                 Coming soon
               </div>
             </TableCell>
