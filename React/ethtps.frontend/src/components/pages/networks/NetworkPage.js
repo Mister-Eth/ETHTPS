@@ -33,6 +33,7 @@ import ZKTubeDetails from './details/ZKTubeDetails';
 import CartesiDetails from './details/CartesiDetails';
 import KchannelsDetails from './details/KchannelsDetails';
 import PerunDetails from './details/PerunDetails';
+import RaidenNetworkDetails from './details/RaidenNetworkDetails';
 import { globalGeneralApi, globalInstantDataService, to2DecimalPlaces } from '../../../services/common';
 import * as qs from 'query-string';
 import { Helmet } from 'react-helmet';
@@ -89,6 +90,7 @@ export default class NetworkPage extends PageWithQueryString {
         'Cartesi': <CartesiDetails name={this.state.name}/>,
         'Kchannels': <KchannelsDetails name={this.state.name}/>,
         'Perun': <PerunDetails name={this.state.name}/>,
+        'Raiden Network': <RaidenNetworkDetails name={this.state.name}/>,
     }
 
     updateInstantTPS(data){
