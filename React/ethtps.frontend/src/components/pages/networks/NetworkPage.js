@@ -30,6 +30,7 @@ import DiversiFiDetails from './details/DiversiFiDetails';
 import SorareDetails from './details/SorareDetails';
 import GazelleDetails from './details/GazelleDetails';
 import ZKTubeDetails from './details/ZKTubeDetails';
+import CartesiDetails from './details/CartesiDetails';
 import { globalGeneralApi, globalInstantDataService, to2DecimalPlaces } from '../../../services/common';
 import * as qs from 'query-string';
 import { Helmet } from 'react-helmet';
@@ -83,6 +84,7 @@ export default class NetworkPage extends PageWithQueryString {
         'DiversiFi': <DiversiFiDetails name={this.state.name}/>,
         'Gazelle': <GazelleDetails name={this.state.name}/>,
         'zkTube': <ZKTubeDetails name={this.state.name}/>,
+        'Cartesi': <CartesiDetails name={this.state.name}/>,
     }
 
     updateInstantTPS(data){
