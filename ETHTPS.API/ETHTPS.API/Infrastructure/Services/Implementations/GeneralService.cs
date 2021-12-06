@@ -108,11 +108,11 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
                         break;
                     case TimeInterval.OneWeek:
                         var nextInterval = TimeInterval.OneMonth;
-                        result.LastData.Add("tps", _tpsService.Get("All", nextInterval.ToString(), network, includeSidechains).ToDictionary(x => x.Key, x => new List<DataPoint>() { new DataPoint() { Value = x.Value.TakeLast(7).Average(x=>x.Data.FirstOrDefault().Value) } }));
+                        result.LastData.Add("tps", _tpsService.Get("All", nextInterval.ToString(), network, includeSidechains).ToDictionary(x => x.Key, x => new List<DataPoint>() { new DataPoint() { Value = x.Value.TakeLast(7).Average(x=>(x.Data.FirstOrDefault()==null)?0: x.Data.FirstOrDefault().Value) } }));
 
-                        result.LastData.Add("gps", _gpsService.Get("All", nextInterval.ToString(), network, includeSidechains).ToDictionary(x => x.Key, x => new List<DataPoint>() { new DataPoint() { Value = x.Value.TakeLast(7).Average(x=>x.Data.FirstOrDefault().Value) } }));
+                        result.LastData.Add("gps", _gpsService.Get("All", nextInterval.ToString(), network, includeSidechains).ToDictionary(x => x.Key, x => new List<DataPoint>() { new DataPoint() { Value = x.Value.TakeLast(7).Average(x=>(x.Data.FirstOrDefault()==null)?0: x.Data.FirstOrDefault().Value) } }));
 
-                        result.LastData.Add("gasAdjustedTPS", _gasAdjustedTPSService.Get("All", nextInterval.ToString(), network, includeSidechains).ToDictionary(x => x.Key, x => new List<DataPoint>() { new DataPoint() { Value = x.Value.TakeLast(7).Average(x=>x.Data.FirstOrDefault().Value) } }));
+                        result.LastData.Add("gasAdjustedTPS", _gasAdjustedTPSService.Get("All", nextInterval.ToString(), network, includeSidechains).ToDictionary(x => x.Key, x => new List<DataPoint>() { new DataPoint() { Value = x.Value.TakeLast(7).Average(x=>(x.Data.FirstOrDefault()==null)?0: x.Data.FirstOrDefault().Value) } }));
                         break;
                     default:
                         nextInterval = GetNextIntervalForInstantData(interval);
