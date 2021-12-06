@@ -43,15 +43,27 @@ class ProviderTable extends React.Component {
         case 'max':
           return function (a,b) {
             //this.state.allMaxData[this.state.mode][row.name].value
-            let x = this.state.allMaxData[this.state.mode][a.name].value;
-            let y = this.state.allMaxData[this.state.mode][b.name].value;
+            let x = 0;
+            if (this.state.allMaxData[this.state.mode][a.name] !== undefined){
+              x = this.state.allMaxData[this.state.mode][a.name].value;
+            }
+            let y = 0;
+            if (this.state.allMaxData[this.state.mode][b.name] !== undefined){
+              y = this.state.allMaxData[this.state.mode][b.name].value;
+            }
             var result = (x < y) ? -1 : (x > y) ? 1 : 0;
             return result * sortOrder;
         }
         case 'value':
           return function (a,b) {
-            let x = this.state.data[a.name][0].value;
-            let y = this.state.data[b.name][0].value;
+            let x = 0;
+            if (this.state.data[b.name] !== undefined){
+              x = this.state.data[a.name][0].value;
+            }
+            let y = 0;
+            if (this.state.data[b.name] !== undefined){
+              y = this.state.data[b.name][0].value;
+            }
             var result = (x < y) ? -1 : (x > y) ? 1 : 0;
             return result * sortOrder;
         }
@@ -115,7 +127,7 @@ class ProviderTable extends React.Component {
             </div>
             </TableCell>
             <TableCell align="left">
-              <div className={((row.type == "Sidechain" || row.type === "Validium" || row.type === "State pools")?'l1':'l1 green')}>
+              <div className={(!(row.type == "Mainnet" || row.type === "Optimistic rollup" || row.type === "ZK rollup")?'l1':'l1 green')}>
                 {row.type}
               </div>
             </TableCell>

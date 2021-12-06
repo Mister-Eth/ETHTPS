@@ -20,6 +20,14 @@ import MetisDetails from './details/MetisDetails';
 import RoninDetails from './details/RoninDetails';
 import StarknetDetails from './details/StarknetDetails';
 import Nahmii20Details from './details/Nahmii20Details';
+import OMGNetworkDetails from './details/OMGNetworkDetails';
+import FuelDetails from './details/FuelDetails';
+import GluonDetails from './details/GluonDetails';
+import HabitatDetails from './details/HabitatDetails';
+import Layer2FinanceDetails from './details/Layer2FinanceDetails';
+import dYdXDetails from './details/dYdXDetails';
+import DiversiFiDetails from './details/DiversiFiDetails';
+import SorareDetails from './details/SorareDetails';
 import { globalGeneralApi, globalInstantDataService, to2DecimalPlaces } from '../../../services/common';
 import * as qs from 'query-string';
 import { Helmet } from 'react-helmet';
@@ -62,7 +70,15 @@ export default class NetworkPage extends PageWithQueryString {
         'Ronin': <RoninDetails name={this.state.name}/>,
         "Starknet": <StarknetDetails name={this.state.name}/>,
         'Nahmii 2.0': <Nahmii20Details name={this.state.name}/>,
-        'Binance Smart Chain': <BSCDetails name={this.state.name}/>
+        'Binance Smart Chain': <BSCDetails name={this.state.name}/>,
+        'OMG Network': <OMGNetworkDetails name={this.state.name}/>,
+        'Gluon': <GluonDetails name={this.state.name}/>,
+        'Habitat': <HabitatDetails name={this.state.name}/>,
+        'Fuel': <FuelDetails name={this.state.name}/>,
+        'Layer2.Finance': <Layer2FinanceDetails name={this.state.name}/>,
+        'dYdX': <DiversiFiDetails name={this.state.name}/>,
+        'Sorare': <SorareDetails name={this.state.name}/>,
+        'DiversiFi': <DiversiFiDetails name={this.state.name}/>,
     }
 
     updateInstantTPS(data){
