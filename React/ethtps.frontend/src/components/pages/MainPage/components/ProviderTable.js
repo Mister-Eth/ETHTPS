@@ -72,6 +72,11 @@ class ProviderTable extends React.Component {
             var result = (parseInt(a[property]) < parseInt(b[property])) ? -1 : (parseInt(a[property]) > parseInt(b[property])) ? 1 : 0;
             return result * sortOrder;
         }
+        case 'name':
+          return function (a,b) {
+            var result = (a[property].toUpperCase() < b[property].toUpperCase()) ? -1 : (a[property].toUpperCase() > b[property].toUpperCase()) ? 1 : 0;
+            return result * sortOrder;
+        }
         default:
           return function (a,b) {
             var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
@@ -99,7 +104,7 @@ class ProviderTable extends React.Component {
       if (this.state.colorDictionary === undefined){
         return <></>
       }
-      let noDataProviders = this.state.rows.filter(x => !this.noDataFilter(x));
+      let noDataProviders = this.state.rows.filter(x => !this.noDataFilter(x)).sort(this.dynamicSort(this.state.sort.columnName).bind(this));
       let noDataRows = <></>;
       if (noDataProviders.length > 0){
         noDataRows = <>
@@ -151,7 +156,7 @@ class ProviderTable extends React.Component {
       let tableBody = <></>
       if (this.state.data !== undefined){
         tableBody = <TableBody>
-        {this.state.rows.sort(this.dynamicSort(this.state.sort.columnName).bind(this)).filter(this.noDataFilter.bind(this)).map((row, i) => (
+        {this.state.rows.filter(this.noDataFilter.bind(this)).sort(this.dynamicSort(this.state.sort.columnName).bind(this)).map((row, i) => (
           <TableRow
             key={row.name}
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
