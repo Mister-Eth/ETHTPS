@@ -310,7 +310,7 @@ class ProviderTable extends React.Component {
         if (previousProps.providerData !== this.props.providerData){
             this.setState({providerData: this.props.providerData});
         }
-        if (previousProps.data !== this.props.data && this.props.data.length > 0){
+        if (previousProps.data !== this.props.data && && this.props.data !== undefined && this.props.data.length > 0){
             this.setState({data: this.props.data});
         }
         if (previousProps.providerData !== this.props.providerData){
