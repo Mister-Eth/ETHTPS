@@ -100,8 +100,9 @@ class ProviderTable extends React.Component {
     noDataFilter = function(x){
       return this.state.data[x.name] !== undefined && this.state.data[x.name][0] !== null &&(this.state.allMaxData[this.state.mode][x.name] !== undefined);
     }
+
     render(){
-      if (this.state.colorDictionary === undefined){
+      if (this.state.colorDictionary === undefined || this.state.data === undefined){
         return <></>
       }
       let noDataProviders = this.state.rows.filter(x => !this.noDataFilter(x)).sort(this.dynamicSort(this.state.sort.columnName).bind(this));
