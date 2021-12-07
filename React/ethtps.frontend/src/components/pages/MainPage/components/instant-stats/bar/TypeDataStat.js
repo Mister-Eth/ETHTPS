@@ -40,7 +40,7 @@ class TypeDataStat extends Component{
         if (state.providerData.length === 0 || state.data.length === 0 || state.colorDictionary === undefined)
             return [{}];
         let datasets = [];
-        for(let p of state.providerData.filter(x=>state.data[x.name] !== undefined)){
+        for(let p of state.providerData.filter(x=>state.data[x.name] !== undefined && state.data[x.name][0] !== null)){
             if (datasets.filter(x => x.label === p.type).length == 0){
                 datasets.push({
                     label: p.type,
@@ -48,10 +48,7 @@ class TypeDataStat extends Component{
                     backgroundColor: state.colorDictionary[p.type]
                 });
             }
-            try{
-                datasets.filter(x => x.label === p.type)[0].data[0] += state.data[p.name][0].value;
-            }
-            catch{}
+            datasets.filter(x => x.label === p.type)[0].data[0] += state.data[p.name][0].value;
         }
         return datasets;
     }
@@ -60,7 +57,7 @@ class TypeDataStat extends Component{
         if (state.data === undefined || state.data.length === 0)
             return 20;
         
-        let t = state.providerData.filter(x=>state.data[x.name] !== undefined).map(x=>state.data[x.name][0].value);
+        let t = state.providerData.filter(x=>state.data[x.name] !== undefined && state.data[x.name][0] !== null).map(x=>state.data[x.name][0].value);
         if (t.length === 0){
             return 0;
         }
