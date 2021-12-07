@@ -14,8 +14,19 @@ export default class LargeHeader extends React.Component{
         return <>
         <center>
         <br></br>
+
         <center>
-            <div  style={{backgroundColor: '#7289da', borderRadius:1, marginBottom: '10px'}}>
+            <div  style={{backgroundColor: '#3285a6', borderRadius:3, marginBottom: '0px'}}>
+            <a style={{color:'white', fontWeight: 'bold', fontSize: 15}} href={'https://gitcoin.co/grants/4139/ethtpsinfo'}>
+                Donate to ETHTPS.info's Gitcoin grant
+            </a>
+            </div>
+        </center>
+
+{/*
+
+<center>
+            <div  style={{backgroundColor: '#7289da', borderRadius:3, marginBottom: '0px'}}>
             <img className={"small-img"} src={blackDiscordIcon}></img>
             <a style={{color:'white', fontWeight: 'bold', fontSize: 15}} href={'https://discord.gg/jWPcsTzpCT'}>
             Click here to join our Discord channel
@@ -23,6 +34,8 @@ export default class LargeHeader extends React.Component{
             <img className={"small-img"} src={blackDiscordIcon}></img>
             </div>
         </center>
+
+*/}
 
         <Link to="/">
         <div className={"jumpy unselectable"}>ETHTPS.info</div>
