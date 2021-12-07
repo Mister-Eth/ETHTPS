@@ -48,7 +48,10 @@ class TypeDataStat extends Component{
                     backgroundColor: state.colorDictionary[p.type]
                 });
             }
-            datasets.filter(x => x.label === p.type)[0].data[0] += state.data[p.name][0].value;
+            try{
+                datasets.filter(x => x.label === p.type)[0].data[0] += state.data[p.name][0].value;
+            }
+            catch{}
         }
         return datasets;
     }
