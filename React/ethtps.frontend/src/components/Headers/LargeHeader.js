@@ -18,7 +18,7 @@ export default class LargeHeader extends React.Component{
         <center>
             <div  style={{backgroundColor: '#3285a6', borderRadius:3, marginBottom: '0px'}}>
             <a style={{color:'white', fontWeight: 'bold', fontSize: 15}} href={'https://gitcoin.co/grants/4139/ethtpsinfo'}>
-                Donate to ETHTPS.info's Gitcoin grant
+                Click here to donate to ETHTPS.info's Gitcoin grant
             </a>
             </div>
         </center>
