@@ -57,11 +57,11 @@ class ProviderTable extends React.Component {
         case 'value':
           return function (a,b) {
             let x = 0;
-            if (this.state.data[a.name] !== undefined){
+            if (this.state.data[a.name] !== undefined && this.state.data[a.name][0] !== null){
               x = this.state.data[a.name][0].value;
             }
             let y = 0;
-            if (this.state.data[b.name] !== undefined){
+            if (this.state.data[b.name] !== undefined && this.state.data[b.name][0] !== null){
               y = this.state.data[b.name][0].value;
             }
             var result = (x < y) ? -1 : (x > y) ? 1 : 0;
@@ -310,8 +310,8 @@ class ProviderTable extends React.Component {
         if (previousProps.providerData !== this.props.providerData){
             this.setState({providerData: this.props.providerData});
         }
-        if (previousProps.data !== this.props.data && this.props.data !== undefined && this.props.data.length > 0){
-            this.setState({data: this.props.data});
+        if (previousProps.data !== this.props.data && this.props.data !== undefined && Object.keys(this.props.data).length > 0){
+            this.setState({data: this.props.data}); 
         }
         if (previousProps.providerData !== this.props.providerData){
             this.setState({rows: this.props.providerData.map(this.createRow.bind(this))});
