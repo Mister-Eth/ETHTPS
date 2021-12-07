@@ -37,7 +37,10 @@ class TypeDataStat extends Component{
       }
 
     createDatasets(state){
-        if (state.providerData.length === 0 || state.data.length === 0 || state.colorDictionary === undefined)
+        if (state.providerData === undefined || state.data === undefined || state.colorDictionary === undefined){
+            return [{}];
+        }
+        if (state.providerData.length === 0 || state.data.length === 0)
             return [{}];
         let datasets = [];
         for(let p of state.providerData.filter(x=>state.data[x.name] !== undefined && state.data[x.name][0] !== null)){
