@@ -12,6 +12,7 @@ import HistoricalChart from '../../charts/HistoricalChart';
 import { Helmet } from 'react-helmet';
 import IntervalSlider from '../../IntervalSlider';
 import LargeHeader from '../../Headers/LargeHeader';
+import InstantDataStat3D from './components/instant-stats/3d/InstantDataStat3D';
 
 class MainPage extends React.Component {
 
@@ -224,7 +225,6 @@ class MainPage extends React.Component {
         Drag the slider above to change the period of the chart and compare the historical {formatModeName(this.state.mode)} distribution.
       </p>
       <hr/>
-
     <h3>
       Networks
     </h3>

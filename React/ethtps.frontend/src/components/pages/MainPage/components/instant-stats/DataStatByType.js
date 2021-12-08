@@ -8,6 +8,7 @@ import InstantDataStat from './bar/InstantDataStat'
 import TypeDataStat from './bar/TypeDataStat';
 import TreemapTypeDataStat from "./treemaps/TreemapTypeDataStat";
 import TotalDataSummaryStat from "./bar/TotalDataSummaryStat";
+import InstantDataStat3D from "./3d/InstantDataStat3D";
 
 export default class DataStatByType extends React.Component {
     constructor(props){
@@ -118,6 +119,12 @@ export default class DataStatByType extends React.Component {
             {title}
         </p>
         {stat}
+        
+        <InstantDataStat3D
+            data={this.state.data} 
+            colorDictionary={this.state.colorDictionary} 
+            mode={this.state.mode}
+            providerData={this.state.providerData}/>  
         </>
     }
 }
