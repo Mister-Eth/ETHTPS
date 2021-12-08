@@ -290,6 +290,11 @@ export default class HistoricalChart extends React.Component {
       this.updateChartFromModel(this.state.provider, "", year, this.state.network, this.state.mode);
     }
 
+    numberFormat = new Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 3
+    });
+
      render(){
        let linearProgress = <></>;
        if (this.state.loading){
@@ -338,8 +343,8 @@ export default class HistoricalChart extends React.Component {
                       type: this.transformScaleName(this.state.scale),
                       ticks: {
                         callback: function (value) {
-                            return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                        }
+                            return this.numberFormat.format(value);
+                        }.bind(this)
                       }
                     }
                   }
