@@ -1,10 +1,5 @@
 import './App.css';
-import githubIcon from './assets/600px-Octicons-mark-github.svg - inv.png';
-import twitterIcon from './assets/1486053611-twitter_79195.png';
-import discordIcon from './assets/discord-mascot.png';
-import blackDiscordIcon from './assets/discord-black-icon-703937.jpg';
 import React, { ReactDOM, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import Main from './Main';
 
 class App extends React.Component {
@@ -44,8 +39,11 @@ class App extends React.Component {
       </div>
       <br></br>
         Donate: 
+        <a style={{marginLeft:'5px'}} href="https://etthtps.eth">
+          ethtps.eth
+        </a>
         <p className={'ul-hover inline'} style={{marginLeft:'5px'}}>
-          0x466Ef24d68ac9b61670eeE7fC2E001B951aBf482
+          (0x466Ef24d68ac9b61670eeE7fC2E001B951aBf482)
         </p>
       </div>
     </footer>
