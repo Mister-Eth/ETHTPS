@@ -17,8 +17,22 @@ const formatModeName = function(mode) {
     }
   }
 
+const formatSmoothingName = function(smoothing){
+    smoothing = smoothing.replace("One", "1")
+    .replace("Minute", "m")
+    .replace("Hour", "h")
+    .replace("Day", "d")
+    .replace("Week", "w")
+    .replace("Month", "mo")
+    return smoothing;
+}
+
 const capitalizeFirstLetter = function(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-export { globalGeneralApi, globalGPSApi, globalTPSApi, globalInstantDataService, globalGasAdjustedTPSApi, formatModeName, capitalizeFirstLetter };
+const to2DecimalPlaces = function(num){
+    return Math.round((num + Number.EPSILON) * 100) / 100
+ }
+
+export { globalGeneralApi, globalGPSApi, globalTPSApi, globalInstantDataService, globalGasAdjustedTPSApi, formatSmoothingName, to2DecimalPlaces, formatModeName, capitalizeFirstLetter };

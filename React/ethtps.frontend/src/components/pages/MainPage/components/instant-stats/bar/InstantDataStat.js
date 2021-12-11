@@ -45,9 +45,9 @@ class InstantDataStat extends Component{
     }
 
     createDatasets(state){
-        if (state.providerData.length === 0 || state.data.length === 0 || state.colorDictionary === undefined)
+        if (state.data === undefined || state.providerData === undefined ||state.providerData.length === 0 || state.data.length === 0 || state.colorDictionary === undefined)
             return [{}];
-        let datasets = state.providerData.filter(x=>state.data[x.name] !== undefined).map(x => this.createDataset(x, state.data, state.colorDictionary));
+        let datasets = state.providerData.filter(x=>state.data[x.name] !== undefined && state.data[x.name][0] !== null).map(x => this.createDataset(x, state.data, state.colorDictionary));
         return datasets;
     }
 
@@ -55,7 +55,7 @@ class InstantDataStat extends Component{
         if (state.data === undefined || state.data.length === 0)
             return 20;
         
-        let t = state.providerData.filter(x=>state.data[x.name] !== undefined).map(x=>state.data[x.name][0].value);
+        let t = state.providerData.filter(x=>state.data[x.name] !== undefined  && state.data[x.name][0] !== null).map(x=>state.data[x.name][0].value);
         if (t.length === 0){
             return 0;
         }

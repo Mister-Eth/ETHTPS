@@ -104,7 +104,7 @@ var EthtpsApi = require('ethtps_api');
 var api = new EthtpsApi.GPSApi()
 var opts = {
   'provider': "provider_example", // {String} 
-  'interval': "interval_example", // {String} 
+  'year': 56, // {Number} 
   'network': "'Mainnet'", // {String} 
   'includeSidechains': true // {Boolean} 
 };
@@ -115,7 +115,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.aPIGPSGetGet(opts, callback);
+api.aPIGPSGeMonthlyDataByYearGet(opts, callback);
 
 ```
 
@@ -125,28 +125,31 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*EthtpsApi.GPSApi* | [**aPIGPSGeMonthlyDataByYearGet**](docs/GPSApi.md#aPIGPSGeMonthlyDataByYearGet) | **GET** /API/GPS/GeMonthlyDataByYear | 
 *EthtpsApi.GPSApi* | [**aPIGPSGetGet**](docs/GPSApi.md#aPIGPSGetGet) | **GET** /API/GPS/Get | 
 *EthtpsApi.GPSApi* | [**aPIGPSInstantGet**](docs/GPSApi.md#aPIGPSInstantGet) | **GET** /API/GPS/Instant | 
 *EthtpsApi.GPSApi* | [**aPIGPSMaxGet**](docs/GPSApi.md#aPIGPSMaxGet) | **GET** /API/GPS/Max | 
+*EthtpsApi.GasAdjustedTPSApi* | [**aPIGasAdjustedTPSGeMonthlyDataByYearGet**](docs/GasAdjustedTPSApi.md#aPIGasAdjustedTPSGeMonthlyDataByYearGet) | **GET** /API/GasAdjustedTPS/GeMonthlyDataByYear | 
 *EthtpsApi.GasAdjustedTPSApi* | [**aPIGasAdjustedTPSGetGet**](docs/GasAdjustedTPSApi.md#aPIGasAdjustedTPSGetGet) | **GET** /API/GasAdjustedTPS/Get | 
 *EthtpsApi.GasAdjustedTPSApi* | [**aPIGasAdjustedTPSInstantGet**](docs/GasAdjustedTPSApi.md#aPIGasAdjustedTPSInstantGet) | **GET** /API/GasAdjustedTPS/Instant | 
 *EthtpsApi.GasAdjustedTPSApi* | [**aPIGasAdjustedTPSMaxGet**](docs/GasAdjustedTPSApi.md#aPIGasAdjustedTPSMaxGet) | **GET** /API/GasAdjustedTPS/Max | 
 *EthtpsApi.GeneralApi* | [**aPIV2ColorDictionaryGet**](docs/GeneralApi.md#aPIV2ColorDictionaryGet) | **GET** /API/v2/ColorDictionary | 
+*EthtpsApi.GeneralApi* | [**aPIV2GetIntervalsWithDataGet**](docs/GeneralApi.md#aPIV2GetIntervalsWithDataGet) | **GET** /API/v2/GetIntervalsWithData | 
+*EthtpsApi.GeneralApi* | [**aPIV2GetUniqueDataYearsGet**](docs/GeneralApi.md#aPIV2GetUniqueDataYearsGet) | **GET** /API/v2/GetUniqueDataYears | 
 *EthtpsApi.GeneralApi* | [**aPIV2InstantDataGet**](docs/GeneralApi.md#aPIV2InstantDataGet) | **GET** /API/v2/InstantData | 
 *EthtpsApi.GeneralApi* | [**aPIV2IntervalsGet**](docs/GeneralApi.md#aPIV2IntervalsGet) | **GET** /API/v2/Intervals | 
 *EthtpsApi.GeneralApi* | [**aPIV2MaxGet**](docs/GeneralApi.md#aPIV2MaxGet) | **GET** /API/v2/Max | 
 *EthtpsApi.GeneralApi* | [**aPIV2NetworksGet**](docs/GeneralApi.md#aPIV2NetworksGet) | **GET** /API/v2/Networks | 
 *EthtpsApi.GeneralApi* | [**aPIV2ProviderTypesColorDictionaryGet**](docs/GeneralApi.md#aPIV2ProviderTypesColorDictionaryGet) | **GET** /API/v2/ProviderTypesColorDictionary | 
 *EthtpsApi.GeneralApi* | [**aPIV2ProvidersGet**](docs/GeneralApi.md#aPIV2ProvidersGet) | **GET** /API/v2/Providers | 
+*EthtpsApi.TPSApi* | [**aPITPSGeMonthlyDataByYearGet**](docs/TPSApi.md#aPITPSGeMonthlyDataByYearGet) | **GET** /API/TPS/GeMonthlyDataByYear | 
 *EthtpsApi.TPSApi* | [**aPITPSGetGet**](docs/TPSApi.md#aPITPSGetGet) | **GET** /API/TPS/Get | 
 *EthtpsApi.TPSApi* | [**aPITPSInstantGet**](docs/TPSApi.md#aPITPSInstantGet) | **GET** /API/TPS/Instant | 
 *EthtpsApi.TPSApi* | [**aPITPSMaxGet**](docs/TPSApi.md#aPITPSMaxGet) | **GET** /API/TPS/Max | 
-*EthtpsApi.TestApi* | [**aPITestGetBlockInfoGet**](docs/TestApi.md#aPITestGetBlockInfoGet) | **GET** /API/Test/GetBlockInfo | 
 
 
 ## Documentation for Models
 
- - [EthtpsApi.BlockInfo](docs/BlockInfo.md)
  - [EthtpsApi.DataPoint](docs/DataPoint.md)
  - [EthtpsApi.DataResponseModel](docs/DataResponseModel.md)
  - [EthtpsApi.ProviderResponseModel](docs/ProviderResponseModel.md)

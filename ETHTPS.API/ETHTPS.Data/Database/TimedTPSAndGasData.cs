@@ -18,4 +18,6 @@ namespace ETHTPS.Data.Database
     public class TpsandGasDataHour : TimedTPSAndGasData { }
     public class TpsandGasDataWeek : TimedTPSAndGasData { }
     public class TpsandGasDataMonth : TimedTPSAndGasData { }
+    public class TpsandGasDataAll : TimedTPSAndGasData { }
+    public class TpsandGasDataYear : TimedTPSAndGasData { }
 }

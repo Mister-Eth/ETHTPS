@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ETHTPS.Data.Extensions;
+
+using Microsoft.EntityFrameworkCore;
 
 using System;
 using System.Collections.Generic;
@@ -13,16 +15,26 @@ namespace ETHTPS.Data.Database.HistoricalDataProviders
     {
         private readonly ETHTPSContext _context;
         private readonly Func<ETHTPSContext, DbSet<TTargetHistoricalData>> _dataSelector;
+        private readonly TimeSpan _maxAge;
 
-        protected HistoricalDataProviderBase(string interval, ETHTPSContext context, Func<ETHTPSContext, DbSet<TTargetHistoricalData>> dataSelector)
+        protected HistoricalDataProviderBase(string interval, ETHTPSContext context, Func<ETHTPSContext, DbSet<TTargetHistoricalData>> dataSelector, TimeSpan maxAge)
         {
             Interval = interval;
             _context = context;
             _dataSelector = dataSelector;
+            _maxAge = maxAge;
         }
 
         public string Interval { get; private set; }
 
-        public IEnumerable<TimedTPSAndGasData> GetData(string provider, string network) => _dataSelector(_context).Where(x => x.NetworkNavigation.Name == network && x.ProviderNavigation.Name == provider).OrderBy(x => x.StartDate);
+        public IEnumerable<TimedTPSAndGasData> GetData(string provider, string network)
+        {
+            IEnumerable<TimedTPSAndGasData> result;
+            lock (_context.LockObj)
+            {
+                result = _dataSelector(_context).Where(x => x.NetworkNavigation.Name == network && x.ProviderNavigation.Name == provider).DistinctBy(x => x.StartDate).OrderBy(x => x.StartDate).ToList().Where(x => DateTime.Now.ToUniversalTime().Subtract(x.StartDate) <= _maxAge);
+            }
+            return result;
+        }
     }
 }

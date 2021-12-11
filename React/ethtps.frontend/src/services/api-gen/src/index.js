@@ -13,7 +13,6 @@
 
 
 import ApiClient from './ApiClient';
-import BlockInfo from './model/BlockInfo';
 import DataPoint from './model/DataPoint';
 import DataResponseModel from './model/DataResponseModel';
 import ProviderResponseModel from './model/ProviderResponseModel';
@@ -21,7 +20,6 @@ import GPSApi from './api/GPSApi';
 import GasAdjustedTPSApi from './api/GasAdjustedTPSApi';
 import GeneralApi from './api/GeneralApi';
 import TPSApi from './api/TPSApi';
-import TestApi from './api/TestApi';
 
 
 /**
@@ -63,12 +61,6 @@ export {
     ApiClient,
 
     /**
-     * The BlockInfo model constructor.
-     * @property {module:model/BlockInfo}
-     */
-    BlockInfo,
-
-    /**
      * The DataPoint model constructor.
      * @property {module:model/DataPoint}
      */
@@ -108,11 +100,5 @@ export {
     * The TPSApi service constructor.
     * @property {module:api/TPSApi}
     */
-    TPSApi,
-
-    /**
-    * The TestApi service constructor.
-    * @property {module:api/TestApi}
-    */
-    TestApi
+    TPSApi
 };

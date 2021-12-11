@@ -4,10 +4,62 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**aPIGasAdjustedTPSGeMonthlyDataByYearGet**](GasAdjustedTPSApi.md#aPIGasAdjustedTPSGeMonthlyDataByYearGet) | **GET** /API/GasAdjustedTPS/GeMonthlyDataByYear | 
 [**aPIGasAdjustedTPSGetGet**](GasAdjustedTPSApi.md#aPIGasAdjustedTPSGetGet) | **GET** /API/GasAdjustedTPS/Get | 
 [**aPIGasAdjustedTPSInstantGet**](GasAdjustedTPSApi.md#aPIGasAdjustedTPSInstantGet) | **GET** /API/GasAdjustedTPS/Instant | 
 [**aPIGasAdjustedTPSMaxGet**](GasAdjustedTPSApi.md#aPIGasAdjustedTPSMaxGet) | **GET** /API/GasAdjustedTPS/Max | 
 
+
+
+## aPIGasAdjustedTPSGeMonthlyDataByYearGet
+
+> {String: [DataResponseModel]} aPIGasAdjustedTPSGeMonthlyDataByYearGet(opts)
+
+
+
+### Example
+
+```javascript
+import EthtpsApi from 'ethtps_api';
+
+let apiInstance = new EthtpsApi.GasAdjustedTPSApi();
+let opts = {
+  'provider': "provider_example", // String | 
+  'year': 56, // Number | 
+  'network': "'Mainnet'", // String | 
+  'includeSidechains': true // Boolean | 
+};
+apiInstance.aPIGasAdjustedTPSGeMonthlyDataByYearGet(opts, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+});
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **provider** | **String**|  | [optional] 
+ **year** | **Number**|  | [optional] 
+ **network** | **String**|  | [optional] [default to &#39;Mainnet&#39;]
+ **includeSidechains** | **Boolean**|  | [optional] [default to true]
+
+### Return type
+
+**{String: [DataResponseModel]}**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: text/plain, application/json, text/json
 
 
 ## aPIGasAdjustedTPSGetGet

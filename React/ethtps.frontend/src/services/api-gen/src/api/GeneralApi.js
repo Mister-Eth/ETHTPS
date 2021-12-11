@@ -70,6 +70,88 @@ export default class GeneralApi {
     }
 
     /**
+     * Callback function to receive the result of the aPIV2GetIntervalsWithDataGet operation.
+     * @callback module:api/GeneralApi~aPIV2GetIntervalsWithDataGetCallback
+     * @param {String} error Error message, if any.
+     * @param {Array.<String>} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Object} opts Optional parameters
+     * @param {String} opts.provider 
+     * @param {String} opts.network  (default to 'Mainnet')
+     * @param {module:api/GeneralApi~aPIV2GetIntervalsWithDataGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link Array.<String>}
+     */
+    aPIV2GetIntervalsWithDataGet(opts, callback) {
+      opts = opts || {};
+      let postBody = null;
+
+      let pathParams = {
+      };
+      let queryParams = {
+        'provider': opts['provider'],
+        'network': opts['network']
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = ['text/plain', 'application/json', 'text/json'];
+      let returnType = ['String'];
+      return this.apiClient.callApi(
+        '/API/v2/GetIntervalsWithData', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the aPIV2GetUniqueDataYearsGet operation.
+     * @callback module:api/GeneralApi~aPIV2GetUniqueDataYearsGetCallback
+     * @param {String} error Error message, if any.
+     * @param {Array.<String>} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Object} opts Optional parameters
+     * @param {String} opts.provider 
+     * @param {String} opts.network  (default to 'Mainnet')
+     * @param {module:api/GeneralApi~aPIV2GetUniqueDataYearsGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link Array.<String>}
+     */
+    aPIV2GetUniqueDataYearsGet(opts, callback) {
+      opts = opts || {};
+      let postBody = null;
+
+      let pathParams = {
+      };
+      let queryParams = {
+        'provider': opts['provider'],
+        'network': opts['network']
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = ['text/plain', 'application/json', 'text/json'];
+      let returnType = ['String'];
+      return this.apiClient.callApi(
+        '/API/v2/GetUniqueDataYears', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
      * Callback function to receive the result of the aPIV2InstantDataGet operation.
      * @callback module:api/GeneralApi~aPIV2InstantDataGetCallback
      * @param {String} error Error message, if any.
@@ -80,6 +162,8 @@ export default class GeneralApi {
     /**
      * @param {Object} opts Optional parameters
      * @param {Boolean} opts.includeSidechains  (default to true)
+     * @param {String} opts.network  (default to 'Mainnet')
+     * @param {String} opts.smoothing  (default to '')
      * @param {module:api/GeneralApi~aPIV2InstantDataGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Object.<String, {String: Object}>}
      */
@@ -90,7 +174,9 @@ export default class GeneralApi {
       let pathParams = {
       };
       let queryParams = {
-        'includeSidechains': opts['includeSidechains']
+        'includeSidechains': opts['includeSidechains'],
+        'network': opts['network'],
+        'smoothing': opts['smoothing']
       };
       let headerParams = {
       };

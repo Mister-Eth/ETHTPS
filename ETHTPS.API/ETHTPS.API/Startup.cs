@@ -22,6 +22,8 @@ using ETHTPS.Services.BlockchainServices.Scan.Implementations;
 using ETHTPS.Services.BlockchainServices;
 using ETHTPS.Services.BlockchainServices.Scan;
 using ETHTPS.Data.Database.HistoricalDataProviders;
+using ETHTPS.API.Infrastructure.Services;
+using ETHTPS.API.Infrastructure.Services.Implementations;
 
 namespace ETHTPS.API
 {
@@ -57,20 +59,62 @@ namespace ETHTPS.API
             {
                 c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             });
-            services.AddDbContext<ETHTPSContext>(options => options.UseSqlServer(defaultConnectionString));
+            services.AddDbContext<ETHTPSContext>(options => options.UseSqlServer(defaultConnectionString), ServiceLifetime.Transient);
             services.AddMemoryCache();
-            InitializeHangFire(defaultConnectionString);
-            services.AddHangfire(x => x.UseSqlServerStorage(defaultConnectionString));
-            services.AddHangfireServer();
-            AddTPSDataUpdaters(services);
-            AddCacheUpdaters(services);
+
+            AddServices(services);
             AddHistoricalDataProviders(services);
+            if (ConfigurationQueues?.Length > 0)
+            {
+                InitializeHangFire(defaultConnectionString);
+                services.AddHangfire(x => x.UseSqlServerStorage(defaultConnectionString));
+                services.AddHangfireServer();
+                AddTPSDataUpdaters(services);
+                AddCacheUpdaters(services);
+                AddHistoricalBlockInfoDataUpdaters(services);
+                AddTimeWarpUpdaters(services);
+            }
+           
         }
+
+        private void AddServices(IServiceCollection services)
+        {
+            services.AddScoped<TPSService>();
+            services.AddScoped<GPSService>();
+            services.AddScoped<GasAdjustedTPSService>();
+            services.AddScoped<GeneralService>();
+            services.AddScoped<TimeWarpService>();
+        }
+
+        private void AddHistoricalBlockInfoDataUpdaters(IServiceCollection services)
+        {
+            if (ConfigurationQueues.Contains(HISTORICALUPDATERQUEUE))
+            {
+                     //services.RegisterHistoricalHangfireBackgroundService<HangfireHistoricalBlockInfoProviderDataLogger<EtherscanBlockInfoProvider>, EtherscanBlockInfoProvider>(CronConstants.EveryMidnight, HISTORICALUPDATERQUEUE);
+                     services.RegisterHistoricalHangfireBackgroundService<HangfireHistoricalBlockInfoProviderDataLogger<InfuraBlockInfoProvider>, InfuraBlockInfoProvider>(CronConstants.EveryMidnight, HISTORICALUPDATERQUEUE);
+                     services.RegisterHistoricalHangfireBackgroundService<HangfireHistoricalBlockInfoProviderDataLogger<MetisBlockInfoProvider>, MetisBlockInfoProvider>(CronConstants.EveryMidnight, HISTORICALUPDATERQUEUE);
+                     services.RegisterHistoricalHangfireBackgroundService<HangfireHistoricalBlockInfoProviderDataLogger<ArbiscanBlockInfoProvider>, ArbiscanBlockInfoProvider>(CronConstants.EveryMidnight, HISTORICALUPDATERQUEUE);
+                     services.RegisterHistoricalHangfireBackgroundService<HangfireHistoricalBlockInfoProviderDataLogger<OptimisticEthereumBlockInfoProvider>, OptimisticEthereumBlockInfoProvider>(CronConstants.EveryMidnight, HISTORICALUPDATERQUEUE);
+                     services.RegisterHistoricalHangfireBackgroundService<HangfireHistoricalBlockInfoProviderDataLogger<PolygonScanBlockInfoProvider>, PolygonScanBlockInfoProvider>(CronConstants.EveryMidnight, HISTORICALUPDATERQUEUE);
+                     services.RegisterHistoricalHangfireBackgroundService<HangfireHistoricalBlockInfoProviderDataLogger<XDAIBlockInfoProvider>, XDAIBlockInfoProvider>(CronConstants.EveryMidnight, HISTORICALUPDATERQUEUE);
+                     services.RegisterHistoricalHangfireBackgroundService<HangfireHistoricalBlockInfoProviderDataLogger<ZKSwapBlockInfoProvider>, ZKSwapBlockInfoProvider>(CronConstants.EveryMidnight, HISTORICALUPDATERQUEUE);
+                     services.RegisterHistoricalHangfireBackgroundService<HangfireHistoricalBlockInfoProviderDataLogger<ZKSsyncBlockInfoProvider>, ZKSsyncBlockInfoProvider>(CronConstants.EveryMidnight, HISTORICALUPDATERQUEUE);
+                     services.RegisterHistoricalHangfireBackgroundService<HangfireHistoricalBlockInfoProviderDataLogger<SnowTraceBlockInfoProvider>, SnowTraceBlockInfoProvider>(CronConstants.EveryMidnight, HISTORICALUPDATERQUEUE);
+                     services.RegisterHistoricalHangfireBackgroundService<HangfireHistoricalBlockInfoProviderDataLogger<BobaNetworkBlockInfoProvider>, BobaNetworkBlockInfoProvider>(CronConstants.EveryMidnight, HISTORICALUPDATERQUEUE);
+                     services.RegisterHistoricalHangfireBackgroundService<HangfireHistoricalBlockInfoProviderDataLogger<LoopringBlockInfoProvider>, LoopringBlockInfoProvider>(CronConstants.EveryMidnight, HISTORICALUPDATERQUEUE);
+                     services.RegisterHistoricalHangfireBackgroundService<HangfireHistoricalBlockInfoProviderDataLogger<AztecBlockInfoProvider>, AztecBlockInfoProvider>(CronConstants.EveryMidnight, HISTORICALUPDATERQUEUE);
+                     services.RegisterHistoricalHangfireBackgroundService<HangfireHistoricalBlockInfoProviderDataLogger<VoyagerBlockInfoProvider>, VoyagerBlockInfoProvider>(CronConstants.EveryMidnight, HISTORICALUPDATERQUEUE);
+                     services.RegisterHistoricalHangfireBackgroundService<HangfireHistoricalBlockInfoProviderDataLogger<Nahmii20BlockInfoProvider>, Nahmii20BlockInfoProvider>(CronConstants.EveryMidnight, HISTORICALUPDATERQUEUE);
+                     services.RegisterHistoricalHangfireBackgroundService<HangfireHistoricalBlockInfoProviderDataLogger<BSCScanBlockInfoProvider>, BSCScanBlockInfoProvider>(CronConstants.EveryMidnight, HISTORICALUPDATERQUEUE);
+            }
+        }
+
         private void AddTPSDataUpdaters(IServiceCollection services)
         {
             if (ConfigurationQueues.Contains(TPSUPDATERQUEUE))
             {
-                services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<EtherscanBlockInfoProvider>, EtherscanBlockInfoProvider>(CronConstants.Every13s, TPSUPDATERQUEUE);
+                //services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<EtherscanBlockInfoProvider>, EtherscanBlockInfoProvider>(CronConstants.Every13s, TPSUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<InfuraBlockInfoProvider>, InfuraBlockInfoProvider>(CronConstants.Every13s, TPSUPDATERQUEUE);
                 services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<PolygonScanBlockInfoProvider>, PolygonScanBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
                 services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<ArbiscanBlockInfoProvider>, ArbiscanBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
                 services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<OptimisticEthereumBlockInfoProvider>, OptimisticEthereumBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
@@ -80,6 +124,15 @@ namespace ETHTPS.API
                 services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<XDAIBlockInfoProvider>, XDAIBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
                 services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<ZKSwapBlockInfoProvider>, ZKSwapBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
                 services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<ZKSsyncBlockInfoProvider>, ZKSsyncBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<AztecBlockInfoProvider>, AztecBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<ImmutableXBlockInfoProvider>, ImmutableXBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<MetisBlockInfoProvider>, MetisBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<RoninBlockInfoProvider>, RoninBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<VoyagerBlockInfoProvider>, VoyagerBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<Nahmii20BlockInfoProvider>, Nahmii20BlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<BSCScanBlockInfoProvider>, BSCScanBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<OMGNetworkBlockInfoProvider>, OMGNetworkBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<ZKTubeBlockInfoProvider>, ZKTubeBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
             }
         }
 
@@ -87,7 +140,15 @@ namespace ETHTPS.API
         {
             if (ConfigurationQueues.Contains(CACHEUPDATERQUEUE))
             {
+                
+            }
+        }
 
+        private void AddTimeWarpUpdaters(IServiceCollection services)
+        {
+            if (ConfigurationQueues.Contains(TIMEWARPUPDATERQUEUE))
+            {
+                services.RegisterTimeWarpHangfireBackgroundService<TimeWarpBlockInfoProviderDataLogger<InfuraBlockInfoProvider>, InfuraBlockInfoProvider>(CronConstants.EveryMidnight, TIMEWARPUPDATERQUEUE);
             }
         }
 
@@ -97,6 +158,8 @@ namespace ETHTPS.API
             services.AddScoped<IHistoricalDataProvider, OneDayHistoricalDataProvider>();
             services.AddScoped<IHistoricalDataProvider, OneWeekHistoricalDataProvider>();
             services.AddScoped<IHistoricalDataProvider, OneMonthHistoricalDataProvider>();
+            services.AddScoped<IHistoricalDataProvider, OneYearHistoricalDataProvider>();
+            services.AddScoped<IHistoricalDataProvider, AllHistoricalDataProvider>();
         }
 
         public static void InitializeHangFire(string connectionString)
@@ -107,6 +170,8 @@ namespace ETHTPS.API
 
         private const string TPSUPDATERQUEUE = "tpsdata";
         private const string CACHEUPDATERQUEUE = "cache";
+        private const string HISTORICALUPDATERQUEUE = "historical";
+        private const string TIMEWARPUPDATERQUEUE = "timewarp";
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
@@ -120,14 +185,16 @@ namespace ETHTPS.API
             });
             app.UseMiddleware<AccesStatsMiddleware>();
             // GlobalConfiguration.Configuration.UseActivator(new HangfireActivator(serviceProvider));
-
-            app.UseHangfireServer(options: new BackgroundJobServerOptions()
+            if (ConfigurationQueues?.Length > 0)
             {
-                Queues = ConfigurationQueues ?? new string[] { "default" }
-            });
-            if (Configuration.GetSection("Hangfire").GetValue<bool>("Show"))
-            {
-                app.UseHangfireDashboard();
+                app.UseHangfireServer(options: new BackgroundJobServerOptions()
+                {
+                    Queues = ConfigurationQueues ?? new string[] { "default" }
+                });
+                if (Configuration.GetSection("Hangfire").GetValue<bool>("Show"))
+                {
+                    app.UseHangfireDashboard();
+                }
             }
             app.UseSwagger();
             app.UseSwaggerUI(c =>

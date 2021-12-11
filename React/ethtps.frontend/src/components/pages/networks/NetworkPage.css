@@ -3,3 +3,19 @@
     height: 40px;
     margin-right: 10px;
 }
+
+.fcontainer{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content:center;
+}
+
+.fitem{
+    align-self: flex-start;
+    max-width: 450px;
+    display: inline;
+}
+
+.s-padding{
+    padding: 10px;
+}

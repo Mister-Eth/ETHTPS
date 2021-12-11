@@ -36,7 +36,7 @@ export default class InfoTypeSelector extends React.Component {
             onChange={this.handleInfoTypeChange}>
             <ToggleButton value="tps">tps</ToggleButton>
             <ToggleButton value="gps">gps</ToggleButton>
-            <ToggleButton value="gasAdjustedTPS">G~TPS</ToggleButton>
+            <ToggleButton value="gasAdjustedTPS">GTPS</ToggleButton>
         </ToggleButtonGroup>
     }
 }

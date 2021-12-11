@@ -1,4 +1,5 @@
-﻿using ETHTPS.Data;
+﻿using ETHTPS.API.Infrastructure.Services.Implementations;
+using ETHTPS.Data;
 using ETHTPS.Data.Database;
 using ETHTPS.Data.Database.Extensions;
 using ETHTPS.Data.Database.HistoricalDataProviders;
@@ -16,84 +17,71 @@ using System.Threading.Tasks;
 namespace ETHTPS.API.Controllers
 {
     [Route("API/v2/[action]")]
-    public class GeneralController : APIControllerWithHistoricalMethodsBase
+    public class GeneralController
     {
-        public GeneralController(ETHTPSContext context, IEnumerable<IHistoricalDataProvider> historicalDataProviders) : base(context, historicalDataProviders)
+        private readonly GeneralService _generalService;
+
+        public GeneralController(GeneralService generalService)
         {
+            _generalService = generalService;
         }
 
         [HttpGet]
         public IEnumerable<string> Networks()
         {
-            return Context.Networks.Select(x => x.Name);
+            return _generalService.Networks();
         }
 
         [HttpGet]
-        public IEnumerable<string> Intervals() => TimeIntervals();
+        public IEnumerable<string> Intervals()
+        {
+            return _generalService.Intervals();
+        }
 
 
         [HttpGet]
         public IEnumerable<ProviderResponseModel> Providers()
         {
-            return Context.Providers.ToList().Select(x => new ProviderResponseModel()
-            {
-                Name = x.Name,
-                Type = x.TypeNavigation.Name,
-                Color = x.ProviderProperties.First(x => x.Name == "Color").Value
-            });
+            return _generalService.Providers();
         }
 
         [HttpGet]
-        public IDictionary<string, string> ColorDictionary() => Context.ProviderProperties.Where(x => x.Name == "Color").ToDictionary(x => x.ProviderNavigation.Name, x => x.Value);
-
-        [HttpGet]
-        public IDictionary<string, string> ProviderTypesColorDictionary() => Context.ProviderTypeProperties.Where(x => x.Name == "Color").ToDictionary(x => x.ProviderTypeNavigation.Name, x => x.Value);
-
-        [HttpGet]
-        public IDictionary<string, object> InstantData(bool includeSidechains = true)
+        public IDictionary<string, string> ColorDictionary()
         {
-            var result = new Dictionary<string, object>();
-            var tpsController = new TPSController(Context, HistoricalDataProviders);
-            var gpsController = new GPSController(Context, HistoricalDataProviders);
-            var gasAdjustedTPSController = new GasAdjustedTPSController(Context, HistoricalDataProviders);
-            var instantGPS = gpsController.Instant(includeSidechains);
-            result.Add("tps", tpsController.Instant(includeSidechains));
-            result.Add("gps", instantGPS);
-            result.Add("gasAdjustedTPS", gasAdjustedTPSController.Instant(includeSidechains));
-            return result;
+            return _generalService.ColorDictionary();
+        }
+
+        [HttpGet]
+        public IDictionary<string, string> ProviderTypesColorDictionary()
+        {
+            return _generalService.ProviderTypesColorDictionary();
+        }
+
+        [HttpGet]
+        public IDictionary<string, object> InstantData(bool includeSidechains = true, string network = "Mainnet", string smoothing = "")
+        {
+            return _generalService.InstantData(includeSidechains, network, smoothing);
         }
 
         [HttpGet]
         public IDictionary<string, object> Max(string provider, string network = "Mainnet")
         {
-            var result = new Dictionary<string, object>();
-            var tpsController = new TPSController(Context, HistoricalDataProviders);
-            var gpsController = new GPSController(Context, HistoricalDataProviders);
-            var maxGPS = gpsController.Max(provider, network);
-            result.Add("tps", tpsController.Max(provider, network));
-            result.Add("gps", maxGPS);
-            var gasAdjustedTPSController = new GasAdjustedTPSController(Context, HistoricalDataProviders);
-            result.Add("gasAdjustedTPS", gasAdjustedTPSController.Max(provider, network));
-            return result;
+            return _generalService.Max(provider, network);
         }
 
-        /*
+        /// <summary>
+        /// Used for displaying chart buttons.
+        /// </summary>
         [HttpGet]
-        public async Task<HomePageViewModel> HomePageModelAsync(string network = "Mainnet")
+        public IEnumerable<string> GetIntervalsWithData(string provider, string network = "Mainnet")
         {
-            return new HomePageViewModel()
-            {
-                InstantTPS = await InstantTPSAsync(),
-                ColorDictionary = _context.Providers.ToDictionary(x => x.Name, x => x.Color),
-                ProviderData = _context.Providers.Select(x => new ProviderInfo()
-                {
-                    Name = x.Name,
-                    MaxTPS = MaxTPS(x.Name).FirstOrDefault().Data.FirstOrDefault().TPS,
-                    Type = x.Type
-                }),
-                //TPSData = await BuildTPSDataAsync(network)
-            };
+            return _generalService.GetIntervalsWithData(provider, network);
         }
-        */
+
+        [HttpGet]
+        public IEnumerable<string> GetUniqueDataYears(string provider, string network = "Mainnet")
+        {
+            return _generalService.GetUniqueDataYears(provider, network);
+        }
     }
 }

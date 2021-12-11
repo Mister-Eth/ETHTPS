@@ -1,4 +1,4 @@
-import gasIcon from '../../../assets/gas.png'
+import gasIcon from '../../../assets/gas inv.png'
 import numberIcon from '../../../assets/number_two_icon_178223.png';
 import gasAdjustedIcon from '../../../assets/gas-adj.png';
 import React from 'react';
@@ -10,48 +10,56 @@ export default class ModeSelector extends React.Component {
         super(props);
         
         this.state = {
-            mode: props.defaultMode
+            mode: props.defaultMode,
+            showGradient: true
         }
     }
 
     gpsSelected(){
         this.props.onChange('gps');
         this.setState({mode: 'gps'});
+        this.hideGradient();
     }
 
     tpsSelected(){
         this.props.onChange('tps');
         this.setState({mode: 'tps'});
+        this.hideGradient();
     }
 
     gasAdjustedSelected(){
         this.props.onChange('gasAdjustedTPS');
         this.setState({mode: 'gasAdjustedTPS'});
+        this.hideGradient();
     }
 
-    
+    hideGradient(){
+        if (this.state.showGradient){
+            this.setState({showGradient: false})
+        }
+    }
 
     render(){
         let image = {};
         let para;
         let text = capitalizeFirstLetter(formatModeName(this.state.mode)) + ' mode';
+        let style = {cursor:'pointer'};
         switch(this.state.mode){
             case 'tps':
                 image = <img className={'small-img'} title={'Gas mode'} src={gasIcon} onClick={this.gpsSelected.bind(this)}/>;
-                para = <p className={'inline'} style={{cursor:'pointer'}} onClick={this.gpsSelected.bind(this)}>{text}</p>;
+                para = <p className={'inline'} style={style} onClick={this.gpsSelected.bind(this)}>{text}</p>;
                 break;
             case 'gps':
                 image = <img className={'small-img'} title={'Gas-adjusted TPS mode'} src={gasAdjustedIcon} onClick={this.gasAdjustedSelected.bind(this)}/>;
-                para = <p className={'inline'} style={{cursor:'pointer'}} onClick={this.gasAdjustedSelected.bind(this)}>{text}</p>;
+                para = <p className={'inline'} style={style} onClick={this.gasAdjustedSelected.bind(this)}>{text}</p>;
                 break;
             case 'gasAdjustedTPS':
                 image = <img className={'small-img'} title={'TPS mode'} src={numberIcon} onClick={this.tpsSelected.bind(this)}/>;
-                para = <p className={'inline'} style={{cursor:'pointer'}} onClick={this.tpsSelected.bind(this)}>{text}</p>;
+                para = <p className={'inline'} style={style} onClick={this.tpsSelected.bind(this)}>{text}</p>;
                 break;
         }
         return <>
-            <div className={'top-right box inline'} style={{backgroundColor:'#f1f2f2'}}>
-               
+            <div style={style} className={'top-right box inline' + (this.state.showGradient?" gradient-border" : "")}>
                 {image}
             </div>
         </>;

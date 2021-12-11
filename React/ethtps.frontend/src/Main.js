@@ -1,6 +1,7 @@
 import App from './App';
 import MainPage from './components/pages/MainPage/MainPage';
 import NetworkPage from './components/pages/networks/NetworkPage';
+import TimeWarpPage from './components/pages/TimeWarpPage';
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
@@ -13,7 +14,8 @@ export default class Main extends React.Component {
     return (
       <Switch> 
         <Route exact path='/' component={MainPage}></Route>
-        <Route exact path='/Network' component={NetworkPage}></Route>
+        <Route path='/Network/' component={NetworkPage}></Route>
+        <Route path='/TimeWarp/' component={TimeWarpPage}></Route>
       </Switch>
     );
   }

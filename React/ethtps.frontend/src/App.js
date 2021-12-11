@@ -1,9 +1,6 @@
 import './App.css';
-import githubIcon from './assets/600px-Octicons-mark-github.svg - inv.png';
-import twitterIcon from './assets/1486053611-twitter_79195.png';
-import discordIcon from './assets/discord-mascot.png';
+import './snowflakes.css';
 import React, { ReactDOM, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import Main from './Main';
 
 class App extends React.Component {
@@ -17,31 +14,31 @@ class App extends React.Component {
   }
 
  render(){
+  let main = "Loading..."; 
+  try{
+      main = <Main/>;
+   }
+   catch {
+     setTimeout(() => {
+        window.location.reload(false);
+     }, 2000);
+   }
+   
+  let numberOfSnowflakes = parseInt((new Date().getDate()) / 5);
+  console.log(numberOfSnowflakes)
   return (
     <>
-    <center>
-    <br></br>
-    <Link to="/">
-      <div className={"jumpy unselectable"}>ETHTPS.info</div>
-    </Link>
-    <br></br>
-    <br></br>
-      <a href="https://github.com/WhoEvenAmI/ETHTPS">
-          <img className={"small-img"} src={githubIcon}>
-          </img>
-        </a>
-        <a href="https://twitter.com/ethtps">
-          <img className={"small-img"} src={twitterIcon}>
-          </img>
-        </a>
-        <a href="https://discord.gg/jWPcsTzpCT">
-          <img className={"small-img"} src={discordIcon}>
-          </img>
-        </a>
-    </center>
-    <hr/>
+    
+    <div class="snowflakes" aria-hidden="true">
+      {[...Array(numberOfSnowflakes).keys()].map(x =>  
+      <div class="snowflake">
+        ❅
+      </div>
+      )}
+    </div>
+    
     <div className={"container"}>
-      <Main/>
+      {main}
     </div>
     <hr/>
     <footer>
@@ -54,8 +51,11 @@ class App extends React.Component {
       </div>
       <br></br>
         Donate: 
+        <a style={{marginLeft:'5px'}} href="https://ethtps.eth">
+          ethtps.eth
+        </a>
         <p className={'ul-hover inline'} style={{marginLeft:'5px'}}>
-          0x466Ef24d68ac9b61670eeE7fC2E001B951aBf482
+          (0x466Ef24d68ac9b61670eeE7fC2E001B951aBf482)
         </p>
       </div>
     </footer>

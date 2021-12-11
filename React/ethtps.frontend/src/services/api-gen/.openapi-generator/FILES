@@ -2,7 +2,6 @@
 .gitignore
 .travis.yml
 README.md
-docs/BlockInfo.md
 docs/DataPoint.md
 docs/DataResponseModel.md
 docs/GPSApi.md
@@ -10,7 +9,6 @@ docs/GasAdjustedTPSApi.md
 docs/GeneralApi.md
 docs/ProviderResponseModel.md
 docs/TPSApi.md
-docs/TestApi.md
 git_push.sh
 mocha.opts
 package.json
@@ -19,10 +17,7 @@ src/api/GPSApi.js
 src/api/GasAdjustedTPSApi.js
 src/api/GeneralApi.js
 src/api/TPSApi.js
-src/api/TestApi.js
 src/index.js
-src/model/BlockInfo.js
 src/model/DataPoint.js
 src/model/DataResponseModel.js
 src/model/ProviderResponseModel.js
-test/api/GasAdjustedTPSApi.spec.js

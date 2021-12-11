@@ -10,7 +10,8 @@ namespace ETHTPS.Data.ResponseModels
     {
         public string Name { get; set; }
         public string Color { get; set; }
-
+        public int TheoreticalMaxTPS { get; set; }
         public string Type { get; set; }
+        public bool IsGeneralPurpose { get; set; }
     }
 }

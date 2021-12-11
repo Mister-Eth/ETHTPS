@@ -35,6 +35,51 @@ export default class TPSApi {
 
 
     /**
+     * Callback function to receive the result of the aPITPSGeMonthlyDataByYearGet operation.
+     * @callback module:api/TPSApi~aPITPSGeMonthlyDataByYearGetCallback
+     * @param {String} error Error message, if any.
+     * @param {Object.<String, {String: [DataResponseModel]}>} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Object} opts Optional parameters
+     * @param {String} opts.provider 
+     * @param {Number} opts.year 
+     * @param {String} opts.network  (default to 'Mainnet')
+     * @param {Boolean} opts.includeSidechains  (default to true)
+     * @param {module:api/TPSApi~aPITPSGeMonthlyDataByYearGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link Object.<String, {String: [DataResponseModel]}>}
+     */
+    aPITPSGeMonthlyDataByYearGet(opts, callback) {
+      opts = opts || {};
+      let postBody = null;
+
+      let pathParams = {
+      };
+      let queryParams = {
+        'provider': opts['provider'],
+        'year': opts['year'],
+        'network': opts['network'],
+        'includeSidechains': opts['includeSidechains']
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = ['text/plain', 'application/json', 'text/json'];
+      let returnType = {'String': [DataResponseModel]};
+      return this.apiClient.callApi(
+        '/API/TPS/GeMonthlyDataByYear', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
      * Callback function to receive the result of the aPITPSGetGet operation.
      * @callback module:api/TPSApi~aPITPSGetGetCallback
      * @param {String} error Error message, if any.
