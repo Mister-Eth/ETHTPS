@@ -85,6 +85,7 @@ namespace ETHTPS.API
             services.AddScoped<GasAdjustedTPSService>();
             services.AddScoped<GeneralService>();
             services.AddScoped<TimeWarpService>();
+            services.AddScoped<IBlockInfoProviderStatusService, BlockInfoProviderStatusService>();
         }
 
         private void AddHistoricalBlockInfoDataUpdaters(IServiceCollection services)
@@ -114,7 +115,6 @@ namespace ETHTPS.API
         {
             if (ConfigurationQueues.Contains(TPSUPDATERQUEUE))
             {
-                services.AddScoped<IBlockInfoProviderStatusService, BlockInfoProviderStatusService>();
                 //services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<EtherscanBlockInfoProvider>, EtherscanBlockInfoProvider>(CronConstants.Every13s, TPSUPDATERQUEUE);
                 services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<InfuraBlockInfoProvider>, InfuraBlockInfoProvider>(CronConstants.Every13s, TPSUPDATERQUEUE);
                 services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<PolygonScanBlockInfoProvider>, PolygonScanBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
