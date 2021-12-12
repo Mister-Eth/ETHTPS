@@ -45,6 +45,7 @@ class App extends React.Component {
         Status
       </a>
     </div>
+    <hr/>
     <footer>
       <div className={'inline'}>
       Brought to you by 
