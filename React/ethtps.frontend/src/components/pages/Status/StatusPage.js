@@ -44,7 +44,7 @@ export default class StatusPage extends SortableTable {
             TPS updater status
         </h2>
         <TableContainer component={Paper} style={{overflowX:'auto'}}>
-        <Table size={"small"} style={{minWidth: '800px'}} aria-label="simple table">
+        <Table size={"small"} style={{minWidth: '300px'}} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell width={10} align="left">
@@ -67,7 +67,7 @@ export default class StatusPage extends SortableTable {
                 </div>
             </TableSortLabel>
             </TableCell>
-            <TableCell width={10} align="left">
+            <TableCell width={150} align="left">
             <TableSortLabel
                 active={this.state.sort.columnName === 'status'}
                 direction={(this.state.sort.asc?'asc':'desc')}
