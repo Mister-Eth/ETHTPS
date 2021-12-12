@@ -27,7 +27,7 @@ namespace ETHTPS.Services.BlockchainServices
             _providerID = _context.Providers.First(x => x.Name == _provider).Id;
         }
 
-        [AutomaticRetry(Attempts = 3, OnAttemptsExceeded = AttemptsExceededAction.Delete)]
+        [AutomaticRetry(Attempts = 1, OnAttemptsExceeded = AttemptsExceededAction.Delete)]
         public override async Task RunAsync()
         {
             try
