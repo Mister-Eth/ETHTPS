@@ -121,7 +121,7 @@ export default class StatusPage extends SortableTable {
                 className += " orange";
                 break;
             case 'NotImplemented':
-                status = 'Not implemented';
+                status = 'n/a';
                 break;
             default:
                 status = <CircularProgress size={15}/>
