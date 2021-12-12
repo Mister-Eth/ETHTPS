@@ -11,6 +11,7 @@ import Paper from '@mui/material/Paper';
 import { TableSortLabel } from '@mui/material';
 import SortableTable from "../MainPage/components/SortableTable";
 import { globalStatusApi } from "../../../services/common";
+import { CircularProgress } from "@mui/material";
 
 export default class StatusPage extends SortableTable {
     constructor(props){
@@ -121,6 +122,9 @@ export default class StatusPage extends SortableTable {
                 break;
             case 'NotImplemented':
                 status = 'Not implemented';
+                break;
+            default:
+                status = <CircularProgress size={15}/>
                 break;
         }
         return <div className={className}>
