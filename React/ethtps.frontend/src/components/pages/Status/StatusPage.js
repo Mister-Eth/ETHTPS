@@ -21,8 +21,8 @@ export default class StatusPage extends SortableTable {
             providerData: providerData,
             statuses: {},
             sort:{
-                asc: true,
-                columnName: 'name'
+                asc: false,
+                columnName: 'status'
             }
         }
     }
@@ -69,7 +69,7 @@ export default class StatusPage extends SortableTable {
             </TableCell>
             <TableCell width={10} align="left">
             <TableSortLabel
-                active={this.state.sort.columnName === 'value'}
+                active={this.state.sort.columnName === 'status'}
                 direction={(this.state.sort.asc?'asc':'desc')}
                 onClick={()=>this.sortTableBy('status')}>
                 <div className={'lh b'}>
