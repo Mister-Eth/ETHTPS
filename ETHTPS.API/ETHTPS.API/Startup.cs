@@ -24,6 +24,7 @@ using ETHTPS.Services.BlockchainServices.Scan;
 using ETHTPS.Data.Database.HistoricalDataProviders;
 using ETHTPS.API.Infrastructure.Services;
 using ETHTPS.API.Infrastructure.Services.Implementations;
+using ETHTPS.Services.BlockchainServices.Status;
 
 namespace ETHTPS.API
 {
@@ -113,6 +114,7 @@ namespace ETHTPS.API
         {
             if (ConfigurationQueues.Contains(TPSUPDATERQUEUE))
             {
+                services.AddScoped<IBlockInfoProviderStatusService, BlockInfoProviderStatusService>();
                 //services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<EtherscanBlockInfoProvider>, EtherscanBlockInfoProvider>(CronConstants.Every13s, TPSUPDATERQUEUE);
                 services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<InfuraBlockInfoProvider>, InfuraBlockInfoProvider>(CronConstants.Every13s, TPSUPDATERQUEUE);
                 services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<PolygonScanBlockInfoProvider>, PolygonScanBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);

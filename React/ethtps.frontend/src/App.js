@@ -24,8 +24,7 @@ class App extends React.Component {
      }, 2000);
    }
    
-  let numberOfSnowflakes = parseInt((new Date().getDate()) / 5);
-  console.log(numberOfSnowflakes)
+  let numberOfSnowflakes = parseInt(new Date().getDate() / 5);
   return (
     <>
     
@@ -41,6 +40,11 @@ class App extends React.Component {
       {main}
     </div>
     <hr/>
+    <div className='bottomnavbar'>
+      <a href="/Status">
+        Status
+      </a>
+    </div>
     <footer>
       <div className={'inline'}>
       Brought to you by 

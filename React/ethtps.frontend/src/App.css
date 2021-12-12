@@ -78,7 +78,13 @@ font-size: small;
   text-decoration: underline;
 }
 
+.red{
+  color: red;
+}
 
+.orange{
+  color: rgb(167, 125, 74);
+}
 
 .jumpy {
     font-size: 40px;
@@ -281,4 +287,10 @@ img{
   50% {
     background-position: 100% 50%;
   }
+}
+
+.bottomnavbar{
+  font-size: small;
+  display: inline-block;
+  margin-left: 10px;
 }
