@@ -9,7 +9,7 @@ Setup:
 
 1. Clone the repository
 
-  ```git clone --branch Dev https://github.com/Mister-Eth/ETHTPS```
+  ```git clone --branch dev https://github.com/Mister-Eth/ETHTPS```
   
 2. CD to the frontend directory
 
