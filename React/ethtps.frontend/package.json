@@ -43,7 +43,7 @@
   },
   "scripts": {
     "win-start": "set PORT=3007 && react-scripts start",
-    "linux-start": "export PORT=3007 && export HOST=0.0.0.0 && npm install -g serve && serve -s build",
+    "linux-start": "export PORT=3007 && export HOST=0.0.0.0 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
