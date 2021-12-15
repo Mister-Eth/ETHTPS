@@ -260,7 +260,7 @@ export default class HistoricalChart extends React.Component {
           data: d.map(x => x.data[0].value),
           borderColor: this.state.colorDictionary[key],
           backgroundColor: this.state.colorDictionary[key] + "11",
-          fill:false,
+          fill:Object.keys(data).length <= 1,
           showLine:true,
           pointHitRadius: 20
         });
