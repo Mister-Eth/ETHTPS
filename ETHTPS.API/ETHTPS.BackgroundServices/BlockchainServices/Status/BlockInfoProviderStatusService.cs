@@ -54,9 +54,17 @@ namespace ETHTPS.Services.BlockchainServices.Status
                 {
                     result.Status = BlockInfoProviderStatus.Ok;
                 }
+                else if (job.LastExecution.HasValue)
+                {
+                    var lastExecution = job.LastExecution.Value;
+                    if (DateTime.Now.Subtract(lastExecution).TotalHours >= 1)
+                    {
+                        result.Status = BlockInfoProviderStatus.NeedsAttention;
+                    }
+                }
                 else
                 {
-                    result.Status = BlockInfoProviderStatus.NeedsAttention;
+                    result.Status = BlockInfoProviderStatus.Down;
                 }
                 result.Details = string.Empty;
             }
