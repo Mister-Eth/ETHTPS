@@ -56,7 +56,7 @@ class App extends React.Component {
       </div>
       <br></br>
         Donate: 
-        <a style={{marginLeft:'5px'}} href="https://ethtps.eth">
+        <a style={{marginLeft:'5px'}} href="https://app.ens.domains/name/ethtps.eth/details">
           ethtps.eth
         </a>
         <p className={'ul-hover inline'} style={{marginLeft:'5px'}}>
