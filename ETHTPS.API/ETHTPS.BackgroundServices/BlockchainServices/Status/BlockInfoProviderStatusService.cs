@@ -53,14 +53,14 @@ namespace ETHTPS.Services.BlockchainServices.Status
                 if (job.LastExecution.HasValue)
                 {
                     var lastExecution = job.LastExecution.Value;
-                    if (DateTime.Now.Subtract(lastExecution).TotalHours >= 1)
+                    if (DateTime.Now.ToUniversalTime().Subtract(lastExecution.ToUniversalTime()).TotalHours >= 1)
                     {
                         result.Status = BlockInfoProviderStatus.NeedsAttention;
                     }
-                }
-                else if (job.RetryAttempt == 0)
-                {
-                    result.Status = BlockInfoProviderStatus.Ok;
+                    else
+                    {
+                        result.Status = BlockInfoProviderStatus.Ok;
+                    }
                 }
                 else
                 {
