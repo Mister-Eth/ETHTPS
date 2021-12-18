@@ -50,17 +50,17 @@ namespace ETHTPS.Services.BlockchainServices.Status
             if (connection.GetRecurringJobs().Any(selector))
             {
                 var job = connection.GetRecurringJobs().First(selector);
-                if (job.RetryAttempt == 0)
-                {
-                    result.Status = BlockInfoProviderStatus.Ok;
-                }
-                else if (job.LastExecution.HasValue)
+                if (job.LastExecution.HasValue)
                 {
                     var lastExecution = job.LastExecution.Value;
                     if (DateTime.Now.Subtract(lastExecution).TotalHours >= 1)
                     {
                         result.Status = BlockInfoProviderStatus.NeedsAttention;
                     }
+                }
+                else if (job.RetryAttempt == 0)
+                {
+                    result.Status = BlockInfoProviderStatus.Ok;
                 }
                 else
                 {
