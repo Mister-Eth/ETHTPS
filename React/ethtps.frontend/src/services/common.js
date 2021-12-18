@@ -1,4 +1,4 @@
-import { GeneralApi, GPSApi, TPSApi, GasAdjustedTPSApi } from './api-gen/src/index';
+import { GeneralApi, GPSApi, TPSApi, GasAdjustedTPSApi, StatusApi } from './api-gen/src/index';
 import ApiClient from './api-gen/src/ApiClient';
 import InstantDataService from './InstantDataService';
 

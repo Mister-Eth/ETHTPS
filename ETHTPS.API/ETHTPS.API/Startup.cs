@@ -24,6 +24,7 @@ using ETHTPS.Services.BlockchainServices.Scan;
 using ETHTPS.Data.Database.HistoricalDataProviders;
 using ETHTPS.API.Infrastructure.Services;
 using ETHTPS.API.Infrastructure.Services.Implementations;
+using ETHTPS.Services.BlockchainServices.Status;
 
 namespace ETHTPS.API
 {
@@ -84,6 +85,7 @@ namespace ETHTPS.API
             services.AddScoped<GasAdjustedTPSService>();
             services.AddScoped<GeneralService>();
             services.AddScoped<TimeWarpService>();
+            services.AddScoped<IBlockInfoProviderStatusService, BlockInfoProviderStatusService>();
         }
 
         private void AddHistoricalBlockInfoDataUpdaters(IServiceCollection services)
