@@ -2,13 +2,14 @@ import { GeneralApi, GPSApi, TPSApi, GasAdjustedTPSApi } from './api-gen/src/ind
 import ApiClient from './api-gen/src/ApiClient';
 import InstantDataService from './InstantDataService';
 
-const client = new ApiClient('https://api.ethtps.info/');
-const globalGeneralApi = new GeneralApi(client);
-const globalGPSApi = new GPSApi(client);
-const globalTPSApi = new TPSApi(client);
-const globalGasAdjustedTPSApi = new GasAdjustedTPSApi(client);
-const globalInstantDataService = new InstantDataService(); 
-const formatModeName = function(mode) {
+export const client = new ApiClient('http://localhost:10202/');
+export const globalGeneralApi = new GeneralApi(client);
+export const globalGPSApi = new GPSApi(client);
+export const globalTPSApi = new TPSApi(client);
+export const globalGasAdjustedTPSApi = new GasAdjustedTPSApi(client);
+export const globalStatusApi = new StatusApi(client);
+export const globalInstantDataService = new InstantDataService(); 
+export const formatModeName = function(mode) {
     if (mode !== "gasAdjustedTPS"){
       return mode.toUpperCase();
     }
@@ -17,7 +18,7 @@ const formatModeName = function(mode) {
     }
   }
 
-const formatSmoothingName = function(smoothing){
+export const formatSmoothingName = function(smoothing){
     smoothing = smoothing.replace("One", "1")
     .replace("Minute", "m")
     .replace("Hour", "h")
@@ -27,12 +28,10 @@ const formatSmoothingName = function(smoothing){
     return smoothing;
 }
 
-const capitalizeFirstLetter = function(string) {
+export const capitalizeFirstLetter = function(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-const to2DecimalPlaces = function(num){
+export const to2DecimalPlaces = function(num){
     return Math.round((num + Number.EPSILON) * 100) / 100
  }
-
-export { globalGeneralApi, globalGPSApi, globalTPSApi, globalInstantDataService, globalGasAdjustedTPSApi, formatSmoothingName, to2DecimalPlaces, formatModeName, capitalizeFirstLetter };
