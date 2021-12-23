@@ -25,6 +25,7 @@ using ETHTPS.Data.Database.HistoricalDataProviders;
 using ETHTPS.API.Infrastructure.Services;
 using ETHTPS.API.Infrastructure.Services.Implementations;
 using ETHTPS.Services.BlockchainServices.Status;
+using ETHTPS.Services.BlockchainServices.Status.BackgroundTasks.Discord;
 
 namespace ETHTPS.API
 {
@@ -74,6 +75,7 @@ namespace ETHTPS.API
                 AddCacheUpdaters(services);
                 AddHistoricalBlockInfoDataUpdaters(services);
                 AddTimeWarpUpdaters(services);
+                AddStatusNotifiers(services);
             }
            
         }
@@ -107,7 +109,7 @@ namespace ETHTPS.API
                      services.RegisterHistoricalHangfireBackgroundService<HangfireHistoricalBlockInfoProviderDataLogger<AztecBlockInfoProvider>, AztecBlockInfoProvider>(CronConstants.Never, HISTORICALUPDATERQUEUE);
                      services.RegisterHistoricalHangfireBackgroundService<HangfireHistoricalBlockInfoProviderDataLogger<VoyagerBlockInfoProvider>, VoyagerBlockInfoProvider>(CronConstants.Never, HISTORICALUPDATERQUEUE);
                      services.RegisterHistoricalHangfireBackgroundService<HangfireHistoricalBlockInfoProviderDataLogger<Nahmii20BlockInfoProvider>, Nahmii20BlockInfoProvider>(CronConstants.Never, HISTORICALUPDATERQUEUE);
-                     services.RegisterHistoricalHangfireBackgroundService<HangfireHistoricalBlockInfoProviderDataLogger<BSCScanBlockInfoProvider>, BSCScanBlockInfoProvider>(CronConstants.Never, HISTORICALUPDATERQUEUE);
+                     //services.RegisterHistoricalHangfireBackgroundService<HangfireHistoricalBlockInfoProviderDataLogger<BSCScanBlockInfoProvider>, BSCScanBlockInfoProvider>(CronConstants.Never, HISTORICALUPDATERQUEUE);
             }
         }
 
@@ -146,6 +148,15 @@ namespace ETHTPS.API
             }
         }
 
+        private void AddStatusNotifiers(IServiceCollection services)
+        {
+            if (ConfigurationQueues.Contains(STATUSUPDATERQUEUE))
+            {
+                services.RegisterHangfireBackgroundService<APIStatusBackgroundTask>(CronConstants.EveryMinute, STATUSUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<WebsiteStatusBackgroundTask>(CronConstants.EveryMinute, STATUSUPDATERQUEUE);
+            }
+        }
+
         private void AddTimeWarpUpdaters(IServiceCollection services)
         {
             if (ConfigurationQueues.Contains(TIMEWARPUPDATERQUEUE))
@@ -172,6 +183,7 @@ namespace ETHTPS.API
 
         private const string TPSUPDATERQUEUE = "tpsdata";
         private const string CACHEUPDATERQUEUE = "cache";
+        private const string STATUSUPDATERQUEUE = "status";
         private const string HISTORICALUPDATERQUEUE = "historical";
         private const string TIMEWARPUPDATERQUEUE = "timewarp";
 
