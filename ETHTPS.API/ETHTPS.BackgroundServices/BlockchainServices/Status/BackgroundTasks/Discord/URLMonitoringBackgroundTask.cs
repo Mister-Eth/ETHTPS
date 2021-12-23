@@ -41,7 +41,16 @@ namespace ETHTPS.Services.BlockchainServices.Status.BackgroundTasks.Discord
             {
                 message = new WebhookMessage()
                 {
-                    content = "Website is down"
+                    content = "URL down",
+                    embeds = new Embed[]
+                    {
+                        new Embed()
+                        {
+                            color = 5814783,
+                            title = "URL",
+                            description = _url
+                        }
+                    }
                 };
                 await _discordWebhookNotifier.SendNotificationAsync(message);
             }

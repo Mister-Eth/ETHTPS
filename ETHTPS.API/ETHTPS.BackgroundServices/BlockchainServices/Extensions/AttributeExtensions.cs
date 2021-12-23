@@ -27,16 +27,16 @@ namespace ETHTPS.Services.BlockchainServices.Extensions
 
         public static string GetProviderNameFromFirstGenericArgument(this Type type)
         {
-            var attributes = type.GetGenericArguments().First().GetCustomAttributes(typeof(ProviderAttribute), true);
-            if (attributes.Any())
+            if (type.GetGenericArguments().Length > 0)
             {
-                var attribute = attributes.First();
-                return (attribute as ProviderAttribute).Name;
+                var attributes = type.GetGenericArguments().First().GetCustomAttributes(typeof(ProviderAttribute), true);
+                if (attributes.Any())
+                {
+                    var attribute = attributes.First();
+                    return (attribute as ProviderAttribute).Name;
+                }
             }
-            else
-            {
-                throw new ArgumentNullException($"Provider {type} isn't marked with any {typeof(ProviderAttribute)}");
-            }
+            return string.Empty;
         }
     }
 }
