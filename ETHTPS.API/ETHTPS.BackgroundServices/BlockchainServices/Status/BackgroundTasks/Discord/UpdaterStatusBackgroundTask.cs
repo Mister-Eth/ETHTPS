@@ -32,7 +32,7 @@ namespace ETHTPS.Services.BlockchainServices.Status.BackgroundTasks.Discord
                     embeds.Add(new Embed()
                     {
                         color = 5814783,
-                        title = x.Details,
+                        title = key,
                         description = x.Status.ToString()
                     });
                 }
