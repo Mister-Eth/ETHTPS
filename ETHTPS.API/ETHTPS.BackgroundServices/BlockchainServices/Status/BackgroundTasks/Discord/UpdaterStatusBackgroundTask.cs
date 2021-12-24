@@ -41,7 +41,7 @@ namespace ETHTPS.Services.BlockchainServices.Status.BackgroundTasks.Discord
             {
                 var message = new WebhookMessage()
                 {
-                    content = "Some services need attention or are down",
+                    content = "<@310483941268127744>\nSome services need attention or are down",
                     embeds = new Embed[]
                     {
                         new Embed()

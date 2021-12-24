@@ -41,7 +41,7 @@ namespace ETHTPS.Services.BlockchainServices.Status.BackgroundTasks.Discord
             {
                 message = new WebhookMessage()
                 {
-                    content = "URL down",
+                    content = "<@310483941268127744>\nURL down",
                     embeds = new Embed[]
                     {
                         new Embed()
