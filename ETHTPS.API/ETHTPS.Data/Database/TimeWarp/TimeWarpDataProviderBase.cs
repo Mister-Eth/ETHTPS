@@ -1,4 +1,5 @@
-﻿using ETHTPS.Data.ResponseModels;
+﻿using ETHTPS.Data.Database.TimeWarp.Models;
+using ETHTPS.Data.ResponseModels;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -36,6 +37,11 @@ namespace ETHTPS.Data.Database.TimeWarp
         }
 
         public IEnumerable<DataPoint> GetGPSAt(long timestamp, string network, int count)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<TimeWarpSyncProgressModel> GetSyncProgress(string provider, string network)
         {
             throw new NotImplementedException();
         }
