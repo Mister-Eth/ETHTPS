@@ -18,8 +18,15 @@ namespace ETHTPS.API.Infrastructure.Services
 
         protected IEnumerable<TimedTPSAndGasData> GetHistoricalData(string interval, string provider, string network)
         {
-            var dataProvider = HistoricalDataProviders.First(x => x.Interval == interval);
-            return dataProvider.GetData(provider, network);
+            if (HistoricalDataProviders.Any(x => x.Interval == interval))
+            {
+                var dataProvider = HistoricalDataProviders.First(x => x.Interval == interval);
+                return dataProvider.GetData(provider, network);
+            }
+            else
+            {
+                return new List<TimedTPSAndGasData>();
+            }
         }
     }
 }

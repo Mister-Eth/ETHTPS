@@ -83,5 +83,11 @@ namespace ETHTPS.API.Controllers
         {
             return _generalService.GetUniqueDataYears(provider, network);
         }
+
+        [HttpGet]
+        public AllDataModel AllData(string network = "Mainnet")
+        {
+            return _generalService.GetAllData(network);
+        }
     }
 }

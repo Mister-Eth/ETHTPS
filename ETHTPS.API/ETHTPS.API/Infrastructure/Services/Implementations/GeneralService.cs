@@ -187,6 +187,18 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             return entries;
         }
 
+        public AllDataModel GetAllData(string network)
+        {
+            return new AllDataModel()
+            {
+                Providers = Context.Providers.Select(x => x.Name).ToArray(),
+                AllTPSData = Intervals().Select(interval => new { interval, data = _tpsService.Get(Constants.All, interval, network, true) }).ToDictionary(x => x.interval, x => x.data),
+                MaxData = Max(Constants.All, network),
+                AllGPSData = Intervals().Select(interval => new { interval, data = _gpsService.Get(Constants.All, interval, network, true) }).ToDictionary(x => x.interval, x => x.data),
+                AllGasAdjustedTPSData = Intervals().Select(interval => new { interval, data = _gasAdjustedTPSService.Get(Constants.All, interval, network, true) }).ToDictionary(x => x.interval, x => x.data),
+            };
+        }
+
         /*
         
         public async Task<HomePageViewModel> HomePageModelAsync(string network = "Mainnet")
