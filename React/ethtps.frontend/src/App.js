@@ -1,5 +1,4 @@
 import './App.css';
-import './snowflakes.css';
 import React, { ReactDOM, useState, useEffect } from "react";
 import Main from './Main';
 
@@ -24,18 +23,8 @@ class App extends React.Component {
      }, 2000);
    }
    
-  let numberOfSnowflakes = parseInt(new Date().getDate() / 5);
   return (
     <>
-    
-    <div class="snowflakes" aria-hidden="true">
-      {[...Array(numberOfSnowflakes).keys()].map(x =>  
-      <div class="snowflake">
-        ❅
-      </div>
-      )}
-    </div>
-    
     <div className={"container"}>
       {main}
     </div>
