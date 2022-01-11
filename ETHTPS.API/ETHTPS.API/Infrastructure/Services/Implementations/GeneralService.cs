@@ -191,7 +191,11 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
         {
             return new AllDataModel()
             {
-                Providers = Context.Providers.Select(x => x.Name).ToArray(),
+                Providers = Context.Providers.Select(x => new ProviderModel()
+                {
+                    Name = x.Name,
+                    Type = x.TypeNavigation.Name
+                }).ToArray(),
                 AllTPSData = Intervals().Select(interval => new { interval, data = _tpsService.Get(Constants.All, interval, network, true) }).ToDictionary(x => x.interval, x => x.data),
                 MaxData = Max(Constants.All, network),
                 AllGPSData = Intervals().Select(interval => new { interval, data = _gpsService.Get(Constants.All, interval, network, true) }).ToDictionary(x => x.interval, x => x.data),
