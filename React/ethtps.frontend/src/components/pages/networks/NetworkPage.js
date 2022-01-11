@@ -105,6 +105,7 @@ export default class NetworkPage extends PageWithQueryString {
     componentDidMount(){
         globalInstantDataService.periodicallyGetInstantDataForPage(this.state.name, this.updateInstantTPS.bind(this));
         globalInstantDataService.getAndCallbackInstantData();
+        window.scrollTo(0, 0);
     }
     
     render(){
