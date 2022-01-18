@@ -35,6 +35,7 @@ import KchannelsDetails from './details/KchannelsDetails';
 import PerunDetails from './details/PerunDetails';
 import RaidenNetworkDetails from './details/RaidenNetworkDetails';
 import FantomDetails from './details/FantomDetails';
+import ZKSpaceDetails from './details/ZKSpaceDetails';
 import { globalGeneralApi, globalInstantDataService, to2DecimalPlaces } from '../../../services/common';
 import * as qs from 'query-string';
 import { Helmet } from 'react-helmet';
@@ -91,6 +92,7 @@ export default class NetworkPage extends PageWithQueryString {
         'Perun': <PerunDetails name={this.state.name}/>,
         'Raiden Network': <RaidenNetworkDetails name={this.state.name}/>,
         'Fantom': <FantomDetails name={this.state.name}/>,
+        'ZKSpace': <ZKSpaceDetails name={this.state.name}/>,
     }
 
     updateInstantTPS(data){
