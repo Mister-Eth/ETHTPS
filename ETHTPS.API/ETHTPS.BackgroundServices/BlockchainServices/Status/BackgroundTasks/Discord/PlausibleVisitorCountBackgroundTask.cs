@@ -34,7 +34,7 @@ namespace ETHTPS.Services.BlockchainServices.Status.BackgroundTasks.Discord
         public override async Task RunAsync()
         {
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _apiKey);
-            var response = await _httpClient.GetAsync($"{_url}/api/v1/stats/aggregate?site_id=ethtps.info&period=day&metrics=visitors,pageviews&date={DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Subtract(TimeSpan.FromDays(1)).Day}");
+            var response = await _httpClient.GetAsync(new Uri($"{_url}/api/v1/stats/aggregate?site_id=ethtps.info&period=day&metrics=visitors,pageviews&date={DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Subtract(TimeSpan.FromDays(1)).Day}", UriKind.Absolute));
             if (response.IsSuccessStatusCode)
             {
                 var obj = JsonConvert.DeserializeObject<MetricsResponseModel>(await response.Content.ReadAsStringAsync());
