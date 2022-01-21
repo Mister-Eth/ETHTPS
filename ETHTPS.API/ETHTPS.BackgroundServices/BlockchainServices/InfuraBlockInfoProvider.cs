@@ -1,4 +1,5 @@
 ﻿using ETHTPS.Data.Extensions;
+using ETHTPS.Services.BlockchainServices.BlockTime;
 using ETHTPS.Services.BlockchainServices.Models.JSONRPC;
 using ETHTPS.Services.Infrastructure.Serialization;
 
@@ -18,8 +19,9 @@ namespace ETHTPS.Services.BlockchainServices
     [Provider("Ethereum")]
     public class InfuraBlockInfoProvider : JSONRPCBlockInfoProviderBase
     {
-        public InfuraBlockInfoProvider(IConfiguration configuration) : base(configuration, "Infura")
+        public InfuraBlockInfoProvider(IConfiguration configuration, EthereumBlockTimeProvider ethereumBlockTimeProvider) : base(configuration, "Infura")
         {
+            BlockTimeSeconds = ethereumBlockTimeProvider.GetBlockTime();
         }
     }
 }

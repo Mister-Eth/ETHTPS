@@ -26,6 +26,7 @@ using ETHTPS.API.Infrastructure.Services;
 using ETHTPS.API.Infrastructure.Services.Implementations;
 using ETHTPS.Services.BlockchainServices.Status;
 using ETHTPS.Services.BlockchainServices.Status.BackgroundTasks.Discord;
+using ETHTPS.Services.BlockchainServices.BlockTime;
 
 namespace ETHTPS.API
 {
@@ -88,6 +89,7 @@ namespace ETHTPS.API
             services.AddScoped<GeneralService>();
             services.AddScoped<TimeWarpService>();
             services.AddScoped<IBlockInfoProviderStatusService, BlockInfoProviderStatusService>();
+            services.AddScoped<EthereumBlockTimeProvider>();
         }
 
         private void AddHistoricalBlockInfoDataUpdaters(IServiceCollection services)
