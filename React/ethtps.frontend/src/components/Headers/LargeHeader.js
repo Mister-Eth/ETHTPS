@@ -16,16 +16,6 @@ export default class LargeHeader extends React.Component{
         <br></br>
 
         <center>
-            <div  style={{backgroundColor: '#3285a6', borderRadius:3, marginBottom: '0px'}}>
-            <a style={{color:'white', fontWeight: 'bold', fontSize: 15}} href={'https://gitcoin.co/grants/4139/ethtpsinfo'}>
-                Click here to donate to ETHTPS.info's Gitcoin grant
-            </a>
-            </div>
-        </center>
-
-{/*
-
-<center>
             <div  style={{backgroundColor: '#7289da', borderRadius:3, marginBottom: '0px'}}>
             <img className={"small-img"} src={blackDiscordIcon}></img>
             <a style={{color:'white', fontWeight: 'bold', fontSize: 15}} href={'https://discord.gg/jWPcsTzpCT'}>
@@ -35,7 +25,6 @@ export default class LargeHeader extends React.Component{
             </div>
         </center>
 
-*/}
 
         <Link to="/">
         <div className={"jumpy unselectable"}>ETHTPS.info</div>

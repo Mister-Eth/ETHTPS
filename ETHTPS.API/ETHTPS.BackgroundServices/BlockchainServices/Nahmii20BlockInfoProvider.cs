@@ -43,17 +43,27 @@ namespace ETHTPS.Services.BlockchainServices
 
             return Task.FromResult(new BlockInfo()
             {
-                TransactionCount = int.Parse(txCount),
+                TransactionCount = (int)ValueOrZero(txCount),
                 Date = DateTime.Parse(date),
                 BlockNumber = blockNumber,
-                GasUsed = double.Parse(gas)
+                GasUsed = ValueOrZero(gas)
             });
+        }
+
+        private double ValueOrZero(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return 0;
+            }
+            else return double.Parse(value);
         }
 
         public Task<BlockInfo> GetBlockInfoAsync(DateTime time)
         {
             throw new NotImplementedException();
         }
+
         private static int GetBlockNumberFromHTML(string html)
         {
             var str = "data-block-number";

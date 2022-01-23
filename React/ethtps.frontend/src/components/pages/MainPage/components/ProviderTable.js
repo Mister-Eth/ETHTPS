@@ -9,8 +9,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Link } from "react-router-dom";
 import { TableSortLabel } from '@mui/material';
+import SortableTable from './SortableTable';
 
-class ProviderTable extends React.Component {
+class ProviderTable extends SortableTable {
     constructor(props){
         super(props);
 

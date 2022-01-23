@@ -20,7 +20,7 @@ export default class IntervalSelector extends React.Component{
     componentDidUpdate(previousProps, previousState){
         if (previousProps.allIntervals !== this.props.allIntervals){
             this.setState({allIntervals: this.props.allIntervals});
-            if (this.props.allIntervals.indexOf(this.interval) === -1 && this.props.allIntervals.length > 0){
+            if (this.props.allIntervals.indexOf(this.props.interval) === -1 && this.props.allIntervals.length > 0){
                 let firstInterval = this.props.allIntervals[0];
                 this.setState({interval: firstInterval});
                 this.handleIntervalChange(null, firstInterval);

@@ -36,7 +36,7 @@ class MainPage extends React.Component {
         providerData: providerData
       },
       network: "Mainnet",
-      excludeSidechains: false,
+      excludeSidechains: true,
       excludeNonGeneralPurposeNetworks: false,
       modifiedInstantTPS: {},
       mode: mode,

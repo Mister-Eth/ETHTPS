@@ -4,6 +4,7 @@ using ETHTPS.Data.Database;
 using ETHTPS.Data.Database.Extensions;
 using ETHTPS.Data.Database.HistoricalDataProviders;
 using ETHTPS.Data.Database.TimeWarp;
+using ETHTPS.Data.Database.TimeWarp.Models;
 using ETHTPS.Data.ResponseModels;
 
 using Microsoft.AspNetCore.Mvc;
@@ -44,9 +45,16 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
+        public Task<TimeWarpSyncProgressModel> GetSyncProgress(string provider, string network)
+        {
+            return ((ITimeWarpService)_timeWarpService).GetSyncProgress(provider, network);
+        }
+
+        [HttpGet]
         public IEnumerable<DataPoint> GetTPSAt(long timestamp, string network = "Mainnet", int count = 30)
         {
             return ((ITimeWarpService)_timeWarpService).GetTPSAt(timestamp, network, count);
         }
+
     }
 }

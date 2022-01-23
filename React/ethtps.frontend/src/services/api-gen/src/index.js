@@ -13,13 +13,17 @@
 
 
 import ApiClient from './ApiClient';
+import BlockInfoProviderStatus from './model/BlockInfoProviderStatus';
+import BlockInfoProviderStatusResult from './model/BlockInfoProviderStatusResult';
 import DataPoint from './model/DataPoint';
 import DataResponseModel from './model/DataResponseModel';
 import ProviderResponseModel from './model/ProviderResponseModel';
 import GPSApi from './api/GPSApi';
 import GasAdjustedTPSApi from './api/GasAdjustedTPSApi';
 import GeneralApi from './api/GeneralApi';
+import StatusApi from './api/StatusApi';
 import TPSApi from './api/TPSApi';
+import TimeWarpApi from './api/TimeWarpApi';
 
 
 /**
@@ -61,6 +65,18 @@ export {
     ApiClient,
 
     /**
+     * The BlockInfoProviderStatus model constructor.
+     * @property {module:model/BlockInfoProviderStatus}
+     */
+    BlockInfoProviderStatus,
+
+    /**
+     * The BlockInfoProviderStatusResult model constructor.
+     * @property {module:model/BlockInfoProviderStatusResult}
+     */
+    BlockInfoProviderStatusResult,
+
+    /**
      * The DataPoint model constructor.
      * @property {module:model/DataPoint}
      */
@@ -97,8 +113,20 @@ export {
     GeneralApi,
 
     /**
+    * The StatusApi service constructor.
+    * @property {module:api/StatusApi}
+    */
+    StatusApi,
+
+    /**
     * The TPSApi service constructor.
     * @property {module:api/TPSApi}
     */
-    TPSApi
+    TPSApi,
+
+    /**
+    * The TimeWarpApi service constructor.
+    * @property {module:api/TimeWarpApi}
+    */
+    TimeWarpApi
 };

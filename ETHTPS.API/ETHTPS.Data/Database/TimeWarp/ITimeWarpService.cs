@@ -1,4 +1,5 @@
-﻿using ETHTPS.Data.ResponseModels;
+﻿using ETHTPS.Data.Database.TimeWarp.Models;
+using ETHTPS.Data.ResponseModels;
 
 using System;
 using System.Collections.Generic;
@@ -13,5 +14,6 @@ namespace ETHTPS.Data.Database.TimeWarp
         public IEnumerable<DataPoint> GetTPSAt(long timestamp, string network, int count);
         public IEnumerable<DataPoint> GetGPSAt(long timestamp, string network, int count);
         public IEnumerable<DataPoint> GetGasAdjustedTPSAt(long timestamp, string network, int count);
+        public Task<TimeWarpSyncProgressModel> GetSyncProgress(string provider, string network);
     }
 }

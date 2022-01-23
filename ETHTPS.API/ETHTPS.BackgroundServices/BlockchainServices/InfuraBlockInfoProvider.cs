@@ -1,4 +1,5 @@
 ﻿using ETHTPS.Data.Extensions;
+using ETHTPS.Services.BlockchainServices.BlockTime;
 using ETHTPS.Services.BlockchainServices.Models.JSONRPC;
 using ETHTPS.Services.Infrastructure.Serialization;
 
@@ -16,71 +17,11 @@ using System.Threading.Tasks;
 namespace ETHTPS.Services.BlockchainServices
 {
     [Provider("Ethereum")]
-    public class InfuraBlockInfoProvider : IBlockInfoProvider
+    public class InfuraBlockInfoProvider : JSONRPCBlockInfoProviderBase
     {
-        private readonly HttpClient _httpClient;
-
-        public InfuraBlockInfoProvider(IConfiguration configuration)
+        public InfuraBlockInfoProvider(IConfiguration configuration, EthereumBlockTimeProvider ethereumBlockTimeProvider) : base(configuration, "Infura")
         {
-            var config = configuration.GetSection("Infura");
-            _httpClient = new HttpClient()
-            {
-                BaseAddress = new Uri(config.GetValue<string>("Endpoint"))
-            };
-        }
-
-        public double BlockTimeSeconds { get; set; } = 13.7;
-
-        public async Task<BlockInfo> GetBlockInfoAsync(int blockNumber)
-        {
-            var requestModel = JSONRPCRequestFactory.CreateGetBlockByBlockNumberRequest("0x" + blockNumber.ToString("X"));
-            var json = requestModel.SerializeAsJsonWithEmptyArray();
-            var message = new HttpRequestMessage()
-            {
-                Content = new StringContent(json, Encoding.UTF8, "application/json"),
-                Method = HttpMethod.Post
-            };
-            var response = await _httpClient.SendAsync(message);
-            if (response.IsSuccessStatusCode)
-            {
-                var responseString = await response.Content.ReadAsStringAsync();
-                var responseObject = JsonConvert.DeserializeObject<JSONRPCGetBlockByNumberResponseModel>(responseString);
-                var result = new BlockInfo()
-                {
-                    BlockNumber = blockNumber,
-                    Date = DateTimeExtensions.FromUnixTime(Convert.ToInt64(responseObject.result.timestamp, 16)),
-                    TransactionCount = responseObject.result.transactions.Length,
-                    Settled = true,
-                    GasUsed = Convert.ToInt64(responseObject.result.gasUsed, 16)
-                };
-                return result;
-            }
-            return null;
-        }
-
-        public Task<BlockInfo> GetBlockInfoAsync(DateTime time)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<BlockInfo> GetLatestBlockInfoAsync()
-        {
-            var requestModel = JSONRPCRequestFactory.CreateGetBlockHeightRequest();
-            var json = requestModel.SerializeAsJsonWithEmptyArray();
-            var message = new HttpRequestMessage()
-            {
-                Content = new StringContent(json, Encoding.UTF8, "application/json"),
-                Method = HttpMethod.Post
-            };
-            var response = await _httpClient.SendAsync(message);
-            if (response.IsSuccessStatusCode)
-            {
-                var responseString = await response.Content.ReadAsStringAsync();
-                var responseObject = JsonConvert.DeserializeObject<JSONRPCResponseModel>(responseString);
-                var blockNumber = Convert.ToInt32(responseObject.Result, 16);
-                return await GetBlockInfoAsync(blockNumber);
-            }
-            return null;
+            BlockTimeSeconds = ethereumBlockTimeProvider.GetBlockTime();
         }
     }
 }

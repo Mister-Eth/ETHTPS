@@ -20,5 +20,17 @@ namespace ETHTPS.Data.Extensions
                 }
             }
         }
+
+        public static T FirstIfAny<T>(this IEnumerable<T> source, Func<T, bool> selector)
+        {
+            if (source.Any(selector))
+            {
+                return source.First(selector);
+            }
+            else
+            {
+                return default;
+            }
+        }
     }
 }

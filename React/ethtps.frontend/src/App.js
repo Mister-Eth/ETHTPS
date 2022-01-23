@@ -1,5 +1,4 @@
 import './App.css';
-import './snowflakes.css';
 import React, { ReactDOM, useState, useEffect } from "react";
 import Main from './Main';
 
@@ -24,21 +23,20 @@ class App extends React.Component {
      }, 2000);
    }
    
-  let numberOfSnowflakes = parseInt((new Date().getDate()) / 5);
-  console.log(numberOfSnowflakes)
   return (
     <>
-    
-    <div class="snowflakes" aria-hidden="true">
-      {[...Array(numberOfSnowflakes).keys()].map(x =>  
-      <div class="snowflake">
-        ❅
-      </div>
-      )}
-    </div>
-    
     <div className={"container"}>
       {main}
+    </div>
+    <hr/>
+    <div className='bottomnavbar'>
+      <a href="/Status">
+        Status
+      </a>
+      <div className={'inline'} style={{marginRight: '10px'}}/>
+      <a href="https://api.ethtps.info/API/v2/AllData">
+        Download data
+      </a>
     </div>
     <hr/>
     <footer>
@@ -51,7 +49,7 @@ class App extends React.Component {
       </div>
       <br></br>
         Donate: 
-        <a style={{marginLeft:'5px'}} href="https://ethtps.eth">
+        <a style={{marginLeft:'5px'}} href="https://app.ens.domains/name/ethtps.eth/details">
           ethtps.eth
         </a>
         <p className={'ul-hover inline'} style={{marginLeft:'5px'}}>

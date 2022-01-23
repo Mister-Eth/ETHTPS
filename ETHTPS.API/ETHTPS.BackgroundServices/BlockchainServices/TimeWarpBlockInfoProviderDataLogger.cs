@@ -36,7 +36,7 @@ namespace ETHTPS.Services.BlockchainServices
             await _context.SaveChangesAsync();
             var oldestEntry = _context.OldestLoggedTimeWarpBlocks.First(x => x.Network == 1 && x.Provider == _providerID);
             
-            while (oldestEntry.OldestBlock > 0)
+            while (oldestEntry.OldestBlock < (await _instance.GetLatestBlockInfoAsync()).BlockNumber)
             {
                 try
                 {
@@ -66,7 +66,7 @@ namespace ETHTPS.Services.BlockchainServices
                 }
                 finally
                 {
-                    oldestEntry.OldestBlock --;
+                    oldestEntry.OldestBlock++;
                     await _context.SaveChangesAsync();
                 }
             }
