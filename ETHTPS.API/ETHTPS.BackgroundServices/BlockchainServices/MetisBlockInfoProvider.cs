@@ -25,7 +25,6 @@ namespace ETHTPS.Services.BlockchainServices
     {
         private readonly HttpClient _httpClient;
         private readonly string _baseURL;
-        private readonly string _baseURL2;
         private readonly string _transactionCountSelector;
         private readonly string _dateSelector;
         private readonly string _gasSelector;
@@ -34,7 +33,6 @@ namespace ETHTPS.Services.BlockchainServices
         {
             var config = configuration.GetSection("BlockInfoProviders").GetSection("Metis");
             _baseURL = config.GetValue<string>("BaseURL");
-            _baseURL2 = config.GetValue<string>("BaseURL2");
             _httpClient = new HttpClient()
             {
                 BaseAddress = new Uri(_baseURL)
@@ -50,7 +48,7 @@ namespace ETHTPS.Services.BlockchainServices
         public async Task<BlockInfo> GetBlockInfoAsync(int blockNumber)
         {
             HtmlWeb web = new HtmlWeb();
-            HtmlDocument doc = web.Load($"{_baseURL2}/block/{blockNumber}/transactions");
+            HtmlDocument doc = web.Load($"{_baseURL}/block/{blockNumber}/transactions");
 
             var dateNode = doc.DocumentNode.QuerySelectorAll(_dateSelector);
             var date = string.Join(" ", dateNode.Select(x => x.Attributes["data-from-now"].Value)).Replace(".000000Z", string.Empty);
@@ -60,7 +58,7 @@ namespace ETHTPS.Services.BlockchainServices
             var gasNode = doc.DocumentNode.QuerySelectorAll(_gasSelector);
             var gas = new string(string.Join(" ", gasNode.Select(x => x.InnerText.Substring(0, x.InnerText.IndexOf("|")))).Where(Char.IsNumber).ToArray());
 
-            var txCount = int.Parse(JsonConvert.DeserializeObject<dynamic>(await _httpClient.GetStringAsync($"{_baseURL2}/block/{blockNumber}/transactions?type=JSON")).items.Count.ToString());
+            var txCount = int.Parse(JsonConvert.DeserializeObject<dynamic>(await _httpClient.GetStringAsync($"{_baseURL}/block/{blockNumber}/transactions?type=JSON")).items.Count.ToString());
 
             return new BlockInfo()
             {

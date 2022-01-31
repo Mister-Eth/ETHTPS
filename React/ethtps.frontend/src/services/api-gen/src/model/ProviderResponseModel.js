@@ -59,6 +59,9 @@ class ProviderResponseModel {
             if (data.hasOwnProperty('type')) {
                 obj['type'] = ApiClient.convertToType(data['type'], 'String');
             }
+            if (data.hasOwnProperty('isGeneralPurpose')) {
+                obj['isGeneralPurpose'] = ApiClient.convertToType(data['isGeneralPurpose'], 'Boolean');
+            }
         }
         return obj;
     }
@@ -85,6 +88,11 @@ ProviderResponseModel.prototype['theoreticalMaxTPS'] = undefined;
  * @member {String} type
  */
 ProviderResponseModel.prototype['type'] = undefined;
+
+/**
+ * @member {Boolean} isGeneralPurpose
+ */
+ProviderResponseModel.prototype['isGeneralPurpose'] = undefined;
 
 
 

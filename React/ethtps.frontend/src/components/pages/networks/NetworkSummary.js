@@ -18,7 +18,8 @@ export default class NetworkSummary extends React.Component {
         "documentation": "Documentation",
         "explorers": "Explorers",
         "repositories": "Repositories",
-        "socialMedia": "Social media"
+        "socialMedia": "Social media",
+        'bridges': "Bridges"
     }
     
     render(){

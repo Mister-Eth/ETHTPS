@@ -10,6 +10,8 @@ import ModeSelector from './ModeSelector';
 import * as qs from 'query-string';
 import HistoricalChart from '../../charts/HistoricalChart';
 import { Helmet } from 'react-helmet';
+import IntervalSlider from '../../IntervalSlider';
+import LargeHeader from '../../Headers/LargeHeader';
 
 class MainPage extends React.Component {
 
@@ -34,10 +36,12 @@ class MainPage extends React.Component {
         providerData: providerData
       },
       network: "Mainnet",
-      excludeSidechains: false,
+      excludeSidechains: true,
+      excludeNonGeneralPurposeNetworks: false,
       modifiedInstantTPS: {},
       mode: mode,
-      offline: false
+      offline: false,
+      smoothing: "Instant"
     }
   }
 
@@ -85,13 +89,22 @@ class MainPage extends React.Component {
     globalInstantDataService.periodicallyGetInstantDataForPage('MainPage', this.updateInstantTPS.bind(this));
   }
   
-  handleInputChange(event){
+  handleExcludeSidechaisnInputChange(event){
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     this.setState({excludeSidechains : value});
+    globalInstantDataService.includeSidechains = !value;
+    globalInstantDataService.getAndCallbackInstantData();
+  }
+
+  handleExcludeNonGeneralPurposeNetworksInputChange(event){
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    this.setState({excludeNonGeneralPurposeNetworks : value});
   }
 
   getFilteredInstantData(state){
+    let result = state.homePageModel.selectedInstantData;
     if (state.excludeSidechains){
       let filteredInstantTPSData = {};
       for(let p of state.homePageModel.providerData){
@@ -99,11 +112,18 @@ class MainPage extends React.Component {
           filteredInstantTPSData[p.name] = state.homePageModel.selectedInstantData[p.name];
         }
       }
-      return filteredInstantTPSData;
+      result = filteredInstantTPSData;
     }
-    else {
-      return state.homePageModel.selectedInstantData;
+    if (state.excludeNonGeneralPurposeNetworks){
+      let filteredInstantTPSData = {};
+      for(let p of state.homePageModel.providerData){
+        if (state.homePageModel.providerData.filter(x => x.name == p.name && x.isGeneralPurpose)){
+          filteredInstantTPSData[p.name] = state.homePageModel.selectedInstantData[p.name];
+        }
+      }
+      result = filteredInstantTPSData;
     }
+    return result;
   }
 
   updateInstantTPS(data){
@@ -124,7 +144,20 @@ class MainPage extends React.Component {
   }
 
   getProviderData(state){
-    return (state.excludeSidechains)?state.homePageModel.providerData.filter(x=>x.type !== "Sidechain"):state.homePageModel.providerData
+    let result = state.homePageModel.providerData;
+    if (state.excludeSidechains){
+      result = result.filter(x => x.type !== "Sidechain");
+    }
+    if (state.excludeNonGeneralPurposeNetworks){
+      result = result.filter(x => x.isGeneralPurpose);
+    }
+    return result;
+  }
+
+  intervalSliderChanged(interval){
+    this.setState({smoothing: interval});
+    globalInstantDataService.smoothing = interval;
+    globalInstantDataService.getAndCallbackInstantData();
   }
 
   modeChanged(mode){
@@ -136,13 +169,15 @@ class MainPage extends React.Component {
   if (this.state.mode === "gasAdjustedTPS"){
     optionalGasAdjustedText = "The gas-adjusted TPS value of a network is calculated by dividing the total gas used by the network at any time by 21,000 gas (the gas cost of a simple ETH transfer). In other words, this value represents the theoretical number of transactions per second a network were to do if all transactions were simple ETH transfers.";
   }
-  let offlineCircle =   <div style={{marginLeft: '10px'}} className={'dot tooltip'}>
+  let offlineCircle =   <div style={{marginLeft: '10px', verticalAlign: 'center'}} className={'tooltip'}>
+    ⚠️
   <span className={'tooltiptext'}>
     Live updates are currently unavailable
   </span>
   </div>;
   return (
     <>
+    <LargeHeader/>
        <Helmet>
           <title>
             Live Ethereum TPS data
@@ -166,15 +201,28 @@ class MainPage extends React.Component {
             providerData={this.getProviderData(this.state)}
             providerTypeColorDictionary={this.state.homePageModel.providerTypeColorDictionary}
             mode={this.state.mode}
+            smoothing={this.state.smoothing}
             split="network"/>
+            <IntervalSlider onChange={this.intervalSliderChanged.bind(this)}/>
       <label className={"small"}>
       <input
             ref={ref=>this.excludeSidechainsCheckBox = ref}
             name="excludeSidechains" type="checkbox"
             checked={this.state.excludeSidechains}
-            onChange={this.handleInputChange.bind(this)}/>
-            Exclude sidechains?
+            onChange={this.handleExcludeSidechaisnInputChange.bind(this)}/>
+            Exclude sidechains
       </label>
+      <label className={"small"}>
+      <input
+            ref={ref=>this.excludeNonGeneralPurposeNetworksCheckBox = ref}
+            name="excludeNonGeneralPurposeNetworks" type="checkbox"
+            checked={this.state.excludeNonGeneralPurposeNetworks}
+            onChange={this.handleExcludeNonGeneralPurposeNetworksInputChange.bind(this)}/>
+            Exclude non-general purpose networks
+      </label>
+      <p>
+        Drag the slider above to change the period of the chart and compare the historical {formatModeName(this.state.mode)} distribution.
+      </p>
       <hr/>
 
     <h3>
@@ -186,6 +234,7 @@ class MainPage extends React.Component {
       colorDictionary={this.state.homePageModel.colorDictionary} 
       allMaxData={this.state.homePageModel.maxData}
       mode={this.state.mode}
+      smoothing={this.state.smoothing}
       providerData={this.getProviderData(this.state)}/>
       <hr/>
       <h3>
@@ -197,7 +246,7 @@ class MainPage extends React.Component {
       <Timeline/>
       <HistoricalChart 
         height={200}
-        interval="1h"
+        interval="1m"
         mode={this.state.mode}
         colorDictionary={this.state.homePageModel.colorDictionary} 
         provider="All"

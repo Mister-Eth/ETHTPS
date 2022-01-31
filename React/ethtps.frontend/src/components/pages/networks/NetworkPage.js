@@ -17,9 +17,29 @@ import ZKSyncDetails from './details/ZKSyncDetails';
 import ImmutableXDetails from './details/ImmutableXDetails';
 import AztecDetails from './details/AztecDetails';
 import MetisDetails from './details/MetisDetails';
+import RoninDetails from './details/RoninDetails';
+import StarknetDetails from './details/StarknetDetails';
+import Nahmii20Details from './details/Nahmii20Details';
+import OMGNetworkDetails from './details/OMGNetworkDetails';
+import FuelDetails from './details/FuelDetails';
+import GluonDetails from './details/GluonDetails';
+import HabitatDetails from './details/HabitatDetails';
+import Layer2FinanceDetails from './details/Layer2FinanceDetails';
+import DYDXDetails from './details/DYDXDetails';
+import DiversiFiDetails from './details/DiversiFiDetails';
+import SorareDetails from './details/SorareDetails';
+import GazelleDetails from './details/GazelleDetails';
+import ZKTubeDetails from './details/ZKTubeDetails';
+import CartesiDetails from './details/CartesiDetails';
+import KchannelsDetails from './details/KchannelsDetails';
+import PerunDetails from './details/PerunDetails';
+import RaidenNetworkDetails from './details/RaidenNetworkDetails';
+import FantomDetails from './details/FantomDetails';
+import ZKSpaceDetails from './details/ZKSpaceDetails';
 import { globalGeneralApi, globalInstantDataService, to2DecimalPlaces } from '../../../services/common';
 import * as qs from 'query-string';
 import { Helmet } from 'react-helmet';
+import CompactHeader from '../../Headers/CompactHeader';
 
 export default class NetworkPage extends PageWithQueryString {
     constructor(props){
@@ -53,7 +73,26 @@ export default class NetworkPage extends PageWithQueryString {
         'ZKSync': <ZKSyncDetails name={this.state.name}/>,
         'Immutable X': <ImmutableXDetails name={this.state.name}/>,
         'Aztec': <AztecDetails name={this.state.name}/>,
-        'Metis': <MetisDetails name={this.state.name}/>
+        'Metis': <MetisDetails name={this.state.name}/>,
+        'Ronin': <RoninDetails name={this.state.name}/>,
+        "Starknet": <StarknetDetails name={this.state.name}/>,
+        'Nahmii 2.0': <Nahmii20Details name={this.state.name}/>,
+        'OMG Network': <OMGNetworkDetails name={this.state.name}/>,
+        'Gluon': <GluonDetails name={this.state.name}/>,
+        'Habitat': <HabitatDetails name={this.state.name}/>,
+        'Fuel': <FuelDetails name={this.state.name}/>,
+        'Layer2.Finance': <Layer2FinanceDetails name={this.state.name}/>,
+        'dYdX': <DYDXDetails name={this.state.name}/>,
+        'Sorare': <SorareDetails name={this.state.name}/>,
+        'DiversiFi': <DiversiFiDetails name={this.state.name}/>,
+        'Gazelle': <GazelleDetails name={this.state.name}/>,
+        'zkTube': <ZKTubeDetails name={this.state.name}/>,
+        'Cartesi': <CartesiDetails name={this.state.name}/>,
+        'Kchannels': <KchannelsDetails name={this.state.name}/>,
+        'Perun': <PerunDetails name={this.state.name}/>,
+        'Raiden Network': <RaidenNetworkDetails name={this.state.name}/>,
+        'Fantom': <FantomDetails name={this.state.name}/>,
+        'ZKSpace': <ZKSpaceDetails name={this.state.name}/>,
     }
 
     updateInstantTPS(data){
@@ -68,6 +107,7 @@ export default class NetworkPage extends PageWithQueryString {
     componentDidMount(){
         globalInstantDataService.periodicallyGetInstantDataForPage(this.state.name, this.updateInstantTPS.bind(this));
         globalInstantDataService.getAndCallbackInstantData();
+        window.scrollTo(0, 0);
     }
     
     render(){
@@ -76,6 +116,7 @@ export default class NetworkPage extends PageWithQueryString {
         let next = (index === Object.keys(this.components).length - 1)? Object.keys(this.components)[0] :Object.keys(this.components)[(index + 1)];
         if (this.state !== null && this.state.colorDictionary !== undefined)
         return <>
+        <CompactHeader/>
         <Helmet>
             <title>
                 ETHTPS.info - {this.state.name}

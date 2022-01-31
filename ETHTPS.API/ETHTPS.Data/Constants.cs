@@ -12,5 +12,7 @@ namespace ETHTPS.Data
             public static TimeSpan Realtime = TimeSpan.FromSeconds(3);
             public static TimeSpan LowUpdateRate = TimeSpan.FromMinutes(1);
         }
+
+        public static string All => "All";
     }
 }

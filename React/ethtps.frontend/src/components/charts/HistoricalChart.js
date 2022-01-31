@@ -1,3 +1,4 @@
+import 'fix-date';
 import * as React from "react";
 import { globalGPSApi, globalTPSApi, globalGasAdjustedTPSApi, globalGeneralApi } from '../../services/common'
 import IntervalSelector from "./IntervalSelector";
@@ -6,6 +7,8 @@ import ScaleSelector from './ScaleSelector';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { Line } from "react-chartjs-2";
+import CircularProgress from '@mui/material/CircularProgress';
+import LinearProgress from '@mui/material/LinearProgress';
 
 export default class HistoricalChart extends React.Component {
 
@@ -33,7 +36,8 @@ export default class HistoricalChart extends React.Component {
           ],
           allIntervals: [],
           years: [],
-          selectedYear: 0
+          selectedYear: 0,
+          loading: true
         }
     }
 
@@ -129,6 +133,7 @@ export default class HistoricalChart extends React.Component {
 
     updateChartFromModel(provider, interval, year, network, mode){
       try{
+        this.setState({loading: true});
         switch(mode){
           case 'tps':
               if (year !== 0){
@@ -197,6 +202,7 @@ export default class HistoricalChart extends React.Component {
 ];
 
     extractLabel(x){
+     try{
       if (this.state.selectedYear !== 0){
         return this.monthNames[x.getMonth()].substr(0, 3) + " " + x.getFullYear();
       }
@@ -208,9 +214,9 @@ export default class HistoricalChart extends React.Component {
         case '1w':
             return x.getHours() + ":00";
         case '1w':
-            return this.monthNames[x.getMonth()].substr(0, 3) + " " + (x.getDay() + 1) + " " + x.getHours() + ":00";
+            return this.monthNames[x.getMonth()].substr(0, 3) + " " + (x.getDate()) + " " + x.getHours() + ":00";
         case '1m':
-            return this.monthNames[x.getMonth()].substr(0, 3) + " " + (x.getDay() + 1);
+            return this.monthNames[x.getMonth()].substr(0, 3) + " " + (x.getDate());
         case '1y':
             return this.monthNames[x.getMonth()].substr(0, 3)+ " " + x.getFullYear();
         case 'All':
@@ -218,16 +224,33 @@ export default class HistoricalChart extends React.Component {
         default:
           return x;
       }
+     }
+     catch{
+       return "";
+     }
     }
 
     buildDatasets(data){
       if (data === null)
         return;
       
+      let maxLength = Math.max(...Object.keys(data).map(key => data[key].length));
       let labels = [];
       let datasets = [];
       for(let key of Object.keys(data)){
         let d = data[key];
+        if (d.length < maxLength){
+          let dLength = maxLength - d.length;
+          for (let i = 0; i < dLength; i++){
+            d = [{
+              data: [{
+                date: new Date(),
+                value: 0
+              }
+              ]
+            }, ...d]
+          }
+        }
         let l = d.map(x => this.extractLabel(x.data[0].date));
         if (l.length > labels.length){
           labels = l;
@@ -237,13 +260,14 @@ export default class HistoricalChart extends React.Component {
           data: d.map(x => x.data[0].value),
           borderColor: this.state.colorDictionary[key],
           backgroundColor: this.state.colorDictionary[key] + "11",
-          fill:true,
+          fill:Object.keys(data).length <= 1,
           showLine:true,
           pointHitRadius: 20
         });
       }
       this.setState({datasets: datasets});
       this.setState({labels: labels});
+      this.setState({loading: false});
     }
 
     onInfoTypeChanged(mode){
@@ -266,10 +290,19 @@ export default class HistoricalChart extends React.Component {
       this.updateChartFromModel(this.state.provider, "", year, this.state.network, this.state.mode);
     }
 
+    numberFormat = new Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 3
+    });
+
      render(){
+       let linearProgress = <></>;
+       if (this.state.loading){
+         linearProgress = <LinearProgress />;
+       }
         return (
             <div>
-                <div style={{marginTop: '5px'}}>
+                <div>
                     <IntervalSelector 
                       allIntervals={this.state.allIntervals} 
                       interval={this.state.interval} 
@@ -278,6 +311,7 @@ export default class HistoricalChart extends React.Component {
                       years={this.state.years}/>
                 </div>
             <div>
+              <div>
                 <Line height={this.props.height} data={{
                   labels: this.state.labels,
                   datasets: this.state.datasets
@@ -306,10 +340,18 @@ export default class HistoricalChart extends React.Component {
                       }
                     },
                     y:{
-                      type: this.transformScaleName(this.state.scale)
+                      stacked:true,
+                      type: this.transformScaleName(this.state.scale),
+                      ticks: {
+                        callback: function (value) {
+                            return this.numberFormat.format(value);
+                        }.bind(this)
+                      }
                     }
                   }
                 }}/>
+                {linearProgress}
+                </div>
             </div>
               <InfoTypeSelector mode={this.state.mode} onChange={this.onInfoTypeChanged.bind(this)}/>
             <div style={{float:"right"}}>

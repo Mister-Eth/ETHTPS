@@ -1,10 +1,5 @@
 import './App.css';
-import githubIcon from './assets/600px-Octicons-mark-github.svg - inv.png';
-import twitterIcon from './assets/1486053611-twitter_79195.png';
-import discordIcon from './assets/discord-mascot.png';
-import blackDiscordIcon from './assets/discord-black-icon-703937.jpg';
 import React, { ReactDOM, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import Main from './Main';
 
 class App extends React.Component {
@@ -30,39 +25,18 @@ class App extends React.Component {
    
   return (
     <>
-    <center>
-    <br></br>
-    <center>
-        <div  style={{backgroundColor: '#7289da', borderRadius:1, marginBottom: '10px'}}>
-        <img className={"small-img"} src={blackDiscordIcon}></img>
-        <a style={{color:'white', fontWeight: 'bold', fontSize: 15}} href={'https://discord.gg/jWPcsTzpCT'}>
-          Click here to join our Discord channel
-        </a>
-        <img className={"small-img"} src={blackDiscordIcon}></img>
-        </div>
-      </center>
-
-    <Link to="/">
-      <div className={"jumpy unselectable"}>ETHTPS.info</div>
-    </Link>
-    <br></br>
-    <br></br>
-      <a href="https://github.com/Mister-Eth/ETHTPS">
-          <img className={"small-img"} src={githubIcon}>
-          </img>
-        </a>
-        <a href="https://twitter.com/ethtps">
-          <img className={"small-img"} src={twitterIcon}>
-          </img>
-        </a>
-        <a href="https://discord.gg/jWPcsTzpCT">
-          <img className={"small-img"} src={discordIcon}>
-          </img>
-        </a>
-    </center>
-    <hr/>
     <div className={"container"}>
       {main}
+    </div>
+    <hr/>
+    <div className='bottomnavbar'>
+      <a href="/Status">
+        Status
+      </a>
+      <div className={'inline'} style={{marginRight: '10px'}}/>
+      <a href="https://api.ethtps.info/API/v2/AllData">
+        Download data
+      </a>
     </div>
     <hr/>
     <footer>
@@ -75,8 +49,11 @@ class App extends React.Component {
       </div>
       <br></br>
         Donate: 
+        <a style={{marginLeft:'5px'}} href="https://app.ens.domains/name/ethtps.eth/details">
+          ethtps.eth
+        </a>
         <p className={'ul-hover inline'} style={{marginLeft:'5px'}}>
-          0x466Ef24d68ac9b61670eeE7fC2E001B951aBf482
+          (0x466Ef24d68ac9b61670eeE7fC2E001B951aBf482)
         </p>
       </div>
     </footer>

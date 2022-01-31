@@ -8,5 +8,6 @@ Name | Type | Description | Notes
 **color** | **String** |  | [optional] 
 **theoreticalMaxTPS** | **Number** |  | [optional] 
 **type** | **String** |  | [optional] 
+**isGeneralPurpose** | **Boolean** |  | [optional] 
 
 

@@ -66,8 +66,15 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             var result = new List<DataResponseModel>();
             lock (Context.LockObj)
             {
-                foreach (var p in Context.Providers.ToList())
+                foreach (var p in Context.Providers.ToList().Where(x => x.Enabled))
                 {
+                    if (!includeSidechains)
+                    {
+                        if (p.TypeNavigation.Name == "Sidechain")
+                        {
+                            continue;
+                        }
+                    }
                     if (Context.TpsandGasDataLatests.Any(x => x.Provider == p.Id))
                     {
                         var entry = Context.TpsandGasDataLatests.First(x => x.Provider == p.Id);
@@ -101,7 +108,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             {
                 if (provider.ToUpper() == "ALL")
                 {
-                    foreach (var p in Context.Providers.ToList())
+                    foreach (var p in Context.Providers.ToList().Where(x => x.Enabled))
                     {
                         if (!includeSidechains)
                         {

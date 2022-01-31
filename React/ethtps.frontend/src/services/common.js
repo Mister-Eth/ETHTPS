@@ -1,4 +1,4 @@
-import { GeneralApi, GPSApi, TPSApi, GasAdjustedTPSApi } from './api-gen/src/index';
+import { GeneralApi, GPSApi, TPSApi, GasAdjustedTPSApi, StatusApi } from './api-gen/src/index';
 import ApiClient from './api-gen/src/ApiClient';
 import InstantDataService from './InstantDataService';
 
@@ -18,12 +18,20 @@ export const formatModeName = function(mode) {
     }
   }
 
-const capitalizeFirstLetter = function(string) {
+export const formatSmoothingName = function(smoothing){
+    smoothing = smoothing.replace("One", "1")
+    .replace("Minute", "m")
+    .replace("Hour", "h")
+    .replace("Day", "d")
+    .replace("Week", "w")
+    .replace("Month", "mo")
+    return smoothing;
+}
+
+export const capitalizeFirstLetter = function(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-const to2DecimalPlaces = function(num){
+export const to2DecimalPlaces = function(num){
     return Math.round((num + Number.EPSILON) * 100) / 100
  }
-
-export { globalGeneralApi, globalGPSApi, globalTPSApi, globalInstantDataService, globalGasAdjustedTPSApi, to2DecimalPlaces, formatModeName, capitalizeFirstLetter };

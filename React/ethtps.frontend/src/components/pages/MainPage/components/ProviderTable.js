@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { formatModeName, capitalizeFirstLetter } from '../../../../services/common';
+import { formatModeName, capitalizeFirstLetter, formatSmoothingName } from '../../../../services/common';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -9,8 +9,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Link } from "react-router-dom";
 import { TableSortLabel } from '@mui/material';
+import SortableTable from './SortableTable';
 
-class ProviderTable extends React.Component {
+class ProviderTable extends SortableTable {
     constructor(props){
         super(props);
 
@@ -23,33 +24,58 @@ class ProviderTable extends React.Component {
             colorDictionary: props.colorDictionary,
             allData: props.allData,
             sort:{
-              asc: true,
-              columnName: 'no'
-            }
+              asc: false,
+              columnName: 'max',
+              isMaxTheoreticalSelected: false
+            },
+            smoothing: props.smoothing
         }
     }
 
     dynamicSort(property) {
       var sortOrder = (this.state.sort.asc?1:-1);
+      if (this.state.mode !== 'tps' && this.state.sort.columnName === 'theoreticalMaxTPS'){
+        this.state.sort.columnName = "max";
+      }
+      else if (this.state.mode === 'tps' && this.state.sort.isMaxTheoreticalSelected){
+        this.state.sort.columnName = "theoreticalMaxTPS";
+      }
       switch(property){
         case 'max':
           return function (a,b) {
             //this.state.allMaxData[this.state.mode][row.name].value
-            let x = this.state.allMaxData[this.state.mode][a.name].value;
-            let y = this.state.allMaxData[this.state.mode][b.name].value;
+            let x = 0;
+            if (this.state.allMaxData[this.state.mode][a.name] !== undefined){
+              x = this.state.allMaxData[this.state.mode][a.name].value;
+            }
+            let y = 0;
+            if (this.state.allMaxData[this.state.mode][b.name] !== undefined){
+              y = this.state.allMaxData[this.state.mode][b.name].value;
+            }
             var result = (x < y) ? -1 : (x > y) ? 1 : 0;
             return result * sortOrder;
         }
         case 'value':
           return function (a,b) {
-            let x = this.state.data[a.name][0].value;
-            let y = this.state.data[b.name][0].value;
+            let x = 0;
+            if (this.state.data[a.name] !== undefined && this.state.data[a.name][0] !== null){
+              x = this.state.data[a.name][0].value;
+            }
+            let y = 0;
+            if (this.state.data[b.name] !== undefined && this.state.data[b.name][0] !== null){
+              y = this.state.data[b.name][0].value;
+            }
             var result = (x < y) ? -1 : (x > y) ? 1 : 0;
             return result * sortOrder;
         }
         case 'no':
           return function (a,b) {
             var result = (parseInt(a[property]) < parseInt(b[property])) ? -1 : (parseInt(a[property]) > parseInt(b[property])) ? 1 : 0;
+            return result * sortOrder;
+        }
+        case 'name':
+          return function (a,b) {
+            var result = (a[property].toUpperCase() < b[property].toUpperCase()) ? -1 : (a[property].toUpperCase() > b[property].toUpperCase()) ? 1 : 0;
             return result * sortOrder;
         }
         default:
@@ -62,6 +88,7 @@ class ProviderTable extends React.Component {
 
     sortTableBy(columnName, noSwitch = false){
       let state = this.state;
+      state.sort.isMaxTheoreticalSelected = columnName === 'theoreticalMaxTPS';
       if (columnName !== state.sort.columnName){
         state.sort.columnName = columnName;
       }
@@ -71,15 +98,107 @@ class ProviderTable extends React.Component {
       this.setState(state);
     }
 
+    noDataFilter = function(x){
+      return this.state.data[x.name] !== undefined && this.state.data[x.name][0] !== null &&(this.state.allMaxData[this.state.mode][x.name] !== undefined);
+    }
+
     render(){
-      if (this.state.colorDictionary === undefined){
+      if (this.state.colorDictionary === undefined || this.state.data === undefined){
         return <></>
       }
-      
-        return <>
+      let noDataProviders = this.state.rows.filter(x => !this.noDataFilter(x)).sort(this.dynamicSort(this.state.sort.columnName).bind(this));
+      let noDataRows = <></>;
+      if (noDataProviders.length > 0){
+        noDataRows = <>
+        <TableRow>
+          <TableCell align="left">
+            
+            </TableCell>
+            <TableCell align="left">
+              <div className={'l1 b'}>
+                Coming soon
+              </div>
+            </TableCell>
+            <TableCell align="left">
+            
+            </TableCell>
+            <TableCell align="left">
+            
+            </TableCell>
+            <TableCell align="left">
+            
+            </TableCell>
+        </TableRow>
+        {noDataProviders.map((row, i) => <TableRow>
+          <TableCell align="left">
+              {this.state.rows.length - noDataProviders.length + i + 1}
+            </TableCell>
+            <TableCell align="left">
+            <div className={'l1 box'}>
+                    <Link style={{color: this.state.colorDictionary[row.name]}} to={`/Network/${row.name}`}>
+                     <img className={'provider-icon'} src={`/provider-icons/${row.name}.png`} />
+                       {row.name}
+                    </Link>
+                  </div>
+            </TableCell>
+            <TableCell align="left">
+            
+            </TableCell>
+            <TableCell align="left">
+            
+            </TableCell>
+            <TableCell align="left">
+              <div className={(!(row.type == "Mainnet" || row.type === "Optimistic rollup" || row.type === "ZK rollup")?'l1':'l1 green')}>
+                  {row.type}
+                </div>
+            </TableCell>
+        </TableRow>)}
+        </>
+      }
+      let tableBody = <></>
+      if (this.state.data !== undefined){
+        tableBody = <TableBody>
+        {this.state.rows.filter(this.noDataFilter.bind(this)).sort(this.dynamicSort(this.state.sort.columnName).bind(this)).map((row, i) => (
+          <TableRow
+            key={row.name}
+            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+          >
+            <TableCell align="left">
+            <div className={'l1'}></div>
+                {i + 1}
+            </TableCell>
+            <TableCell align="left">
+                  <div className={'l1 box'}>
+                    <Link style={{color: this.state.colorDictionary[row.name]}} to={`/Network/${row.name}`}>
+                     <img className={'provider-icon'} src={`/provider-icons/${row.name}.png`} />
+                       {row.name}
+                    </Link>
+                  </div>
+            </TableCell>
+            <TableCell align="left">
+              <div className={'l1'}>
+                {this.format(this.state.data[row.name][0].value)}
+                </div>
+            </TableCell>
+            <TableCell align="left">
+            <div className={'l1'}>
+              {this.getMaxRow(this.state.allMaxData[this.state.mode][row.name].value, row.name)}
+            </div>
+            </TableCell>
+            <TableCell align="left">
+              <div className={(!(row.type == "Mainnet" || row.type === "Optimistic rollup" || row.type === "ZK rollup")?'l1':'l1 green')}>
+                {row.type}
+              </div>
+            </TableCell>
+          </TableRow>
+        ))}
+        {noDataRows}
+      </TableBody>;
+      }
+      return <>
         <div>
         <TableContainer component={Paper} style={{overflowX:'auto'}}>
-      <Table size={"small"} style={{minWidth: '750px'}} aria-label="simple table">
+      <Table size={"small"} style={{minWidth: '800px'}} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell width={10} align="left">
@@ -108,7 +227,9 @@ class ProviderTable extends React.Component {
                 direction={(this.state.sort.asc?'asc':'desc')}
                 onClick={()=>this.sortTableBy('value')}>
                 <div className={'lh b'}>
-                    {capitalizeFirstLetter(formatModeName(this.state.mode))}
+                {(this.state.smoothing !== "Instant")?
+                "Average " + formatSmoothingName(this.state.smoothing) + " " + capitalizeFirstLetter(formatModeName(this.state.mode)) 
+                : capitalizeFirstLetter(formatModeName(this.state.mode))}
                 </div>
             </TableSortLabel>
             </TableCell>
@@ -122,18 +243,6 @@ class ProviderTable extends React.Component {
                   </div>
                   </TableSortLabel>
               </TableCell>
-            {(this.state.mode === 'tps')?<> 
-            <TableCell width={20} align="left">
-            <TableSortLabel
-                active={this.state.sort.columnName === 'theoreticalMaxTPS'}
-                direction={(this.state.sort.asc?'asc':'desc')}
-                onClick={()=>this.sortTableBy('theoreticalMaxTPS')}>
-                <div className={'lh b'}>
-                    Theoretical max TPS
-                </div>
-                </TableSortLabel>
-            </TableCell>
-            </>:<></>}
             <TableCell width={150} align="left">
             <TableSortLabel
                 active={this.state.sort.columnName === 'type'}
@@ -146,50 +255,7 @@ class ProviderTable extends React.Component {
             </TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {this.state.rows.sort(this.dynamicSort(this.state.sort.columnName).bind(this)).map((row) => (
-            <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell align="left">
-              <div className={'l1'}></div>
-                  {row.no}
-              </TableCell>
-              <TableCell align="left">
-                    <div className={'l1 box'}>
-                      <Link style={{color: this.state.colorDictionary[row.name]}} to={`/Network/${row.name}`}>
-                       <img className={'provider-icon'} src={`/provider-icons/${row.name}.png`} />
-                         {row.name}
-                      </Link>
-                    </div>
-              </TableCell>
-              <TableCell align="left">
-                <div className={'l1'}>
-                  {(this.state.data[row.name] !== undefined)?this.format(this.state.data[row.name][0].value):0}
-                  </div>
-              </TableCell>
-              <TableCell align="left">
-              <div className={'l1'}>
-                {(this.state.allMaxData[this.state.mode][row.name] !== undefined)?this.getMaxRow(this.state.allMaxData[this.state.mode][row.name].value, row.name):0}
-              </div>
-              </TableCell>
-              {(this.state.mode === 'tps')?<>
-                <TableCell align="left">
-                  <div className={'l1'}>
-                    {this.format(row.theoreticalMaxTPS)}
-                  </div>
-                </TableCell>
-              </>:<></>}
-        
-              <TableCell align="left">
-                <div className={((row.type == "Sidechain" || row.type === "Validium")?'l1':'l1 green')}>
-                  {row.type}
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
+        {tableBody}
       </Table>
     </TableContainer>
     <p>
@@ -245,8 +311,8 @@ class ProviderTable extends React.Component {
         if (previousProps.providerData !== this.props.providerData){
             this.setState({providerData: this.props.providerData});
         }
-        if (previousProps.data !== this.props.data){
-            this.setState({data: this.props.data});
+        if (previousProps.data !== this.props.data && this.props.data !== undefined && Object.keys(this.props.data).length > 0){
+            this.setState({data: this.props.data}); 
         }
         if (previousProps.providerData !== this.props.providerData){
             this.setState({rows: this.props.providerData.map(this.createRow.bind(this))});
@@ -265,6 +331,9 @@ class ProviderTable extends React.Component {
         }
         if (previousProps.allData !== this.props.allData){
           this.setState({allData: this.props.allData});
+        }
+        if (previousProps.smoothing !== this.props.smoothing){
+          this.setState({smoothing: this.props.smoothing});
         }
       }
 }    

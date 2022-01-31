@@ -142,16 +142,21 @@ Class | Method | HTTP request | Description
 *EthtpsApi.GeneralApi* | [**aPIV2NetworksGet**](docs/GeneralApi.md#aPIV2NetworksGet) | **GET** /API/v2/Networks | 
 *EthtpsApi.GeneralApi* | [**aPIV2ProviderTypesColorDictionaryGet**](docs/GeneralApi.md#aPIV2ProviderTypesColorDictionaryGet) | **GET** /API/v2/ProviderTypesColorDictionary | 
 *EthtpsApi.GeneralApi* | [**aPIV2ProvidersGet**](docs/GeneralApi.md#aPIV2ProvidersGet) | **GET** /API/v2/Providers | 
+*EthtpsApi.StatusApi* | [**apiStatusGetBlockInfoProviderStatusGet**](docs/StatusApi.md#apiStatusGetBlockInfoProviderStatusGet) | **GET** /api/Status/GetBlockInfoProviderStatus | 
 *EthtpsApi.TPSApi* | [**aPITPSGeMonthlyDataByYearGet**](docs/TPSApi.md#aPITPSGeMonthlyDataByYearGet) | **GET** /API/TPS/GeMonthlyDataByYear | 
 *EthtpsApi.TPSApi* | [**aPITPSGetGet**](docs/TPSApi.md#aPITPSGetGet) | **GET** /API/TPS/Get | 
 *EthtpsApi.TPSApi* | [**aPITPSInstantGet**](docs/TPSApi.md#aPITPSInstantGet) | **GET** /API/TPS/Instant | 
 *EthtpsApi.TPSApi* | [**aPITPSMaxGet**](docs/TPSApi.md#aPITPSMaxGet) | **GET** /API/TPS/Max | 
-*EthtpsApi.TestApi* | [**aPITestGetBlockInfoGet**](docs/TestApi.md#aPITestGetBlockInfoGet) | **GET** /API/Test/GetBlockInfo | 
+*EthtpsApi.TimeWarpApi* | [**aPITimeWarpGetEarliestDateGet**](docs/TimeWarpApi.md#aPITimeWarpGetEarliestDateGet) | **GET** /API/TimeWarp/GetEarliestDate | 
+*EthtpsApi.TimeWarpApi* | [**aPITimeWarpGetGPSAtGet**](docs/TimeWarpApi.md#aPITimeWarpGetGPSAtGet) | **GET** /API/TimeWarp/GetGPSAt | 
+*EthtpsApi.TimeWarpApi* | [**aPITimeWarpGetGasAdjustedTPSAtGet**](docs/TimeWarpApi.md#aPITimeWarpGetGasAdjustedTPSAtGet) | **GET** /API/TimeWarp/GetGasAdjustedTPSAt | 
+*EthtpsApi.TimeWarpApi* | [**aPITimeWarpGetTPSAtGet**](docs/TimeWarpApi.md#aPITimeWarpGetTPSAtGet) | **GET** /API/TimeWarp/GetTPSAt | 
 
 
 ## Documentation for Models
 
- - [EthtpsApi.BlockInfo](docs/BlockInfo.md)
+ - [EthtpsApi.BlockInfoProviderStatus](docs/BlockInfoProviderStatus.md)
+ - [EthtpsApi.BlockInfoProviderStatusResult](docs/BlockInfoProviderStatusResult.md)
  - [EthtpsApi.DataPoint](docs/DataPoint.md)
  - [EthtpsApi.DataResponseModel](docs/DataResponseModel.md)
  - [EthtpsApi.ProviderResponseModel](docs/ProviderResponseModel.md)

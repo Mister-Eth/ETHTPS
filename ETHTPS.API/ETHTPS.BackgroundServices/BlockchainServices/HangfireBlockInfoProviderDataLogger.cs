@@ -27,7 +27,7 @@ namespace ETHTPS.Services.BlockchainServices
             _providerID = _context.Providers.First(x => x.Name == _provider).Id;
         }
 
-        [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Delete)]
+        [AutomaticRetry(Attempts = 1, OnAttemptsExceeded = AttemptsExceededAction.Delete)]
         public override async Task RunAsync()
         {
             try
@@ -304,7 +304,8 @@ namespace ETHTPS.Services.BlockchainServices
                 .Subtract(TimeSpan.FromMilliseconds(entry.Date.Millisecond))
                 .Subtract(TimeSpan.FromMinutes(entry.Date.Minute))
                 .Subtract(TimeSpan.FromHours(entry.Date.Hour))
-                .Subtract(TimeSpan.FromDays(entry.Date.Day));
+                .Subtract(TimeSpan.FromDays(entry.Date.Day))
+                .Add(TimeSpan.FromDays(1));
             Func<TpsandGasDataYear, bool> selector = x => x.NetworkNavigation.Name == "Mainnet" && x.Provider == _providerID && x.StartDate.Month == targetDate.Month;
             if (!_context.TpsandGasDataYears.Any(selector))
             {
@@ -344,7 +345,8 @@ namespace ETHTPS.Services.BlockchainServices
                 .Subtract(TimeSpan.FromMilliseconds(entry.Date.Millisecond))
                 .Subtract(TimeSpan.FromMinutes(entry.Date.Minute))
                 .Subtract(TimeSpan.FromHours(entry.Date.Hour))
-                .Subtract(TimeSpan.FromDays(entry.Date.Day));
+                .Subtract(TimeSpan.FromDays(entry.Date.Day))
+                .Add(TimeSpan.FromDays(1));
             Func<TpsandGasDataAll, bool> selector = x => x.NetworkNavigation.Name == "Mainnet" && x.Provider == _providerID && x.StartDate.Month == targetDate.Month && x.StartDate.Year == targetDate.Year;
             if (!_context.TpsandGasDataAlls.Any(selector))
             {

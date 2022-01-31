@@ -4,8 +4,10 @@ import { globalInstantDataService, formatModeName, capitalizeFirstLetter } from 
 import { allInstantData, colorDictionary, providerData } from '../../services/defaultData';
 import ModeSelector from './MainPage/ModeSelector';
 import Box from '@mui/material/Box';
-import Slider from '@mui/material/Slider';
 import { Helmet } from 'react-helmet';
+import IntervalSlider from '../IntervalSlider';
+import Slider from '@mui/material/Slider';
+import CompactHeader from '../Headers/CompactHeader';
 
 export default class TimeWarpPage extends React.Component{
     constructor(props){
@@ -64,43 +66,10 @@ export default class TimeWarpPage extends React.Component{
         }
       }
 
-      marks = [
-        {
-            value: 1,
-            label: '1x',
-        },
-        {
-          value: 20,
-          label: '1 min/s',
-        },
-        {
-          value: 40,
-          label: '1 h/s',
-        },
-        {
-            value: 60,
-            label: '1 d/s',
-        },
-        {
-            value: 80,
-            label: '1 w/s',
-        },
-        {
-            value: 100,
-            label: '1 m/s',
-        },
-      ];
-      
-      valuetext(value) {
-        return `${value}min/s`;
-      }
-      
-      valueLabelFormat(value) {
-        return this.marks.findIndex((mark) => mark.value === value) + 1;
-      }
 
     render(){
         return <>
+        <CompactHeader/>
             <Helmet>
                 <title>
                     ETHTPS.info - Time warp
@@ -113,7 +82,7 @@ export default class TimeWarpPage extends React.Component{
             </div>
             <ModeSelector defaultMode={this.state.mode} onChange={this.modeChanged.bind(this)}/>
               <center>
-            <Box>
+            <Box style={{width: '90%'}}>
                     <Slider
                     aria-label="Temperature"
                     defaultValue={100}
@@ -132,15 +101,7 @@ export default class TimeWarpPage extends React.Component{
                 Speed
             </h5>
             <center>
-                <Slider
-                    aria-label="Restricted values"
-                    defaultValue={1}
-                    valueLabelFormat={this.valueLabelFormat.bind(this)}
-                    getAriaValueText={this.valuetext.bind(this)}
-                    step={null}
-                    marks={this.marks}
-                    max={100}
-                />
+               <IntervalSlider isTimeWarp={true}/>
             </center>
             <p>
                 This is an experimental feature. How did you even get here?

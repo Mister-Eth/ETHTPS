@@ -36,7 +36,14 @@ Table AccesStats{
   Path varchar [not null]
   Count int [not null]
   AverageRequestTimeMs float [not null]
-  ExternalCount int [not null]
+}
+
+Table DetailedAccessStats{
+  ID int [pk, increment]
+  Path varchar [not null]
+  RequestTimeMs float [not null]
+  IPAddress varchar [not null]
+  Date datetime [not null]
 }
 
 Table CachedResponses{
@@ -83,6 +90,7 @@ Table TPSAndGasData_Hour{
   AverageTPS float [not null]
   AverageGPS float [not null]
   ReadingsCount int [not null]
+  OCLH_JSON varchar
 }
 
 Ref: TPSAndGasData_Hour.Provider > Providers.ID
@@ -97,6 +105,7 @@ Table TPSAndGasData_Day{
   AverageTPS float [not null]
   AverageGPS float [not null]
   ReadingsCount int [not null]
+  OCLH_JSON varchar
 }
 
 Ref: TPSAndGasData_Day.Provider > Providers.ID
@@ -111,6 +120,7 @@ Table TPSAndGasData_Week{
   AverageTPS float [not null]
   AverageGPS float [not null]
   ReadingsCount int [not null]
+  OCLH_JSON varchar
 }
 
 Ref: TPSAndGasData_Week.Provider > Providers.ID
@@ -128,3 +138,122 @@ Table TPSAndGasData_Month{
 
 Ref: TPSAndGasData_Month.Provider > Providers.ID
 Ref: TPSAndGasData_Month.Network > Networks.ID
+
+Table TPSAndGasData_Year{
+  ID int [pk, increment]
+  Network int [not null]
+  Provider int [not null]
+  StartDate datetime [not null]
+  AverageTPS float [not null]
+  AverageGPS float [not null]
+  ReadingsCount int [not null]
+}
+
+Ref: TPSAndGasData_Year.Provider > Providers.ID
+Ref: TPSAndGasData_Year.Network > Networks.ID
+
+Table TPSAndGasData_All {
+  ID int [pk, increment]
+  Network int [not null]
+  Provider int [not null]
+  StartDate datetime [not null]
+  AverageTPS float [not null]
+  AverageGPS float [not null]
+  ReadingsCount int [not null]
+}
+
+Ref: TPSAndGasData_All.Provider > Providers.ID
+Ref: TPSAndGasData_All.Network > Networks.ID
+
+Table OldestLoggedHistoricalEntries{
+  ID int [pk, increment]
+  Network int [not null]
+  Provider int [not null]
+  OldestBlock int [not null]
+}
+
+Ref: OldestLoggedHistoricalEntries.Provider > Providers.ID
+Ref: OldestLoggedHistoricalEntries.Network > Networks.ID
+
+Table APIKeys {
+  ID int [pk, increment]
+  KeyHash varchar [not null]
+  TotalCalls int [not null]
+  CallsLast24h int [not null]
+  Limit24h int [not null]
+}
+
+Table TimeWarpData{
+   ID int [pk, increment]
+   Network int [not null]
+   Provider int [not null]
+   Block int
+   Date datetime [not null]
+   TPS float [not null]
+   GPS float [not null]
+}
+
+Ref: TimeWarpData.Provider > Providers.ID
+Ref: TimeWarpData.Network > Networks.ID
+
+Table TimeWarpData_Minute{
+   ID int [pk, increment]
+   Network int [not null]
+   Provider int [not null]
+   Block int
+   StartDate datetime [not null]
+   AverageTPS float [not null]
+   AverageGPS float [not null]
+}
+
+Ref: TimeWarpData_Minute.Provider > Providers.ID
+Ref: TimeWarpData_Minute.Network > Networks.ID
+
+Table TimeWarpData_Hour{
+   ID int [pk, increment]
+   Network int [not null]
+   Provider int [not null]
+   Block int
+   StartDate datetime [not null]
+   AverageTPS float [not null]
+   AverageGPS float [not null]
+}
+
+Ref: TimeWarpData_Hour.Provider > Providers.ID
+Ref: TimeWarpData_Hour.Network > Networks.ID
+
+Table TimeWarpData_Day{
+   ID int [pk, increment]
+   Network int [not null]
+   Provider int [not null]
+   Block int
+   StartDate datetime [not null]
+   AverageTPS float [not null]
+   AverageGPS float [not null]
+}
+
+Ref: TimeWarpData_Day.Provider > Providers.ID
+Ref: TimeWarpData_Day.Network > Networks.ID
+
+Table TimeWarpData_Week{
+   ID int [pk, increment]
+   Network int [not null]
+   Provider int [not null]
+   Block int
+   StartDate datetime [not null]
+   AverageTPS float [not null]
+   AverageGPS float [not null]
+}
+
+Ref: TimeWarpData_Week.Provider > Providers.ID
+Ref: TimeWarpData_Week.Network > Networks.ID
+
+Table OldestLoggedTimeWarpBlocks {
+  ID int [pk, increment]
+  Network int [not null]
+  Provider int [not null]
+  OldestBlock int [not null]
+}
+
+Ref: OldestLoggedTimeWarpBlocks.Provider > Providers.ID
+Ref: OldestLoggedTimeWarpBlocks.Network > Networks.ID

@@ -162,7 +162,9 @@ import EthtpsApi from 'ethtps_api';
 
 let apiInstance = new EthtpsApi.GeneralApi();
 let opts = {
-  'includeSidechains': true // Boolean | 
+  'includeSidechains': true, // Boolean | 
+  'network': "'Mainnet'", // String | 
+  'smoothing': "''" // String | 
 };
 apiInstance.aPIV2InstantDataGet(opts, (error, data, response) => {
   if (error) {
@@ -179,6 +181,8 @@ apiInstance.aPIV2InstantDataGet(opts, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **includeSidechains** | **Boolean**|  | [optional] [default to true]
+ **network** | **String**|  | [optional] [default to &#39;Mainnet&#39;]
+ **smoothing** | **String**|  | [optional] [default to &#39;&#39;]
 
 ### Return type
 

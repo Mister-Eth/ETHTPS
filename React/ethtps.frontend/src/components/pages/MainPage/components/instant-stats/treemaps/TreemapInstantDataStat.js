@@ -61,7 +61,7 @@ export default class TreemapInstantDataStat extends React.Component {
         }
         return [
                 {
-                    data: state.providerData.filter(x => state.data[x.name] !== undefined).map(x => this.createDataPoint(x, state))
+                    data: state.providerData.filter(x => state.data[x.name] !== undefined && state.data[x.name][0] !== null).map(x => this.createDataPoint(x, state))
                 }
             ];
     }

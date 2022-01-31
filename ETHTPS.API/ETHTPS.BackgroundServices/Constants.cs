@@ -15,6 +15,7 @@ namespace ETHTPS.Services
         public const string Every5Minutes = "*/5 * * * *";
         public const string Every15Minutes = "*/15 * * * *";
         public const string EveryHour = "0 * * * *";
+        public const string Never = "0 0 5 31 2 ?";
         public const string EveryMidnight = "0 0 * * *";
     }
 }

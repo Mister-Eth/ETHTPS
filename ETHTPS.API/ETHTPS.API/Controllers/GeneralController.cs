@@ -58,9 +58,9 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
-        public IDictionary<string, object> InstantData(bool includeSidechains = true)
+        public IDictionary<string, object> InstantData(bool includeSidechains = true, string network = "Mainnet", string smoothing = "")
         {
-            return _generalService.InstantData(includeSidechains);
+            return _generalService.InstantData(includeSidechains, network, smoothing);
         }
 
         [HttpGet]
@@ -82,6 +82,12 @@ namespace ETHTPS.API.Controllers
         public IEnumerable<string> GetUniqueDataYears(string provider, string network = "Mainnet")
         {
             return _generalService.GetUniqueDataYears(provider, network);
+        }
+
+        [HttpGet]
+        public AllDataModel AllData(string network = "Mainnet")
+        {
+            return _generalService.GetAllData(network);
         }
     }
 }
