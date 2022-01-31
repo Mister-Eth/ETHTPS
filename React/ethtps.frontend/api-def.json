@@ -683,6 +683,45 @@
         }
       }
     },
+    "/API/v2/AllData": {
+      "get": {
+        "tags": [
+          "General"
+        ],
+        "parameters": [
+          {
+            "name": "network",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": "Mainnet"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllDataModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllDataModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllDataModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/API/GPS/GeMonthlyDataByYear": {
       "get": {
         "tags": [
@@ -1163,6 +1202,51 @@
         }
       }
     },
+    "/API/TimeWarp/GetSyncProgress": {
+      "get": {
+        "tags": [
+          "TimeWarp"
+        ],
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "network",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeWarpSyncProgressModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeWarpSyncProgressModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeWarpSyncProgressModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/API/TimeWarp/GetTPSAt": {
       "get": {
         "tags": [
@@ -1502,6 +1586,63 @@
   },
   "components": {
     "schemas": {
+      "AllDataModel": {
+        "type": "object",
+        "properties": {
+          "providers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProviderModel"
+            },
+            "nullable": true
+          },
+          "maxData": {
+            "type": "object",
+            "additionalProperties": { },
+            "nullable": true
+          },
+          "allTPSData": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DataResponseModel"
+                }
+              }
+            },
+            "nullable": true
+          },
+          "allGPSData": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DataResponseModel"
+                }
+              }
+            },
+            "nullable": true
+          },
+          "allGasAdjustedTPSData": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DataResponseModel"
+                }
+              }
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "BlockInfoProviderStatus": {
         "enum": [
           0,
@@ -1556,6 +1697,20 @@
         },
         "additionalProperties": false
       },
+      "ProviderModel": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ProviderResponseModel": {
         "type": "object",
         "properties": {
@@ -1577,6 +1732,20 @@
           },
           "isGeneralPurpose": {
             "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimeWarpSyncProgressModel": {
+        "type": "object",
+        "properties": {
+          "currentBlock": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "latestBlockHeight": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

@@ -133,6 +133,7 @@ Class | Method | HTTP request | Description
 *EthtpsApi.GasAdjustedTPSApi* | [**aPIGasAdjustedTPSGetGet**](docs/GasAdjustedTPSApi.md#aPIGasAdjustedTPSGetGet) | **GET** /API/GasAdjustedTPS/Get | 
 *EthtpsApi.GasAdjustedTPSApi* | [**aPIGasAdjustedTPSInstantGet**](docs/GasAdjustedTPSApi.md#aPIGasAdjustedTPSInstantGet) | **GET** /API/GasAdjustedTPS/Instant | 
 *EthtpsApi.GasAdjustedTPSApi* | [**aPIGasAdjustedTPSMaxGet**](docs/GasAdjustedTPSApi.md#aPIGasAdjustedTPSMaxGet) | **GET** /API/GasAdjustedTPS/Max | 
+*EthtpsApi.GeneralApi* | [**aPIV2AllDataGet**](docs/GeneralApi.md#aPIV2AllDataGet) | **GET** /API/v2/AllData | 
 *EthtpsApi.GeneralApi* | [**aPIV2ColorDictionaryGet**](docs/GeneralApi.md#aPIV2ColorDictionaryGet) | **GET** /API/v2/ColorDictionary | 
 *EthtpsApi.GeneralApi* | [**aPIV2GetIntervalsWithDataGet**](docs/GeneralApi.md#aPIV2GetIntervalsWithDataGet) | **GET** /API/v2/GetIntervalsWithData | 
 *EthtpsApi.GeneralApi* | [**aPIV2GetUniqueDataYearsGet**](docs/GeneralApi.md#aPIV2GetUniqueDataYearsGet) | **GET** /API/v2/GetUniqueDataYears | 
@@ -150,16 +151,20 @@ Class | Method | HTTP request | Description
 *EthtpsApi.TimeWarpApi* | [**aPITimeWarpGetEarliestDateGet**](docs/TimeWarpApi.md#aPITimeWarpGetEarliestDateGet) | **GET** /API/TimeWarp/GetEarliestDate | 
 *EthtpsApi.TimeWarpApi* | [**aPITimeWarpGetGPSAtGet**](docs/TimeWarpApi.md#aPITimeWarpGetGPSAtGet) | **GET** /API/TimeWarp/GetGPSAt | 
 *EthtpsApi.TimeWarpApi* | [**aPITimeWarpGetGasAdjustedTPSAtGet**](docs/TimeWarpApi.md#aPITimeWarpGetGasAdjustedTPSAtGet) | **GET** /API/TimeWarp/GetGasAdjustedTPSAt | 
+*EthtpsApi.TimeWarpApi* | [**aPITimeWarpGetSyncProgressGet**](docs/TimeWarpApi.md#aPITimeWarpGetSyncProgressGet) | **GET** /API/TimeWarp/GetSyncProgress | 
 *EthtpsApi.TimeWarpApi* | [**aPITimeWarpGetTPSAtGet**](docs/TimeWarpApi.md#aPITimeWarpGetTPSAtGet) | **GET** /API/TimeWarp/GetTPSAt | 
 
 
 ## Documentation for Models
 
+ - [EthtpsApi.AllDataModel](docs/AllDataModel.md)
  - [EthtpsApi.BlockInfoProviderStatus](docs/BlockInfoProviderStatus.md)
  - [EthtpsApi.BlockInfoProviderStatusResult](docs/BlockInfoProviderStatusResult.md)
  - [EthtpsApi.DataPoint](docs/DataPoint.md)
  - [EthtpsApi.DataResponseModel](docs/DataResponseModel.md)
+ - [EthtpsApi.ProviderModel](docs/ProviderModel.md)
  - [EthtpsApi.ProviderResponseModel](docs/ProviderResponseModel.md)
+ - [EthtpsApi.TimeWarpSyncProgressModel](docs/TimeWarpSyncProgressModel.md)
 
 
 ## Documentation for Authorization
