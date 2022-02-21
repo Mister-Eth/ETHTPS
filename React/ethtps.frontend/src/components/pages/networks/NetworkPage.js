@@ -119,7 +119,7 @@ export default class NetworkPage extends PageWithQueryString {
         <CompactHeader/>
         <Helmet>
             <title>
-                ETHTPS.info - {this.state.name}
+                {this.state.name} Live TPS
             </title>
         </Helmet>
         <div style={{display:'inline-box'}}>
