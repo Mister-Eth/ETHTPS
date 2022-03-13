@@ -16,12 +16,17 @@ export default class LargeHeader extends React.Component{
         <br></br>
 
         <center>
-            <div  style={{backgroundColor: '#7289da', borderRadius:3, marginBottom: '0px'}}>
+            <div  style={{backgroundColor: '#7289da', borderRadius:3, marginBottom: '5px'}}>
             <img className={"small-img"} src={blackDiscordIcon}></img>
             <a style={{color:'white', fontWeight: 'bold', fontSize: 15}} href={'https://discord.gg/jWPcsTzpCT'}>
             Click here to join our Discord channel
             </a>
             <img className={"small-img"} src={blackDiscordIcon}></img>
+            </div>
+            <div  style={{backgroundColor: '#3285a6', borderRadius:3, marginBottom: '0px'}}>
+            <a style={{color:'white', fontWeight: 'bold', fontSize: 15}} href={'https://gitcoin.co/grants/4139/ethtpsinfo'}>
+                Click here to donate to ETHTPS.info's Gitcoin grant
+            </a>
             </div>
         </center>
 
