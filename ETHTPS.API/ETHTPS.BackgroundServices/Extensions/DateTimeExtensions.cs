@@ -10,7 +10,7 @@ namespace ETHTPS.Services.Extensions
     {
         public static int GetTodayUnixDay() => GetUnixDay(DateTime.Now);
 
-        public static int GetUnixDay(DateTime date)
+        public static int GetUnixDay(this DateTime date)
         {
             return date.ToUnixTimeSeconds() / 86400;
         }

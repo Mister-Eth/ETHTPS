@@ -34,9 +34,15 @@ namespace ETHTPS.Services.BlockchainServices.Starkware
             throw new NotImplementedException();
         }
 
-        public Task<BlockInfo> GetBlockInfoAsync(DateTime time)
+        public async Task<BlockInfo> GetBlockInfoAsync(DateTime time)
         {
-            throw new NotImplementedException();
+            var txCountForDay = await _starkwareClient.GetTransactionCountForAllTokensAsync(time, _productName);
+            return new BlockInfo()
+            {
+                Date = time,
+                Settled = true,
+                TransactionCount = (int)(100 * txCountForDay / 86400)
+            };
         }
 
         public async Task<BlockInfo> GetLatestBlockInfoAsync()
@@ -59,7 +65,7 @@ namespace ETHTPS.Services.BlockchainServices.Starkware
             var entry = _context.StarkwareTransactionCountData.First(x => x.Product == _productName);
             if (entry.LastUpdateCount != todaysTransactionCount) //tx count has changed, update the entry
             {
-                if (todaysTransactionCount > entry.LastUpdateCount)
+                if (entry.LastUpdateTime.Day == DateTime.Now.Day)
                 {
                     entry.LastUpdateTPS = (todaysTransactionCount - entry.LastUpdateCount) / DateTime.Now.Subtract(entry.LastUpdateTime).TotalSeconds;  //TPS since last update
                 }

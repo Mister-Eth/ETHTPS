@@ -40,18 +40,20 @@ namespace ETHTPS.Services.BlockchainServices.Starkware.API
             _apiKey = section.GetValue<string>("APIKey");
         }
 
-        public async Task<int> GetTodayTransactionCountForAllTokensAsync(string product)
+        public async Task<int> GetTransactionCountForAllTokensAsync(DateTime date, string product)
         {
             TransactionCountRequestModel model = new()
             {
                 Product = product,
                 TransactionType = TransactionTypes.All,
-                UnixDayStart = DateTimeExtensions.GetTodayUnixDay() - 1,
-                UnixDayEnd = DateTimeExtensions.GetTodayUnixDay(),
+                UnixDayStart = date.GetUnixDay() - 1,
+                UnixDayEnd = date.GetUnixDay(),
                 TokenID = TransactionTypes.All
             };
             return (await GetTransactionCountAsync(model)).Count;
         }
+
+        public async Task<int> GetTodayTransactionCountForAllTokensAsync(string product) => await GetTransactionCountForAllTokensAsync(DateTime.Now, product);
 
         public async Task<TransactionCountResponseModel> GetTransactionCountAsync(TransactionCountRequestModel model)
         {
