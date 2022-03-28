@@ -14,7 +14,7 @@ export default class DeversiFiDetails extends React.Component {
                   websites: ['https://www.deversifi.com/'],
                   documentation: ['https://docs.deversifi.com/',
                     'https://support.deversifi.com/en/',
-                    'https://docs.starkware.co/starkex-docs-v2/'],
+                    'https://docs.starkware.co/'],
                   repositories: ['https://github.com/starkware-libs/starkex-contracts', 'https://github.com/deversifi'],
                   socialMedia: [
                     'https://blog.deversifi.com/',

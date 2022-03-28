@@ -12,7 +12,7 @@ export default class SorareDetails extends React.Component {
                 purpose: 'Payments',
                 links: {
                   websites: ['https://sorare.com/'],
-                  documentation: ['https://docs.starkware.co/starkex-docs-v2/'],
+                  documentation: ['https://docs.starkware.co/'],
                   repositories: ['https://github.com/starkware-libs/starkex-contracts'],
                   socialMedia: [
                     'https://discord.gg/TSjtHaM',
