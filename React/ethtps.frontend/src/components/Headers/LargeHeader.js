@@ -23,11 +23,6 @@ export default class LargeHeader extends React.Component{
             </a>
             <img className={"small-img"} src={blackDiscordIcon}></img>
             </div>
-            <div  style={{backgroundColor: '#3285a6', borderRadius:3, marginBottom: '0px'}}>
-            <a style={{color:'white', fontWeight: 'bold', fontSize: 15}} href={'https://gitcoin.co/grants/4139/ethtpsinfo'}>
-                Click here to donate to ETHTPS.info's Gitcoin grant
-            </a>
-            </div>
         </center>
 
 
