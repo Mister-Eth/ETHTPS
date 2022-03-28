@@ -10,7 +10,7 @@ namespace ETHTPS.Services.BlockchainServices.Starkware.API.Models
     {
         public static string ImmutableX => "immutable";
         public static string Sorare => "sorare";
-        public static string DiversiFi => "deversifi";
+        public static string DeversiFi => "deversifi";
     }
 
     public static class TransactionTypes

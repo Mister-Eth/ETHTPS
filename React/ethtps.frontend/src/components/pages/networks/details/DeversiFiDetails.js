@@ -1,7 +1,7 @@
 import React from "react";
 import NetworkSummary from "../NetworkSummary";
 
-export default class DiversiFiDetails extends React.Component {
+export default class DeversiFiDetails extends React.Component {
     constructor(props){
         super(props);
         this.state = {

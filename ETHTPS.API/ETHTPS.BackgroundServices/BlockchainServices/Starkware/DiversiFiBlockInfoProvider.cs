@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace ETHTPS.Services.BlockchainServices.Starkware
 {
-    [Provider("DiversiFi")]
-    public class DiversiFiBlockInfoProvider : StarkwareBlockInfoProviderBase
+    [Provider("DeversiFi")]
+    public class DeversiFiBlockInfoProvider : StarkwareBlockInfoProviderBase
     {
-        public DiversiFiBlockInfoProvider(ETHTPSContext context, IConfiguration configuration) : base(Products.DiversiFi, context, configuration)
+        public DeversiFiBlockInfoProvider(ETHTPSContext context, IConfiguration configuration) : base(Products.DeversiFi, context, configuration)
         {
         }
     }
