@@ -47,35 +47,35 @@ namespace ETHTPS.Services.BlockchainServices.Starkware
 
         public async Task<BlockInfo> GetLatestBlockInfoAsync()
         {
-            var todaysTransactionCount = await _starkwareClient.GetTodayTransactionCountForAllTokensAsync(_productName);
+            var yesterdaysTransactionCount = await _starkwareClient.GetYesterdaysTransactionCountForAllTokensAsync(_productName);
             var mainnetID = _context.GetMainnetID();
             if (!_context.StarkwareTransactionCountData.Any(x => x.Product == _productName)) //First time we see this product
             {
                 _context.StarkwareTransactionCountData.Add(new StarkwareTransactionCountData()
                 {
-                    LastUpdateCount = todaysTransactionCount,
-                    LastUpdateTime = DateTime.Now,
+                    LastUpdateCount = yesterdaysTransactionCount,
+                    LastUpdateTime = DateTime.Now.Subtract(TimeSpan.FromDays(1)),
                     Network = mainnetID,
                     Product = _productName,
-                    LastUpdateTPS = todaysTransactionCount / DateTime.Now.TimeOfDay.TotalSeconds
+                    LastUpdateTPS = yesterdaysTransactionCount / DateTime.Now.TimeOfDay.TotalSeconds
                 });
                 _context.SaveChanges();
             }
 
             var entry = _context.StarkwareTransactionCountData.First(x => x.Product == _productName);
-            if (entry.LastUpdateCount != todaysTransactionCount) //tx count has changed, update the entry
+            if (entry.LastUpdateCount != yesterdaysTransactionCount) //tx count has changed, update the entry
             {
-                if (entry.LastUpdateTime.Day == DateTime.Now.Day)
+                if (entry.LastUpdateTime.Day == (DateTime.Now.Day - 1))
                 {
-                    entry.LastUpdateTPS = (todaysTransactionCount - entry.LastUpdateCount) / DateTime.Now.Subtract(entry.LastUpdateTime).TotalSeconds;  //TPS since last update
+                    entry.LastUpdateTPS = (yesterdaysTransactionCount - entry.LastUpdateCount) / DateTime.Now.Subtract(entry.LastUpdateTime).TotalSeconds;  //TPS since last update
                 }
                 else //New day
                 {
-                    entry.LastUpdateTPS = todaysTransactionCount / DateTime.Now.TimeOfDay.TotalSeconds;
+                    entry.LastUpdateTPS = yesterdaysTransactionCount / 86400;
                 }
 
-                entry.LastUpdateCount = todaysTransactionCount;
-                entry.LastUpdateTime = DateTime.Now;
+                entry.LastUpdateCount = yesterdaysTransactionCount;
+                entry.LastUpdateTime = DateTime.Now.Subtract(TimeSpan.FromDays(1));
 
                 _context.StarkwareTransactionCountData.Update(entry);
                 _context.SaveChanges();
