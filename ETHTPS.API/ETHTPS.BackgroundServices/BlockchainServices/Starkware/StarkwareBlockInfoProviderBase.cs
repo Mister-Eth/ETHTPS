@@ -71,7 +71,7 @@ namespace ETHTPS.Services.BlockchainServices.Starkware
                 }
                 else //New day
                 {
-                    entry.LastUpdateTPS = todaysTransactionCount / 86400;
+                    entry.LastUpdateTPS = (double)todaysTransactionCount / 86400;
                 }
 
                 entry.LastUpdateCount = todaysTransactionCount;
