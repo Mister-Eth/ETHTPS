@@ -21,7 +21,7 @@ using System.Linq;
 using ETHTPS.Services.BlockchainServices.Scan.Implementations;
 using ETHTPS.Services.BlockchainServices;
 using ETHTPS.Services.BlockchainServices.Scan;
-using ETHTPS.Data.Database.Historical.Chart;
+using ETHTPS.Services.DataProviders.Historical.Chart;
 using ETHTPS.API.Infrastructure.Services;
 using ETHTPS.API.Infrastructure.Services.Implementations;
 using ETHTPS.Services.BlockchainServices.Status;

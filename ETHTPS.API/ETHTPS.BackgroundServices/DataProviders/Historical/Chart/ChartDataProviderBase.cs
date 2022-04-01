@@ -1,4 +1,5 @@
-﻿using ETHTPS.Data.Extensions;
+﻿using ETHTPS.Data.Database;
+using ETHTPS.Data.Extensions;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -8,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ETHTPS.Data.Database.Historical.Chart
+namespace ETHTPS.Services.DataProviders.Historical.Chart
 {
     public abstract class ChartDataProviderBase<TTargetHistoricalData> : IChartDataProvider
         where TTargetHistoricalData: TimedTPSAndGasData

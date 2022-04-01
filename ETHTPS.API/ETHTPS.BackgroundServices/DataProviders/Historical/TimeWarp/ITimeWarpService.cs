@@ -1,4 +1,4 @@
-﻿using ETHTPS.Data.Database.TimeWarp.Models;
+﻿using ETHTPS.Services.DataProviders.Historical.TimeWarp.Models;
 using ETHTPS.Data.ResponseModels;
 
 using System;
@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ETHTPS.Data.Database.TimeWarp
+namespace ETHTPS.Services.DataProviders.Historical.TimeWarp
 {
     public interface ITimeWarpService
     {

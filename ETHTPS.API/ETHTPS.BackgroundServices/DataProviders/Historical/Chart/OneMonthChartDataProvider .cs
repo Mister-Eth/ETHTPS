@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ETHTPS.Data.Database;
+
+using Microsoft.EntityFrameworkCore;
 
 using System;
 using System.Collections.Generic;
@@ -6,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ETHTPS.Data.Database.Historical.Chart
+namespace ETHTPS.Services.DataProviders.Historical.Chart
 {
     public class OneMonthChartDataProvider : ChartDataProviderBase<TpsandGasDataMonth>
     {

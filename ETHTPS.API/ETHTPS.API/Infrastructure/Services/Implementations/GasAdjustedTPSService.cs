@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 
 using ETHTPS.API.Infrastructure.Services;
 using ETHTPS.Data.Database;
-using ETHTPS.Data.Database.Historical.Chart;
+using ETHTPS.Services.DataProviders.Historical.Chart;
 using ETHTPS.Data.ResponseModels;
+using ETHTPS.Services.DataProviders.Historical;
 
 namespace ETHTPS.API.Infrastructure.Services.Implementations
 {
-    public class GasAdjustedTPSService : HistoricalMethodsServiceBase, IPSService
+    public class GasAdjustedTPSService : HistoricalMethodsServiceBase<IChartDataProvider>, IPSService
     {
         private readonly GPSService _gpsService;
 

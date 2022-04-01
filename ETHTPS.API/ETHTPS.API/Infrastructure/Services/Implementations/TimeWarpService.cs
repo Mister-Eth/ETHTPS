@@ -1,8 +1,8 @@
 ﻿using ETHTPS.Data;
 using ETHTPS.Data.Database;
-using ETHTPS.Data.Database.Historical.Chart;
-using ETHTPS.Data.Database.TimeWarp;
-using ETHTPS.Data.Database.TimeWarp.Models;
+using ETHTPS.Services.DataProviders.Historical.Chart;
+using ETHTPS.Services.DataProviders.Historical.TimeWarp;
+using ETHTPS.Services.DataProviders.Historical.TimeWarp.Models;
 using ETHTPS.Data.Extensions;
 using ETHTPS.Data.ResponseModels;
 using ETHTPS.Services;
@@ -17,15 +17,17 @@ using System.Threading.Tasks;
 
 namespace ETHTPS.API.Infrastructure.Services.Implementations
 {
-    public class TimeWarpService : HistoricalMethodsServiceBase, ITimeWarpService
+    public class TimeWarpService : ITimeWarpService
     {
         private readonly ETHTPSContext _context;
         private readonly IServiceProvider _services;
+        private readonly IEnumerable<ITimeWarpDataProvider> _timeWarpDataProviders;
 
-        public TimeWarpService(ETHTPSContext context, IServiceProvider services, IEnumerable<IChartDataProvider> historicalDataProviders) : base(context, historicalDataProviders)
+        public TimeWarpService(ETHTPSContext context, IServiceProvider services, IEnumerable<ITimeWarpDataProvider> timeWarpDataProviders)
         {
             _context = context;
             _services = services;
+            _timeWarpDataProviders = timeWarpDataProviders;
         }
 
         public DateTime GetEarliestDate()

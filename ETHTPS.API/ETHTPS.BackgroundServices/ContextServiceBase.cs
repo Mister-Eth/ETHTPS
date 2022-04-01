@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ETHTPS.API.Infrastructure
+namespace ETHTPS.Services
 {
     public abstract class ContextServiceBase
     {

@@ -2,9 +2,9 @@
 using ETHTPS.API.Infrastructure.Services.Implementations;
 using ETHTPS.Data.Database;
 using ETHTPS.Data.Database.Extensions;
-using ETHTPS.Data.Database.Historical.Chart;
-using ETHTPS.Data.Database.TimeWarp;
-using ETHTPS.Data.Database.TimeWarp.Models;
+using ETHTPS.Services.DataProviders.Historical.Chart;
+using ETHTPS.Services.DataProviders.Historical.TimeWarp;
+using ETHTPS.Services.DataProviders.Historical.TimeWarp.Models;
 using ETHTPS.Data.ResponseModels;
 
 using Microsoft.AspNetCore.Mvc;

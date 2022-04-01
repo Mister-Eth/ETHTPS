@@ -1,4 +1,4 @@
-﻿using ETHTPS.Data.Database.TimeWarp.Models;
+﻿using ETHTPS.Services.DataProviders.Historical.TimeWarp.Models;
 using ETHTPS.Data.ResponseModels;
 
 using Microsoft.EntityFrameworkCore;
@@ -8,8 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ETHTPS.Data.Database;
 
-namespace ETHTPS.Data.Database.TimeWarp
+namespace ETHTPS.Services.DataProviders.Historical.TimeWarp
 {
     public abstract class TimeWarpDataProviderBase<TTargetTimeWarpData> : ITimeWarpDataProvider
         where TTargetTimeWarpData: TimeWarpDataBase
@@ -25,6 +26,11 @@ namespace ETHTPS.Data.Database.TimeWarp
         }
 
         public string Interval { get; set; }
+
+        public IEnumerable<TimedTPSAndGasData> GetData(string provider, string network)
+        {
+            throw new NotImplementedException();
+        }
 
         public DateTime GetEarliestDate()
         {
