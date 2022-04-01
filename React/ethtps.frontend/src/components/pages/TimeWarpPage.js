@@ -14,6 +14,7 @@ export default class TimeWarpPage extends React.Component{
         super(props);
 
         let mode = 'tps';
+        let now = (new Date()).getTime();
         this.state = {
             data: allInstantData[mode],
             backgroundColors: [],
@@ -22,8 +23,8 @@ export default class TimeWarpPage extends React.Component{
             mode: mode,
             offline: false,
             minTimestamp: 0,
-            maxTimestamp: 0,
-            currentTimestamp: 0,
+            maxTimestamp: now,
+            currentTimestamp: now,
             smoothing: "Instant",
             bufferSize: 10
         }
@@ -95,6 +96,7 @@ export default class TimeWarpPage extends React.Component{
         this.updateTimestampAndRefreshChart(this.selectedTimestamp);
       }
 
+      updateTimestampAndRefreshChart() { this.updateTimestampAndRefreshChart(this.state.currentTimestamp); }
       updateTimestampAndRefreshChart(timestamp){
         this.setState({currentTimestamp: timestamp});
         let method = globalTimeWarpApi.aPITimeWarpGetTPSAtGet;
@@ -110,17 +112,18 @@ export default class TimeWarpPage extends React.Component{
         method.bind(globalTimeWarpApi)({
           smoothing: this.state.smoothing,
           network: this.state.network,
-          timestamp: this.state.timestamp,
+          timestamp: timestamp,
           count: this.state.bufferSize
         }, (err, data, res) => {
           if (data !== null){
-            
+            this.setState({data: data});
           }
         });
       }
 
     speedSliderChanged(value){
       this.setState({smoothing: value});
+      this.updateTimestampAndRefreshChart();
     }
 
     render(){

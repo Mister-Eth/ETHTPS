@@ -86,6 +86,14 @@ export default class IntervalSlider extends React.Component{
             }
         }
     }
+
+    commited(){
+        let y = this.lastValue;
+        this.lastInterval = this.intervals[y];
+        if (this.props.onChange !== undefined){
+            this.props.onChange(this.lastInterval);
+        }
+    }
     
     valuetext(value) {
       return `${value}min/s`;
@@ -106,6 +114,7 @@ export default class IntervalSlider extends React.Component{
                     marks={(this.state.isTimeWarp)?this.timeWarpMarks:this.marks}
                     track={false}
                     onChange={this.onChange.bind(this)}
+                    onChangeCommitted={this.commited.bind(this)}
                     max={100}
                 />
         </Box>
