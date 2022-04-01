@@ -15,15 +15,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ETHTPS.API.Infrastructure.Services.Implementations
+namespace ETHTPS.Services.DataProviders.Historical.TimeWarp
 {
-    public class TimeWarpService : ITimeWarpService
+    public class TimeWarpService : HistoricalMethodsServiceBase<ITimeWarpDataProvider>, ITimeWarpService
     {
         private readonly ETHTPSContext _context;
         private readonly IServiceProvider _services;
         private readonly IEnumerable<ITimeWarpDataProvider> _timeWarpDataProviders;
 
-        public TimeWarpService(ETHTPSContext context, IServiceProvider services, IEnumerable<ITimeWarpDataProvider> timeWarpDataProviders)
+        public TimeWarpService(ETHTPSContext context, IServiceProvider services, IEnumerable<ITimeWarpDataProvider> timeWarpDataProviders) : base(context, timeWarpDataProviders)
         {
             _context = context;
             _services = services;
@@ -71,7 +71,13 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
 
         public IEnumerable<DataPoint> GetTPSAt(long timestamp, string network, string smoothing, int count)
         {
-            throw new NotImplementedException();
+            var data = base.GetHistoricalData(smoothing, Constants.All, network);
+
+            return data.Select(x=> new DataPoint()
+            {
+                Date = x.StartDate,
+                Value = x.AverageTps
+            });
         }
     }
 }

@@ -1095,6 +1095,14 @@
             }
           },
           {
+            "name": "smoothing",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": "Instant"
+            }
+          },
+          {
             "name": "count",
             "in": "query",
             "schema": {
@@ -1157,6 +1165,14 @@
             "schema": {
               "type": "string",
               "default": "Mainnet"
+            }
+          },
+          {
+            "name": "smoothing",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": "Instant"
             }
           },
           {
@@ -1267,6 +1283,14 @@
             "schema": {
               "type": "string",
               "default": "Mainnet"
+            }
+          },
+          {
+            "name": "smoothing",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": "Instant"
             }
           },
           {

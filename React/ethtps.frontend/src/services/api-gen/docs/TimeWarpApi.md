@@ -66,6 +66,7 @@ let apiInstance = new EthtpsApi.TimeWarpApi();
 let opts = {
   'timestamp': 789, // Number | 
   'network': "'Mainnet'", // String | 
+  'smoothing': "'Instant'", // String | 
   'count': 30 // Number | 
 };
 apiInstance.aPITimeWarpGetGPSAtGet(opts, (error, data, response) => {
@@ -84,6 +85,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **timestamp** | **Number**|  | [optional] 
  **network** | **String**|  | [optional] [default to &#39;Mainnet&#39;]
+ **smoothing** | **String**|  | [optional] [default to &#39;Instant&#39;]
  **count** | **Number**|  | [optional] [default to 30]
 
 ### Return type
@@ -115,6 +117,7 @@ let apiInstance = new EthtpsApi.TimeWarpApi();
 let opts = {
   'timestamp': 789, // Number | 
   'network': "'Mainnet'", // String | 
+  'smoothing': "'Instant'", // String | 
   'count': 30 // Number | 
 };
 apiInstance.aPITimeWarpGetGasAdjustedTPSAtGet(opts, (error, data, response) => {
@@ -133,6 +136,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **timestamp** | **Number**|  | [optional] 
  **network** | **String**|  | [optional] [default to &#39;Mainnet&#39;]
+ **smoothing** | **String**|  | [optional] [default to &#39;Instant&#39;]
  **count** | **Number**|  | [optional] [default to 30]
 
 ### Return type
@@ -211,6 +215,7 @@ let apiInstance = new EthtpsApi.TimeWarpApi();
 let opts = {
   'timestamp': 789, // Number | 
   'network': "'Mainnet'", // String | 
+  'smoothing': "'Instant'", // String | 
   'count': 30 // Number | 
 };
 apiInstance.aPITimeWarpGetTPSAtGet(opts, (error, data, response) => {
@@ -229,6 +234,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **timestamp** | **Number**|  | [optional] 
  **network** | **String**|  | [optional] [default to &#39;Mainnet&#39;]
+ **smoothing** | **String**|  | [optional] [default to &#39;Instant&#39;]
  **count** | **Number**|  | [optional] [default to 30]
 
 ### Return type

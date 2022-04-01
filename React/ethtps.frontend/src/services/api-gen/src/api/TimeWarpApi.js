@@ -82,6 +82,7 @@ export default class TimeWarpApi {
      * @param {Object} opts Optional parameters
      * @param {Number} opts.timestamp 
      * @param {String} opts.network  (default to 'Mainnet')
+     * @param {String} opts.smoothing  (default to 'Instant')
      * @param {Number} opts.count  (default to 30)
      * @param {module:api/TimeWarpApi~aPITimeWarpGetGPSAtGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Array.<module:model/DataPoint>}
@@ -95,6 +96,7 @@ export default class TimeWarpApi {
       let queryParams = {
         'timestamp': opts['timestamp'],
         'network': opts['network'],
+        'smoothing': opts['smoothing'],
         'count': opts['count']
       };
       let headerParams = {
@@ -125,6 +127,7 @@ export default class TimeWarpApi {
      * @param {Object} opts Optional parameters
      * @param {Number} opts.timestamp 
      * @param {String} opts.network  (default to 'Mainnet')
+     * @param {String} opts.smoothing  (default to 'Instant')
      * @param {Number} opts.count  (default to 30)
      * @param {module:api/TimeWarpApi~aPITimeWarpGetGasAdjustedTPSAtGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Array.<module:model/DataPoint>}
@@ -138,6 +141,7 @@ export default class TimeWarpApi {
       let queryParams = {
         'timestamp': opts['timestamp'],
         'network': opts['network'],
+        'smoothing': opts['smoothing'],
         'count': opts['count']
       };
       let headerParams = {
@@ -209,6 +213,7 @@ export default class TimeWarpApi {
      * @param {Object} opts Optional parameters
      * @param {Number} opts.timestamp 
      * @param {String} opts.network  (default to 'Mainnet')
+     * @param {String} opts.smoothing  (default to 'Instant')
      * @param {Number} opts.count  (default to 30)
      * @param {module:api/TimeWarpApi~aPITimeWarpGetTPSAtGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Array.<module:model/DataPoint>}
@@ -222,6 +227,7 @@ export default class TimeWarpApi {
       let queryParams = {
         'timestamp': opts['timestamp'],
         'network': opts['network'],
+        'smoothing': opts['smoothing'],
         'count': opts['count']
       };
       let headerParams = {

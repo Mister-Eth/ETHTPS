@@ -35,6 +35,3 @@ src/model/DataResponseModel.js
 src/model/ProviderModel.js
 src/model/ProviderResponseModel.js
 src/model/TimeWarpSyncProgressModel.js
-test/model/AllDataModel.spec.js
-test/model/ProviderModel.spec.js
-test/model/TimeWarpSyncProgressModel.spec.js

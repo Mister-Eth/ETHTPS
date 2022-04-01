@@ -28,6 +28,7 @@ using ETHTPS.Services.BlockchainServices.Status;
 using ETHTPS.Services.BlockchainServices.Status.BackgroundTasks.Discord;
 using ETHTPS.Services.BlockchainServices.BlockTime;
 using ETHTPS.Services.BlockchainServices.Starkware;
+using ETHTPS.Services.DataProviders.Historical.TimeWarp;
 
 namespace ETHTPS.API
 {

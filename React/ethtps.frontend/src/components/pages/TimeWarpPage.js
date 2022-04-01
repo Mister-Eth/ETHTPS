@@ -23,7 +23,9 @@ export default class TimeWarpPage extends React.Component{
             offline: false,
             minTimestamp: 0,
             maxTimestamp: 0,
-            currentTimestamp: 0
+            currentTimestamp: 0,
+            smoothing: "Instant",
+            bufferSize: 10
         }
     }
 
@@ -84,15 +86,42 @@ export default class TimeWarpPage extends React.Component{
         this.selectedTimestamp = d;
         let currentDate = new Date();
         if (currentDate.getTime() - this.lastTimestampChangeTime.getTime() >= this.timestampChangeDeltaMs) { //Only update date if user stops moving the bar for 500ms
-          this.setState({currentTimestamp: d});
+          this.updateTimestampAndRefreshChart(d);
           this.lastTimestampChangeTime = currentDate;
         }
       }
 
       timestampChangeCommitted(){
-        this.setState({currentTimestamp: this.selectedTimestamp});
-        console.log("change committed");
+        this.updateTimestampAndRefreshChart(this.selectedTimestamp);
       }
+
+      updateTimestampAndRefreshChart(timestamp){
+        this.setState({currentTimestamp: timestamp});
+        let method = globalTimeWarpApi.aPITimeWarpGetTPSAtGet;
+        switch(this.state.mode){
+          case 'gps':
+              method = globalTimeWarpApi.aPITimeWarpGetGPSAtGet;
+            break;
+          case 'gasAdjustedTPS':
+              method = globalTimeWarpApi.aPITimeWarpGetGasAdjustedTPSAtGet;
+            break;
+        }
+
+        method.bind(globalTimeWarpApi)({
+          smoothing: this.state.smoothing,
+          network: this.state.network,
+          timestamp: this.state.timestamp,
+          count: this.state.bufferSize
+        }, (err, data, res) => {
+          if (data !== null){
+            
+          }
+        });
+      }
+
+    speedSliderChanged(value){
+      this.setState({smoothing: value});
+    }
 
     render(){
         return <>
@@ -130,7 +159,7 @@ export default class TimeWarpPage extends React.Component{
                 Speed
             </h5>
             <center>
-               <IntervalSlider isTimeWarp={true}/>
+               <IntervalSlider isTimeWarp={true} onChange={this.speedSliderChanged.bind(this)}/>
             </center>
             <p>
                 This is an experimental feature. How did you even get here?
