@@ -1,4 +1,4 @@
-import { globalGeneralApi } from "./common";
+import { globalGeneralApi, isEmpty } from "./common";
 
 /*
 * A class for providing a way to register single instant data callbacks for pages.
@@ -20,7 +20,7 @@ export default class InstantDataService {
 
     getAndCallbackInstantData(){
         globalGeneralApi.aPIV2InstantDataGet({includeSidechains: this.includeSidechains, smoothing: this.smoothing}, (err, data, res) => {
-            if (data !== null && Object.entries(this.instantDataForPageCallbackDictionary).length > 0){
+            if (data !== null && !isEmpty(data) && Object.entries(this.instantDataForPageCallbackDictionary).length > 0){
                 Object.entries(this.instantDataForPageCallbackDictionary).forEach(([key, value]) => {
                     value(data);
                  });

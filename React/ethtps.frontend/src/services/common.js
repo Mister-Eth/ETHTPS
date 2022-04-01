@@ -1,4 +1,4 @@
-import { GeneralApi, GPSApi, TPSApi, GasAdjustedTPSApi, StatusApi } from './api-gen/src/index';
+import { GeneralApi, GPSApi, TPSApi, GasAdjustedTPSApi, StatusApi, TimeWarpApi } from './api-gen/src/index';
 import ApiClient from './api-gen/src/ApiClient';
 import InstantDataService from './InstantDataService';
 
@@ -9,6 +9,7 @@ export const globalTPSApi = new TPSApi(client);
 export const globalGasAdjustedTPSApi = new GasAdjustedTPSApi(client);
 export const globalStatusApi = new StatusApi(client);
 export const globalInstantDataService = new InstantDataService(); 
+export const globalTimeWarpApi = new TimeWarpApi(client);
 export const formatModeName = function(mode) {
     if (mode !== "gasAdjustedTPS"){
       return mode.toUpperCase();
@@ -17,6 +18,15 @@ export const formatModeName = function(mode) {
       return "gas-adjusted TPS"
     }
   }
+
+export const isEmpty = function(obj) {
+    for(var prop in obj) {
+        if(obj.hasOwnProperty(prop))
+            return false;
+    }
+
+    return true;
+}
 
 export const formatSmoothingName = function(smoothing){
     smoothing = smoothing.replace("One", "1")

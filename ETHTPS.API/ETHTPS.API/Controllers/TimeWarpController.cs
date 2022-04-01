@@ -20,7 +20,7 @@ namespace ETHTPS.API.Controllers
     public class TimeWarpController : ITimeWarpService
     {
         private readonly TimeWarpService _timeWarpService;
-
+        private const string DEFAULT_SMOOTHING = "Instant";
         public TimeWarpController(TimeWarpService timeWarpService)
         {
             _timeWarpService = timeWarpService;
@@ -33,15 +33,15 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<DataPoint> GetGasAdjustedTPSAt(long timestamp, string network = "Mainnet", int count = 30)
+        public IEnumerable<DataPoint> GetGasAdjustedTPSAt(long timestamp, string network = "Mainnet", string smoothing = DEFAULT_SMOOTHING, int count = 30)
         {
-            return ((ITimeWarpService)_timeWarpService).GetGasAdjustedTPSAt(timestamp, network, count);
+            return ((ITimeWarpService)_timeWarpService).GetGasAdjustedTPSAt(timestamp, network, smoothing, count);
         }
 
         [HttpGet]
-        public IEnumerable<DataPoint> GetGPSAt(long timestamp, string network = "Mainnet", int count = 30)
+        public IEnumerable<DataPoint> GetGPSAt(long timestamp, string network = "Mainnet", string smoothing = DEFAULT_SMOOTHING, int count = 30)
         {
-            return ((ITimeWarpService)_timeWarpService).GetGPSAt(timestamp, network, count);
+            return ((ITimeWarpService)_timeWarpService).GetGPSAt(timestamp, network, smoothing, count);
         }
 
         [HttpGet]
@@ -51,9 +51,9 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<DataPoint> GetTPSAt(long timestamp, string network = "Mainnet", int count = 30)
+        public IEnumerable<DataPoint> GetTPSAt(long timestamp, string network = "Mainnet", string smoothing = DEFAULT_SMOOTHING, int count = 30)
         {
-            return ((ITimeWarpService)_timeWarpService).GetTPSAt(timestamp, network, count);
+            return ((ITimeWarpService)_timeWarpService).GetTPSAt(timestamp, network, smoothing, count);
         }
 
     }

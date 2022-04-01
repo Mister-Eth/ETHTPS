@@ -11,9 +11,9 @@ namespace ETHTPS.Data.Database.TimeWarp
     public interface ITimeWarpService
     {
         public DateTime GetEarliestDate();
-        public IEnumerable<DataPoint> GetTPSAt(long timestamp, string network, int count);
-        public IEnumerable<DataPoint> GetGPSAt(long timestamp, string network, int count);
-        public IEnumerable<DataPoint> GetGasAdjustedTPSAt(long timestamp, string network, int count);
+        public IEnumerable<DataPoint> GetTPSAt(long timestamp, string network, string smoothing, int count);
+        public IEnumerable<DataPoint> GetGPSAt(long timestamp, string network, string smoothing, int count);
+        public IEnumerable<DataPoint> GetGasAdjustedTPSAt(long timestamp, string network, string smoothing, int count);
         public Task<TimeWarpSyncProgressModel> GetSyncProgress(string provider, string network);
     }
 }

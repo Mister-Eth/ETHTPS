@@ -31,12 +31,12 @@ namespace ETHTPS.Data.Database.TimeWarp
             throw new NotImplementedException();
         }
 
-        public IEnumerable<DataPoint> GetGasAdjustedTPSAt(long timestamp, string network, int count)
+        public IEnumerable<DataPoint> GetGasAdjustedTPSAt(long timestamp, string network, string smoothing, int count)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<DataPoint> GetGPSAt(long timestamp, string network, int count)
+        public IEnumerable<DataPoint> GetGPSAt(long timestamp, string network, string smoothing, int count)
         {
             throw new NotImplementedException();
         }
@@ -46,7 +46,7 @@ namespace ETHTPS.Data.Database.TimeWarp
             throw new NotImplementedException();
         }
 
-        public IEnumerable<DataPoint> GetTPSAt(long timestamp, string network, int count)
+        public IEnumerable<DataPoint> GetTPSAt(long timestamp, string network, string smoothing, int count)
         {
             throw new NotImplementedException();
         }
