@@ -36,12 +36,12 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             else return DateTime.MinValue;
         }
 
-        public IEnumerable<DataPoint> GetGasAdjustedTPSAt(long timestamp, string network, int count)
+        public IEnumerable<DataPoint> GetGasAdjustedTPSAt(long timestamp, string network, string smoothing, int count)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<DataPoint> GetGPSAt(long timestamp, string network, int count)
+        public IEnumerable<DataPoint> GetGPSAt(long timestamp, string network, string smoothing, int count)
         {
             throw new NotImplementedException();
         }
@@ -65,7 +65,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             };
         }
 
-        public IEnumerable<DataPoint> GetTPSAt(long timestamp, string network, int count)
+        public IEnumerable<DataPoint> GetTPSAt(long timestamp, string network, string smoothing, int count)
         {
             throw new NotImplementedException();
         }
