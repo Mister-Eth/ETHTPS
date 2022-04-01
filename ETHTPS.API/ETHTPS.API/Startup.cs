@@ -21,7 +21,7 @@ using System.Linq;
 using ETHTPS.Services.BlockchainServices.Scan.Implementations;
 using ETHTPS.Services.BlockchainServices;
 using ETHTPS.Services.BlockchainServices.Scan;
-using ETHTPS.Data.Database.HistoricalDataProviders;
+using ETHTPS.Data.Database.Historical.Chart;
 using ETHTPS.API.Infrastructure.Services;
 using ETHTPS.API.Infrastructure.Services.Implementations;
 using ETHTPS.Services.BlockchainServices.Status;
@@ -67,7 +67,7 @@ namespace ETHTPS.API
             services.AddMemoryCache();
 
             AddServices(services);
-            AddHistoricalDataProviders(services);
+            AddChartDataProviders(services);
             if (ConfigurationQueues?.Length > 0)
             {
                 InitializeHangFire(defaultConnectionString);
@@ -178,14 +178,14 @@ namespace ETHTPS.API
             }
         }
 
-        private void AddHistoricalDataProviders(IServiceCollection services)
+        private void AddChartDataProviders(IServiceCollection services)
         {
-            services.AddScoped<IHistoricalDataProvider, OneHourHistoricalDataProvider>();
-            services.AddScoped<IHistoricalDataProvider, OneDayHistoricalDataProvider>();
-            services.AddScoped<IHistoricalDataProvider, OneWeekHistoricalDataProvider>();
-            services.AddScoped<IHistoricalDataProvider, OneMonthHistoricalDataProvider>();
-            services.AddScoped<IHistoricalDataProvider, OneYearHistoricalDataProvider>();
-            services.AddScoped<IHistoricalDataProvider, AllHistoricalDataProvider>();
+            services.AddScoped<IChartDataProvider, OneHourChartDataProvider>();
+            services.AddScoped<IChartDataProvider, OneDayChartDataProvider>();
+            services.AddScoped<IChartDataProvider, OneWeekChartDataProvider>();
+            services.AddScoped<IChartDataProvider, OneMonthChartDataProvider>();
+            services.AddScoped<IChartDataProvider, OneYearChartDataProvider>();
+            services.AddScoped<IChartDataProvider, AllChartDataProvider>();
         }
 
         public static void InitializeHangFire(string connectionString)

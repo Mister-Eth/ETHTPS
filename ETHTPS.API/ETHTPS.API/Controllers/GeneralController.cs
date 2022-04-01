@@ -2,7 +2,7 @@
 using ETHTPS.Data;
 using ETHTPS.Data.Database;
 using ETHTPS.Data.Database.Extensions;
-using ETHTPS.Data.Database.HistoricalDataProviders;
+using ETHTPS.Data.Database.Historical.Chart;
 using ETHTPS.Data.ResponseModels;
 using ETHTPS.Data.ResponseModels.HomePage;
 

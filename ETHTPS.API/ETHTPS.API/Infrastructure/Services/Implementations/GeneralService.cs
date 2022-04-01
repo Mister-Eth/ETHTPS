@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 using ETHTPS.Data;
 using ETHTPS.Data.Database;
 using ETHTPS.Data.Database.Extensions;
-using ETHTPS.Data.Database.HistoricalDataProviders;
+using ETHTPS.Data.Database.Historical.Chart;
+using ETHTPS.Data.Extensions;
 using ETHTPS.Data.ResponseModels;
 using ETHTPS.Data.ResponseModels.HomePage;
 
@@ -18,7 +19,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
         private readonly GPSService _gpsService;
         private readonly GasAdjustedTPSService _gasAdjustedTPSService;
 
-        public GeneralService(TPSService tpsService, GPSService gpsService, GasAdjustedTPSService gasAdjustedTPSService, ETHTPSContext context, IEnumerable<IHistoricalDataProvider> historicalDataProviders) : base(context, historicalDataProviders)
+        public GeneralService(TPSService tpsService, GPSService gpsService, GasAdjustedTPSService gasAdjustedTPSService, ETHTPSContext context, IEnumerable<IChartDataProvider> historicalDataProviders) : base(context, historicalDataProviders)
         {
             _tpsService = tpsService;
             _gpsService = gpsService;
@@ -84,11 +85,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
 
         public IDictionary<string, object> InstantData(bool includeSidechains = true, string network = "Mainnet", string smoothing = "")
         {
-            var interval = TimeInterval.Instant;
-            if (!string.IsNullOrWhiteSpace(smoothing))
-            {
-                interval = Enum.Parse<TimeInterval>(smoothing);
-            }
+            var interval = smoothing.ToTimeInterval();
             var key = (includeSidechains, network, interval.ToString());
             if (!_instantDataDictionary.ContainsKey(key))
             {

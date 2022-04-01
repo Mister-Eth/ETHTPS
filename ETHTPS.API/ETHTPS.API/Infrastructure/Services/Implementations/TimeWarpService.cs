@@ -1,4 +1,6 @@
-﻿using ETHTPS.Data.Database;
+﻿using ETHTPS.Data;
+using ETHTPS.Data.Database;
+using ETHTPS.Data.Database.Historical.Chart;
 using ETHTPS.Data.Database.TimeWarp;
 using ETHTPS.Data.Database.TimeWarp.Models;
 using ETHTPS.Data.Extensions;
@@ -15,12 +17,12 @@ using System.Threading.Tasks;
 
 namespace ETHTPS.API.Infrastructure.Services.Implementations
 {
-    public class TimeWarpService : ITimeWarpService
+    public class TimeWarpService : HistoricalMethodsServiceBase, ITimeWarpService
     {
         private readonly ETHTPSContext _context;
         private readonly IServiceProvider _services;
 
-        public TimeWarpService(ETHTPSContext context, IServiceProvider services)
+        public TimeWarpService(ETHTPSContext context, IServiceProvider services, IEnumerable<IChartDataProvider> historicalDataProviders) : base(context, historicalDataProviders)
         {
             _context = context;
             _services = services;

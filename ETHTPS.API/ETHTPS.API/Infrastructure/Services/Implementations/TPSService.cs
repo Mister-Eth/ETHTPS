@@ -1,5 +1,5 @@
 ﻿using ETHTPS.Data.Database;
-using ETHTPS.Data.Database.HistoricalDataProviders;
+using ETHTPS.Data.Database.Historical.Chart;
 using ETHTPS.Data.ResponseModels;
 
 using System;
@@ -11,7 +11,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
 {
     public class TPSService : HistoricalMethodsServiceBase, IPSService
     {
-        public TPSService(ETHTPSContext context, IEnumerable<IHistoricalDataProvider> historicalDataProviders) : base(context, historicalDataProviders)
+        public TPSService(ETHTPSContext context, IEnumerable<IChartDataProvider> historicalDataProviders) : base(context, historicalDataProviders)
         {
 
         }
@@ -77,7 +77,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
                                 continue;
                             }
                         }
-                        result[p.Name] = GetHistoricalData(interval, p.Name, network).Select(x => new DataResponseModel()
+                        result[p.Name] = GetChartData(interval, p.Name, network).Select(x => new DataResponseModel()
                         {
                             Data = new List<DataPoint>()
                         {
@@ -88,7 +88,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
                 }
                 else
                 {
-                    result[provider] = GetHistoricalData(interval, provider, network).Select(x => new DataResponseModel()
+                    result[provider] = GetChartData(interval, provider, network).Select(x => new DataResponseModel()
                     {
                         Data = new List<DataPoint>()
                         {

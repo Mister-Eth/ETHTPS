@@ -77,8 +77,21 @@ export default class TimeWarpPage extends React.Component{
         }
       }
 
+      lastTimestampChangeTime = new Date();
+      timestampChangeDeltaMs = 500;
+      selectedTimestamp = 0;
       timstampChanged(event, d){
-        this.setState({currentTimestamp: d});
+        this.selectedTimestamp = d;
+        let currentDate = new Date();
+        if (currentDate.getTime() - this.lastTimestampChangeTime.getTime() >= this.timestampChangeDeltaMs) { //Only update date if user stops moving the bar for 500ms
+          this.setState({currentTimestamp: d});
+          this.lastTimestampChangeTime = currentDate;
+        }
+      }
+
+      timestampChangeCommitted(){
+        this.setState({currentTimestamp: this.selectedTimestamp});
+        console.log("change committed");
       }
 
     render(){
@@ -103,6 +116,7 @@ export default class TimeWarpPage extends React.Component{
                     min={this.state.minTimestamp}
                     max={this.state.maxTimestamp}
                     onChange={this.timstampChanged.bind(this)}
+                    onChangeCommitted={this.timestampChangeCommitted.bind(this)}
                 />
             </Box>
               </center>

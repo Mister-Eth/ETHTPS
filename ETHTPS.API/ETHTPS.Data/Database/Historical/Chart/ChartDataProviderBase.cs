@@ -8,16 +8,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ETHTPS.Data.Database.HistoricalDataProviders
+namespace ETHTPS.Data.Database.Historical.Chart
 {
-    public abstract class HistoricalDataProviderBase<TTargetHistoricalData> : IHistoricalDataProvider
+    public abstract class ChartDataProviderBase<TTargetHistoricalData> : IChartDataProvider
         where TTargetHistoricalData: TimedTPSAndGasData
     {
         private readonly ETHTPSContext _context;
         private readonly Func<ETHTPSContext, DbSet<TTargetHistoricalData>> _dataSelector;
         private readonly TimeSpan _maxAge;
 
-        protected HistoricalDataProviderBase(string interval, ETHTPSContext context, Func<ETHTPSContext, DbSet<TTargetHistoricalData>> dataSelector, TimeSpan maxAge)
+        protected ChartDataProviderBase(string interval, ETHTPSContext context, Func<ETHTPSContext, DbSet<TTargetHistoricalData>> dataSelector, TimeSpan maxAge)
         {
             Interval = interval;
             _context = context;

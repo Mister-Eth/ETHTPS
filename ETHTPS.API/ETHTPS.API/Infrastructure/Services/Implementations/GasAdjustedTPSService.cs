@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 using ETHTPS.API.Infrastructure.Services;
 using ETHTPS.Data.Database;
-using ETHTPS.Data.Database.HistoricalDataProviders;
+using ETHTPS.Data.Database.Historical.Chart;
 using ETHTPS.Data.ResponseModels;
 
 namespace ETHTPS.API.Infrastructure.Services.Implementations
@@ -13,7 +13,8 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
     public class GasAdjustedTPSService : HistoricalMethodsServiceBase, IPSService
     {
         private readonly GPSService _gpsService;
-        public GasAdjustedTPSService(GPSService gpsService, ETHTPSContext context, IEnumerable<IHistoricalDataProvider> historicalDataProviders):base(context, historicalDataProviders)
+
+        public GasAdjustedTPSService(GPSService gpsService, ETHTPSContext context, IEnumerable<IChartDataProvider> historicalDataProviders):base(context, historicalDataProviders)
         {
             _gpsService = gpsService;
         }
