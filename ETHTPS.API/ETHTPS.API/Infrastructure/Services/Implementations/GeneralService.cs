@@ -14,7 +14,7 @@ using ETHTPS.Services.DataProviders.Historical;
 
 namespace ETHTPS.API.Infrastructure.Services.Implementations
 {
-    public class GeneralService : HistoricalMethodsServiceBase<IChartDataProvider>
+    public class GeneralService : HistoricalMethodsServiceBase<IChartDataProvider, TimedTPSAndGasData>
     {
         private readonly TPSService _tpsService;
         private readonly GPSService _gpsService;
@@ -113,7 +113,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
                         result.LastData.Add("gasAdjustedTPS", _gasAdjustedTPSService.Get("All", nextInterval.ToString(), network, includeSidechains).Where(x => x.Value.Any()).ToDictionary(x => x.Key, x => new List<DataPoint>() { new DataPoint() { Value = x.Value.TakeLast(7).Average(x=>(x.Data.FirstOrDefault()==null)?0: x.Data.FirstOrDefault().Value) } }));
                         break;
                     default:
-                        nextInterval = GetNextIntervalForInstantData(interval);
+                        nextInterval = interval.NextInterval();
                         result.LastData.Add("tps", _tpsService.Get("All", nextInterval.ToString(), network, includeSidechains).ToDictionary(x => x.Key, x => new List<DataPoint>() { x.Value.LastOrDefault()?.Data.FirstOrDefault() }));
                         result.LastData.Add("gps", _gpsService.Get("All", nextInterval.ToString(), network, includeSidechains).ToDictionary(x => x.Key, x => new List<DataPoint>() { x.Value.LastOrDefault()?.Data.FirstOrDefault() }));
                         result.LastData.Add("gasAdjustedTPS", _gasAdjustedTPSService.Get("All", nextInterval.ToString(), network, includeSidechains).ToDictionary(x => x.Key, x => new List<DataPoint>() { x.Value.LastOrDefault()?.Data.FirstOrDefault() }));
@@ -121,23 +121,6 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
                 }
             }
             return _instantDataDictionary[key].LastData;
-        }
-
-        private static TimeInterval GetNextIntervalForInstantData(TimeInterval interval)
-        {
-            switch (interval)
-            {
-                case TimeInterval.OneMinute:
-                    return TimeInterval.OneHour;
-                case TimeInterval.OneHour:
-                    return TimeInterval.OneDay;
-                case TimeInterval.OneDay:
-                    return TimeInterval.OneMonth;
-                case TimeInterval.OneMonth:
-                    return TimeInterval.OneYear;
-                default:
-                    return TimeInterval.OneDay;
-            }
         }
         
         public IDictionary<string, object> Max(string provider, string network = "Mainnet")

@@ -77,7 +77,9 @@ namespace ETHTPS.API
                 AddTPSDataUpdaters(services);
                 AddCacheUpdaters(services);
                 AddHistoricalBlockInfoDataUpdaters(services);
+                AddTimeWarpDataProviders(services);
                 AddTimeWarpUpdaters(services);
+                services.AddScoped<TimeWarpService>();
                 AddStatusNotifiers(services);
             }
            
@@ -89,7 +91,6 @@ namespace ETHTPS.API
             services.AddScoped<GPSService>();
             services.AddScoped<GasAdjustedTPSService>();
             services.AddScoped<GeneralService>();
-            services.AddScoped<TimeWarpService>();
             services.AddScoped<IBlockInfoProviderStatusService, BlockInfoProviderStatusService>();
             services.AddScoped<EthereumBlockTimeProvider>();
         }
@@ -177,6 +178,15 @@ namespace ETHTPS.API
             {
                 services.RegisterTimeWarpHangfireBackgroundService<TimeWarpBlockInfoProviderDataLogger<InfuraBlockInfoProvider>, InfuraBlockInfoProvider>(CronConstants.Never, TIMEWARPUPDATERQUEUE);
             }
+        }
+
+        private void AddTimeWarpDataProviders(IServiceCollection services)
+        {
+            services.AddScoped<ITimeWarpDataProvider, OneMinuteTimeWarpDataProvider>();
+            services.AddScoped<ITimeWarpDataProvider, OneHourTimeWarpDataProvider>();
+            services.AddScoped<ITimeWarpDataProvider, OneDayTimeWarpDataProvider>();
+            services.AddScoped<ITimeWarpDataProvider, InstantTimeWarpDataProvider>();
+            services.AddScoped<ITimeWarpDataProvider, OneWeekTimeWarpDataProvider>();
         }
 
         private void AddChartDataProviders(IServiceCollection services)

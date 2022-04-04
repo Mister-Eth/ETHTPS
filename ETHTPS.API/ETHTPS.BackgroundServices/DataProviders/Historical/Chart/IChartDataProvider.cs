@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ETHTPS.Data.Database;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ETHTPS.Services.DataProviders.Historical.Chart
 {
-    public interface IChartDataProvider : IHistoricalDataProvider
+    public interface IChartDataProvider : IHistoricalDataProvider<TimedTPSAndGasData>
     {
     }
 }

@@ -28,7 +28,7 @@ namespace ETHTPS.Services.BlockchainServices.Models.JSONRPC
 
         public static JSONRPCRequestModel CreateGetBlockByBlockNumberRequest(string block) => new JSONRPCRequestModel()
         {
-            ID = 0,
+            ID = 1,
             JsonRPC = "2.0",
             Method = "eth_getBlockByNumber",
             Params = new List<object>()

@@ -37,5 +37,15 @@ namespace ETHTPS.Services.DataProviders.Historical.Chart
             }
             return result;
         }
+
+        public IEnumerable<TimedTPSAndGasData> GetData(string provider, string network, DateTime olderThan)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<TimedTPSAndGasData> GetData(string provider, string network, DateTime olderThan, int count)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

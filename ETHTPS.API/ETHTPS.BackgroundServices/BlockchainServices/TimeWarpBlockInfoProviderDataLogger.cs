@@ -22,6 +22,7 @@ namespace ETHTPS.Services.BlockchainServices
         }
 
         [AutomaticRetry(Attempts = 10, OnAttemptsExceeded = AttemptsExceededAction.Delete)]
+        [MaximumConcurrentExecutions(1)]
         public override async Task RunAsync()
         {
             if (!_context.OldestLoggedTimeWarpBlocks.Any(x => x.Network == 1 && x.Provider == _providerID))
@@ -30,7 +31,7 @@ namespace ETHTPS.Services.BlockchainServices
                 {
                     Network = 1,
                     Provider = _providerID,
-                    OldestBlock = (await _instance.GetLatestBlockInfoAsync()).BlockNumber
+                    OldestBlock = 1
                 });
             }
             await _context.SaveChangesAsync();
@@ -44,6 +45,9 @@ namespace ETHTPS.Services.BlockchainServices
                     stopwatch.Start();
 
                     var delta = await CalculateTPSGPSAsync(oldestEntry.OldestBlock);
+                    if (_context.TimeWarpData.Any(x => x.Block == delta.BlockNumber && x.Network == 1 && x.Provider == _providerID))
+                        continue;
+
                     UpdateMaxEntry(delta);
                     _context.TimeWarpData.Add(new TimeWarpDatum()
                     {
@@ -58,6 +62,7 @@ namespace ETHTPS.Services.BlockchainServices
                     stopwatch.Stop();
                     var eta = TimeSpan.FromMilliseconds(oldestEntry.OldestBlock * (stopwatch.Elapsed.TotalMilliseconds + 1000));
                     _logger.LogInformation($"{_provider} [{oldestEntry.OldestBlock}] @{delta.Date} ETA: [{eta}] {delta.TPS}TPS {delta.GPS}GPS");
+                    oldestEntry.OldestBlock++;
                     await Task.Delay(1000);
                 }
                 catch(Exception e)
@@ -66,7 +71,6 @@ namespace ETHTPS.Services.BlockchainServices
                 }
                 finally
                 {
-                    oldestEntry.OldestBlock++;
                     await _context.SaveChangesAsync();
                 }
             }

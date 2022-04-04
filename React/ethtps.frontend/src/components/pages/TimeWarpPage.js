@@ -34,7 +34,11 @@ export default class TimeWarpPage extends React.Component{
         globalInstantDataService.periodicallyGetInstantDataForPage('TimeWarpPage', this.updateInstantTPS.bind(this));
         globalTimeWarpApi.aPITimeWarpGetEarliestDateGet((err, data, res) => {
           if (data !== null){
-            this.setState({minTimestamp: data.getTime()});
+            let ts = data.getTime();
+            if (ts > this.state.currentTimestamp){
+              ts = this.state.maxTimestamp;
+            }
+            this.setState({minTimestamp: ts});
           }
         });
     }
@@ -84,6 +88,9 @@ export default class TimeWarpPage extends React.Component{
       timestampChangeDeltaMs = 500;
       selectedTimestamp = 0;
       timstampChanged(event, d){
+        if (this.selectedTimestamp === d)
+          return;
+
         this.selectedTimestamp = d;
         let currentDate = new Date();
         if (currentDate.getTime() - this.lastTimestampChangeTime.getTime() >= this.timestampChangeDeltaMs) { //Only update date if user stops moving the bar for 500ms
@@ -93,6 +100,9 @@ export default class TimeWarpPage extends React.Component{
       }
 
       timestampChangeCommitted(){
+        if (this.selectedTimestamp !== 0 && this.selectedTimestamp === this.state.maxTimestamp)
+          return;
+          
         this.updateTimestampAndRefreshChart(this.selectedTimestamp);
       }
 

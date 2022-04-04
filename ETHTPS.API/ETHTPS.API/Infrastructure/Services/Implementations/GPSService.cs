@@ -12,7 +12,7 @@ using ETHTPS.Services.DataProviders.Historical;
 
 namespace ETHTPS.API.Infrastructure.Services.Implementations
 {
-    public class GPSService : HistoricalMethodsServiceBase<IChartDataProvider>, IPSService
+    public class GPSService : HistoricalMethodsServiceBase<IChartDataProvider, TimedTPSAndGasData>, IPSService
     {
         public GPSService(ETHTPSContext context, IEnumerable<IChartDataProvider> historicalDataProviders) : base(context, historicalDataProviders)
         {

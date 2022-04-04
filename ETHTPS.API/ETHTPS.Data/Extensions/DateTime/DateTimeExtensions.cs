@@ -15,6 +15,11 @@ namespace ETHTPS.Data.Extensions
             return epoch.AddSeconds(unixTime);
         }
 
+        public static DateTime FromJSTimestamp(this long timestamp)
+        {
+            return new DateTime(1970, 1, 1).AddTicks(timestamp * 10000);
+        }
+
         public static long ToUnixTime(this DateTime time) => ((DateTimeOffset)time).ToUnixTimeSeconds();
     }
 }

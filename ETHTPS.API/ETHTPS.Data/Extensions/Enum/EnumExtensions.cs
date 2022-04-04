@@ -17,5 +17,22 @@ namespace ETHTPS.Data.Extensions
             }
             return interval;
         }
+
+        public static TimeInterval NextInterval(this TimeInterval interval)
+        {
+            switch (interval)
+            {
+                case TimeInterval.OneMinute:
+                    return TimeInterval.OneHour;
+                case TimeInterval.OneHour:
+                    return TimeInterval.OneDay;
+                case TimeInterval.OneDay:
+                    return TimeInterval.OneMonth;
+                case TimeInterval.OneMonth:
+                    return TimeInterval.OneYear;
+                default:
+                    return TimeInterval.OneDay;
+            }
+        }
     }
 }

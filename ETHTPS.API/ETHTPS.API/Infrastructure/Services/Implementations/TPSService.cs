@@ -10,7 +10,7 @@ using ETHTPS.Services.DataProviders.Historical;
 
 namespace ETHTPS.API.Infrastructure.Services.Implementations
 {
-    public class TPSService : HistoricalMethodsServiceBase<IChartDataProvider>, IPSService
+    public class TPSService : HistoricalMethodsServiceBase<IChartDataProvider, TimedTPSAndGasData>, IPSService
     {
         public TPSService(ETHTPSContext context, IEnumerable<IChartDataProvider> historicalDataProviders) : base(context, historicalDataProviders)
         {

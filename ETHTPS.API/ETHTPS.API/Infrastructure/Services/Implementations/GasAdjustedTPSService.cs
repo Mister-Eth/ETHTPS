@@ -11,7 +11,7 @@ using ETHTPS.Services.DataProviders.Historical;
 
 namespace ETHTPS.API.Infrastructure.Services.Implementations
 {
-    public class GasAdjustedTPSService : HistoricalMethodsServiceBase<IChartDataProvider>, IPSService
+    public class GasAdjustedTPSService : HistoricalMethodsServiceBase<IChartDataProvider, TimedTPSAndGasData>, IPSService
     {
         private readonly GPSService _gpsService;
 

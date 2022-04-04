@@ -17,17 +17,15 @@ using System.Threading.Tasks;
 
 namespace ETHTPS.Services.DataProviders.Historical.TimeWarp
 {
-    public class TimeWarpService : HistoricalMethodsServiceBase<ITimeWarpDataProvider>, ITimeWarpService
+    public class TimeWarpService : HistoricalMethodsServiceBase<ITimeWarpDataProvider, TimeWarpDataBase>, ITimeWarpService
     {
         private readonly ETHTPSContext _context;
         private readonly IServiceProvider _services;
-        private readonly IEnumerable<ITimeWarpDataProvider> _timeWarpDataProviders;
 
         public TimeWarpService(ETHTPSContext context, IServiceProvider services, IEnumerable<ITimeWarpDataProvider> timeWarpDataProviders) : base(context, timeWarpDataProviders)
         {
             _context = context;
             _services = services;
-            _timeWarpDataProviders = timeWarpDataProviders;
         }
 
         public DateTime GetEarliestDate()
@@ -37,16 +35,18 @@ namespace ETHTPS.Services.DataProviders.Historical.TimeWarp
             {
                 return oldest.StartDate;
             }
-            else return DateTime.MinValue;
+            else return DateTime.MaxValue;
         }
 
         public IEnumerable<DataPoint> GetGasAdjustedTPSAt(long timestamp, string network, string smoothing, int count)
         {
+            var targetDate = timestamp.FromJSTimestamp();
             throw new NotImplementedException();
         }
 
         public IEnumerable<DataPoint> GetGPSAt(long timestamp, string network, string smoothing, int count)
         {
+            var targetDate = timestamp.FromJSTimestamp();
             throw new NotImplementedException();
         }
 
@@ -71,9 +71,15 @@ namespace ETHTPS.Services.DataProviders.Historical.TimeWarp
 
         public IEnumerable<DataPoint> GetTPSAt(long timestamp, string network, string smoothing, int count)
         {
-            var data = base.GetHistoricalData(smoothing, Constants.All, network);
+            var targetDate = timestamp.FromJSTimestamp();
+            var nextInterval = Enum.Parse<TimeInterval>(smoothing);
+            if (nextInterval != TimeInterval.Instant) 
+            {
+                nextInterval = nextInterval.NextInterval();
+            }
+            var data = base.GetHistoricalData(nextInterval.ToString(), Constants.All, network, targetDate, count);
 
-            return data.Select(x=> new DataPoint()
+            return data.Select(x => new DataPoint()
             {
                 Date = x.StartDate,
                 Value = x.AverageTps

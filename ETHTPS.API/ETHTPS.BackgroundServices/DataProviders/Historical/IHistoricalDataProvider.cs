@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 
 namespace ETHTPS.Services.DataProviders.Historical
 {
-    public interface IHistoricalDataProvider
+    public interface IHistoricalDataProvider<T>
     {
-        public IEnumerable<TimedTPSAndGasData> GetData(string provider, string network);
+        public IEnumerable<T> GetData(string provider, string network);
+        public IEnumerable<T> GetData(string provider, string network, DateTime olderThan);
+        public IEnumerable<T> GetData(string provider, string network, DateTime olderThan, int count);
         public string Interval { get; }
     }
 }
