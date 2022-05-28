@@ -72,7 +72,10 @@ namespace ETHTPS.API
             {
                 InitializeHangFire(defaultConnectionString);
                 services.AddHangfire(x => x.UseSqlServerStorage(defaultConnectionString));
-                services.AddHangfireServer();
+                services.AddHangfireServer(options =>
+                {
+                    options.SchedulePollingInterval = TimeSpan.FromSeconds(5);
+                });
                 AddTPSDataUpdaters(services);
                 AddCacheUpdaters(services);
                 AddHistoricalBlockInfoDataUpdaters(services);
