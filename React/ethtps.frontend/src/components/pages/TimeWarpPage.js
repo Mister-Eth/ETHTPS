@@ -32,6 +32,8 @@ export default class TimeWarpPage extends React.Component{
         globalTimeWarpApi.aPITimeWarpGetEarliestDateGet((err, data, res) => {
           if (data !== null){
             this.setState({minTimestamp: data.getTime()});
+            this.setState({maxTimestamp: (new Date()).getTime()});
+            this.setState({currentTimestamp: this.state.maxTimestamp});
           }
         });
     }
@@ -102,6 +104,7 @@ export default class TimeWarpPage extends React.Component{
                     defaultValue={this.state.maxTimestamp}
                     min={this.state.minTimestamp}
                     max={this.state.maxTimestamp}
+                    //key={`timestamp-${this.state.currentTimestamp}`}
                     onChange={this.timstampChanged.bind(this)}
                 />
             </Box>

@@ -28,7 +28,7 @@ namespace ETHTPS.Data.Database.TimeWarp
 
         public DateTime GetEarliestDate()
         {
-            throw new NotImplementedException();
+            return _context.TimeWarpData.OrderBy(x => x.StartDate).FirstOrDefault().StartDate;
         }
 
         public IEnumerable<DataPoint> GetGasAdjustedTPSAt(long timestamp, string network, string smoothing, int count)
