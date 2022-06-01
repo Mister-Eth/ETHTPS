@@ -68,6 +68,10 @@ namespace ETHTPS.Services.BlockchainServices
             var blockHeightNode = doc.DocumentNode.QuerySelectorAll(_blockHeightSelector);
             var blockHeight = string.Join(" ", blockHeightNode.Select(x => x.InnerText));
 
+            if (string.IsNullOrWhiteSpace(blockHeight))
+            {
+                throw new Exception("Couldn't get block height");
+            }
             var result = await GetBlockInfoAsync(int.Parse(blockHeight) - 1);
             result.Date = DateTime.Now;
             return result;
