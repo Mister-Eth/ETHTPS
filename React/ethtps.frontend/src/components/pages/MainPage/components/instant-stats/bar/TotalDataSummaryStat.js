@@ -40,7 +40,7 @@ export default class TotalDataSummaryStat extends React.Component{
     }
 
     render(){
-        let titlePart = "Ethereum currently does ";
+        let titlePart = "Ethereum is doing ";
         if (this.state.smoothing !== "Instant"){
             titlePart = "Over the past " + this.state.smoothing.replace('One', '').toLowerCase() + ", Ethereum did an average of "
         }
