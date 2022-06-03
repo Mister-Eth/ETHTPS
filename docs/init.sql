@@ -221,7 +221,8 @@ CREATE TABLE [StarkwareTransactionCountData] (
   [Network] int NOT NULL,
   [Product] nvarchar(255) NOT NULL,
   [LastUpdateTime] datetime NOT NULL,
-  [LastUpdateCount] int NOT NULL
+  [LastUpdateCount] int NOT NULL,
+  [LastUpdateTPS] float NOT NULL
 )
 GO
 
