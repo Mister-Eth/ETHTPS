@@ -36,11 +36,11 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             return result;
         }
 
-        
+
         public IEnumerable<string> Intervals() => TimeIntervals();
 
 
-        
+
         public IEnumerable<ProviderResponseModel> Providers()
         {
             IEnumerable<ProviderResponseModel> result;
@@ -52,13 +52,14 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
                     Type = x.TypeNavigation.Name,
                     Color = x.Color,
                     TheoreticalMaxTPS = x.TheoreticalMaxTps,
-                    IsGeneralPurpose = (x.IsGeneralPurpose.HasValue) ? x.IsGeneralPurpose.Value == 1 : x.TypeNavigation.IsGeneralPurpose == 1
+                    IsGeneralPurpose = (x.IsGeneralPurpose.HasValue) ? x.IsGeneralPurpose.Value == 1 : x.TypeNavigation.IsGeneralPurpose == 1,
+                    IsSubchainOf = x.SubchainOfNavigation?.Name
                 });
             }
             return result;
         }
 
-        
+
         public IDictionary<string, string> ColorDictionary()
         {
             IDictionary<string, string> result;
@@ -69,7 +70,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             return result;
         }
 
-        
+
         public IDictionary<string, string> ProviderTypesColorDictionary()
         {
             IDictionary<string, string> result;
@@ -108,11 +109,11 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
                         break;
                     case TimeInterval.OneWeek:
                         var nextInterval = TimeInterval.OneMonth;
-                        result.LastData.Add("tps", _tpsService.Get("All", nextInterval.ToString(), network, includeSidechains).Where(x => x.Value.Any()).ToDictionary(x => x.Key, x => new List<DataPoint>() { new DataPoint() { Value = x.Value.TakeLast(7).Average(x=>(x.Data.FirstOrDefault()==null)?0: x.Data.FirstOrDefault().Value) } }));
+                        result.LastData.Add("tps", _tpsService.Get("All", nextInterval.ToString(), network, includeSidechains).Where(x => x.Value.Any()).ToDictionary(x => x.Key, x => new List<DataPoint>() { new DataPoint() { Value = x.Value.TakeLast(7).Average(x => (x.Data.FirstOrDefault() == null) ? 0 : x.Data.FirstOrDefault().Value) } }));
 
-                        result.LastData.Add("gps", _gpsService.Get("All", nextInterval.ToString(), network, includeSidechains).Where(x => x.Value.Any()).ToDictionary(x => x.Key, x => new List<DataPoint>() { new DataPoint() { Value = x.Value.TakeLast(7).Average(x=>(x.Data.FirstOrDefault()==null)?0: x.Data.FirstOrDefault().Value) } }));
+                        result.LastData.Add("gps", _gpsService.Get("All", nextInterval.ToString(), network, includeSidechains).Where(x => x.Value.Any()).ToDictionary(x => x.Key, x => new List<DataPoint>() { new DataPoint() { Value = x.Value.TakeLast(7).Average(x => (x.Data.FirstOrDefault() == null) ? 0 : x.Data.FirstOrDefault().Value) } }));
 
-                        result.LastData.Add("gasAdjustedTPS", _gasAdjustedTPSService.Get("All", nextInterval.ToString(), network, includeSidechains).Where(x => x.Value.Any()).ToDictionary(x => x.Key, x => new List<DataPoint>() { new DataPoint() { Value = x.Value.TakeLast(7).Average(x=>(x.Data.FirstOrDefault()==null)?0: x.Data.FirstOrDefault().Value) } }));
+                        result.LastData.Add("gasAdjustedTPS", _gasAdjustedTPSService.Get("All", nextInterval.ToString(), network, includeSidechains).Where(x => x.Value.Any()).ToDictionary(x => x.Key, x => new List<DataPoint>() { new DataPoint() { Value = x.Value.TakeLast(7).Average(x => (x.Data.FirstOrDefault() == null) ? 0 : x.Data.FirstOrDefault().Value) } }));
                         break;
                     default:
                         nextInterval = GetNextIntervalForInstantData(interval);
@@ -141,7 +142,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
                     return TimeInterval.OneDay;
             }
         }
-        
+
         public IDictionary<string, object> Max(string provider, string network = "Mainnet")
         {
             var result = new Dictionary<string, object>();
@@ -158,7 +159,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
         /// <summary>
         /// Used for displaying chart buttons.
         /// </summary>
-        
+
         public IEnumerable<string> GetIntervalsWithData(string provider, string network = "Mainnet")
         {
             List<string> result = new();
@@ -180,7 +181,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             return result;
         }
 
-        
+
         public IEnumerable<string> GetUniqueDataYears(string provider, string network = "Mainnet")
         {
             var entries = _tpsService.Get(provider, "All", network, true)[provider]?.Select(x => x.Data.FirstOrDefault()?.Date.Year.ToString())?.OrderBy(x => x).Distinct();

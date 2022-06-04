@@ -349,6 +349,11 @@ namespace ETHTPS.Data.Database
                     .HasForeignKey(d => d.Type)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Providers__Type__3F466844");
+
+                entity.HasOne(d => d.SubchainOfNavigation)
+                  .WithMany(p => p.InverseSubchainOfNavigation)
+                  .HasForeignKey(d => d.SubchainOf)
+                  .HasConstraintName("FK__Providers__Subch__503BEA1C");
             });
 
             modelBuilder.Entity<ProviderType>(entity =>

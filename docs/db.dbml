@@ -6,9 +6,11 @@ Table Providers{
   IsGeneralPurpose bit
   HistoricalAggregationDeltaBlock int
   Enabled bit [not null]
+  SubchainOf int
 }
 
 Ref: Providers.Type > ProviderTypes.ID
+Ref: Providers.SubchainOf > Providers.ID
 
 Table ProviderTypes{
   ID int [pk, increment]

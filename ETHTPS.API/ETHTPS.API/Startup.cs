@@ -58,7 +58,13 @@ namespace ETHTPS.API
                                   });
             });
 
-            services.AddControllers().AddNewtonsoftJson().AddJsonOptions(options => { options.JsonSerializerOptions.IgnoreNullValues = true; });
+            services.AddControllers().AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+            }).AddJsonOptions(options => 
+            { 
+                options.JsonSerializerOptions.IgnoreNullValues = true; 
+            });
             services.AddSwaggerGen(c =>
             {
                 c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
