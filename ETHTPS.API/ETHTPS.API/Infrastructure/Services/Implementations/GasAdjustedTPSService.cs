@@ -39,10 +39,10 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             return data;
         }
 
-        public IDictionary<string, IEnumerable<DataPoint>> Instant(bool includeSidechains = true)
+        public IDictionary<string, IEnumerable<DataPoint>> Instant(string provider, bool includeSidechains = true)
         {
             Dictionary<string, List<DataPoint>> gasAdjustedTPS = new();
-            var instantGPS = _gpsService.Instant(includeSidechains);
+            var instantGPS = _gpsService.Instant(provider, includeSidechains);
             foreach (var entry in instantGPS)
             {
                 gasAdjustedTPS.Add(entry.Key, new List<DataPoint>()

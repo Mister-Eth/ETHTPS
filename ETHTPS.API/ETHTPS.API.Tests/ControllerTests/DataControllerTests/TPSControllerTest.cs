@@ -1,20 +1,51 @@
-﻿using ETHTPS.API.Controllers;
-using ETHTPS.API.Infrastructure.Services;
+﻿using ETHTPS.API.Infrastructure.Services;
 using ETHTPS.Data.Database;
 using ETHTPS.Data.ResponseModels;
 
-using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+
+using NUnit.Framework;
+
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
 
 namespace ETHTPS.API.Tests.ControllerTests.DataControllerTests
-{/*
-    public class TPSControllerTest : PSControllerTestBase<DataPoint, DataResponseModel>
+{
+    [TestFixture]
+    public class TPSControllerTest
     {
-        public TPSControllerTest() : base(new TPSController(new Infrastructure.Services.Implementations.TPSService(new ETHTPSContext())), context)
+        private readonly Controllers.TPSController _controller;
+        private readonly ETHTPSContext _context;
+        private IEnumerable<string> _providers;
+        private IEnumerable<string> _networks;
+
+        public TPSControllerTest()
         {
+            var serviceProvider = DependencyContainer.GetServiceProvider();
+
+            _context = serviceProvider.GetRequiredService<ETHTPSContext>();
+            _providers = _context.Providers.Select(x => x.Name).AsEnumerable();
+            _networks = _context.Networks.Select(x => x.Name).AsEnumerable();
+            _controller = serviceProvider.GetRequiredService<Controllers.TPSController>();
         }
-    }*/
+
+        [Test]
+        public void MaxTest()
+        {
+            foreach (var provider in _providers)
+            {
+                foreach (var network in _networks)
+                {
+                    Assert.DoesNotThrow(() =>
+                    {
+                        _controller.Max(provider, network);
+                    });
+                }
+            }
+        }
+    }
 }

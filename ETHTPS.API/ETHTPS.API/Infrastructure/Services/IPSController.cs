@@ -13,7 +13,7 @@ namespace ETHTPS.API.Infrastructure.Services
     public interface IPSController<TDataPoint, TResponseModel>
     {
         IDictionary<string, TDataPoint> Max(string provider, string network = "Mainnet");
-        IDictionary<string, IEnumerable<TDataPoint>> Instant(bool includeSidechains = true);
+        IDictionary<string, IEnumerable<TDataPoint>> Instant(string provider, bool includeSidechains = true);
         IDictionary<string, IEnumerable<TResponseModel>> Get(string provider, string interval, string network = "Mainnet", bool includeSidechains = true);
         public IDictionary<string, IEnumerable<TResponseModel>> GeMonthlyDataByYear(string provider, int year, string network = "Mainnet", bool includeSidechains = true);
     }

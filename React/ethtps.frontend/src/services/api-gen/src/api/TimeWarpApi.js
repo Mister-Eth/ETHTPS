@@ -14,6 +14,7 @@
 
 import ApiClient from "../ApiClient";
 import DataPoint from '../model/DataPoint';
+import TimeWarpSyncProgressModel from '../model/TimeWarpSyncProgressModel';
 
 /**
 * TimeWarp service.
@@ -81,6 +82,7 @@ export default class TimeWarpApi {
      * @param {Object} opts Optional parameters
      * @param {Number} opts.timestamp 
      * @param {String} opts.network  (default to 'Mainnet')
+     * @param {String} opts.smoothing  (default to 'Instant')
      * @param {Number} opts.count  (default to 30)
      * @param {module:api/TimeWarpApi~aPITimeWarpGetGPSAtGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Array.<module:model/DataPoint>}
@@ -94,6 +96,7 @@ export default class TimeWarpApi {
       let queryParams = {
         'timestamp': opts['timestamp'],
         'network': opts['network'],
+        'smoothing': opts['smoothing'],
         'count': opts['count']
       };
       let headerParams = {
@@ -124,6 +127,7 @@ export default class TimeWarpApi {
      * @param {Object} opts Optional parameters
      * @param {Number} opts.timestamp 
      * @param {String} opts.network  (default to 'Mainnet')
+     * @param {String} opts.smoothing  (default to 'Instant')
      * @param {Number} opts.count  (default to 30)
      * @param {module:api/TimeWarpApi~aPITimeWarpGetGasAdjustedTPSAtGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Array.<module:model/DataPoint>}
@@ -137,6 +141,7 @@ export default class TimeWarpApi {
       let queryParams = {
         'timestamp': opts['timestamp'],
         'network': opts['network'],
+        'smoothing': opts['smoothing'],
         'count': opts['count']
       };
       let headerParams = {
@@ -156,6 +161,47 @@ export default class TimeWarpApi {
     }
 
     /**
+     * Callback function to receive the result of the aPITimeWarpGetSyncProgressGet operation.
+     * @callback module:api/TimeWarpApi~aPITimeWarpGetSyncProgressGetCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/TimeWarpSyncProgressModel} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Object} opts Optional parameters
+     * @param {String} opts.provider 
+     * @param {String} opts.network 
+     * @param {module:api/TimeWarpApi~aPITimeWarpGetSyncProgressGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/TimeWarpSyncProgressModel}
+     */
+    aPITimeWarpGetSyncProgressGet(opts, callback) {
+      opts = opts || {};
+      let postBody = null;
+
+      let pathParams = {
+      };
+      let queryParams = {
+        'provider': opts['provider'],
+        'network': opts['network']
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = ['text/plain', 'application/json', 'text/json'];
+      let returnType = TimeWarpSyncProgressModel;
+      return this.apiClient.callApi(
+        '/API/TimeWarp/GetSyncProgress', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
      * Callback function to receive the result of the aPITimeWarpGetTPSAtGet operation.
      * @callback module:api/TimeWarpApi~aPITimeWarpGetTPSAtGetCallback
      * @param {String} error Error message, if any.
@@ -167,6 +213,7 @@ export default class TimeWarpApi {
      * @param {Object} opts Optional parameters
      * @param {Number} opts.timestamp 
      * @param {String} opts.network  (default to 'Mainnet')
+     * @param {String} opts.smoothing  (default to 'Instant')
      * @param {Number} opts.count  (default to 30)
      * @param {module:api/TimeWarpApi~aPITimeWarpGetTPSAtGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Array.<module:model/DataPoint>}
@@ -180,6 +227,7 @@ export default class TimeWarpApi {
       let queryParams = {
         'timestamp': opts['timestamp'],
         'network': opts['network'],
+        'smoothing': opts['smoothing'],
         'count': opts['count']
       };
       let headerParams = {

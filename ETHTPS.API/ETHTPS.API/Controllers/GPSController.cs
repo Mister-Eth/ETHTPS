@@ -37,9 +37,9 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
-        public IDictionary<string, IEnumerable<DataPoint>> Instant(bool includeSidechains = true)
+        public IDictionary<string, IEnumerable<DataPoint>> Instant(string provider, bool includeSidechains = true)
         {
-            return ((IPSController<DataPoint, DataResponseModel>)_gpsService).Instant(includeSidechains);
+            return ((IPSController<DataPoint, DataResponseModel>)_gpsService).Instant(provider, includeSidechains);
         }
 
         [HttpGet]

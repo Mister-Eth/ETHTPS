@@ -13,6 +13,7 @@
 
 
 import ApiClient from "../ApiClient";
+import AllDataModel from '../model/AllDataModel';
 import ProviderResponseModel from '../model/ProviderResponseModel';
 
 /**
@@ -33,6 +34,45 @@ export default class GeneralApi {
         this.apiClient = apiClient || ApiClient.instance;
     }
 
+
+    /**
+     * Callback function to receive the result of the aPIV2AllDataGet operation.
+     * @callback module:api/GeneralApi~aPIV2AllDataGetCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/AllDataModel} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Object} opts Optional parameters
+     * @param {String} opts.network  (default to 'Mainnet')
+     * @param {module:api/GeneralApi~aPIV2AllDataGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/AllDataModel}
+     */
+    aPIV2AllDataGet(opts, callback) {
+      opts = opts || {};
+      let postBody = null;
+
+      let pathParams = {
+      };
+      let queryParams = {
+        'network': opts['network']
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = ['text/plain', 'application/json', 'text/json'];
+      let returnType = AllDataModel;
+      return this.apiClient.callApi(
+        '/API/v2/AllData', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
 
     /**
      * Callback function to receive the result of the aPIV2ColorDictionaryGet operation.
@@ -349,15 +389,19 @@ export default class GeneralApi {
      */
 
     /**
+     * @param {Object} opts Optional parameters
+     * @param {String} opts.subchainsOf  (default to 'Ethereum')
      * @param {module:api/GeneralApi~aPIV2ProvidersGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Array.<module:model/ProviderResponseModel>}
      */
-    aPIV2ProvidersGet(callback) {
+    aPIV2ProvidersGet(opts, callback) {
+      opts = opts || {};
       let postBody = null;
 
       let pathParams = {
       };
       let queryParams = {
+        'subchainsOf': opts['subchainsOf']
       };
       let headerParams = {
       };

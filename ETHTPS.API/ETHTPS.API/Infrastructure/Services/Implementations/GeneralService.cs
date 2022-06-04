@@ -7,6 +7,7 @@ using ETHTPS.Data;
 using ETHTPS.Data.Database;
 using ETHTPS.Data.Database.Extensions;
 using ETHTPS.Data.Database.HistoricalDataProviders;
+using ETHTPS.Data.Extensions.StringExtensions;
 using ETHTPS.Data.ResponseModels;
 using ETHTPS.Data.ResponseModels.HomePage;
 
@@ -39,8 +40,6 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
 
         public IEnumerable<string> Intervals() => TimeIntervals();
 
-
-
         public IEnumerable<ProviderResponseModel> Providers()
         {
             IEnumerable<ProviderResponseModel> result;
@@ -59,6 +58,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             return result;
         }
 
+        public IEnumerable<ProviderResponseModel> Providers(string subchainsOf) => Providers().Where(x => x.Name.LossyCompareTo(subchainsOf));
 
         public IDictionary<string, string> ColorDictionary()
         {
@@ -83,7 +83,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
 
         private static Dictionary<(bool IncludeSidechains, string Network, string Smoothing), (Dictionary<string, object> LastData, DateTime LastGetTime)> _instantDataDictionary = new Dictionary<(bool IncludeSidechains, string Network, string Smoothing), (Dictionary<string, object> LastData, DateTime LastGetTime)>();
 
-        public IDictionary<string, object> InstantData(bool includeSidechains = true, string network = "Mainnet", string smoothing = "")
+        public IDictionary<string, object> InstantData(string provider, bool includeSidechains = true, string network = "Mainnet", string smoothing = "")
         {
             var interval = TimeInterval.Instant;
             if (!string.IsNullOrWhiteSpace(smoothing))
@@ -103,9 +103,9 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
                 switch (interval)
                 {
                     case TimeInterval.Instant:
-                        result.LastData.Add("tps", _tpsService.Instant(includeSidechains));
-                        result.LastData.Add("gps", _gpsService.Instant(includeSidechains));
-                        result.LastData.Add("gasAdjustedTPS", _gasAdjustedTPSService.Instant(includeSidechains));
+                        result.LastData.Add("tps", _tpsService.Instant(provider, includeSidechains));
+                        result.LastData.Add("gps", _gpsService.Instant(provider, includeSidechains));
+                        result.LastData.Add("gasAdjustedTPS", _gasAdjustedTPSService.Instant(provider, includeSidechains));
                         break;
                     case TimeInterval.OneWeek:
                         var nextInterval = TimeInterval.OneMonth;

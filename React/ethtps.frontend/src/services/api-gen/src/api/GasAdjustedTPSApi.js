@@ -14,7 +14,7 @@
 
 import ApiClient from "../ApiClient";
 import DataPoint from '../model/DataPoint';
-import { DataResponseModel } from "..";
+import DataResponseModel from '../model/DataResponseModel';
 /**
 * GasAdjustedTPS service.
 * @module api/GasAdjustedTPSApi

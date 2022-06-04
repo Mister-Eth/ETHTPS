@@ -40,8 +40,11 @@ namespace ETHTPS.API.Controllers
 
 
         [HttpGet]
-        public IEnumerable<ProviderResponseModel> Providers()
+        public IEnumerable<ProviderResponseModel> Providers(string subchainsOf)
         {
+            if (!string.IsNullOrWhiteSpace(subchainsOf))
+                return _generalService.Providers(subchainsOf); 
+
             return _generalService.Providers();
         }
 
@@ -58,9 +61,9 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
-        public IDictionary<string, object> InstantData(bool includeSidechains = true, string network = "Mainnet", string smoothing = "")
+        public IDictionary<string, object> InstantData(string provider, bool includeSidechains = true, string network = "Mainnet", string smoothing = "")
         {
-            return _generalService.InstantData(includeSidechains, network, smoothing);
+            return _generalService.InstantData(provider, includeSidechains, network, smoothing);
         }
 
         [HttpGet]

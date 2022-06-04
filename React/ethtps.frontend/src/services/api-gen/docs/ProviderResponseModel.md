@@ -9,5 +9,6 @@ Name | Type | Description | Notes
 **theoreticalMaxTPS** | **Number** |  | [optional] 
 **type** | **String** |  | [optional] 
 **isGeneralPurpose** | **Boolean** |  | [optional] 
+**isSubchainOf** | **String** |  | [optional] 
 
 
