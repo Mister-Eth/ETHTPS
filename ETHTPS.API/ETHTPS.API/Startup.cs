@@ -18,16 +18,16 @@ using Microsoft.Extensions.Hosting;
 
 using System;
 using System.Linq;
-using ETHTPS.Services.BlockchainServices.Scan.Implementations;
 using ETHTPS.Services.BlockchainServices;
-using ETHTPS.Services.BlockchainServices.Scan;
 using ETHTPS.Data.Database.HistoricalDataProviders;
 using ETHTPS.API.Infrastructure.Services;
 using ETHTPS.API.Infrastructure.Services.Implementations;
 using ETHTPS.Services.BlockchainServices.Status;
 using ETHTPS.Services.BlockchainServices.Status.BackgroundTasks.Discord;
 using ETHTPS.Services.BlockchainServices.BlockTime;
-using ETHTPS.Services.BlockchainServices.Starkware;
+using ETHTPS.Services.Ethereum;
+using ETHTPS.Services.Ethereum.Starkware;
+using ETHTPS.Services.Ethereum.Scan.Implementations;
 
 namespace ETHTPS.API
 {
