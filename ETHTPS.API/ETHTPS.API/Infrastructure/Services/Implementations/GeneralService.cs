@@ -59,7 +59,15 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             return result;
         }
 
-        public IEnumerable<ProviderResponseModel> Providers(string subchainsOf) => Providers().Where(x => x.Name.LossyCompareTo(subchainsOf));
+        public IEnumerable<ProviderResponseModel> Providers(string subchainsOf)
+        {
+            var list = Providers();
+            if (string.IsNullOrWhiteSpace(subchainsOf) || subchainsOf.LossyCompareTo(Constants.All))
+            {
+                return list;
+            }
+            return list.Where(x => x.Name.LossyCompareTo(subchainsOf));
+        }
 
         public IDictionary<string, string> ColorDictionary()
         {

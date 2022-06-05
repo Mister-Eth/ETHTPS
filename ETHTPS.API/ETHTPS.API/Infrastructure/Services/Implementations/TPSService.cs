@@ -79,7 +79,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
                                 continue;
                             }
                         }
-                        result[p.Name] = GetHistoricalData(model, interval).Select(x => new DataResponseModel()
+                        result[p.Name] = GetHistoricalData(ProviderQueryModel.FromProviderName(p.Name), interval).Select(x => new DataResponseModel()
                         {
                             Data = new List<DataPoint>()
                         {

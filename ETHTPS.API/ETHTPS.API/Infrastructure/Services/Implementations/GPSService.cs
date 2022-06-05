@@ -108,7 +108,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             var result = new Dictionary<string, IEnumerable<DataResponseModel>>();
             lock (Context.LockObj)
             {
-                if (model.Provider.ToUpper() == Constants.All)
+                if (model.Provider.ToUpper() == Constants.All.ToUpper())
                 {
                     foreach (var p in Context.Providers.ToList().Where(x => x.Enabled))
                     {
@@ -119,7 +119,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
                                 continue;
                             }
                         }
-                        result[p.Name] = GetHistoricalData(model, interval).Select(x => new DataResponseModel()
+                        result[p.Name] = GetHistoricalData(ProviderQueryModel.FromProviderName(p.Name), interval).Select(x => new DataResponseModel()
                         {
                             Data = new List<DataPoint>()
                         {

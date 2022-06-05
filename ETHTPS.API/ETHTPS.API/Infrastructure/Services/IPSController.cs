@@ -1,4 +1,5 @@
-﻿using ETHTPS.Data.Models.Query;
+﻿using ETHTPS.Data;
+using ETHTPS.Data.Models.Query;
 
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace ETHTPS.API.Infrastructure.Services
         IDictionary<string, TDataPoint> Max(ProviderQueryModel model);
         IDictionary<string, IEnumerable<TDataPoint>> Instant(ProviderQueryModel model);
         IDictionary<string, IEnumerable<TResponseModel>> Get(ProviderQueryModel model, string interval);
-        public IDictionary<string, IEnumerable<TResponseModel>> GeMonthlyDataByYear(ProviderQueryModel model, int year);
+        IDictionary<string, IEnumerable<TResponseModel>> Get(ProviderQueryModel model, TimeInterval interval);
+        IDictionary<string, IEnumerable<TResponseModel>> GeMonthlyDataByYear(ProviderQueryModel model, int year);
     }
 }
