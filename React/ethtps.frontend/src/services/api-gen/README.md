@@ -104,9 +104,9 @@ var EthtpsApi = require('ethtps_api');
 var api = new EthtpsApi.GPSApi()
 var opts = {
   'provider': "provider_example", // {String} 
-  'year': 56, // {Number} 
-  'network': "'Mainnet'", // {String} 
-  'includeSidechains': true // {Boolean} 
+  'network': "network_example", // {String} 
+  'includeSidechains': true, // {Boolean} 
+  'year': 56 // {Number} 
 };
 var callback = function(error, data, response) {
   if (error) {
@@ -143,6 +143,8 @@ Class | Method | HTTP request | Description
 *EthtpsApi.GeneralApi* | [**aPIV2NetworksGet**](docs/GeneralApi.md#aPIV2NetworksGet) | **GET** /API/v2/Networks | 
 *EthtpsApi.GeneralApi* | [**aPIV2ProviderTypesColorDictionaryGet**](docs/GeneralApi.md#aPIV2ProviderTypesColorDictionaryGet) | **GET** /API/v2/ProviderTypesColorDictionary | 
 *EthtpsApi.GeneralApi* | [**aPIV2ProvidersGet**](docs/GeneralApi.md#aPIV2ProvidersGet) | **GET** /API/v2/Providers | 
+*EthtpsApi.PageModelApi* | [**aPIPagesHomeGet**](docs/PageModelApi.md#aPIPagesHomeGet) | **GET** /API/Pages/Home | 
+*EthtpsApi.PageModelApi* | [**aPIPagesProviderGet**](docs/PageModelApi.md#aPIPagesProviderGet) | **GET** /API/Pages/Provider | 
 *EthtpsApi.StatusApi* | [**apiStatusGetBlockInfoProviderStatusGet**](docs/StatusApi.md#apiStatusGetBlockInfoProviderStatusGet) | **GET** /api/Status/GetBlockInfoProviderStatus | 
 *EthtpsApi.TPSApi* | [**aPITPSGeMonthlyDataByYearGet**](docs/TPSApi.md#aPITPSGeMonthlyDataByYearGet) | **GET** /API/TPS/GeMonthlyDataByYear | 
 *EthtpsApi.TPSApi* | [**aPITPSGetGet**](docs/TPSApi.md#aPITPSGetGet) | **GET** /API/TPS/Get | 
@@ -160,10 +162,14 @@ Class | Method | HTTP request | Description
  - [EthtpsApi.AllDataModel](docs/AllDataModel.md)
  - [EthtpsApi.BlockInfoProviderStatus](docs/BlockInfoProviderStatus.md)
  - [EthtpsApi.BlockInfoProviderStatusResult](docs/BlockInfoProviderStatusResult.md)
+ - [EthtpsApi.ChartData](docs/ChartData.md)
  - [EthtpsApi.DataPoint](docs/DataPoint.md)
  - [EthtpsApi.DataResponseModel](docs/DataResponseModel.md)
+ - [EthtpsApi.DataType](docs/DataType.md)
+ - [EthtpsApi.HomePageResponseModel](docs/HomePageResponseModel.md)
  - [EthtpsApi.ProviderModel](docs/ProviderModel.md)
  - [EthtpsApi.ProviderResponseModel](docs/ProviderResponseModel.md)
+ - [EthtpsApi.TimeInterval](docs/TimeInterval.md)
  - [EthtpsApi.TimeWarpSyncProgressModel](docs/TimeWarpSyncProgressModel.md)
 
 

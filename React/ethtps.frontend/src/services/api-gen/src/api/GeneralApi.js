@@ -120,7 +120,8 @@ export default class GeneralApi {
     /**
      * @param {Object} opts Optional parameters
      * @param {String} opts.provider 
-     * @param {String} opts.network  (default to 'Mainnet')
+     * @param {String} opts.network 
+     * @param {Boolean} opts.includeSidechains 
      * @param {module:api/GeneralApi~aPIV2GetIntervalsWithDataGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Array.<String>}
      */
@@ -131,8 +132,9 @@ export default class GeneralApi {
       let pathParams = {
       };
       let queryParams = {
-        'provider': opts['provider'],
-        'network': opts['network']
+        'Provider': opts['provider'],
+        'Network': opts['network'],
+        'IncludeSidechains': opts['includeSidechains']
       };
       let headerParams = {
       };
@@ -161,7 +163,8 @@ export default class GeneralApi {
     /**
      * @param {Object} opts Optional parameters
      * @param {String} opts.provider 
-     * @param {String} opts.network  (default to 'Mainnet')
+     * @param {String} opts.network 
+     * @param {Boolean} opts.includeSidechains 
      * @param {module:api/GeneralApi~aPIV2GetUniqueDataYearsGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Array.<String>}
      */
@@ -172,8 +175,9 @@ export default class GeneralApi {
       let pathParams = {
       };
       let queryParams = {
-        'provider': opts['provider'],
-        'network': opts['network']
+        'Provider': opts['provider'],
+        'Network': opts['network'],
+        'IncludeSidechains': opts['includeSidechains']
       };
       let headerParams = {
       };
@@ -201,8 +205,9 @@ export default class GeneralApi {
 
     /**
      * @param {Object} opts Optional parameters
-     * @param {Boolean} opts.includeSidechains  (default to true)
-     * @param {String} opts.network  (default to 'Mainnet')
+     * @param {String} opts.provider 
+     * @param {String} opts.network 
+     * @param {Boolean} opts.includeSidechains 
      * @param {String} opts.smoothing  (default to '')
      * @param {module:api/GeneralApi~aPIV2InstantDataGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Object.<String, {String: Object}>}
@@ -214,8 +219,9 @@ export default class GeneralApi {
       let pathParams = {
       };
       let queryParams = {
-        'includeSidechains': opts['includeSidechains'],
-        'network': opts['network'],
+        'Provider': opts['provider'],
+        'Network': opts['network'],
+        'IncludeSidechains': opts['includeSidechains'],
         'smoothing': opts['smoothing']
       };
       let headerParams = {
@@ -280,7 +286,8 @@ export default class GeneralApi {
     /**
      * @param {Object} opts Optional parameters
      * @param {String} opts.provider 
-     * @param {String} opts.network  (default to 'Mainnet')
+     * @param {String} opts.network 
+     * @param {Boolean} opts.includeSidechains 
      * @param {module:api/GeneralApi~aPIV2MaxGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Object.<String, {String: Object}>}
      */
@@ -291,8 +298,9 @@ export default class GeneralApi {
       let pathParams = {
       };
       let queryParams = {
-        'provider': opts['provider'],
-        'network': opts['network']
+        'Provider': opts['provider'],
+        'Network': opts['network'],
+        'IncludeSidechains': opts['includeSidechains']
       };
       let headerParams = {
       };
@@ -390,7 +398,7 @@ export default class GeneralApi {
 
     /**
      * @param {Object} opts Optional parameters
-     * @param {String} opts.subchainsOf  (default to 'Ethereum')
+     * @param {String} opts.subchainsOf 
      * @param {module:api/GeneralApi~aPIV2ProvidersGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Array.<module:model/ProviderResponseModel>}
      */

@@ -14,7 +14,7 @@
 
 import ApiClient from "../ApiClient";
 import DataPoint from '../model/DataPoint';
-import DataResponseModel from '../model/DataResponseModel';
+import DataResponseModel from "../model/DataResponseModel";
 /**
 * TPS service.
 * @module api/TPSApi
@@ -45,9 +45,9 @@ export default class TPSApi {
     /**
      * @param {Object} opts Optional parameters
      * @param {String} opts.provider 
+     * @param {String} opts.network 
+     * @param {Boolean} opts.includeSidechains 
      * @param {Number} opts.year 
-     * @param {String} opts.network  (default to 'Mainnet')
-     * @param {Boolean} opts.includeSidechains  (default to true)
      * @param {module:api/TPSApi~aPITPSGeMonthlyDataByYearGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Object.<String, {String: [DataResponseModel]}>}
      */
@@ -58,10 +58,10 @@ export default class TPSApi {
       let pathParams = {
       };
       let queryParams = {
-        'provider': opts['provider'],
-        'year': opts['year'],
-        'network': opts['network'],
-        'includeSidechains': opts['includeSidechains']
+        'Provider': opts['provider'],
+        'Network': opts['network'],
+        'IncludeSidechains': opts['includeSidechains'],
+        'year': opts['year']
       };
       let headerParams = {
       };
@@ -90,9 +90,9 @@ export default class TPSApi {
     /**
      * @param {Object} opts Optional parameters
      * @param {String} opts.provider 
+     * @param {String} opts.network 
+     * @param {Boolean} opts.includeSidechains 
      * @param {String} opts.interval 
-     * @param {String} opts.network  (default to 'Mainnet')
-     * @param {Boolean} opts.includeSidechains  (default to true)
      * @param {module:api/TPSApi~aPITPSGetGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Object.<String, {String: [DataResponseModel]}>}
      */
@@ -103,10 +103,10 @@ export default class TPSApi {
       let pathParams = {
       };
       let queryParams = {
-        'provider': opts['provider'],
-        'interval': opts['interval'],
-        'network': opts['network'],
-        'includeSidechains': opts['includeSidechains']
+        'Provider': opts['provider'],
+        'Network': opts['network'],
+        'IncludeSidechains': opts['includeSidechains'],
+        'interval': opts['interval']
       };
       let headerParams = {
       };
@@ -134,7 +134,9 @@ export default class TPSApi {
 
     /**
      * @param {Object} opts Optional parameters
-     * @param {Boolean} opts.includeSidechains  (default to true)
+     * @param {String} opts.provider 
+     * @param {String} opts.network 
+     * @param {Boolean} opts.includeSidechains 
      * @param {module:api/TPSApi~aPITPSInstantGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Object.<String, {String: [DataPoint]}>}
      */
@@ -145,7 +147,9 @@ export default class TPSApi {
       let pathParams = {
       };
       let queryParams = {
-        'includeSidechains': opts['includeSidechains']
+        'Provider': opts['provider'],
+        'Network': opts['network'],
+        'IncludeSidechains': opts['includeSidechains']
       };
       let headerParams = {
       };
@@ -174,7 +178,8 @@ export default class TPSApi {
     /**
      * @param {Object} opts Optional parameters
      * @param {String} opts.provider 
-     * @param {String} opts.network  (default to 'Mainnet')
+     * @param {String} opts.network 
+     * @param {Boolean} opts.includeSidechains 
      * @param {module:api/TPSApi~aPITPSMaxGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Object.<String, module:model/{String: DataPoint}>}
      */
@@ -185,8 +190,9 @@ export default class TPSApi {
       let pathParams = {
       };
       let queryParams = {
-        'provider': opts['provider'],
-        'network': opts['network']
+        'Provider': opts['provider'],
+        'Network': opts['network'],
+        'IncludeSidechains': opts['includeSidechains']
       };
       let headerParams = {
       };

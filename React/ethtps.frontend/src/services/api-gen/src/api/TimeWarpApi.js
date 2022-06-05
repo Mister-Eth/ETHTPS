@@ -80,8 +80,10 @@ export default class TimeWarpApi {
 
     /**
      * @param {Object} opts Optional parameters
+     * @param {String} opts.provider 
+     * @param {String} opts.network 
+     * @param {Boolean} opts.includeSidechains 
      * @param {Number} opts.timestamp 
-     * @param {String} opts.network  (default to 'Mainnet')
      * @param {String} opts.smoothing  (default to 'Instant')
      * @param {Number} opts.count  (default to 30)
      * @param {module:api/TimeWarpApi~aPITimeWarpGetGPSAtGetCallback} callback The callback function, accepting three arguments: error, data, response
@@ -94,8 +96,10 @@ export default class TimeWarpApi {
       let pathParams = {
       };
       let queryParams = {
+        'Provider': opts['provider'],
+        'Network': opts['network'],
+        'IncludeSidechains': opts['includeSidechains'],
         'timestamp': opts['timestamp'],
-        'network': opts['network'],
         'smoothing': opts['smoothing'],
         'count': opts['count']
       };
@@ -125,8 +129,10 @@ export default class TimeWarpApi {
 
     /**
      * @param {Object} opts Optional parameters
+     * @param {String} opts.provider 
+     * @param {String} opts.network 
+     * @param {Boolean} opts.includeSidechains 
      * @param {Number} opts.timestamp 
-     * @param {String} opts.network  (default to 'Mainnet')
      * @param {String} opts.smoothing  (default to 'Instant')
      * @param {Number} opts.count  (default to 30)
      * @param {module:api/TimeWarpApi~aPITimeWarpGetGasAdjustedTPSAtGetCallback} callback The callback function, accepting three arguments: error, data, response
@@ -139,8 +145,10 @@ export default class TimeWarpApi {
       let pathParams = {
       };
       let queryParams = {
+        'Provider': opts['provider'],
+        'Network': opts['network'],
+        'IncludeSidechains': opts['includeSidechains'],
         'timestamp': opts['timestamp'],
-        'network': opts['network'],
         'smoothing': opts['smoothing'],
         'count': opts['count']
       };
@@ -172,6 +180,7 @@ export default class TimeWarpApi {
      * @param {Object} opts Optional parameters
      * @param {String} opts.provider 
      * @param {String} opts.network 
+     * @param {Boolean} opts.includeSidechains 
      * @param {module:api/TimeWarpApi~aPITimeWarpGetSyncProgressGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/TimeWarpSyncProgressModel}
      */
@@ -182,8 +191,9 @@ export default class TimeWarpApi {
       let pathParams = {
       };
       let queryParams = {
-        'provider': opts['provider'],
-        'network': opts['network']
+        'Provider': opts['provider'],
+        'Network': opts['network'],
+        'IncludeSidechains': opts['includeSidechains']
       };
       let headerParams = {
       };
@@ -211,8 +221,10 @@ export default class TimeWarpApi {
 
     /**
      * @param {Object} opts Optional parameters
+     * @param {String} opts.provider 
+     * @param {String} opts.network 
+     * @param {Boolean} opts.includeSidechains 
      * @param {Number} opts.timestamp 
-     * @param {String} opts.network  (default to 'Mainnet')
      * @param {String} opts.smoothing  (default to 'Instant')
      * @param {Number} opts.count  (default to 30)
      * @param {module:api/TimeWarpApi~aPITimeWarpGetTPSAtGetCallback} callback The callback function, accepting three arguments: error, data, response
@@ -225,8 +237,10 @@ export default class TimeWarpApi {
       let pathParams = {
       };
       let queryParams = {
+        'Provider': opts['provider'],
+        'Network': opts['network'],
+        'IncludeSidechains': opts['includeSidechains'],
         'timestamp': opts['timestamp'],
-        'network': opts['network'],
         'smoothing': opts['smoothing'],
         'count': opts['count']
       };

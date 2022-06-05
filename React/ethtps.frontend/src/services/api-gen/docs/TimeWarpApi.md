@@ -64,8 +64,10 @@ import EthtpsApi from 'ethtps_api';
 
 let apiInstance = new EthtpsApi.TimeWarpApi();
 let opts = {
+  'provider': "provider_example", // String | 
+  'network': "network_example", // String | 
+  'includeSidechains': true, // Boolean | 
   'timestamp': 789, // Number | 
-  'network': "'Mainnet'", // String | 
   'smoothing': "'Instant'", // String | 
   'count': 30 // Number | 
 };
@@ -83,8 +85,10 @@ apiInstance.aPITimeWarpGetGPSAtGet(opts, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **provider** | **String**|  | [optional] 
+ **network** | **String**|  | [optional] 
+ **includeSidechains** | **Boolean**|  | [optional] 
  **timestamp** | **Number**|  | [optional] 
- **network** | **String**|  | [optional] [default to &#39;Mainnet&#39;]
  **smoothing** | **String**|  | [optional] [default to &#39;Instant&#39;]
  **count** | **Number**|  | [optional] [default to 30]
 
@@ -115,8 +119,10 @@ import EthtpsApi from 'ethtps_api';
 
 let apiInstance = new EthtpsApi.TimeWarpApi();
 let opts = {
+  'provider': "provider_example", // String | 
+  'network': "network_example", // String | 
+  'includeSidechains': true, // Boolean | 
   'timestamp': 789, // Number | 
-  'network': "'Mainnet'", // String | 
   'smoothing': "'Instant'", // String | 
   'count': 30 // Number | 
 };
@@ -134,8 +140,10 @@ apiInstance.aPITimeWarpGetGasAdjustedTPSAtGet(opts, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **provider** | **String**|  | [optional] 
+ **network** | **String**|  | [optional] 
+ **includeSidechains** | **Boolean**|  | [optional] 
  **timestamp** | **Number**|  | [optional] 
- **network** | **String**|  | [optional] [default to &#39;Mainnet&#39;]
  **smoothing** | **String**|  | [optional] [default to &#39;Instant&#39;]
  **count** | **Number**|  | [optional] [default to 30]
 
@@ -167,7 +175,8 @@ import EthtpsApi from 'ethtps_api';
 let apiInstance = new EthtpsApi.TimeWarpApi();
 let opts = {
   'provider': "provider_example", // String | 
-  'network': "network_example" // String | 
+  'network': "network_example", // String | 
+  'includeSidechains': true // Boolean | 
 };
 apiInstance.aPITimeWarpGetSyncProgressGet(opts, (error, data, response) => {
   if (error) {
@@ -185,6 +194,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **provider** | **String**|  | [optional] 
  **network** | **String**|  | [optional] 
+ **includeSidechains** | **Boolean**|  | [optional] 
 
 ### Return type
 
@@ -213,8 +223,10 @@ import EthtpsApi from 'ethtps_api';
 
 let apiInstance = new EthtpsApi.TimeWarpApi();
 let opts = {
+  'provider': "provider_example", // String | 
+  'network': "network_example", // String | 
+  'includeSidechains': true, // Boolean | 
   'timestamp': 789, // Number | 
-  'network': "'Mainnet'", // String | 
   'smoothing': "'Instant'", // String | 
   'count': 30 // Number | 
 };
@@ -232,8 +244,10 @@ apiInstance.aPITimeWarpGetTPSAtGet(opts, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **provider** | **String**|  | [optional] 
+ **network** | **String**|  | [optional] 
+ **includeSidechains** | **Boolean**|  | [optional] 
  **timestamp** | **Number**|  | [optional] 
- **network** | **String**|  | [optional] [default to &#39;Mainnet&#39;]
  **smoothing** | **String**|  | [optional] [default to &#39;Instant&#39;]
  **count** | **Number**|  | [optional] [default to 30]
 

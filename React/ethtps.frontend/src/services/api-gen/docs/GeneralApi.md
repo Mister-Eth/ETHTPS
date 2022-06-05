@@ -115,7 +115,8 @@ import EthtpsApi from 'ethtps_api';
 let apiInstance = new EthtpsApi.GeneralApi();
 let opts = {
   'provider': "provider_example", // String | 
-  'network': "'Mainnet'" // String | 
+  'network': "network_example", // String | 
+  'includeSidechains': true // Boolean | 
 };
 apiInstance.aPIV2GetIntervalsWithDataGet(opts, (error, data, response) => {
   if (error) {
@@ -132,7 +133,8 @@ apiInstance.aPIV2GetIntervalsWithDataGet(opts, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **provider** | **String**|  | [optional] 
- **network** | **String**|  | [optional] [default to &#39;Mainnet&#39;]
+ **network** | **String**|  | [optional] 
+ **includeSidechains** | **Boolean**|  | [optional] 
 
 ### Return type
 
@@ -162,7 +164,8 @@ import EthtpsApi from 'ethtps_api';
 let apiInstance = new EthtpsApi.GeneralApi();
 let opts = {
   'provider': "provider_example", // String | 
-  'network': "'Mainnet'" // String | 
+  'network': "network_example", // String | 
+  'includeSidechains': true // Boolean | 
 };
 apiInstance.aPIV2GetUniqueDataYearsGet(opts, (error, data, response) => {
   if (error) {
@@ -179,7 +182,8 @@ apiInstance.aPIV2GetUniqueDataYearsGet(opts, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **provider** | **String**|  | [optional] 
- **network** | **String**|  | [optional] [default to &#39;Mainnet&#39;]
+ **network** | **String**|  | [optional] 
+ **includeSidechains** | **Boolean**|  | [optional] 
 
 ### Return type
 
@@ -208,8 +212,9 @@ import EthtpsApi from 'ethtps_api';
 
 let apiInstance = new EthtpsApi.GeneralApi();
 let opts = {
+  'provider': "provider_example", // String | 
+  'network': "network_example", // String | 
   'includeSidechains': true, // Boolean | 
-  'network': "'Mainnet'", // String | 
   'smoothing': "''" // String | 
 };
 apiInstance.aPIV2InstantDataGet(opts, (error, data, response) => {
@@ -226,8 +231,9 @@ apiInstance.aPIV2InstantDataGet(opts, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **includeSidechains** | **Boolean**|  | [optional] [default to true]
- **network** | **String**|  | [optional] [default to &#39;Mainnet&#39;]
+ **provider** | **String**|  | [optional] 
+ **network** | **String**|  | [optional] 
+ **includeSidechains** | **Boolean**|  | [optional] 
  **smoothing** | **String**|  | [optional] [default to &#39;&#39;]
 
 ### Return type
@@ -297,7 +303,8 @@ import EthtpsApi from 'ethtps_api';
 let apiInstance = new EthtpsApi.GeneralApi();
 let opts = {
   'provider': "provider_example", // String | 
-  'network': "'Mainnet'" // String | 
+  'network': "network_example", // String | 
+  'includeSidechains': true // Boolean | 
 };
 apiInstance.aPIV2MaxGet(opts, (error, data, response) => {
   if (error) {
@@ -314,7 +321,8 @@ apiInstance.aPIV2MaxGet(opts, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **provider** | **String**|  | [optional] 
- **network** | **String**|  | [optional] [default to &#39;Mainnet&#39;]
+ **network** | **String**|  | [optional] 
+ **includeSidechains** | **Boolean**|  | [optional] 
 
 ### Return type
 
@@ -421,7 +429,7 @@ import EthtpsApi from 'ethtps_api';
 
 let apiInstance = new EthtpsApi.GeneralApi();
 let opts = {
-  'subchainsOf': "'Ethereum'" // String | 
+  'subchainsOf': "subchainsOf_example" // String | 
 };
 apiInstance.aPIV2ProvidersGet(opts, (error, data, response) => {
   if (error) {
@@ -437,7 +445,7 @@ apiInstance.aPIV2ProvidersGet(opts, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **subchainsOf** | **String**|  | [optional] [default to &#39;Ethereum&#39;]
+ **subchainsOf** | **String**|  | [optional] 
 
 ### Return type
 
