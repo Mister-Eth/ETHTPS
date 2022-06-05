@@ -8,11 +8,11 @@ export default class MetisDetails extends React.Component {
             details: {
                 description:
                   'Metis aims to revolutionize how people/businesses collaborate using blockchain technology and solve layer 1 problems in a framework.',
-                purpose: 'Private payments',
+                purpose: 'General purpose',
                 links: {
                   websites: ['https://www.metis.io/'],
                   documentation: ['https://docs.metis.io/'],
-                  explorers: ['http://18.223.107.64/', 'https://stardust-explorer.metis.io/'],
+                  explorers: ['https://andromeda-explorer.metis.io/'],
                   repositories: ['https://github.com/MetisProtocol'],
                   socialMedia: [
                     'https://twitter.com/MetisDAO',

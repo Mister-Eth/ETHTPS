@@ -37,5 +37,7 @@ namespace ETHTPS.Data.Database.Extensions
         }
 
         public static async Task<int> GetProviderIDAsync(this ETHTPSContext context, string provider) => (await context.Providers.FirstAsync(x => x.Name.ToUpper() == provider.ToUpper())).Id;
+
+        public static int GetMainnetID(this ETHTPSContext context) => context.Networks.First(x => x.Name == "Mainnet").Id;
     }
 }

@@ -45,6 +45,8 @@ export default class StatusApi {
     /**
      * @param {Object} opts Optional parameters
      * @param {String} opts.provider 
+     * @param {String} opts.network 
+     * @param {Boolean} opts.includeSidechains 
      * @param {module:api/StatusApi~apiStatusGetBlockInfoProviderStatusGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Object.<String, module:model/{String: BlockInfoProviderStatusResult}>}
      */
@@ -55,7 +57,9 @@ export default class StatusApi {
       let pathParams = {
       };
       let queryParams = {
-        'provider': opts['provider']
+        'Provider': opts['provider'],
+        'Network': opts['network'],
+        'IncludeSidechains': opts['includeSidechains']
       };
       let headerParams = {
       };

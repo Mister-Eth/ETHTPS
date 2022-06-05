@@ -49,5 +49,7 @@ namespace ETHTPS.Data.Extensions.StringExtensions
             FinalString = STR.Substring(Pos1, Pos2 - Pos1);
             return FinalString;
         }
+
+        public static bool LossyCompareTo(this string source, string reference) => source.Trim().ToUpper() == reference.Trim().ToUpper();
     }
 }

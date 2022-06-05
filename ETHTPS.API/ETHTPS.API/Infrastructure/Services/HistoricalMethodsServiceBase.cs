@@ -1,5 +1,6 @@
 ﻿using ETHTPS.Data.Database;
 using ETHTPS.Data.Database.HistoricalDataProviders;
+using ETHTPS.Data.Models.Query;
 
 using System;
 using System.Collections.Generic;
@@ -16,12 +17,12 @@ namespace ETHTPS.API.Infrastructure.Services
             HistoricalDataProviders = historicalDataProviders;
         }
 
-        protected IEnumerable<TimedTPSAndGasData> GetHistoricalData(string interval, string provider, string network)
+        protected IEnumerable<TimedTPSAndGasData> GetHistoricalData(ProviderQueryModel model, string interval)
         {
             if (HistoricalDataProviders.Any(x => x.Interval == interval))
             {
                 var dataProvider = HistoricalDataProviders.First(x => x.Interval == interval);
-                return dataProvider.GetData(provider, network);
+                return dataProvider.GetData(model);
             }
             else
             {

@@ -76,6 +76,7 @@ namespace ETHTPS.Services.BlockchainServices
         }
         protected async Task<TPSGPSInfo> CalculateTPSGPSAsync() => await CalculateTPSGPSAsync(await _instance.GetLatestBlockInfoAsync());
         protected async Task<TPSGPSInfo> CalculateTPSGPSAsync(int blockNumber) => await CalculateTPSGPSAsync(await _instance.GetBlockInfoAsync(blockNumber));
+        protected async Task<TPSGPSInfo> CalculateTPSGPSAsync(DateTime atTime) => await CalculateTPSGPSAsync(await _instance.GetBlockInfoAsync(atTime));
         protected async Task<TPSGPSInfo> CalculateTPSGPSAsync(BlockInfo latestBlock)
         {
             if (_instance.BlockTimeSeconds > 0)

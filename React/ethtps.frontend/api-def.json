@@ -12,10 +12,24 @@
         ],
         "parameters": [
           {
-            "name": "provider",
+            "name": "Provider",
             "in": "query",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "Network",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IncludeSidechains",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
             }
           },
           {
@@ -24,22 +38,6 @@
             "schema": {
               "type": "integer",
               "format": "int32"
-            }
-          },
-          {
-            "name": "network",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "default": "Mainnet"
-            }
-          },
-          {
-            "name": "includeSidechains",
-            "in": "query",
-            "schema": {
-              "type": "boolean",
-              "default": true
             }
           }
         ],
@@ -92,10 +90,24 @@
         ],
         "parameters": [
           {
-            "name": "provider",
+            "name": "Provider",
             "in": "query",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "Network",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IncludeSidechains",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
             }
           },
           {
@@ -103,22 +115,6 @@
             "in": "query",
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "network",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "default": "Mainnet"
-            }
-          },
-          {
-            "name": "includeSidechains",
-            "in": "query",
-            "schema": {
-              "type": "boolean",
-              "default": true
             }
           }
         ],
@@ -171,11 +167,24 @@
         ],
         "parameters": [
           {
-            "name": "includeSidechains",
+            "name": "Provider",
             "in": "query",
             "schema": {
-              "type": "boolean",
-              "default": true
+              "type": "string"
+            }
+          },
+          {
+            "name": "Network",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IncludeSidechains",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
             }
           }
         ],
@@ -228,18 +237,24 @@
         ],
         "parameters": [
           {
-            "name": "provider",
+            "name": "Provider",
             "in": "query",
             "schema": {
               "type": "string"
             }
           },
           {
-            "name": "network",
+            "name": "Network",
             "in": "query",
             "schema": {
-              "type": "string",
-              "default": "Mainnet"
+              "type": "string"
+            }
+          },
+          {
+            "name": "IncludeSidechains",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
             }
           }
         ],
@@ -357,6 +372,15 @@
         "tags": [
           "General"
         ],
+        "parameters": [
+          {
+            "name": "subchainsOf",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -473,19 +497,24 @@
         ],
         "parameters": [
           {
-            "name": "includeSidechains",
+            "name": "Provider",
             "in": "query",
             "schema": {
-              "type": "boolean",
-              "default": true
+              "type": "string"
             }
           },
           {
-            "name": "network",
+            "name": "Network",
             "in": "query",
             "schema": {
-              "type": "string",
-              "default": "Mainnet"
+              "type": "string"
+            }
+          },
+          {
+            "name": "IncludeSidechains",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
             }
           },
           {
@@ -531,18 +560,24 @@
         ],
         "parameters": [
           {
-            "name": "provider",
+            "name": "Provider",
             "in": "query",
             "schema": {
               "type": "string"
             }
           },
           {
-            "name": "network",
+            "name": "Network",
             "in": "query",
             "schema": {
-              "type": "string",
-              "default": "Mainnet"
+              "type": "string"
+            }
+          },
+          {
+            "name": "IncludeSidechains",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
             }
           }
         ],
@@ -580,18 +615,24 @@
         ],
         "parameters": [
           {
-            "name": "provider",
+            "name": "Provider",
             "in": "query",
             "schema": {
               "type": "string"
             }
           },
           {
-            "name": "network",
+            "name": "Network",
             "in": "query",
             "schema": {
-              "type": "string",
-              "default": "Mainnet"
+              "type": "string"
+            }
+          },
+          {
+            "name": "IncludeSidechains",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
             }
           }
         ],
@@ -635,18 +676,24 @@
         ],
         "parameters": [
           {
-            "name": "provider",
+            "name": "Provider",
             "in": "query",
             "schema": {
               "type": "string"
             }
           },
           {
-            "name": "network",
+            "name": "Network",
             "in": "query",
             "schema": {
-              "type": "string",
-              "default": "Mainnet"
+              "type": "string"
+            }
+          },
+          {
+            "name": "IncludeSidechains",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
             }
           }
         ],
@@ -683,6 +730,45 @@
         }
       }
     },
+    "/API/v2/AllData": {
+      "get": {
+        "tags": [
+          "General"
+        ],
+        "parameters": [
+          {
+            "name": "network",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": "Mainnet"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllDataModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllDataModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllDataModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/API/GPS/GeMonthlyDataByYear": {
       "get": {
         "tags": [
@@ -690,10 +776,24 @@
         ],
         "parameters": [
           {
-            "name": "provider",
+            "name": "Provider",
             "in": "query",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "Network",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IncludeSidechains",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
             }
           },
           {
@@ -702,22 +802,6 @@
             "schema": {
               "type": "integer",
               "format": "int32"
-            }
-          },
-          {
-            "name": "network",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "default": "Mainnet"
-            }
-          },
-          {
-            "name": "includeSidechains",
-            "in": "query",
-            "schema": {
-              "type": "boolean",
-              "default": true
             }
           }
         ],
@@ -770,10 +854,24 @@
         ],
         "parameters": [
           {
-            "name": "provider",
+            "name": "Provider",
             "in": "query",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "Network",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IncludeSidechains",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
             }
           },
           {
@@ -781,22 +879,6 @@
             "in": "query",
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "network",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "default": "Mainnet"
-            }
-          },
-          {
-            "name": "includeSidechains",
-            "in": "query",
-            "schema": {
-              "type": "boolean",
-              "default": true
             }
           }
         ],
@@ -849,11 +931,24 @@
         ],
         "parameters": [
           {
-            "name": "includeSidechains",
+            "name": "Provider",
             "in": "query",
             "schema": {
-              "type": "boolean",
-              "default": true
+              "type": "string"
+            }
+          },
+          {
+            "name": "Network",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IncludeSidechains",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
             }
           }
         ],
@@ -906,18 +1001,24 @@
         ],
         "parameters": [
           {
-            "name": "provider",
+            "name": "Provider",
             "in": "query",
             "schema": {
               "type": "string"
             }
           },
           {
-            "name": "network",
+            "name": "Network",
             "in": "query",
             "schema": {
-              "type": "string",
-              "default": "Mainnet"
+              "type": "string"
+            }
+          },
+          {
+            "name": "IncludeSidechains",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
             }
           }
         ],
@@ -954,6 +1055,128 @@
         }
       }
     },
+    "/API/Pages/Home": {
+      "get": {
+        "tags": [
+          "PageModel"
+        ],
+        "parameters": [
+          {
+            "name": "SubchainsOf",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Interval",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/TimeInterval"
+            }
+          },
+          {
+            "name": "DataType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/DataType"
+            }
+          },
+          {
+            "name": "Provider",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Network",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IncludeSidechains",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomePageResponseModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomePageResponseModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomePageResponseModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/API/Pages/Provider": {
+      "get": {
+        "tags": [
+          "PageModel"
+        ],
+        "parameters": [
+          {
+            "name": "Interval",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/TimeInterval"
+            }
+          },
+          {
+            "name": "DataType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/DataType"
+            }
+          },
+          {
+            "name": "Provider",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Network",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IncludeSidechains",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Status/GetBlockInfoProviderStatus": {
       "get": {
         "tags": [
@@ -961,10 +1184,24 @@
         ],
         "parameters": [
           {
-            "name": "provider",
+            "name": "Provider",
             "in": "query",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "Network",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IncludeSidechains",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
             }
           }
         ],
@@ -1040,6 +1277,27 @@
         ],
         "parameters": [
           {
+            "name": "Provider",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Network",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IncludeSidechains",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
             "name": "timestamp",
             "in": "query",
             "schema": {
@@ -1048,11 +1306,11 @@
             }
           },
           {
-            "name": "network",
+            "name": "smoothing",
             "in": "query",
             "schema": {
               "type": "string",
-              "default": "Mainnet"
+              "default": "Instant"
             }
           },
           {
@@ -1105,6 +1363,27 @@
         ],
         "parameters": [
           {
+            "name": "Provider",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Network",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IncludeSidechains",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
             "name": "timestamp",
             "in": "query",
             "schema": {
@@ -1113,11 +1392,11 @@
             }
           },
           {
-            "name": "network",
+            "name": "smoothing",
             "in": "query",
             "schema": {
               "type": "string",
-              "default": "Mainnet"
+              "default": "Instant"
             }
           },
           {
@@ -1163,12 +1442,85 @@
         }
       }
     },
+    "/API/TimeWarp/GetSyncProgress": {
+      "get": {
+        "tags": [
+          "TimeWarp"
+        ],
+        "parameters": [
+          {
+            "name": "Provider",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Network",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IncludeSidechains",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeWarpSyncProgressModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeWarpSyncProgressModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeWarpSyncProgressModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/API/TimeWarp/GetTPSAt": {
       "get": {
         "tags": [
           "TimeWarp"
         ],
         "parameters": [
+          {
+            "name": "Provider",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Network",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IncludeSidechains",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
           {
             "name": "timestamp",
             "in": "query",
@@ -1178,11 +1530,11 @@
             }
           },
           {
-            "name": "network",
+            "name": "smoothing",
             "in": "query",
             "schema": {
               "type": "string",
-              "default": "Mainnet"
+              "default": "Instant"
             }
           },
           {
@@ -1235,10 +1587,24 @@
         ],
         "parameters": [
           {
-            "name": "provider",
+            "name": "Provider",
             "in": "query",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "Network",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IncludeSidechains",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
             }
           },
           {
@@ -1247,22 +1613,6 @@
             "schema": {
               "type": "integer",
               "format": "int32"
-            }
-          },
-          {
-            "name": "network",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "default": "Mainnet"
-            }
-          },
-          {
-            "name": "includeSidechains",
-            "in": "query",
-            "schema": {
-              "type": "boolean",
-              "default": true
             }
           }
         ],
@@ -1315,10 +1665,24 @@
         ],
         "parameters": [
           {
-            "name": "provider",
+            "name": "Provider",
             "in": "query",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "Network",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IncludeSidechains",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
             }
           },
           {
@@ -1326,22 +1690,6 @@
             "in": "query",
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "network",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "default": "Mainnet"
-            }
-          },
-          {
-            "name": "includeSidechains",
-            "in": "query",
-            "schema": {
-              "type": "boolean",
-              "default": true
             }
           }
         ],
@@ -1394,11 +1742,24 @@
         ],
         "parameters": [
           {
-            "name": "includeSidechains",
+            "name": "Provider",
             "in": "query",
             "schema": {
-              "type": "boolean",
-              "default": true
+              "type": "string"
+            }
+          },
+          {
+            "name": "Network",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IncludeSidechains",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
             }
           }
         ],
@@ -1451,18 +1812,24 @@
         ],
         "parameters": [
           {
-            "name": "provider",
+            "name": "Provider",
             "in": "query",
             "schema": {
               "type": "string"
             }
           },
           {
-            "name": "network",
+            "name": "Network",
             "in": "query",
             "schema": {
-              "type": "string",
-              "default": "Mainnet"
+              "type": "string"
+            }
+          },
+          {
+            "name": "IncludeSidechains",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
             }
           }
         ],
@@ -1502,6 +1869,63 @@
   },
   "components": {
     "schemas": {
+      "AllDataModel": {
+        "type": "object",
+        "properties": {
+          "providers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProviderModel"
+            },
+            "nullable": true
+          },
+          "maxData": {
+            "type": "object",
+            "additionalProperties": { },
+            "nullable": true
+          },
+          "allTPSData": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DataResponseModel"
+                }
+              }
+            },
+            "nullable": true
+          },
+          "allGPSData": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DataResponseModel"
+                }
+              }
+            },
+            "nullable": true
+          },
+          "allGasAdjustedTPSData": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DataResponseModel"
+                }
+              }
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "BlockInfoProviderStatus": {
         "enum": [
           0,
@@ -1521,6 +1945,25 @@
           "details": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ChartData": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/DataResponseModel"
+              }
+            },
+            "nullable": true
+          },
+          "dataType": {
+            "$ref": "#/components/schemas/DataType"
           }
         },
         "additionalProperties": false
@@ -1556,6 +1999,69 @@
         },
         "additionalProperties": false
       },
+      "DataType": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "HomePageResponseModel": {
+        "type": "object",
+        "properties": {
+          "chartData": {
+            "$ref": "#/components/schemas/ChartData"
+          },
+          "maxData": {
+            "type": "object",
+            "additionalProperties": { },
+            "nullable": true
+          },
+          "instantData": {
+            "type": "object",
+            "additionalProperties": { },
+            "nullable": true
+          },
+          "colorDictionary": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "providerTypesColorDictionary": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProviderResponseModel"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProviderModel": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ProviderResponseModel": {
         "type": "object",
         "properties": {
@@ -1577,6 +2083,38 @@
           },
           "isGeneralPurpose": {
             "type": "boolean"
+          },
+          "isSubchainOf": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimeInterval": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "TimeWarpSyncProgressModel": {
+        "type": "object",
+        "properties": {
+          "currentBlock": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "latestBlockHeight": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

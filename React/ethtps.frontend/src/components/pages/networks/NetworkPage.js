@@ -26,7 +26,7 @@ import GluonDetails from './details/GluonDetails';
 import HabitatDetails from './details/HabitatDetails';
 import Layer2FinanceDetails from './details/Layer2FinanceDetails';
 import DYDXDetails from './details/DYDXDetails';
-import DiversiFiDetails from './details/DiversiFiDetails';
+import DeversiFiDetails from './details/DeversiFiDetails';
 import SorareDetails from './details/SorareDetails';
 import GazelleDetails from './details/GazelleDetails';
 import ZKTubeDetails from './details/ZKTubeDetails';
@@ -36,6 +36,7 @@ import PerunDetails from './details/PerunDetails';
 import RaidenNetworkDetails from './details/RaidenNetworkDetails';
 import FantomDetails from './details/FantomDetails';
 import ZKSpaceDetails from './details/ZKSpaceDetails';
+import PolygonHermezDetails from './details/PolygonHermezDetails';
 import { globalGeneralApi, globalInstantDataService, to2DecimalPlaces } from '../../../services/common';
 import * as qs from 'query-string';
 import { Helmet } from 'react-helmet';
@@ -84,7 +85,7 @@ export default class NetworkPage extends PageWithQueryString {
         'Layer2.Finance': <Layer2FinanceDetails name={this.state.name}/>,
         'dYdX': <DYDXDetails name={this.state.name}/>,
         'Sorare': <SorareDetails name={this.state.name}/>,
-        'DiversiFi': <DiversiFiDetails name={this.state.name}/>,
+        'DeversiFi': <DeversiFiDetails name={this.state.name}/>,
         'Gazelle': <GazelleDetails name={this.state.name}/>,
         'zkTube': <ZKTubeDetails name={this.state.name}/>,
         'Cartesi': <CartesiDetails name={this.state.name}/>,
@@ -93,6 +94,7 @@ export default class NetworkPage extends PageWithQueryString {
         'Raiden Network': <RaidenNetworkDetails name={this.state.name}/>,
         'Fantom': <FantomDetails name={this.state.name}/>,
         'ZKSpace': <ZKSpaceDetails name={this.state.name}/>,
+        'Polygon Hermez': <PolygonHermezDetails name={this.state.name}/>,
     }
 
     updateInstantTPS(data){
@@ -119,7 +121,7 @@ export default class NetworkPage extends PageWithQueryString {
         <CompactHeader/>
         <Helmet>
             <title>
-                ETHTPS.info - {this.state.name}
+                {this.state.name} Live TPS
             </title>
         </Helmet>
         <div style={{display:'inline-box'}}>

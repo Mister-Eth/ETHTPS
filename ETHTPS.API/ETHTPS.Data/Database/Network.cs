@@ -11,6 +11,7 @@ namespace ETHTPS.Data.Database
         {
             OldestLoggedHistoricalEntries = new HashSet<OldestLoggedHistoricalEntry>();
             OldestLoggedTimeWarpBlocks = new HashSet<OldestLoggedTimeWarpBlock>();
+            StarkwareTransactionCountData = new HashSet<StarkwareTransactionCountData>();
             TimeWarpData = new HashSet<TimeWarpDatum>();
             TimeWarpDataDays = new HashSet<TimeWarpDataDay>();
             TimeWarpDataHours = new HashSet<TimeWarpDataHour>();
@@ -31,6 +32,7 @@ namespace ETHTPS.Data.Database
 
         public virtual ICollection<OldestLoggedHistoricalEntry> OldestLoggedHistoricalEntries { get; set; }
         public virtual ICollection<OldestLoggedTimeWarpBlock> OldestLoggedTimeWarpBlocks { get; set; }
+        public virtual ICollection<StarkwareTransactionCountData> StarkwareTransactionCountData { get; set; }
         public virtual ICollection<TimeWarpDatum> TimeWarpData { get; set; }
         public virtual ICollection<TimeWarpDataDay> TimeWarpDataDays { get; set; }
         public virtual ICollection<TimeWarpDataHour> TimeWarpDataHours { get; set; }

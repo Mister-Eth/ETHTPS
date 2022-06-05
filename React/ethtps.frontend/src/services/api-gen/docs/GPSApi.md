@@ -25,9 +25,9 @@ import EthtpsApi from 'ethtps_api';
 let apiInstance = new EthtpsApi.GPSApi();
 let opts = {
   'provider': "provider_example", // String | 
-  'year': 56, // Number | 
-  'network': "'Mainnet'", // String | 
-  'includeSidechains': true // Boolean | 
+  'network': "network_example", // String | 
+  'includeSidechains': true, // Boolean | 
+  'year': 56 // Number | 
 };
 apiInstance.aPIGPSGeMonthlyDataByYearGet(opts, (error, data, response) => {
   if (error) {
@@ -44,9 +44,9 @@ apiInstance.aPIGPSGeMonthlyDataByYearGet(opts, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **provider** | **String**|  | [optional] 
+ **network** | **String**|  | [optional] 
+ **includeSidechains** | **Boolean**|  | [optional] 
  **year** | **Number**|  | [optional] 
- **network** | **String**|  | [optional] [default to &#39;Mainnet&#39;]
- **includeSidechains** | **Boolean**|  | [optional] [default to true]
 
 ### Return type
 
@@ -76,9 +76,9 @@ import EthtpsApi from 'ethtps_api';
 let apiInstance = new EthtpsApi.GPSApi();
 let opts = {
   'provider': "provider_example", // String | 
-  'interval': "interval_example", // String | 
-  'network': "'Mainnet'", // String | 
-  'includeSidechains': true // Boolean | 
+  'network': "network_example", // String | 
+  'includeSidechains': true, // Boolean | 
+  'interval': "interval_example" // String | 
 };
 apiInstance.aPIGPSGetGet(opts, (error, data, response) => {
   if (error) {
@@ -95,9 +95,9 @@ apiInstance.aPIGPSGetGet(opts, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **provider** | **String**|  | [optional] 
+ **network** | **String**|  | [optional] 
+ **includeSidechains** | **Boolean**|  | [optional] 
  **interval** | **String**|  | [optional] 
- **network** | **String**|  | [optional] [default to &#39;Mainnet&#39;]
- **includeSidechains** | **Boolean**|  | [optional] [default to true]
 
 ### Return type
 
@@ -126,6 +126,8 @@ import EthtpsApi from 'ethtps_api';
 
 let apiInstance = new EthtpsApi.GPSApi();
 let opts = {
+  'provider': "provider_example", // String | 
+  'network': "network_example", // String | 
   'includeSidechains': true // Boolean | 
 };
 apiInstance.aPIGPSInstantGet(opts, (error, data, response) => {
@@ -142,7 +144,9 @@ apiInstance.aPIGPSInstantGet(opts, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **includeSidechains** | **Boolean**|  | [optional] [default to true]
+ **provider** | **String**|  | [optional] 
+ **network** | **String**|  | [optional] 
+ **includeSidechains** | **Boolean**|  | [optional] 
 
 ### Return type
 
@@ -172,7 +176,8 @@ import EthtpsApi from 'ethtps_api';
 let apiInstance = new EthtpsApi.GPSApi();
 let opts = {
   'provider': "provider_example", // String | 
-  'network': "'Mainnet'" // String | 
+  'network': "network_example", // String | 
+  'includeSidechains': true // Boolean | 
 };
 apiInstance.aPIGPSMaxGet(opts, (error, data, response) => {
   if (error) {
@@ -189,7 +194,8 @@ apiInstance.aPIGPSMaxGet(opts, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **provider** | **String**|  | [optional] 
- **network** | **String**|  | [optional] [default to &#39;Mainnet&#39;]
+ **network** | **String**|  | [optional] 
+ **includeSidechains** | **Boolean**|  | [optional] 
 
 ### Return type
 

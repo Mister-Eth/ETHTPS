@@ -1,5 +1,5 @@
 import React from "react";
-import { formatModeName } from '../../../../../../services/common'
+import { addThousandsSeparators, formatModeName } from '../../../../../../services/common'
 
 export default class TotalDataSummaryStat extends React.Component{
     constructor(props){
@@ -40,14 +40,14 @@ export default class TotalDataSummaryStat extends React.Component{
     }
 
     render(){
-        let titlePart = "Ethereum currently does ";
+        let titlePart = "Ethereum is doing ";
         if (this.state.smoothing !== "Instant"){
             titlePart = "Over the past " + this.state.smoothing.replace('One', '').toLowerCase() + ", Ethereum did an average of "
         }
         return <>
         <center>
             <h4 className={'tooltip'}>
-                 {titlePart + parseFloat(this.calculateTotalData(this.state).toString()).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} {formatModeName(this.state.mode)}
+                 {titlePart + addThousandsSeparators(this.calculateTotalData(this.state).toString())} {formatModeName(this.state.mode)}
                 <span className={'tooltiptext'}>This includes L2s, sidechains (if the box at the bottom of this section is unchecked), ZK rollups, validiums etc.</span>
             </h4>
         </center>

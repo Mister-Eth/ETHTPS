@@ -40,6 +40,7 @@ namespace ETHTPS.Data.Database
         public virtual DbSet<TimeWarpDataWeek> TimeWarpDataWeeks { get; set; }
        public virtual DbSet<TimeWarpDatum> TimeWarpData { get; set; }
         public virtual DbSet<OldestLoggedTimeWarpBlock> OldestLoggedTimeWarpBlocks { get; set; }
+        public virtual DbSet<StarkwareTransactionCountData> StarkwareTransactionCountData { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -348,6 +349,11 @@ namespace ETHTPS.Data.Database
                     .HasForeignKey(d => d.Type)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Providers__Type__3F466844");
+
+                entity.HasOne(d => d.SubchainOfNavigation)
+                  .WithMany(p => p.InverseSubchainOfNavigation)
+                  .HasForeignKey(d => d.SubchainOf)
+                  .HasConstraintName("FK__Providers__Subch__503BEA1C");
             });
 
             modelBuilder.Entity<ProviderType>(entity =>
@@ -491,6 +497,23 @@ namespace ETHTPS.Data.Database
                     .HasForeignKey(d => d.Provider)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__TPSAndGas__Provi__49C3F6B7");
+            });
+
+            modelBuilder.Entity<StarkwareTransactionCountData>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.LastUpdateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.Product)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.HasOne(d => d.NetworkNavigation)
+                    .WithMany(p => p.StarkwareTransactionCountData)
+                    .HasForeignKey(d => d.Network)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Starkware__Netwo__4F47C5E3");
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -1,6 +1,7 @@
 ﻿
 using ETHTPS.API.Infrastructure.Services;
 using ETHTPS.API.Infrastructure.Services.Implementations;
+using ETHTPS.Data.Models.Query;
 using ETHTPS.Data.ResponseModels;
 
 using Microsoft.AspNetCore.Mvc;
@@ -23,27 +24,24 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
-        public IDictionary<string, IEnumerable<DataResponseModel>> GeMonthlyDataByYear(string provider, int year, string network = "Mainnet", bool includeSidechains = true)
+        public IDictionary<string, IEnumerable<DataResponseModel>> GeMonthlyDataByYear([FromQuery] ProviderQueryModel model, int year)
         {
-            return ((IPSController<DataPoint, DataResponseModel>)_gasAdjustedTPSService).GeMonthlyDataByYear(provider, year, network, includeSidechains);
+            return ((IPSController<DataPoint, DataResponseModel>)_gasAdjustedTPSService).GeMonthlyDataByYear(model, year);
         }
-
         [HttpGet]
-        public IDictionary<string, IEnumerable<DataResponseModel>> Get(string provider, string interval, string network = "Mainnet", bool includeSidechains = true)
+        public IDictionary<string, IEnumerable<DataResponseModel>> Get([FromQuery] ProviderQueryModel model, string interval)
         {
-            return ((IPSController<DataPoint, DataResponseModel>)_gasAdjustedTPSService).Get(provider, interval, network, includeSidechains);
+            return ((IPSController<DataPoint, DataResponseModel>)_gasAdjustedTPSService).Get(model, interval);
         }
-
         [HttpGet]
-        public IDictionary<string, IEnumerable<DataPoint>> Instant(bool includeSidechains = true)
+        public IDictionary<string, IEnumerable<DataPoint>> Instant([FromQuery] ProviderQueryModel model)
         {
-            return ((IPSController<DataPoint, DataResponseModel>)_gasAdjustedTPSService).Instant(includeSidechains);
+            return ((IPSController<DataPoint, DataResponseModel>)_gasAdjustedTPSService).Instant(model);
         }
-
         [HttpGet]
-        public IDictionary<string, DataPoint> Max(string provider, string network = "Mainnet")
+        public IDictionary<string, DataPoint> Max([FromQuery] ProviderQueryModel model)
         {
-            return ((IPSController<DataPoint, DataResponseModel>)_gasAdjustedTPSService).Max(provider, network);
+            return ((IPSController<DataPoint, DataResponseModel>)_gasAdjustedTPSService).Max(model);
         }
     }
 }

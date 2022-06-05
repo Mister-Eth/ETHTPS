@@ -4,6 +4,7 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**aPIV2AllDataGet**](GeneralApi.md#aPIV2AllDataGet) | **GET** /API/v2/AllData | 
 [**aPIV2ColorDictionaryGet**](GeneralApi.md#aPIV2ColorDictionaryGet) | **GET** /API/v2/ColorDictionary | 
 [**aPIV2GetIntervalsWithDataGet**](GeneralApi.md#aPIV2GetIntervalsWithDataGet) | **GET** /API/v2/GetIntervalsWithData | 
 [**aPIV2GetUniqueDataYearsGet**](GeneralApi.md#aPIV2GetUniqueDataYearsGet) | **GET** /API/v2/GetUniqueDataYears | 
@@ -14,6 +15,51 @@ Method | HTTP request | Description
 [**aPIV2ProviderTypesColorDictionaryGet**](GeneralApi.md#aPIV2ProviderTypesColorDictionaryGet) | **GET** /API/v2/ProviderTypesColorDictionary | 
 [**aPIV2ProvidersGet**](GeneralApi.md#aPIV2ProvidersGet) | **GET** /API/v2/Providers | 
 
+
+
+## aPIV2AllDataGet
+
+> AllDataModel aPIV2AllDataGet(opts)
+
+
+
+### Example
+
+```javascript
+import EthtpsApi from 'ethtps_api';
+
+let apiInstance = new EthtpsApi.GeneralApi();
+let opts = {
+  'network': "'Mainnet'" // String | 
+};
+apiInstance.aPIV2AllDataGet(opts, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+});
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **network** | **String**|  | [optional] [default to &#39;Mainnet&#39;]
+
+### Return type
+
+[**AllDataModel**](AllDataModel.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: text/plain, application/json, text/json
 
 
 ## aPIV2ColorDictionaryGet
@@ -69,7 +115,8 @@ import EthtpsApi from 'ethtps_api';
 let apiInstance = new EthtpsApi.GeneralApi();
 let opts = {
   'provider': "provider_example", // String | 
-  'network': "'Mainnet'" // String | 
+  'network': "network_example", // String | 
+  'includeSidechains': true // Boolean | 
 };
 apiInstance.aPIV2GetIntervalsWithDataGet(opts, (error, data, response) => {
   if (error) {
@@ -86,7 +133,8 @@ apiInstance.aPIV2GetIntervalsWithDataGet(opts, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **provider** | **String**|  | [optional] 
- **network** | **String**|  | [optional] [default to &#39;Mainnet&#39;]
+ **network** | **String**|  | [optional] 
+ **includeSidechains** | **Boolean**|  | [optional] 
 
 ### Return type
 
@@ -116,7 +164,8 @@ import EthtpsApi from 'ethtps_api';
 let apiInstance = new EthtpsApi.GeneralApi();
 let opts = {
   'provider': "provider_example", // String | 
-  'network': "'Mainnet'" // String | 
+  'network': "network_example", // String | 
+  'includeSidechains': true // Boolean | 
 };
 apiInstance.aPIV2GetUniqueDataYearsGet(opts, (error, data, response) => {
   if (error) {
@@ -133,7 +182,8 @@ apiInstance.aPIV2GetUniqueDataYearsGet(opts, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **provider** | **String**|  | [optional] 
- **network** | **String**|  | [optional] [default to &#39;Mainnet&#39;]
+ **network** | **String**|  | [optional] 
+ **includeSidechains** | **Boolean**|  | [optional] 
 
 ### Return type
 
@@ -162,8 +212,9 @@ import EthtpsApi from 'ethtps_api';
 
 let apiInstance = new EthtpsApi.GeneralApi();
 let opts = {
+  'provider': "provider_example", // String | 
+  'network': "network_example", // String | 
   'includeSidechains': true, // Boolean | 
-  'network': "'Mainnet'", // String | 
   'smoothing': "''" // String | 
 };
 apiInstance.aPIV2InstantDataGet(opts, (error, data, response) => {
@@ -180,8 +231,9 @@ apiInstance.aPIV2InstantDataGet(opts, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **includeSidechains** | **Boolean**|  | [optional] [default to true]
- **network** | **String**|  | [optional] [default to &#39;Mainnet&#39;]
+ **provider** | **String**|  | [optional] 
+ **network** | **String**|  | [optional] 
+ **includeSidechains** | **Boolean**|  | [optional] 
  **smoothing** | **String**|  | [optional] [default to &#39;&#39;]
 
 ### Return type
@@ -251,7 +303,8 @@ import EthtpsApi from 'ethtps_api';
 let apiInstance = new EthtpsApi.GeneralApi();
 let opts = {
   'provider': "provider_example", // String | 
-  'network': "'Mainnet'" // String | 
+  'network': "network_example", // String | 
+  'includeSidechains': true // Boolean | 
 };
 apiInstance.aPIV2MaxGet(opts, (error, data, response) => {
   if (error) {
@@ -268,7 +321,8 @@ apiInstance.aPIV2MaxGet(opts, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **provider** | **String**|  | [optional] 
- **network** | **String**|  | [optional] [default to &#39;Mainnet&#39;]
+ **network** | **String**|  | [optional] 
+ **includeSidechains** | **Boolean**|  | [optional] 
 
 ### Return type
 
@@ -364,7 +418,7 @@ No authorization required
 
 ## aPIV2ProvidersGet
 
-> [ProviderResponseModel] aPIV2ProvidersGet()
+> [ProviderResponseModel] aPIV2ProvidersGet(opts)
 
 
 
@@ -374,7 +428,10 @@ No authorization required
 import EthtpsApi from 'ethtps_api';
 
 let apiInstance = new EthtpsApi.GeneralApi();
-apiInstance.aPIV2ProvidersGet((error, data, response) => {
+let opts = {
+  'subchainsOf': "subchainsOf_example" // String | 
+};
+apiInstance.aPIV2ProvidersGet(opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -385,7 +442,10 @@ apiInstance.aPIV2ProvidersGet((error, data, response) => {
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **subchainsOf** | **String**|  | [optional] 
 
 ### Return type
 

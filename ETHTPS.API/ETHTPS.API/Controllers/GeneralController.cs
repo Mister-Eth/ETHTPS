@@ -3,6 +3,7 @@ using ETHTPS.Data;
 using ETHTPS.Data.Database;
 using ETHTPS.Data.Database.Extensions;
 using ETHTPS.Data.Database.HistoricalDataProviders;
+using ETHTPS.Data.Models.Query;
 using ETHTPS.Data.ResponseModels;
 using ETHTPS.Data.ResponseModels.HomePage;
 
@@ -40,8 +41,11 @@ namespace ETHTPS.API.Controllers
 
 
         [HttpGet]
-        public IEnumerable<ProviderResponseModel> Providers()
+        public IEnumerable<ProviderResponseModel> Providers(string subchainsOf)
         {
+            if (!string.IsNullOrWhiteSpace(subchainsOf))
+                return _generalService.Providers(subchainsOf); 
+
             return _generalService.Providers();
         }
 
@@ -58,30 +62,30 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
-        public IDictionary<string, object> InstantData(bool includeSidechains = true, string network = "Mainnet", string smoothing = "")
+        public IDictionary<string, object> InstantData([FromQuery]ProviderQueryModel model, string smoothing = "")
         {
-            return _generalService.InstantData(includeSidechains, network, smoothing);
+            return _generalService.InstantData(model, smoothing);
         }
 
         [HttpGet]
-        public IDictionary<string, object> Max(string provider, string network = "Mainnet")
+        public IDictionary<string, object> Max([FromQuery] ProviderQueryModel model)
         {
-            return _generalService.Max(provider, network);
+            return _generalService.Max(model);
         }
 
         /// <summary>
         /// Used for displaying chart buttons.
         /// </summary>
         [HttpGet]
-        public IEnumerable<string> GetIntervalsWithData(string provider, string network = "Mainnet")
+        public IEnumerable<string> GetIntervalsWithData([FromQuery] ProviderQueryModel model)
         {
-            return _generalService.GetIntervalsWithData(provider, network);
+            return _generalService.GetIntervalsWithData(model);
         }
 
         [HttpGet]
-        public IEnumerable<string> GetUniqueDataYears(string provider, string network = "Mainnet")
+        public IEnumerable<string> GetUniqueDataYears([FromQuery] ProviderQueryModel model)
         {
-            return _generalService.GetUniqueDataYears(provider, network);
+            return _generalService.GetUniqueDataYears(model);
         }
 
         [HttpGet]

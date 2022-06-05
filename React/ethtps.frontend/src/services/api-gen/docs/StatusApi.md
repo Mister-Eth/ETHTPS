@@ -21,7 +21,9 @@ import EthtpsApi from 'ethtps_api';
 
 let apiInstance = new EthtpsApi.StatusApi();
 let opts = {
-  'provider': "provider_example" // String | 
+  'provider': "provider_example", // String | 
+  'network': "network_example", // String | 
+  'includeSidechains': true // Boolean | 
 };
 apiInstance.apiStatusGetBlockInfoProviderStatusGet(opts, (error, data, response) => {
   if (error) {
@@ -38,6 +40,8 @@ apiInstance.apiStatusGetBlockInfoProviderStatusGet(opts, (error, data, response)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **provider** | **String**|  | [optional] 
+ **network** | **String**|  | [optional] 
+ **includeSidechains** | **Boolean**|  | [optional] 
 
 ### Return type
 

@@ -9,6 +9,7 @@ namespace ETHTPS.Data.Database
     {
         public Provider()
         {
+            InverseSubchainOfNavigation = new HashSet<Provider>();
             OldestLoggedHistoricalEntries = new HashSet<OldestLoggedHistoricalEntry>();
             OldestLoggedTimeWarpBlocks = new HashSet<OldestLoggedTimeWarpBlock>();
             TimeWarpData = new HashSet<TimeWarpDatum>();
@@ -34,6 +35,7 @@ namespace ETHTPS.Data.Database
         public int? IsGeneralPurpose { get; set; }
         public int? HistoricalAggregationDeltaBlock { get; set; }
         public bool Enabled { get; set; }
+        public int? SubchainOf { get; set; }
 
         public virtual ProviderType TypeNavigation { get; set; }
         public virtual ICollection<OldestLoggedHistoricalEntry> OldestLoggedHistoricalEntries { get; set; }
@@ -51,5 +53,7 @@ namespace ETHTPS.Data.Database
         public virtual ICollection<TpsandGasDataMonth> TpsandGasDataMonths { get; set; }
         public virtual ICollection<TpsandGasDataWeek> TpsandGasDataWeeks { get; set; }
         public virtual ICollection<TpsandGasDataYear> TpsandGasDataYears { get; set; }
+        public virtual ICollection<Provider> InverseSubchainOfNavigation { get; set; }
+        public virtual Provider SubchainOfNavigation { get; set; }
     }
 }

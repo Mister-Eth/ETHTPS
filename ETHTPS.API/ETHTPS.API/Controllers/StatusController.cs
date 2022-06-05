@@ -1,4 +1,5 @@
-﻿using ETHTPS.Services.BlockchainServices.Status;
+﻿using ETHTPS.Data.Models.Query;
+using ETHTPS.Services.BlockchainServices.Status;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,9 +21,9 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
-        public IDictionary<string, BlockInfoProviderStatusResult> GetBlockInfoProviderStatus(string provider)
+        public IDictionary<string, BlockInfoProviderStatusResult> GetBlockInfoProviderStatus(ProviderQueryModel model)
         {
-            return _blockInfoProviderStatusService.GetBlockInfoProviderStatus(provider);
+            return _blockInfoProviderStatusService.GetBlockInfoProviderStatus(model);
         }
     }
 }

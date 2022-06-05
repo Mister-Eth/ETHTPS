@@ -14,5 +14,6 @@ namespace ETHTPS.Data
         }
 
         public static string All => "All";
+        public static string Mainnet => "Mainnet";
     }
 }

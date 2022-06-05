@@ -1,4 +1,5 @@
 ﻿using ETHTPS.Data.Database;
+using ETHTPS.Data.Models.Query;
 using ETHTPS.Services.BlockchainServices;
 using ETHTPS.Services.BlockchainServices.Extensions;
 
@@ -21,31 +22,31 @@ namespace ETHTPS.Services.BlockchainServices.Status
             _context = context;
         }
 
-        public IDictionary<string, BlockInfoProviderStatusResult> GetBlockInfoProviderStatus(string provider)
+        public IDictionary<string, BlockInfoProviderStatusResult> GetBlockInfoProviderStatus(ProviderQueryModel model)
         {
             Dictionary<string, BlockInfoProviderStatusResult> result = new();
-            if (provider.ToUpper() == "ALL")
+            if (model.Provider.ToUpper() == "ALL")
             {
                 foreach(var providerName in _context.Providers.ToList().Select(x => x.Name))
                 {
-                    result[providerName] = GetStatus(providerName);
+                    result[providerName] = GetStatus(ProviderQueryModel.FromProviderName(providerName));
                 }
             }
             else
             {
-                result[provider] = GetStatus(provider);
+                result[model.Provider] = GetStatus(ProviderQueryModel.FromProviderName(model.Provider));
             }
             return result;
         }
 
-        private BlockInfoProviderStatusResult GetStatus(string provider)
+        private BlockInfoProviderStatusResult GetStatus(ProviderQueryModel model)
         {
             IStorageConnection connection = JobStorage.Current.GetConnection();
-            Func<RecurringJobDto, bool> selector = x => x.Job.Type.GetProviderNameFromFirstGenericArgument() == provider && typeof(HangfireBlockInfoProviderDataLogger<>).IsAssignableFrom(x.Job.Type);
+            Func<RecurringJobDto, bool> selector = x => x.Job.Type.GetProviderNameFromFirstGenericArgument() == model.Provider && typeof(HangfireBlockInfoProviderDataLogger<>).IsAssignableFrom(x.Job.Type);
             var result = new BlockInfoProviderStatusResult()
             {
                 Status = BlockInfoProviderStatus.NotImplemented,
-                Details = $"No {nameof(IBlockInfoProvider)} found for {provider}"
+                Details = $"No {nameof(IBlockInfoProvider)} found for {model.Provider}"
             };
             if (connection.GetRecurringJobs().Any(selector))
             {

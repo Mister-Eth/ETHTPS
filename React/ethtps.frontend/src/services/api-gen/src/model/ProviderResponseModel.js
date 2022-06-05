@@ -62,6 +62,9 @@ class ProviderResponseModel {
             if (data.hasOwnProperty('isGeneralPurpose')) {
                 obj['isGeneralPurpose'] = ApiClient.convertToType(data['isGeneralPurpose'], 'Boolean');
             }
+            if (data.hasOwnProperty('isSubchainOf')) {
+                obj['isSubchainOf'] = ApiClient.convertToType(data['isSubchainOf'], 'String');
+            }
         }
         return obj;
     }
@@ -93,6 +96,11 @@ ProviderResponseModel.prototype['type'] = undefined;
  * @member {Boolean} isGeneralPurpose
  */
 ProviderResponseModel.prototype['isGeneralPurpose'] = undefined;
+
+/**
+ * @member {String} isSubchainOf
+ */
+ProviderResponseModel.prototype['isSubchainOf'] = undefined;
 
 
 

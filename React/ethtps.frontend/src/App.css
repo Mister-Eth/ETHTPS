@@ -294,3 +294,8 @@ img{
   display: inline-block;
   margin-left: 10px;
 }
+
+
+.arrow_box {
+  background: white;
+}

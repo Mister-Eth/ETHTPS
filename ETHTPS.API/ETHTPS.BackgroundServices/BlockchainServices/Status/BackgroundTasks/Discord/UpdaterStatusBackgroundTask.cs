@@ -1,4 +1,5 @@
 ﻿using ETHTPS.Data.Database;
+using ETHTPS.Data.Models.Query;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -22,7 +23,7 @@ namespace ETHTPS.Services.BlockchainServices.Status.BackgroundTasks.Discord
 
         public override async Task RunAsync()
         {
-            var status = _blockInfoProviderStatusService.GetBlockInfoProviderStatus("All");
+            var status = _blockInfoProviderStatusService.GetBlockInfoProviderStatus(ProviderQueryModel.All);
             var embeds = new List<Embed>();
             foreach(var key in status.Keys)
             {

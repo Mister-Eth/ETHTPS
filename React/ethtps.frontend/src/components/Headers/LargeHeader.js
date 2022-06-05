@@ -16,7 +16,7 @@ export default class LargeHeader extends React.Component{
         <br></br>
 
         <center>
-            <div  style={{backgroundColor: '#7289da', borderRadius:3, marginBottom: '0px'}}>
+            <div  style={{backgroundColor: '#7289da', borderRadius:3, marginBottom: '5px'}}>
             <img className={"small-img"} src={blackDiscordIcon}></img>
             <a style={{color:'white', fontWeight: 'bold', fontSize: 15}} href={'https://discord.gg/jWPcsTzpCT'}>
             Click here to join our Discord channel
