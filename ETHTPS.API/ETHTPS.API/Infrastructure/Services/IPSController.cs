@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ETHTPS.Data.Models.Query;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,9 +14,9 @@ namespace ETHTPS.API.Infrastructure.Services
     /// <typeparam name="TResponseModel"></typeparam>
     public interface IPSController<TDataPoint, TResponseModel>
     {
-        IDictionary<string, TDataPoint> Max(string provider, string network = "Mainnet");
-        IDictionary<string, IEnumerable<TDataPoint>> Instant(string provider, bool includeSidechains = true);
-        IDictionary<string, IEnumerable<TResponseModel>> Get(string provider, string interval, string network = "Mainnet", bool includeSidechains = true);
-        public IDictionary<string, IEnumerable<TResponseModel>> GeMonthlyDataByYear(string provider, int year, string network = "Mainnet", bool includeSidechains = true);
+        IDictionary<string, TDataPoint> Max(ProviderQueryModel model);
+        IDictionary<string, IEnumerable<TDataPoint>> Instant(ProviderQueryModel model);
+        IDictionary<string, IEnumerable<TResponseModel>> Get(ProviderQueryModel model, string interval);
+        public IDictionary<string, IEnumerable<TResponseModel>> GeMonthlyDataByYear(ProviderQueryModel model, int year);
     }
 }

@@ -1,5 +1,7 @@
-﻿using ETHTPS.Data.Database;
+﻿using ETHTPS.Data;
+using ETHTPS.Data.Database;
 using ETHTPS.Data.Database.HistoricalDataProviders;
+using ETHTPS.Data.Models.Query;
 using ETHTPS.Data.ResponseModels;
 
 using System;
@@ -17,15 +19,15 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
         }
 
 
-        public IDictionary<string, DataPoint> Max(string provider, string network = "Mainnet")
+        public IDictionary<string, DataPoint> Max(ProviderQueryModel model)
         {
             var result = new List<DataResponseModel>();
             lock (Context.LockObj)
             {
-                var providers = (provider.ToUpper() == "ALL") ? Context.Providers.AsEnumerable() : new Provider[] { Context.Providers.First(x => x.Name.ToUpper() == provider.ToUpper()) };
+                var providers = (model.Provider.ToUpper() == "ALL") ? Context.Providers.AsEnumerable() : new Provider[] { Context.Providers.First(x => x.Name.ToUpper() == model.Provider.ToUpper()) };
                 foreach (var p in providers.ToArray())
                 {
-                    var entry = Context.TpsandGasDataMaxes.FirstOrDefault(x => x.Provider == p.Id && x.NetworkNavigation.Name == network);
+                    var entry = Context.TpsandGasDataMaxes.FirstOrDefault(x => x.Provider == p.Id && x.NetworkNavigation.Name == model.Network);
                     if (entry != null)
                     {
                         result.Add(new DataResponseModel()
@@ -61,23 +63,23 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             return result.ToDictionary(x => x.Provider, x => x.Data.First());
         }
 
-        public IDictionary<string, IEnumerable<DataResponseModel>> Get(string provider, string interval, string network = "Mainnet", bool includeSidechains = true)
+        public IDictionary<string, IEnumerable<DataResponseModel>> Get(ProviderQueryModel model, string interval)
         {
             var result = new Dictionary<string, IEnumerable<DataResponseModel>>();
             lock (Context.LockObj)
             {
-                if (provider.ToUpper() == "ALL")
+                if (model.Provider.ToUpper() == "ALL")
                 {
                     foreach (var p in Context.Providers.ToList().Where(x => x.Enabled))
                     {
-                        if (!includeSidechains)
+                        if (!model.IncludeSidechains)
                         {
                             if (IsSidechain(p.Name))
                             {
                                 continue;
                             }
                         }
-                        result[p.Name] = GetHistoricalData(interval, p.Name, network).Select(x => new DataResponseModel()
+                        result[p.Name] = GetHistoricalData(model, interval).Select(x => new DataResponseModel()
                         {
                             Data = new List<DataPoint>()
                         {
@@ -88,7 +90,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
                 }
                 else
                 {
-                    result[provider] = GetHistoricalData(interval, provider, network).Select(x => new DataResponseModel()
+                    result[model.Provider] = GetHistoricalData(model, interval).Select(x => new DataResponseModel()
                     {
                         Data = new List<DataPoint>()
                         {
@@ -100,9 +102,9 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             return result;
         }
 
-        public IDictionary<string, IEnumerable<DataResponseModel>> GeMonthlyDataByYear(string provider, int year, string network = "Mainnet", bool includeSidechains = true)
+        public IDictionary<string, IEnumerable<DataResponseModel>> GeMonthlyDataByYear(ProviderQueryModel model, int year)
         {
-            var data = Get(provider, "All", network, includeSidechains);
+            var data = Get(model, Constants.All);
             foreach (var key in data.Keys)
             {
                 data[key] = data[key].Where(x => x.Data.First().Date.Year == year);
@@ -110,14 +112,14 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             return data;
         }
 
-        public IDictionary<string, IEnumerable<DataPoint>> Instant(string provider, bool includeSidechains = true)
+        public IDictionary<string, IEnumerable<DataPoint>> Instant(ProviderQueryModel model)
         {
             var result = new List<DataResponseModel>();
             lock (Context.LockObj)
             {
                 foreach (var p in Context.Providers.ToList().Where(x => x.Enabled))
                 {
-                    if (!includeSidechains)
+                    if (!model.IncludeSidechains)
                     {
                         if (p.TypeNavigation.Name == "Sidechain")
                         {

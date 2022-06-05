@@ -42,7 +42,11 @@ namespace ETHTPS.API.Tests.ControllerTests.DataControllerTests
                 {
                     Assert.DoesNotThrow(() =>
                     {
-                        _controller.Max(provider, network);
+                        _controller.Max(new Data.Models.Query.ProviderQueryModel()
+                        {
+                            Network = network,
+                            Provider = provider
+                        });
                     });
                 }
             }

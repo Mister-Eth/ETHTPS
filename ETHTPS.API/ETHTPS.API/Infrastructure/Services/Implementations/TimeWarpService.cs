@@ -2,6 +2,7 @@
 using ETHTPS.Data.Database.TimeWarp;
 using ETHTPS.Data.Database.TimeWarp.Models;
 using ETHTPS.Data.Extensions;
+using ETHTPS.Data.Models.Query;
 using ETHTPS.Data.ResponseModels;
 using ETHTPS.Services;
 using ETHTPS.Services.BlockchainServices.Extensions;
@@ -36,23 +37,23 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             else return DateTime.MinValue;
         }
 
-        public IEnumerable<DataPoint> GetGasAdjustedTPSAt(long timestamp, string network, string smoothing, int count)
+        public IEnumerable<DataPoint> GetGasAdjustedTPSAt(ProviderQueryModel model, long timestamp, string smoothing, int count)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<DataPoint> GetGPSAt(long timestamp, string network, string smoothing, int count)
+        public IEnumerable<DataPoint> GetGPSAt(ProviderQueryModel model, long timestamp, string smoothing, int count)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<TimeWarpSyncProgressModel> GetSyncProgress(string provider, string network)
+        public async Task<TimeWarpSyncProgressModel> GetSyncProgress(ProviderQueryModel model)
         {
-            var blockInfoProvider = _services.GetProvider(provider);
+            var blockInfoProvider = _services.GetProvider(model.Provider);
             var earliestSyncedBlockHeight = 0;
-            if (_context.TimeWarpData.Any(x => x.ProviderNavigation.Name == provider))
+            if (_context.TimeWarpData.Any(x => x.ProviderNavigation.Name == model.Provider))
             {
-                var entry = _context.TimeWarpData.Where(x => x.ProviderNavigation.Name == provider).OrderByDescending(x => x.Block).First().Block;
+                var entry = _context.TimeWarpData.Where(x => x.ProviderNavigation.Name == model.Provider).OrderByDescending(x => x.Block).First().Block;
                 if (entry.HasValue)
                 {
                     earliestSyncedBlockHeight = entry.Value;
@@ -65,7 +66,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             };
         }
 
-        public IEnumerable<DataPoint> GetTPSAt(long timestamp, string network, string smoothing, int count)
+        public IEnumerable<DataPoint> GetTPSAt(ProviderQueryModel model, long timestamp, string smoothing, int count)
         {
             throw new NotImplementedException();
         }

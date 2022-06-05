@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using ETHTPS.API.Infrastructure.Services;
+using ETHTPS.Data;
 using ETHTPS.Data.Database;
 using ETHTPS.Data.Database.HistoricalDataProviders;
+using ETHTPS.Data.Models.Query;
 using ETHTPS.Data.ResponseModels;
 
 namespace ETHTPS.API.Infrastructure.Services.Implementations
@@ -18,9 +20,9 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             _gpsService = gpsService;
         }
 
-        public IDictionary<string, IEnumerable<DataResponseModel>> Get(string provider, string interval, string network = "Mainnet", bool includeSidechains = true)
+        public IDictionary<string, IEnumerable<DataResponseModel>> Get(ProviderQueryModel model, string interval)
         {
-            var data = _gpsService.Get(provider, interval, network, includeSidechains);
+            var data = _gpsService.Get(model, interval);
             foreach (var key in data.Keys)
             {
                 data[key] = data[key].Select(x => new DataResponseModel()
@@ -39,10 +41,10 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             return data;
         }
 
-        public IDictionary<string, IEnumerable<DataPoint>> Instant(string provider, bool includeSidechains = true)
+        public IDictionary<string, IEnumerable<DataPoint>> Instant(ProviderQueryModel model)
         {
             Dictionary<string, List<DataPoint>> gasAdjustedTPS = new();
-            var instantGPS = _gpsService.Instant(provider, includeSidechains);
+            var instantGPS = _gpsService.Instant(model);
             foreach (var entry in instantGPS)
             {
                 gasAdjustedTPS.Add(entry.Key, new List<DataPoint>()
@@ -57,9 +59,9 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             return gasAdjustedTPS.ToDictionary(x => x.Key, x => x.Value.AsEnumerable());
         }
 
-        public IDictionary<string, IEnumerable<DataResponseModel>> GeMonthlyDataByYear(string provider, int year, string network = "Mainnet", bool includeSidechains = true)
+        public IDictionary<string, IEnumerable<DataResponseModel>> GeMonthlyDataByYear(ProviderQueryModel model, int year)
         {
-            var data = Get(provider, "All", network, includeSidechains);
+            var data = Get(model, Constants.All);
             foreach (var key in data.Keys)
             {
                 data[key] = data[key].Where(x => x.Data.First().Date.Year == year);
@@ -67,10 +69,10 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             return data;
         }
 
-        public IDictionary<string, DataPoint> Max(string provider, string network = "Mainnet")
+        public IDictionary<string, DataPoint> Max(ProviderQueryModel model)
         {
             Dictionary<string, DataPoint> gasAdjustedTPS = new();
-            var maxGPS = _gpsService.Max(provider, network);
+            var maxGPS = _gpsService.Max(model);
             foreach (var entry in maxGPS)
             {
                 gasAdjustedTPS.Add(entry.Key, new DataPoint()

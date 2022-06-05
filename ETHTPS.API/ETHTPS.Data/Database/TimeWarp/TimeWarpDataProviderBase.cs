@@ -1,4 +1,5 @@
 ﻿using ETHTPS.Data.Database.TimeWarp.Models;
+using ETHTPS.Data.Models.Query;
 using ETHTPS.Data.ResponseModels;
 
 using Microsoft.EntityFrameworkCore;
@@ -31,22 +32,22 @@ namespace ETHTPS.Data.Database.TimeWarp
             return _context.TimeWarpData.OrderBy(x => x.StartDate).FirstOrDefault().StartDate;
         }
 
-        public IEnumerable<DataPoint> GetGasAdjustedTPSAt(long timestamp, string network, string smoothing, int count)
+        public IEnumerable<DataPoint> GetGasAdjustedTPSAt(ProviderQueryModel model, long timestamp, string smoothing, int count)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<DataPoint> GetGPSAt(long timestamp, string network, string smoothing, int count)
+        public IEnumerable<DataPoint> GetGPSAt(ProviderQueryModel model, long timestamp, string smoothing, int count)
         {
             throw new NotImplementedException();
         }
 
-        public Task<TimeWarpSyncProgressModel> GetSyncProgress(string provider, string network)
+        public Task<TimeWarpSyncProgressModel> GetSyncProgress(ProviderQueryModel model)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<DataPoint> GetTPSAt(long timestamp, string network, string smoothing, int count)
+        public IEnumerable<DataPoint> GetTPSAt(ProviderQueryModel model, long timestamp, string smoothing, int count)
         {
             throw new NotImplementedException();
         }
