@@ -20,7 +20,7 @@ export default class InstantDataService {
 
     getAndCallbackInstantData(){
         globalGeneralApi.aPIV2InstantDataGet({includeSidechains: this.includeSidechains, smoothing: this.smoothing}, (err, data, res) => {
-            if (data !== null && !isEmpty(data) && Object.entries(this.instantDataForPageCallbackDictionary).length > 0){
+            if (data !== null && !isEmpty(data) && Object.entries(data).length === 3 && Object.entries(this.instantDataForPageCallbackDictionary).length > 0){
                 Object.entries(this.instantDataForPageCallbackDictionary).forEach(([key, value]) => {
                     value(data);
                  });

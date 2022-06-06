@@ -436,6 +436,10 @@ namespace ETHTPS.Data.Database
 
                 entity.Property(e => e.MaxTps).HasColumnName("MaxTPS");
 
+                entity.Property(e => e.MaxTPSBlockNumber).HasColumnName("MaxTPSBlockNumber");
+
+                entity.Property(e => e.MaxGPSBlockNumber).HasColumnName("MaxGPSBlockNumber");
+
                 entity.HasOne(d => d.NetworkNavigation)
                     .WithMany(p => p.TpsandGasDataMaxes)
                     .HasForeignKey(d => d.Network)

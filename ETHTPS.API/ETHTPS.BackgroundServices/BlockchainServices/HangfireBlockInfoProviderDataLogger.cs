@@ -130,6 +130,8 @@ namespace ETHTPS.Services.BlockchainServices
                     Date = entry.Date,
                     MaxGps = entry.GPS,
                     MaxTps = entry.TPS,
+                    MaxTPSBlockNumber = entry.BlockNumber,
+                    MaxGPSBlockNumber = entry.BlockNumber,
                     Network = 1,
                     Provider = _providerID
                 });
@@ -140,10 +142,12 @@ namespace ETHTPS.Services.BlockchainServices
                 if (entry.TPS > targetEntry.MaxTps)
                 {
                     targetEntry.MaxTps = entry.TPS;
+                    targetEntry.MaxTPSBlockNumber = entry.BlockNumber;
                 }
                 if (entry.GPS > targetEntry.MaxGps)
                 {
                     targetEntry.MaxGps = entry.GPS;
+                    targetEntry.MaxGPSBlockNumber = entry.BlockNumber;
                 }
                 _context.TpsandGasDataMaxes.Update(targetEntry);
             }

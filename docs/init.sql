@@ -70,7 +70,9 @@ CREATE TABLE [dbo].[TPSAndGasData_Max] (
   [Network] int NOT NULL,
   [Date] datetime NOT NULL,
   [MaxTPS] float NOT NULL,
-  [MaxGPS] float NOT NULL
+  [MaxGPS] float NOT NULL,
+  [MaxTPSBlockNumber] int,
+  [MaxGPSBlockNumber] int
 )
 GO
 
@@ -245,7 +247,7 @@ GO
 CREATE TABLE [ProjectManagement].[Projects] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Enabled] bit NOT NULL,
-  [Provider] int NOT NULL,
+  [Provider] int,
   [Name] nvarchar(255) NOT NULL,
   [Website] nvarchar(255) NOT NULL,
   [Details] nvarchar(255)
