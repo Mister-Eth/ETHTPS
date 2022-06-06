@@ -1,0 +1,15 @@
+[Unit]
+Description=ETHTPS service 5
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=lmvm2
+WorkingDirectory=/home/lmvm2/Desktop/ethtps/ETHTPS/ETHTPS.API/ETHTPS.API/bin/Release/net5.0/
+ExecStart=/usr/bin/dotnet ETHTPS.API.dll --urls=http://*:50034
+
+[Install]
+WantedBy=multi-user.target

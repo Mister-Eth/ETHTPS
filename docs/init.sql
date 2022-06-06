@@ -1,15 +1,22 @@
-CREATE TABLE [Providers] (
+CREATE SCHEMA [dbo]
+GO
+
+CREATE SCHEMA [ProjectManagement]
+GO
+
+CREATE TABLE [dbo].[Providers] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Name] nvarchar(255) UNIQUE NOT NULL,
   [Type] int NOT NULL,
   [Color] varchar(16) NOT NULL,
   [IsGeneralPurpose] bit,
   [HistoricalAggregationDeltaBlock] int,
-  [Enabled] bit NOT NULL
+  [Enabled] bit NOT NULL,
+  [SubchainOf] int
 )
 GO
 
-CREATE TABLE [ProviderTypes] (
+CREATE TABLE [dbo].[ProviderTypes] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Name] nvarchar(255) UNIQUE NOT NULL,
   [Color] varchar(16) NOT NULL,
@@ -17,7 +24,7 @@ CREATE TABLE [ProviderTypes] (
 )
 GO
 
-CREATE TABLE [AccesStats] (
+CREATE TABLE [dbo].[AccesStats] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Project] nvarchar(255) NOT NULL,
   [Path] nvarchar(255) NOT NULL,
@@ -26,7 +33,7 @@ CREATE TABLE [AccesStats] (
 )
 GO
 
-CREATE TABLE [DetailedAccessStats] (
+CREATE TABLE [dbo].[DetailedAccessStats] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Path] nvarchar(255) NOT NULL,
   [RequestTimeMs] float NOT NULL,
@@ -35,20 +42,20 @@ CREATE TABLE [DetailedAccessStats] (
 )
 GO
 
-CREATE TABLE [CachedResponses] (
+CREATE TABLE [dbo].[CachedResponses] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Name] nvarchar(255) UNIQUE NOT NULL,
   [JSON] varchar(max)
 )
 GO
 
-CREATE TABLE [Networks] (
+CREATE TABLE [dbo].[Networks] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Name] nvarchar(255) UNIQUE NOT NULL
 )
 GO
 
-CREATE TABLE [TPSAndGasData_Latest] (
+CREATE TABLE [dbo].[TPSAndGasData_Latest] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Provider] int UNIQUE NOT NULL,
   [Network] int NOT NULL,
@@ -57,7 +64,7 @@ CREATE TABLE [TPSAndGasData_Latest] (
 )
 GO
 
-CREATE TABLE [TPSAndGasData_Max] (
+CREATE TABLE [dbo].[TPSAndGasData_Max] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Provider] int UNIQUE NOT NULL,
   [Network] int NOT NULL,
@@ -67,7 +74,7 @@ CREATE TABLE [TPSAndGasData_Max] (
 )
 GO
 
-CREATE TABLE [TPSAndGasData_Hour] (
+CREATE TABLE [dbo].[TPSAndGasData_Hour] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Network] int NOT NULL,
   [Provider] int NOT NULL,
@@ -79,7 +86,7 @@ CREATE TABLE [TPSAndGasData_Hour] (
 )
 GO
 
-CREATE TABLE [TPSAndGasData_Day] (
+CREATE TABLE [dbo].[TPSAndGasData_Day] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Network] int NOT NULL,
   [Provider] int NOT NULL,
@@ -91,7 +98,7 @@ CREATE TABLE [TPSAndGasData_Day] (
 )
 GO
 
-CREATE TABLE [TPSAndGasData_Week] (
+CREATE TABLE [dbo].[TPSAndGasData_Week] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Network] int NOT NULL,
   [Provider] int NOT NULL,
@@ -103,7 +110,7 @@ CREATE TABLE [TPSAndGasData_Week] (
 )
 GO
 
-CREATE TABLE [TPSAndGasData_Month] (
+CREATE TABLE [dbo].[TPSAndGasData_Month] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Network] int NOT NULL,
   [Provider] int NOT NULL,
@@ -114,7 +121,7 @@ CREATE TABLE [TPSAndGasData_Month] (
 )
 GO
 
-CREATE TABLE [TPSAndGasData_Year] (
+CREATE TABLE [dbo].[TPSAndGasData_Year] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Network] int NOT NULL,
   [Provider] int NOT NULL,
@@ -125,7 +132,7 @@ CREATE TABLE [TPSAndGasData_Year] (
 )
 GO
 
-CREATE TABLE [TPSAndGasData_All] (
+CREATE TABLE [dbo].[TPSAndGasData_All] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Network] int NOT NULL,
   [Provider] int NOT NULL,
@@ -136,7 +143,7 @@ CREATE TABLE [TPSAndGasData_All] (
 )
 GO
 
-CREATE TABLE [OldestLoggedHistoricalEntries] (
+CREATE TABLE [dbo].[OldestLoggedHistoricalEntries] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Network] int NOT NULL,
   [Provider] int NOT NULL,
@@ -144,7 +151,7 @@ CREATE TABLE [OldestLoggedHistoricalEntries] (
 )
 GO
 
-CREATE TABLE [APIKeys] (
+CREATE TABLE [dbo].[APIKeys] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [KeyHash] nvarchar(255) NOT NULL,
   [TotalCalls] int NOT NULL,
@@ -153,7 +160,7 @@ CREATE TABLE [APIKeys] (
 )
 GO
 
-CREATE TABLE [TimeWarpData] (
+CREATE TABLE [dbo].[TimeWarpData] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Network] int NOT NULL,
   [Provider] int NOT NULL,
@@ -164,7 +171,7 @@ CREATE TABLE [TimeWarpData] (
 )
 GO
 
-CREATE TABLE [TimeWarpData_Minute] (
+CREATE TABLE [dbo].[TimeWarpData_Minute] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Network] int NOT NULL,
   [Provider] int NOT NULL,
@@ -175,7 +182,7 @@ CREATE TABLE [TimeWarpData_Minute] (
 )
 GO
 
-CREATE TABLE [TimeWarpData_Hour] (
+CREATE TABLE [dbo].[TimeWarpData_Hour] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Network] int NOT NULL,
   [Provider] int NOT NULL,
@@ -186,7 +193,7 @@ CREATE TABLE [TimeWarpData_Hour] (
 )
 GO
 
-CREATE TABLE [TimeWarpData_Day] (
+CREATE TABLE [dbo].[TimeWarpData_Day] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Network] int NOT NULL,
   [Provider] int NOT NULL,
@@ -197,7 +204,7 @@ CREATE TABLE [TimeWarpData_Day] (
 )
 GO
 
-CREATE TABLE [TimeWarpData_Week] (
+CREATE TABLE [dbo].[TimeWarpData_Week] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Network] int NOT NULL,
   [Provider] int NOT NULL,
@@ -208,7 +215,7 @@ CREATE TABLE [TimeWarpData_Week] (
 )
 GO
 
-CREATE TABLE [OldestLoggedTimeWarpBlocks] (
+CREATE TABLE [dbo].[OldestLoggedTimeWarpBlocks] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Network] int NOT NULL,
   [Provider] int NOT NULL,
@@ -216,7 +223,7 @@ CREATE TABLE [OldestLoggedTimeWarpBlocks] (
 )
 GO
 
-CREATE TABLE [StarkwareTransactionCountData] (
+CREATE TABLE [dbo].[StarkwareTransactionCountData] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Network] int NOT NULL,
   [Product] nvarchar(255) NOT NULL,
@@ -226,98 +233,126 @@ CREATE TABLE [StarkwareTransactionCountData] (
 )
 GO
 
-ALTER TABLE [Providers] ADD FOREIGN KEY ([Type]) REFERENCES [ProviderTypes] ([ID])
+CREATE TABLE [ProjectManagement].[Features] (
+  [ID] int PRIMARY KEY IDENTITY(1, 1),
+  [ProjectID] int NOT NULL,
+  [Enabled] bit NOT NULL,
+  [Name] nvarchar(255) NOT NULL,
+  [Details] nvarchar(255)
+)
 GO
 
-ALTER TABLE [TPSAndGasData_Latest] ADD FOREIGN KEY ([Provider]) REFERENCES [Providers] ([ID])
+CREATE TABLE [ProjectManagement].[Projects] (
+  [ID] int PRIMARY KEY IDENTITY(1, 1),
+  [Enabled] bit NOT NULL,
+  [Provider] int NOT NULL,
+  [Name] nvarchar(255) NOT NULL,
+  [Website] nvarchar(255) NOT NULL,
+  [Details] nvarchar(255)
+)
 GO
 
-ALTER TABLE [TPSAndGasData_Latest] ADD FOREIGN KEY ([Network]) REFERENCES [Networks] ([ID])
+ALTER TABLE [dbo].[Providers] ADD FOREIGN KEY ([Type]) REFERENCES [dbo].[ProviderTypes] ([ID])
 GO
 
-ALTER TABLE [TPSAndGasData_Max] ADD FOREIGN KEY ([Provider]) REFERENCES [Providers] ([ID])
+ALTER TABLE [dbo].[Providers] ADD FOREIGN KEY ([SubchainOf]) REFERENCES [dbo].[Providers] ([ID])
 GO
 
-ALTER TABLE [TPSAndGasData_Max] ADD FOREIGN KEY ([Network]) REFERENCES [Networks] ([ID])
+ALTER TABLE [dbo].[TPSAndGasData_Latest] ADD FOREIGN KEY ([Provider]) REFERENCES [dbo].[Providers] ([ID])
 GO
 
-ALTER TABLE [TPSAndGasData_Hour] ADD FOREIGN KEY ([Provider]) REFERENCES [Providers] ([ID])
+ALTER TABLE [dbo].[TPSAndGasData_Latest] ADD FOREIGN KEY ([Network]) REFERENCES [dbo].[Networks] ([ID])
 GO
 
-ALTER TABLE [TPSAndGasData_Hour] ADD FOREIGN KEY ([Network]) REFERENCES [Networks] ([ID])
+ALTER TABLE [dbo].[TPSAndGasData_Max] ADD FOREIGN KEY ([Provider]) REFERENCES [dbo].[Providers] ([ID])
 GO
 
-ALTER TABLE [TPSAndGasData_Day] ADD FOREIGN KEY ([Provider]) REFERENCES [Providers] ([ID])
+ALTER TABLE [dbo].[TPSAndGasData_Max] ADD FOREIGN KEY ([Network]) REFERENCES [dbo].[Networks] ([ID])
 GO
 
-ALTER TABLE [TPSAndGasData_Day] ADD FOREIGN KEY ([Network]) REFERENCES [Networks] ([ID])
+ALTER TABLE [dbo].[TPSAndGasData_Hour] ADD FOREIGN KEY ([Provider]) REFERENCES [dbo].[Providers] ([ID])
 GO
 
-ALTER TABLE [TPSAndGasData_Week] ADD FOREIGN KEY ([Provider]) REFERENCES [Providers] ([ID])
+ALTER TABLE [dbo].[TPSAndGasData_Hour] ADD FOREIGN KEY ([Network]) REFERENCES [dbo].[Networks] ([ID])
 GO
 
-ALTER TABLE [TPSAndGasData_Week] ADD FOREIGN KEY ([Network]) REFERENCES [Networks] ([ID])
+ALTER TABLE [dbo].[TPSAndGasData_Day] ADD FOREIGN KEY ([Provider]) REFERENCES [dbo].[Providers] ([ID])
 GO
 
-ALTER TABLE [TPSAndGasData_Month] ADD FOREIGN KEY ([Provider]) REFERENCES [Providers] ([ID])
+ALTER TABLE [dbo].[TPSAndGasData_Day] ADD FOREIGN KEY ([Network]) REFERENCES [dbo].[Networks] ([ID])
 GO
 
-ALTER TABLE [TPSAndGasData_Month] ADD FOREIGN KEY ([Network]) REFERENCES [Networks] ([ID])
+ALTER TABLE [dbo].[TPSAndGasData_Week] ADD FOREIGN KEY ([Provider]) REFERENCES [dbo].[Providers] ([ID])
 GO
 
-ALTER TABLE [TPSAndGasData_Year] ADD FOREIGN KEY ([Provider]) REFERENCES [Providers] ([ID])
+ALTER TABLE [dbo].[TPSAndGasData_Week] ADD FOREIGN KEY ([Network]) REFERENCES [dbo].[Networks] ([ID])
 GO
 
-ALTER TABLE [TPSAndGasData_Year] ADD FOREIGN KEY ([Network]) REFERENCES [Networks] ([ID])
+ALTER TABLE [dbo].[TPSAndGasData_Month] ADD FOREIGN KEY ([Provider]) REFERENCES [dbo].[Providers] ([ID])
 GO
 
-ALTER TABLE [TPSAndGasData_All] ADD FOREIGN KEY ([Provider]) REFERENCES [Providers] ([ID])
+ALTER TABLE [dbo].[TPSAndGasData_Month] ADD FOREIGN KEY ([Network]) REFERENCES [dbo].[Networks] ([ID])
 GO
 
-ALTER TABLE [TPSAndGasData_All] ADD FOREIGN KEY ([Network]) REFERENCES [Networks] ([ID])
+ALTER TABLE [dbo].[TPSAndGasData_Year] ADD FOREIGN KEY ([Provider]) REFERENCES [dbo].[Providers] ([ID])
 GO
 
-ALTER TABLE [OldestLoggedHistoricalEntries] ADD FOREIGN KEY ([Provider]) REFERENCES [Providers] ([ID])
+ALTER TABLE [dbo].[TPSAndGasData_Year] ADD FOREIGN KEY ([Network]) REFERENCES [dbo].[Networks] ([ID])
 GO
 
-ALTER TABLE [OldestLoggedHistoricalEntries] ADD FOREIGN KEY ([Network]) REFERENCES [Networks] ([ID])
+ALTER TABLE [dbo].[TPSAndGasData_All] ADD FOREIGN KEY ([Provider]) REFERENCES [dbo].[Providers] ([ID])
 GO
 
-ALTER TABLE [TimeWarpData] ADD FOREIGN KEY ([Provider]) REFERENCES [Providers] ([ID])
+ALTER TABLE [dbo].[TPSAndGasData_All] ADD FOREIGN KEY ([Network]) REFERENCES [dbo].[Networks] ([ID])
 GO
 
-ALTER TABLE [TimeWarpData] ADD FOREIGN KEY ([Network]) REFERENCES [Networks] ([ID])
+ALTER TABLE [dbo].[OldestLoggedHistoricalEntries] ADD FOREIGN KEY ([Provider]) REFERENCES [dbo].[Providers] ([ID])
 GO
 
-ALTER TABLE [TimeWarpData_Minute] ADD FOREIGN KEY ([Provider]) REFERENCES [Providers] ([ID])
+ALTER TABLE [dbo].[OldestLoggedHistoricalEntries] ADD FOREIGN KEY ([Network]) REFERENCES [dbo].[Networks] ([ID])
 GO
 
-ALTER TABLE [TimeWarpData_Minute] ADD FOREIGN KEY ([Network]) REFERENCES [Networks] ([ID])
+ALTER TABLE [dbo].[TimeWarpData] ADD FOREIGN KEY ([Provider]) REFERENCES [dbo].[Providers] ([ID])
 GO
 
-ALTER TABLE [TimeWarpData_Hour] ADD FOREIGN KEY ([Provider]) REFERENCES [Providers] ([ID])
+ALTER TABLE [dbo].[TimeWarpData] ADD FOREIGN KEY ([Network]) REFERENCES [dbo].[Networks] ([ID])
 GO
 
-ALTER TABLE [TimeWarpData_Hour] ADD FOREIGN KEY ([Network]) REFERENCES [Networks] ([ID])
+ALTER TABLE [dbo].[TimeWarpData_Minute] ADD FOREIGN KEY ([Provider]) REFERENCES [dbo].[Providers] ([ID])
 GO
 
-ALTER TABLE [TimeWarpData_Day] ADD FOREIGN KEY ([Provider]) REFERENCES [Providers] ([ID])
+ALTER TABLE [dbo].[TimeWarpData_Minute] ADD FOREIGN KEY ([Network]) REFERENCES [dbo].[Networks] ([ID])
 GO
 
-ALTER TABLE [TimeWarpData_Day] ADD FOREIGN KEY ([Network]) REFERENCES [Networks] ([ID])
+ALTER TABLE [dbo].[TimeWarpData_Hour] ADD FOREIGN KEY ([Provider]) REFERENCES [dbo].[Providers] ([ID])
 GO
 
-ALTER TABLE [TimeWarpData_Week] ADD FOREIGN KEY ([Provider]) REFERENCES [Providers] ([ID])
+ALTER TABLE [dbo].[TimeWarpData_Hour] ADD FOREIGN KEY ([Network]) REFERENCES [dbo].[Networks] ([ID])
 GO
 
-ALTER TABLE [TimeWarpData_Week] ADD FOREIGN KEY ([Network]) REFERENCES [Networks] ([ID])
+ALTER TABLE [dbo].[TimeWarpData_Day] ADD FOREIGN KEY ([Provider]) REFERENCES [dbo].[Providers] ([ID])
 GO
 
-ALTER TABLE [OldestLoggedTimeWarpBlocks] ADD FOREIGN KEY ([Provider]) REFERENCES [Providers] ([ID])
+ALTER TABLE [dbo].[TimeWarpData_Day] ADD FOREIGN KEY ([Network]) REFERENCES [dbo].[Networks] ([ID])
 GO
 
-ALTER TABLE [OldestLoggedTimeWarpBlocks] ADD FOREIGN KEY ([Network]) REFERENCES [Networks] ([ID])
+ALTER TABLE [dbo].[TimeWarpData_Week] ADD FOREIGN KEY ([Provider]) REFERENCES [dbo].[Providers] ([ID])
 GO
 
-ALTER TABLE [StarkwareTransactionCountData] ADD FOREIGN KEY ([Network]) REFERENCES [Networks] ([ID])
+ALTER TABLE [dbo].[TimeWarpData_Week] ADD FOREIGN KEY ([Network]) REFERENCES [dbo].[Networks] ([ID])
+GO
+
+ALTER TABLE [dbo].[OldestLoggedTimeWarpBlocks] ADD FOREIGN KEY ([Provider]) REFERENCES [dbo].[Providers] ([ID])
+GO
+
+ALTER TABLE [dbo].[OldestLoggedTimeWarpBlocks] ADD FOREIGN KEY ([Network]) REFERENCES [dbo].[Networks] ([ID])
+GO
+
+ALTER TABLE [dbo].[StarkwareTransactionCountData] ADD FOREIGN KEY ([Network]) REFERENCES [dbo].[Networks] ([ID])
+GO
+
+ALTER TABLE [ProjectManagement].[Projects] ADD FOREIGN KEY ([Provider]) REFERENCES [dbo].[Providers] ([ID])
+GO
+
+ALTER TABLE [ProjectManagement].[Features] ADD FOREIGN KEY ([ProjectID]) REFERENCES [ProjectManagement].[Projects] ([ID])
 GO

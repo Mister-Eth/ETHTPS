@@ -1,0 +1,6 @@
+#!/bin/bash
+systemctl start ethtps1
+systemctl start ethtps2
+systemctl start ethtps3
+systemctl start ethtps4
+systemctl start ethtps5
