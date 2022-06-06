@@ -1978,6 +1978,11 @@
           "value": {
             "type": "number",
             "format": "double"
+          },
+          "blockNumber": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false
