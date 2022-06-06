@@ -1,6 +1,11 @@
 #!/bin/bash
+echo 'start ethtps1'
 systemctl start ethtps1
+echo 'start ethtps2'
 systemctl start ethtps2
+echo 'start ethtps3'
 systemctl start ethtps3
+echo 'start ethtps4'
 systemctl start ethtps4
+echo 'start ethtps5'
 systemctl start ethtps5
