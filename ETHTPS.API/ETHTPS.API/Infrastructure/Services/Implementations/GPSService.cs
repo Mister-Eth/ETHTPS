@@ -38,7 +38,8 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
                             new DataPoint()
                             {
                                 Date = entry.Date,
-                                Value = entry.MaxGps
+                                Value = entry.MaxGps,
+                                BlockNumber = entry.MaxGPSBlockNumber
                             }
                         }
                         });
