@@ -283,7 +283,6 @@ class ProviderTable extends SortableTable {
     }
     let blockNo = this.state.allMaxData['tps'][name].blockNumber;
     if (blockNo !== undefined) {
-      console.log(blockNo);
       return <>
         <div className={'l1 tooltip'} style={{ color: '#003300' }}>
           {this.format(value)}
