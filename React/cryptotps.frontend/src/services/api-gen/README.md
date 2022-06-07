@@ -101,21 +101,20 @@ Please follow the [installation](#installation) instruction and execute the foll
 var EthtpsApi = require('ethtps_api');
 
 
-var api = new EthtpsApi.GPSApi()
+var api = new EthtpsApi.FeatureApi()
 var opts = {
-  'provider': "provider_example", // {String} 
-  'network': "network_example", // {String} 
-  'includeSidechains': true, // {Boolean} 
-  'year': 56 // {Number} 
+  'featureId': 56, // {Number} 
+  'featureName': "featureName_example", // {String} 
+  'project': "project_example" // {String} 
 };
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 };
-api.aPIGPSGeMonthlyDataByYearGet(opts, callback);
+api.apiStatusGetFeaturesGet(opts, callback);
 
 ```
 
@@ -125,6 +124,8 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*EthtpsApi.FeatureApi* | [**apiStatusGetFeaturesGet**](docs/FeatureApi.md#apiStatusGetFeaturesGet) | **GET** /api/Status/GetFeatures | 
+*EthtpsApi.FeatureApi* | [**apiStatusIsFeatureEnabledGet**](docs/FeatureApi.md#apiStatusIsFeatureEnabledGet) | **GET** /api/Status/IsFeatureEnabled | 
 *EthtpsApi.GPSApi* | [**aPIGPSGeMonthlyDataByYearGet**](docs/GPSApi.md#aPIGPSGeMonthlyDataByYearGet) | **GET** /API/GPS/GeMonthlyDataByYear | 
 *EthtpsApi.GPSApi* | [**aPIGPSGetGet**](docs/GPSApi.md#aPIGPSGetGet) | **GET** /API/GPS/Get | 
 *EthtpsApi.GPSApi* | [**aPIGPSInstantGet**](docs/GPSApi.md#aPIGPSInstantGet) | **GET** /API/GPS/Instant | 

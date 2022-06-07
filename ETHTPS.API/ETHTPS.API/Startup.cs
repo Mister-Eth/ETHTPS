@@ -54,6 +54,7 @@ namespace ETHTPS.API
                                       builder.WithOrigins("https://ethtps.info");
                                       builder.WithOrigins("https://ultrasound.money/");
                                       builder.WithOrigins("http://localhost:3007");
+                                      builder.WithOrigins("http://localhost:3000");
                                       builder.AllowAnyHeader();
                                   });
             });
@@ -98,6 +99,7 @@ namespace ETHTPS.API
             services.AddScoped<GasAdjustedTPSService>();
             services.AddScoped<GeneralService>();
             services.AddScoped<TimeWarpService>();
+            services.AddScoped<FeatureService>();
             services.AddScoped<IBlockInfoProviderStatusService, BlockInfoProviderStatusService>();
             services.AddScoped<EthereumBlockTimeProvider>();
         }

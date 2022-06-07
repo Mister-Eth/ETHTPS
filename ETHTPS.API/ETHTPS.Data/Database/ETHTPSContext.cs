@@ -1,4 +1,5 @@
 ﻿using System;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -38,9 +39,11 @@ namespace ETHTPS.Data.Database
         public virtual DbSet<TimeWarpDataHour> TimeWarpDataHours { get; set; }
         public virtual DbSet<TimeWarpDataMinute> TimeWarpDataMinutes { get; set; }
         public virtual DbSet<TimeWarpDataWeek> TimeWarpDataWeeks { get; set; }
-       public virtual DbSet<TimeWarpDatum> TimeWarpData { get; set; }
+        public virtual DbSet<TimeWarpDatum> TimeWarpData { get; set; }
         public virtual DbSet<OldestLoggedTimeWarpBlock> OldestLoggedTimeWarpBlocks { get; set; }
         public virtual DbSet<StarkwareTransactionCountData> StarkwareTransactionCountData { get; set; }
+        public virtual DbSet<Feature> Features { get; set; }
+        public virtual DbSet<Project> Projects { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -50,7 +53,7 @@ namespace ETHTPS.Data.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
-            
+
             modelBuilder.Entity<TimeWarpDataDay>(entity =>
             {
                 entity.ToTable("TimeWarpData_Day");
@@ -174,7 +177,7 @@ namespace ETHTPS.Data.Database
                     .HasConstraintName("FK__TimeWarpD__Provi__2B0A656D");
             });
 
-            
+
             modelBuilder.Entity<OldestLoggedTimeWarpBlock>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("ID");
@@ -191,7 +194,7 @@ namespace ETHTPS.Data.Database
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__OldestLog__Provi__3493CFA7");
             });
-            
+
             modelBuilder.Entity<OldestLoggedHistoricalEntry>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("ID");
@@ -514,6 +517,49 @@ namespace ETHTPS.Data.Database
                     .HasForeignKey(d => d.Network)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Starkware__Netwo__4F47C5E3");
+            });
+
+            modelBuilder.Entity<Feature>(entity =>
+            {
+                entity.ToTable("Features", "ProjectManagement");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Details).HasMaxLength(255);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.ProjectId).HasColumnName("ProjectID");
+
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.Features)
+                    .HasForeignKey(d => d.ProjectId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Features__Projec__59C55456");
+            });
+
+            modelBuilder.Entity<Project>(entity =>
+            {
+                entity.ToTable("Projects", "ProjectManagement");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Details).HasMaxLength(255);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.Website)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.HasOne(d => d.ProviderNavigation)
+                    .WithMany(p => p.Projects)
+                    .HasForeignKey(d => d.Provider)
+                    .HasConstraintName("FK__Projects__Provid__55009F39");
             });
 
             OnModelCreatingPartial(modelBuilder);

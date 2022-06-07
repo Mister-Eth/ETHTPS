@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
 export default class Footer extends Component {
-    constructor() {
-        super({});
+    constructor(props: any) {
+        super(props);
     }
 
     render() {

@@ -25,6 +25,7 @@ namespace ETHTPS.Data.Database
             TpsandGasDataMonths = new HashSet<TpsandGasDataMonth>();
             TpsandGasDataWeeks = new HashSet<TpsandGasDataWeek>();
             TpsandGasDataYears = new HashSet<TpsandGasDataYear>();
+            Projects = new HashSet<Project>();
         }
 
         public int Id { get; set; }
@@ -54,6 +55,7 @@ namespace ETHTPS.Data.Database
         public virtual ICollection<TpsandGasDataWeek> TpsandGasDataWeeks { get; set; }
         public virtual ICollection<TpsandGasDataYear> TpsandGasDataYears { get; set; }
         public virtual ICollection<Provider> InverseSubchainOfNavigation { get; set; }
+        public virtual ICollection<Project> Projects { get; set; }
         public virtual Provider SubchainOfNavigation { get; set; }
     }
 }

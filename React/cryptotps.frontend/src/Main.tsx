@@ -10,6 +10,7 @@ import { HomePageModel } from "./Pages/HomePage/HomePageModel";
 import Header from "./Components/Header/Header";
 import { HeaderModel } from "./Components/Header/HeaderModel";
 import Footer from "./Components/Footer/Footer";
+import DiscordBanner from "./Components/DiscordBanner";
 
 export default class Main extends Component<ApplicationConfiguration> {
     homePageModel: HomePageModel;
@@ -23,6 +24,7 @@ export default class Main extends Component<ApplicationConfiguration> {
     render() {
         return <>
             <BrowserRouter>
+                <DiscordBanner/>
                 <Header {...new HeaderModel(this.homePageModel.configuration.name)} />
                 <hr />
                 <Routes>

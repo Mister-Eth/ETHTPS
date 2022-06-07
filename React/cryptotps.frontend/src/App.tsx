@@ -5,14 +5,14 @@ import Main from './Main';
 import { ApplicationConfiguration } from './Models/ApplicationConfiguration';
 import Header from './Components/Header/Header';
 import { HeaderModel } from './Components/Header/HeaderModel';
+import { Modes } from './Models/Enums';
 
-const config = new ApplicationConfiguration("ETHTPS.info");
+const ethtpsConfig = new ApplicationConfiguration("ETHTPS.info", Modes.TPS, 'Ethereum', "Mainnet");
 
 function App() {
   return (
     <div className="App">
-      <Main {...config}/>
-
+      <Main {...ethtpsConfig}/>
     </div>
   );
 }

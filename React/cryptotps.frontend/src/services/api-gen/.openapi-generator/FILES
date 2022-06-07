@@ -1,6 +1,5 @@
 .babelrc
 .gitignore
-.openapi-generator-ignore
 .travis.yml
 README.md
 docs/AllDataModel.md
@@ -10,6 +9,7 @@ docs/ChartData.md
 docs/DataPoint.md
 docs/DataResponseModel.md
 docs/DataType.md
+docs/FeatureApi.md
 docs/GPSApi.md
 docs/GasAdjustedTPSApi.md
 docs/GeneralApi.md
@@ -26,6 +26,7 @@ git_push.sh
 mocha.opts
 package.json
 src/ApiClient.js
+src/api/FeatureApi.js
 src/api/GPSApi.js
 src/api/GasAdjustedTPSApi.js
 src/api/GeneralApi.js
@@ -46,22 +47,4 @@ src/model/ProviderModel.js
 src/model/ProviderResponseModel.js
 src/model/TimeInterval.js
 src/model/TimeWarpSyncProgressModel.js
-test/api/GPSApi.spec.js
-test/api/GasAdjustedTPSApi.spec.js
-test/api/GeneralApi.spec.js
-test/api/PageModelApi.spec.js
-test/api/StatusApi.spec.js
-test/api/TPSApi.spec.js
-test/api/TimeWarpApi.spec.js
-test/model/AllDataModel.spec.js
-test/model/BlockInfoProviderStatus.spec.js
-test/model/BlockInfoProviderStatusResult.spec.js
-test/model/ChartData.spec.js
-test/model/DataPoint.spec.js
-test/model/DataResponseModel.spec.js
-test/model/DataType.spec.js
-test/model/HomePageResponseModel.spec.js
-test/model/ProviderModel.spec.js
-test/model/ProviderResponseModel.spec.js
-test/model/TimeInterval.spec.js
-test/model/TimeWarpSyncProgressModel.spec.js
+test/api/FeatureApi.spec.js

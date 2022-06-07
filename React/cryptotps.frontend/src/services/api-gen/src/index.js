@@ -25,6 +25,7 @@ import ProviderModel from './model/ProviderModel';
 import ProviderResponseModel from './model/ProviderResponseModel';
 import TimeInterval from './model/TimeInterval';
 import TimeWarpSyncProgressModel from './model/TimeWarpSyncProgressModel';
+import FeatureApi from './api/FeatureApi';
 import GPSApi from './api/GPSApi';
 import GasAdjustedTPSApi from './api/GasAdjustedTPSApi';
 import GeneralApi from './api/GeneralApi';
@@ -143,6 +144,12 @@ export {
      * @property {module:model/TimeWarpSyncProgressModel}
      */
     TimeWarpSyncProgressModel,
+
+    /**
+    * The FeatureApi service constructor.
+    * @property {module:api/FeatureApi}
+    */
+    FeatureApi,
 
     /**
     * The GPSApi service constructor.
