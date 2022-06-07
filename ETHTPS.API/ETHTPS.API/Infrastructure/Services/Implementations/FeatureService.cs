@@ -38,7 +38,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
         {
             var projectID = _context.Projects.AsEnumerable().First(x => x.Name.LossyCompareTo(model.Project)).Id;
             Func<Feature, bool> query = x => x.Name.LossyCompareTo(model.FeatureName) && x.ProjectId == projectID;
-            if (model.FeatureId != null)
+            if (model.FeatureId != null && model.FeatureId > 0)
             {
                 query = x => x.Id == model.FeatureId && x.ProjectId == projectID;
             }
