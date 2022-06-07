@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { ApplicationConfiguration } from "../../Models/ApplicationConfiguration";
+import { HomePageModel } from "./HomePageModel";
 import { Routes, Route } from 'react-router-dom';
 
-export default class HomePage extends Component<ApplicationConfiguration> {
-    constructor(props: ApplicationConfiguration) {
+export default class HomePage extends Component<HomePageModel> {
+    constructor(props: HomePageModel) {
         super(props);
     }
 

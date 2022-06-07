@@ -6,18 +6,30 @@ import {
     Route,
 } from "react-router-dom";
 import HomePage from "./Pages/HomePage/HomePage";
+import { HomePageModel } from "./Pages/HomePage/HomePageModel";
+import Header from "./Components/Header/Header";
+import { HeaderModel } from "./Components/Header/HeaderModel";
+import Footer from "./Components/Footer/Footer";
 
 export default class Main extends Component<ApplicationConfiguration> {
+    homePageModel: HomePageModel;
+
     constructor(props: ApplicationConfiguration) {
         super(props);
+
+        this.homePageModel = new HomePageModel(props);
     }
 
     render() {
         return <>
             <BrowserRouter>
+                <Header {...new HeaderModel(this.homePageModel.configuration.name)} />
+                <hr />
                 <Routes>
-                    <Route index element={<HomePage {...this.props} />} />
+                    <Route index element={<HomePage {...this.homePageModel} />} />
                 </Routes>
+                <hr />
+                <Footer />
             </BrowserRouter>
         </>;
     }
