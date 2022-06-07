@@ -11,6 +11,7 @@ import Header from "./Components/Header/Header";
 import { HeaderModel } from "./Components/Header/HeaderModel";
 import Footer from "./Components/Footer/Footer";
 import DiscordBanner from "./Components/DiscordBanner";
+import { FeatureConfiguration } from "./Components/FeatureDependentComponent";
 
 export default class Main extends Component<ApplicationConfiguration> {
     homePageModel: HomePageModel;
@@ -24,7 +25,7 @@ export default class Main extends Component<ApplicationConfiguration> {
     render() {
         return <>
             <BrowserRouter>
-                <DiscordBanner/>
+                <DiscordBanner {...new FeatureConfiguration("DiscordBanner", this.props.name)} />
                 <Header {...new HeaderModel(this.homePageModel.configuration.name)} />
                 <hr />
                 <Routes>

@@ -36,7 +36,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
 
         Func<Feature, bool> GetQuery(FeatureQueryModel model)
         {
-            var projectID = _context.Projects.AsEnumerable().First(x => x.Name.LossyCompareTo(model.Project)).Id;
+            var projectID = _context.Projects.AsEnumerable().First(x => x.Name.LossyCompareTo(model.Project) || x.Website.LossyCompareTo(model.Project)).Id;
             Func<Feature, bool> query = x => x.Name.LossyCompareTo(model.FeatureName) && x.ProjectId == projectID;
             if (model.FeatureId != null && model.FeatureId > 0)
             {
@@ -56,7 +56,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             if (string.IsNullOrWhiteSpace(model.Project))
                 throw new ArgumentNullException(nameof(model.Project));
 
-            if (!_context.Projects.AsEnumerable().Any(x => x.Name.LossyCompareTo(model.Project)))
+            if (!_context.Projects.AsEnumerable().Any(x => x.Name.LossyCompareTo(model.Project) || x.Website.LossyCompareTo(model.Project)))
                 throw new ArgumentException(nameof(model.Project));
         }
     }

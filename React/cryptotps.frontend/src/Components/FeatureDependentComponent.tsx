@@ -1,21 +1,16 @@
 import React, { Component } from "react";
 import { featureAPI } from "../services/global/apiServices";
 
-export default class FeatureDependentComponent<TP> extends Component<TP, FeatureDependentComponentRenderOptions>{
-    featureName: string;
-    project: string;
-
-    constructor(props: TP, featureName: string, project: string) {
+export default class FeatureDependentComponent extends Component<FeatureConfiguration, FeatureDependentComponentRenderOptions>{
+    constructor(props: FeatureConfiguration) {
         super(props);
-        this.featureName = featureName;
-        this.project = project;
     }
 
     componentDidMount() {
         featureAPI.apiStatusIsFeatureEnabledGet({
             featureId: -1,
-            featureName: 'DiscordBanner',
-            project: 'ETHTPS'
+            featureName: this.props.featureName,
+            project: this.props.project
         }, (err: any, data: string, res: any) => {
             let x = JSON.parse(res.body) as Boolean;
             this.setState({shouldRender: x});
@@ -35,5 +30,15 @@ export class FeatureDependentComponentRenderOptions {
     shouldRender: Boolean;
     constructor(shouldRender: Boolean) {
         this.shouldRender = shouldRender;
+    }
+}
+
+export class FeatureConfiguration{
+    featureName: string;
+    project: string;
+
+    constructor(featureName: string, project: string) {
+        this.featureName = featureName;
+        this.project = project;
     }
 }

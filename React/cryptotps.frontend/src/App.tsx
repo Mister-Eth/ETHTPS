@@ -8,11 +8,12 @@ import { HeaderModel } from './Components/Header/HeaderModel';
 import { Modes } from './Models/Enums';
 
 const ethtpsConfig = new ApplicationConfiguration("ETHTPS.info", Modes.TPS, 'Ethereum', "Mainnet");
+const cryptotpsConfig = new ApplicationConfiguration("CryptoTPS.info", Modes.TPS, 'All', "Mainnet");
 
 function App() {
   return (
     <div className="App">
-      <Main {...ethtpsConfig}/>
+      <Main {...ethtpsConfig} />
     </div>
   );
 }

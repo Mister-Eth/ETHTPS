@@ -1,9 +1,10 @@
 import blackDiscordIcon from '../../src/assets/discord-black-icon-703937.jpg';
 import FeatureDependentComponent from "./FeatureDependentComponent";
+import { FeatureConfiguration } from './FeatureDependentComponent';
 
-export default class DiscordBanner extends FeatureDependentComponent<{}> {
-    constructor(props: any) {
-        super(props, "DiscordBanner", "ETHTPS");
+export default class DiscordBanner extends FeatureDependentComponent {
+    constructor(props: FeatureConfiguration) {
+        super(props);
     }
 
     render() {
