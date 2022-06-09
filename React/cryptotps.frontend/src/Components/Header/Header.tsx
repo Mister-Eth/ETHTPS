@@ -17,15 +17,15 @@ export default class Header extends Component<HeaderModel> {
                 <div className={"jumpy unselectable"}>{this.props.applicationName}</div>
             </Link>
             <br></br>
-            <a href="https://github.com/Mister-Eth/ETHTPS">
+            <a href={this.props.socialMediaLinks.githubURL}>
                 <img className={"small-img"} src={githubIcon}>
                 </img>
             </a>
-            <a href="https://twitter.com/ethtps">
+            <a href={this.props.socialMediaLinks.twitterURL}>
                 <img className={"small-img"} src={twitterIcon}>
                 </img>
             </a>
-            <a href="https://discord.gg/jWPcsTzpCT">
+            <a href={this.props.socialMediaLinks.discordURL}>
                 <img className={"small-img"} src={discordIcon}>
                 </img>
             </a>

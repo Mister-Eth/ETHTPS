@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { featureAPI } from "../services/global/apiServices";
 
-export default class FeatureDependentComponent extends Component<FeatureConfiguration, FeatureDependentComponentRenderOptions>{
-    constructor(props: FeatureConfiguration) {
+export default class FeatureDependentComponent<TProps> extends Component<FeatureConfiguration<TProps>, FeatureDependentComponentRenderOptions>{
+    constructor(props: FeatureConfiguration<TProps>) {
         super(props);
     }
 
@@ -33,12 +33,14 @@ export class FeatureDependentComponentRenderOptions {
     }
 }
 
-export class FeatureConfiguration{
+export class FeatureConfiguration<T>{
     featureName: string;
     project: string;
+    instance: T;
 
-    constructor(featureName: string, project: string) {
+    constructor(featureName: string, project: string, instance: T) {
         this.featureName = featureName;
         this.project = project;
+        this.instance = instance;
     }
 }

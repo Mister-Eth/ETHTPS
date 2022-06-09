@@ -25,8 +25,8 @@ export default class Main extends Component<ApplicationConfiguration> {
     render() {
         return <>
             <BrowserRouter>
-                <DiscordBanner {...new FeatureConfiguration("DiscordBanner", this.props.name)} />
-                <Header {...new HeaderModel(this.homePageModel.configuration.name)} />
+                <DiscordBanner {...new FeatureConfiguration<string>("DiscordBanner", this.props.name, this.props.websiteSocialMediaLinks.discordURL)} />
+                <Header {...new HeaderModel(this.homePageModel.configuration.name, this.homePageModel.configuration.websiteSocialMediaLinks)} />
                 <hr />
                 <Routes>
                     <Route index element={<HomePage {...this.homePageModel} />} />
