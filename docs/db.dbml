@@ -65,6 +65,8 @@ Table dbo.TPSAndGasData_Max {
   Date datetime [not null]
   MaxTPS float [not null]
   MaxGPS float [not null]
+  MaxTPSBlockNumber int
+  MaxGPSBlockNumber int
 }
 
 Ref: dbo.TPSAndGasData_Max.Provider > dbo.Providers.ID

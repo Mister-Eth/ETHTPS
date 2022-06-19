@@ -1,0 +1,16 @@
+[Unit]
+Description=ETHTPS service 1
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=lmvm2
+WorkingDirectory=/home/lmvm2/Desktop/ethtps/ETHTPS/React/ethtps-frontend
+ExecStartPre=/usr/bin/npm i
+ExecStart=/usr/bin/npm run linux-start
+
+[Install]
+WantedBy=multi-user.target

@@ -53,6 +53,9 @@ class DataPoint {
             if (data.hasOwnProperty('value')) {
                 obj['value'] = ApiClient.convertToType(data['value'], 'Number');
             }
+            if (data.hasOwnProperty('blockNumber')) {
+                obj['blockNumber'] = ApiClient.convertToType(data['blockNumber'], 'Number');
+            }
         }
         return obj;
     }
@@ -69,6 +72,11 @@ DataPoint.prototype['date'] = undefined;
  * @member {Number} value
  */
 DataPoint.prototype['value'] = undefined;
+
+/**
+ * @member {Number} blockNumber
+ */
+DataPoint.prototype['blockNumber'] = undefined;
 
 
 

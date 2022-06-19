@@ -45,8 +45,3 @@ src/model/ProviderModel.js
 src/model/ProviderResponseModel.js
 src/model/TimeInterval.js
 src/model/TimeWarpSyncProgressModel.js
-test/api/PageModelApi.spec.js
-test/model/ChartData.spec.js
-test/model/DataType.spec.js
-test/model/HomePageResponseModel.spec.js
-test/model/TimeInterval.spec.js

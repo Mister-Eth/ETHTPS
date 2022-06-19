@@ -1,6 +1,11 @@
 #!/bin/bash
+echo 'stop ethtps1'
 systemctl stop ethtps1
+echo 'stop ethtps2'
 systemctl stop ethtps2
+echo 'stop ethtps3'
 systemctl stop ethtps3
+echo 'stop ethtps4'
 systemctl stop ethtps4
+echo 'stop ethtps5'
 systemctl stop ethtps5
