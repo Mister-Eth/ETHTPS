@@ -299,3 +299,15 @@ img{
 .arrow_box {
   background: white;
 }
+
+.child {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 3s, visibility 3s;
+}
+
+.parent .child {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 3s, visibility 3s;
+}

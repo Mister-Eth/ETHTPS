@@ -5,6 +5,7 @@ import { pageModelAPI } from "../../services/global/apiServices";
 import { HomePageResponseModel } from "../../services/api-gen/src";
 import { TimeIntervals } from "../../Models/Enums";
 import { isNullOrUndefined } from "util";
+import ProviderTable from "../../Components/ProviderTable/ProviderTable";
 
 export default class HomePage extends Component<HomePageModel, HomePageResponseModel> {
     constructor(props: HomePageModel) {
@@ -12,6 +13,10 @@ export default class HomePage extends Component<HomePageModel, HomePageResponseM
     }
 
     componentDidMount() {
+        this.updateData();
+    }
+
+    updateData(){
         pageModelAPI.aPIPagesHomeGet({
             subchainsOf: '',
             interval: TimeIntervals.OneMonth,
@@ -20,7 +25,12 @@ export default class HomePage extends Component<HomePageModel, HomePageResponseM
             includeSidechains: true,
             network: this.props.configuration.defaultNetwork
         }, (err: any, data: HomePageResponseModel, res: any) => {
-            this.setState(data);
+            if (isNullOrUndefined(data)){
+                this.updateData();
+            }
+            else{
+                this.setState(data);
+            }
         });
     }
 
@@ -30,7 +40,7 @@ export default class HomePage extends Component<HomePageModel, HomePageResponseM
                 Loading...
             </>;
         return <>
-            {JSON.stringify(this.state.providers)}
+            <ProviderTable {...this.state}/>
         </>;
     }
 }
