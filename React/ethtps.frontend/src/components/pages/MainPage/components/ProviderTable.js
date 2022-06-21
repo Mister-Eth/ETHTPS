@@ -283,10 +283,14 @@ class ProviderTable extends SortableTable {
     }
     let blockNo = this.state.allMaxData['tps'][name].blockNumber;
     if (blockNo !== undefined) {
+      let text = "Seen  " + this.state.allMaxData['tps'][name].date;
+      if (blockNo > 0){
+        text = "Seen at block " + this.state.allMaxData['tps'][name].blockNumber;
+      }
       return <>
         <div className={'l1 tooltip'} style={{ color: '#003300' }}>
           {this.format(value)}
-          <span className={'tooltiptext'}>Seen at block {blockNo}</span>
+          <span className={'tooltiptext'}>{text}</span>
         </div>
       </>;
     }
