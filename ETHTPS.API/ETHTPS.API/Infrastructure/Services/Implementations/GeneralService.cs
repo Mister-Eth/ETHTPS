@@ -62,7 +62,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
         public IEnumerable<ProviderResponseModel> Providers(string subchainsOf)
         {
             var list = Providers();
-            if (string.IsNullOrWhiteSpace(subchainsOf) || subchainsOf.LossyCompareTo(Constants.All))
+            if (string.IsNullOrWhiteSpace(subchainsOf) || subchainsOf.LossyCompareTo(Data.Constants.All))
             {
                 return list;
             }
@@ -193,7 +193,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
 
         public IEnumerable<string> GetUniqueDataYears(ProviderQueryModel model)
         {
-            var entries = _tpsService.Get(model, Constants.All)[model.Provider]?.Select(x => x.Data.FirstOrDefault()?.Date.Year.ToString())?.OrderBy(x => x).Distinct();
+            var entries = _tpsService.Get(model, Data.Constants.All)[model.Provider]?.Select(x => x.Data.FirstOrDefault()?.Date.Year.ToString())?.OrderBy(x => x).Distinct();
             return entries;
         }
 
@@ -201,7 +201,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
         {
             var allDataModel = new ProviderQueryModel()
             {
-                Provider = Constants.All,
+                Provider = Data.Constants.All,
                 Network = network
             };
             return new AllDataModel()

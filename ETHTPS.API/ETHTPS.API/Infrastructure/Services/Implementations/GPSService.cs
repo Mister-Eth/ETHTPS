@@ -96,7 +96,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
 
         public IDictionary<string, IEnumerable<DataResponseModel>> GeMonthlyDataByYear(ProviderQueryModel model, int year)
         {
-            var data = Get(model, Constants.All);
+            var data = Get(model, Data.Constants.All);
             foreach (var key in data.Keys)
             {
                 data[key] = data[key].Where(x => x.Data.First().Date.Year == year);
@@ -109,7 +109,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             var result = new Dictionary<string, IEnumerable<DataResponseModel>>();
             lock (Context.LockObj)
             {
-                if (model.Provider.ToUpper() == Constants.All.ToUpper())
+                if (model.Provider.ToUpper() == Data.Constants.All.ToUpper())
                 {
                     foreach (var p in Context.Providers.ToList().Where(x => x.Enabled))
                     {

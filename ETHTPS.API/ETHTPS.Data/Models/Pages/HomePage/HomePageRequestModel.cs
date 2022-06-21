@@ -10,6 +10,6 @@ namespace ETHTPS.Data.Models.Pages.HomePage
 {
     public class HomePageRequestModel : RequestModelWithChartBase
     {
-        public string SubchainsOf { get; set; } = Constants.All;
+        public string SubchainsOf { get; set; } = Data.Constants.All;
     }
 }

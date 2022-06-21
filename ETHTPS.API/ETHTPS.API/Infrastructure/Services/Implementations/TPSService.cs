@@ -105,7 +105,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
 
         public IDictionary<string, IEnumerable<DataResponseModel>> GeMonthlyDataByYear(ProviderQueryModel model, int year)
         {
-            var data = Get(model, Constants.All);
+            var data = Get(model, Data.Constants.All);
             foreach (var key in data.Keys)
             {
                 data[key] = data[key].Where(x => x.Data.First().Date.Year == year);

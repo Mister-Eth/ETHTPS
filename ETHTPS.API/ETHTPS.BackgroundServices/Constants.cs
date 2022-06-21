@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ETHTPS.Services
+namespace ETHTPS.Constants
 {
     public static class CronConstants
     {
@@ -17,5 +17,14 @@ namespace ETHTPS.Services
         public const string EveryHour = "0 * * * *";
         public const string Never = "0 0 5 31 2 ?";
         public const string EveryMidnight = "0 0 * * *";
+    }
+
+    public static class Queues
+    {
+        public const string TPSUPDATERQUEUE = "tpsdata";
+        public const string CACHEUPDATERQUEUE = "cache";
+        public const string STATUSUPDATERQUEUE = "status";
+        public const string HISTORICALUPDATERQUEUE = "historical";
+        public const string TIMEWARPUPDATERQUEUE = "timewarp";
     }
 }
