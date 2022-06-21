@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import { pageModelAPI } from "../../services/global/apiServices";
 import { HomePageResponseModel } from "../../services/api-gen/src";
 import { TimeIntervals } from "../../Models/Enums";
-import { isNullOrUndefined } from "util";
+import { Util } from "../../services/Util";
 import ProviderTable from "../../Components/ProviderTable/ProviderTable";
 
 export default class HomePage extends Component<HomePageModel, HomePageResponseModel> {
@@ -25,7 +25,7 @@ export default class HomePage extends Component<HomePageModel, HomePageResponseM
             includeSidechains: true,
             network: this.props.configuration.defaultNetwork
         }, (err: any, data: HomePageResponseModel, res: any) => {
-            if (isNullOrUndefined(data)){
+            if (Util.isNullOrUndefined(data)){
                 this.updateData();
             }
             else{
@@ -35,7 +35,7 @@ export default class HomePage extends Component<HomePageModel, HomePageResponseM
     }
 
     render() {
-        if (isNullOrUndefined(this.state))
+        if (Util.isNullOrUndefined(this.state))
             return <>
                 Loading...
             </>;

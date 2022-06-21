@@ -8,7 +8,7 @@ export default class FeatureDependentComponent<TProps> extends Component<Feature
 
     componentDidMount() {
         featureAPI.apiStatusIsFeatureEnabledGet({
-            featureId: -1,
+            featureId: Number.NaN,
             featureName: this.props.featureName,
             project: this.props.project
         }, (err: any, data: string, res: any) => {
