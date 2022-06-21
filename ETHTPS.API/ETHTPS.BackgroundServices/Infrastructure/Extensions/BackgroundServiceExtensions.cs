@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -58,7 +60,18 @@ namespace ETHTPS.Services.Infrastructure.Extensions
             services.AddScoped<T>();
             RecurringJob.AddOrUpdate<T>(typeof(T).Name, x => x.RunAsync(), cronExpression, queue: queue);
         }
-
+        /*
+        public static void RegisterHangfireBackgroundService(this IServiceCollection services, Type backgroundServiceType, string cronExpression, string queue)
+        {
+            if (!typeof(HangfireBackgroundService).IsAssignableFrom(backgroundServiceType))
+            {
+                throw new ArgumentException($"{backgroundServiceType} is not of type {typeof(HangfireBackgroundService)}");
+            }
+            services.AddScoped(backgroundServiceType);
+            typeof(RecurringJob).GetMethod("AddOrUpdate").MakeGenericMethod(backgroundServiceType).Invoke(RecurringJob, )
+            RecurringJob.AddOrUpdate(,)
+        }
+        */
 #pragma warning restore CS0618
     }
 }

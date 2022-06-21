@@ -12,8 +12,13 @@ using Microsoft.Extensions.DependencyInjection;
 using static ETHTPS.Constants.Queues;
 using static ETHTPS.Constants.CronConstants;
 using ETHTPS.Services.BlockchainServices.Status.BackgroundTasks.Discord;
+using System.Reflection;
+using System;
+using ETHTPS.Services.BlockchainServices.Extensions.Assemblies;
+using static ETHTPS.API.Infrastructure.Extensions.AssemblyExtensions;
+using System.Linq;
 
-namespace ETHTPS.API.Infrastructure.ServiceCollection.Extensions
+namespace ETHTPS.API.Infrastructure.Extensions
 {
     public static class ServiceCollectionExtensions
     {
@@ -58,6 +63,8 @@ namespace ETHTPS.API.Infrastructure.ServiceCollection.Extensions
 
         public static void AddInstantDataUpdaters(this IServiceCollection services)
         {
+            var blockInfoProviderDescriptors = GetApplicationAssemblies().SelectMany(assembly => assembly.GetAllBlockInfoProviders());
+            //TODO
             //services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<EtherscanBlockInfoProvider>, EtherscanBlockInfoProvider>(Every13s, TPSUPDATERQUEUE);
             services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<InfuraBlockInfoProvider>, InfuraBlockInfoProvider>(Every5s, TPSUPDATERQUEUE);
             //services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<HabitatBlockInfoProvider>, HabitatBlockInfoProvider>(EveryMinute, TPSUPDATERQUEUE);

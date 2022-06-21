@@ -22,5 +22,10 @@ namespace ETHTPS.Services
         }
 
         public abstract Task RunAsync();
+
+        public static explicit operator HangfireBackgroundService(Type v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

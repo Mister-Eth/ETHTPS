@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ETHTPS.Services.BlockchainServices
 {
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-    public class ProviderAttribute : Attribute
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+    public class ProviderAttribute : Attribute, IBlockInfoProviderDescriptor
     {
         public ProviderAttribute(string name)
         {

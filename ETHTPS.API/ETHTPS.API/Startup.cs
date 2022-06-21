@@ -28,9 +28,9 @@ using ETHTPS.Services.BlockchainServices.BlockTime;
 using ETHTPS.Services.Ethereum;
 using ETHTPS.Services.Ethereum.Starkware;
 using ETHTPS.Services.Ethereum.Scan.Implementations;
-using ETHTPS.API.Infrastructure.ServiceCollection.Extensions;
 using static ETHTPS.Constants.Queues;
 using static ETHTPS.Constants.CronConstants;
+using ETHTPS.API.Infrastructure.Extensions;
 
 namespace ETHTPS.API
 {
