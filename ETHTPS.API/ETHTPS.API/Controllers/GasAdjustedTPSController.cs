@@ -1,6 +1,6 @@
 ﻿
-using ETHTPS.API.Infrastructure.Services;
-using ETHTPS.API.Infrastructure.Services.Implementations;
+using ETHTPS.Services.PSServices;
+using ETHTPS.Services.PSServices.Implementations;
 using ETHTPS.Data.Models.Query;
 using ETHTPS.Data.ResponseModels;
 

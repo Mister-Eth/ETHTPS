@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ETHTPS.Constants
+namespace ETHTPS.Services.Constants
 {
     public static class CronConstants
     {

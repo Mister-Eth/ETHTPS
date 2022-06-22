@@ -38,7 +38,12 @@
   <ItemGroup>
     <ProjectReference Include="..\ETHTPS.BackgroundServices\ETHTPS.Services.csproj" />
     <ProjectReference Include="..\ETHTPS.Data\ETHTPS.Data.csproj" />
+    <ProjectReference Include="..\ETHTPS.Services.DependencyInjection\ETHTPS.Services.DependencyInjection.csproj" />
     <ProjectReference Include="..\ETHTPS.Services.Ethereum\ETHTPS.Services.Ethereum.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Infrastructure\Extensions\" />
   </ItemGroup>
 
 </Project>

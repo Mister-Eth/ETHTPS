@@ -20,17 +20,18 @@ using System;
 using System.Linq;
 using ETHTPS.Services.BlockchainServices;
 using ETHTPS.Data.Database.HistoricalDataProviders;
-using ETHTPS.API.Infrastructure.Services;
-using ETHTPS.API.Infrastructure.Services.Implementations;
+using ETHTPS.Services.PSServices;
+using ETHTPS.Services.PSServices.Implementations;
 using ETHTPS.Services.BlockchainServices.Status;
 using ETHTPS.Services.BlockchainServices.Status.BackgroundTasks.Discord;
 using ETHTPS.Services.BlockchainServices.BlockTime;
 using ETHTPS.Services.Ethereum;
 using ETHTPS.Services.Ethereum.Starkware;
 using ETHTPS.Services.Ethereum.Scan.Implementations;
-using static ETHTPS.Constants.Queues;
-using static ETHTPS.Constants.CronConstants;
-using ETHTPS.API.Infrastructure.Extensions;
+using static ETHTPS.Services.Constants.Queues;
+using static ETHTPS.Services.Constants.CronConstants;
+using ETHTPS.Services.Extensions;
+using ETHTPS.Services.DependencyInjection;
 
 namespace ETHTPS.API
 {
@@ -44,7 +45,6 @@ namespace ETHTPS.API
         }
 
         public IConfiguration Configuration { get; }
-        public string[] ConfigurationQueues => Configuration.GetSection("Hangfire").GetSection("Queues").Get<string[]>();
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -78,29 +78,9 @@ namespace ETHTPS.API
 
             services.AddCoreServices();
             services.AddHistoricalDataProviders();
-            if (ConfigurationQueues?.Length > 0)
-            {
-                InitializeHangFire(defaultConnectionString);
-                services.AddHangfire(x => x.UseSqlServerStorage(defaultConnectionString));
-                services.AddHangfireServer(options =>
-                {
-                    options.SchedulePollingInterval = TimeSpan.FromSeconds(5);
-                });
-                services.AddDataProviders(ConfigurationQueues.Contains(TPSUPDATERQUEUE), ConfigurationQueues.Contains(CACHEUPDATERQUEUE), ConfigurationQueues.Contains(HISTORICALUPDATERQUEUE), ConfigurationQueues.Contains(TIMEWARPUPDATERQUEUE));
-                if (ConfigurationQueues.Contains(STATUSUPDATERQUEUE))
-                    services.AddStatusNotifiers();
-            }
            
         }
 
-
-        public static void InitializeHangFire(string connectionString)
-        {
-            var sqlStorage = new SqlServerStorage(connectionString);
-            JobStorage.Current = sqlStorage;
-        }
-
-      
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
@@ -114,17 +94,7 @@ namespace ETHTPS.API
             });
             app.UseMiddleware<AccesStatsMiddleware>();
             // GlobalConfiguration.Configuration.UseActivator(new HangfireActivator(serviceProvider));
-            if (ConfigurationQueues?.Length > 0)
-            {
-                app.UseHangfireServer(options: new BackgroundJobServerOptions()
-                {
-                    Queues = ConfigurationQueues ?? new string[] { "default" }
-                });
-                if (Configuration.GetSection("Hangfire").GetValue<bool>("Show"))
-                {
-                    app.UseHangfireDashboard();
-                }
-            }
+      
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

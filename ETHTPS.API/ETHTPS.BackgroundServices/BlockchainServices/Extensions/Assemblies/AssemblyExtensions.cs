@@ -13,7 +13,7 @@ namespace ETHTPS.Services.BlockchainServices.Extensions.Assemblies
     {
         public static IEnumerable<BlockInfoProviderDescriptor> GetAllBlockInfoProviders(this Assembly assembly) =>
             assembly.GetTypes()
-            .Where(x => typeof(IBlockInfoProvider).IsAssignableFrom(x) && x.GetCustomAttribute<ProviderAttribute>() != null)
+            .Where(x => typeof(IBlockInfoProvider).IsAssignableFrom(x) )
             .Select(type => new BlockInfoProviderDescriptor()
             {
                 ImplementationType = type,
