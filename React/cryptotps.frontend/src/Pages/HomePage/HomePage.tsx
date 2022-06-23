@@ -12,11 +12,14 @@ export default class HomePage extends Component<HomePageModel, HomePageResponseM
         super(props);
     }
 
+    totalRetries: number = -1;
+
     componentDidMount() {
         this.updateData();
     }
 
-    updateData(){
+    updateData() {
+        this.totalRetries++;
         pageModelAPI.aPIPagesHomeGet({
             subchainsOf: '',
             interval: TimeIntervals.OneMonth,
@@ -25,11 +28,20 @@ export default class HomePage extends Component<HomePageModel, HomePageResponseM
             includeSidechains: true,
             network: this.props.configuration.defaultNetwork
         }, (err: any, data: HomePageResponseModel, res: any) => {
-            if (Util.isNullOrUndefined(data)){
-                this.updateData();
+            if (Util.isNullOrUndefined(data)) {
+                if (this.totalRetries < 10) {
+                    this.updateData();
+                }
+                else {
+                    setTimeout((() => {
+                        this.totalRetries = 9;
+                        this.updateData();
+                    }).bind(this), 5000);
+                }
             }
-            else{
+            else {
                 this.setState(data);
+                this.totalRetries = -1;
             }
         });
     }
@@ -40,7 +52,7 @@ export default class HomePage extends Component<HomePageModel, HomePageResponseM
                 Loading...
             </>;
         return <>
-            <ProviderTable {...this.state}/>
+            <ProviderTable {...this.state} />
         </>;
     }
 }
