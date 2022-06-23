@@ -35,7 +35,7 @@ namespace ETHTPS.Data.Database.HistoricalDataProviders
             lock (_context.LockObj)
             {
                 result = _dataSelector(_context)
-                    .Where(x => x.NetworkNavigation.Name.LossyEquals(model.Network) && x.ProviderNavigation.Name.LossyEquals(model.Provider))
+                    .Where(x => x.NetworkNavigation.Name == model.Network && x.ProviderNavigation.Name == model.Provider)
                     .DistinctBy(x => x.StartDate)
                     .OrderBy(x => x.StartDate)
                     .ToList()
