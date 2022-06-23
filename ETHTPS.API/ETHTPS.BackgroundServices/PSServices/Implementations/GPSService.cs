@@ -7,6 +7,7 @@ using ETHTPS.Data;
 using ETHTPS.Data.Database;
 using ETHTPS.Data.Database.Extensions;
 using ETHTPS.Data.Database.HistoricalDataProviders;
+using ETHTPS.Data.Extensions.StringExtensions;
 using ETHTPS.Data.Models.Query;
 using ETHTPS.Data.ResponseModels;
 
@@ -68,7 +69,16 @@ namespace ETHTPS.Services.PSServices.Implementations
             var result = new List<DataResponseModel>();
             lock (Context.LockObj)
             {
-                foreach (var p in Context.Providers.ToList().Where(x => x.Enabled))
+                var providers = Context.Providers.ToList().Where(x => x.Enabled);
+                if (model.Provider != Data.Constants.All)
+                {
+                    providers = providers.Where(x =>
+                    x.Name.LossyEquals(model.Provider)
+                    || (x.SubchainOfNavigation != null ?
+                        x.SubchainOfNavigation.Name.LossyEquals(model.Provider)
+                        : false));
+                }
+                foreach (var p in providers)
                 {
                     if (!model.IncludeSidechains)
                     {

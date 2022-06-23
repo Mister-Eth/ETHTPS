@@ -50,6 +50,17 @@ namespace ETHTPS.Data.Extensions.StringExtensions
             return FinalString;
         }
 
-        public static bool LossyCompareTo(this string source, string reference) => source.Trim().ToUpper() == reference.Trim().ToUpper();
+        public static bool LossyEquals(this string source, string reference)
+        {
+            if (string.IsNullOrWhiteSpace(source) ^ string.IsNullOrWhiteSpace(reference))
+            {
+                return false;
+            }
+            if (source == reference)
+            {
+                return true;
+            }
+            return source.Trim().ToUpper() == reference.Trim().ToUpper();
+        }
     }
 }

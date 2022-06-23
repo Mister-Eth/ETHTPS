@@ -1,4 +1,5 @@
 ﻿using ETHTPS.Data.Extensions;
+using ETHTPS.Data.Extensions.StringExtensions;
 using ETHTPS.Data.Models.Query;
 
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +34,12 @@ namespace ETHTPS.Data.Database.HistoricalDataProviders
             IEnumerable<TimedTPSAndGasData> result;
             lock (_context.LockObj)
             {
-                result = _dataSelector(_context).Where(x => x.NetworkNavigation.Name == model.Network && x.ProviderNavigation.Name == model.Provider).DistinctBy(x => x.StartDate).OrderBy(x => x.StartDate).ToList().Where(x => DateTime.Now.ToUniversalTime().Subtract(x.StartDate) <= _maxAge);
+                result = _dataSelector(_context)
+                    .Where(x => x.NetworkNavigation.Name.LossyEquals(model.Network) && x.ProviderNavigation.Name.LossyEquals(model.Provider))
+                    .DistinctBy(x => x.StartDate)
+                    .OrderBy(x => x.StartDate)
+                    .ToList()
+                    .Where(x => DateTime.Now.ToUniversalTime().Subtract(x.StartDate) <= _maxAge);
             }
             return result;
         }

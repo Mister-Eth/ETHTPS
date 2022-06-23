@@ -62,11 +62,11 @@ namespace ETHTPS.Services.PSServices.Implementations
         public IEnumerable<ProviderResponseModel> Providers(string subchainsOf)
         {
             var list = Providers();
-            if (string.IsNullOrWhiteSpace(subchainsOf) || subchainsOf.LossyCompareTo(Data.Constants.All))
+            if (string.IsNullOrWhiteSpace(subchainsOf) || subchainsOf.LossyEquals(Data.Constants.All))
             {
                 return list;
             }
-            return list.Where(x => x.Name.LossyCompareTo(subchainsOf));
+            return list.Where(x => x.Name.LossyEquals(subchainsOf));
         }
 
         public IDictionary<string, string> ColorDictionary()

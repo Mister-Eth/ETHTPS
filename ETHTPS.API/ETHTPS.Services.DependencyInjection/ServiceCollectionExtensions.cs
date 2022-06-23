@@ -17,6 +17,7 @@ using static ETHTPS.Services.DependencyInjection.Extensions.AssemblyExtensions;
 using ETHTPS.Services.Ethereum;
 using ETHTPS.Services.Ethereum.Scan.Implementations;
 using ETHTPS.Services.Ethereum.Starkware;
+using ETHTPS.Services.OtherBlockchains;
 
 namespace ETHTPS.Services.DependencyInjection
 {
@@ -100,7 +101,7 @@ namespace ETHTPS.Services.DependencyInjection
             services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<SorareBlockInfoProvider>, SorareBlockInfoProvider>();
             services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<DeversiFiBlockInfoProvider>, DeversiFiBlockInfoProvider>();
             services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<PolygonHermezBlockInfoProvider>, PolygonHermezBlockInfoProvider>();
-      
+            services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<BitcoinBlockInfoProvider>, BitcoinBlockInfoProvider>();
         }
 
         public static void AddHistoricalBlockInfoProviderDataLoggers(this IServiceCollection services)

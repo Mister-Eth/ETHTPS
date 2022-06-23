@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ETHTPS.Data.Models.Query
 {
+    /// <summary>
+    /// Represents a user-defined model for finding providers based on different criteria
+    /// </summary>
     public class ProviderQueryModel
     {
         public string Provider { get; set; } = Data.Constants.All;
