@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ETHTPS.Services.BlockchainServices.Attributes;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +24,22 @@ namespace ETHTPS.Services.BlockchainServices.Extensions
             else
             {
                 throw new ArgumentNullException($"Provider {type} isn't marked with any {typeof(ProviderAttribute)}");
+            }
+        }
+
+        public static TRet? ExtractFieldFromAttribute<T, TAttribute, TRet>(this Type type, Func<TAttribute, TRet> attributeKeySelector)
+            where TAttribute : Attribute
+            where T : class
+        {
+            var attributes = type.GetCustomAttributes(typeof(TAttribute), true);
+            if (attributes.Any())
+            {
+                var attribute = attributes.First();
+                return attributeKeySelector((TAttribute)attribute);
+            }
+            else
+            {
+                throw new ArgumentNullException($"Provider {type} isn't marked with any {typeof(TAttribute)}");
             }
         }
 

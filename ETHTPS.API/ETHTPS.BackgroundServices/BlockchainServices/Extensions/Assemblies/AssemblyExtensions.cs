@@ -1,4 +1,5 @@
-﻿using ETHTPS.Services.BlockchainServices.Extensions.Assemblies;
+﻿using ETHTPS.Services.BlockchainServices.Attributes;
+using ETHTPS.Services.BlockchainServices.Extensions.Assemblies;
 
 using System;
 using System.Collections.Generic;

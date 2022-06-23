@@ -6,8 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ETHTPS.BackgroundServices\ETHTPS.Services.csproj" />
-    <ProjectReference Include="..\ETHTPS.Services.Ethereum\ETHTPS.Services.Ethereum.csproj" />
-    <ProjectReference Include="..\ETHTPS.Services.OtherBlockchains\ETHTPS.Services.OtherBlockchains.csproj" />
   </ItemGroup>
 
 </Project>

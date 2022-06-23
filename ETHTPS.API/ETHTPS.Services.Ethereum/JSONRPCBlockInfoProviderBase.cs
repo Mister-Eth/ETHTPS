@@ -2,7 +2,7 @@
 using ETHTPS.Services.BlockchainServices;
 using ETHTPS.Services.Ethereum.Models.JSONRPC;
 using ETHTPS.Services.Infrastructure.Serialization;
-
+using ETHTPS.Services.BlockchainServices.Attributes;
 using Microsoft.Extensions.Configuration;
 
 using Newtonsoft.Json;

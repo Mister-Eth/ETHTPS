@@ -20,6 +20,7 @@ using ETHTPS.Services.Ethereum.Starkware;
 
 namespace ETHTPS.Services.DependencyInjection
 {
+    // Complete mess, will fix some time
     public static class ServiceCollectionExtensions
     {
         public static void AddCoreServices(this IServiceCollection services)
@@ -74,7 +75,7 @@ namespace ETHTPS.Services.DependencyInjection
             }
             //services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<EtherscanBlockInfoProvider>, EtherscanBlockInfoProvider>(Every13s, TPSUPDATERQUEUE);
             */
-            services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<InfuraBlockInfoProvider>, InfuraBlockInfoProvider>(Every5s, TPSUPDATERQUEUE);
+            services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<InfuraBlockInfoProvider>, InfuraBlockInfoProvider>();
             //services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<HabitatBlockInfoProvider>, HabitatBlockInfoProvider>(EveryMinute, TPSUPDATERQUEUE);
             services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<PolygonScanBlockInfoProvider>, PolygonScanBlockInfoProvider>(Every5s, TPSUPDATERQUEUE);
             services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<ArbiscanBlockInfoProvider>, ArbiscanBlockInfoProvider>(Every5s, TPSUPDATERQUEUE);

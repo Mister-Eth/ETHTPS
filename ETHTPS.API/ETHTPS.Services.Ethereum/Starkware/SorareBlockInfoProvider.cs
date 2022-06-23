@@ -1,7 +1,7 @@
 ﻿using ETHTPS.Data.Database;
 using ETHTPS.Services.BlockchainServices;
 using ETHTPS.Services.Ethereum.Starkware.API.Models;
-
+using ETHTPS.Services.BlockchainServices.Attributes;
 using Microsoft.Extensions.Configuration;
 
 using System;

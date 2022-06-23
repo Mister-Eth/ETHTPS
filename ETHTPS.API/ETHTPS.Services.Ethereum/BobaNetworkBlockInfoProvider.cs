@@ -1,5 +1,6 @@
 ﻿using ETHTPS.Data.Extensions.StringExtensions;
 using ETHTPS.Services.BlockchainServices;
+using ETHTPS.Services.BlockchainServices.Attributes;
 
 using Fizzler.Systems.HtmlAgilityPack;
 

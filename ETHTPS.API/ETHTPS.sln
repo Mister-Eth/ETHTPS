@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETHTPS.Services.ServiceRunn
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETHTPS.Services.DependencyInjection", "ETHTPS.Services.DependencyInjection\ETHTPS.Services.DependencyInjection.csproj", "{A447C156-428B-408C-894F-12E049A94421}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETHTPS.Services.OtherBlockchains", "ETHTPS.Services.OtherBlockchains\ETHTPS.Services.OtherBlockchains.csproj", "{5A1A18F2-9404-4A2E-9966-AF550A2330ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +60,10 @@ Global
 		{A447C156-428B-408C-894F-12E049A94421}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A447C156-428B-408C-894F-12E049A94421}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A447C156-428B-408C-894F-12E049A94421}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A1A18F2-9404-4A2E-9966-AF550A2330ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A1A18F2-9404-4A2E-9966-AF550A2330ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A1A18F2-9404-4A2E-9966-AF550A2330ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A1A18F2-9404-4A2E-9966-AF550A2330ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{7C14D89C-FE35-4EAC-901A-9CB091F151E7} = {9DDB3A6B-7733-4BAF-B4D1-AD629B8AA54D}
 		{ED99C0BA-5790-478B-B4D5-F829A81075D7} = {9DDB3A6B-7733-4BAF-B4D1-AD629B8AA54D}
 		{A447C156-428B-408C-894F-12E049A94421} = {9DDB3A6B-7733-4BAF-B4D1-AD629B8AA54D}
+		{5A1A18F2-9404-4A2E-9966-AF550A2330ED} = {9DDB3A6B-7733-4BAF-B4D1-AD629B8AA54D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {968433BF-DD00-4B16-A322-480760422806}

@@ -1,4 +1,5 @@
 ﻿using ETHTPS.Services.BlockchainServices;
+using ETHTPS.Services.BlockchainServices.Attributes;
 
 using Newtonsoft.Json;
 
