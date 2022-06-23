@@ -19,9 +19,15 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 
+using Hangfire;
+using static ETHTPS.Services.Constants.CronConstants;
+using static ETHTPS.Services.Constants.Queues;
+
 namespace ETHTPS.Services.Ethereum
 {
     [Provider("Metis")]
+    [RunEvery(EveryMinute)]
+    [Queue(TPSUPDATERQUEUE)]
     public class MetisBlockInfoProvider : IBlockInfoProvider
     {
         private readonly HttpClient _httpClient;

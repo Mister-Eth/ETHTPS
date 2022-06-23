@@ -5,7 +5,6 @@ using ETHTPS.Services.BlockchainServices.BlockTime;
 using ETHTPS.Services.Ethereum.Models.JSONRPC;
 using ETHTPS.Services.Infrastructure.Serialization;
 
-using Hangfire;
 
 using Microsoft.Extensions.Configuration;
 
@@ -17,6 +16,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+
+using Hangfire;
 using static ETHTPS.Services.Constants.CronConstants;
 using static ETHTPS.Services.Constants.Queues;
 

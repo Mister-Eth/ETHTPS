@@ -3,6 +3,8 @@ using ETHTPS.Services.BlockchainServices.Attributes;
 
 using Fizzler.Systems.HtmlAgilityPack;
 
+using Hangfire;
+
 using HtmlAgilityPack;
 
 using Microsoft.Extensions.Configuration;
@@ -12,10 +14,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static ETHTPS.Services.Constants.CronConstants;
+using static ETHTPS.Services.Constants.Queues;
 
 namespace ETHTPS.Services.Ethereum.Scan.Implementations
 {
     [Provider("Optimism")]
+    [RunEvery(Every5s)]
+    [Queue(TPSUPDATERQUEUE)]
     public class OptimisticEthereumBlockInfoProvider : ScanBlockInfoProviderBase
     {
         private readonly string _targetElementSelector;

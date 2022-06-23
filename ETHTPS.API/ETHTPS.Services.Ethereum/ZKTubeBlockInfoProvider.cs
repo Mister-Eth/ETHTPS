@@ -10,9 +10,15 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
+using Hangfire;
+using static ETHTPS.Services.Constants.CronConstants;
+using static ETHTPS.Services.Constants.Queues;
+
 namespace ETHTPS.Services.Ethereum
 {
     [Provider("zkTube")]
+    [RunEvery(EveryMinute)]
+    [Queue(TPSUPDATERQUEUE)]
     public class ZKTubeBlockInfoProvider : IBlockInfoProvider
     {
         private readonly HttpClient _httpClient;

@@ -16,10 +16,15 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Hangfire;
+using static ETHTPS.Services.Constants.CronConstants;
+using static ETHTPS.Services.Constants.Queues;
 
 namespace ETHTPS.Services.Ethereum
 {
     [Provider("XDAI")]
+    [RunEvery(Every5s)]
+    [Queue(TPSUPDATERQUEUE)]
     public class XDAIBlockInfoProvider : IBlockInfoProvider
     {
         private readonly HttpClient _httpClient;
