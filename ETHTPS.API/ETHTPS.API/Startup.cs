@@ -28,6 +28,7 @@ using ETHTPS.Services.BlockchainServices.BlockTime;
 using ETHTPS.Services.Ethereum;
 using ETHTPS.Services.Ethereum.Starkware;
 using ETHTPS.Services.Ethereum.Scan.Implementations;
+using ETHTPS.Services.BlockchainServices.Status.BackgroundTasks.Discord.Endpoints;
 
 namespace ETHTPS.API
 {
@@ -174,7 +175,11 @@ namespace ETHTPS.API
         {
             if (ConfigurationQueues.Contains(STATUSUPDATERQUEUE))
             {
-                services.RegisterHangfireBackgroundService<APIStatusBackgroundTask>(CronConstants.EveryMinute, STATUSUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<MainAPIStatusBackgroundTask>(CronConstants.EveryMinute, STATUSUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<TPSAPIStatusBackgroundTask>(CronConstants.EveryMinute, STATUSUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<GPSAPIStatusBackgroundTask>(CronConstants.EveryMinute, STATUSUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<GeneralAPIStatusBackgroundTask>(CronConstants.EveryMinute, STATUSUPDATERQUEUE);
+                services.RegisterHangfireBackgroundService<TimeWarpAPIStatusBackgroundTask>(CronConstants.EveryMinute, STATUSUPDATERQUEUE);
                 services.RegisterHangfireBackgroundService<WebsiteStatusBackgroundTask>(CronConstants.EveryMinute, STATUSUPDATERQUEUE);
                 //services.RegisterHangfireBackgroundService<UpdaterStatusBackgroundTask>(CronConstants.EveryMinute, STATUSUPDATERQUEUE);
                 services.RegisterHangfireBackgroundService<PlausibleVisitorCountBackgroundTask>(CronConstants.EveryMidnight, STATUSUPDATERQUEUE);
