@@ -37,6 +37,7 @@ import RaidenNetworkDetails from './details/RaidenNetworkDetails';
 import FantomDetails from './details/FantomDetails';
 import ZKSpaceDetails from './details/ZKSpaceDetails';
 import PolygonHermezDetails from './details/PolygonHermezDetails';
+import ArbitrumNovaDetails from './details/ArbitrumNovaDetails';
 import { globalGeneralApi, globalInstantDataService, to2DecimalPlaces } from '../../../services/common';
 import * as qs from 'query-string';
 import { Helmet } from 'react-helmet';
@@ -95,6 +96,7 @@ export default class NetworkPage extends PageWithQueryString {
         'Fantom': <FantomDetails name={this.state.name}/>,
         'ZKSpace': <ZKSpaceDetails name={this.state.name}/>,
         'Polygon Hermez': <PolygonHermezDetails name={this.state.name}/>,
+        'Arbitrum Nova': <ArbitrumNovaDetails name={this.state.name}/>,
     }
 
     updateInstantTPS(data){

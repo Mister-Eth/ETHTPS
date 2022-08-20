@@ -1,6 +1,7 @@
 ﻿using ETHTPS.Data.Extensions;
 using ETHTPS.Services.BlockchainServices;
 using ETHTPS.Services.Ethereum.Models.JSONRPC;
+using ETHTPS.Services.Ethereum.Models.JSONRPC.Exceptions;
 using ETHTPS.Services.Infrastructure.Serialization;
 
 using Microsoft.Extensions.Configuration;
@@ -19,7 +20,7 @@ namespace ETHTPS.Services.Ethereum
 {
     public abstract class JSONRPCBlockInfoProviderBase : IBlockInfoProvider
     {
-        private readonly HttpClient _httpClient;
+        protected readonly HttpClient _httpClient;
 
         public JSONRPCBlockInfoProviderBase(IConfiguration configuration, string sectionName)
         {
@@ -32,7 +33,7 @@ namespace ETHTPS.Services.Ethereum
 
         public double BlockTimeSeconds { get; set; }
 
-        public async Task<BlockInfo> GetBlockInfoAsync(int blockNumber)
+        public virtual async Task<BlockInfo> GetBlockInfoAsync(int blockNumber)
         {
             var requestModel = JSONRPCRequestFactory.CreateGetBlockByBlockNumberRequest("0x" + blockNumber.ToString("X"));
             var json = requestModel.SerializeAsJsonWithEmptyArray();
@@ -56,7 +57,7 @@ namespace ETHTPS.Services.Ethereum
                 };
                 return result;
             }
-            return null;
+            throw new JSONRPCRequestException(_httpClient.BaseAddress.ToString());
         }
 
         public Task<BlockInfo> GetBlockInfoAsync(DateTime time)
@@ -68,7 +69,7 @@ namespace ETHTPS.Services.Ethereum
         {
             var requestModel = JSONRPCRequestFactory.CreateGetBlockHeightRequest();
             var json = requestModel.SerializeAsJsonWithEmptyArray();
-            var message = new HttpRequestMessage()
+            var message = new HttpRequestMessage()            
             {
                 Content = new StringContent(json, Encoding.UTF8, "application/json"),
                 Method = HttpMethod.Post
@@ -81,7 +82,7 @@ namespace ETHTPS.Services.Ethereum
                 var blockNumber = Convert.ToInt32(responseObject.Result, 16);
                 return await GetBlockInfoAsync(blockNumber);
             }
-            return null;
+            throw new JSONRPCRequestException(_httpClient.BaseAddress.ToString());
         }
     }
 }
