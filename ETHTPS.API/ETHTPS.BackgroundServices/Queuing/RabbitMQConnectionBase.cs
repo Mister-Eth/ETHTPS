@@ -16,6 +16,7 @@ namespace ETHTPS.Services.Queuing
         protected string Host { get; private set; }
         protected IEnumerable<string> Queues { get; private set; }
         protected IConnection Connection { get; private set; }
+        protected IModel Channel { get; private set; }
 
         protected RabbitMQConnectionBase(string host, params string[] queues)
         {
@@ -23,6 +24,7 @@ namespace ETHTPS.Services.Queuing
             Queues = queues;
             ConnectionFactory = new ConnectionFactory() { HostName = Host };
             Connection = ConnectionFactory.CreateConnection();
+            Channel = Connection.CreateModel();
         }
 
         protected RabbitMQConnectionBase(IConfiguration configuration, params string[] queues) 

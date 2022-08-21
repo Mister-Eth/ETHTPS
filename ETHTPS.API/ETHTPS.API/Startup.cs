@@ -78,8 +78,10 @@ namespace ETHTPS.API
             AddHistoricalDataProviders(services);
             var publisher = new RabbtiMQPublisher(Configuration, ConfigurationQueues);
             publisher.Initialize();
+            services.AddSingleton(publisher);
             var consumer = new RabbitMQReceiver(Configuration, ConfigurationQueues);
             consumer.Initialize();
+            services.AddSingleton(consumer);
             if (ConfigurationQueues?.Length > 0)
             {
                 InitializeHangFire(defaultConnectionString);
@@ -94,7 +96,7 @@ namespace ETHTPS.API
                 AddTimeWarpUpdaters(services);
                 AddStatusNotifiers(services);
             }
-           
+            services.RegisterHangfirePublisherBackgroundService<HangfireRabbitMQRecurringTaskPublisher<InfuraBlockInfoProvider>, InfuraBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
         }
 
         private void AddServices(IServiceCollection services)

@@ -1,4 +1,5 @@
 ﻿using ETHTPS.Services.BlockchainServices;
+using ETHTPS.Services.Queuing;
 
 using Hangfire;
 
@@ -22,6 +23,15 @@ namespace ETHTPS.Services.Infrastructure.Extensions
             services.AddScoped<V>();
             services.AddScoped<T>();
             RecurringJob.AddOrUpdate<T>(typeof(V).Name, x => x.RunAsync(), cronExpression, queue: queue);
+        }
+
+        public static void RegisterHangfirePublisherBackgroundService<T, V>(this IServiceCollection services, string cronExpression, string queue)
+           where V : class, IBlockInfoProvider
+           where T : HangfireRabbitMQRecurringTaskPublisher<V>
+        {
+            services.AddScoped<V>();
+            services.AddScoped<T>();
+            RecurringJob.AddOrUpdate<T>(typeof(V).Name, x => x.RunAsync(queue), cronExpression, queue: queue);
         }
 
         public static void RegisterHistoricalHangfireBackgroundService<T, V>(this IServiceCollection services, string cronExpression, string queue)

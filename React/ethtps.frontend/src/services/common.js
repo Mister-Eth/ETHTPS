@@ -2,7 +2,7 @@ import { GeneralApi, GPSApi, TPSApi, GasAdjustedTPSApi, StatusApi, TimeWarpApi, 
 import ApiClient from './api-gen/src/ApiClient';
 import InstantDataService from './InstantDataService';
 
-export const client = new ApiClient('https://api.ethtps.info/');
+export const client = new ApiClient('http://localhost:10202/');
 export const globalGeneralApi = new GeneralApi(client);
 export const globalGPSApi = new GPSApi(client);
 export const globalTPSApi = new TPSApi(client);

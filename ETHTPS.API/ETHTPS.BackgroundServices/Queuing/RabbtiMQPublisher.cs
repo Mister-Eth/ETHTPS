@@ -1,6 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using ETHTPS.Services.BlockchainServices;
+using ETHTPS.Services.BlockchainServices.Extensions;
+
+using Microsoft.Extensions.Configuration;
 
 using RabbitMQ.Client;
+using RabbitMQ;
 
 using System;
 using System.Collections.Generic;
@@ -24,13 +28,24 @@ namespace ETHTPS.Services.Queuing
 
         public override void Initialize()
         {
-            using (var channel = Connection.CreateModel())
+            foreach (var queue in Queues)
             {
-                foreach(var queue in Queues)
-                {
-                    channel.QueueDeclare(queue, durable: true, autoDelete: false, exclusive: false);
-                }
+                Channel.QueueDeclare(queue, durable: true, autoDelete: false, exclusive: false);
             }
+        }
+
+        public void Publish<T, V>(string queueName)
+            where V: IBlockInfoProvider
+            where T: HangfireBlockInfoProviderDataLogger<V>
+        {
+            var providerName = typeof(V).GetProviderName();
+            var typeName = typeof(T).Name;
+            var model = new RecurringTaskModel(typeName, providerName);
+            Channel.BasicPublish(exchange: "",
+                              routingKey: "hello",
+                              basicProperties: null,
+                              mandatory: true,
+                              body: Encoding.UTF8.GetBytes(model.ToString()));
         }
     }
 }
