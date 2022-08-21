@@ -29,6 +29,7 @@ using ETHTPS.Services.Ethereum;
 using ETHTPS.Services.Ethereum.Starkware;
 using ETHTPS.Services.Ethereum.Scan.Implementations;
 using ETHTPS.Services.BlockchainServices.Status.BackgroundTasks.Discord.Endpoints;
+using ETHTPS.Services.Queuing;
 
 namespace ETHTPS.API
 {
@@ -75,6 +76,10 @@ namespace ETHTPS.API
 
             AddServices(services);
             AddHistoricalDataProviders(services);
+            var publisher = new RabbtiMQPublisher(Configuration, ConfigurationQueues);
+            publisher.Initialize();
+            var consumer = new RabbitMQReceiver(Configuration, ConfigurationQueues);
+            consumer.Initialize();
             if (ConfigurationQueues?.Length > 0)
             {
                 InitializeHangFire(defaultConnectionString);
