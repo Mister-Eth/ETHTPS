@@ -76,12 +76,19 @@ namespace ETHTPS.Services.Ethereum.Scan
             {
 
             }
+            
+            var transactionCount = int.Parse(txCount);
+            if (_providerName == "Arbiscan")
+            {
+                // There is a StartBlock transaction in every Arbitrum Block that should not count toward TPS
+                transactionCount -= 1;
+            }
 
             return Task.FromResult(new BlockInfo()
             {
                 BlockNumber = blockNumber,
                 GasUsed = double.Parse(gasUsed),
-                TransactionCount = int.Parse(txCount),
+                TransactionCount = transactionCount,
                 Date = date
             });
         }
