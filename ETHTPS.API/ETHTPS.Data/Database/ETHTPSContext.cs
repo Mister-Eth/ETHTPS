@@ -41,6 +41,7 @@ namespace ETHTPS.Data.Database
        public virtual DbSet<TimeWarpDatum> TimeWarpData { get; set; }
         public virtual DbSet<OldestLoggedTimeWarpBlock> OldestLoggedTimeWarpBlocks { get; set; }
         public virtual DbSet<StarkwareTransactionCountData> StarkwareTransactionCountData { get; set; }
+        public virtual DbSet<APIKey> APIKeys { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -50,7 +51,18 @@ namespace ETHTPS.Data.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
-            
+
+            modelBuilder.Entity<APIKey>(entity =>
+            {
+                entity.ToTable("APIKeys");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.KeyHash)
+                    .IsRequired()
+                    .HasMaxLength(255);
+            });
+
             modelBuilder.Entity<TimeWarpDataDay>(entity =>
             {
                 entity.ToTable("TimeWarpData_Day");

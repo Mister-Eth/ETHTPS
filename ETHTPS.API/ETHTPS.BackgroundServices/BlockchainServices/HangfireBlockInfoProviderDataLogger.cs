@@ -19,12 +19,15 @@ namespace ETHTPS.Services.BlockchainServices
         protected readonly T _instance;
         protected readonly string _provider;
         protected readonly int _providerID;
+        private readonly int _mainnetID;
 
         public HangfireBlockInfoProviderDataLogger(T instance, ILogger<HangfireBackgroundService> logger, ETHTPSContext context) : base(logger, context)
         {
             _instance = instance;
             _provider = _instance.GetProviderName();
             _providerID = _context.Providers.First(x => x.Name == _provider).Id;
+
+            _mainnetID = context.Networks.First(x => x.Name == "Mainnet").Id;
         }
 
         [AutomaticRetry(Attempts = 1, OnAttemptsExceeded = AttemptsExceededAction.Delete)]
@@ -55,14 +58,14 @@ namespace ETHTPS.Services.BlockchainServices
 
         private void UpdateLatestEntries(TPSGPSInfo entry)
         {
-            Func<TpsandGasDataLatest, bool> selector = x => x.NetworkNavigation.Name == "Mainnet" && x.ProviderNavigation.Name == _provider;
+            Func<TpsandGasDataLatest, bool> selector = x => x.NetworkNavigation.Id == _mainnetID && x.ProviderNavigation.Name == _provider;
             if (!_context.TpsandGasDataLatests.Any(selector))
             {
                 _context.TpsandGasDataLatests.Add(new TpsandGasDataLatest()
                 {
                     Gps = entry.GPS,
                     Tps = entry.TPS,
-                    Network = 1,
+                    Network = _mainnetID,
                     Provider = _providerID
                 });
             }
@@ -122,7 +125,7 @@ namespace ETHTPS.Services.BlockchainServices
         }
         protected void UpdateMaxEntry(TPSGPSInfo entry)
         {
-            Func<TpsandGasDataMax, bool> selector = x => x.ProviderNavigation.Name == _provider && x.NetworkNavigation.Name == "Mainnet";
+            Func<TpsandGasDataMax, bool> selector = x => x.ProviderNavigation.Name == _provider && x.NetworkNavigation.Id == _mainnetID;
             if (!_context.TpsandGasDataMaxes.Any(selector))
             {
                 _context.TpsandGasDataMaxes.Add(new TpsandGasDataMax()
@@ -132,7 +135,7 @@ namespace ETHTPS.Services.BlockchainServices
                     MaxTps = entry.TPS,
                     MaxTPSBlockNumber = entry.BlockNumber,
                     MaxGPSBlockNumber = entry.BlockNumber,
-                    Network = 1,
+                    Network = _mainnetID,
                     Provider = _providerID
                 });
             }
@@ -158,12 +161,12 @@ namespace ETHTPS.Services.BlockchainServices
             var targetDate = entry.Date
                 .Subtract(TimeSpan.FromSeconds(entry.Date.Second))
                 .Subtract(TimeSpan.FromMilliseconds(entry.Date.Millisecond));
-            Func<TpsandGasDataHour, bool> selector = x => x.NetworkNavigation.Name == "Mainnet" && x.Provider == _providerID && x.StartDate.Minute == targetDate.Minute;
+            Func<TpsandGasDataHour, bool> selector = x => x.NetworkNavigation.Id == _mainnetID && x.Provider == _providerID && x.StartDate.Minute == targetDate.Minute;
             if (!_context.TpsandGasDataHours.Any(selector))
             {
                 _context.TpsandGasDataHours.Add(new TpsandGasDataHour()
                 {
-                    Network = 1,
+                    Network = _mainnetID,
                     AverageTps = entry.TPS,
                     AverageGps = entry.GPS,
                     Provider = _providerID,
@@ -195,12 +198,12 @@ namespace ETHTPS.Services.BlockchainServices
                 .Subtract(TimeSpan.FromSeconds(entry.Date.Second))
                 .Subtract(TimeSpan.FromMilliseconds(entry.Date.Millisecond))
                 .Subtract(TimeSpan.FromMinutes(entry.Date.Minute));
-            Func<TpsandGasDataDay, bool> selector = x => x.NetworkNavigation.Name == "Mainnet" && x.Provider == _providerID && x.StartDate.Hour == targetDate.Hour;
+            Func<TpsandGasDataDay, bool> selector = x => x.NetworkNavigation.Id == _mainnetID && x.Provider == _providerID && x.StartDate.Hour == targetDate.Hour;
             if (!_context.TpsandGasDataDays.Any(selector))
             {
                 _context.TpsandGasDataDays.Add(new TpsandGasDataDay()
                 {
-                    Network = 1,
+                    Network = _mainnetID,
                     AverageTps = entry.TPS,
                     AverageGps = entry.GPS,
                     Provider = _providerID,
@@ -232,12 +235,12 @@ namespace ETHTPS.Services.BlockchainServices
                 .Subtract(TimeSpan.FromSeconds(entry.Date.Second))
                 .Subtract(TimeSpan.FromMilliseconds(entry.Date.Millisecond))
                 .Subtract(TimeSpan.FromMinutes(entry.Date.Minute));
-            Func<TpsandGasDataWeek, bool> selector = x => x.NetworkNavigation.Name == "Mainnet" && x.Provider == _providerID && x.StartDate.Hour == targetDate.Hour && x.StartDate.DayOfWeek == targetDate.DayOfWeek;
+            Func<TpsandGasDataWeek, bool> selector = x => x.NetworkNavigation.Id == _mainnetID && x.Provider == _providerID && x.StartDate.Hour == targetDate.Hour && x.StartDate.DayOfWeek == targetDate.DayOfWeek;
             if (!_context.TpsandGasDataWeeks.Any(selector))
             {
                 _context.TpsandGasDataWeeks.Add(new TpsandGasDataWeek()
                 {
-                    Network = 1,
+                    Network = _mainnetID,
                     AverageTps = entry.TPS,
                     AverageGps = entry.GPS,
                     Provider = _providerID,
@@ -270,12 +273,12 @@ namespace ETHTPS.Services.BlockchainServices
                 .Subtract(TimeSpan.FromMilliseconds(entry.Date.Millisecond))
                 .Subtract(TimeSpan.FromMinutes(entry.Date.Minute))
                 .Subtract(TimeSpan.FromHours(entry.Date.Hour));
-            Func<TpsandGasDataMonth, bool> selector = x => x.NetworkNavigation.Name == "Mainnet" && x.Provider == _providerID && x.StartDate.Day == targetDate.Day;
+            Func<TpsandGasDataMonth, bool> selector = x => x.NetworkNavigation.Id == _mainnetID && x.Provider == _providerID && x.StartDate.Day == targetDate.Day;
             if (!_context.TpsandGasDataMonths.Any(selector))
             {
                 _context.TpsandGasDataMonths.Add(new TpsandGasDataMonth()
                 {
-                    Network = 1,
+                    Network = _mainnetID,
                     AverageTps = entry.TPS,
                     AverageGps = entry.GPS,
                     Provider = _providerID,
@@ -311,12 +314,12 @@ namespace ETHTPS.Services.BlockchainServices
                 .Subtract(TimeSpan.FromHours(entry.Date.Hour))
                 .Subtract(TimeSpan.FromDays(entry.Date.Day))
                 .Add(TimeSpan.FromDays(1));
-            Func<TpsandGasDataYear, bool> selector = x => x.NetworkNavigation.Name == "Mainnet" && x.Provider == _providerID && x.StartDate.Month == targetDate.Month;
+            Func<TpsandGasDataYear, bool> selector = x => x.NetworkNavigation.Id == _mainnetID && x.Provider == _providerID && x.StartDate.Month == targetDate.Month;
             if (!_context.TpsandGasDataYears.Any(selector))
             {
                 _context.TpsandGasDataYears.Add(new TpsandGasDataYear()
                 {
-                    Network = 1,
+                    Network = _mainnetID,
                     AverageTps = entry.TPS,
                     AverageGps = entry.GPS,
                     Provider = _providerID,
@@ -352,12 +355,12 @@ namespace ETHTPS.Services.BlockchainServices
                 .Subtract(TimeSpan.FromHours(entry.Date.Hour))
                 .Subtract(TimeSpan.FromDays(entry.Date.Day))
                 .Add(TimeSpan.FromDays(1));
-            Func<TpsandGasDataAll, bool> selector = x => x.NetworkNavigation.Name == "Mainnet" && x.Provider == _providerID && x.StartDate.Month == targetDate.Month && x.StartDate.Year == targetDate.Year;
+            Func<TpsandGasDataAll, bool> selector = x => x.NetworkNavigation.Id == _mainnetID && x.Provider == _providerID && x.StartDate.Month == targetDate.Month && x.StartDate.Year == targetDate.Year;
             if (!_context.TpsandGasDataAlls.Any(selector))
             {
                 _context.TpsandGasDataAlls.Add(new TpsandGasDataAll()
                 {
-                    Network = 1,
+                    Network = _mainnetID,
                     AverageTps = entry.TPS,
                     AverageGps = entry.GPS,
                     Provider = _providerID,

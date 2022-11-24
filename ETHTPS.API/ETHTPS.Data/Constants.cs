@@ -13,6 +13,11 @@ namespace ETHTPS.Data
             public static TimeSpan LowUpdateRate = TimeSpan.FromMinutes(1);
         }
 
+        public static class Headers
+        {
+            public static string XAPIKey => "X-API-Key";
+        }
+
         public static string All => "All";
         public static string Mainnet => "Mainnet";
     }

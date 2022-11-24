@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace ETHTPS.Data.Extensions.StringExtensions
@@ -51,5 +53,23 @@ namespace ETHTPS.Data.Extensions.StringExtensions
         }
 
         public static bool LossyCompareTo(this string source, string reference) => source.Trim().ToUpper() == reference.Trim().ToUpper();
+
+        public static string SHA256(this string value)
+        {
+            StringBuilder Sb = new StringBuilder();
+
+#pragma warning disable SYSLIB0021 // Type or member is obsolete
+            using (var hash = SHA256Managed.Create())
+            {
+                Encoding enc = Encoding.UTF8;
+                Byte[] result = hash.ComputeHash(enc.GetBytes(value));
+
+                foreach (Byte b in result)
+                    Sb.Append(b.ToString("x2"));
+            }
+#pragma warning restore SYSLIB0021 // Type or member is obsolete
+
+            return Sb.ToString().ToUpper();
+        }
     }
 }

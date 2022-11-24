@@ -32,7 +32,7 @@ namespace ETHTPS.API.Middlewares
             await _next(context);
             stopwatch.Stop();
 
-            logger.LogInformation($"{context.Request.Headers["X-Forwarded-For"]} ({context.Connection.Id}): {context.Request.Path}{context.Request.QueryString} ({stopwatch.Elapsed.TotalMilliseconds}ms)");
+            logger.LogInformation($"{context.Request.HttpContext.Connection.RemoteIpAddress} {context.Request.Headers["X-Forwarded-For"]} ({context.Connection.Id}): {context.Request.Path}{context.Request.QueryString} ({stopwatch.Elapsed.TotalMilliseconds}ms)");
 
 #if RELEASE
             try
