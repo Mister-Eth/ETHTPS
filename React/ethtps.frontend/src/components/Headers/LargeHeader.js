@@ -16,6 +16,14 @@ export default class LargeHeader extends React.Component{
         <br></br>
 
         <center>
+            <div  style={{backgroundColor: 'yellow', borderRadius:3, marginBottom: '5px'}}>
+            <p style={{color:'black', fontWeight: 'bold', fontSize: 15}} href={'https://discord.gg/jWPcsTzpCT'}>
+            Server upgrade... sorry for messing up the website :/
+            </p>
+            </div>
+        </center>
+        
+        <center>
             <div  style={{backgroundColor: '#7289da', borderRadius:3, marginBottom: '5px'}}>
             <img className={"small-img"} src={blackDiscordIcon}></img>
             <a style={{color:'white', fontWeight: 'bold', fontSize: 15}} href={'https://discord.gg/jWPcsTzpCT'}>
@@ -24,6 +32,7 @@ export default class LargeHeader extends React.Component{
             <img className={"small-img"} src={blackDiscordIcon}></img>
             </div>
         </center>
+
 
 
         <Link to="/">
