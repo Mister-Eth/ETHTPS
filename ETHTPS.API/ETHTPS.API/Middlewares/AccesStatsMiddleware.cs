@@ -42,7 +42,7 @@ namespace ETHTPS.API.Middlewares
                 {
                     if (context.Request.Method == "GET")
                     {
-                        if (context.Request.Path.ToString().Contains("API/v2/Providers"))
+                        if (context.Request.Path.ToString().Contains("API/v2/Max"))
                         {
                             var bot = new NetTelegramBotApi.TelegramBot(section.GetValue<string>("Token"), new System.Net.Http.HttpClient());
                             var message = new NetTelegramBotApi.Requests.SendMessage(section.GetValue<long>("ChatID"), $"{context.Request.Headers["X-Forwarded-For"]} New user");
