@@ -52,7 +52,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
                     Type = x.TypeNavigation.Name,
                     Color = x.Color,
                     TheoreticalMaxTPS = x.TheoreticalMaxTps,
-                    IsGeneralPurpose = (x.IsGeneralPurpose.HasValue) ? x.IsGeneralPurpose.Value == 1 : x.TypeNavigation.IsGeneralPurpose == 1,
+                    IsGeneralPurpose = (x.IsGeneralPurpose.HasValue) ? x.IsGeneralPurpose.Value : x.TypeNavigation.IsGeneralPurpose,
                     IsSubchainOf = x.SubchainOfNavigation?.Name
                 });
             }

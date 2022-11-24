@@ -32,7 +32,7 @@ namespace ETHTPS.Data.Database
         public int Type { get; set; }
         public string Color { get; set; }
         public int TheoreticalMaxTps { get; set; }
-        public int? IsGeneralPurpose { get; set; }
+        public bool? IsGeneralPurpose { get; set; }
         public int? HistoricalAggregationDeltaBlock { get; set; }
         public bool Enabled { get; set; }
         public int? SubchainOf { get; set; }
