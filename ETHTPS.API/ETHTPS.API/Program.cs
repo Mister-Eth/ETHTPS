@@ -16,12 +16,12 @@ namespace ETHTPS.API
     {
         public static void Main(string[] args)
         {
+            AppDomain.CurrentDomain.SetData("APP_CONFIG_FILE", Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "appsettings.json")));
             CreateHostBuilder(args).Build().Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureAppConfiguration(app => app.AddJsonFile(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "appsettings.json"))
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
