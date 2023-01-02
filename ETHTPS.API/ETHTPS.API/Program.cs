@@ -19,6 +19,7 @@ namespace ETHTPS.API
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration(app => app.AddJsonFile(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "appsettings.json"))
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
