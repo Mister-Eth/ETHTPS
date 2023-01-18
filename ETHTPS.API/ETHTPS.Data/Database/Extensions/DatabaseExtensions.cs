@@ -20,7 +20,7 @@ namespace ETHTPS.Data.Database.Extensions
 
             if (await context.CachedResponses.AnyAsync(x => x.Name == name))
             {
-                var json = (await context.CachedResponses.FirstAsync(x => x.Name == name)).Json;
+                var json = (await context.CachedResponses.FirstAsync(x => x.Name == name)).KeyJson;
                 if (string.IsNullOrWhiteSpace(json))
                 {
                     return default(T);

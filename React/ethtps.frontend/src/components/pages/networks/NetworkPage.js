@@ -41,7 +41,7 @@ import ArbitrumNovaDetails from './details/ArbitrumNovaDetails';
 import { globalGeneralApi, globalInstantDataService, to2DecimalPlaces } from '../../../services/common';
 import * as qs from 'query-string';
 import { Helmet } from 'react-helmet';
-import CompactHeader from '../../Headers/CompactHeader';
+import CompactHeader from '../../Headers/CompactHeader.tsx';
 
 export default class NetworkPage extends PageWithQueryString {
     constructor(props){

@@ -291,9 +291,13 @@ namespace ETHTPS.Data.Database
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
-                entity.Property(e => e.Json)
+                entity.Property(e => e.KeyJson)
                     .IsUnicode(false)
-                    .HasColumnName("JSON");
+                    .HasColumnName("KeyJson");
+
+                entity.Property(e => e.ValueJson)
+                    .IsUnicode(false)
+                    .HasColumnName("ValueJSON");
 
                 entity.Property(e => e.Name)
                     .IsRequired()

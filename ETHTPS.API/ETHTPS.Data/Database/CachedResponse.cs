@@ -9,6 +9,7 @@ namespace ETHTPS.Data.Database
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Json { get; set; }
+        public string KeyJson { get; set; }
+        public string ValueJson { get; set; }
     }
 }

@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import { Helmet } from 'react-helmet';
 import IntervalSlider from '../IntervalSlider';
 import Slider from '@mui/material/Slider';
-import CompactHeader from '../Headers/CompactHeader';
+import CompactHeader from '../Headers/CompactHeader.tsx';
 
 export default class TimeWarpPage extends React.Component{
     constructor(props){
