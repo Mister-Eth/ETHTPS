@@ -14,13 +14,13 @@ import { globalStatusApi } from "../../../services/common";
 import { CircularProgress } from "@mui/material";
 
 export default class StatusPage extends SortableTable {
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
             providerData: providerData,
             statuses: {},
-            sort:{
+            sort: {
                 asc: false,
                 columnName: 'status'
             }
@@ -28,88 +28,88 @@ export default class StatusPage extends SortableTable {
     }
 
     componentDidMount() {
-        globalStatusApi.apiStatusGetBlockInfoProviderStatusGet({provider: 'All'}, (err,data,res)=>{
-            if (data !== null){
-                this.setState({statuses: data});
+        globalStatusApi.apiStatusGetBlockInfoProviderStatusGet({ provider: 'All' }, (err, data, res) => {
+            if (data !== null) {
+                this.setState({ statuses: data });
             }
         });
     }
 
-    render(){
+    render() {
         return <>
-        <CompactHeader/>
-       
+            <CompactHeader />
 
-        <h2>
-            TPS updater status
-        </h2>
-        <TableContainer component={Paper} style={{overflowX:'auto'}}>
-        <Table size={"small"} style={{minWidth: '300px'}} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell width={10} align="left">
-            <TableSortLabel
-                active={this.state.sort.columnName === 'no'}
-                direction={(this.state.sort.asc?'asc':'desc')}
-                onClick={()=>this.sortTableBy('no')}>
-                <div className={'lh b'}>
-                    No.
-                </div>
-            </TableSortLabel>
-            </TableCell>
-            <TableCell width={150} align="left">
-            <TableSortLabel
-                active={this.state.sort.columnName === 'name'}
-                direction={(this.state.sort.asc?'asc':'desc')}
-                onClick={()=>this.sortTableBy('name')}>
-                <div className={'lh b'}>
-                    Name
-                </div>
-            </TableSortLabel>
-            </TableCell>
-            <TableCell width={150} align="left">
-            <TableSortLabel
-                active={this.state.sort.columnName === 'status'}
-                direction={(this.state.sort.asc?'asc':'desc')}
-                onClick={()=>this.sortTableBy('status')}>
-                <div className={'lh b'}>
-                Status
-                </div>
-            </TableSortLabel>
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        {this.state.providerData.sort(this.dynamicSort(this.state.sort.columnName).bind(this)).map((x, i) => <>
-            <TableRow>
-            <TableCell align="left">
-                <div className={'l1'}></div>
-                    {i + 1}
-                </TableCell>
-                <TableCell align="left">
-                <div className={'l1'}>
-                    {x.name}
-                </div>
-                </TableCell>
-                <TableCell align="left">
-                    {this.getStatusCell(this.getStatus(x.name))}
-                </TableCell>
-            </TableRow>
-        </>)}
-      </Table>
-    </TableContainer>
+
+            <h2>
+                TPS updater status
+            </h2>
+            <TableContainer component={Paper} style={{ overflowX: 'auto' }}>
+                <Table size={"small"} style={{ minWidth: '300px' }} aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell width={10} align="left">
+                                <TableSortLabel
+                                    active={this.state.sort.columnName === 'no'}
+                                    direction={(this.state.sort.asc ? 'asc' : 'desc')}
+                                    onClick={() => this.sortTableBy('no')}>
+                                    <div className={'lh b'}>
+                                        No.
+                                    </div>
+                                </TableSortLabel>
+                            </TableCell>
+                            <TableCell width={150} align="left">
+                                <TableSortLabel
+                                    active={this.state.sort.columnName === 'name'}
+                                    direction={(this.state.sort.asc ? 'asc' : 'desc')}
+                                    onClick={() => this.sortTableBy('name')}>
+                                    <div className={'lh b'}>
+                                        Name
+                                    </div>
+                                </TableSortLabel>
+                            </TableCell>
+                            <TableCell width={150} align="left">
+                                <TableSortLabel
+                                    active={this.state.sort.columnName === 'status'}
+                                    direction={(this.state.sort.asc ? 'asc' : 'desc')}
+                                    onClick={() => this.sortTableBy('status')}>
+                                    <div className={'lh b'}>
+                                        Status
+                                    </div>
+                                </TableSortLabel>
+                            </TableCell>
+                        </TableRow>
+                    </TableHead>
+                    {this.state.providerData.sort(this.dynamicSort(this.state.sort.columnName).bind(this)).map((x, i) => <>
+                        <TableRow>
+                            <TableCell align="left">
+                                <div className={'l1'}></div>
+                                {i + 1}
+                            </TableCell>
+                            <TableCell align="left">
+                                <div className={'l1'}>
+                                    {x.name}
+                                </div>
+                            </TableCell>
+                            <TableCell align="left">
+                                {this.getStatusCell(this.getStatus(x.name))}
+                            </TableCell>
+                        </TableRow>
+                    </>)}
+                </Table>
+            </TableContainer>
         </>
     }
 
-    getStatus(provider){
-        if (this.state.statuses[provider] !== undefined){
+    getStatus(provider) {
+        if (this.state.statuses[provider] !== undefined) {
             return this.state.statuses[provider].status;
         }
         else return "-";
     }
 
-    getStatusCell(status){
+    getStatusCell(status) {
         let className = 'l1';
-        switch(status){
+        switch (status) {
             case 'Ok':
                 className += ' green';
                 break;
@@ -124,11 +124,11 @@ export default class StatusPage extends SortableTable {
                 status = 'n/a';
                 break;
             default:
-                status = <CircularProgress size={15}/>
+                status = <CircularProgress size={15} />
                 break;
         }
         return <div className={className}>
-                    {status}
-                </div>
+            {status}
+        </div>
     }
 }
