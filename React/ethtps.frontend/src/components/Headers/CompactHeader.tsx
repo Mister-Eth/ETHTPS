@@ -7,27 +7,27 @@ import { Link } from "react-router-dom";
 
 export default function CompactHeader() {
     const elementSize = 30;
-    let imageSize = {width: elementSize * 0.9, height: elementSize * 0.9};
+    let imageSize = { width: elementSize * 0.9, height: elementSize * 0.9 };
     return <>
         <Link to="/">
-            <br/>
-        <div className={"jumpy unselectable"} style={{fontSize: elementSize, display:'inline'}}>ETHTPS.info</div>
+            <br />
+            <div className={"jumpy unselectable"} style={{ fontSize: elementSize, display: 'inline' }}>ETHTPS.info</div>
         </Link>
-        <div style={{display:'inline', float: 'right'}}>
+        <div style={{ display: 'inline', float: 'right' }}>
             <a href="https://github.com/Mister-Eth/ETHTPS">
                 <img style={imageSize} className={"small-img"} src={githubIcon}>
                 </img>
-                </a>
-                <a href="https://twitter.com/ethtps">
+            </a>
+            <a href="https://twitter.com/ethtps">
                 <img style={imageSize} className={"small-img"} src={twitterIcon}>
                 </img>
-                </a>
-                <a href="https://discord.gg/jWPcsTzpCT">
+            </a>
+            <a href="https://discord.gg/jWPcsTzpCT">
                 <img style={imageSize} className={"small-img"} src={discordIcon}>
                 </img>
             </a>
         </div>
-        <hr/>
-        </>;
-    
+        <hr />
+    </>;
+
 }

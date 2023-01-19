@@ -1,14 +1,13 @@
 import React from "react";
-import * as qs from 'query-string';
-import { useHistory } from "react-router";
+import queryString from 'query-string';
 
 export default class PageWithQueryString extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        let name = qs.parse(window.location.search).name;
-        if (name === undefined){
+        let name = queryString.parse(window.location.search).name;
+        if (name === undefined) {
             let paramIndex = window.location.href.length;
-            if (window.location.href.includes('?')){
+            if (window.location.href.includes('?')) {
                 paramIndex = window.location.href.lastIndexOf('?');
             }
             name = window.location.href.substring(window.location.href.lastIndexOf("/") + 1, paramIndex);

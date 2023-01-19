@@ -7,18 +7,19 @@ import HorizontalBarChart from '../../HorizontalBarChart';
 import ProviderTable from './components/ProviderTable';
 import DataStatByType from './components/instant-stats/DataStatByType';
 import ModeSelector from './ModeSelector';
-import * as qs from 'query-string';
+import 'query-string';
 import HistoricalChart from '../../charts/HistoricalChart';
 import { Helmet } from 'react-helmet';
 import IntervalSlider from '../../IntervalSlider';
 import LargeHeader from '../../Headers/LargeHeader.tsx';
+import queryString from 'query-string';
 
 class MainPage extends React.Component {
 
   constructor(props) {
     super(props);
 
-    let queryStringMode = qs.parse(window.location.search).mode;
+    let queryStringMode = queryString.parse(window.location.search).mode;
     let mode = 'tps';
     if (queryStringMode !== undefined) {
       if (queryStringMode === "gps" || queryStringMode === "tps" || queryStringMode === "gasAdjustedTPS") {
