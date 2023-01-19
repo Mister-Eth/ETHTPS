@@ -6,9 +6,7 @@ using Hangfire;
 using Microsoft.Extensions.Logging;
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ETHTPS.Services.BlockchainServices
@@ -35,7 +33,7 @@ namespace ETHTPS.Services.BlockchainServices
         {
             try
             {
-                var delta = await CalculateTPSGPSAsync();
+                TPSGPSInfo delta = await CalculateTPSGPSAsync();
                 UpdateMaxEntry(delta);
                 UpdateLatestEntries(delta);
 
@@ -71,7 +69,7 @@ namespace ETHTPS.Services.BlockchainServices
             }
             else
             {
-                var x = _context.TpsandGasDataLatests.First(selector);
+                TpsandGasDataLatest x = _context.TpsandGasDataLatests.First(selector);
                 x.Tps = entry.TPS;
                 x.Gps = entry.GPS;
                 _context.TpsandGasDataLatests.Update(x);
@@ -94,7 +92,7 @@ namespace ETHTPS.Services.BlockchainServices
             }
             else //Add up all blocks submitted at the same time
             {
-                var result = new TPSGPSInfo()
+                TPSGPSInfo result = new()
                 {
                     Date = latestBlock.Date
                 };
@@ -116,7 +114,7 @@ namespace ETHTPS.Services.BlockchainServices
                     await Task.Delay(200);
                     if (++count == 100)
                     {
-                        throw new Exception($"Possible infinite loop {(typeof(T))}");
+                        throw new Exception($"Possible infinite loop {typeof(T)}");
                     }
                 }
                 while (true);
@@ -141,7 +139,7 @@ namespace ETHTPS.Services.BlockchainServices
             }
             else
             {
-                var targetEntry = _context.TpsandGasDataMaxes.First(selector);
+                TpsandGasDataMax targetEntry = _context.TpsandGasDataMaxes.First(selector);
                 if (entry.TPS > targetEntry.MaxTps)
                 {
                     targetEntry.MaxTps = entry.TPS;
@@ -158,7 +156,7 @@ namespace ETHTPS.Services.BlockchainServices
 
         protected void AddOrUpdateHourTPSEntry(TPSGPSInfo entry)
         {
-            var targetDate = entry.Date
+            DateTime targetDate = entry.Date
                 .Subtract(TimeSpan.FromSeconds(entry.Date.Second))
                 .Subtract(TimeSpan.FromMilliseconds(entry.Date.Millisecond));
             Func<TpsandGasDataHour, bool> selector = x => x.NetworkNavigation.Id == _mainnetID && x.Provider == _providerID && x.StartDate.Minute == targetDate.Minute;
@@ -176,7 +174,7 @@ namespace ETHTPS.Services.BlockchainServices
             }
             else
             {
-                var x = _context.TpsandGasDataHours.First(selector);
+                TpsandGasDataHour x = _context.TpsandGasDataHours.First(selector);
                 if (x.StartDate.Hour == targetDate.Hour)
                 {
                     x.AverageTps = ((x.AverageTps * x.ReadingsCount) + entry.TPS) / ++x.ReadingsCount;
@@ -194,7 +192,7 @@ namespace ETHTPS.Services.BlockchainServices
         }
         protected void AddOrUpdateDayTPSEntry(TPSGPSInfo entry)
         {
-            var targetDate = entry.Date
+            DateTime targetDate = entry.Date
                 .Subtract(TimeSpan.FromSeconds(entry.Date.Second))
                 .Subtract(TimeSpan.FromMilliseconds(entry.Date.Millisecond))
                 .Subtract(TimeSpan.FromMinutes(entry.Date.Minute));
@@ -213,7 +211,7 @@ namespace ETHTPS.Services.BlockchainServices
             }
             else
             {
-                var x = _context.TpsandGasDataDays.First(selector);
+                TpsandGasDataDay x = _context.TpsandGasDataDays.First(selector);
                 if (x.StartDate.Day == targetDate.Day)
                 {
                     x.AverageTps = ((x.AverageTps * x.ReadingsCount) + entry.TPS) / ++x.ReadingsCount;
@@ -231,7 +229,7 @@ namespace ETHTPS.Services.BlockchainServices
         }
         protected void AddOrUpdateWeekTPSEntry(TPSGPSInfo entry)
         {
-            var targetDate = entry.Date
+            DateTime targetDate = entry.Date
                 .Subtract(TimeSpan.FromSeconds(entry.Date.Second))
                 .Subtract(TimeSpan.FromMilliseconds(entry.Date.Millisecond))
                 .Subtract(TimeSpan.FromMinutes(entry.Date.Minute));
@@ -250,7 +248,7 @@ namespace ETHTPS.Services.BlockchainServices
             }
             else
             {
-                var x = _context.TpsandGasDataWeeks.First(selector);
+                TpsandGasDataWeek x = _context.TpsandGasDataWeeks.First(selector);
                 if (x.StartDate.Day == targetDate.Day)
                 {
                     x.AverageTps = ((x.AverageTps * x.ReadingsCount) + entry.TPS) / ++x.ReadingsCount;
@@ -268,7 +266,7 @@ namespace ETHTPS.Services.BlockchainServices
         }
         protected void AddOrUpdateMonthTPSEntry(TPSGPSInfo entry)
         {
-            var targetDate = entry.Date
+            DateTime targetDate = entry.Date
                 .Subtract(TimeSpan.FromSeconds(entry.Date.Second))
                 .Subtract(TimeSpan.FromMilliseconds(entry.Date.Millisecond))
                 .Subtract(TimeSpan.FromMinutes(entry.Date.Minute))
@@ -288,7 +286,7 @@ namespace ETHTPS.Services.BlockchainServices
             }
             else
             {
-                var x = _context.TpsandGasDataMonths.First(selector);
+                TpsandGasDataMonth x = _context.TpsandGasDataMonths.First(selector);
                 if (x.StartDate.Month == targetDate.Month)
                 {
                     x.AverageTps = ((x.AverageTps * x.ReadingsCount) + entry.TPS) / ++x.ReadingsCount;
@@ -307,7 +305,7 @@ namespace ETHTPS.Services.BlockchainServices
 
         protected void AddOrUpdateYearTPSEntry(TPSGPSInfo entry)
         {
-            var targetDate = entry.Date
+            DateTime targetDate = entry.Date
                 .Subtract(TimeSpan.FromSeconds(entry.Date.Second))
                 .Subtract(TimeSpan.FromMilliseconds(entry.Date.Millisecond))
                 .Subtract(TimeSpan.FromMinutes(entry.Date.Minute))
@@ -329,7 +327,7 @@ namespace ETHTPS.Services.BlockchainServices
             }
             else
             {
-                var x = _context.TpsandGasDataYears.First(selector);
+                TpsandGasDataYear x = _context.TpsandGasDataYears.First(selector);
                 if (x.StartDate.Year == targetDate.Year)
                 {
                     x.AverageTps = ((x.AverageTps * x.ReadingsCount) + entry.TPS) / ++x.ReadingsCount;
@@ -348,7 +346,7 @@ namespace ETHTPS.Services.BlockchainServices
 
         protected void AddOrUpdateAllTPSEntry(TPSGPSInfo entry)
         {
-            var targetDate = entry.Date
+            DateTime targetDate = entry.Date
                 .Subtract(TimeSpan.FromSeconds(entry.Date.Second))
                 .Subtract(TimeSpan.FromMilliseconds(entry.Date.Millisecond))
                 .Subtract(TimeSpan.FromMinutes(entry.Date.Minute))
@@ -370,7 +368,7 @@ namespace ETHTPS.Services.BlockchainServices
             }
             else
             {
-                var x = _context.TpsandGasDataAlls.First(selector);
+                TpsandGasDataAll x = _context.TpsandGasDataAlls.First(selector);
                 x.AverageTps = ((x.AverageTps * x.ReadingsCount) + entry.TPS) / ++x.ReadingsCount;
                 x.AverageGps = ((x.AverageGps * x.ReadingsCount) + entry.GPS) / ++x.ReadingsCount;
                 _context.TpsandGasDataAlls.Update(x);
