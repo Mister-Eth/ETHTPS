@@ -1055,6 +1055,18 @@
         }
       }
     },
+    "/api/Ingestion": {
+      "post": {
+        "tags": [
+          "Ingestion"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/API/Pages/Home": {
       "get": {
         "tags": [
@@ -1893,7 +1905,8 @@
                 "items": {
                   "$ref": "#/components/schemas/DataResponseModel"
                 }
-              }
+              },
+              "nullable": true
             },
             "nullable": true
           },
@@ -1906,7 +1919,8 @@
                 "items": {
                   "$ref": "#/components/schemas/DataResponseModel"
                 }
-              }
+              },
+              "nullable": true
             },
             "nullable": true
           },
@@ -1919,7 +1933,8 @@
                 "items": {
                   "$ref": "#/components/schemas/DataResponseModel"
                 }
-              }
+              },
+              "nullable": true
             },
             "nullable": true
           }

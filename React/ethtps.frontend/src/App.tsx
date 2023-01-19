@@ -2,6 +2,9 @@ import './App.css';
 import React from "react";
 import MainPage from './components/pages/MainPage/MainPage';
 import { QueryClient, QueryClientProvider } from "react-query"
+import { ETHTPSApi } from './services/api/ETHTPSApi';
+
+const apiClient = new ETHTPSApi('http://localhost:10202');
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -13,7 +16,7 @@ const queryClient = new QueryClient({
 
 export default function App(): JSX.Element {
   return <QueryClientProvider client={queryClient}>
-    <MainPage />
+    <MainPage {...apiClient} />
   </QueryClientProvider>
 }
 

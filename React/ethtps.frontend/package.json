@@ -16,6 +16,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
     "apexcharts": "^3.36.3",
+    "axios": "^1.2.3",
     "bootstrap": "^5.2.3",
     "chart.js": "^4.2.0",
     "chart.js-plugin-labels-dv": "^3.3.0",
