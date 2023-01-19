@@ -1,19 +1,10 @@
 ﻿using ETHTPS.API.Infrastructure.Services.Implementations;
-using ETHTPS.Data;
-using ETHTPS.Data.Database;
-using ETHTPS.Data.Database.Extensions;
-using ETHTPS.Data.Database.HistoricalDataProviders;
 using ETHTPS.Data.Models.Query;
 using ETHTPS.Data.ResponseModels;
-using ETHTPS.Data.ResponseModels.HomePage;
 
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ETHTPS.API.Controllers
 {
@@ -44,7 +35,7 @@ namespace ETHTPS.API.Controllers
         public IEnumerable<ProviderResponseModel> Providers(string subchainsOf)
         {
             if (!string.IsNullOrWhiteSpace(subchainsOf))
-                return _generalService.Providers(subchainsOf); 
+                return _generalService.Providers(subchainsOf);
 
             return _generalService.Providers();
         }
@@ -62,7 +53,7 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
-        public IDictionary<string, object> InstantData([FromQuery]ProviderQueryModel model, string smoothing = "")
+        public IDictionary<string, object> InstantData([FromQuery] ProviderQueryModel model, string smoothing = "")
         {
             return _generalService.InstantData(model, smoothing);
         }

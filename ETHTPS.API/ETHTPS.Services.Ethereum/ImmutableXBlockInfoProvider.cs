@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ETHTPS.Services.Ethereum
@@ -53,7 +52,7 @@ namespace ETHTPS.Services.Ethereum
             {
                 return null;
             }
-            while(block.TransactionCount == txLimit) //Increase the limit until we get all transactions
+            while (block.TransactionCount == txLimit) //Increase the limit until we get all transactions
             {
                 txLimit *= 2; //An exponential increase will reduce the number of calls
                 block = await GenerateFakeBlockAsync(txLimit);
@@ -95,7 +94,7 @@ namespace ETHTPS.Services.Ethereum
         private double CalculateGasCost(IEnumerable<Item> items)
         {
             double sum = 0;
-            foreach(var item in items)
+            foreach (var item in items)
             {
                 switch (item.txn_type)
                 {

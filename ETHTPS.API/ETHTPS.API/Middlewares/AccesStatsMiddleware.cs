@@ -6,11 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -65,7 +62,7 @@ namespace ETHTPS.API.Middlewares
                 Path = context.Request.PathBase + context.Request.Path + context.Request.QueryString,
                 Project = Assembly.GetEntryAssembly().FullName
             };
-            if (!dbContext.AccesStats.Any(x=>x.Path == entry.Path && x.Project == entry.Project))
+            if (!dbContext.AccesStats.Any(x => x.Path == entry.Path && x.Project == entry.Project))
             {
                 dbContext.AccesStats.Add(entry);
             }

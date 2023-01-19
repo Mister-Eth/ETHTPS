@@ -1,6 +1,5 @@
 ﻿using ETHTPS.Data.Database;
 using ETHTPS.Data.Models.Query;
-using ETHTPS.Services.BlockchainServices;
 using ETHTPS.Services.BlockchainServices.Extensions;
 
 using Hangfire;
@@ -9,7 +8,6 @@ using Hangfire.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace ETHTPS.Services.BlockchainServices.Status
 {
@@ -27,7 +25,7 @@ namespace ETHTPS.Services.BlockchainServices.Status
             Dictionary<string, BlockInfoProviderStatusResult> result = new();
             if (model.Provider.ToUpper() == "ALL")
             {
-                foreach(var providerName in _context.Providers.ToList().Select(x => x.Name))
+                foreach (var providerName in _context.Providers.ToList().Select(x => x.Name))
                 {
                     result[providerName] = GetStatus(ProviderQueryModel.FromProviderName(providerName));
                 }

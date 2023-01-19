@@ -1,10 +1,7 @@
 ﻿using ETHTPS.Data;
 using ETHTPS.Data.Models.Query;
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ETHTPS.API.Infrastructure.Services
 {

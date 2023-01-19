@@ -7,13 +7,12 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ETHTPS.Data.Database.TimeWarp
 {
     public abstract class TimeWarpDataProviderBase<TTargetTimeWarpData> : ITimeWarpDataProvider
-        where TTargetTimeWarpData: TimeWarpDataBase
+        where TTargetTimeWarpData : TimeWarpDataBase
     {
         private readonly ETHTPSContext _context;
         private readonly Func<ETHTPSContext, DbSet<TTargetTimeWarpData>> _dataSelector;

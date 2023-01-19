@@ -1,13 +1,9 @@
 ﻿using ETHTPS.Data.Database;
 using ETHTPS.Data.Database.TimeWarp;
 using ETHTPS.Data.Database.TimeWarp.Models;
-using ETHTPS.Data.Extensions;
 using ETHTPS.Data.Models.Query;
 using ETHTPS.Data.ResponseModels;
-using ETHTPS.Services;
 using ETHTPS.Services.BlockchainServices.Extensions;
-
-using Microsoft.Extensions.DependencyInjection;
 
 using System;
 using System.Collections.Generic;

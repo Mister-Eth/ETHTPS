@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-using ETHTPS.API.Infrastructure.Services;
-using ETHTPS.Data;
+﻿using ETHTPS.Data;
 using ETHTPS.Data.Database;
 using ETHTPS.Data.Database.HistoricalDataProviders;
 using ETHTPS.Data.Models.Query;
 using ETHTPS.Data.ResponseModels;
+
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ETHTPS.API.Infrastructure.Services.Implementations
 {
     public class GasAdjustedTPSService : HistoricalMethodsServiceBase, IPSService
     {
         private readonly GPSService _gpsService;
-        public GasAdjustedTPSService(GPSService gpsService, ETHTPSContext context, IEnumerable<IHistoricalDataProvider> historicalDataProviders):base(context, historicalDataProviders)
+        public GasAdjustedTPSService(GPSService gpsService, ETHTPSContext context, IEnumerable<IHistoricalDataProvider> historicalDataProviders) : base(context, historicalDataProviders)
         {
             _gpsService = gpsService;
         }

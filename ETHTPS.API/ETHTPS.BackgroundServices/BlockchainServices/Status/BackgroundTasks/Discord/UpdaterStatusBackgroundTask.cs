@@ -4,10 +4,8 @@ using ETHTPS.Data.Models.Query;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ETHTPS.Services.BlockchainServices.Status.BackgroundTasks.Discord
@@ -25,7 +23,7 @@ namespace ETHTPS.Services.BlockchainServices.Status.BackgroundTasks.Discord
         {
             var status = _blockInfoProviderStatusService.GetBlockInfoProviderStatus(ProviderQueryModel.All);
             var embeds = new List<Embed>();
-            foreach(var key in status.Keys)
+            foreach (var key in status.Keys)
             {
                 var x = status[key];
                 if (x.Status == BlockInfoProviderStatus.NeedsAttention || x.Status == BlockInfoProviderStatus.Down)

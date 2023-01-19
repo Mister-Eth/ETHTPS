@@ -1,17 +1,12 @@
-﻿using ETHTPS.API.Infrastructure.Services;
-using ETHTPS.Data.Database;
-using ETHTPS.Data.ResponseModels;
+﻿using ETHTPS.Data.Database;
 
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using NUnit.Framework;
 
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 
 namespace ETHTPS.API.Tests.ControllerTests.DataControllerTests
 {

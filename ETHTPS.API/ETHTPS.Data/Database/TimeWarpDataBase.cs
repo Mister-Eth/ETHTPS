@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 #nullable disable
 
@@ -22,6 +21,6 @@ namespace ETHTPS.Data.Database
     public partial class TimeWarpDataWeek : TimeWarpDataBase { }
     public partial class TimeWarpDataHour : TimeWarpDataBase { }
     public partial class TimeWarpDataMinute : TimeWarpDataBase { }
-    public partial class TimeWarpDataDay: TimeWarpDataBase { }
+    public partial class TimeWarpDataDay : TimeWarpDataBase { }
     public partial class TimeWarpDatum : TimeWarpDataBase { }
 }

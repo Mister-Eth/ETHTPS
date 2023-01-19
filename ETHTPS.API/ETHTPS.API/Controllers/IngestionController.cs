@@ -1,7 +1,6 @@
 ﻿using ETHTPS.Data;
 using ETHTPS.Data.Database;
 
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 using System.Linq;

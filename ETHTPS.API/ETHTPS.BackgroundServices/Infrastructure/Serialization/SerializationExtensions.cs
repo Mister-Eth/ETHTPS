@@ -1,11 +1,5 @@
 ﻿using Newtonsoft.Json;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace ETHTPS.Services.Infrastructure.Serialization
 {
     public static class SerializationExtensions

@@ -1,10 +1,8 @@
 ﻿using NUnit.Framework;
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ETHTPS.API.Tests.StressTests
@@ -17,7 +15,7 @@ namespace ETHTPS.API.Tests.StressTests
         private readonly HttpClient _httpClient;
         private readonly int _maxConcurrentRequests;
 
-        public MultiEndpointStressTest()  
+        public MultiEndpointStressTest()
         {
             _endpoint = "http://10.10.0.174:50023";
             //_endpoint = "https://api.ethtps.info";
@@ -32,7 +30,7 @@ namespace ETHTPS.API.Tests.StressTests
                 "/API/v2/Intervals",
                 "/API/v2/Providers",
             };
-            _httpClient = new HttpClient() 
+            _httpClient = new HttpClient()
             {
                 BaseAddress = new Uri(_endpoint)
             };
@@ -47,7 +45,7 @@ namespace ETHTPS.API.Tests.StressTests
                 var response = await _httpClient.GetAsync(path);
                 Assert.That(response.IsSuccessStatusCode, $"Failed with {response.StatusCode}");
             })));
-            Assert.DoesNotThrowAsync(async() =>
+            Assert.DoesNotThrowAsync(async () =>
             {
                 await Task.WhenAll(requests);
                 //Assert.That(requests.All(x => x.Status == TaskStatus.RanToCompletion), $"Failed: {requests.Count(x => x.Status != TaskStatus.RanToCompletion)}");

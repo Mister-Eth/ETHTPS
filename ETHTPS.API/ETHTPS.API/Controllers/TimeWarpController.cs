@@ -1,8 +1,4 @@
-﻿using ETHTPS.API.Infrastructure.Services;
-using ETHTPS.API.Infrastructure.Services.Implementations;
-using ETHTPS.Data.Database;
-using ETHTPS.Data.Database.Extensions;
-using ETHTPS.Data.Database.HistoricalDataProviders;
+﻿using ETHTPS.API.Infrastructure.Services.Implementations;
 using ETHTPS.Data.Database.TimeWarp;
 using ETHTPS.Data.Database.TimeWarp.Models;
 using ETHTPS.Data.Models.Query;
@@ -12,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ETHTPS.API.Controllers

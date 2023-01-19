@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ETHTPS.Services.Ethereum.Starkware.API.Models
+﻿namespace ETHTPS.Services.Ethereum.Starkware.API.Models
 {
     public static class Products
     {

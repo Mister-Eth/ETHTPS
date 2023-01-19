@@ -1,14 +1,11 @@
 ﻿using ETHTPS.Data.Database;
-using ETHTPS.Services.BlockchainServices.Extensions;
 
 using Hangfire;
 
 using Microsoft.Extensions.Logging;
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ETHTPS.Services.BlockchainServices
@@ -35,12 +32,12 @@ namespace ETHTPS.Services.BlockchainServices
             await _context.SaveChangesAsync();
             var oldestEntry = _context.OldestLoggedHistoricalEntries.First(x => x.Network == 1 && x.ProviderNavigation.Name == _provider);
             var step = 1;
-            
+
             if (_context.Providers.Any(x => x.Id == _providerID && x.HistoricalAggregationDeltaBlock.HasValue))
             {
                 step = _context.Providers.First(x => x.Id == _providerID).HistoricalAggregationDeltaBlock.Value;
             }
-            
+
             while (oldestEntry.OldestBlock > 0)
             {
                 try
@@ -74,11 +71,11 @@ namespace ETHTPS.Services.BlockchainServices
                     AddOrUpdateAllTPSEntry(delta);
 
                     stopwatch.Stop();
-                    var eta = TimeSpan.FromMilliseconds(oldestEntry.OldestBlock * (stopwatch.Elapsed.TotalMilliseconds + 350)/ step);
+                    var eta = TimeSpan.FromMilliseconds(oldestEntry.OldestBlock * (stopwatch.Elapsed.TotalMilliseconds + 350) / step);
                     _logger.LogInformation($"{_provider} [{oldestEntry.OldestBlock}] @{delta.Date} ETA: [{eta}] {delta.TPS}TPS {delta.GPS}GPS");
                     await Task.Delay(350);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     _logger.LogDebug("HangfireHistoricalBlockInfoProviderDataLogger", e);
                 }

@@ -1,25 +1,15 @@
 ﻿using ETHTPS.API.Infrastructure.Services;
 using ETHTPS.API.Infrastructure.Services.Implementations;
 using ETHTPS.Data;
-using ETHTPS.Data.Database;
-using ETHTPS.Data.Database.Extensions;
-using ETHTPS.Data.Database.HistoricalDataProviders;
 using ETHTPS.Data.Extensions.StringExtensions;
-using ETHTPS.Data.Models.Pages;
 using ETHTPS.Data.Models.Pages.Chart;
 using ETHTPS.Data.Models.Pages.HomePage;
 using ETHTPS.Data.Models.Pages.ProviderPage;
 using ETHTPS.Data.Models.Query;
-using ETHTPS.Data.ResponseModels;
-using ETHTPS.Data.ResponseModels.HomePage;
 
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace ETHTPS.API.Controllers
 {
