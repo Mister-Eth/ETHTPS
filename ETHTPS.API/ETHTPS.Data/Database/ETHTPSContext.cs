@@ -1,7 +1,6 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
 
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+using System;
 
 #nullable disable
 
@@ -342,35 +341,28 @@ namespace ETHTPS.Data.Database
 
             modelBuilder.Entity<Provider>(entity =>
             {
-                entity.HasIndex(e => e.Name, "UQ__Provider__737584F6B7368E0F")
-                    .IsUnique();
+                entity.HasKey(e => e.Id).HasName("PK__Provider__3214EC2720D7D6EB");
+
+                entity.HasIndex(e => e.Name, "UQ__Provider__737584F60991B0F2").IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("ID");
-
                 entity.Property(e => e.Color)
                     .IsRequired()
                     .HasMaxLength(16)
-                    .IsUnicode(false)
-                    .HasDefaultValueSql("('#')");
-
-                entity.Property(e => e.IsGeneralPurpose).HasDefaultValueSql("((0))");
-
+                    .IsUnicode(false);
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(255);
-               
                 entity.Property(e => e.TheoreticalMaxTps).HasColumnName("TheoreticalMaxTPS");
 
-                entity.HasOne(d => d.TypeNavigation)
-                    .WithMany(p => p.Providers)
+                entity.HasOne(d => d.SubchainOfNavigation).WithMany(p => p.InverseSubchainOfNavigation)
+                    .HasForeignKey(d => d.SubchainOf)
+                    .HasConstraintName("FK__Providers__Subch__4E53A1AA");
+
+                entity.HasOne(d => d.TypeNavigation).WithMany(p => p.Providers)
                     .HasForeignKey(d => d.Type)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Providers__Type__3F466844");
-
-                entity.HasOne(d => d.SubchainOfNavigation)
-                  .WithMany(p => p.InverseSubchainOfNavigation)
-                  .HasForeignKey(d => d.SubchainOf)
-                  .HasConstraintName("FK__Providers__Subch__503BEA1C");
+                    .HasConstraintName("FK__Providers__Type__4D5F7D71");
             });
 
             modelBuilder.Entity<ProviderType>(entity =>

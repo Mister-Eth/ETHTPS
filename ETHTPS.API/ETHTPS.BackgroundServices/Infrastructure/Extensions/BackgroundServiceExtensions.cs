@@ -4,20 +4,14 @@ using Hangfire;
 
 using Microsoft.Extensions.DependencyInjection;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace ETHTPS.Services.Infrastructure.Extensions
 {
     public static class BackgroundServiceExtensions
     {
 #pragma warning disable CS0618
         public static void RegisterHangfireBackgroundService<T, V>(this IServiceCollection services, string cronExpression, string queue)
-            where V: class, IBlockInfoProvider
-            where T: HangfireBlockInfoProviderDataLogger<V>
+            where V : class, IBlockInfoProvider
+            where T : HangfireBlockInfoProviderDataLogger<V>
         {
             services.AddScoped<V>();
             services.AddScoped<T>();

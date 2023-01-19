@@ -1,9 +1,20 @@
 import './App.css';
 import React from "react";
 import MainPage from './components/pages/MainPage/MainPage';
+import { QueryClient, QueryClientProvider } from "react-query"
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: true
+    }
+  }
+})
 
 export default function App(): JSX.Element {
-  return <MainPage />
+  return <QueryClientProvider client={queryClient}>
+    <MainPage />
+  </QueryClientProvider>
 }
 
 /*

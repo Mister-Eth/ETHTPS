@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ETHTPS.Data.Extensions
 {
@@ -21,9 +19,9 @@ namespace ETHTPS.Data.Extensions
             }
         }
 
-        public static IEnumerable<T> Where2<T>(this IEnumerable<T> source, Func<T, int> predicate) => source.Where(x => predicate(x) == 1);
+        public static IEnumerable<T> Where2<T>(this IEnumerable<T> source, Func<T, int> predicate) => Enumerable.Where(source, x => predicate(x) == 1);
 
-        public static IEnumerable<T> Where2<T>(this IEnumerable<T> source, Func<T, bool> predicate) => source.Where(x => predicate(x));
+        //public static IEnumerable<T> Where<T>(this IEnumerable<T> source, Func<T, bool> predicate) => source;
 
         public static T FirstIfAny<T>(this IEnumerable<T> source, Func<T, bool> selector)
         {

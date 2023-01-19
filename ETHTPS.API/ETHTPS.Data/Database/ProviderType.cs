@@ -15,6 +15,7 @@ namespace ETHTPS.Data.Database
         public string Name { get; set; }
         public string Color { get; set; }
         public bool IsGeneralPurpose { get; set; }
+        public bool Enabled { get; set; }
 
         public virtual ICollection<Provider> Providers { get; set; }
     }

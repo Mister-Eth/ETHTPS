@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-using ETHTPS.Data;
+﻿using ETHTPS.Data;
 using ETHTPS.Data.Database;
-using ETHTPS.Data.Database.Extensions;
 using ETHTPS.Data.Database.HistoricalDataProviders;
 using ETHTPS.Data.Extensions;
 using ETHTPS.Data.Extensions.StringExtensions;
 using ETHTPS.Data.Models.Query;
 using ETHTPS.Data.ResponseModels;
-using ETHTPS.Data.ResponseModels.HomePage;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ETHTPS.API.Infrastructure.Services.Implementations
 {
@@ -47,7 +44,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             IEnumerable<ProviderResponseModel> result;
             lock (Context.LockObj)
             {
-                result = Context.Providers.ToList().Where2(x => x.Enabled).Select(x => new ProviderResponseModel()
+                result = Context.Providers.ToList().Where(x => x.Enabled).Select(x => new ProviderResponseModel()
                 {
                     Name = x.Name,
                     Type = x.TypeNavigation.Name,
@@ -62,12 +59,12 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
 
         public IEnumerable<ProviderResponseModel> Providers(string subchainsOf)
         {
-            var list = Providers();
+            IEnumerable<ProviderResponseModel> list = Providers();
             if (string.IsNullOrWhiteSpace(subchainsOf) || subchainsOf.LossyCompareTo(Constants.All))
             {
                 return list;
             }
-            return list.Where(x => x.Name.LossyCompareTo(subchainsOf));
+            return Enumerable.Where(list, x => x.Name.LossyCompareTo(subchainsOf));
         }
 
         public IDictionary<string, string> ColorDictionary()
@@ -75,7 +72,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             IDictionary<string, string> result;
             lock (Context.LockObj)
             {
-                result = Context.Providers.Where2(x => x.Enabled).ToDictionary(x => x.Name, x => x.Color);
+                result = Context.Providers.Where(x => x.Enabled).ToDictionary(x => x.Name, x => x.Color);
             }
             return result;
         }
@@ -91,16 +88,16 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             return result;
         }
 
-        private static Dictionary<(bool IncludeSidechains, string Network, string Smoothing), (Dictionary<string, object> LastData, DateTime LastGetTime)> _instantDataDictionary = new Dictionary<(bool IncludeSidechains, string Network, string Smoothing), (Dictionary<string, object> LastData, DateTime LastGetTime)>();
+        private static Dictionary<(bool IncludeSidechains, string Network, string Smoothing), (Dictionary<string, object> LastData, DateTime LastGetTime)> _instantDataDictionary = new();
 
         public IDictionary<string, object> InstantData(ProviderQueryModel model, string smoothing = "")
         {
-            var interval = TimeInterval.Instant;
+            TimeInterval interval = TimeInterval.Instant;
             if (!string.IsNullOrWhiteSpace(smoothing))
             {
                 interval = Enum.Parse<TimeInterval>(smoothing);
             }
-            var key = (model.IncludeSidechains, model.Network, interval.ToString());
+            (bool IncludeSidechains, string Network, string) key = (model.IncludeSidechains, model.Network, interval.ToString());
             if (!_instantDataDictionary.ContainsKey(key))
             {
                 _instantDataDictionary.Add(key, (new Dictionary<string, object>(), DateTime.Now.Subtract(TimeSpan.FromSeconds(5))));
@@ -109,7 +106,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             if (!returnDefault)
             {
                 _instantDataDictionary[key] = (new Dictionary<string, object>(), DateTime.Now);
-                var result = _instantDataDictionary[key];
+                (Dictionary<string, object> LastData, DateTime LastGetTime) result = _instantDataDictionary[key];
                 switch (interval)
                 {
                     case TimeInterval.Instant:
@@ -118,12 +115,12 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
                         result.LastData.Add("gasAdjustedTPS", _gasAdjustedTPSService.Instant(model));
                         break;
                     case TimeInterval.OneWeek:
-                        var nextInterval = TimeInterval.OneMonth;
-                        result.LastData.Add("tps", _tpsService.Get(model, nextInterval.ToString()).Where(x => x.Value.Any()).ToDictionary(x => x.Key, x => new List<DataPoint>() { new DataPoint() { Value = x.Value.TakeLast(7).Average(x => (x.Data.FirstOrDefault() == null) ? 0 : x.Data.FirstOrDefault().Value) } }));
+                        TimeInterval nextInterval = TimeInterval.OneMonth;
+                        result.LastData.Add("tps", Enumerable.Where(_tpsService.Get(model, nextInterval.ToString()), x => x.Value.Any()).ToDictionary(x => x.Key, x => new List<DataPoint>() { new DataPoint() { Value = x.Value.TakeLast(7).Average(x => (x.Data.FirstOrDefault() == null) ? 0 : x.Data.FirstOrDefault().Value) } }));
 
-                        result.LastData.Add("gps", _gpsService.Get(model, nextInterval.ToString()).Where(x => x.Value.Any()).ToDictionary(x => x.Key, x => new List<DataPoint>() { new DataPoint() { Value = x.Value.TakeLast(7).Average(x => (x.Data.FirstOrDefault() == null) ? 0 : x.Data.FirstOrDefault().Value) } }));
+                        result.LastData.Add("gps", Enumerable.Where(_gpsService.Get(model, nextInterval.ToString()), x => x.Value.Any()).ToDictionary(x => x.Key, x => new List<DataPoint>() { new DataPoint() { Value = x.Value.TakeLast(7).Average(x => (x.Data.FirstOrDefault() == null) ? 0 : x.Data.FirstOrDefault().Value) } }));
 
-                        result.LastData.Add("gasAdjustedTPS", _gasAdjustedTPSService.Get(model, nextInterval.ToString()).Where(x => x.Value.Any()).ToDictionary(x => x.Key, x => new List<DataPoint>() { new DataPoint() { Value = x.Value.TakeLast(7).Average(x => (x.Data.FirstOrDefault() == null) ? 0 : x.Data.FirstOrDefault().Value) } }));
+                        result.LastData.Add("gasAdjustedTPS", Enumerable.Where(_gasAdjustedTPSService.Get(model, nextInterval.ToString()), x => x.Value.Any()).ToDictionary(x => x.Key, x => new List<DataPoint>() { new DataPoint() { Value = x.Value.TakeLast(7).Average(x => (x.Data.FirstOrDefault() == null) ? 0 : x.Data.FirstOrDefault().Value) } }));
                         break;
                     default:
                         nextInterval = GetNextIntervalForInstantData(interval);
@@ -155,10 +152,10 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
 
         public IDictionary<string, object> Max(ProviderQueryModel model)
         {
-            var result = new Dictionary<string, object>();
+            Dictionary<string, object> result = new();
             lock (Context.LockObj)
             {
-                var maxGPS = _gpsService.Max(model);
+                IDictionary<string, DataPoint> maxGPS = _gpsService.Max(model);
                 result.Add("tps", _tpsService.Max(model));
                 result.Add("gps", maxGPS);
                 result.Add("gasAdjustedTPS", _gasAdjustedTPSService.Max(model));
@@ -173,11 +170,11 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
         public IEnumerable<string> GetIntervalsWithData(ProviderQueryModel model)
         {
             List<string> result = new();
-            foreach (var interval in TimeIntervals())
+            foreach (string interval in TimeIntervals())
             {
                 try
                 {
-                    var count = _tpsService.Get(model, interval)[model.Provider].Count();
+                    int count = _tpsService.Get(model, interval)[model.Provider].Count();
                     if (count > 1)
                     {
                         if (interval == "All" && count < 12)
@@ -194,13 +191,13 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
 
         public IEnumerable<string> GetUniqueDataYears(ProviderQueryModel model)
         {
-            var entries = _tpsService.Get(model, Constants.All)[model.Provider]?.Select(x => x.Data.FirstOrDefault()?.Date.Year.ToString())?.OrderBy(x => x).Distinct();
+            IEnumerable<string> entries = _tpsService.Get(model, Constants.All)[model.Provider]?.Select(x => x.Data.FirstOrDefault()?.Date.Year.ToString())?.OrderBy(x => x).Distinct();
             return entries;
         }
 
         public AllDataModel GetAllData(string network)
         {
-            var allDataModel = new ProviderQueryModel()
+            ProviderQueryModel allDataModel = new()
             {
                 Provider = Constants.All,
                 Network = network

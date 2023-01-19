@@ -1,59 +1,63 @@
-﻿using System;
-using System.Collections.Generic;
-
-#nullable disable
+﻿using System.Collections.Generic;
 
 namespace ETHTPS.Data.Database
 {
     public partial class Provider
     {
-        public Provider()
-        {
-            InverseSubchainOfNavigation = new HashSet<Provider>();
-            OldestLoggedHistoricalEntries = new HashSet<OldestLoggedHistoricalEntry>();
-            OldestLoggedTimeWarpBlocks = new HashSet<OldestLoggedTimeWarpBlock>();
-            TimeWarpData = new HashSet<TimeWarpDatum>();
-            TimeWarpDataDays = new HashSet<TimeWarpDataDay>();
-            TimeWarpDataHours = new HashSet<TimeWarpDataHour>();
-            TimeWarpDataMinutes = new HashSet<TimeWarpDataMinute>();
-            TimeWarpDataWeeks = new HashSet<TimeWarpDataWeek>();
-            TpsandGasDataAlls = new HashSet<TpsandGasDataAll>();
-            TpsandGasDataDays = new HashSet<TpsandGasDataDay>();
-            TpsandGasDataHours = new HashSet<TpsandGasDataHour>();
-            TpsandGasDataLatests = new HashSet<TpsandGasDataLatest>();
-            TpsandGasDataMaxes = new HashSet<TpsandGasDataMax>();
-            TpsandGasDataMonths = new HashSet<TpsandGasDataMonth>();
-            TpsandGasDataWeeks = new HashSet<TpsandGasDataWeek>();
-            TpsandGasDataYears = new HashSet<TpsandGasDataYear>();
-        }
-
         public int Id { get; set; }
+
         public string Name { get; set; }
+
         public int Type { get; set; }
+
         public string Color { get; set; }
-        public int TheoreticalMaxTps { get; set; }
+
         public bool? IsGeneralPurpose { get; set; }
+
         public int? HistoricalAggregationDeltaBlock { get; set; }
+
         public bool Enabled { get; set; }
+
         public int? SubchainOf { get; set; }
 
-        public virtual ProviderType TypeNavigation { get; set; }
-        public virtual ICollection<OldestLoggedHistoricalEntry> OldestLoggedHistoricalEntries { get; set; }
-        public virtual ICollection<OldestLoggedTimeWarpBlock> OldestLoggedTimeWarpBlocks { get; set; }
-        public virtual ICollection<TimeWarpDatum> TimeWarpData { get; set; }
-        public virtual ICollection<TimeWarpDataDay> TimeWarpDataDays { get; set; }
-        public virtual ICollection<TimeWarpDataHour> TimeWarpDataHours { get; set; }
-        public virtual ICollection<TimeWarpDataMinute> TimeWarpDataMinutes { get; set; }
-        public virtual ICollection<TimeWarpDataWeek> TimeWarpDataWeeks { get; set; }
-        public virtual ICollection<TpsandGasDataAll> TpsandGasDataAlls { get; set; }
-        public virtual ICollection<TpsandGasDataDay> TpsandGasDataDays { get; set; }
-        public virtual ICollection<TpsandGasDataHour> TpsandGasDataHours { get; set; }
-        public virtual ICollection<TpsandGasDataLatest> TpsandGasDataLatests { get; set; }
-        public virtual ICollection<TpsandGasDataMax> TpsandGasDataMaxes { get; set; }
-        public virtual ICollection<TpsandGasDataMonth> TpsandGasDataMonths { get; set; }
-        public virtual ICollection<TpsandGasDataWeek> TpsandGasDataWeeks { get; set; }
-        public virtual ICollection<TpsandGasDataYear> TpsandGasDataYears { get; set; }
-        public virtual ICollection<Provider> InverseSubchainOfNavigation { get; set; }
+        public int TheoreticalMaxTps { get; set; }
+
+        public virtual ICollection<Provider> InverseSubchainOfNavigation { get; } = new List<Provider>();
+
+        public virtual ICollection<OldestLoggedHistoricalEntry> OldestLoggedHistoricalEntries { get; } = new List<OldestLoggedHistoricalEntry>();
+
+        public virtual ICollection<OldestLoggedTimeWarpBlock> OldestLoggedTimeWarpBlocks { get; } = new List<OldestLoggedTimeWarpBlock>();
+
+        //public virtual ICollection<Project> Projects { get; } = new List<Project>();
+
         public virtual Provider SubchainOfNavigation { get; set; }
+
+        public virtual ICollection<TimeWarpDatum> TimeWarpData { get; } = new List<TimeWarpDatum>();
+
+        public virtual ICollection<TimeWarpDataDay> TimeWarpDataDays { get; } = new List<TimeWarpDataDay>();
+
+        public virtual ICollection<TimeWarpDataHour> TimeWarpDataHours { get; } = new List<TimeWarpDataHour>();
+
+        public virtual ICollection<TimeWarpDataMinute> TimeWarpDataMinutes { get; } = new List<TimeWarpDataMinute>();
+
+        public virtual ICollection<TimeWarpDataWeek> TimeWarpDataWeeks { get; } = new List<TimeWarpDataWeek>();
+
+        public virtual ICollection<TpsandGasDataAll> TpsandGasDataAlls { get; } = new List<TpsandGasDataAll>();
+
+        public virtual ICollection<TpsandGasDataDay> TpsandGasDataDays { get; } = new List<TpsandGasDataDay>();
+
+        public virtual ICollection<TpsandGasDataHour> TpsandGasDataHours { get; } = new List<TpsandGasDataHour>();
+
+        public virtual ICollection<TpsandGasDataLatest> TpsandGasDataLatests { get; set; }
+
+        public virtual ICollection<TpsandGasDataMax> TpsandGasDataMaxes { get; set; }
+
+        public virtual ICollection<TpsandGasDataMonth> TpsandGasDataMonths { get; } = new List<TpsandGasDataMonth>();
+
+        public virtual ICollection<TpsandGasDataWeek> TpsandGasDataWeeks { get; } = new List<TpsandGasDataWeek>();
+
+        public virtual ICollection<TpsandGasDataYear> TpsandGasDataYears { get; } = new List<TpsandGasDataYear>();
+
+        public virtual ProviderType TypeNavigation { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace ETHTPS.API.Middlewares
 
         public async Task InvokeAsync(HttpContext context, ETHTPSContext dbContext, ILogger<AccesStatsMiddleware> logger, IConfiguration configuration)
         {
-            var stopwatch = new Stopwatch();
+            Stopwatch stopwatch = new();
             stopwatch.Start();
             await _next(context);
             stopwatch.Stop();
@@ -56,22 +56,24 @@ namespace ETHTPS.API.Middlewares
             }
 #endif
             return;
-            var entry = new AccesStat()
+#pragma warning disable CS0162 // Unreachable code detected
+            AccesStat entry = new()
             {
                 Count = 1,
                 Path = context.Request.PathBase + context.Request.Path + context.Request.QueryString,
                 Project = Assembly.GetEntryAssembly().FullName
             };
+#pragma warning restore CS0162 // Unreachable code detected
             if (!dbContext.AccesStats.Any(x => x.Path == entry.Path && x.Project == entry.Project))
             {
                 dbContext.AccesStats.Add(entry);
             }
             else
             {
-                var target = dbContext.AccesStats.First(x => x.Path == entry.Path && x.Project == entry.Project);
+                AccesStat target = dbContext.AccesStats.First(x => x.Path == entry.Path && x.Project == entry.Project);
                 target.Count++;
 
-                target.AverageRequestTimeMs = (target.AverageRequestTimeMs * target.Count + stopwatch.Elapsed.TotalMilliseconds) / (target.Count + 1);
+                target.AverageRequestTimeMs = ((target.AverageRequestTimeMs * target.Count) + stopwatch.Elapsed.TotalMilliseconds) / (target.Count + 1);
                 dbContext.AccesStats.Update(target);
             }
             dbContext.SaveChanges();
