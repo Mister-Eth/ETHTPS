@@ -1,12 +1,13 @@
 import './App.css';
 import React from "react";
+import MainPage from './components/pages/MainPage/MainPage';
 
 export default function App(): JSX.Element {
-  let main = "Loading...";
-  return <>
-    <div className={"container"}>
-      {main}
-    </div>
+  return <MainPage />
+}
+
+/*
+
     <hr />
     <div className='bottomnavbar'>
       <a href="/Status">
@@ -36,5 +37,4 @@ export default function App(): JSX.Element {
         </p>
       </div>
     </footer>
-  </>
-}
+*/

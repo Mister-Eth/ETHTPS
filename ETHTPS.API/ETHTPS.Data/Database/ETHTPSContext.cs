@@ -1,4 +1,5 @@
 ﻿using System;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -38,7 +39,7 @@ namespace ETHTPS.Data.Database
         public virtual DbSet<TimeWarpDataHour> TimeWarpDataHours { get; set; }
         public virtual DbSet<TimeWarpDataMinute> TimeWarpDataMinutes { get; set; }
         public virtual DbSet<TimeWarpDataWeek> TimeWarpDataWeeks { get; set; }
-       public virtual DbSet<TimeWarpDatum> TimeWarpData { get; set; }
+        public virtual DbSet<TimeWarpDatum> TimeWarpData { get; set; }
         public virtual DbSet<OldestLoggedTimeWarpBlock> OldestLoggedTimeWarpBlocks { get; set; }
         public virtual DbSet<StarkwareTransactionCountData> StarkwareTransactionCountData { get; set; }
         public virtual DbSet<APIKey> APIKeys { get; set; }
@@ -186,7 +187,7 @@ namespace ETHTPS.Data.Database
                     .HasConstraintName("FK__TimeWarpD__Provi__2B0A656D");
             });
 
-            
+
             modelBuilder.Entity<OldestLoggedTimeWarpBlock>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("ID");
@@ -203,7 +204,7 @@ namespace ETHTPS.Data.Database
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__OldestLog__Provi__3493CFA7");
             });
-            
+
             modelBuilder.Entity<OldestLoggedHistoricalEntry>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("ID");
@@ -357,7 +358,7 @@ namespace ETHTPS.Data.Database
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(255);
-
+               
                 entity.Property(e => e.TheoreticalMaxTps).HasColumnName("TheoreticalMaxTPS");
 
                 entity.HasOne(d => d.TypeNavigation)

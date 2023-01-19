@@ -1,6 +1,7 @@
 ﻿using ETHTPS.Data;
 using ETHTPS.Data.Database;
 using ETHTPS.Data.Database.HistoricalDataProviders;
+using ETHTPS.Data.Extensions;
 using ETHTPS.Data.Models.Query;
 using ETHTPS.Data.ResponseModels;
 
@@ -71,7 +72,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             {
                 if (model.Provider.ToUpper() == "ALL")
                 {
-                    foreach (var p in Context.Providers.ToList().Where(x => x.Enabled))
+                    foreach (var p in Context.Providers.ToList().Where2(x => x.Enabled))
                     {
                         if (!model.IncludeSidechains)
                         {
@@ -118,7 +119,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             var result = new List<DataResponseModel>();
             lock (Context.LockObj)
             {
-                foreach (var p in Context.Providers.ToList().Where(x => x.Enabled))
+                foreach (var p in Context.Providers.ToList().Where2(x => x.Enabled))
                 {
                     if (!model.IncludeSidechains)
                     {

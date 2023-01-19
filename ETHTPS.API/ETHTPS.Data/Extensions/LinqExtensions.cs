@@ -21,6 +21,10 @@ namespace ETHTPS.Data.Extensions
             }
         }
 
+        public static IEnumerable<T> Where2<T>(this IEnumerable<T> source, Func<T, int> predicate) => source.Where(x => predicate(x) == 1);
+
+        public static IEnumerable<T> Where2<T>(this IEnumerable<T> source, Func<T, bool> predicate) => source.Where(x => predicate(x));
+
         public static T FirstIfAny<T>(this IEnumerable<T> source, Func<T, bool> selector)
         {
             if (source.Any(selector))

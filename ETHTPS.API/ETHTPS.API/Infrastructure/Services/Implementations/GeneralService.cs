@@ -7,6 +7,7 @@ using ETHTPS.Data;
 using ETHTPS.Data.Database;
 using ETHTPS.Data.Database.Extensions;
 using ETHTPS.Data.Database.HistoricalDataProviders;
+using ETHTPS.Data.Extensions;
 using ETHTPS.Data.Extensions.StringExtensions;
 using ETHTPS.Data.Models.Query;
 using ETHTPS.Data.ResponseModels;
@@ -46,13 +47,13 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             IEnumerable<ProviderResponseModel> result;
             lock (Context.LockObj)
             {
-                result = Context.Providers.ToList().Where(x => x.Enabled).Select(x => new ProviderResponseModel()
+                result = Context.Providers.ToList().Where2(x => x.Enabled).Select(x => new ProviderResponseModel()
                 {
                     Name = x.Name,
                     Type = x.TypeNavigation.Name,
                     Color = x.Color,
                     TheoreticalMaxTPS = x.TheoreticalMaxTps,
-                    IsGeneralPurpose = (x.IsGeneralPurpose.HasValue) ? x.IsGeneralPurpose.Value : x.TypeNavigation.IsGeneralPurpose,
+                    IsGeneralPurpose = x.IsGeneralPurpose.HasValue ? x.IsGeneralPurpose.Value : x.TypeNavigation.IsGeneralPurpose,
                     IsSubchainOf = x.SubchainOfNavigation?.Name
                 });
             }
@@ -74,7 +75,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
             IDictionary<string, string> result;
             lock (Context.LockObj)
             {
-                result = Context.Providers.Where(x => x.Enabled).ToDictionary(x => x.Name, x => x.Color);
+                result = Context.Providers.Where2(x => x.Enabled).ToDictionary(x => x.Name, x => x.Color);
             }
             return result;
         }
