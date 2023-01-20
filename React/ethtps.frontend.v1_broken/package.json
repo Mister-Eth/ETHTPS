@@ -11,6 +11,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
     "@types/react-redux": "^7.1.25",
+    "babel-preset-es2015": "^6.24.1",
     "fix-date": "^1.1.6",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",
@@ -26,7 +27,8 @@
     "styled-components": "^5.3.6",
     "superagent": "^8.0.8",
     "typescript": "^4.9.4",
-    "web-vitals": "^3.1.1"
+    "web-vitals": "^3.1.1",
+    "webpack": "^4.19.1"
   },
   "scripts": {
     "win-start": "set PORT=3007 && react-scripts start",
