@@ -1,8 +1,8 @@
 import { ResponseContext, RequestContext, HttpFile } from '../http/http';
 import * as models from '../models/all';
-import { Configuration} from '../configuration'
+import { Configuration } from '../configuration'
 import { Observable, of, from } from '../rxjsStub';
-import {mergeMap, map} from  '../rxjsStub';
+import { mergeMap, map } from '../rxjsStub';
 import { AllDataModel } from '../models/AllDataModel';
 import { BlockInfoProviderStatus } from '../models/BlockInfoProviderStatus';
 import { BlockInfoProviderStatusResult } from '../models/BlockInfoProviderStatusResult';
@@ -16,7 +16,15 @@ import { ProviderResponseModel } from '../models/ProviderResponseModel';
 import { TimeInterval } from '../models/TimeInterval';
 import { TimeWarpSyncProgressModel } from '../models/TimeWarpSyncProgressModel';
 
-import { GPSApiRequestFactory, GPSApiResponseProcessor} from "../apis/GPSApi";
+import { GPSApiRequestFactory, GPSApiResponseProcessor } from "../apis/GPSApi";
+import { GasAdjustedTPSApiRequestFactory, GasAdjustedTPSApiResponseProcessor } from "../apis/GasAdjustedTPSApi";
+import { GeneralApiRequestFactory, GeneralApiResponseProcessor } from "../apis/GeneralApi";
+import { IngestionApiRequestFactory, IngestionApiResponseProcessor } from "../apis/IngestionApi";
+import { PageModelApiRequestFactory, PageModelApiResponseProcessor } from "../apis/PageModelApi";
+import { StatusApiRequestFactory, StatusApiResponseProcessor } from "../apis/StatusApi";
+
+import { TPSApiRequestFactory, TPSApiResponseProcessor } from "../apis/TPSApi";
+import { TimeWarpApiRequestFactory, TimeWarpApiResponseProcessor } from "../apis/TimeWarpApi";
 export class ObservableGPSApi {
     private requestFactory: GPSApiRequestFactory;
     private responseProcessor: GPSApiResponseProcessor;
@@ -132,7 +140,6 @@ export class ObservableGPSApi {
 
 }
 
-import { GasAdjustedTPSApiRequestFactory, GasAdjustedTPSApiResponseProcessor} from "../apis/GasAdjustedTPSApi";
 export class ObservableGasAdjustedTPSApi {
     private requestFactory: GasAdjustedTPSApiRequestFactory;
     private responseProcessor: GasAdjustedTPSApiResponseProcessor;
@@ -248,7 +255,6 @@ export class ObservableGasAdjustedTPSApi {
 
 }
 
-import { GeneralApiRequestFactory, GeneralApiResponseProcessor} from "../apis/GeneralApi";
 export class ObservableGeneralApi {
     private requestFactory: GeneralApiRequestFactory;
     private responseProcessor: GeneralApiResponseProcessor;
@@ -491,7 +497,6 @@ export class ObservableGeneralApi {
 
 }
 
-import { IngestionApiRequestFactory, IngestionApiResponseProcessor} from "../apis/IngestionApi";
 export class ObservableIngestionApi {
     private requestFactory: IngestionApiRequestFactory;
     private responseProcessor: IngestionApiResponseProcessor;
@@ -530,7 +535,6 @@ export class ObservableIngestionApi {
 
 }
 
-import { PageModelApiRequestFactory, PageModelApiResponseProcessor} from "../apis/PageModelApi";
 export class ObservablePageModelApi {
     private requestFactory: PageModelApiRequestFactory;
     private responseProcessor: PageModelApiResponseProcessor;
@@ -601,7 +605,6 @@ export class ObservablePageModelApi {
 
 }
 
-import { StatusApiRequestFactory, StatusApiResponseProcessor} from "../apis/StatusApi";
 export class ObservableStatusApi {
     private requestFactory: StatusApiRequestFactory;
     private responseProcessor: StatusApiResponseProcessor;
@@ -642,8 +645,6 @@ export class ObservableStatusApi {
     }
 
 }
-
-import { TPSApiRequestFactory, TPSApiResponseProcessor} from "../apis/TPSApi";
 export class ObservableTPSApi {
     private requestFactory: TPSApiRequestFactory;
     private responseProcessor: TPSApiResponseProcessor;
@@ -759,7 +760,6 @@ export class ObservableTPSApi {
 
 }
 
-import { TimeWarpApiRequestFactory, TimeWarpApiResponseProcessor} from "../apis/TimeWarpApi";
 export class ObservableTimeWarpApi {
     private requestFactory: TimeWarpApiRequestFactory;
     private responseProcessor: TimeWarpApiResponseProcessor;

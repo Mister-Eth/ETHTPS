@@ -1,6 +1,9 @@
 import { createConfiguration } from '../api-gen/configuration';
 import { ServerConfiguration } from '../api-gen/servers';
 import { GeneralApi } from '../api-gen/index'
+import { DefaultOptions, QueryClientConfig, QueryObserverOptions, QueryOptions, useQueries, useQuery, QueryFunction } from 'react-query';
+import { ProviderResponseModel } from '../api-gen/models/ProviderResponseModel';
+
 export class ETHTPSApi {
 
     public generalApi: GeneralApi;
@@ -13,23 +16,29 @@ export class ETHTPSApi {
         })
         this.generalApi = new GeneralApi(config);
     }
-    /*
-    public _generalApi: GeneralApiRequestFactory
-    private _client: HttpLibrary;
 
-    constructor() {
-        let config = createConfiguration();
-        config.baseServer.
-        this._generalApi = new GeneralApiRequestFactory(createConfiguration())
-        this._generalApi.aPIV2ProvidersGet();
-        this._client = new IsomorphicFetchHttpLibrary();
+    private getProvidersQuery() {
+        return {
+            retry: true,
+            refetchInterval: 2000,
+            staleTime: 60000,
+            onSuccess: (data: any | unknown) => {
+                console.log(data)
+            },
+            onError: (error: any) => {
+                console.log(error)
+            },
+            //queryFn: useQuery('test', () => this.generalApi?.aPIV2ProvidersGet())
+
+        }
     }
 
-    public getProviders(subchainsOf?: string, _options?: Configuration): Promise<[ProviderModel] | unknown> {
-        return this._generalApi.aPIV2ProvidersGet(subchainsOf, _options).then(((value: RequestContext) => {
-            return this._client.send(value).toPromise().then((responseContext: ResponseContext) => {
-                return responseContext.getBodyAsAny() as [ProviderModel] | unknown
-            })
-        }).bind(this))
-    }*/
+    public buildQueryClientConfig(): QueryClientConfig {
+        return {
+            defaultOptions: {
+                queries: {}
+                //this.getProvidersQuery()
+            }
+        }
+    }
 }

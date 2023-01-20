@@ -1,15 +1,3 @@
-export * from './AllDataModel';
-export * from './BlockInfoProviderStatus';
-export * from './BlockInfoProviderStatusResult';
-export * from './ChartData';
-export * from './DataPoint';
-export * from './DataResponseModel';
-export * from './DataType';
-export * from './HomePageResponseModel';
-export * from './ProviderModel';
-export * from './ProviderResponseModel';
-export * from './TimeInterval';
-export * from './TimeWarpSyncProgressModel';
 
 import { AllDataModel } from './AllDataModel';
 import { BlockInfoProviderStatus } from './BlockInfoProviderStatus';
@@ -23,23 +11,35 @@ import { ProviderModel } from './ProviderModel';
 import { ProviderResponseModel } from './ProviderResponseModel';
 import { TimeInterval } from './TimeInterval';
 import { TimeWarpSyncProgressModel } from './TimeWarpSyncProgressModel';
+export * from './AllDataModel';
+export * from './BlockInfoProviderStatus';
+export * from './BlockInfoProviderStatusResult';
+export * from './ChartData';
+export * from './DataPoint';
+export * from './DataResponseModel';
+export * from './DataType';
+export * from './HomePageResponseModel';
+export * from './ProviderModel';
+export * from './ProviderResponseModel';
+export * from './TimeInterval';
+export * from './TimeWarpSyncProgressModel';
 
 /* tslint:disable:no-unused-variable */
 let primitives = [
-                    "string",
-                    "boolean",
-                    "double",
-                    "integer",
-                    "long",
-                    "float",
-                    "number",
-                    "any"
-                 ];
+    "string",
+    "boolean",
+    "double",
+    "integer",
+    "long",
+    "float",
+    "number",
+    "any"
+];
 
 const supportedMediaTypes: { [mediaType: string]: number } = {
-  "application/json": Infinity,
-  "application/octet-stream": 0,
-  "application/x-www-form-urlencoded": 0
+    "application/json": Infinity,
+    "application/octet-stream": 0,
+    "application/x-www-form-urlencoded": 0
 }
 
 
@@ -49,7 +49,7 @@ let enumsMap: Set<string> = new Set<string>([
     "TimeInterval",
 ]);
 
-let typeMap: {[index: string]: any} = {
+let typeMap: { [index: string]: any } = {
     "AllDataModel": AllDataModel,
     "BlockInfoProviderStatusResult": BlockInfoProviderStatusResult,
     "ChartData": ChartData,
@@ -85,7 +85,7 @@ export class ObjectSerializer {
             } else {
                 if (data[discriminatorProperty]) {
                     var discriminatorType = data[discriminatorProperty];
-                    if(typeMap[discriminatorType]){
+                    if (typeMap[discriminatorType]) {
                         return discriminatorType; // use the type given in the discriminator
                     } else {
                         return expectedType; // discriminator did not map to a type
@@ -113,7 +113,7 @@ export class ObjectSerializer {
             return transformedData;
         } else if (type === "Date") {
             if (format == "date") {
-                let month = data.getMonth()+1
+                let month = data.getMonth() + 1
                 month = month < 10 ? "0" + month.toString() : month.toString()
                 let day = data.getDate();
                 day = day < 10 ? "0" + day.toString() : day.toString();
@@ -135,7 +135,7 @@ export class ObjectSerializer {
 
             // get the map for the correct type.
             let attributeTypes = typeMap[type].getAttributeTypeMap();
-            let instance: {[index: string]: any} = {};
+            let instance: { [index: string]: any } = {};
             for (let index in attributeTypes) {
                 let attributeType = attributeTypes[index];
                 instance[attributeType.baseName] = ObjectSerializer.serialize(data[attributeType.name], attributeType.type, attributeType.format);

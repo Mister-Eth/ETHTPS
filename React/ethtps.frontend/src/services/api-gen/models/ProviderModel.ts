@@ -11,14 +11,15 @@
  */
 
 import { HttpFile } from '../http/http';
+import { IProviderModel } from '../../../models/interfaces/IProviderModel';
 
-export class ProviderModel {
+export class ProviderModel implements IProviderModel {
     'name'?: string;
     'type'?: string;
 
     static readonly discriminator: string | undefined = undefined;
 
-    static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
+    static readonly attributeTypeMap: Array<{ name: string, baseName: string, type: string, format: string }> = [
         {
             "name": "name",
             "baseName": "name",
@@ -30,7 +31,7 @@ export class ProviderModel {
             "baseName": "type",
             "type": "string",
             "format": ""
-        }    ];
+        }];
 
     static getAttributeTypeMap() {
         return ProviderModel.attributeTypeMap;

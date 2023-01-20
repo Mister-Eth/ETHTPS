@@ -4,15 +4,12 @@ import TimeWarpPage from './components/pages/TimeWarpPage';
 import StatusPage from './components/pages/Status/StatusPage';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import LoadingPage from './components/pages/loading/LoadingPage';
+import { IGlobalDependencies } from './models/dependencies/IGlobalDependencies';
 
-export default function Main(): JSX.Element {
+export default function Main(dependencies: IGlobalDependencies): JSX.Element {
   return (
     <Routes>
-      <Route path='/' element={LoadingPage}></Route>
-      <Route path='/Network/' element={NetworkPage}></Route>
-      <Route path='/TimeWarp/' element={TimeWarpPage}></Route>
-      <Route path='/Status/' element={StatusPage}></Route>
+      <Route path='/' element={<MainPage{...dependencies} />}></Route>
     </Routes>
   )
 }

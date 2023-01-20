@@ -1,22 +1,15 @@
 import './App.css';
 import React from "react";
-import MainPage from './components/pages/MainPage/MainPage';
 import { QueryClient, QueryClientProvider } from "react-query"
 import { ETHTPSApi } from './services/api/ETHTPSApi';
+import Main from './Main';
+import { configureStore } from '@reduxjs/toolkit';
 
 const apiClient = new ETHTPSApi('http://localhost:10202');
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: true
-    }
-  }
-})
-
+const queryClient = new QueryClient(apiClient.buildQueryClientConfig())
 export default function App(): JSX.Element {
   return <QueryClientProvider client={queryClient}>
-    <MainPage {...apiClient} />
+    <Main {...apiClient} />
   </QueryClientProvider>
 }
 
