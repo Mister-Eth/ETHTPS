@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { providersReducer } from './slices/ProvidersSlice'
 import { ApplicationState } from './models/dependencies/ApplicationState'
-import { ProviderModel } from './services/api-gen/models/ProviderModel';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
-const preloadedState = new ApplicationState([new ProviderModel()])
+const preloadedState = new ApplicationState()
 
 export const store = configureStore({
-    reducer: { providersReducer },
+    reducer: {
+        providers: providersReducer
+    },
     ...
     preloadedState,
     middleware: (getDefaultMiddleware) =>
@@ -16,3 +18,7 @@ export const store = configureStore({
 })
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
+// Use throughout your app instead of plain `useDispatch` and `useSelector`
+type DispatchFunc = () => AppDispatch
+export const useAppDispatch: DispatchFunc = useDispatch
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
