@@ -17,6 +17,10 @@ export class ETHTPSApi {
         this.generalApi = new GeneralApi(config);
     }
 
+    public getProviders(): Promise<ProviderResponseModel[]> {
+        return this.generalApi.aPIV2ProvidersGet()
+    }
+
     private getProvidersQuery() {
         return {
             retry: true,

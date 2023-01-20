@@ -5,14 +5,13 @@ import { ProviderResponseModel } from "../../services/api-gen";
 import { useSelector } from "react-redux";
 import { ApplicationState } from '../../models/dependencies/ApplicationState';
 import { store, AppDispatch, useAppDispatch } from '../../store';
-import { useGetProvidersFromAppStore, addProviderToAppState } from '../../hooks/providerHooks';
+import { useGetProvidersFromAppStore, loadProvidersFromServerAsync } from '../../hooks/providerHooks';
 import { addProvider } from "../../slices/ProvidersSlice";
 
 export function ProviderTablePartial() {
     const providers = useGetProvidersFromAppStore()
     const clickTest = () => {
-        console.log(2)
-        addProviderToAppState(new ProviderModel())
+        loadProvidersFromServerAsync();
     }
     return <>
         Provider table with <b>{providers?.length === undefined ? 'no' : providers?.length} provider{providers?.length != 1 ? "s" : ""} </b>

@@ -1,4 +1,5 @@
 import { IProviderModel } from "../interfaces/IProviderModel";
+import { ETHTPSApi } from '../../services/api/ETHTPSApi';
 
 export interface IApplicationState {
     providers?: IProviderModel[]
