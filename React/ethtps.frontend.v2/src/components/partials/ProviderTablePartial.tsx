@@ -7,6 +7,7 @@ import { ApplicationState } from '../../models/dependencies/ApplicationState';
 import { store, AppDispatch, useAppDispatch } from '../../store';
 import { useGetProvidersFromAppStore, loadProvidersFromServerAsync } from '../../hooks/providerHooks';
 import { addProvider } from "../../slices/ProvidersSlice";
+import { Button } from "../../stories/Button";
 
 export function ProviderTablePartial() {
     const providers = useGetProvidersFromAppStore()
@@ -15,8 +16,6 @@ export function ProviderTablePartial() {
     }
     return <>
         Provider table with <b>{providers?.length === undefined ? 'no' : providers?.length} provider{providers?.length != 1 ? "s" : ""} </b>
-        <button onClick={clickTest}>
-            Please work
-        </button>
+        <Button label="Please work" />
     </>
 }
