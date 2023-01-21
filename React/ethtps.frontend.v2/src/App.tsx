@@ -4,7 +4,7 @@ import { ETHTPSApi } from './services/api/ETHTPSApi';
 import Main from './Main';
 import { configureStore } from '@reduxjs/toolkit';
 
-const apiClient = new ETHTPSApi('http://localhost:10202');
+const apiClient = new ETHTPSApi('https://api.ethtps.info');
 export default function App(): JSX.Element {
   return <Main {...apiClient} />
 }
