@@ -9,5 +9,8 @@ export const darkTheme = createTheme({
     secondary: {
       main: green[500],
     },
+    background: {
+      default: "#000000",
+    },
   },
 });

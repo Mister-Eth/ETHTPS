@@ -1,10 +1,7 @@
-import { Button } from "@mui/material"
-import React from "react"
+import { Button } from "@mui/material";
+import React from "react";
+import { CustomButtonGroup } from "./CustomButtonGroup";
 
 export function ModeButton(): JSX.Element {
-    return <>
-        <Button>
-            TPS
-        </Button>
-    </>
+  return <CustomButtonGroup {...{ buttons: ["TPS", "GPS", "GTPS"] }} />;
 }

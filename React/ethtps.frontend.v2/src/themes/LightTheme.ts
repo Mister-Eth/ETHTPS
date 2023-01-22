@@ -9,5 +9,8 @@ export const lightTheme = createTheme({
     secondary: {
       main: green[500],
     },
+    background: {
+      default: "#ffffff",
+    },
   },
 });
