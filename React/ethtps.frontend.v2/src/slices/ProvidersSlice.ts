@@ -1,32 +1,35 @@
-import { PayloadAction, configureStore, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { IProviderModel } from "../models/interfaces/IProviderModel";
-import { ProviderModel } from '../services/api-gen/models/ProviderModel';
-import { ApplicationState } from '../models/dependencies/ApplicationState';
-import { useAppSelector, useAppDispatch } from '../store';
+import { ProviderModel } from "../services/api-gen/models/ProviderModel";
 import { ProviderResponseModel } from "../services/api-gen";
-import { ETHTPSApi } from "../services/api/ETHTPSApi";
 
-const initialState: ProviderModel[] = []
+const initialState: ProviderModel[] = [];
 
 const providersSlice = createSlice({
-    name: 'providers',
-    initialState,
-    reducers: {
-        addProvider: (state: ProviderModel[], action: PayloadAction<IProviderModel>) => {
-            state = [...state, action.payload]
-            return [...state]
-        },
-        setProviders(state: ProviderModel[], action: PayloadAction<ProviderResponseModel[]>) {
-            let arr = action.payload.map(x => {
-                let result = new ProviderModel();
-                result.name = x?.name
-                result.type = x?.type
-                return result;
-            })
-            return state.concat(arr)
-        }
-    }
-})
+  name: "providers",
+  initialState,
+  reducers: {
+    addProvider: (
+      state: ProviderModel[],
+      action: PayloadAction<IProviderModel>
+    ) => {
+      state = [...state, action.payload];
+      return [...state];
+    },
+    setProviders(
+      state: ProviderModel[],
+      action: PayloadAction<ProviderResponseModel[]>
+    ) {
+      let arr = action.payload.map((x) => {
+        let result = new ProviderModel();
+        result.name = x?.name;
+        result.type = x?.type;
+        return result;
+      });
+      return state.concat(arr);
+    },
+  },
+});
 
-export const { addProvider, setProviders } = providersSlice.actions
-export const providersReducer = providersSlice.reducer
+export const { addProvider, setProviders } = providersSlice.actions;
+export const providersReducer = providersSlice.reducer;

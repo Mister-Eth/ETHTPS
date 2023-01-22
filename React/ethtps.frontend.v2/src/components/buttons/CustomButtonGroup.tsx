@@ -8,8 +8,8 @@ interface ICustomButtonGroupParameters {
 export function CustomButtonGroup(params: ICustomButtonGroupParameters) {
   return (
     <ButtonGroup variant="contained" aria-label="outlined primary button group">
-      {params?.buttons?.map((x) => (
-        <Button>{x}</Button>
+      {params?.buttons?.map((x, i) => (
+        <Button key={i}>{x}</Button>
       ))}
     </ButtonGroup>
   );

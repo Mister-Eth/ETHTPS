@@ -1,14 +1,20 @@
 import { IProviderModel } from "../interfaces/IProviderModel";
-import { ETHTPSApi } from '../../services/api/ETHTPSApi';
+import { ETHTPSApi } from "../../services/api/ETHTPSApi";
 
 export interface IApplicationState {
-    providers?: IProviderModel[]
+  providers?: IProviderModel[];
+  networks?: string[];
+  intervals?: string[];
 }
 
 export class ApplicationState implements IApplicationState {
-    public providers?: IProviderModel[]
+  public providers?: IProviderModel[];
+  public networks?: string[] | undefined;
+  public intervals?: string[] | undefined;
 
-    constructor(providers?: IProviderModel[]) {
-        this.providers = providers
-    }
+  constructor(state?: IApplicationState) {
+    this.providers = state?.providers;
+    this.networks = state?.networks;
+    this.intervals = state?.intervals;
+  }
 }
