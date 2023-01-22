@@ -1,18 +1,14 @@
 import React, { PropsWithChildren } from "react";
-import { useState } from "react";
-import { useLoadingBarUntilDataReady } from "../../../hooks/useLoadingBarUntilDataReady";
-import { useGetProvidersTablePartial } from "../../../hooks/useGetProvidersTablePartial";
-import { loadProvidersFromServer } from "../../../hooks/providerHooks";
 import { setProviders } from "../../../slices/ProvidersSlice";
 import { store } from "../../../store";
 import { CircularProgress, Stack, Typography } from "@mui/material";
-import { ProviderResponseModel } from "../../../services/api-gen/models/ProviderResponseModel";
 import { useLoadValuesHook } from "../../../hooks/useLoadValuesHook";
 import { api } from "../../../services/DependenciesIOC";
 import { setNetworks } from "../../../slices/NetworksSlice";
 import { setIntervals } from "../../../slices/IntervalsSlice";
+import { useState } from "react";
+import { useEffect } from "react";
 import {
-  setMaxData,
   setMaxGPSData,
   setMaxGTPSData,
   setMaxTPSData,
@@ -48,14 +44,20 @@ export function LoadingApplicationDataPartial({
       (value) => store.dispatch(setMaxGTPSData(value))
     ),
   ];
+  const [loadedPercentage, setLoadedPercentage] = useState(0);
+  useEffect(() => {
+    setLoadedPercentage(
+      (loadees.filter((x) => x).length * 100) / loadees.length
+    );
+  }, [loadedPercentage]);
   if (loadees.every((x) => x)) return <>{children}</>;
   else
     return (
       <>
         <Stack spacing={2} direction="row">
-          <CircularProgress variant="indeterminate" />
+          <CircularProgress variant="determinate" value={loadedPercentage} />
         </Stack>
-        <Typography>Loading...</Typography>
+        <Typography>Loading... {loadedPercentage}%</Typography>
       </>
     );
 }

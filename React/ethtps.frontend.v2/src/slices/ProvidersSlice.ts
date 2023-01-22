@@ -20,6 +20,7 @@ const providersSlice = createSlice({
       state: ProviderModel[],
       action: PayloadAction<ProviderResponseModel[]>
     ) {
+      state.length = 0;
       let arr = action.payload.map((x) => {
         let result = new ProviderModel();
         result.name = x?.name;
