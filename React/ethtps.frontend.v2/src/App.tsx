@@ -3,10 +3,19 @@ import React from "react";
 import { ETHTPSApi } from './services/api/ETHTPSApi';
 import Main from './Main';
 import { configureStore } from '@reduxjs/toolkit';
+import { StorageThemeProvider } from './services/api/themes/StorageThemeProvider';
+import { ThemeProvider } from '@emotion/react';
 
 const apiClient = new ETHTPSApi('https://api.ethtps.info');
+const themeProvider = new StorageThemeProvider();
+const deps = {
+  apiClient,
+  themeProvider
+}
 export default function App(): JSX.Element {
-  return <Main {...apiClient} />
+  return <ThemeProvider theme={deps.themeProvider.getCurrentTheme()}>
+    <Main {...deps} />
+  </ThemeProvider>
 }
 
 /*
