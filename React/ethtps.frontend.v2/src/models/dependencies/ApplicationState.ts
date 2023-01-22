@@ -1,14 +1,12 @@
 import { IProviderModel } from "../interfaces/IProviderModel";
 import { ETHTPSApi } from "../../services/api/ETHTPSApi";
 import { DataPoint } from "../../services/api-gen";
+import { IMaxDataModel } from "../interfaces/IMaxDataModel";
 
-export interface IApplicationState {
+export interface IApplicationState extends IMaxDataModel {
   providers?: IProviderModel[];
   networks?: string[];
   intervals?: string[];
-  maxTPSData?: { [key: string]: DataPoint };
-  maxGPSData?: { [key: string]: DataPoint };
-  maxGTPSData?: { [key: string]: DataPoint };
 }
 
 export class ApplicationState implements IApplicationState {

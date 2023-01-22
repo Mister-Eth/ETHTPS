@@ -1,11 +1,9 @@
 import React from "react";
 import { IGlobalDependencies } from "../models/dependencies/IGlobalDependencies";
-import { useGetProvidersTablePartial } from "../hooks/useGetProvidersTablePartial";
 import { DiscordBanner } from "../components/partials/banners/DiscordBanner";
 import { LoadingApplicationDataPartial } from "../components/partials/loading/LoadingApplicationDataPartial";
 import { ModeButton } from "../components/buttons/ModeButton";
-import useEffect from "react";
-import { ProviderTablePartial } from "../components/partials/ProviderTablePartial";
+import { AllProvidersTable } from "../components/tables/all networks/AllProvidersTable";
 
 export default function MainPage(
   dependencies: IGlobalDependencies
@@ -17,7 +15,7 @@ export default function MainPage(
         <>
           <ModeButton />
           <br />
-          <ProviderTablePartial />
+          <AllProvidersTable />
         </>
       </LoadingApplicationDataPartial>
     </>

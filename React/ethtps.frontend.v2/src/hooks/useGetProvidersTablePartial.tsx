@@ -1,6 +1,6 @@
 import React from "react";
-import { ProviderTablePartial } from "../components/partials/ProviderTablePartial";
+import { ProviderTable } from "../components/tables/ProviderTable";
 
 export function useGetProvidersTablePartial(): JSX.Element {
-  return <ProviderTablePartial />;
+  return <ProviderTable />;
 }
