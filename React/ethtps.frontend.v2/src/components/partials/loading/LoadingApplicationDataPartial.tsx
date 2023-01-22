@@ -10,7 +10,13 @@ import { ProviderResponseModel } from "../../../services/api-gen/models/Provider
 import { useLoadValuesHook } from "../../../hooks/useLoadValuesHook";
 import { api } from "../../../services/DependenciesIOC";
 import { setNetworks } from "../../../slices/NetworksSlice";
-import { setintervals } from "../../../slices/IntervalsSlice";
+import { setIntervals } from "../../../slices/IntervalsSlice";
+import {
+  setMaxData,
+  setMaxGPSData,
+  setMaxGTPSData,
+  setMaxTPSData,
+} from "../../../slices/DataSlice";
 
 export function LoadingApplicationDataPartial({
   children,
@@ -27,11 +33,22 @@ export function LoadingApplicationDataPartial({
     ),
     useLoadValuesHook(
       () => api.getIntervals(),
-      (value) => store.dispatch(setintervals(value))
+      (value) => store.dispatch(setIntervals(value))
+    ),
+    useLoadValuesHook(
+      () => api.getMax("TPS"),
+      (value) => store.dispatch(setMaxTPSData(value))
+    ),
+    useLoadValuesHook(
+      () => api.getMax("GPS"),
+      (value) => store.dispatch(setMaxGPSData(value))
+    ),
+    useLoadValuesHook(
+      () => api.getMax("GTPS"),
+      (value) => store.dispatch(setMaxGTPSData(value))
     ),
   ];
-  let ready = loadees.every((x) => x);
-  if (ready) return <>{children}</>;
+  if (loadees.every((x) => x)) return <>{children}</>;
   else
     return (
       <>

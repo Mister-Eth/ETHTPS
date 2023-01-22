@@ -4,6 +4,7 @@ import { ApplicationState } from "./models/dependencies/ApplicationState";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { networksReducer } from "./slices/NetworksSlice";
 import { intervalsReducer } from "./slices/IntervalsSlice";
+import { dataReducer } from "./slices/DataSlice";
 
 const preloadedState = new ApplicationState();
 
@@ -12,6 +13,7 @@ export const store = configureStore({
     providers: providersReducer,
     networks: networksReducer,
     intervals: intervalsReducer,
+    data: dataReducer,
   },
   ...preloadedState,
   middleware: (getDefaultMiddleware) =>

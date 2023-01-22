@@ -1,11 +1,12 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { api } from "../services/DependenciesIOC";
 const initialState: Array<string> = [];
 
 const intervalsSlice = createSlice({
   name: "intervals",
   initialState,
   reducers: {
-    setintervals(state: string[], action: PayloadAction<string[]>) {
+    setIntervals(state: string[], action: PayloadAction<string[]>) {
       state.length = 0;
       state = {
         ...action.payload,
@@ -15,5 +16,5 @@ const intervalsSlice = createSlice({
   },
 });
 
-export const { setintervals } = intervalsSlice.actions;
+export const { setIntervals } = intervalsSlice.actions;
 export const intervalsReducer = intervalsSlice.reducer;
