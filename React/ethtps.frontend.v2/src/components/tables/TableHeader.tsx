@@ -8,8 +8,8 @@ interface ITableHeaderParams {
 export function TableHeader(params: ITableHeaderParams): JSX.Element {
   return (
     <TableRow>
-      {params.text?.map((x) => (
-        <TableCell>{x}</TableCell>
+      {params.text?.map((x, i) => (
+        <TableCell key={i}>{x}</TableCell>
       ))}
     </TableRow>
   );
