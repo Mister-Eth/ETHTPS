@@ -8,6 +8,7 @@ import {
 } from "../api-gen/index";
 //import { DefaultOptions, QueryClientConfig, QueryObserverOptions, QueryOptions, useQueries, useQuery, QueryFunction } from 'react-query';
 import { ProviderResponseModel } from "../api-gen/models/ProviderResponseModel";
+import { randomShortSleeper } from "../PromiseSleeper";
 
 export class ETHTPSApi {
   public generalApi: GeneralApi;
@@ -16,7 +17,9 @@ export class ETHTPSApi {
   public gtpsApi: GasAdjustedTPSApi;
 
   private _variables: { [key: string]: any };
-  constructor(url: string) {
+  private _sleeperDelay: number;
+
+  constructor(url: string, useArtificialDelay: boolean = true) {
     this._variables = {};
     let config = createConfiguration({
       baseServer: new ServerConfiguration(url, this._variables),
@@ -25,6 +28,7 @@ export class ETHTPSApi {
     this.tpsApi = new TPSApi(config);
     this.gpsApi = new GPSApi(config);
     this.gtpsApi = new GasAdjustedTPSApi(config);
+    this._sleeperDelay = useArtificialDelay ? 1000 : 0;
   }
 
   public getProviders(): Promise<ProviderResponseModel[]> {

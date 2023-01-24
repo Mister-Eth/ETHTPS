@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+
+.center {
+  height: 100%;
+  padding: 70px 0;
+/*  border: 3px solid green; */
+  text-align: center;
+}

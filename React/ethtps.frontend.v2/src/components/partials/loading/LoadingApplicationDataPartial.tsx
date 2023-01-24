@@ -1,7 +1,12 @@
 import React, { PropsWithChildren } from "react";
 import { setProviders } from "../../../slices/ProvidersSlice";
 import { store } from "../../../store";
-import { CircularProgress, Stack, Typography } from "@mui/material";
+import {
+  CircularProgress,
+  LinearProgress,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { useLoadValuesHook } from "../../../hooks/useLoadValuesHook";
 import { api } from "../../../services/DependenciesIOC";
 import { setNetworks } from "../../../slices/NetworksSlice";
@@ -54,10 +59,18 @@ export function LoadingApplicationDataPartial({
   else
     return (
       <>
-        <Stack spacing={2} direction="row">
-          <CircularProgress variant="determinate" value={loadedPercentage} />
-        </Stack>
-        <Typography>Loading... {loadedPercentage}%</Typography>
+        <div className="center">
+          <Stack spacing={2} direction="row">
+            <LinearProgress
+              variant="indeterminate"
+              style={{ width: "100%" }}
+              value={loadedPercentage}
+            />
+          </Stack>
+          <Typography>
+            Loading... {loadedPercentage > 0 ? <>{loadedPercentage}%</> : <></>}
+          </Typography>
+        </div>
       </>
     );
 }

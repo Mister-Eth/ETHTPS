@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { api } from "../services/DependenciesIOC";
 import { DataPoint } from "../services/api-gen";
 import { IMaxDataModel } from "../models/interfaces/IMaxDataModel";
+import { CustomDataPoint } from "../Types";
 
 const initialState: IMaxDataModel = {
   maxTPSData: {},
@@ -11,8 +12,8 @@ const initialState: IMaxDataModel = {
 
 function modifyMaxDataState(
   state: IMaxDataModel,
-  finalState: { [key: string]: DataPoint },
-  f: (state: IMaxDataModel) => { [key: string]: DataPoint }
+  finalState: CustomDataPoint,
+  f: (state: IMaxDataModel) => CustomDataPoint
 ): IMaxDataModel {
   let target = f(state);
   let keys = Object.keys(target);

@@ -1,7 +1,7 @@
-import { DataPoint } from "../../services/api-gen";
+import { CustomDataPoint } from "../../Types";
 
 export interface IMaxDataModel {
-  maxTPSData?: { [key: string]: DataPoint };
-  maxGPSData?: { [key: string]: DataPoint };
-  maxGTPSData?: { [key: string]: DataPoint };
+  maxTPSData?: CustomDataPoint;
+  maxGPSData?: CustomDataPoint;
+  maxGTPSData?: CustomDataPoint;
 }
