@@ -13,9 +13,10 @@ const initialState: IMaxDataModel = {
 function modifyMaxDataState(
   state: IMaxDataModel,
   finalState: CustomDataPoint,
-  f: (state: IMaxDataModel) => CustomDataPoint
+  f: (state: IMaxDataModel) => CustomDataPoint | undefined
 ): IMaxDataModel {
-  let target = f(state);
+  let t = f(state);
+  let target: CustomDataPoint = t as CustomDataPoint;
   let keys = Object.keys(target);
   for (let i = 0; i < keys.length; i++) {
     delete target[keys[i]];

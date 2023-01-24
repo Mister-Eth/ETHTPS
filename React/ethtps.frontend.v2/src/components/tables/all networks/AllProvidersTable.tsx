@@ -10,10 +10,9 @@ import React from "react";
 import { IProviderTableModel } from "../../../models/tables/IProviderTableModel";
 import { AllProvidersHeader } from "./AllProvidersHeader";
 import { AllProvidersRows } from "./AllProvidersRows";
-import { useGetProvidersFromAppStore } from "../../../hooks/providerHooks";
+import { useGetProvidersFromAppStore } from "../../../hooks/ProviderHooks";
 
 export function AllProvidersTable(tableData: IProviderTableModel): JSX.Element {
-  const providers = useGetProvidersFromAppStore();
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
