@@ -1,7 +1,7 @@
-import { CustomDataPoint } from "../../Types";
+import { DataPointDictionary } from "../../Types";
 
 export interface IMaxDataModel {
-  maxTPSData?: CustomDataPoint;
-  maxGPSData?: CustomDataPoint;
-  maxGTPSData?: CustomDataPoint;
+  maxTPSData?: DataPointDictionary;
+  maxGPSData?: DataPointDictionary;
+  maxGTPSData?: DataPointDictionary;
 }

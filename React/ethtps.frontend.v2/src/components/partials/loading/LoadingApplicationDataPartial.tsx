@@ -18,6 +18,8 @@ import {
   setMaxGTPSData,
   setMaxTPSData,
 } from "../../../slices/DataSlice";
+import { DataType } from "../../../Types";
+import { DataPoint } from "../../../services/api-gen/models/DataPoint";
 
 export function LoadingApplicationDataPartial({
   children,
@@ -37,15 +39,15 @@ export function LoadingApplicationDataPartial({
       (value) => store.dispatch(setIntervals(value))
     ),
     useLoadValuesHook(
-      () => api.getMax("TPS"),
+      () => api.getMax(DataType.TPS),
       (value) => store.dispatch(setMaxTPSData(value))
     ),
     useLoadValuesHook(
-      () => api.getMax("GPS"),
+      () => api.getMax(DataType.GPS),
       (value) => store.dispatch(setMaxGPSData(value))
     ),
     useLoadValuesHook(
-      () => api.getMax("GTPS"),
+      () => api.getMax(DataType.GTPS),
       (value) => store.dispatch(setMaxGTPSData(value))
     ),
   ];

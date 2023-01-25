@@ -1,4 +1,4 @@
-import { createConfiguration } from "../api-gen/configuration";
+import { Configuration, createConfiguration } from "../api-gen/configuration";
 import { ServerConfiguration } from "../api-gen/servers";
 import {
   GPSApi,
@@ -9,6 +9,12 @@ import {
 //import { DefaultOptions, QueryClientConfig, QueryObserverOptions, QueryOptions, useQueries, useQuery, QueryFunction } from 'react-query';
 import { ProviderResponseModel } from "../api-gen/models/ProviderResponseModel";
 import { randomShortSleeper } from "../PromiseSleeper";
+import { DataType, toShortString, DataPointDictionary } from "../../Types";
+import { DataPoint } from "../api-gen/models/DataPoint";
+import {
+  ThrowConversionNotImplementedException,
+  ThrowInvalidDataTypeException,
+} from "../ThrowHelper";
 
 export class ETHTPSApi {
   public generalApi: GeneralApi;
@@ -44,63 +50,59 @@ export class ETHTPSApi {
   }
 
   public getData(
-    type: string,
+    type: DataType,
     interval: string,
     provider?: string,
     network?: string,
     includeSidechains?: boolean
   ) {
-    switch (type.toUpperCase()) {
-      case "GPS":
+    switch (type) {
+      case DataType.GPS:
         return this.gpsApi.aPIGPSGetGet(
           provider,
           network,
           includeSidechains,
           interval
         );
-      case "GTPS":
+      case DataType.GTPS:
         return this.gtpsApi.aPIGasAdjustedTPSGetGet(
           provider,
           network,
           includeSidechains,
           interval
         );
-      default:
+      case DataType.TPS:
         return this.tpsApi.aPITPSGetGet(
           provider,
           network,
           includeSidechains,
           interval
         );
+      default:
+        ThrowConversionNotImplementedException(type);
+        return;
     }
   }
 
   public getMax(
-    type: string,
+    dataType: DataType,
     provider?: string,
     network?: string,
     includeSidechains?: boolean
-  ) {
-    switch (type.toUpperCase()) {
-      case "GPS":
+  ): Promise<DataPointDictionary> | undefined {
+    switch (dataType) {
+      case DataType.TPS:
+        return this.tpsApi.aPITPSMaxGet(provider, network, includeSidechains);
+      case DataType.GPS:
         return this.gpsApi.aPIGPSMaxGet(provider, network, includeSidechains);
-      case "GTPS":
+      case DataType.GTPS:
         return this.gtpsApi.aPIGasAdjustedTPSMaxGet(
           provider,
           network,
           includeSidechains
         );
       default:
-        return this.tpsApi.aPITPSMaxGet(provider, network, includeSidechains);
+        ThrowConversionNotImplementedException(dataType);
     }
-  }
-
-  public buildQueryClientConfig() {
-    return {
-      defaultOptions: {
-        queries: {},
-        //this.getProvidersQuery()
-      },
-    };
   }
 }

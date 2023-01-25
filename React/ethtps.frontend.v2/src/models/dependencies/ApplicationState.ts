@@ -2,24 +2,24 @@ import { IProviderModel } from "../interfaces/IProviderModel";
 import { ETHTPSApi } from "../../services/api/ETHTPSApi";
 import { DataPoint } from "../../services/api-gen";
 import { IMaxDataModel } from "../interfaces/IMaxDataModel";
-import { CustomDataPoint } from "../../Types";
+import { DataPointDictionary } from "../../Types";
 
 export interface IApplicationState extends IMaxDataModel {
   providers?: IProviderModel[];
   networks?: string[];
   intervals?: string[];
-  maxTPSData?: CustomDataPoint;
-  maxGPSData?: CustomDataPoint;
-  maxGTPSData?: CustomDataPoint;
+  maxTPSData?: DataPointDictionary;
+  maxGPSData?: DataPointDictionary;
+  maxGTPSData?: DataPointDictionary;
 }
 
 export class ApplicationState implements IApplicationState {
   public providers?: IProviderModel[];
   public networks?: string[] | undefined;
   public intervals?: string[] | undefined;
-  public maxTPSData?: CustomDataPoint;
-  public maxGPSData?: CustomDataPoint;
-  public maxGTPSData?: CustomDataPoint;
+  public maxTPSData?: DataPointDictionary;
+  public maxGPSData?: DataPointDictionary;
+  public maxGTPSData?: DataPointDictionary;
 
   constructor(state?: IApplicationState) {
     this.providers = state?.providers;

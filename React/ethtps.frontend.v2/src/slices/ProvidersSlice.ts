@@ -18,10 +18,12 @@ const providersSlice = createSlice({
     },
     setProviders(
       state: ProviderModel[],
-      action: PayloadAction<ProviderResponseModel[]>
+      action: PayloadAction<ProviderResponseModel[] | undefined>
     ) {
-      state.length = 0;
-      let arr = action.payload.map((x) => {
+      if (action.payload === undefined) return state;
+
+      state.length = 0; //Clear existing state
+      let arr = action.payload?.map((x) => {
         let result = new ProviderModel();
         result.name = x?.name;
         result.type = x?.type;

@@ -5,7 +5,9 @@ const networksSlice = createSlice({
   name: "networks",
   initialState,
   reducers: {
-    setNetworks(state: string[], action: PayloadAction<string[]>) {
+    setNetworks(state: string[], action: PayloadAction<string[] | undefined>) {
+      if (action.payload === undefined) return state;
+
       state.length = 0;
       state = {
         ...action.payload,

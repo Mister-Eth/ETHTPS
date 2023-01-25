@@ -6,7 +6,9 @@ const intervalsSlice = createSlice({
   name: "intervals",
   initialState,
   reducers: {
-    setIntervals(state: string[], action: PayloadAction<string[]>) {
+    setIntervals(state: string[], action: PayloadAction<string[] | undefined>) {
+      if (action.payload === undefined) return state;
+
       state.length = 0;
       state = {
         ...action.payload,

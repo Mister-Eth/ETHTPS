@@ -1,7 +1,5 @@
-import { store, useAppDispatch, useAppSelector } from "../store";
-import { IProviderModel } from "../models/interfaces/IProviderModel";
-import { ProviderModel, ProviderResponseModel } from "../services/api-gen";
-import { addProvider } from "../slices/ProvidersSlice";
+import { useAppSelector } from "../store";
+import { ProviderResponseModel } from "../services/api-gen";
 import { api } from "../services/DependenciesIOC";
 
 export function useGetProvidersFromAppStore() {

@@ -1,7 +1,7 @@
 import React from "react";
 import { IProviderTableModel } from "../../../models/tables/IProviderTableModel";
 import { TableCell, TableRow } from "@mui/material";
-import { CustomDataPoint } from "../../../Types";
+import { DataPointDictionary } from "../../../Types";
 
 export function AllProvidersRows(rowData: IProviderTableModel): JSX.Element {
   return (
