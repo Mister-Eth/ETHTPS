@@ -6,7 +6,7 @@ import { DiscordIcon } from "../icons/DiscordIcon"
 export function LinksSection(): JSX.Element {
   return (
     <>
-      <ButtonGroup>
+      <ButtonGroup sx={{ float: "right" }}>
         <AnimatedButtonWithIcon
           image={<GitHub />}
           href={"https://github.com/Mister-Eth/ETHTPS"}
@@ -20,7 +20,7 @@ export function LinksSection(): JSX.Element {
         <AnimatedButtonWithIcon
           image={<DiscordIcon />}
           href={"https://discord.gg/jWPcsTzpCT"}
-          text={"Join our discord"}
+          text={"Join our Discord"}
         />
       </ButtonGroup>
     </>
