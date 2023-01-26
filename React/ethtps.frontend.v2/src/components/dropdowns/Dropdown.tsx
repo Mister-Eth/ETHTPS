@@ -13,14 +13,15 @@ import { indexOfOr } from "../../services/ArrayHelper"
 import { useEffect } from "react"
 import { IDropdownCallback } from "./IDropdownCallback"
 
-interface IDropdownConfiguration extends IDropdownCallback {
+interface IDropdownConfiguration<T> extends IDropdownCallback<T> {
   options: string[]
   defaultOption: string
   hoverText?: string
-  selectionChanged?: (value: string) => void
+  selectionChanged?: (value: T) => void
+  conversionFunction(value: string): T
 }
 
-export function Dropdown(configuration: IDropdownConfiguration) {
+export function Dropdown<T>(configuration: IDropdownConfiguration<T>) {
   const [open, setOpen] = React.useState(false)
   const anchorRef = React.useRef<HTMLDivElement>(null)
   const [selectedIndex, setSelectedIndex] = React.useState(0)
@@ -30,13 +31,13 @@ export function Dropdown(configuration: IDropdownConfiguration) {
       indexOfOr(configuration.options, configuration.defaultOption),
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [configuration.options])
+  }, [])
 
-  const handleMenuItemClick = (network: string, index: number) => {
+  const handleMenuItemClick = (value: string, index: number) => {
     setSelectedIndex(index)
     setOpen(false)
     if (configuration.selectionChanged !== undefined)
-      configuration.selectionChanged(network)
+      configuration.selectionChanged(configuration.conversionFunction(value))
   }
 
   const handleToggle = () => {
@@ -92,13 +93,13 @@ export function Dropdown(configuration: IDropdownConfiguration) {
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList id="split-button-menu" autoFocusItem>
-                  {configuration.options.map((network, index) => (
+                  {configuration.options.map((value, index) => (
                     <MenuItem
-                      key={network}
+                      key={value}
                       selected={index === selectedIndex}
-                      onClick={() => handleMenuItemClick(network, index)}
+                      onClick={() => handleMenuItemClick(value, index)}
                     >
-                      {network}
+                      {value}
                     </MenuItem>
                   ))}
                 </MenuList>

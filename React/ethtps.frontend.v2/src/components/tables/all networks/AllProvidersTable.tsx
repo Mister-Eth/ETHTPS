@@ -12,7 +12,12 @@ import { AllProvidersRows } from "./AllProvidersRows"
 export function AllProvidersTable(tableData: IProviderTableModel): JSX.Element {
   return (
     <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
+      <Table
+        sx={{
+          minWidth: 750,
+        }}
+        aria-label="collapsible table"
+      >
         <TableHead>
           <AllProvidersHeader />
         </TableHead>

@@ -3,7 +3,6 @@ import { ServerConfiguration } from "../api-gen/servers"
 import { GPSApi, GasAdjustedTPSApi, GeneralApi, TPSApi } from "../api-gen/index"
 import { ProviderResponseModel } from "../api-gen/models/ProviderResponseModel"
 import { DataType, DataPointDictionary, StringDictionary } from "../../Types"
-import { ThrowConversionNotImplementedException } from "../ThrowHelper"
 
 export class ETHTPSApi {
   public generalApi: GeneralApi
@@ -36,14 +35,14 @@ export class ETHTPSApi {
     return this.generalApi.aPIV2IntervalsGet()
   }
 
-  public getData(
-    type: DataType,
+  public getData<DataType>(
+    dataType: DataType,
     interval: string,
     provider?: string,
     network?: string,
     includeSidechains?: boolean,
   ) {
-    switch (type) {
+    switch (dataType) {
       case DataType.GPS:
         return this.gpsApi.aPIGPSGetGet(
           provider,
@@ -66,8 +65,7 @@ export class ETHTPSApi {
           interval,
         )
       default:
-        ThrowConversionNotImplementedException(type)
-        return
+        throw TypeError("Invalid data type")
     }
   }
 

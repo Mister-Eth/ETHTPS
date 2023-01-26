@@ -1,3 +1,3 @@
-export interface IDropdownCallback {
-  selectionChanged?: (value: string) => void
+export interface IDropdownCallback<T> {
+  selectionChanged?: (value: T) => void
 }

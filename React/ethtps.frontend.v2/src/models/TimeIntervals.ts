@@ -50,3 +50,22 @@ export function toShortString_2(intervalName: string) {
       return intervalName
   }
 }
+
+export function fromShortString_2(intervalName: string) {
+  switch (intervalName) {
+    case "1d":
+      return "OneDay"
+    case "1h":
+      return "OneHour"
+    case "1m":
+      return "OneMinute"
+    case "1mo":
+      return "OneMonth"
+    case "1y":
+      return "OneYear"
+    case "1w":
+      return "OneWeek"
+    default:
+      return intervalName
+  }
+}

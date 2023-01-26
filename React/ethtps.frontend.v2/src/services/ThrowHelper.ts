@@ -4,6 +4,6 @@ export function ThrowInvalidDataTypeException(typeStr: string) {
   throw new TypeError(`Invalid DataType "${typeStr}"`)
 }
 
-export function ThrowConversionNotImplementedException(dataType: DataType) {
+export function ThrowConversionNotImplementedException(dataType?: DataType) {
   throw new TypeError(`Invalid DataType "${dataType}"`)
 }
