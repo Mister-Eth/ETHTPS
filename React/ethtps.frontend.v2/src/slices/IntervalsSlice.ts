@@ -9,9 +9,7 @@ const intervalsSlice = createSlice({
       if (action.payload === undefined) return state
 
       state.length = 0
-      state = {
-        ...action.payload,
-      }
+      state = [...action.payload]
       return state
     },
   },

@@ -6,6 +6,8 @@ import { DataPoint } from "./services/api-gen"
 
 export type DataPointDictionary = { [key: string]: DataPoint }
 
+export type StringDictionary = { [key: string]: string }
+
 export enum DataType {
   TPS,
   GPS,

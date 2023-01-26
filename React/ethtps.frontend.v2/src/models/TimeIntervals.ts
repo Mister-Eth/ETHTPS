@@ -29,3 +29,24 @@ export function toShortString(interval: TimeInterval) {
       return "Other"
   }
 }
+
+// long string > short string
+// example: OneMinute > 1m
+export function toShortString_2(intervalName: string) {
+  switch (intervalName) {
+    case "OneDay":
+      return "1d"
+    case "OneHour":
+      return "1h"
+    case "OneMinute":
+      return "1m"
+    case "OneMonth":
+      return "1mo"
+    case "OneYear":
+      return "1y"
+    case "OneWeek":
+      return "1w"
+    default:
+      return intervalName
+  }
+}

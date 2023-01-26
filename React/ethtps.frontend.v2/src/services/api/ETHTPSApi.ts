@@ -2,7 +2,7 @@ import { createConfiguration } from "../api-gen/configuration"
 import { ServerConfiguration } from "../api-gen/servers"
 import { GPSApi, GasAdjustedTPSApi, GeneralApi, TPSApi } from "../api-gen/index"
 import { ProviderResponseModel } from "../api-gen/models/ProviderResponseModel"
-import { DataType, DataPointDictionary } from "../../Types"
+import { DataType, DataPointDictionary, StringDictionary } from "../../Types"
 import { ThrowConversionNotImplementedException } from "../ThrowHelper"
 
 export class ETHTPSApi {
@@ -91,5 +91,13 @@ export class ETHTPSApi {
       default:
         return undefined
     }
+  }
+
+  public getProviderColorDictionary(): Promise<StringDictionary> {
+    return this.generalApi.aPIV2ColorDictionaryGet()
+  }
+
+  public getProviderTypeColorDictionary(): Promise<StringDictionary> {
+    return this.generalApi.aPIV2ProviderTypesColorDictionaryGet()
   }
 }

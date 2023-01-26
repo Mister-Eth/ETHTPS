@@ -5,7 +5,11 @@ export function NetworksDropdown() {
   const networks = useGetNetworksFromAppStore()
   return (
     <>
-      <Dropdown options={networks} defaultOption={"Mainnet"} />
+      <Dropdown
+        options={networks}
+        defaultOption={"Mainnet"}
+        hoverText={"Choose network"}
+      />
     </>
   )
 }

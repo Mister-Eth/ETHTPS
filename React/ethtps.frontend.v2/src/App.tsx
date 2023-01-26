@@ -16,7 +16,7 @@ const deps = {
 export default function App(): JSX.Element {
   return (
     <ThemeProvider theme={deps.themeProvider.getCurrentTheme()}>
-      <CompactHeader />
+      <CompactHeader floating={false} />
       <Main {...deps} />
       <LinksFooter />
       <SignatureFooter />

@@ -1,23 +1,36 @@
 import { Link } from "react-router-dom"
-import { NetworksDropdown } from "../../dropdowns/NetworksDropdown"
 import { LinksSection } from "../LinksSection"
+import { Container } from "@mui/material"
 
-export default function CompactHeader(): JSX.Element {
+interface ICompactHeaderConfig {
+  floating: boolean
+}
+
+export default function CompactHeader(
+  config: ICompactHeaderConfig,
+): JSX.Element {
   const elementSize = 30
   return (
     <>
-      <Link to="/">
-        <br />
-        <div
-          className={"jumpy unselectable"}
-          style={{ fontSize: elementSize, display: "inline" }}
-        >
-          ETHTPS.info
-        </div>
-      </Link>
-      <NetworksDropdown />
-      <LinksSection />
-      <hr />
+      <Container
+        sx={{
+          position: config.floating ? "absolute" : "relative",
+        }}
+      >
+        <Link to="/">
+          <br />
+          <div
+            className={"jumpy unselectable"}
+            style={{
+              fontSize: elementSize,
+              display: "inline",
+            }}
+          >
+            ETHTPS.info
+          </div>
+        </Link>
+        <LinksSection />
+      </Container>
     </>
   )
 }

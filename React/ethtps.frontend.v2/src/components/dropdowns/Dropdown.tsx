@@ -15,6 +15,7 @@ import { useEffect } from "react"
 interface IDropdownConfiguration {
   options: string[]
   defaultOption: string
+  hoverText?: string
 }
 
 export function Dropdown(configuration: IDropdownConfiguration) {
@@ -23,8 +24,10 @@ export function Dropdown(configuration: IDropdownConfiguration) {
   const [selectedIndex, setSelectedIndex] = React.useState(0)
   useEffect(() => {
     setSelectedIndex(
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       indexOfOr(configuration.options, configuration.defaultOption),
     )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [configuration.options])
 
   const handleMenuItemClick = (network: string, index: number) => {
@@ -54,7 +57,7 @@ export function Dropdown(configuration: IDropdownConfiguration) {
         aria-label="split button"
         color={"primary"}
       >
-        <Tooltip title={"Choose network"}>
+        <Tooltip title={configuration.hoverText}>
           <Button
             color={"primary"}
             endIcon={<ArrowDropDownIcon />}

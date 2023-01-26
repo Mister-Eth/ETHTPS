@@ -56,6 +56,7 @@ code {
   font-size: 40px;
   font-weight: 900;
   line-height: 1;
+  margin-left: 30px;
   margin-top: 30px;
 }
 
@@ -67,7 +68,7 @@ code {
 }
 
 .jumpy:hover {
-  animation: text-shadow 1s ease-in-out;
+  animation: text-shadow 0.2s ease-in-out;
   cursor: default;
 }
 
@@ -90,10 +91,18 @@ code {
 
   50% {
     text-shadow:
-      0 0.125em 0 #0c2ffb,
-      0 0.25em 0 #2cfcfd,
-      0 -0.125em 0 #fb203b,
-      0 -0.25em 0 #fefc4b;
+      0 0.006em 0 #0c2ffb,
+      0 0.125em 0 #2cfcfd,
+      0 -0.006em 0 #fb203b,
+      0 -0.125em 0 #fefc4b;
+  }
+
+  100% {
+    text-shadow:
+    0 0 0 #0c2ffb,
+    0 0 0 #2cfcfd,
+    0 0 0 #fb203b,
+    0 0 0 #fefc4b;
   }
 }
 
@@ -280,4 +289,8 @@ img {
 
 .arrow_box {
   background: white;
+}
+
+.floating{
+  position:absolute
 }

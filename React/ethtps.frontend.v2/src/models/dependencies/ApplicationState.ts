@@ -17,6 +17,7 @@ export interface IApplicationState
   maxGTPSData?: DataPointDictionary
   mode: DataType
   liveDataSmoothing: TimeInterval
+  liveDataType: DataType
 }
 
 export class ApplicationState implements IApplicationState {
@@ -28,6 +29,7 @@ export class ApplicationState implements IApplicationState {
   public maxGPSData?: DataPointDictionary
   public maxGTPSData?: DataPointDictionary
   public liveDataSmoothing: TimeInterval
+  public liveDataType: DataType
 
   constructor(state?: IApplicationState) {
     this.providers = state?.providers
@@ -38,5 +40,6 @@ export class ApplicationState implements IApplicationState {
     this.maxGTPSData = state?.maxGTPSData
     this.mode = state?.mode ?? DataType.TPS
     this.liveDataSmoothing = state?.liveDataSmoothing ?? TimeInterval._1m
+    this.liveDataType = state?.liveDataType ?? DataType.TPS
   }
 }

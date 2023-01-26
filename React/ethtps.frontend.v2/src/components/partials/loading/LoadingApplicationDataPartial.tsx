@@ -12,6 +12,10 @@ import {
   setMaxTPSData,
 } from "../../../slices/DataSlice"
 import { DataType } from "../../../Types"
+import {
+  setProviderColorDictionary,
+  setProviderTypeColorDictionary,
+} from "../../../slices/ColorSlice"
 
 export function LoadingApplicationDataPartial({
   children,
@@ -41,6 +45,14 @@ export function LoadingApplicationDataPartial({
     useLoadValuesHook(
       () => api.getMax(DataType.GTPS),
       (value) => store.dispatch(setMaxGTPSData(value)),
+    ),
+    useLoadValuesHook(
+      () => api.getProviderColorDictionary(),
+      (value) => store.dispatch(setProviderColorDictionary(value)),
+    ),
+    useLoadValuesHook(
+      () => api.getProviderTypeColorDictionary(),
+      (value) => store.dispatch(setProviderTypeColorDictionary(value)),
     ),
   ]
   if (loadees.every((x) => x)) return <>{children}</>
