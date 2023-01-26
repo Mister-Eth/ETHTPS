@@ -11,11 +11,13 @@ import MenuList from "@mui/material/MenuList"
 import { Tooltip } from "@mui/material"
 import { indexOfOr } from "../../services/ArrayHelper"
 import { useEffect } from "react"
+import { IDropdownCallback } from "./IDropdownCallback"
 
-interface IDropdownConfiguration {
+interface IDropdownConfiguration extends IDropdownCallback {
   options: string[]
   defaultOption: string
   hoverText?: string
+  selectionChanged?: (value: string) => void
 }
 
 export function Dropdown(configuration: IDropdownConfiguration) {
@@ -33,6 +35,8 @@ export function Dropdown(configuration: IDropdownConfiguration) {
   const handleMenuItemClick = (network: string, index: number) => {
     setSelectedIndex(index)
     setOpen(false)
+    if (configuration.selectionChanged !== undefined)
+      configuration.selectionChanged(network)
   }
 
   const handleToggle = () => {

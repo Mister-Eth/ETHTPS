@@ -5,6 +5,7 @@ import { AllProvidersTable } from "../components/tables/all networks/AllProvider
 import { Container } from "@mui/material"
 import { useGetProvidersFromAppStore } from "../hooks/ProviderHooks"
 import { useGetMaxDataFromAppStore } from "../hooks/DataHooks"
+import { ProviderDataChart } from "../components/charts/ProviderDataChart"
 
 export default function MainPage(
   dependencies: IGlobalDependencies,
@@ -18,6 +19,7 @@ export default function MainPage(
         <>
           <br />
           <Container maxWidth={"md"}>
+            <ProviderDataChart provider={"Ethereum"}></ProviderDataChart>
             <AllProvidersTable providerData={providers} maxData={max} />
           </Container>
         </>

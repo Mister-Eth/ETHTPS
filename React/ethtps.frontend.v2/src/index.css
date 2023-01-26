@@ -17,9 +17,20 @@ code {
   width: 35px;
   height: 35px;
   margin-left: 5px;
+  margin-right: 10px;
 }
 
-.small-img:hover {
+.tiny-img {
+  display: inline;
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.tiny-img:hover {
+   cursor: pointer;
+ }
+.small-img:hover  {
   cursor: pointer;
 }
 
