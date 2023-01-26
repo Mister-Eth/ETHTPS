@@ -11,7 +11,12 @@ export function NameCell(config: ICustomCellConfiguration) {
   const color: string =
     colorDictionary !== undefined ? colorDictionary[name] : "primary"
   return (
-    <Tooltip arrow title={`Click to see more details about ${name}`}>
+    <Tooltip
+      arrow
+      title={
+        <Typography>{`Click to see more details about ${name}`}</Typography>
+      }
+    >
       <TableCell {...centered}>
         <>
           <img
