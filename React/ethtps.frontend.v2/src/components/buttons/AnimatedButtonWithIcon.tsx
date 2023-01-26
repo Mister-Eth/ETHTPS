@@ -1,5 +1,4 @@
-import { Button, Tooltip } from "@mui/material"
-import { openNewTab } from "../../services/LinksHelper"
+import { IconButton, Tooltip } from "@mui/material"
 
 interface IButtonProperties {
   image: JSX.Element
@@ -13,9 +12,7 @@ export function AnimatedButtonWithIcon(props: IButtonProperties): JSX.Element {
   return (
     <>
       <Tooltip title={props.text}>
-        <Button startIcon={props.image} onClick={() => openNewTab(props.href)}>
-          {props.showText ? props.text : ""}
-        </Button>
+        <IconButton color={"primary"}>{props.image}</IconButton>
       </Tooltip>
     </>
   )

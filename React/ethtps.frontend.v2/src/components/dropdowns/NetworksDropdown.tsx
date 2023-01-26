@@ -8,21 +8,21 @@ import Paper from "@mui/material/Paper"
 import Popper from "@mui/material/Popper"
 import MenuItem from "@mui/material/MenuItem"
 import MenuList from "@mui/material/MenuList"
+import { Tooltip } from "@mui/material"
 import { useGetNetworksFromAppStore } from "../../hooks/DataHooks"
+import { indexOfOr } from "../../services/ArrayHelper"
+import { useEffect } from "react"
 
 export function NetworksDropdown() {
   const [open, setOpen] = React.useState(false)
   const anchorRef = React.useRef<HTMLDivElement>(null)
-  const [selectedIndex, setSelectedIndex] = React.useState(1)
-  const options = useGetNetworksFromAppStore()
-  const handleClick = () => {
-    console.info(`You clicked ${options[selectedIndex]}`)
-  }
+  const networks = useGetNetworksFromAppStore()
+  const [selectedIndex, setSelectedIndex] = React.useState(0)
+  useEffect(() => {
+    setSelectedIndex(indexOfOr(networks, "Mainnet"))
+  }, [networks])
 
-  const handleMenuItemClick = (
-    event: React.MouseEvent<HTMLLIElement, MouseEvent>,
-    index: number,
-  ) => {
+  const handleMenuItemClick = (network: string, index: number) => {
     setSelectedIndex(index)
     setOpen(false)
   }
@@ -41,25 +41,23 @@ export function NetworksDropdown() {
 
     setOpen(false)
   }
-
   return (
     <React.Fragment>
       <ButtonGroup
-        variant="contained"
+        variant="outlined"
         ref={anchorRef}
         aria-label="split button"
+        color={"primary"}
       >
-        <Button onClick={handleClick}>{options[selectedIndex]}</Button>
-        <Button
-          size="small"
-          aria-controls={open ? "split-button-menu" : undefined}
-          aria-expanded={open ? "true" : undefined}
-          aria-label="select merge strategy"
-          aria-haspopup="menu"
-          onClick={handleToggle}
-        >
-          <ArrowDropDownIcon />
-        </Button>
+        <Tooltip title={"Choose network"}>
+          <Button
+            color={"primary"}
+            endIcon={<ArrowDropDownIcon />}
+            onClick={handleToggle}
+          >
+            {networks[selectedIndex]}
+          </Button>
+        </Tooltip>
       </ButtonGroup>
       <Popper
         sx={{
@@ -82,14 +80,13 @@ export function NetworksDropdown() {
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList id="split-button-menu" autoFocusItem>
-                  {Array.from(options).map((option, index) => (
+                  {networks.map((network, index) => (
                     <MenuItem
-                      key={option}
-                      disabled={index === 2}
+                      key={network}
                       selected={index === selectedIndex}
-                      onClick={(event) => handleMenuItemClick(event, index)}
+                      onClick={() => handleMenuItemClick(network, index)}
                     >
-                      {option}
+                      {network}
                     </MenuItem>
                   ))}
                 </MenuList>
