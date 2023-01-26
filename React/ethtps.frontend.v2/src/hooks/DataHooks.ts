@@ -1,19 +1,27 @@
 import { useAppSelector } from "../store"
+import { DataType } from "../Types"
 
 export function useGetMaxDataFromAppStore() {
-  return useAppSelector((state) => state.data)
+  return useAppSelector((state) => state.maxData)
+}
+
+export function useGetMaxDataForProviderFromAppStore(
+  provider: string,
+  type: DataType,
+) {
+  return useAppSelector((state) => state.maxData.getMaxDataFor(provider, type))
 }
 
 export function useGetMaxTPSDataFromAppStore() {
-  return useAppSelector((state) => state.data).maxTPSData
+  return useAppSelector((state) => state.maxData).maxTPSData
 }
 
 export function useGetMaxGPSDataFromAppStore() {
-  return useAppSelector((state) => state.data).maxGPSData
+  return useAppSelector((state) => state.maxData).maxGPSData
 }
 
 export function useGetMaxGTPSDataFromAppStore() {
-  return useAppSelector((state) => state.data).maxGTPSData
+  return useAppSelector((state) => state.maxData).maxGTPSData
 }
 
 export function useGetNetworksFromAppStore() {

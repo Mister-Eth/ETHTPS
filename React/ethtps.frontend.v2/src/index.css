@@ -59,11 +59,15 @@ code {
   color: red;
 }
 
+.pointable{
+  cursor: pointer;
+}
+
 .orange {
   color: rgb(167, 125, 74);
 }
 
-.jumpy {
+.jumpy {color: #0f71b3;
   font-size: 40px;
   font-weight: 900;
   line-height: 1;
@@ -79,17 +83,10 @@ code {
 }
 
 .jumpy:hover {
-  animation: text-shadow 0.2s ease-in-out;
-  cursor: default;
+  animation: text-shadow 2s infinite ease-in-out;
+  cursor: pointer;text-decoration: none;
 }
 
-.jumpy {
-  color: #0f71b3;
-}
-
-.jumpy:hover {
-  text-decoration: none;
-}
 
 @keyframes text-shadow {
   0% {
@@ -103,9 +100,9 @@ code {
   50% {
     text-shadow:
       0 0.006em 0 #0c2ffb,
-      0 0.125em 0 #2cfcfd,
+      0 0.25em 0 #2cfcfd,
       0 -0.006em 0 #fb203b,
-      0 -0.125em 0 #fefc4b;
+      0 -0.25em 0 #fefc4b;
   }
 
   100% {

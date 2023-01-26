@@ -15,7 +15,7 @@ export const store = configureStore({
     providers: providersReducer,
     networks: networksReducer,
     intervals: intervalsReducer,
-    data: dataReducer,
+    maxData: dataReducer,
     liveData: liveDataReducer,
     colors: colorReducer,
   },

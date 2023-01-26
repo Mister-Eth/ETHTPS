@@ -1,9 +1,9 @@
-import { TableCell, Tooltip } from "@mui/material"
+import { TableCell, Tooltip, Typography } from "@mui/material"
 import { ICustomCellConfiguration } from "./ICustomCellConfiguration"
 import { useGetProviderColorDictionaryFromAppStore } from "../../../../hooks/ColorHooks"
-import React from "react"
-import { openNewTab } from "../../../../services/LinksHelper"
-import { FullScreenProviderDialog } from "../../../partials/dialogs/full screen/FullScreenProviderDialog"
+
+import { centered } from "../../Cells.Types"
+import { tableCellTypographyStandard } from "./Typography.types"
 
 export function NameCell(config: ICustomCellConfiguration) {
   const colorDictionary = useGetProviderColorDictionaryFromAppStore()
@@ -11,22 +11,24 @@ export function NameCell(config: ICustomCellConfiguration) {
   const color: string =
     colorDictionary !== undefined ? colorDictionary[name] : "primary"
   return (
-    <React.Fragment>
-      <Tooltip title={"Click to see more details"}>
-        <TableCell
-          sx={{ color: color, fontWeight: "bold", cursor: "pointer" }}
-          onClick={() => openNewTab(`/Providers/${config.provider?.name}`)}
-        >
+    <Tooltip arrow title={`Click to see more details about ${name}`}>
+      <TableCell {...centered}>
+        <>
           <img
             alt={`${config.provider?.name} icon`}
             src={`provider-icons/${config.provider?.name}.png`}
             className={"tiny-img inline"}
             style={{ marginRight: "15px" }}
           ></img>
-          {config.provider?.name}
-        </TableCell>
-      </Tooltip>
-      <FullScreenProviderDialog />
-    </React.Fragment>
+          <Typography
+            className={"inline pointable"}
+            color={color}
+            {...tableCellTypographyStandard}
+          >
+            {config.provider?.name}
+          </Typography>
+        </>
+      </TableCell>
+    </Tooltip>
   )
 }

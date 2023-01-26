@@ -11,7 +11,7 @@ interface IButtonProperties {
 export function AnimatedButtonWithIcon(props: IButtonProperties): JSX.Element {
   return (
     <>
-      <Tooltip title={props.text}>
+      <Tooltip arrow title={props.text}>
         <IconButton color={"primary"}>{props.image}</IconButton>
       </Tooltip>
     </>
