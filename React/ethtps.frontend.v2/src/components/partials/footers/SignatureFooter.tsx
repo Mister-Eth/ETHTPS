@@ -1,8 +1,9 @@
 export function SignatureFooter(): JSX.Element {
   return (
     <>
-      {" "}
-      <footer style={{ fontSize: "13px" }}>
+      <footer
+        style={{ fontSize: "13px", marginTop: "2rem", marginLeft: "2rem" }}
+      >
         <div className={"inline"}>
           Brought to you by
           <div style={{ marginLeft: "5px" }} className={"trick"}>

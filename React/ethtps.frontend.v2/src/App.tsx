@@ -11,7 +11,6 @@ export default function App(): JSX.Element {
     <ThemeProvider theme={themeProvider.getCurrentTheme()}>
       <CompactHeader />
       <Main />
-      <LinksFooter />
       <SignatureFooter />
     </ThemeProvider>
   )
