@@ -22,6 +22,7 @@ import {
   RocketLaunchOutlined,
   Twitter,
   RocketOutlined,
+  QuestionMarkOutlined,
 } from "@mui/icons-material"
 import { DiscordIcon } from "../icons/DiscordIcon"
 import Popper from "@mui/material/Popper"
@@ -85,6 +86,13 @@ export function LinksSection(): JSX.Element {
                       image={<DataArray />}
                       href={"https://api.ethtps.info/API/v2/AllData"}
                       text={"Download data"}
+                    />
+                    <MenuItemWithIcon
+                      myKey={4}
+                      openInNewTab
+                      image={<QuestionMarkOutlined />}
+                      href={"https://v1.ethtps.info"}
+                      text={"Old version"}
                     />
                     <MenuItemWithIcon
                       myKey={3}

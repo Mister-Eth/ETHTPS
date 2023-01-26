@@ -4,6 +4,7 @@ import { DataPointDictionary, DataType } from "../../Types"
 import { IDataModeModel } from "../interfaces/IDataModeModel"
 import { ILiveDataModeModel } from "../interfaces/ILiveDataModeModel"
 import { TimeInterval } from "../TimeIntervals"
+import { DataPoint } from "../../services/api-gen"
 
 export interface IApplicationState
   extends IMaxDataModel,
@@ -18,6 +19,7 @@ export interface IApplicationState
   mode: DataType
   liveDataSmoothing: TimeInterval
   liveDataType: DataType
+  getMaxDataFor(provider: string, type: DataType): DataPoint | undefined
 }
 
 export class ApplicationState implements IApplicationState {
@@ -30,6 +32,12 @@ export class ApplicationState implements IApplicationState {
   public maxGTPSData?: DataPointDictionary
   public liveDataSmoothing: TimeInterval
   public liveDataType: DataType
+  public getMaxDataFor(
+    provider: string,
+    type: DataType,
+  ): DataPoint | undefined {
+    return undefined
+  }
 
   constructor(state?: IApplicationState) {
     this.providers = state?.providers
