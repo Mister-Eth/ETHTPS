@@ -1,18 +1,17 @@
-import React from "react";
-import { IGlobalDependencies } from "../models/dependencies/IGlobalDependencies";
-import { DiscordBanner } from "../components/partials/banners/DiscordBanner";
-import { LoadingApplicationDataPartial } from "../components/partials/loading/LoadingApplicationDataPartial";
-import { ModeButton } from "../components/buttons/ModeButton";
-import { AllProvidersTable } from "../components/tables/all networks/AllProvidersTable";
-import { Container } from "@mui/material";
-import { useGetProvidersFromAppStore } from "../hooks/ProviderHooks";
-import { useGetMaxDataFromAppStore } from "../hooks/DataHooks";
+import { IGlobalDependencies } from "../models/dependencies/IGlobalDependencies"
+import { DiscordBanner } from "../components/partials/banners/DiscordBanner"
+import { LoadingApplicationDataPartial } from "../components/partials/loading/LoadingApplicationDataPartial"
+import { ModeButton } from "../components/buttons/ModeButton"
+import { AllProvidersTable } from "../components/tables/all networks/AllProvidersTable"
+import { Container } from "@mui/material"
+import { useGetProvidersFromAppStore } from "../hooks/ProviderHooks"
+import { useGetMaxDataFromAppStore } from "../hooks/DataHooks"
 
 export default function MainPage(
-  dependencies: IGlobalDependencies
+  dependencies: IGlobalDependencies,
 ): JSX.Element {
-  const providers = useGetProvidersFromAppStore();
-  const max = useGetMaxDataFromAppStore();
+  const providers = useGetProvidersFromAppStore()
+  const max = useGetMaxDataFromAppStore()
   return (
     <>
       <DiscordBanner />
@@ -26,5 +25,5 @@ export default function MainPage(
         </>
       </LoadingApplicationDataPartial>
     </>
-  );
+  )
 }

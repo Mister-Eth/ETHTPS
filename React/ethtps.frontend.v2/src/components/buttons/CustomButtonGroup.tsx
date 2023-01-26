@@ -1,8 +1,7 @@
-import { Button, ButtonGroup } from "@mui/material";
-import React from "react";
+import { Button, ButtonGroup } from "@mui/material"
 
 interface ICustomButtonGroupParameters {
-  buttons?: string[];
+  buttons?: string[]
 }
 
 export function CustomButtonGroup(params: ICustomButtonGroupParameters) {
@@ -12,5 +11,5 @@ export function CustomButtonGroup(params: ICustomButtonGroupParameters) {
         <Button key={i}>{x}</Button>
       ))}
     </ButtonGroup>
-  );
+  )
 }

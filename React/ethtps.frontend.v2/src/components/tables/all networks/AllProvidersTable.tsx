@@ -4,13 +4,10 @@ import {
   Table,
   TableHead,
   TableBody,
-  Container,
-} from "@mui/material";
-import React from "react";
-import { IProviderTableModel } from "../../../models/tables/IProviderTableModel";
-import { AllProvidersHeader } from "./AllProvidersHeader";
-import { AllProvidersRows } from "./AllProvidersRows";
-import { useGetProvidersFromAppStore } from "../../../hooks/ProviderHooks";
+} from "@mui/material"
+import { IProviderTableModel } from "../../../models/tables/IProviderTableModel"
+import { AllProvidersHeader } from "./AllProvidersHeader"
+import { AllProvidersRows } from "./AllProvidersRows"
 
 export function AllProvidersTable(tableData: IProviderTableModel): JSX.Element {
   return (
@@ -24,5 +21,5 @@ export function AllProvidersTable(tableData: IProviderTableModel): JSX.Element {
         </TableBody>
       </Table>
     </TableContainer>
-  );
+  )
 }

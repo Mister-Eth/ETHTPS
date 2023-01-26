@@ -1,52 +1,39 @@
-import { Configuration, createConfiguration } from "../api-gen/configuration";
-import { ServerConfiguration } from "../api-gen/servers";
-import {
-  GPSApi,
-  GasAdjustedTPSApi,
-  GeneralApi,
-  TPSApi,
-} from "../api-gen/index";
-//import { DefaultOptions, QueryClientConfig, QueryObserverOptions, QueryOptions, useQueries, useQuery, QueryFunction } from 'react-query';
-import { ProviderResponseModel } from "../api-gen/models/ProviderResponseModel";
-import { randomShortSleeper } from "../PromiseSleeper";
-import { DataType, toShortString, DataPointDictionary } from "../../Types";
-import { DataPoint } from "../api-gen/models/DataPoint";
-import {
-  ThrowConversionNotImplementedException,
-  ThrowInvalidDataTypeException,
-} from "../ThrowHelper";
+import { createConfiguration } from "../api-gen/configuration"
+import { ServerConfiguration } from "../api-gen/servers"
+import { GPSApi, GasAdjustedTPSApi, GeneralApi, TPSApi } from "../api-gen/index"
+import { ProviderResponseModel } from "../api-gen/models/ProviderResponseModel"
+import { DataType, DataPointDictionary } from "../../Types"
+import { ThrowConversionNotImplementedException } from "../ThrowHelper"
 
 export class ETHTPSApi {
-  public generalApi: GeneralApi;
-  public tpsApi: TPSApi;
-  public gpsApi: GPSApi;
-  public gtpsApi: GasAdjustedTPSApi;
+  public generalApi: GeneralApi
+  public tpsApi: TPSApi
+  public gpsApi: GPSApi
+  public gtpsApi: GasAdjustedTPSApi
 
-  private _variables: { [key: string]: any };
-  private _sleeperDelay: number;
+  private _variables: { [key: string]: any }
 
   constructor(url: string, useArtificialDelay: boolean = true) {
-    this._variables = {};
+    this._variables = {}
     let config = createConfiguration({
       baseServer: new ServerConfiguration(url, this._variables),
-    });
-    this.generalApi = new GeneralApi(config);
-    this.tpsApi = new TPSApi(config);
-    this.gpsApi = new GPSApi(config);
-    this.gtpsApi = new GasAdjustedTPSApi(config);
-    this._sleeperDelay = useArtificialDelay ? 1000 : 0;
+    })
+    this.generalApi = new GeneralApi(config)
+    this.tpsApi = new TPSApi(config)
+    this.gpsApi = new GPSApi(config)
+    this.gtpsApi = new GasAdjustedTPSApi(config)
   }
 
   public getProviders(): Promise<ProviderResponseModel[]> {
-    return this.generalApi.aPIV2ProvidersGet();
+    return this.generalApi.aPIV2ProvidersGet()
   }
 
   public getNetworks(): Promise<Array<string>> {
-    return this.generalApi.aPIV2NetworksGet();
+    return this.generalApi.aPIV2NetworksGet()
   }
 
   public getIntervals(): Promise<string[]> {
-    return this.generalApi.aPIV2IntervalsGet();
+    return this.generalApi.aPIV2IntervalsGet()
   }
 
   public getData(
@@ -54,7 +41,7 @@ export class ETHTPSApi {
     interval: string,
     provider?: string,
     network?: string,
-    includeSidechains?: boolean
+    includeSidechains?: boolean,
   ) {
     switch (type) {
       case DataType.GPS:
@@ -62,25 +49,25 @@ export class ETHTPSApi {
           provider,
           network,
           includeSidechains,
-          interval
-        );
+          interval,
+        )
       case DataType.GTPS:
         return this.gtpsApi.aPIGasAdjustedTPSGetGet(
           provider,
           network,
           includeSidechains,
-          interval
-        );
+          interval,
+        )
       case DataType.TPS:
         return this.tpsApi.aPITPSGetGet(
           provider,
           network,
           includeSidechains,
-          interval
-        );
+          interval,
+        )
       default:
-        ThrowConversionNotImplementedException(type);
-        return;
+        ThrowConversionNotImplementedException(type)
+        return
     }
   }
 
@@ -88,21 +75,21 @@ export class ETHTPSApi {
     dataType: DataType,
     provider?: string,
     network?: string,
-    includeSidechains?: boolean
+    includeSidechains?: boolean,
   ): Promise<DataPointDictionary> | undefined {
     switch (dataType) {
       case DataType.TPS:
-        return this.tpsApi.aPITPSMaxGet(provider, network, includeSidechains);
+        return this.tpsApi.aPITPSMaxGet(provider, network, includeSidechains)
       case DataType.GPS:
-        return this.gpsApi.aPIGPSMaxGet(provider, network, includeSidechains);
+        return this.gpsApi.aPIGPSMaxGet(provider, network, includeSidechains)
       case DataType.GTPS:
         return this.gtpsApi.aPIGasAdjustedTPSMaxGet(
           provider,
           network,
-          includeSidechains
-        );
+          includeSidechains,
+        )
       default:
-        ThrowConversionNotImplementedException(dataType);
+        return undefined
     }
   }
 }

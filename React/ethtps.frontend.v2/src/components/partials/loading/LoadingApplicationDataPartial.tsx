@@ -1,25 +1,17 @@
-import React, { PropsWithChildren } from "react";
-import { setProviders } from "../../../slices/ProvidersSlice";
-import { store } from "../../../store";
-import {
-  CircularProgress,
-  LinearProgress,
-  Stack,
-  Typography,
-} from "@mui/material";
-import { useLoadValuesHook } from "../../../hooks/useLoadValuesHook";
-import { api } from "../../../services/DependenciesIOC";
-import { setNetworks } from "../../../slices/NetworksSlice";
-import { setIntervals } from "../../../slices/IntervalsSlice";
-import { useState } from "react";
-import { useEffect } from "react";
+import { PropsWithChildren } from "react"
+import { setProviders } from "../../../slices/ProvidersSlice"
+import { store } from "../../../store"
+import { LinearProgress, Stack, Typography } from "@mui/material"
+import { useLoadValuesHook } from "../../../hooks/useLoadValuesHook"
+import { api } from "../../../services/DependenciesIOC"
+import { setNetworks } from "../../../slices/NetworksSlice"
+import { setIntervals } from "../../../slices/IntervalsSlice"
 import {
   setMaxGPSData,
   setMaxGTPSData,
   setMaxTPSData,
-} from "../../../slices/DataSlice";
-import { DataType } from "../../../Types";
-import { DataPoint } from "../../../services/api-gen/models/DataPoint";
+} from "../../../slices/DataSlice"
+import { DataType } from "../../../Types"
 
 export function LoadingApplicationDataPartial({
   children,
@@ -28,51 +20,39 @@ export function LoadingApplicationDataPartial({
   let loadees = [
     useLoadValuesHook(
       () => api.getProviders(),
-      (value) => store.dispatch(setProviders(value))
+      (value) => store.dispatch(setProviders(value)),
     ),
     useLoadValuesHook(
       () => api.getNetworks(),
-      (value) => store.dispatch(setNetworks(value))
+      (value) => store.dispatch(setNetworks(value)),
     ),
     useLoadValuesHook(
       () => api.getIntervals(),
-      (value) => store.dispatch(setIntervals(value))
+      (value) => store.dispatch(setIntervals(value)),
     ),
     useLoadValuesHook(
       () => api.getMax(DataType.TPS),
-      (value) => store.dispatch(setMaxTPSData(value))
+      (value) => store.dispatch(setMaxTPSData(value)),
     ),
     useLoadValuesHook(
       () => api.getMax(DataType.GPS),
-      (value) => store.dispatch(setMaxGPSData(value))
+      (value) => store.dispatch(setMaxGPSData(value)),
     ),
     useLoadValuesHook(
       () => api.getMax(DataType.GTPS),
-      (value) => store.dispatch(setMaxGTPSData(value))
+      (value) => store.dispatch(setMaxGTPSData(value)),
     ),
-  ];
-  const [loadedPercentage, setLoadedPercentage] = useState(0);
-  useEffect(() => {
-    setLoadedPercentage(
-      (loadees.filter((x) => x).length * 100) / loadees.length
-    );
-  }, [loadedPercentage]);
-  if (loadees.every((x) => x)) return <>{children}</>;
+  ]
+  if (loadees.every((x) => x)) return <>{children}</>
   else
     return (
       <>
         <div className="center">
           <Stack spacing={2} direction="row">
-            <LinearProgress
-              variant="indeterminate"
-              style={{ width: "100%" }}
-              value={loadedPercentage}
-            />
+            <LinearProgress variant="indeterminate" style={{ width: "100%" }} />
           </Stack>
-          <Typography>
-            Loading... {loadedPercentage > 0 ? <>{loadedPercentage}%</> : <></>}
-          </Typography>
+          <Typography>Loading...</Typography>
         </div>
       </>
-    );
+    )
 }

@@ -1,7 +1,5 @@
-import React from "react";
-import { IProviderTableModel } from "../../../models/tables/IProviderTableModel";
-import { TableCell, TableRow } from "@mui/material";
-import { DataPointDictionary } from "../../../Types";
+import { IProviderTableModel } from "../../../models/tables/IProviderTableModel"
+import { TableCell, TableRow } from "@mui/material"
 
 export function AllProvidersRows(rowData: IProviderTableModel): JSX.Element {
   return (
@@ -16,5 +14,5 @@ export function AllProvidersRows(rowData: IProviderTableModel): JSX.Element {
         </TableRow>
       ))}
     </>
-  );
+  )
 }
