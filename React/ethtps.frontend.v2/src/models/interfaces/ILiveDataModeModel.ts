@@ -1,1 +1,5 @@
-export interface ILiveDataModeModel {}
+import { TimeInterval } from "../TimeIntervals"
+
+export interface ILiveDataModeModel {
+  liveDataSmoothing: TimeInterval
+}

@@ -2,8 +2,13 @@ import { IProviderModel } from "../interfaces/IProviderModel"
 import { IMaxDataModel } from "../interfaces/IMaxDataModel"
 import { DataPointDictionary, DataType } from "../../Types"
 import { IDataModeModel } from "../interfaces/IDataModeModel"
+import { ILiveDataModeModel } from "../interfaces/ILiveDataModeModel"
+import { TimeInterval } from "../TimeIntervals"
 
-export interface IApplicationState extends IMaxDataModel, IDataModeModel {
+export interface IApplicationState
+  extends IMaxDataModel,
+    IDataModeModel,
+    ILiveDataModeModel {
   providers?: IProviderModel[]
   networks?: string[]
   intervals?: string[]
@@ -11,6 +16,7 @@ export interface IApplicationState extends IMaxDataModel, IDataModeModel {
   maxGPSData?: DataPointDictionary
   maxGTPSData?: DataPointDictionary
   mode: DataType
+  liveDataSmoothing: TimeInterval
 }
 
 export class ApplicationState implements IApplicationState {
@@ -21,6 +27,7 @@ export class ApplicationState implements IApplicationState {
   public maxTPSData?: DataPointDictionary
   public maxGPSData?: DataPointDictionary
   public maxGTPSData?: DataPointDictionary
+  public liveDataSmoothing: TimeInterval
 
   constructor(state?: IApplicationState) {
     this.providers = state?.providers
@@ -29,6 +36,7 @@ export class ApplicationState implements IApplicationState {
     this.maxTPSData = state?.maxTPSData
     this.maxGPSData = state?.maxGPSData
     this.maxGTPSData = state?.maxGTPSData
-    this.mode = state?.mode ?? DataType.Unknown
+    this.mode = state?.mode ?? DataType.TPS
+    this.liveDataSmoothing = state?.liveDataSmoothing ?? TimeInterval._1m
   }
 }
