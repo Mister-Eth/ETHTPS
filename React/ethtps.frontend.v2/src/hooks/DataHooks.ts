@@ -15,3 +15,7 @@ export function useGetMaxGPSDataFromAppStore() {
 export function useGetMaxGTPSDataFromAppStore() {
   return useAppSelector((state) => state.data).maxGTPSData
 }
+
+export function useGetNetworksFromAppStore() {
+  return useAppSelector((state) => state.networks)
+}
