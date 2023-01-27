@@ -1,6 +1,8 @@
 import { Box, Modal, Paper } from "@mui/material"
 import { ProviderModel } from "../../../../services/api-gen/models/ProviderModel"
 import { ProviderDataChart } from "../../../charts/ProviderDataChart"
+import { ConditionalRender } from "../../../../Types"
+import { ProviderCarousel } from "../../navigation/ProviderCarousel"
 
 interface IProviderModalConfiguration {
   open: boolean
@@ -33,10 +35,10 @@ export function ProviderModal(config: IProviderModalConfiguration) {
     >
       <Box sx={{ ...style }}>
         <Paper elevation={1}>
-          {config.provider !== undefined ? (
-            <ProviderDataChart provider={config.provider?.name as string} />
-          ) : (
-            <></>
+          <ProviderCarousel provider={config.provider} />
+          {ConditionalRender(
+            <ProviderDataChart provider={config.provider?.name as string} />,
+            config.provider !== undefined,
           )}
         </Paper>
       </Box>
