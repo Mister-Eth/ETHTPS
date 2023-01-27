@@ -7,6 +7,7 @@ import { api } from "../../services/DependenciesIOC"
 import { Fragment, useState, useEffect } from "react"
 import { ProviderModel } from "../../services/api-gen"
 import { IDropdownConfig } from "./IDropdownConfig"
+import { shortTimeIntervalToUIFormat } from "../../Types"
 interface IIntervalDropdownConfig
   extends IDropdownCallbackWithProvider<string>,
     IDropdownConfig<string> {
@@ -45,6 +46,7 @@ export function IntervalDropdown(config: IIntervalDropdownConfig) {
         }
         selectionChanged={config.selectionChanged}
         conversionFunction={(x) => fromShortString_2(x)}
+        uiFormatFunction={shortTimeIntervalToUIFormat}
         hoverText={<Typography>{"Select time interval"}</Typography>}
       />
     </Fragment>

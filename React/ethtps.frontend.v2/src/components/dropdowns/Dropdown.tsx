@@ -8,22 +8,22 @@ import Paper from "@mui/material/Paper"
 import Popper from "@mui/material/Popper"
 import MenuItem from "@mui/material/MenuItem"
 import MenuList from "@mui/material/MenuList"
-import { Tooltip } from "@mui/material"
-import { indexOfOr } from "../../services/ArrayHelper"
-import { useEffect } from "react"
+import { Tooltip, Typography } from "@mui/material"
 import { IDropdownCallback } from "./IDropdownCallback"
-import { ConditionalRender } from "../../Types"
+import { ConditionalRender, shortTimeIntervalToUIFormat } from "../../Types"
 
 interface IDropdownConfiguration<T> extends IDropdownCallback<T> {
   options: string[]
   hidden?: boolean
   defaultOption?: string
   hoverText?: string | JSX.Element
+  openOnHover?: boolean
   selectionChanged?: (value: T) => void
   conversionFunction(value: string): T
+  uiFormatFunction?: (value: T) => string
 }
 
-export function Dropdown<T>(configuration: IDropdownConfiguration<string>) {
+export function Dropdown<T>(configuration: IDropdownConfiguration<T>) {
   const [open, setOpen] = React.useState(false)
   const anchorRef = React.useRef<HTMLDivElement>(null)
   const [selectedIndex, setSelectedIndex] = React.useState(0)
@@ -58,7 +58,7 @@ export function Dropdown<T>(configuration: IDropdownConfiguration<string>) {
         aria-label="split button"
         color={"primary"}
       >
-        <Tooltip title={configuration.hoverText}>
+        <Tooltip arrow placement="top" title={configuration.hoverText}>
           <Button
             color={"primary"}
             endIcon={<ArrowDropDownIcon />}
@@ -90,13 +90,28 @@ export function Dropdown<T>(configuration: IDropdownConfiguration<string>) {
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList id="split-button-menu" autoFocusItem>
                   {configuration.options.map((value, index) => (
-                    <MenuItem
+                    <Tooltip
+                      arrow
                       key={value}
-                      selected={index === selectedIndex}
-                      onClick={() => handleMenuItemClick(value, index)}
+                      placement="right"
+                      title={
+                        <Typography>
+                          {configuration.uiFormatFunction !== undefined
+                            ? configuration.uiFormatFunction(
+                                configuration.conversionFunction(value),
+                              )
+                            : value}
+                        </Typography>
+                      }
                     >
-                      {value}
-                    </MenuItem>
+                      <MenuItem
+                        key={value}
+                        selected={index === selectedIndex}
+                        onClick={() => handleMenuItemClick(value, index)}
+                      >
+                        {value}
+                      </MenuItem>
+                    </Tooltip>
                   ))}
                 </MenuList>
               </ClickAwayListener>

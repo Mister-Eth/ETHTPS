@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material"
-import { ConditionalRender, DataType, fromShortString } from "../../Types"
+import { DataType, appModeToUIFormat, fromShortString } from "../../Types"
 import { Dropdown } from "./Dropdown"
 import { IDropdownConfig } from "./IDropdownConfig"
 
@@ -11,6 +11,7 @@ export function ModeDropdown(config: IDropdownConfig<DataType>) {
       hidden={config.hidden}
       selectionChanged={config.selectionChanged}
       conversionFunction={fromShortString}
+      uiFormatFunction={appModeToUIFormat}
       hoverText={<Typography>{"Select data type"}</Typography>}
     />
   )
