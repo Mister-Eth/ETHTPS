@@ -4,14 +4,12 @@ import {
   Table,
   TableHead,
   TableBody,
-  Button,
 } from "@mui/material"
 import { IProviderTableModel } from "../../../models/tables/IProviderTableModel"
 import { AllProvidersHeader } from "./AllProvidersHeader"
 import { AllProvidersRows } from "./AllProvidersRows"
 import { ConditionalRender } from "../../../Types"
 import { useState } from "react"
-import * as iconsMaterial from "@mui/icons-material"
 import { SeeMoreButton } from "../../buttons/SeeMoreButton"
 
 export function AllProvidersTable(tableData: IProviderTableModel): JSX.Element {

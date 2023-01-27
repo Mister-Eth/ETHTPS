@@ -7,6 +7,10 @@ import { useGetMaxDataFromAppStore } from "../hooks/DataHooks"
 import { ProviderModel } from "../services/api-gen"
 import { useState, useEffect } from "react"
 import { ProviderModal } from "../components/partials/dialogs/modals/ProviderModal"
+import { DataModeButtonGroup } from "../components/buttons/DataModeButtonGroup"
+import { DataType } from "../Types"
+import { store } from "../store"
+import { setLiveDataType } from "../slices/LiveDataSlice"
 
 export default function MainPage(): JSX.Element {
   const providers = useGetProvidersFromAppStore()
@@ -24,26 +28,32 @@ export default function MainPage(): JSX.Element {
   return (
     <>
       <DiscordBanner />
-      <LoadingApplicationDataPartial>
-        <>
-          <br />
-          <ProviderModal
-            open={showProviderModal}
-            provider={modalProvider}
-            onClose={() => setShowProviderModal(false)}
-          />
-          <Container maxWidth={"md"}>
-            <Paper elevation={1}>
-              <AllProvidersTable
-                providerData={providers}
-                maxData={max}
-                maxRowsBeforeShowingExpand={10}
-                clickCallback={useHandleCellClick}
-              />
-            </Paper>
-          </Container>
-        </>
-      </LoadingApplicationDataPartial>
+      <LoadingApplicationDataPartial />
+      <>
+        <br />
+        <ProviderModal
+          open={showProviderModal}
+          provider={modalProvider}
+          onClose={() => setShowProviderModal(false)}
+        />
+        <Container maxWidth={"md"}>
+          <Paper elevation={1}>
+            <DataModeButtonGroup
+              modeChanged={(mode: DataType) =>
+                store.dispatch(() => setLiveDataType(mode))
+              }
+            />
+          </Paper>
+          <Paper elevation={1}>
+            <AllProvidersTable
+              providerData={providers}
+              maxData={max}
+              maxRowsBeforeShowingExpand={20}
+              clickCallback={useHandleCellClick}
+            />
+          </Paper>
+        </Container>
+      </>
     </>
   )
 }
