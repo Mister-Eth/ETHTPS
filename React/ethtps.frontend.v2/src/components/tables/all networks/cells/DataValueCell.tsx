@@ -25,7 +25,15 @@ export function DataValueCell(config: ICustomCellConfiguration) {
     setValue(x)
   }, [mode, liveData])
   return (
-    <TableCell {...centered} {...buildClassNames(config)}>
+    <TableCell
+      {...centered}
+      {...buildClassNames(config)}
+      onClick={() =>
+        config.clickCallback !== undefined
+          ? config.clickCallback(config.provider, "DataValue")
+          : () => {}
+      }
+    >
       {value === undefined ? (
         <SkeletonWithTooltip
           text={`Loading ${config.provider?.name} ${toShortString(mode)}...`}

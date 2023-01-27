@@ -19,6 +19,11 @@ export function ProviderTypeCell(config: ICustomCellConfiguration) {
         {...centered}
         {...buildClassNames(config)}
         sx={{ color: color }}
+        onClick={() =>
+          config.clickCallback !== undefined
+            ? config.clickCallback(config.provider, "ProviderType")
+            : () => {}
+        }
       >
         <Typography {...tableCellTypographyStandard}>
           {config.provider?.type}

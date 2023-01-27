@@ -41,7 +41,15 @@ export function MaxValueCell(config: ICustomCellConfiguration) {
   )
   const tooltipTypography = generateMaxTypography(maxData)
   return (
-    <TableCell {...centered} {...buildClassNames(config)}>
+    <TableCell
+      {...centered}
+      {...buildClassNames(config)}
+      onClick={() =>
+        config.clickCallback !== undefined
+          ? config.clickCallback(config.provider, "MaxValue")
+          : () => {}
+      }
+    >
       <Tooltip arrow={true} title={tooltipTypography}>
         <Typography
           {...tableCellTypographyStandard}

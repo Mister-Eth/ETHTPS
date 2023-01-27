@@ -9,5 +9,16 @@ interface IIndexCellConfiguration extends ICustomCellConfiguration {
 }
 
 export function IndexCell(config: IIndexCellConfiguration) {
-  return <TableCell {...buildClassNames(config)}>{config.index}</TableCell>
+  return (
+    <TableCell
+      {...buildClassNames(config)}
+      onClick={() =>
+        config.clickCallback !== undefined
+          ? config.clickCallback(config.provider, "Index")
+          : () => {}
+      }
+    >
+      {config.index}
+    </TableCell>
+  )
 }

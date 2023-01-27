@@ -18,7 +18,15 @@ export function NameCell(config: ICustomCellConfiguration) {
       arrow
       title={<Typography>{`Click to read more about ${name}`}</Typography>}
     >
-      <TableCell {...centered} {...buildClassNames(config)}>
+      <TableCell
+        {...centered}
+        {...buildClassNames(config)}
+        onClick={() =>
+          config.clickCallback !== undefined
+            ? config.clickCallback(config.provider, "Name")
+            : () => {}
+        }
+      >
         <>
           <img
             alt={`${config.provider?.name} icon`}

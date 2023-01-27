@@ -4,10 +4,12 @@ import { AllProvidersTable } from "../components/tables/all networks/AllProvider
 import { Container } from "@mui/material"
 import { useGetProvidersFromAppStore } from "../hooks/ProviderHooks"
 import { useGetMaxDataFromAppStore } from "../hooks/DataHooks"
+import { ProviderModel } from "../services/api-gen"
 
 export default function MainPage(): JSX.Element {
   const providers = useGetProvidersFromAppStore()
   const max = useGetMaxDataFromAppStore()
+  const handleCellClick = (provider?: ProviderModel, cellName?: string) => {}
   return (
     <>
       <DiscordBanner />
@@ -15,7 +17,11 @@ export default function MainPage(): JSX.Element {
         <>
           <br />
           <Container maxWidth={"md"}>
-            <AllProvidersTable providerData={providers} maxData={max} />
+            <AllProvidersTable
+              providerData={providers}
+              maxData={max}
+              clickCallback={handleCellClick}
+            />
           </Container>
         </>
       </LoadingApplicationDataPartial>
