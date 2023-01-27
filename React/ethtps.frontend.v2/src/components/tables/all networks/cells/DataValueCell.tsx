@@ -8,8 +8,10 @@ import { useGetLiveDataFromAppStore } from "../../../../hooks/LiveDataHooks"
 import { useGetLiveDataModeFromAppStore } from "../../../../hooks/LiveDataHooks"
 import { toShortString } from "../../../../Types"
 import { tableCellTypographyStandard } from "./Typography.types"
-import { centered } from "../../Cells.Types"
+import { animatedCentered, centered } from "../../Cells.Types"
 import { useEffect, useState } from "react"
+import "../../cells.styles.css"
+import { AnimatedTypography } from "../../../text/AnimatedTypography"
 
 export function DataValueCell(config: ICustomCellConfiguration) {
   const mode = useGetLiveDataModeFromAppStore()
@@ -39,9 +41,12 @@ export function DataValueCell(config: ICustomCellConfiguration) {
           text={`Loading ${config.provider?.name} ${toShortString(mode)}...`}
         />
       ) : (
-        <Typography {...tableCellTypographyStandard}>
-          {value as number}
-        </Typography>
+        <AnimatedTypography
+          animationClassName="animated-cell"
+          standard={tableCellTypographyStandard}
+          child={(value as number).toString()}
+          durationMs={1000}
+        />
       )}
     </TableCell>
   )

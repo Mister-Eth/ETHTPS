@@ -8,12 +8,5 @@ interface IProviderCarouselConfiguration extends IObjectWithProvider {}
 
 export function ProviderCarousel(config: IProviderCarouselConfiguration) {
   const providers = useGetProvidersFromAppStore()
-  return (
-    <Fragment>
-      <LargeProviderHeader provider={config.provider} />
-      {providers.map((x, i) => (
-        <Paper key={i}></Paper>
-      ))}
-    </Fragment>
-  )
+  return <Fragment></Fragment>
 }

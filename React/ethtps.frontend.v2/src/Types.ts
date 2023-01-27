@@ -1,8 +1,4 @@
 import { Moment } from "moment"
-import {
-  ThrowConversionNotImplementedException,
-  ThrowInvalidDataTypeException,
-} from "./services/ThrowHelper"
 import { DataPoint } from "./services/api-gen/models/DataPoint"
 import moment from "moment"
 import { DataResponseModel } from "./services/api-gen"
@@ -109,4 +105,17 @@ export const ConditionalSkeletonRender = (
   renderIf?: boolean,
 ) => {
   return renderIf ? component : React.createElement(SkeletonWithTooltip)
+}
+
+export const inline = {
+  className: "inline",
+}
+
+export function uniform<T>(size: T) {
+  return {
+    style: {
+      width: size,
+      height: size,
+    },
+  }
 }
