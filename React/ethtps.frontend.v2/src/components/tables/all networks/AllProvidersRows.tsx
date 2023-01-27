@@ -6,16 +6,51 @@ import { DataValueCell } from "./cells/DataValueCell"
 import { MaxValueCell } from "./cells/MaxValueCell"
 import { ProviderTypeCell } from "./cells/ProviderTypeCell"
 import { SkeletonWithTooltip } from "../../partials/SkeletonWithTooltip"
-import { ProviderModel } from "../../../services/api-gen/models/ProviderModel"
-import { useState } from "react"
-import { ConditionalRender } from "../../../Types"
-import * as iconsMaterial from "@mui/icons-material"
+import { DataType, toShortString } from "../../../Types"
+import {
+  useGetLiveDataModeFromAppStore,
+  useGetLiveDataFromAppStore,
+} from "../../../hooks/LiveDataHooks"
+import { ILiveDataModeModel } from "../../../models/interfaces/ILiveDataModeModel"
+import { useEffect, useState } from "react"
+import { objectKeys } from "ts-extras"
+import { DataResponseModelDictionary } from "../../../Types.dictionaries"
+
+const getModeData = (
+  model: ILiveDataModeModel,
+  mode: DataType,
+): DataResponseModelDictionary | undefined => {
+  switch (mode) {
+    case DataType.TPS:
+      return model.data?.tps
+    case DataType.GPS:
+      return model.data?.gps
+    case DataType.GTPS:
+      return model.data?.gasAdjustedTPS
+  }
+}
+
+const extractData = (
+  dict?: DataResponseModelDictionary,
+  providerName?: string,
+) => {
+  if (dict && providerName && dict[providerName]) {
+    if (dict[providerName].at(0)) {
+      let result = dict[providerName].at(0).value
+      return Math.round(result * 100) / 100
+    }
+  }
+  return 0
+}
 
 export function AllProvidersRows(model: IProviderTableModel): JSX.Element {
-  const [showExpandButton, setShowExpandButton] = useState(
-    (model?.maxRowsBeforeShowingExpand as number) !== 0,
-  )
   const hasData = (model.providerData?.length as number) > 0
+  const mode = useGetLiveDataModeFromAppStore()
+  const liveData = useGetLiveDataFromAppStore()
+  const [data, setData] = useState(getModeData(liveData, mode))
+  useEffect(() => {
+    setData(getModeData(liveData, mode))
+  }, [mode, liveData])
   return (
     <>
       {hasData ? (
@@ -35,6 +70,8 @@ export function AllProvidersRows(model: IProviderTableModel): JSX.Element {
                 <DataValueCell
                   clickCallback={model.clickCallback}
                   provider={x}
+                  dataType={mode}
+                  value={extractData(data, x.name)}
                 />
                 <MaxValueCell
                   clickCallback={model.clickCallback}

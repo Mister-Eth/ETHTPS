@@ -9,12 +9,12 @@ import {
 } from "../api-gen/index"
 import { ProviderResponseModel } from "../api-gen/models/ProviderResponseModel"
 import { TimeInterval, toShortString } from "../../models/TimeIntervals"
+import { DataType } from "../../Types"
 import {
-  DataType,
+  DataResponseModelDictionary,
   DataPointDictionary,
   StringDictionary,
-  DataResponseModelDictionary,
-} from "../../Types"
+} from "../../Types.dictionaries"
 
 export class ETHTPSApi {
   public generalApi: GeneralApi

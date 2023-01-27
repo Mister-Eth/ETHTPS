@@ -1,8 +1,9 @@
-import { DataResponseModelDictionary, DataType } from "../../Types"
+import { DataType } from "../../Types"
 import { TimeInterval } from "../TimeIntervals"
+import { InstantDataResponseModel } from "../../Types.dictionaries"
 
 export interface ILiveDataModeModel {
   liveDataSmoothing: TimeInterval
   liveDataType: DataType
-  data?: DataResponseModelDictionary
+  data?: InstantDataResponseModel
 }

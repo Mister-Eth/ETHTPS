@@ -1,7 +1,7 @@
 import { Fragment, useState } from "react"
-import { DataType } from "../../Types"
+import { DataType, inline } from "../../Types"
 import { CustomButtonGroup } from "./CustomButtonGroup"
-import { IconButton, Tooltip, Typography } from "@mui/material"
+import { Box, IconButton, Tooltip, Typography } from "@mui/material"
 import {
   EvStation,
   LocalGasStation,
@@ -23,34 +23,40 @@ export function DataModeButtonGroup(model: IDataModeButtonGroupConfiguration) {
   }
   return (
     <Fragment>
-      <Typography>Mode:</Typography>
+      <Box sx={{ float: "right" }}>
+        <Tooltip
+          arrow
+          placement={"top"}
+          {...getColorComparedTo(DataType.TPS)}
+          title={<Typography>Transactions per second</Typography>}
+        >
+          <IconButton onClick={() => triggerChange(DataType.TPS)}>
+            <Numbers />
+          </IconButton>
+        </Tooltip>
 
-      <Tooltip
-        {...getColorComparedTo(DataType.TPS)}
-        title={<Typography>Transactions per second</Typography>}
-      >
-        <IconButton onClick={() => triggerChange(DataType.TPS)}>
-          <Numbers />
-        </IconButton>
-      </Tooltip>
+        <Tooltip
+          arrow
+          placement={"top"}
+          {...getColorComparedTo(DataType.GPS)}
+          title={<Typography>Gas per second</Typography>}
+        >
+          <IconButton onClick={() => triggerChange(DataType.GPS)}>
+            <LocalGasStation />
+          </IconButton>
+        </Tooltip>
 
-      <Tooltip
-        {...getColorComparedTo(DataType.GPS)}
-        title={<Typography>Gas per second</Typography>}
-      >
-        <IconButton onClick={() => triggerChange(DataType.GPS)}>
-          <LocalGasStation />
-        </IconButton>
-      </Tooltip>
-
-      <Tooltip
-        {...getColorComparedTo(DataType.GTPS)}
-        title={<Typography>Gas-adjusted transactions per second</Typography>}
-      >
-        <IconButton onClick={() => triggerChange(DataType.GTPS)}>
-          <EvStation />
-        </IconButton>
-      </Tooltip>
+        <Tooltip
+          arrow
+          placement={"top"}
+          {...getColorComparedTo(DataType.GTPS)}
+          title={<Typography>Gas-adjusted transactions per second</Typography>}
+        >
+          <IconButton onClick={() => triggerChange(DataType.GTPS)}>
+            <EvStation />
+          </IconButton>
+        </Tooltip>
+      </Box>
     </Fragment>
   )
 }

@@ -10,14 +10,12 @@ import {
   setMaxGTPSData,
   setMaxTPSData,
 } from "../../../slices/DataSlice"
-import { DataType, DataPointDictionary } from "../../../Types"
-import { TimeInterval } from "../../../models/TimeIntervals"
+import { DataType } from "../../../Types"
 import {
   setProviderColorDictionary,
   setProviderTypeColorDictionary,
 } from "../../../slices/ColorSlice"
-import { setLiveData } from "../../../slices/LiveDataSlice"
-import { DataResponseModel } from "../../../services/api-gen/models/DataResponseModel"
+import { useUpdateLiveData } from "../../../hooks/LiveDataHooks"
 
 export function LoadingApplicationDataPartial({
   children,
@@ -63,12 +61,7 @@ export function LoadingApplicationDataPartial({
     () => api.getProviderTypeColorDictionary(),
     (value) => store.dispatch(setProviderTypeColorDictionary(value)),
   )
-  useLoadValuesHook(
-    "liveData",
-    () => api.getData(DataType.TPS, "Instant", "All"),
-    (value: DataPointDictionary) => store.dispatch(setLiveData(value)),
-  )
-
+  useUpdateLiveData()
   return <>{children}</>
   /*
   if (loadees.every((x) => x)) return <>{children}</>

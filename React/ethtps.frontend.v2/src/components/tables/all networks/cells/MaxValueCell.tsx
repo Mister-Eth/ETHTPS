@@ -9,6 +9,7 @@ import { centered } from "../../Cells.Types"
 import { tableCellTypographyStandard } from "./Typography.types"
 import { DataPoint } from "../../../../services/api-gen"
 import moment from "moment"
+import { numberFormat } from "../../../../Types"
 
 function generateMaxHoverMessage(data?: DataPoint): string {
   if (
@@ -58,7 +59,7 @@ export function MaxValueCell(config: ICustomCellConfiguration) {
               tooltipTypography !== undefined ? "underline" : undefined,
           }}
         >
-          {Math.round(maxData?.value as number).toString()}
+          {numberFormat(maxData?.value).toString()}
         </Typography>
       </Tooltip>
     </TableCell>

@@ -1,18 +1,9 @@
 import { Moment } from "moment"
 import { DataPoint } from "./services/api-gen/models/DataPoint"
 import moment from "moment"
-import { DataResponseModel } from "./services/api-gen"
 import React from "react"
 import { SkeletonWithTooltip } from "./components/partials/SkeletonWithTooltip"
 import { toShortString_2 } from "./models/TimeIntervals"
-
-export type DataPointDictionary = { [key: string]: DataPoint }
-
-export type DataResponseModelDictionary = { [key: string]: DataResponseModel[] }
-
-export type StringDictionary = { [key: string]: string }
-
-export type AnyDictionary = { [key: string]: any }
 
 export enum DataType {
   TPS,
@@ -118,4 +109,10 @@ export function uniform<T>(size: T) {
       height: size,
     },
   }
+}
+
+export const numberFormat = (value?: number) => {
+  if (!value) return 0
+  if (value > 1000) value = Math.round(value)
+  return (Math.round(value * 100) / 100).toLocaleString()
 }

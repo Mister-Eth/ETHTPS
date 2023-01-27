@@ -9,8 +9,12 @@ import { useState, useEffect } from "react"
 import { ProviderModal } from "../components/partials/dialogs/modals/ProviderModal"
 import { DataModeButtonGroup } from "../components/buttons/DataModeButtonGroup"
 import { DataType } from "../Types"
-import { store } from "../store"
+import { store, useAppSelector } from "../store"
 import { setLiveDataType } from "../slices/LiveDataSlice"
+import {
+  useSetDataModeMutation,
+  useUpdateLiveData,
+} from "../hooks/LiveDataHooks"
 
 export default function MainPage(): JSX.Element {
   const providers = useGetProvidersFromAppStore()
@@ -25,6 +29,7 @@ export default function MainPage(): JSX.Element {
     setShowProviderModal(true)
     setModalProvider(provider)
   }
+
   return (
     <>
       <DiscordBanner />
@@ -38,11 +43,7 @@ export default function MainPage(): JSX.Element {
         />
         <Container maxWidth={"md"}>
           <Paper elevation={1}>
-            <DataModeButtonGroup
-              modeChanged={(mode: DataType) =>
-                store.dispatch(() => setLiveDataType(mode))
-              }
-            />
+            <DataModeButtonGroup modeChanged={useSetDataModeMutation} />
           </Paper>
           <Paper elevation={1}>
             <AllProvidersTable

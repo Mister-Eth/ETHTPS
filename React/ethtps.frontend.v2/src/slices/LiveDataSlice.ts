@@ -1,8 +1,8 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { ILiveDataModeModel } from "../models/interfaces/ILiveDataModeModel"
 import { TimeInterval } from "../models/TimeIntervals"
-import { DataType, DataPointDictionary, AnyDictionary } from "../Types"
-import { DataResponseModel } from "../services/api-gen/models/DataResponseModel"
+import { DataType } from "../Types"
+import { InstantDataResponseModel } from "../Types.dictionaries"
 
 const initialState: ILiveDataModeModel = {
   liveDataSmoothing: TimeInterval.Instant,
@@ -33,7 +33,7 @@ const liveDataSlice = createSlice({
 
     setLiveData(
       state: ILiveDataModeModel,
-      action: PayloadAction<AnyDictionary | undefined>,
+      action: PayloadAction<InstantDataResponseModel | undefined>,
     ) {
       state.data = action.payload
       return state
