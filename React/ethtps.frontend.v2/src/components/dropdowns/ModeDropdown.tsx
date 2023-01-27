@@ -9,7 +9,6 @@ export function ModeDropdown(config: IDropdownConfig<DataType>) {
     <Dropdown<DataType>
       options={types}
       hidden={config.hidden}
-      defaultOption={"TPS"}
       selectionChanged={config.selectionChanged}
       conversionFunction={fromShortString}
       hoverText={<Typography>{"Select data type"}</Typography>}

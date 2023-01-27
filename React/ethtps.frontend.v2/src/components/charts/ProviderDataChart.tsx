@@ -20,9 +20,10 @@ interface IProviderDataChartConfiguration {
 }
 
 export function ProviderDataChart(config: IProviderDataChartConfiguration) {
-  const displayNetworksDropdown = config.provider.toUpperCase() === "ETHEREUM"
+  const displayNetworksDropdown =
+    false && config.provider.toUpperCase() === "ETHEREUM"
   const colorDictionary = useGetProviderColorDictionaryFromAppStore() ?? {}
-  const [interval, setInterval] = useState("OneDay")
+  const [interval, setInterval] = useState<string>()
   const [network, setNetwork] = useState("Mainnet")
   const [mode, setMode] = useState(DataType.TPS)
 
@@ -39,7 +40,7 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
   }
   useEffect(() => {
     api
-      .getData(mode, interval, config.provider, network)
+      .getData(mode, interval as string, config.provider, network)
       ?.then((data) => {
         if (data[config.provider] !== undefined) {
           const values = data[config.provider]?.map((x) => x.data?.at(0))
@@ -73,6 +74,7 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
             <IntervalDropdown
               hidden={noData}
               onNoDataAvailable={() => setNoData(true)}
+              onDataLoaded={(intervals) => setInterval(intervals?.at(0))}
               provider={config.provider}
               selectionChanged={intervalChanged}
             />

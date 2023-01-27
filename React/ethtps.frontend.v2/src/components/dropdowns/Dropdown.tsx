@@ -17,21 +17,19 @@ import { ConditionalRender } from "../../Types"
 interface IDropdownConfiguration<T> extends IDropdownCallback<T> {
   options: string[]
   hidden?: boolean
+  defaultOption?: string
   hoverText?: string | JSX.Element
   selectionChanged?: (value: T) => void
   conversionFunction(value: string): T
 }
 
-export function Dropdown<T>(configuration: IDropdownConfiguration<T>) {
+export function Dropdown<T>(configuration: IDropdownConfiguration<string>) {
   const [open, setOpen] = React.useState(false)
   const anchorRef = React.useRef<HTMLDivElement>(null)
   const [selectedIndex, setSelectedIndex] = React.useState(0)
-  useEffect(() => {
-    setSelectedIndex(0)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   const handleMenuItemClick = (value: string, index: number) => {
+    if (index === selectedIndex) return
     setSelectedIndex(index)
     setOpen(false)
     if (configuration.selectionChanged !== undefined)
