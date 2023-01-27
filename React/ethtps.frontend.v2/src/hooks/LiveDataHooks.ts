@@ -7,3 +7,7 @@ export function useGetLiveDataModeFromAppStore() {
 export function useGetLiveDataSmoothingFromAppStore() {
   return useAppSelector((state) => state.liveData.liveDataSmoothing)
 }
+
+export function useGetLiveDataFromAppStore() {
+  return useAppSelector((state) => state.liveData)
+}

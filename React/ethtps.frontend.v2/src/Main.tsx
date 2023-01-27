@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom"
+
 import MainPage from "./pages/MainPage"
 
 export default function Main(): JSX.Element {

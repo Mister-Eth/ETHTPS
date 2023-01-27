@@ -12,8 +12,9 @@ export class ETHTPSApi {
 
   private _variables: { [key: string]: any }
 
-  constructor(url: string, useArtificialDelay: boolean = true) {
+  constructor(url?: string, useArtificialDelay: boolean = true) {
     this._variables = {}
+    url ??= ""
     let config = createConfiguration({
       baseServer: new ServerConfiguration(url, this._variables),
     })

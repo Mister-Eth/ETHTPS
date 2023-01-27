@@ -27,7 +27,7 @@ function generateMaxHoverMessage(data?: DataPoint): string {
 
 function generateMaxTypography(data?: DataPoint) {
   const message = generateMaxHoverMessage(data)
-  return message.length > 0 ? <Typography>{message}</Typography> : undefined
+  return message?.length > 0 ? <Typography>{message}</Typography> : undefined
 }
 
 export function MaxValueCell(config: ICustomCellConfiguration) {
@@ -47,7 +47,7 @@ export function MaxValueCell(config: ICustomCellConfiguration) {
               tooltipTypography !== undefined ? "underline" : undefined,
           }}
         >
-          {Math.round(maxData?.value as number)}
+          {Math.round(maxData?.value as number).toString()}
         </Typography>
       </Tooltip>
     </TableCell>

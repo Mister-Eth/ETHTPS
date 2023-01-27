@@ -55,6 +55,8 @@ export function LoadingApplicationDataPartial({
       (value) => store.dispatch(setProviderTypeColorDictionary(value)),
     ),
   ]
+  return <>{children}</>
+  /*
   if (loadees.every((x) => x)) return <>{children}</>
   else
     return (
@@ -66,5 +68,5 @@ export function LoadingApplicationDataPartial({
           <Typography>Loading...</Typography>
         </div>
       </>
-    )
+    )*/
 }

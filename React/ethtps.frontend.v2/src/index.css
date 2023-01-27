@@ -87,6 +87,22 @@ code {
   cursor: pointer;text-decoration: none;
 }
 
+.rotate45{
+    rotate: 0;
+}
+
+.rotate45:hover{
+  animation: rotate 0.2s ease-in;
+}
+
+@keyframes rotate{
+  0%{
+    rotate: 0;
+  }
+  100%{
+    rotate:calc(45)
+  }
+}
 
 @keyframes text-shadow {
   0% {
