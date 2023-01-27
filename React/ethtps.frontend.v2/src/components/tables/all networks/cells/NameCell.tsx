@@ -1,5 +1,8 @@
 import { TableCell, Tooltip, Typography } from "@mui/material"
-import { ICustomCellConfiguration } from "./ICustomCellConfiguration"
+import {
+  ICustomCellConfiguration,
+  buildClassNames,
+} from "./ICustomCellConfiguration"
 import { useGetProviderColorDictionaryFromAppStore } from "../../../../hooks/ColorHooks"
 
 import { centered } from "../../Cells.Types"
@@ -13,11 +16,9 @@ export function NameCell(config: ICustomCellConfiguration) {
   return (
     <Tooltip
       arrow
-      title={
-        <Typography>{`Click to see more details about ${name}`}</Typography>
-      }
+      title={<Typography>{`Click to read more about ${name}`}</Typography>}
     >
-      <TableCell {...centered}>
+      <TableCell {...centered} {...buildClassNames(config)}>
         <>
           <img
             alt={`${config.provider?.name} icon`}
@@ -26,7 +27,9 @@ export function NameCell(config: ICustomCellConfiguration) {
             style={{ marginRight: "15px" }}
           ></img>
           <Typography
-            className={"inline pointable"}
+            className={`inline ${
+              config.clickCallback !== undefined ? "pointable" : ""
+            }`}
             color={color}
             {...tableCellTypographyStandard}
           >

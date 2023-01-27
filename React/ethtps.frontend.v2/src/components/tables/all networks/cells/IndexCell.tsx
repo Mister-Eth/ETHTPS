@@ -1,9 +1,13 @@
 import { TableCell } from "@mui/material"
+import {
+  ICustomCellConfiguration,
+  buildClassNames,
+} from "./ICustomCellConfiguration"
 
-interface IIndexCellConfiguration {
+interface IIndexCellConfiguration extends ICustomCellConfiguration {
   index: number
 }
 
 export function IndexCell(config: IIndexCellConfiguration) {
-  return <TableCell>{config.index}</TableCell>
+  return <TableCell {...buildClassNames(config)}>{config.index}</TableCell>
 }

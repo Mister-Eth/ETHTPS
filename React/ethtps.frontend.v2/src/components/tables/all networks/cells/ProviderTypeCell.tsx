@@ -1,5 +1,8 @@
 import { TableCell, Typography } from "@mui/material"
-import { ICustomCellConfiguration } from "./ICustomCellConfiguration"
+import {
+  ICustomCellConfiguration,
+  buildClassNames,
+} from "./ICustomCellConfiguration"
 import { useGetProviderTypeColorDictionaryFromAppStore } from "../../../../hooks/ColorHooks"
 import React from "react"
 import { centered } from "../../Cells.Types"
@@ -12,7 +15,11 @@ export function ProviderTypeCell(config: ICustomCellConfiguration) {
     colorDictionary !== undefined ? colorDictionary[name] : "primary"
   return (
     <React.Fragment>
-      <TableCell {...centered} sx={{ color: color }}>
+      <TableCell
+        {...centered}
+        {...buildClassNames(config)}
+        sx={{ color: color }}
+      >
         <Typography {...tableCellTypographyStandard}>
           {config.provider?.type}
         </Typography>

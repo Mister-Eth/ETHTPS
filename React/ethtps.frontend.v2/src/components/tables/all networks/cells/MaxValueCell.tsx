@@ -1,5 +1,8 @@
 import { TableCell, Tooltip, Typography } from "@mui/material"
-import { ICustomCellConfiguration } from "./ICustomCellConfiguration"
+import {
+  ICustomCellConfiguration,
+  buildClassNames,
+} from "./ICustomCellConfiguration"
 import { useGetMaxDataForProviderFromAppStore } from "../../../../hooks/DataHooks"
 import { useGetLiveDataModeFromAppStore } from "../../../../hooks/LiveDataHooks"
 import { centered } from "../../Cells.Types"
@@ -38,7 +41,7 @@ export function MaxValueCell(config: ICustomCellConfiguration) {
   )
   const tooltipTypography = generateMaxTypography(maxData)
   return (
-    <TableCell {...centered}>
+    <TableCell {...centered} {...buildClassNames(config)}>
       <Tooltip arrow={true} title={tooltipTypography}>
         <Typography
           {...tableCellTypographyStandard}

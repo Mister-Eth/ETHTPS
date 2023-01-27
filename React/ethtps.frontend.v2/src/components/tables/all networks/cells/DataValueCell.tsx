@@ -1,4 +1,7 @@
-import { ICustomCellConfiguration } from "./ICustomCellConfiguration"
+import {
+  ICustomCellConfiguration,
+  buildClassNames,
+} from "./ICustomCellConfiguration"
 import { SkeletonWithTooltip } from "../../../partials/SkeletonWithTooltip"
 import { TableCell, Typography } from "@mui/material"
 import { useGetLiveDataFromAppStore } from "../../../../hooks/LiveDataHooks"
@@ -22,7 +25,7 @@ export function DataValueCell(config: ICustomCellConfiguration) {
     setValue(x)
   }, [mode, liveData])
   return (
-    <TableCell {...centered}>
+    <TableCell {...centered} {...buildClassNames(config)}>
       {value === undefined ? (
         <SkeletonWithTooltip
           text={`Loading ${config.provider?.name} ${toShortString(mode)}...`}
