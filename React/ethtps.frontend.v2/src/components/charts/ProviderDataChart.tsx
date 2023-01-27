@@ -11,11 +11,11 @@ import { CategoryScale, Chart } from "chart.js/auto"
 import "chartjs-adapter-moment"
 import { noGrid } from "./ChartTypes"
 import { Paper } from "@mui/material"
-import { ProviderModel } from "../../services/api-gen/models/ProviderModel"
+import { INoDataAvailableEvent } from "../INoDataAvailableEvent"
 
 Chart.register(CategoryScale)
 
-interface IProviderDataChartConfiguration {
+interface IProviderDataChartConfiguration extends INoDataAvailableEvent {
   provider: string
 }
 
@@ -73,7 +73,12 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
           <div style={{ float: "right" }}>
             <IntervalDropdown
               hidden={noData}
-              onNoDataAvailable={() => setNoData(true)}
+              onNoDataAvailable={(p) => {
+                setNoData(true)
+                if (config.onNoDataAvailable) {
+                  config.onNoDataAvailable(p)
+                }
+              }}
               onDataLoaded={(intervals) => setInterval(intervals?.at(0))}
               provider={config.provider}
               selectionChanged={intervalChanged}

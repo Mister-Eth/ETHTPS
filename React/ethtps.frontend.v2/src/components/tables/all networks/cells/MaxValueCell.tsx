@@ -23,7 +23,7 @@ function generateMaxHoverMessage(data?: DataPoint): string {
   }
 
   if (data?.blockNumber !== undefined && data?.blockNumber !== 0) {
-    return `Seen at block ${data?.blockNumber}`
+    return `Seen at block ${numberFormat(data?.blockNumber).toString()}`
   }
 
   return `Seen ${moment(data?.date)}`
@@ -51,7 +51,7 @@ export function MaxValueCell(config: ICustomCellConfiguration) {
           : () => {}
       }
     >
-      <Tooltip arrow={true} title={tooltipTypography}>
+      <Tooltip arrow placement="top-start" title={tooltipTypography}>
         <Typography
           {...tableCellTypographyStandard}
           sx={{

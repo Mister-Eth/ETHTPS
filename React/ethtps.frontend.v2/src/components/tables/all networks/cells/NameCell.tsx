@@ -16,6 +16,7 @@ export function NameCell(config: ICustomCellConfiguration) {
   return (
     <Tooltip
       arrow
+      placement="right"
       title={<Typography>{`Click to read more about ${name}`}</Typography>}
     >
       <TableCell

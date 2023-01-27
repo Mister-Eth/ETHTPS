@@ -5,15 +5,17 @@ import { Typography } from "@mui/material"
 import { useQuery } from "react-query"
 import { api } from "../../services/DependenciesIOC"
 import { Fragment, useState, useEffect } from "react"
-import { ProviderModel } from "../../services/api-gen"
 import { IDropdownConfig } from "./IDropdownConfig"
 import { shortTimeIntervalToUIFormat } from "../../Types"
+import { INoDataAvailableEvent } from "../INoDataAvailableEvent"
+
 interface IIntervalDropdownConfig
   extends IDropdownCallbackWithProvider<string>,
-    IDropdownConfig<string> {
-  onNoDataAvailable?: (provider: ProviderModel | string) => void
+    IDropdownConfig<string>,
+    INoDataAvailableEvent {
   onDataLoaded?: (availableIntervals: string[]) => void
 }
+
 export function IntervalDropdown(config: IIntervalDropdownConfig) {
   const [intervals, setIntervals] = useState<string[]>()
   const { data, status } = useQuery(

@@ -5,16 +5,10 @@ import { Container, Paper } from "@mui/material"
 import { useGetProvidersFromAppStore } from "../hooks/ProviderHooks"
 import { useGetMaxDataFromAppStore } from "../hooks/DataHooks"
 import { ProviderModel } from "../services/api-gen"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { ProviderModal } from "../components/partials/dialogs/modals/ProviderModal"
 import { DataModeButtonGroup } from "../components/buttons/DataModeButtonGroup"
-import { DataType } from "../Types"
-import { store, useAppSelector } from "../store"
-import { setLiveDataType } from "../slices/LiveDataSlice"
-import {
-  useSetDataModeMutation,
-  useUpdateLiveData,
-} from "../hooks/LiveDataHooks"
+import { useSetDataModeMutation } from "../hooks/LiveDataHooks"
 
 export default function MainPage(): JSX.Element {
   const providers = useGetProvidersFromAppStore()
