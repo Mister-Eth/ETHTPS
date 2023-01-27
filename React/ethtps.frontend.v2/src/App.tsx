@@ -2,16 +2,18 @@ import "./App.css"
 import Main from "./Main"
 import { ThemeProvider } from "@emotion/react"
 import CompactHeader from "./components/partials/headers/CompactHeader"
-import { LinksFooter } from "./components/partials/footers/LinksFooter"
 import { SignatureFooter } from "./components/partials/footers/SignatureFooter"
-import { themeProvider } from "./services/DependenciesIOC"
+import { queryClient, themeProvider } from "./services/DependenciesIOC"
+import { QueryClientProvider } from "react-query"
 
 export default function App(): JSX.Element {
   return (
-    <ThemeProvider theme={themeProvider.getCurrentTheme()}>
-      <CompactHeader />
-      <Main />
-      <SignatureFooter />
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={themeProvider.getCurrentTheme()}>
+        <CompactHeader />
+        <Main />
+        <SignatureFooter />
+      </ThemeProvider>
+    </QueryClientProvider>
   )
 }

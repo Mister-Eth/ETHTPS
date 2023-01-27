@@ -1,30 +1,19 @@
-import { AnimatedButtonWithIcon } from "../buttons/AnimatedButtonWithIcon"
 import {
-  Button,
   ButtonGroup,
   ClickAwayListener,
   Grow,
   IconButton,
-  MenuItem,
   MenuList,
   Paper,
 } from "@mui/material"
 import {
   Api,
-  ArrowDownward,
-  ArrowForward,
   DataArray,
-  GitHub,
   Info,
-  LensBlurOutlined,
-  LensOutlined,
-  LinearScale,
   RocketLaunchOutlined,
-  Twitter,
   RocketOutlined,
   QuestionMarkOutlined,
 } from "@mui/icons-material"
-import { DiscordIcon } from "../icons/DiscordIcon"
 import Popper from "@mui/material/Popper"
 import { useRef, useState } from "react"
 import { MenuItemWithIcon } from "../menu item/MenuItemWithIcon"
@@ -78,7 +67,7 @@ export function LinksSection(): JSX.Element {
                       openInNewTab
                       image={<Api />}
                       href={"https://api.ethtps.info/"}
-                      text={"API reference"}
+                      text={"API"}
                     />
                     <MenuItemWithIcon
                       myKey={1}

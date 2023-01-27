@@ -1,6 +1,5 @@
-import { IconButton, MenuItem, Tooltip, Typography } from "@mui/material"
+import { MenuItem } from "@mui/material"
 import { openNewTab } from "../../services/LinksHelper"
-import { DataArray } from "@mui/icons-material"
 import { AnimatedButtonWithIcon } from "../buttons/AnimatedButtonWithIcon"
 
 interface IButtonProperties {

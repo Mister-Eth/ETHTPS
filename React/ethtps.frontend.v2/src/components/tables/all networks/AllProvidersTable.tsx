@@ -8,11 +8,8 @@ import {
 import { IProviderTableModel } from "../../../models/tables/IProviderTableModel"
 import { AllProvidersHeader } from "./AllProvidersHeader"
 import { AllProvidersRows } from "./AllProvidersRows"
-import { SkeletonWithTooltip } from "../../partials/SkeletonWithTooltip"
-import { Skeleton } from "@mui/material"
 
 export function AllProvidersTable(tableData: IProviderTableModel): JSX.Element {
-  const hasData: boolean = (tableData.providerData?.length as number) > 0
   return (
     <TableContainer component={Paper}>
       <Table

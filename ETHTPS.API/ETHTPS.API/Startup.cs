@@ -202,6 +202,7 @@ namespace ETHTPS.API
             services.AddScoped<IHistoricalDataProvider, OneMonthHistoricalDataProvider>();
             services.AddScoped<IHistoricalDataProvider, OneYearHistoricalDataProvider>();
             services.AddScoped<IHistoricalDataProvider, AllHistoricalDataProvider>();
+            services.AddScoped<IHistoricalDataProvider, InstantDataProvider>();
         }
 
         public static void InitializeHangFire(string connectionString)

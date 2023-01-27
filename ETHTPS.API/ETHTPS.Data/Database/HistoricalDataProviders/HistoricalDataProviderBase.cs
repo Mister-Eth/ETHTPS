@@ -8,14 +8,14 @@ using System.Linq;
 
 namespace ETHTPS.Data.Database.HistoricalDataProviders
 {
-    public abstract class HistoricalDataProviderBase<TTargetHistoricalData> : IHistoricalDataProvider
+    public abstract class HistoricalTimedTPSAndGasDataProviderBase<TTargetHistoricalData> : IHistoricalDataProvider
         where TTargetHistoricalData : TimedTPSAndGasData
     {
         private readonly ETHTPSContext _context;
         private readonly Func<ETHTPSContext, DbSet<TTargetHistoricalData>> _dataSelector;
         private readonly TimeSpan _maxAge;
 
-        protected HistoricalDataProviderBase(string interval, ETHTPSContext context, Func<ETHTPSContext, DbSet<TTargetHistoricalData>> dataSelector, TimeSpan maxAge)
+        protected HistoricalTimedTPSAndGasDataProviderBase(string interval, ETHTPSContext context, Func<ETHTPSContext, DbSet<TTargetHistoricalData>> dataSelector, TimeSpan maxAge)
         {
             Interval = interval;
             _context = context;

@@ -2,7 +2,7 @@
 
 namespace ETHTPS.Data.Database
 {
-    public abstract class TimedTPSAndGasData : TPSAndGasDataBase
+    public class TimedTPSAndGasData : TPSAndGasDataBase
     {
         public DateTime StartDate { get; set; }
         public double AverageTps { get; set; }

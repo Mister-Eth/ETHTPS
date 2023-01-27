@@ -1,22 +1,20 @@
+import { getType } from "@reduxjs/toolkit"
 import React from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useQuery } from "react-query"
 
 export function useLoadValuesHook<T>(
+  dataName: string,
   loadFunction: () => Promise<T> | undefined,
   setValueFunction: (value?: T) => void,
 ) {
   const [completed, setCompleted] = useState(false)
-  React.useEffect(() => {
-    loadFunction()
-      ?.then((value) => {
-        setValueFunction(value)
-        setCompleted(true)
-      })
-      .catch((reason) => {
-        console.log("Error: " + reason)
-        setCompleted(true)
-      })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const { data, status } = useQuery(dataName, loadFunction, {})
+  useEffect(() => {
+    if (status === "success") {
+      setCompleted(true)
+      setValueFunction(data)
+    }
+  }, [data, status])
   return completed
 }

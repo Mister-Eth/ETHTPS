@@ -1,7 +1,6 @@
 import { PropsWithChildren } from "react"
 import { setProviders } from "../../../slices/ProvidersSlice"
 import { store } from "../../../store"
-import { LinearProgress, Stack, Typography } from "@mui/material"
 import { useLoadValuesHook } from "../../../hooks/useLoadValuesHook"
 import { api } from "../../../services/DependenciesIOC"
 import { setNetworks } from "../../../slices/NetworksSlice"
@@ -11,50 +10,65 @@ import {
   setMaxGTPSData,
   setMaxTPSData,
 } from "../../../slices/DataSlice"
-import { DataType } from "../../../Types"
+import { DataType, DataPointDictionary } from "../../../Types"
+import { TimeInterval } from "../../../models/TimeIntervals"
 import {
   setProviderColorDictionary,
   setProviderTypeColorDictionary,
 } from "../../../slices/ColorSlice"
+import { setLiveData } from "../../../slices/LiveDataSlice"
+import { DataResponseModel } from "../../../services/api-gen/models/DataResponseModel"
 
 export function LoadingApplicationDataPartial({
   children,
   ...props
 }: PropsWithChildren): JSX.Element {
-  let loadees = [
-    useLoadValuesHook(
-      () => api.getProviders(),
-      (value) => store.dispatch(setProviders(value)),
-    ),
-    useLoadValuesHook(
-      () => api.getNetworks(),
-      (value) => store.dispatch(setNetworks(value)),
-    ),
-    useLoadValuesHook(
-      () => api.getIntervals(),
-      (value) => store.dispatch(setIntervals(value)),
-    ),
-    useLoadValuesHook(
-      () => api.getMax(DataType.TPS),
-      (value) => store.dispatch(setMaxTPSData(value)),
-    ),
-    useLoadValuesHook(
-      () => api.getMax(DataType.GPS),
-      (value) => store.dispatch(setMaxGPSData(value)),
-    ),
-    useLoadValuesHook(
-      () => api.getMax(DataType.GTPS),
-      (value) => store.dispatch(setMaxGTPSData(value)),
-    ),
-    useLoadValuesHook(
-      () => api.getProviderColorDictionary(),
-      (value) => store.dispatch(setProviderColorDictionary(value)),
-    ),
-    useLoadValuesHook(
-      () => api.getProviderTypeColorDictionary(),
-      (value) => store.dispatch(setProviderTypeColorDictionary(value)),
-    ),
-  ]
+  useLoadValuesHook(
+    "providers",
+    () => api.getProviders(),
+    (value) => store.dispatch(setProviders(value)),
+  )
+  useLoadValuesHook(
+    "networks",
+    () => api.getNetworks(),
+    (value) => store.dispatch(setNetworks(value)),
+  )
+  useLoadValuesHook(
+    "intervals",
+    () => api.getIntervals(),
+    (value) => store.dispatch(setIntervals(value)),
+  )
+  useLoadValuesHook(
+    "maxTPS",
+    () => api.getMax(DataType.TPS),
+    (value) => store.dispatch(setMaxTPSData(value)),
+  )
+  useLoadValuesHook(
+    "maxGPS",
+    () => api.getMax(DataType.GPS),
+    (value) => store.dispatch(setMaxGPSData(value)),
+  )
+  useLoadValuesHook(
+    "maxGTPS",
+    () => api.getMax(DataType.GTPS),
+    (value) => store.dispatch(setMaxGTPSData(value)),
+  )
+  useLoadValuesHook(
+    "getProviderColorDictionary",
+    () => api.getProviderColorDictionary(),
+    (value) => store.dispatch(setProviderColorDictionary(value)),
+  )
+  useLoadValuesHook(
+    "getProviderTypeColorDictionary",
+    () => api.getProviderTypeColorDictionary(),
+    (value) => store.dispatch(setProviderTypeColorDictionary(value)),
+  )
+  useLoadValuesHook(
+    "liveData",
+    () => api.getData(DataType.TPS, "Instant", "All"),
+    (value: DataPointDictionary) => store.dispatch(setLiveData(value)),
+  )
+
   return <>{children}</>
   /*
   if (loadees.every((x) => x)) return <>{children}</>

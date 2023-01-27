@@ -5,10 +5,15 @@ import {
 } from "./services/ThrowHelper"
 import { DataPoint } from "./services/api-gen/models/DataPoint"
 import moment from "moment"
+import { DataResponseModel } from "./services/api-gen"
 
 export type DataPointDictionary = { [key: string]: DataPoint }
 
+export type DataResponseModelDictionary = { [key: string]: DataResponseModel[] }
+
 export type StringDictionary = { [key: string]: string }
+
+export type AnyDictionary = { [key: string]: any }
 
 export enum DataType {
   TPS,

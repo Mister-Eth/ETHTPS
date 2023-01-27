@@ -2,7 +2,13 @@ import { createConfiguration } from "../api-gen/configuration"
 import { ServerConfiguration } from "../api-gen/servers"
 import { GPSApi, GasAdjustedTPSApi, GeneralApi, TPSApi } from "../api-gen/index"
 import { ProviderResponseModel } from "../api-gen/models/ProviderResponseModel"
-import { DataType, DataPointDictionary, StringDictionary } from "../../Types"
+import { TimeInterval, toShortString } from "../../models/TimeIntervals"
+import {
+  DataType,
+  DataPointDictionary,
+  StringDictionary,
+  DataResponseModelDictionary,
+} from "../../Types"
 
 export class ETHTPSApi {
   public generalApi: GeneralApi
@@ -42,7 +48,7 @@ export class ETHTPSApi {
     provider?: string,
     network?: string,
     includeSidechains?: boolean,
-  ) {
+  ): Promise<DataResponseModelDictionary> {
     switch (dataType) {
       case DataType.GPS:
         return this.gpsApi.aPIGPSGetGet(
@@ -90,6 +96,15 @@ export class ETHTPSApi {
       default:
         return undefined
     }
+  }
+
+  public getInstantData(smoothing: TimeInterval) {
+    return this.generalApi.aPIV2InstantDataGet(
+      undefined,
+      undefined,
+      true,
+      toShortString(smoothing),
+    )
   }
 
   public getProviderColorDictionary(): Promise<StringDictionary> {

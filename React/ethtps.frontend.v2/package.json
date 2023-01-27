@@ -23,6 +23,7 @@
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
+    "react-query": "^3.39.3",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.7.0",
     "react-scripts": "5.0.1",
@@ -31,7 +32,7 @@
   },
   "scripts": {
     "start": "set PORT=3007 && react-scripts start",
-    "start:dev":"set PORT=3007 && env-cmd -f dev.env npm start",
+    "start:dev": "set PORT=3007 && env-cmd -f dev.env npm start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
