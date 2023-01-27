@@ -1,6 +1,12 @@
 import { createConfiguration } from "../api-gen/configuration"
 import { ServerConfiguration } from "../api-gen/servers"
-import { GPSApi, GasAdjustedTPSApi, GeneralApi, TPSApi } from "../api-gen/index"
+import {
+  GPSApi,
+  GasAdjustedTPSApi,
+  GeneralApi,
+  ProviderModel,
+  TPSApi,
+} from "../api-gen/index"
 import { ProviderResponseModel } from "../api-gen/models/ProviderResponseModel"
 import { TimeInterval, toShortString } from "../../models/TimeIntervals"
 import {
@@ -113,5 +119,9 @@ export class ETHTPSApi {
 
   public getProviderTypeColorDictionary(): Promise<StringDictionary> {
     return this.generalApi.aPIV2ProviderTypesColorDictionaryGet()
+  }
+
+  public getIntervalsWithData(provider: string) {
+    return this.generalApi.aPIV2GetIntervalsWithDataGet(provider)
   }
 }

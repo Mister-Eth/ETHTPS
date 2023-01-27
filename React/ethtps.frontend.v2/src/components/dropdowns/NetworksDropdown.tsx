@@ -1,6 +1,7 @@
 import { Dropdown } from "./Dropdown"
 import { useGetNetworksFromAppStore } from "../../hooks/DataHooks"
 import { IDropdownCallback } from "./IDropdownCallback"
+import { Typography } from "@mui/material"
 
 export function NetworksDropdown(config: IDropdownCallback<string>) {
   const networks = useGetNetworksFromAppStore()
@@ -9,7 +10,7 @@ export function NetworksDropdown(config: IDropdownCallback<string>) {
       <Dropdown<string>
         options={networks}
         defaultOption={"Mainnet"}
-        hoverText={"Choose network"}
+        hoverText={<Typography>{"Choose network"}</Typography>}
         conversionFunction={(x) => x}
         selectionChanged={config.selectionChanged}
       />

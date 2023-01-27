@@ -12,11 +12,12 @@ import { Tooltip } from "@mui/material"
 import { indexOfOr } from "../../services/ArrayHelper"
 import { useEffect } from "react"
 import { IDropdownCallback } from "./IDropdownCallback"
+import { ConditionalRender } from "../../Types"
 
 interface IDropdownConfiguration<T> extends IDropdownCallback<T> {
   options: string[]
-  defaultOption: string
-  hoverText?: string
+  hidden?: boolean
+  hoverText?: string | JSX.Element
   selectionChanged?: (value: T) => void
   conversionFunction(value: string): T
 }
@@ -26,10 +27,7 @@ export function Dropdown<T>(configuration: IDropdownConfiguration<T>) {
   const anchorRef = React.useRef<HTMLDivElement>(null)
   const [selectedIndex, setSelectedIndex] = React.useState(0)
   useEffect(() => {
-    setSelectedIndex(
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      indexOfOr(configuration.options, configuration.defaultOption),
-    )
+    setSelectedIndex(0)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -54,7 +52,7 @@ export function Dropdown<T>(configuration: IDropdownConfiguration<T>) {
 
     setOpen(false)
   }
-  return (
+  return ConditionalRender(
     <React.Fragment>
       <ButtonGroup
         variant="outlined"
@@ -108,6 +106,7 @@ export function Dropdown<T>(configuration: IDropdownConfiguration<T>) {
           </Grow>
         )}
       </Popper>
-    </React.Fragment>
+    </React.Fragment>,
+    !configuration.hidden,
   )
 }

@@ -6,6 +6,8 @@ import {
 import { DataPoint } from "./services/api-gen/models/DataPoint"
 import moment from "moment"
 import { DataResponseModel } from "./services/api-gen"
+import React from "react"
+import { SkeletonWithTooltip } from "./components/partials/SkeletonWithTooltip"
 
 export type DataPointDictionary = { [key: string]: DataPoint }
 
@@ -60,4 +62,22 @@ export class TimeValue implements TV {
     this.x = moment(p?.date)
     this.y = p?.value ?? 0
   }
+}
+
+export const ConditionalRender = (
+  component: JSX.Element,
+  renderIf?: boolean,
+) => {
+  return renderIf
+    ? component
+    : React.createElement("div", {
+        className: "placeholder",
+      })
+}
+
+export const ConditionalSkeletonRender = (
+  component: JSX.Element,
+  renderIf?: boolean,
+) => {
+  return renderIf ? component : React.createElement(SkeletonWithTooltip)
 }

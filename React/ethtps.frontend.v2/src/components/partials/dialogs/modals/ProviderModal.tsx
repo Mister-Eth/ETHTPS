@@ -1,9 +1,11 @@
-import { Box, Modal } from "@mui/material"
+import { Box, Modal, Paper } from "@mui/material"
 import { ProviderModel } from "../../../../services/api-gen/models/ProviderModel"
+import { ProviderDataChart } from "../../../charts/ProviderDataChart"
 
 interface IProviderModalConfiguration {
   open: boolean
   provider?: ProviderModel
+  onClose: () => void
 }
 
 const style = {
@@ -11,7 +13,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: "90%",
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -23,15 +25,20 @@ const style = {
 export function ProviderModal(config: IProviderModalConfiguration) {
   return (
     <Modal
+      keepMounted={false}
       open={config.open}
       aria-labelledby="parent-modal-title"
       aria-describedby="parent-modal-description"
+      onClose={config.onClose}
     >
-      <Box sx={{ ...style, width: 400 }}>
-        <h2 id="parent-modal-title">Text in a modal</h2>
-        <p id="parent-modal-description">
-          Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-        </p>
+      <Box sx={{ ...style }}>
+        <Paper elevation={1}>
+          {config.provider !== undefined ? (
+            <ProviderDataChart provider={config.provider?.name as string} />
+          ) : (
+            <></>
+          )}
+        </Paper>
       </Box>
     </Modal>
   )

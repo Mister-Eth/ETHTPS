@@ -10,6 +10,8 @@ import { Line } from "react-chartjs-2"
 import { CategoryScale, Chart } from "chart.js/auto"
 import "chartjs-adapter-moment"
 import { noGrid } from "./ChartTypes"
+import { Paper } from "@mui/material"
+import { ProviderModel } from "../../services/api-gen/models/ProviderModel"
 
 Chart.register(CategoryScale)
 
@@ -25,7 +27,7 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
   const [mode, setMode] = useState(DataType.TPS)
 
   const [data, setData] = useState<TimeValue[]>([])
-
+  const [noData, setNoData] = useState(false)
   const intervalChanged = (interval: string) => {
     setInterval(interval)
   }
@@ -61,48 +63,63 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
           borderBlockColor: "primary",
         }}
       >
-        {displayNetworksDropdown ? (
-          <NetworksDropdown selectionChanged={networkChanged} />
-        ) : (
-          <></>
-        )}
-        <div style={{ float: "right" }}>
-          <IntervalDropdown selectionChanged={intervalChanged} />
-          <ModeDropdown selectionChanged={modeChanged} />
-        </div>
-        <Line
-          data={{
-            datasets: [
-              {
-                label: `${config.provider}`,
-                data: data,
-                fill: true,
-                borderColor: colorDictionary[config.provider],
-                tension: 0.3,
-                pointHoverRadius: 15,
-                pointRadius: 0,
-                pointHitRadius: 30,
-                pointBackgroundColor: colorDictionary[config.provider],
+        <Paper elevation={1} sx={{ display: noData ? "none" : undefined }}>
+          {displayNetworksDropdown ? (
+            <NetworksDropdown selectionChanged={networkChanged} />
+          ) : (
+            <></>
+          )}
+          <div style={{ float: "right" }}>
+            <IntervalDropdown
+              hidden={noData}
+              onNoDataAvailable={() => setNoData(true)}
+              provider={config.provider}
+              selectionChanged={intervalChanged}
+            />
+            <ModeDropdown hidden={noData} selectionChanged={modeChanged} />
+          </div>
+        </Paper>
+        <br />
+        <Paper elevation={1}>
+          <Line
+            style={{
+              width: "inherit",
+              height: "100%",
+              maxHeight: "500px",
+            }}
+            data={{
+              datasets: [
+                {
+                  label: `${config.provider}`,
+                  data: data,
+                  fill: true,
+                  borderColor: colorDictionary[config.provider],
+                  tension: 0.3,
+                  pointHoverRadius: 15,
+                  pointRadius: 0,
+                  pointHitRadius: 30,
+                  pointBackgroundColor: colorDictionary[config.provider],
+                },
+              ],
+            }}
+            options={{
+              plugins: {
+                legend: {
+                  display: false,
+                },
               },
-            ],
-          }}
-          options={{
-            plugins: {
-              legend: {
-                display: false,
+              scales: {
+                x: {
+                  type: "timeseries",
+                  ...noGrid,
+                },
+                y: {
+                  ...noGrid,
+                },
               },
-            },
-            scales: {
-              x: {
-                type: "timeseries",
-                ...noGrid,
-              },
-              y: {
-                ...noGrid,
-              },
-            },
-          }}
-        />
+            }}
+          />
+        </Paper>
       </Container>
     </React.Fragment>
   )

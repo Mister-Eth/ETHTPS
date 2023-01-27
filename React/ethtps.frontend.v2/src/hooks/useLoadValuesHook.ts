@@ -1,5 +1,3 @@
-import { getType } from "@reduxjs/toolkit"
-import React from "react"
 import { useState, useEffect } from "react"
 import { useQuery } from "react-query"
 
