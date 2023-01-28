@@ -1,5 +1,6 @@
 
 
+using ETHTPS.API.Authentication;
 using ETHTPS.API.Infrastructure.Services.Implementations;
 using ETHTPS.API.Middlewares;
 using ETHTPS.Data.Database;
@@ -18,6 +19,8 @@ using ETHTPS.Services.Infrastructure.Extensions;
 using Hangfire;
 using Hangfire.SqlServer;
 
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -71,6 +74,17 @@ namespace ETHTPS.API
             });
             services.AddDbContext<ETHTPSContext>(options => options.UseSqlServer(defaultConnectionString), ServiceLifetime.Transient);
             services.AddMemoryCache();
+            services.AddAuthentication().AddScheme<AuthenticationSchemeOptions, APIKeyAuthenticationSchemeHandler>("APIKey", opts =>
+            {
+
+            }); 
+            services.AddAuthorization(options =>
+            {
+                options.DefaultPolicy = new AuthorizationPolicyBuilder()
+                    .AddAuthenticationSchemes("APIKey")
+                    .RequireAuthenticatedUser()
+                    .Build();
+            });
 
             AddServices(services);
             AddHistoricalDataProviders(services);
@@ -247,10 +261,11 @@ namespace ETHTPS.API
                 c.RoutePrefix = string.Empty;
             });
             app.UseRouting();
+            app.UseAuthorization();
             app.UseCors(MyAllowSpecificOrigins);
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllers().RequireAuthorization();
             });
         }
     }

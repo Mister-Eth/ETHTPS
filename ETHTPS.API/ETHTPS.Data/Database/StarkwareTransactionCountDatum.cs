@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ETHTPS.Data.Database;
 
-public partial class StarkwareTransactionCountDatum
+public partial class StarkwareTransactionCountData
 {
     public int Id { get; set; }
 
@@ -15,7 +15,7 @@ public partial class StarkwareTransactionCountDatum
 
     public int LastUpdateCount { get; set; }
 
-    public double LastUpdateTps { get; set; }
+    public double LastUpdateTPS { get; set; }
 
     public virtual Network NetworkNavigation { get; set; }
 }

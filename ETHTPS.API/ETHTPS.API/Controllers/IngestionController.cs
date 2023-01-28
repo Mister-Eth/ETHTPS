@@ -36,7 +36,7 @@ namespace ETHTPS.API.Controllers
             var keyHash = headerValues.First();
             if (!string.IsNullOrEmpty(keyHash))
             {
-                if (!_context.APIKeys.Any(x => x.KeyHash.ToUpper() == keyHash.ToUpper()))
+                if (!_context.Apikeys.Any(x => x.KeyHash.ToUpper() == keyHash.ToUpper()))
                     return Unauthorized();
             }
             else

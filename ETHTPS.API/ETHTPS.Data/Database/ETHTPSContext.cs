@@ -73,7 +73,7 @@ namespace ETHTPS.Data.Database
 
         public virtual DbSet<Set> Sets { get; set; }
 
-        public virtual DbSet<StarkwareTransactionCountDatum> StarkwareTransactionCountData { get; set; }
+        public virtual DbSet<StarkwareTransactionCountData> StarkwareTransactionCountData { get; set; }
 
         public virtual DbSet<State> States { get; set; }
 
@@ -529,13 +529,13 @@ namespace ETHTPS.Data.Database
                 entity.Property(e => e.ExpireAt).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<StarkwareTransactionCountDatum>(entity =>
+            modelBuilder.Entity<StarkwareTransactionCountData>(entity =>
             {
                 entity.HasKey(e => e.Id).HasName("PK__Starkwar__3214EC277EE03B03");
 
                 entity.Property(e => e.Id).HasColumnName("ID");
                 entity.Property(e => e.LastUpdateTime).HasColumnType("datetime");
-                entity.Property(e => e.LastUpdateTps).HasColumnName("LastUpdateTPS");
+                entity.Property(e => e.LastUpdateTPS).HasColumnName("LastUpdateTPS");
                 entity.Property(e => e.Product)
                     .IsRequired()
                     .HasMaxLength(255);
