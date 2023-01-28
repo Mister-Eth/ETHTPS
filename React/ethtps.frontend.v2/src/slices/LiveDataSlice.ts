@@ -7,6 +7,7 @@ import { InstantDataResponseModel } from "../Types.dictionaries"
 const initialState: ILiveDataModeModel = {
   liveDataSmoothing: TimeInterval.Instant,
   liveDataType: DataType.TPS,
+  includeSidechains: false,
 }
 
 const liveDataSlice = createSlice({
@@ -38,9 +39,21 @@ const liveDataSlice = createSlice({
       state.data = action.payload
       return state
     },
+
+    setIncludeSidechains(
+      state: ILiveDataModeModel,
+      action: PayloadAction<boolean>,
+    ) {
+      state.includeSidechains = action.payload
+      return state
+    },
   },
 })
 
-export const { setLiveDataSmoothing, setLiveDataType, setLiveData } =
-  liveDataSlice.actions
+export const {
+  setLiveDataSmoothing,
+  setLiveDataType,
+  setLiveData,
+  setIncludeSidechains,
+} = liveDataSlice.actions
 export const liveDataReducer = liveDataSlice.reducer

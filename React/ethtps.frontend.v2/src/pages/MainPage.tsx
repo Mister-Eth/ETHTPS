@@ -8,12 +8,17 @@ import { ProviderModel } from "../services/api-gen"
 import { useState } from "react"
 import { ProviderModal } from "../components/partials/dialogs/modals/ProviderModal"
 import { DataModeButtonGroup } from "../components/buttons/DataModeButtonGroup"
-import { useSetDataModeMutation } from "../hooks/LiveDataHooks"
+import {
+  useGetSidechainsIncludedFromAppStore,
+  useSetDataModeMutation,
+} from "../hooks/LiveDataHooks"
+import { SidechainToggleButton } from "../components/buttons/SidechainToggleButton"
+import { useSetSidechainsIncluded } from "../hooks/LiveDataHooks"
 
 export default function MainPage(): JSX.Element {
   const providers = useGetProvidersFromAppStore()
   const max = useGetMaxDataFromAppStore()
-
+  const sidechainsIncluded = useGetSidechainsIncludedFromAppStore()
   const [showProviderModal, setShowProviderModal] = useState(false)
   const [modalProvider, setModalProvider] =
     useState<ProviderModel | undefined>()
@@ -37,6 +42,10 @@ export default function MainPage(): JSX.Element {
         />
         <Container maxWidth={"md"}>
           <Paper elevation={1}>
+            <SidechainToggleButton
+              toggled={useSetSidechainsIncluded}
+              defaultIncluded={sidechainsIncluded}
+            />
             <DataModeButtonGroup modeChanged={useSetDataModeMutation} />
           </Paper>
           <Paper elevation={1}>

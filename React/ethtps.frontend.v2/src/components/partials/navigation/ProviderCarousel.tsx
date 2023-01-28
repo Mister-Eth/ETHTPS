@@ -1,7 +1,5 @@
 import { Fragment } from "react"
 import { useGetProvidersFromAppStore } from "../../../hooks/ProviderHooks"
-import { LargeProviderHeader } from "../../widgets/LargeProviderHeader"
-import { Paper } from "@mui/material"
 import { IObjectWithProvider } from "../../../models/interfaces/IObjectWithProvider"
 
 interface IProviderCarouselConfiguration extends IObjectWithProvider {}

@@ -1,7 +1,11 @@
 import { DataType } from "../Types"
 import { TimeInterval } from "../models/TimeIntervals"
 import { api } from "../services/DependenciesIOC"
-import { setLiveData, setLiveDataType } from "../slices/LiveDataSlice"
+import {
+  setIncludeSidechains,
+  setLiveData,
+  setLiveDataType,
+} from "../slices/LiveDataSlice"
 import { useAppSelector, useAppDispatch, store } from "../store"
 import { useLoadValuesHook } from "./useLoadValuesHook"
 
@@ -30,4 +34,12 @@ export function useUpdateLiveData() {
     0,
     4000,
   )
+}
+
+export function useGetSidechainsIncludedFromAppStore() {
+  return useAppSelector((state) => state.liveData.includeSidechains)
+}
+
+export function useSetSidechainsIncluded(value: boolean) {
+  store.dispatch(setIncludeSidechains(value))
 }
