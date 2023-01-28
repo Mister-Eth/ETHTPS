@@ -8,6 +8,7 @@ namespace ETHTPS.Data.Database
         public double AverageTps { get; set; }
         public double AverageGps { get; set; }
         public int ReadingsCount { get; set; }
+        public string OclhJson { get; set; }
     }
 
     public class TpsandGasDataDay : TimedTPSAndGasData { }
