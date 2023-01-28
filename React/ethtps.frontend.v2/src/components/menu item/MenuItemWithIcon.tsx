@@ -31,7 +31,7 @@ export function MenuItemWithIcon(props: IButtonProperties): JSX.Element {
           showText
           openInNewTab={false}
           image={props.image}
-          href={"https://api.ethtps.info/API/v2/AllData"}
+          href={props.href}
           text={props.text}
         />
       </MenuItem>

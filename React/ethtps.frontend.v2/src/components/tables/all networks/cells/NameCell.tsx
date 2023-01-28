@@ -29,21 +29,23 @@ export function NameCell(config: ICustomCellConfiguration) {
         }
       >
         <>
-          <img
-            alt={`${config.provider?.name} icon`}
-            src={`provider-icons/${config.provider?.name}.png`}
-            className={"tiny-img inline"}
-            style={{ marginRight: "15px" }}
-          ></img>
-          <Typography
-            className={`inline ${
-              config.clickCallback !== undefined ? "pointable" : ""
-            }`}
-            color={color}
-            {...tableCellTypographyStandard}
-          >
-            {config.provider?.name}
-          </Typography>
+          <div className={"box"}>
+            <img
+              alt={`${config.provider?.name} icon`}
+              src={`provider-icons/${config.provider?.name}.png`}
+              className={"tiny-img inline"}
+              style={{ marginRight: "15px" }}
+            ></img>
+            <Typography
+              className={`inline ${
+                config.clickCallback !== undefined ? "pointable" : ""
+              }`}
+              color={color}
+              {...tableCellTypographyStandard}
+            >
+              {config.provider?.name}
+            </Typography>
+          </div>
         </>
       </TableCell>
     </Tooltip>

@@ -1,3 +1,5 @@
+import { DataPoint, DataResponseModel } from "./services/api-gen"
+
 export type GenericDictionary<T> = { [key: string]: T }
 export type DataPointDictionary = GenericDictionary<DataPoint>
 export type DataResponseModelDictionary = GenericDictionary<DataResponseModel[]>

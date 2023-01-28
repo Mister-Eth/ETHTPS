@@ -10,13 +10,12 @@ interface IAnimatedTypographyConfiguration {
 
 export function AnimatedTypography(config: IAnimatedTypographyConfiguration) {
   const [completed, setCompleted] = useState(false)
-  /* setTimeout(() => {
-    setCompleted(true)
-    console.log("completed")
-  }, config.durationMs)*/
   return (
     <Typography
       {...config.standard}
+      onAnimationEnd={() => {
+        setCompleted(true)
+      }}
       className={completed ? undefined : config.animationClassName}
     >
       {config.child}

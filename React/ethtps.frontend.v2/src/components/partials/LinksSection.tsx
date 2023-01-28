@@ -83,13 +83,6 @@ export function LinksSection(): JSX.Element {
                       href={"https://v1.ethtps.info"}
                       text={"Old version"}
                     />
-                    <MenuItemWithIcon
-                      myKey={3}
-                      openInNewTab
-                      image={<Info />}
-                      href={"https://ethtps.info/About+"}
-                      text={"About"}
-                    />
                   </MenuList>
                 </ClickAwayListener>
               </Paper>

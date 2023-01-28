@@ -4,8 +4,9 @@ import { ProviderDataChart } from "../../../charts/ProviderDataChart"
 import { ConditionalRender } from "../../../../Types"
 import { ProviderCarousel } from "../../navigation/ProviderCarousel"
 import { INoDataAvailableEvent } from "../../../INoDataAvailableEvent"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { tableCellTypographyStandard } from "../../../tables/all networks/cells/Typography.types"
+import { useSearchParams } from "react-router-dom"
 
 interface IProviderModalConfiguration extends INoDataAvailableEvent {
   open: boolean
@@ -20,7 +21,7 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: "90%",
   bgcolor: "background.paper",
-  border: "2px solid #000",
+  border: "2px line #000",
   boxShadow: 24,
   pt: 2,
   px: 4,
@@ -60,7 +61,7 @@ export function ProviderModal(config: IProviderModalConfiguration) {
                 {generateNoDataAvailableString(config.provider?.name)}
                 <a href="https://discord.com/invite/jWPcsTzpCT">Discord</a>.
                 <br />
-                See a list of available integrations{" "}
+                See a list of available integrations
                 <a href="https://github.com/Mister-Eth/ETHTPS/tree/dev/ETHTPS.API/ETHTPS.Services.Ethereum">
                   here
                 </a>

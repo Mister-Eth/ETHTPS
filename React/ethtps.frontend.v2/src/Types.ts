@@ -4,6 +4,8 @@ import moment from "moment"
 import React from "react"
 import { SkeletonWithTooltip } from "./components/partials/SkeletonWithTooltip"
 import { toShortString_2 } from "./models/TimeIntervals"
+import { DataResponseModelDictionary } from "./Types.dictionaries"
+import { ILiveDataModeModel } from "./models/interfaces/ILiveDataModeModel"
 
 export enum DataType {
   TPS,
@@ -35,6 +37,34 @@ export function fromShortString(typeStr: string): DataType {
       return DataType.GTPS
     default:
       return DataType.Unknown
+  }
+}
+
+// Have to use any because it has a weird structure. Whose fault could it be?
+export const extractData = (dict?: any, providerName?: string) => {
+  if (dict && providerName && dict[providerName]) {
+    if (dict[providerName].at(0)) {
+      let q = dict[providerName].at(0)
+      if (q) {
+        let result = q.value
+        return Math.round(result * 100) / 100
+      }
+    }
+  }
+  return 0
+}
+
+export const getModeData = (
+  model: ILiveDataModeModel,
+  mode: DataType,
+): DataResponseModelDictionary | undefined => {
+  switch (mode) {
+    case DataType.TPS:
+      return model.data?.tps
+    case DataType.GPS:
+      return model.data?.gps
+    case DataType.GTPS:
+      return model.data?.gasAdjustedTPS
   }
 }
 
