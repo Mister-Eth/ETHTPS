@@ -4,6 +4,7 @@ import {
   extractData,
   getModeData,
   ConditionalRender,
+  ConditionalSkeletonRender,
 } from "../../Types"
 import {
   DataResponseModelDictionary,
@@ -28,6 +29,8 @@ import { Bar } from "react-chartjs-2"
 import { objectKeys } from "ts-extras"
 import { useGetProvidersFromAppStore } from "../../hooks/ProviderHooks"
 import { ProviderModel } from "../../services/api-gen/models/ProviderModel"
+import { noGrid } from "../charts/ChartTypes"
+import { useGetProviderColorDictionaryFromAppStore } from "../../hooks/ColorHooks"
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
@@ -49,11 +52,22 @@ export const options = {
   },
   plugins: {
     legend: {
-      position: "right" as const,
+      display: false,
+    },
+    scales: {
+      x: {
+        ...noGrid,
+      },
+      y: {
+        ...noGrid,
+      },
+      _custom: {
+        ...noGrid,
+        max: 100,
+      },
     },
     title: {
-      display: true,
-      text: "Chart.js Horizontal Bar Chart",
+      display: false,
     },
   },
 }
@@ -70,20 +84,25 @@ type InstantBarChartData = {
   datasets: InstantBarChartDataset[]
 }
 
-const createDataset = (data: DataResponseModelDictionary, x: ProviderModel) => {
+const createDataset = (
+  data: DataResponseModelDictionary,
+  x: ProviderModel,
+  color: string,
+) => {
   let value = extractData(data, x.name)
   if (value === 0) return undefined
   return {
     label: x.name as string,
     data: [value],
-    borderColor: "",
-    backgroundColor: "",
+    borderColor: color,
+    backgroundColor: color,
   } as InstantBarChartDataset
 }
 
 export function SimpleInstantBar() {
   const providers = useGetProvidersFromAppStore()
   const smoothing = useGetLiveDataSmoothingFromAppStore()
+  const colors = useGetProviderColorDictionaryFromAppStore()
 
   const mode = useGetLiveDataModeFromAppStore()
   const liveData = useGetLiveDataFromAppStore()
@@ -93,19 +112,23 @@ export function SimpleInstantBar() {
     setData(getModeData(liveData, mode))
   }, [mode, liveData])
   useEffect(() => {
-    if (data)
+    if (data && colors)
       setChartData({
         labels: [""],
         datasets: providers
-          .map((x) => createDataset(data, x))
+          .map((x) => createDataset(data, x, colors[x.name as string]))
           .filter((x) => x !== undefined)
           .map((x) => x as InstantBarChartDataset),
       })
-  }, [mode, smoothing, liveData])
+  }, [mode, smoothing, liveData, colors])
   return (
     <Fragment>
-      {ConditionalRender(
-        <Bar options={options} data={chartData as InstantBarChartData} />,
+      {ConditionalSkeletonRender(
+        <Bar
+          height={"25px"}
+          options={options}
+          data={chartData as InstantBarChartData}
+        />,
         chartData !== undefined,
       )}
     </Fragment>
