@@ -21,7 +21,7 @@ import {
 } from "../../../hooks/ColorHooks"
 import { setApplicationDataLoaded } from "../../../slices/ApplicationStateSlice"
 import { store } from "../../../store"
-import { Typography } from "@mui/material"
+import { Paper, Typography } from "@mui/material"
 
 export function SlowLoadingMessage() {
   const [display, setDisplay] = useState(false)
@@ -80,10 +80,13 @@ export function SlowLoadingMessage() {
     <>
       {ConditionalRender(
         <Fragment>
-          <LinearWithValueLabel progress={percentage} />
-          <Typography sx={{ fontSize: "bold" }}>{`Loading ${loadeeNames.join(
-            ", ",
-          )}...`}</Typography>
+          <Paper elevation={1}>
+            <LinearWithValueLabel progress={percentage} />
+            <Typography
+              align="center"
+              sx={{ fontWeight: 100 }}
+            >{`Loading ${loadeeNames.join(", ")}...`}</Typography>
+          </Paper>
         </Fragment>,
         !dataLoaded && display,
       )}
