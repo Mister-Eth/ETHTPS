@@ -1,10 +1,8 @@
 import { Fragment, createRef, useState, useEffect } from "react"
 import { ConditionalRender } from "../Types"
-import Recaptcha, { Callbacks } from "react-google-invisible-recaptcha"
+import Recaptcha from "react-google-invisible-recaptcha"
 import { LoadingApplicationDataPartial } from "./partials/loading/LoadingApplicationDataPartial"
 import { api } from "../services/DependenciesIOC"
-import { useQuery } from "react-query"
-import { options } from "./instant data animations/SimpleInstantBar"
 
 export function RecaptchaAPIKeyAndDataLoader() {
   const [hasAPIKey, setHasAPIKey] = useState(api.apiKey !== undefined)

@@ -34,5 +34,13 @@ namespace ETHTPS.Data.Extensions
                 return default;
             }
         }
+
+        public static IEnumerable<TReturn> SafeSelect<T, TReturn>(this IEnumerable<T> source, Func<T, TReturn> selector)
+        {
+            if (source == null || !source.Any())
+                return Enumerable.Empty<TReturn>();
+
+            return source.Select(selector);
+        }
     }
 }

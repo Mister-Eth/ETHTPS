@@ -170,4 +170,18 @@ export class ETHTPSApi {
   public getIntervalsWithData(provider: string) {
     return this.generalApi.aPIV2GetIntervalsWithDataGet(provider)
   }
+
+  public getAvailableExperiments(deviceType: string) {
+    return fetch(
+      this._url +
+        "/api/beta/experiments/AvailableExperiments?deviceType=" +
+        deviceType +
+        "&XAPIKey=" +
+        this.apiKey,
+    ).then((response) => {
+      return response.text().then((text) => {
+        return JSON.parse(text) as number[]
+      })
+    })
+  }
 }

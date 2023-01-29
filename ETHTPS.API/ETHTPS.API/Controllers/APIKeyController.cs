@@ -7,8 +7,6 @@ using ETHTPS.Data.ResponseModels.APIKey;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 
 using System.Threading.Tasks;
 

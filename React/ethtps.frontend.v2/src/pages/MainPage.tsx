@@ -1,5 +1,4 @@
 import { DiscordBanner } from "../components/partials/banners/DiscordBanner"
-import { LoadingApplicationDataPartial } from "../components/partials/loading/LoadingApplicationDataPartial"
 import { AllProvidersTable } from "../components/tables/all networks/AllProvidersTable"
 import { Container, Paper } from "@mui/material"
 import { useGetProvidersFromAppStore } from "../hooks/ProviderHooks"
@@ -20,6 +19,7 @@ import {
 import { createSearchParams, useSearchParams } from "react-router-dom"
 import { toShortString } from "../Types"
 import { SimpleInstantBar } from "../components/instant data animations/SimpleInstantBar"
+import { TestTube } from "../components/experiments/TestTube"
 
 export default function MainPage(): JSX.Element {
   const providers = useGetProvidersFromAppStore()
@@ -48,6 +48,7 @@ export default function MainPage(): JSX.Element {
 
   return (
     <>
+      <TestTube />
       <DiscordBanner />
 
       <>

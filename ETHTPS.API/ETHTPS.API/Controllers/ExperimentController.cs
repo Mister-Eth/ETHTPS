@@ -4,10 +4,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ETHTPS.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/beta/experiments")]
     [ApiController]
     public class ExperimentController : ControllerBase
     {
@@ -18,10 +19,10 @@ namespace ETHTPS.API.Controllers
             _experimentService = experimentService;
         }
 
-        [HttpGet]
-        public IEnumerable<int> GetAvailableExperiments([FromQuery] ExperimentRequesterParameters parameters)
+        [HttpGet("AvailableExperiments")]
+        public async Task<IEnumerable<int>>  GetAvailableExperiments([FromQuery] ExperimentRequesterParameters parameters)
         {
-            return _experimentService.GetAvailableExperiments(parameters);
+            return await _experimentService.GetAvailableExperimentsAsync(parameters, HttpContext);
         }
     }
 }

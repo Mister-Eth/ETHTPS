@@ -1,10 +1,11 @@
 import { IProviderModel } from "../interfaces/IProviderModel"
 import { IMaxDataModel } from "../interfaces/IMaxDataModel"
-import { DataPointDictionary, DataType } from "../../Types"
 import { IDataModeModel } from "../interfaces/IDataModeModel"
 import { ILiveDataModeModel } from "../interfaces/ILiveDataModeModel"
 import { TimeInterval } from "../TimeIntervals"
 import { DataPoint } from "../../services/api-gen"
+import { DataPointDictionary } from "../../Types.dictionaries"
+import { DataType } from "../../Types"
 
 export interface IApplicationState
   extends IMaxDataModel,
@@ -19,6 +20,7 @@ export interface IApplicationState
   mode: DataType
   liveDataSmoothing: TimeInterval
   liveDataType: DataType
+  experiments: number[]
   getMaxDataFor(provider: string, type: DataType): DataPoint | undefined
 }
 
@@ -33,6 +35,7 @@ export class ApplicationState implements IApplicationState {
   public liveDataSmoothing: TimeInterval
   public liveDataType: DataType
   public includeSidechains: boolean = false
+  public experiments: number[] = []
   public getMaxDataFor(
     provider: string,
     type: DataType,

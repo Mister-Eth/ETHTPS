@@ -25,6 +25,7 @@
     "query-string": "^8.1.0",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
+    "react-device-detect": "^2.2.2",
     "react-dom": "^18.2.0",
     "react-google-invisible-recaptcha": "^1.0.0-rc.2",
     "react-markdown": "^8.0.5",

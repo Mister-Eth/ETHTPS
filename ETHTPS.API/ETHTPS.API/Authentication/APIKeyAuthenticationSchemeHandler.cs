@@ -1,5 +1,6 @@
 ﻿using ETHTPS.Data.Database;
 using ETHTPS.Data.Database.Extensions;
+using ETHTPS.Data.Extensions;
 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
@@ -33,16 +34,12 @@ namespace ETHTPS.API.Authentication
 
         protected override Task<AuthenticateResult> HandleAuthenticateAsync()
         {
-            var apiKey = Context.Request.Headers["X-API-KEY"];
-            if (string.IsNullOrWhiteSpace(apiKey))
-            {
-                Context.Request.Query.TryGetValue("XAPIKey", out apiKey);
-            }
+            var apiKey = Context.ExtractAPIKey();
             if (!ValidateAPIKey(apiKey))
                 return Task.FromResult(AuthenticateResult.Fail("No X-API-KEY header specified or API key is invalid"));
 
             if (!_context.ValidateNumberOfCalls(apiKey))
-                return Task.FromResult(AuthenticateResult.Fail("Rate limit reached"));
+                return Task.FromResult(AuthenticateResult.Fail("Limit reached for today"));
 
             _context.IncrementNumberOfCalls(apiKey);
             var claims = new[] { new Claim(ClaimTypes.Name, "VALID USER") };

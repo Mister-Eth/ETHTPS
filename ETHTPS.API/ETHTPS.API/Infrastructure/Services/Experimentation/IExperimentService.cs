@@ -1,11 +1,14 @@
-﻿using System.Collections;
+﻿using Microsoft.AspNetCore.Http;
+
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ETHTPS.API.Infrastructure.Services.Experimentation
 {
     public interface IExperimentService
     {
-        public IEnumerable<int> GetAvailableExperiments(ExperimentRequesterParameters parameters);
+        public Task<IEnumerable<int>> GetAvailableExperimentsAsync(ExperimentRequesterParameters parameters, HttpContext context);
+        public Task EnrollInNewExperimentsIfApplicableAsync(ExperimentRequesterParameters parameters, HttpContext context);
         public void GiveAnonymousFeedback();
     }
 }

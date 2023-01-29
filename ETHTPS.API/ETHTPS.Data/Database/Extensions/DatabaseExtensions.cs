@@ -37,36 +37,6 @@ namespace ETHTPS.Data.Database.Extensions
 
         public static int GetMainnetID(this ETHTPSContext context) => context.Networks.First(x => x.Name == "Mainnet").Id;
 
-        public static bool ValidateAPIKey(this ETHTPSContext context, string apiKey) 
-        {
-            var keyHash = apiKey.SHA256();
-            lock (context.LockObj)
-            {
-                return context.Apikeys.Any(context => context.KeyHash == keyHash);
-            }
-        }
-
-        public static bool ValidateNumberOfCalls(this ETHTPSContext context, string apiKey)
-        {
-            var keyHash = apiKey.SHA256();
-            lock (context.LockObj)
-            {
-                 var entry = context.Apikeys.First(context => context.KeyHash == keyHash);
-                return entry.CallsLast24h < entry.Limit24h;
-            }
-        }
-
-        public static void IncrementNumberOfCalls(this ETHTPSContext context, string apiKey)
-        {
-            var keyHash = apiKey.SHA256();
-            lock (context.LockObj)
-            {
-                var entry = context.Apikeys.First(context => context.KeyHash == keyHash);
-                entry.CallsLast24h++;
-                entry.TotalCalls++;
-                context.Update(entry);
-                context.SaveChanges();
-            }
-        }
+     
     }
 }

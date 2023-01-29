@@ -16,6 +16,7 @@ public partial class ExperimentRunParameter
     public int? DisplayToNpeopleBeforeEnd { get; set; }
 
     public int ConsiderFinishedAfterTimeoutSeconds { get; set; }
+    public int? EnrollmentChance { get; set; }
 
     public virtual ICollection<Experiment> Experiments { get; } = new List<Experiment>();
 }

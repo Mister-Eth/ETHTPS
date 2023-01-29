@@ -61,9 +61,8 @@ export function ProviderModal(config: IProviderModalConfiguration) {
                 {generateNoDataAvailableString(config.provider?.name)}
                 <a href="https://discord.com/invite/jWPcsTzpCT">Discord</a>.
                 <br />
-                See a list of available integrations
                 <a href="https://github.com/Mister-Eth/ETHTPS/tree/dev/ETHTPS.API/ETHTPS.Services.Ethereum">
-                  here
+                  See a list of available integrations here
                 </a>
                 .
               </Alert>

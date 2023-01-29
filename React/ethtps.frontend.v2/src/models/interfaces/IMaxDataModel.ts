@@ -1,4 +1,5 @@
-import { DataPointDictionary, DataType } from "../../Types"
+import { DataType } from "../../Types"
+import { DataPointDictionary } from "../../Types.dictionaries"
 import { DataPoint } from "../../services/api-gen/models/DataPoint"
 
 export interface IMaxDataModel {

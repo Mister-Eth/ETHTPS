@@ -1,11 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
 using Newtonsoft.Json;
-
-using System.IO;
-using System.Net;
-using System.Text;
-using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Net.Http;
