@@ -1,6 +1,11 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using ETHTPS.Data.Database;
+using ETHTPS.Data.Database.Extensions;
+
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Primitives;
+
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -9,26 +14,42 @@ namespace ETHTPS.API.Authentication
 {
     public class APIKeyAuthenticationSchemeHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
+        private readonly ETHTPSContext _context;
         public APIKeyAuthenticationSchemeHandler(
             IOptionsMonitor<AuthenticationSchemeOptions> options,
             ILoggerFactory logger,
             UrlEncoder encoder,
-            ISystemClock clock) : base(options, logger, encoder, clock)
+            ISystemClock clock,
+            ETHTPSContext context) : base(options, logger, encoder, clock)
         {
+            _context = context;
         }
 
-        protected async override Task<AuthenticateResult> HandleAuthenticateAsync()
+        private bool ValidateAPIKey(StringValues apikey)
         {
-            // Read the token from request headers/cookies
-            // Check that it's a valid session, depending on your implementation
+            if (string.IsNullOrWhiteSpace(apikey)) return false;
+            return _context.ValidateAPIKey(apikey);
+        }
 
-            // If the session is valid, return success:
-            var principal = new ClaimsPrincipal(new ClaimsIdentity("Test"));
-            var ticket = new AuthenticationTicket(principal, this.Scheme.Name);
-            return AuthenticateResult.Success(ticket);
+        protected override Task<AuthenticateResult> HandleAuthenticateAsync()
+        {
+            var apiKey = Context.Request.Headers["X-API-KEY"];
+            if (string.IsNullOrWhiteSpace(apiKey))
+            {
+                Context.Request.Query.TryGetValue("XAPIKey", out apiKey);
+            }
+            if (!ValidateAPIKey(apiKey))
+                return Task.FromResult(AuthenticateResult.Fail("No X-API-KEY header specified or API key is invalid"));
 
-            // If the token is missing or the session is invalid, return failure:
-            // return AuthenticateResult.Fail("Authentication failed");
+            if (!_context.ValidateNumberOfCalls(apiKey))
+                return Task.FromResult(AuthenticateResult.Fail("Rate limit reached"));
+
+            _context.IncrementNumberOfCalls(apiKey);
+            var claims = new[] { new Claim(ClaimTypes.Name, "VALID USER") };
+            var identity = new ClaimsIdentity(claims, Scheme.Name);
+            var principal = new ClaimsPrincipal(identity);
+            var ticket = new AuthenticationTicket(principal, Scheme.Name);
+            return Task.FromResult(AuthenticateResult.Success(ticket));
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace ETHTPS.Data.Models.Query
 {
-    public class ProviderQueryModel
+    public class ProviderQueryModel : APIKeyRequestModel
     {
         public string Provider { get; set; } = Constants.All;
         public string Network { get; set; } = Constants.Mainnet;

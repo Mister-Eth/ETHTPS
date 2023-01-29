@@ -45,5 +45,28 @@ namespace ETHTPS.Data.Database.Extensions
                 return context.Apikeys.Any(context => context.KeyHash == keyHash);
             }
         }
+
+        public static bool ValidateNumberOfCalls(this ETHTPSContext context, string apiKey)
+        {
+            var keyHash = apiKey.SHA256();
+            lock (context.LockObj)
+            {
+                 var entry = context.Apikeys.First(context => context.KeyHash == keyHash);
+                return entry.CallsLast24h < entry.Limit24h;
+            }
+        }
+
+        public static void IncrementNumberOfCalls(this ETHTPSContext context, string apiKey)
+        {
+            var keyHash = apiKey.SHA256();
+            lock (context.LockObj)
+            {
+                var entry = context.Apikeys.First(context => context.KeyHash == keyHash);
+                entry.CallsLast24h++;
+                entry.TotalCalls++;
+                context.Update(entry);
+                context.SaveChanges();
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ETHTPS.API.Infrastructure.Services.Implementations;
+using ETHTPS.Data.Models;
 using ETHTPS.Data.Models.Query;
 using ETHTPS.Data.ResponseModels;
 
@@ -19,20 +20,20 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<string> Networks()
+        public IEnumerable<string> Networks([FromQuery] APIKeyRequestModel model)
         {
             return _generalService.Networks();
         }
 
         [HttpGet]
-        public IEnumerable<string> Intervals()
+        public IEnumerable<string> Intervals([FromQuery] APIKeyRequestModel model)
         {
             return _generalService.Intervals();
         }
 
 
         [HttpGet]
-        public IEnumerable<ProviderResponseModel> Providers(string subchainsOf)
+        public IEnumerable<ProviderResponseModel> Providers([FromQuery] APIKeyRequestModel model, string subchainsOf)
         {
             if (!string.IsNullOrWhiteSpace(subchainsOf))
                 return _generalService.Providers(subchainsOf);
@@ -41,13 +42,13 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
-        public IDictionary<string, string> ColorDictionary()
+        public IDictionary<string, string> ColorDictionary([FromQuery] APIKeyRequestModel model)
         {
             return _generalService.ColorDictionary();
         }
 
         [HttpGet]
-        public IDictionary<string, string> ProviderTypesColorDictionary()
+        public IDictionary<string, string> ProviderTypesColorDictionary([FromQuery] APIKeyRequestModel model)
         {
             return _generalService.ProviderTypesColorDictionary();
         }
@@ -80,7 +81,7 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
-        public AllDataModel AllData(string network = "Mainnet")
+        public AllDataModel AllData([FromQuery] APIKeyRequestModel model, string network = "Mainnet")
         {
             return _generalService.GetAllData(network);
         }

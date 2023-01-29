@@ -1,5 +1,6 @@
 ﻿using ETHTPS.Data;
 using ETHTPS.Data.Database;
+using ETHTPS.Data.Models;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,30 +23,8 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult IngestLatestData()
+        public IActionResult IngestLatestData([FromQuery] APIKeyRequestModel model)
         {
-            if (!Request.Headers.ContainsKey(Constants.Headers.XAPIKey))
-            {
-                return Unauthorized($"No {Constants.Headers.XAPIKey} header specified");
-            }
-            var headerValues = Request.Headers[Constants.Headers.XAPIKey];
-            if (headerValues.Count > 1)
-            {
-                return BadRequest($"Only one {Constants.Headers.XAPIKey} header allowed");
-            }
-            var keyHash = headerValues.First();
-            if (!string.IsNullOrEmpty(keyHash))
-            {
-                if (!_context.Apikeys.Any(x => x.KeyHash.ToUpper() == keyHash.ToUpper()))
-                    return Unauthorized();
-            }
-            else
-            {
-                return Unauthorized();
-            }
-
-
-
             return Ok();
         }
     }

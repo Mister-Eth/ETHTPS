@@ -1,6 +1,7 @@
 ﻿using ETHTPS.API.Infrastructure.Services.Implementations;
 using ETHTPS.Data.Database.TimeWarp;
 using ETHTPS.Data.Database.TimeWarp.Models;
+using ETHTPS.Data.Models;
 using ETHTPS.Data.Models.Query;
 using ETHTPS.Data.ResponseModels;
 
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 namespace ETHTPS.API.Controllers
 {
     [Route("API/TimeWarp/[action]")]
-    public class TimeWarpController : ITimeWarpService
+    public class TimeWarpController
     {
         private readonly TimeWarpService _timeWarpService;
         private const string DEFAULT_SMOOTHING = "Instant";
@@ -23,7 +24,7 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
-        public DateTime GetEarliestDate()
+        public DateTime GetEarliestDate([FromQuery] APIKeyRequestModel model)
         {
             return ((ITimeWarpService)_timeWarpService).GetEarliestDate();
         }

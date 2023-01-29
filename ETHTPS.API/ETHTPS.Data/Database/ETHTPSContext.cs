@@ -102,6 +102,7 @@ namespace ETHTPS.Data.Database
         public virtual DbSet<TpsandGasDataWeek> TpsandGasDataWeeks { get; set; }
 
         public virtual DbSet<TpsandGasDataYear> TpsandGasDataYears { get; set; }
+        public virtual DbSet<ApikeyExperimentBinding> ApikeyExperimentBindings { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -130,7 +131,6 @@ namespace ETHTPS.Data.Database
                 entity.ToTable("APIKeys");
 
                 entity.Property(e => e.Id).HasColumnName("ID");
-                entity.Property(e => e.ExperimentId).HasColumnName("ExperimentID");
                 entity.Property(e => e.KeyHash)
                     .IsRequired()
                     .HasMaxLength(255);
@@ -138,10 +138,6 @@ namespace ETHTPS.Data.Database
                     .IsRequired()
                     .HasMaxLength(255)
                     .HasColumnName("RequesterIPAddress");
-
-                entity.HasOne(d => d.Experiment).WithMany(p => p.Apikeys)
-                    .HasForeignKey(d => d.ExperimentId)
-                    .HasConstraintName("FK__APIKeys__Experim__0697FACD");
             });
 
             modelBuilder.Entity<CachedResponse>(entity =>
@@ -189,6 +185,29 @@ namespace ETHTPS.Data.Database
                     .IsRequired()
                     .HasMaxLength(255);
             });
+
+
+            modelBuilder.Entity<ApikeyExperimentBinding>(entity =>
+            {
+                entity.HasKey(e => e.Id).HasName("PK__APIKeyEx__3214EC276D75AB55");
+
+                entity.ToTable("APIKeyExperimentBinding", "ABTesting");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+                entity.Property(e => e.ApikeyId).HasColumnName("APIKeyID");
+                entity.Property(e => e.ExperimentId).HasColumnName("ExperimentID");
+
+                entity.HasOne(d => d.Apikey).WithMany(p => p.ApikeyExperimentBindings)
+                    .HasForeignKey(d => d.ApikeyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__APIKeyExp__APIKe__0A688BB1");
+
+                entity.HasOne(d => d.Experiment).WithMany(p => p.ApikeyExperimentBindings)
+                    .HasForeignKey(d => d.ExperimentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__APIKeyExp__Exper__09746778");
+            });
+
 
             modelBuilder.Entity<Experiment>(entity =>
             {

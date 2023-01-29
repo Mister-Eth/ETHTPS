@@ -41,4 +41,8 @@
     <ProjectReference Include="..\ETHTPS.Services.Ethereum\ETHTPS.Services.Ethereum.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Infrastructure\Models\" />
+  </ItemGroup>
+
 </Project>
