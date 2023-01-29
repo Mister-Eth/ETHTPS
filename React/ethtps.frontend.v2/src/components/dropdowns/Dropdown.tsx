@@ -10,7 +10,20 @@ import MenuItem from "@mui/material/MenuItem"
 import MenuList from "@mui/material/MenuList"
 import { Tooltip, Typography } from "@mui/material"
 import { IDropdownCallback } from "./IDropdownCallback"
-import { ConditionalRender, shortTimeIntervalToUIFormat } from "../../Types"
+import {
+  ConditionalRender,
+  IconType,
+  shortTimeIntervalToUIFormat,
+} from "../../Types"
+import { ReactNode } from "react"
+import { QuestionMark } from "@mui/icons-material"
+
+const getBeginIcon = (beginiconName: string) => {
+  switch (beginiconName) {
+    default:
+      return <QuestionMark />
+  }
+}
 
 interface IDropdownConfiguration<T> extends IDropdownCallback<T> {
   options: string[]
@@ -18,6 +31,7 @@ interface IDropdownConfiguration<T> extends IDropdownCallback<T> {
   defaultOption?: string
   hoverText?: string | JSX.Element
   openOnHover?: boolean
+  beginiconName: string
   selectionChanged?: (value: T) => void
   conversionFunction(value: string): T
   uiFormatFunction?: (value: T) => string
@@ -30,8 +44,8 @@ export function Dropdown<T>(configuration: IDropdownConfiguration<T>) {
 
   const handleMenuItemClick = (value: string, index: number) => {
     if (index === selectedIndex) return
-    setSelectedIndex(index)
     setOpen(false)
+    setSelectedIndex(index)
     if (configuration.selectionChanged !== undefined)
       configuration.selectionChanged(configuration.conversionFunction(value))
   }
@@ -50,9 +64,26 @@ export function Dropdown<T>(configuration: IDropdownConfiguration<T>) {
 
     setOpen(false)
   }
+  let hoverAwayRef: NodeJS.Timeout | undefined
+  const clearHoverAwayTimeout = () => {
+    clearInterval(hoverAwayRef)
+    setOpen(true)
+  }
+
+  const setHoverAwayTimeout = () => {
+    hoverAwayRef = setTimeout(() => {
+      setOpen(false)
+    }, 200)
+  }
+  const hoverEvents = {
+    onMouseOverCapture: clearHoverAwayTimeout,
+    onMouseOutCapture: setHoverAwayTimeout,
+    onMouseDownCapture: () => setOpen(true),
+  }
   return ConditionalRender(
     <React.Fragment>
       <ButtonGroup
+        {...hoverEvents}
         variant="outlined"
         ref={anchorRef}
         aria-label="split button"
@@ -105,6 +136,7 @@ export function Dropdown<T>(configuration: IDropdownConfiguration<T>) {
                       }
                     >
                       <MenuItem
+                        {...hoverEvents}
                         key={value}
                         selected={index === selectedIndex}
                         onClick={() => handleMenuItemClick(value, index)}

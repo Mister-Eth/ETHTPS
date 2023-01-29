@@ -149,21 +149,24 @@ export const numberFormat = (value?: number) => {
   return (Math.round(value * 100) / 100).toLocaleString()
 }
 
-export type Icon =
-  | OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
-      muiName: string
-    }
+interface IconTypeProps {
+  width: number
+  height: number
+  color: string
+}
+
+export type IconType = (props: IconTypeProps) => JSX.Element
 
 export type DropdownOptionWithIcon<T> =
   | {
       value: T
-      icon?: Icon
+      icon?: IconType
     }
   | undefined
 
 export function createDropdownOptionWithIcon<T>(
   value: T,
-  icon?: Icon,
+  icon?: IconType,
 ): DropdownOptionWithIcon<T> {
   return {
     value,
