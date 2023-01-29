@@ -1,7 +1,6 @@
 import { DiscordBanner } from "../components/partials/banners/DiscordBanner"
 import { AllProvidersTable } from "../components/tables/all networks/AllProvidersTable"
 import { Container, Paper } from "@mui/material"
-import { useGetProvidersFromAppStore } from "../hooks/ProviderHooks"
 import { useGetMaxDataFromAppStore } from "../hooks/DataHooks"
 import { ProviderModel } from "../services/api-gen"
 import { useState, useEffect } from "react"
@@ -20,6 +19,7 @@ import { createSearchParams, useSearchParams } from "react-router-dom"
 import { toShortString } from "../Types"
 import { SimpleInstantBar } from "../components/instant data animations/SimpleInstantBar"
 import { TestTube } from "../components/experiments/TestTube"
+import { useGetProvidersFromAppStore } from "../hooks/ProviderHooks"
 
 export default function MainPage(): JSX.Element {
   const providers = useGetProvidersFromAppStore()
