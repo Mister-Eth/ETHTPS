@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
+import { DataType } from "../Types"
+import { DataPointDictionary } from "../Types.dictionaries"
 import { IMaxDataModel } from "../models/interfaces/IMaxDataModel"
-import { DataPointDictionary, DataType } from "../Types"
 
 const initialState: IMaxDataModel = {
   maxTPSData: {},

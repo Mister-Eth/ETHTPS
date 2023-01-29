@@ -21,47 +21,67 @@ export function LoadingApplicationDataPartial({
   children,
   ...props
 }: PropsWithChildren): JSX.Element {
+  const defaultRefetch = 4000
+  const rarelyUpdates = 60000
+  const frequentlyUpdates = 30000
+  const almostLive = 4000
   useLoadValuesHook(
     "providers",
     () => api.getProviders(),
     (value) => store.dispatch(setProviders(value)),
+    rarelyUpdates,
+    rarelyUpdates,
   )
   useLoadValuesHook(
     "networks",
     () => api.getNetworks(),
     (value) => store.dispatch(setNetworks(value)),
+    rarelyUpdates,
+    rarelyUpdates,
   )
   useLoadValuesHook(
     "intervals",
     () => api.getIntervals(),
     (value) => store.dispatch(setIntervals(value)),
+    rarelyUpdates,
+    rarelyUpdates,
   )
   useLoadValuesHook(
     "maxTPS",
     () => api.getMax(DataType.TPS),
     (value) => store.dispatch(setMaxTPSData(value)),
+    frequentlyUpdates,
+    frequentlyUpdates,
   )
   useLoadValuesHook(
     "maxGPS",
     () => api.getMax(DataType.GPS),
     (value) => store.dispatch(setMaxGPSData(value)),
+    frequentlyUpdates,
+    frequentlyUpdates,
   )
   useLoadValuesHook(
     "maxGTPS",
     () => api.getMax(DataType.GTPS),
     (value) => store.dispatch(setMaxGTPSData(value)),
+    frequentlyUpdates,
+    frequentlyUpdates,
   )
   useLoadValuesHook(
     "getProviderColorDictionary",
     () => api.getProviderColorDictionary(),
     (value) => store.dispatch(setProviderColorDictionary(value)),
+    rarelyUpdates,
+    rarelyUpdates,
   )
   useLoadValuesHook(
     "getProviderTypeColorDictionary",
     () => api.getProviderTypeColorDictionary(),
     (value) => store.dispatch(setProviderTypeColorDictionary(value)),
+    rarelyUpdates,
+    rarelyUpdates,
   )
-  useUpdateLiveData()
+  useUpdateLiveData(almostLive)
   return <>{children}</>
   /*
   if (loadees.every((x) => x)) return <>{children}</>

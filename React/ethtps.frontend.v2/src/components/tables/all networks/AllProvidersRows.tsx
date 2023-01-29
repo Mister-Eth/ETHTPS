@@ -12,6 +12,7 @@ import {
   useGetLiveDataFromAppStore,
 } from "../../../hooks/LiveDataHooks"
 import { useEffect, useState } from "react"
+import { range } from "lodash"
 
 export function AllProvidersRows(model: IProviderTableModel): JSX.Element {
   const hasData = (model.providerData?.length as number) > 0
@@ -56,21 +57,11 @@ export function AllProvidersRows(model: IProviderTableModel): JSX.Element {
         </>
       ) : (
         <TableRow key={0}>
-          <TableCell>
-            <SkeletonWithTooltip rectangular={false} />
-          </TableCell>
-          <TableCell>
-            <SkeletonWithTooltip rectangular={false} />
-          </TableCell>
-          <TableCell>
-            <SkeletonWithTooltip rectangular={false} />
-          </TableCell>
-          <TableCell>
-            <SkeletonWithTooltip rectangular={false} />
-          </TableCell>
-          <TableCell>
-            <SkeletonWithTooltip rectangular={false} />
-          </TableCell>
+          {range(0, 5).map((x) => (
+            <TableCell key={x}>
+              <SkeletonWithTooltip randomDelay rectangular={false} />
+            </TableCell>
+          ))}
         </TableRow>
       )}
     </>

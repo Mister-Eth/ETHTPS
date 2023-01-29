@@ -25,14 +25,14 @@ export function useSetDataModeMutation(mode: DataType) {
   store.dispatch(setLiveDataType(mode))
 }
 
-export function useUpdateLiveData() {
+export function useUpdateLiveData(updateRateMs: number) {
   const dataMode = useGetLiveDataModeFromAppStore()
   useLoadValuesHook(
     "liveData",
     () => api.getInstantData(TimeInterval.Instant),
     (value) => store.dispatch(setLiveData(value)),
-    0,
-    4000,
+    1000,
+    updateRateMs,
   )
 }
 

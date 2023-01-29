@@ -1,15 +1,40 @@
-import { Fab, Tooltip, Typography } from "@mui/material"
+import {
+  Fab,
+  Tooltip,
+  Typography,
+  IconButton,
+  Paper,
+  DialogTitle,
+  Dialog,
+  List,
+  ListItem,
+  Box,
+  Slider,
+} from "@mui/material"
 import { Fragment } from "react"
-import { AddHome, Feedback } from "@mui/icons-material"
+import { AddHome, Feedback, QuestionMark } from "@mui/icons-material"
 import { useState } from "react"
 import { ConditionalRender } from "../../../Types"
+import React from "react"
+import { SimpleDialog } from "../../dialogs/SimpleDialog"
+import { FaceRatingGroup } from "../feedback/FaceRatingGroup"
 
 export function SimpleDesktopFeedbackExperiment() {
   const [display, setDisplay] = useState(false)
+  const [showPopup, setShowPopup] = useState(false)
   const [hovered, setHovered] = useState(false)
   setTimeout(() => {
     setDisplay(true)
   }, 1 * 1000) //Display after 15 seconds
+
+  const handleClickOpen = () => {
+    setShowPopup(true)
+  }
+
+  const handleClose = () => {
+    setShowPopup(false)
+  }
+
   return (
     <Fragment>
       {ConditionalRender(
@@ -22,16 +47,35 @@ export function SimpleDesktopFeedbackExperiment() {
             right: "2rem",
           }}
         >
-          <Tooltip title={<Typography>Do you like the changes?</Typography>}>
-            <Fab
-              onMouseEnter={() => setHovered(true)}
-              onMouseLeave={() => setHovered(false)}
-              color="primary"
-              aria-label="add"
+          <Paper onClick={handleClickOpen}>
+            <Tooltip
+              arrow
+              placement="left"
+              title={<Typography>Do you like the changes?</Typography>}
             >
-              <Feedback />
-            </Fab>
-          </Tooltip>
+              <IconButton onClick={handleClickOpen}>
+                <QuestionMark />
+              </IconButton>
+            </Tooltip>
+          </Paper>
+
+          {ConditionalRender(
+            <Dialog onClose={handleClose} open>
+              <List sx={{ pt: 0 }}>
+                <ListItem>
+                  <DialogTitle sx={{ fontWeight: "bold" }}>
+                    How would you rate the new version of the website?
+                  </DialogTitle>
+                </ListItem>
+                <ListItem>
+                  <Box sx={{ width: "95%" }}>
+                    <FaceRatingGroup />
+                  </Box>
+                </ListItem>
+              </List>
+            </Dialog>,
+            showPopup,
+          )}
         </div>,
         display,
       )}
