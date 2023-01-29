@@ -1,11 +1,13 @@
 import { Moment } from "moment"
 import { DataPoint } from "./services/api-gen/models/DataPoint"
 import moment from "moment"
-import React from "react"
+import React, { ReactNode } from "react"
 import { SkeletonWithTooltip } from "./components/partials/SkeletonWithTooltip"
 import { toShortString_2 } from "./models/TimeIntervals"
 import { DataResponseModelDictionary } from "./Types.dictionaries"
 import { ILiveDataModeModel } from "./models/interfaces/ILiveDataModeModel"
+import { SvgIconTypeMap } from "@mui/material"
+import { OverridableComponent } from "@mui/material/OverridableComponent"
 
 export enum DataType {
   TPS,
@@ -145,4 +147,26 @@ export const numberFormat = (value?: number) => {
   if (!value) return 0
   if (value > 1000) value = Math.round(value)
   return (Math.round(value * 100) / 100).toLocaleString()
+}
+
+export type Icon =
+  | OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
+      muiName: string
+    }
+
+export type DropdownOptionWithIcon<T> =
+  | {
+      value: T
+      icon?: Icon
+    }
+  | undefined
+
+export function createDropdownOptionWithIcon<T>(
+  value: T,
+  icon?: Icon,
+): DropdownOptionWithIcon<T> {
+  return {
+    value,
+    icon,
+  }
 }

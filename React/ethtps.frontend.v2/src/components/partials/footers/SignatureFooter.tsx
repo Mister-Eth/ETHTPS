@@ -1,3 +1,6 @@
+import { AppBar } from "@mui/material"
+import { themeProvider } from "../../../services/DependenciesIOC"
+
 export function SignatureFooter(): JSX.Element {
   return (
     <>

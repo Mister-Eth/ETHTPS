@@ -48,37 +48,39 @@ export default function MainPage(): JSX.Element {
 
   return (
     <>
-      <TestTube />
-      <DiscordBanner />
+      <Paper elevation={0}>
+        <TestTube />
+        <DiscordBanner />
 
-      <>
-        <br />
-        <ProviderModal
-          open={showProviderModal}
-          provider={modalProvider}
-          onClose={() => setShowProviderModal(false)}
-        />
-        <Container maxWidth={"md"}>
-          <Paper elevation={1}>
-            <SidechainToggleButton
-              toggled={useSetSidechainsIncluded}
-              defaultIncluded={sidechainsIncluded}
-            />
-            <DataModeButtonGroup modeChanged={useSetDataModeMutation} />
-          </Paper>
-          <Paper elevation={1}>
-            <SimpleInstantBar />
-          </Paper>
-          <Paper elevation={1}>
-            <AllProvidersTable
-              providerData={providers}
-              maxData={max}
-              maxRowsBeforeShowingExpand={20}
-              clickCallback={useHandleCellClick}
-            />
-          </Paper>
-        </Container>
-      </>
+        <>
+          <br />
+          <ProviderModal
+            open={showProviderModal}
+            provider={modalProvider}
+            onClose={() => setShowProviderModal(false)}
+          />
+          <Container maxWidth={"md"}>
+            <Paper elevation={1}>
+              <SidechainToggleButton
+                toggled={useSetSidechainsIncluded}
+                defaultIncluded={sidechainsIncluded}
+              />
+              <DataModeButtonGroup modeChanged={useSetDataModeMutation} />
+            </Paper>
+            <Paper elevation={1}>
+              <SimpleInstantBar />
+            </Paper>
+            <Paper elevation={1}>
+              <AllProvidersTable
+                providerData={providers}
+                maxData={max}
+                maxRowsBeforeShowingExpand={20}
+                clickCallback={useHandleCellClick}
+              />
+            </Paper>
+          </Container>
+        </>
+      </Paper>
     </>
   )
 }
