@@ -1,20 +1,24 @@
-import { createConfiguration } from "../api-gen/configuration"
-import { ServerConfiguration } from "../api-gen/servers"
+import { createConfiguration, Configuration } from "../api-gen/configuration"
 import {
+  ApiKeyConfiguration,
   GPSApi,
   GasAdjustedTPSApi,
   GeneralApi,
-  ProviderModel,
+  ProviderResponseModel,
+  RequestContext,
+  ResponseContext,
+  ServerConfiguration,
   TPSApi,
 } from "../api-gen/index"
-import { ProviderResponseModel } from "../api-gen/models/ProviderResponseModel"
 import { TimeInterval, toShortString } from "../../models/TimeIntervals"
 import { DataType } from "../../Types"
+import { configureAuthMethods } from "../api-gen/auth/auth"
 import {
   DataResponseModelDictionary,
   DataPointDictionary,
   StringDictionary,
 } from "../../Types.dictionaries"
+import { Observable } from "../api-gen/rxjsStub"
 
 export class ETHTPSApi {
   public generalApi: GeneralApi
@@ -22,14 +26,50 @@ export class ETHTPSApi {
   public gpsApi: GPSApi
   public gtpsApi: GasAdjustedTPSApi
 
-  private _variables: { [key: string]: any }
+  public apiKey?: string
+  private _url: string
 
-  constructor(url?: string, useArtificialDelay: boolean = true) {
-    this._variables = {}
+  constructor(
+    url?: string,
+    apiKey?: string,
+    useArtificialDelay: boolean = true,
+  ) {
     url ??= ""
-    let config = createConfiguration({
-      baseServer: new ServerConfiguration(url, this._variables),
+    this._url = url
+    if (!apiKey) {
+      let supposedlyAKey = localStorage.getItem("XAPIKey")
+      if (supposedlyAKey) {
+        this.apiKey = supposedlyAKey //Definitely a key
+      }
+    }
+    let config = this._genConfig()
+    this.generalApi = new GeneralApi(config)
+    this.tpsApi = new TPSApi(config)
+    this.gpsApi = new GPSApi(config)
+    this.gtpsApi = new GasAdjustedTPSApi(config)
+  }
+
+  private _genConfig() {
+    return createConfiguration({
+      baseServer: new ServerConfiguration(this._url, {
+        XAPIKey: this.apiKey as string,
+      }),
+      middleware: [
+        {
+          pre: (context: RequestContext): Observable<RequestContext> => {
+            context.setHeaderParam("X-API-Key", this.apiKey as string)
+            return new Observable<RequestContext>(Promise.resolve(context))
+          },
+          post: (context: ResponseContext): Observable<ResponseContext> => {
+            return new Observable<ResponseContext>(Promise.resolve(context))
+          },
+        },
+      ],
     })
+  }
+
+  public resetConfig() {
+    let config = this._genConfig()
     this.generalApi = new GeneralApi(config)
     this.tpsApi = new TPSApi(config)
     this.gpsApi = new GPSApi(config)
@@ -110,6 +150,12 @@ export class ETHTPSApi {
       undefined,
       true,
       toShortString(smoothing),
+    )
+  }
+
+  public getNewAPIKey(humanityProof: string) {
+    return fetch(
+      this._url + "/api/APIKey/GetNewKey?humanityProof=" + humanityProof,
     )
   }
 

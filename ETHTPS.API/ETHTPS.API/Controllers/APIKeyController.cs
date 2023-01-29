@@ -30,7 +30,7 @@ namespace ETHTPS.API.Controllers
             return true;
         }
 
-        [HttpGet]
+        [HttpGet("GetNewKey")]
         public IActionResult GetNewKey(string humanityProof)
         {
             if (!Validate(humanityProof))

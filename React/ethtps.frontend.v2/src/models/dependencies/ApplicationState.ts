@@ -32,6 +32,7 @@ export class ApplicationState implements IApplicationState {
   public maxGTPSData?: DataPointDictionary
   public liveDataSmoothing: TimeInterval
   public liveDataType: DataType
+  public includeSidechains: boolean = false
   public getMaxDataFor(
     provider: string,
     type: DataType,

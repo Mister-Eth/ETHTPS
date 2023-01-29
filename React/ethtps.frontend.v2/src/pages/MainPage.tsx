@@ -27,8 +27,9 @@ export default function MainPage(): JSX.Element {
   const sidechainsIncluded = useGetSidechainsIncludedFromAppStore()
   const [showProviderModal, setShowProviderModal] = useState(false)
   const mode = useGetLiveDataModeFromAppStore()
-  const [modalProvider, setModalProvider] =
-    useState<ProviderModel | undefined>()
+  const [modalProvider, setModalProvider] = useState<
+    ProviderModel | undefined
+  >()
   const useHandleCellClick = (provider?: ProviderModel, cellName?: string) => {
     if ((cellName as string) === "MaxValue" || (cellName as string) === "Index")
       return
@@ -48,7 +49,7 @@ export default function MainPage(): JSX.Element {
   return (
     <>
       <DiscordBanner />
-      <LoadingApplicationDataPartial />
+
       <>
         <br />
         <ProviderModal
