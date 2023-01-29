@@ -2,12 +2,13 @@ import { ArrowDownward, ArrowUpward } from "@mui/icons-material"
 import { Button } from "@mui/material"
 import { useState } from "react"
 
-interface ISeeMoreButtonEvents {
+interface ISeeMoreButtonProps {
   onSeeMore?: () => void
   onSeeLess?: () => void
+  enabled: boolean
 }
 
-export function SeeMoreButton(events: ISeeMoreButtonEvents) {
+export function SeeMoreButton(events: ISeeMoreButtonProps) {
   const [expand, setExpand] = useState(true)
   const onClick = () => {
     if (expand) {
@@ -25,6 +26,7 @@ export function SeeMoreButton(events: ISeeMoreButtonEvents) {
   return (
     <>
       <Button
+        disabled={!events.enabled}
         variant="text"
         sx={{
           width: "100%",

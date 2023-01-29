@@ -11,9 +11,11 @@ import { AllProvidersRows } from "./AllProvidersRows"
 import { ConditionalRender } from "../../../Types"
 import { useState } from "react"
 import { SeeMoreButton } from "../../buttons/SeeMoreButton"
+import { useGetApplicationDataLoadedFromAppStore } from "../../../hooks/ApplicationStateHooks"
 
 export function AllProvidersTable(tableData: IProviderTableModel): JSX.Element {
   const oldShowRowCountValue = tableData.maxRowsBeforeShowingExpand as number
+  const appDataLoaded = useGetApplicationDataLoadedFromAppStore()
   const [showRowCount, setShowRowCount] = useState(
     tableData?.maxRowsBeforeShowingExpand as number,
   )
@@ -45,7 +47,11 @@ export function AllProvidersTable(tableData: IProviderTableModel): JSX.Element {
         </Table>
       </TableContainer>
       {ConditionalRender(
-        <SeeMoreButton onSeeMore={onSeeMore} onSeeLess={onSeeLess} />,
+        <SeeMoreButton
+          enabled={appDataLoaded}
+          onSeeMore={onSeeMore}
+          onSeeLess={onSeeLess}
+        />,
         showRowCount > 0,
       )}
     </>

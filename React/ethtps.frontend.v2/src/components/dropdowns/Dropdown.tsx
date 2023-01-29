@@ -10,12 +10,7 @@ import MenuItem from "@mui/material/MenuItem"
 import MenuList from "@mui/material/MenuList"
 import { Tooltip, Typography } from "@mui/material"
 import { IDropdownCallback } from "./IDropdownCallback"
-import {
-  ConditionalRender,
-  IconType,
-  shortTimeIntervalToUIFormat,
-} from "../../Types"
-import { ReactNode } from "react"
+import { ConditionalRender } from "../../Types"
 import { QuestionMark } from "@mui/icons-material"
 
 const getBeginIcon = (beginiconName: string) => {
@@ -31,7 +26,6 @@ interface IDropdownConfiguration<T> extends IDropdownCallback<T> {
   defaultOption?: string
   hoverText?: string | JSX.Element
   openOnHover?: boolean
-  beginiconName: string
   selectionChanged?: (value: T) => void
   conversionFunction(value: string): T
   uiFormatFunction?: (value: T) => string

@@ -16,7 +16,6 @@ import { AddHome, Feedback, QuestionMark } from "@mui/icons-material"
 import { useState } from "react"
 import { ConditionalRender } from "../../../Types"
 import React from "react"
-import { SimpleDialog } from "../../dialogs/SimpleDialog"
 import { FaceRatingGroup } from "../feedback/FaceRatingGroup"
 
 export function SimpleDesktopFeedbackExperiment() {

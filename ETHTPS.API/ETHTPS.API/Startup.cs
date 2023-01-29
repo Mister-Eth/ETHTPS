@@ -246,6 +246,7 @@ namespace ETHTPS.API
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
+            app.UseMiddleware<UnstableConnectionSimulatorMiddleware>(); //Simulating high server load
             app.UseMiddleware<AccesStatsMiddleware>();
             // GlobalConfiguration.Configuration.UseActivator(new HangfireActivator(serviceProvider));
             if (ConfigurationQueues?.Length > 0)

@@ -7,6 +7,8 @@ import { intervalsReducer } from "./slices/IntervalsSlice"
 import { dataReducer } from "./slices/DataSlice"
 import { liveDataReducer } from "./slices/LiveDataSlice"
 import { colorReducer } from "./slices/ColorSlice"
+import { experimentReducer } from "./slices/ExperimentSlice"
+import { applicationStateReducer } from "./slices/ApplicationStateSlice"
 
 const preloadedState = new ApplicationState()
 
@@ -18,6 +20,8 @@ export const store = configureStore({
     maxData: dataReducer,
     liveData: liveDataReducer,
     colors: colorReducer,
+    experiments: experimentReducer,
+    applicationState: applicationStateReducer,
   },
   ...preloadedState,
   middleware: (getDefaultMiddleware) =>
