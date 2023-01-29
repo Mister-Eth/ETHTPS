@@ -1,7 +1,9 @@
 
 
 using ETHTPS.API.Authentication;
+using ETHTPS.API.Infrastructure.Services.Experimentation;
 using ETHTPS.API.Infrastructure.Services.Implementations;
+using ETHTPS.API.Infrastructure.Services.Recaptcha;
 using ETHTPS.API.Middlewares;
 using ETHTPS.Data.Database;
 using ETHTPS.Data.Database.HistoricalDataProviders;
@@ -115,6 +117,8 @@ namespace ETHTPS.API
             services.AddScoped<TimeWarpService>();
             services.AddScoped<IBlockInfoProviderStatusService, BlockInfoProviderStatusService>();
             services.AddScoped<EthereumBlockTimeProvider>();
+            services.AddScoped<IExperimentService, ExperimentService>();
+            services.AddSingleton<IRecaptchaVerificationService, RecaptchaVerificationService>();
         }
 
         private void AddHistoricalBlockInfoDataUpdaters(IServiceCollection services)

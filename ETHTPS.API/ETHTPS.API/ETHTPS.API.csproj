@@ -43,6 +43,7 @@
 
   <ItemGroup>
     <Folder Include="Infrastructure\Models\" />
+    <Folder Include="Infrastructure\Services\Recaptcha\Extensions\" />
   </ItemGroup>
 
 </Project>
