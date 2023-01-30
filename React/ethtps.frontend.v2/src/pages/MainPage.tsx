@@ -16,13 +16,11 @@ import {
   useGetLiveDataModeFromAppStore,
 } from "../hooks/LiveDataHooks"
 import { createSearchParams, useSearchParams } from "react-router-dom"
-import { toShortString, ConditionalRender } from "../Types"
-import { SimpleInstantBar } from "../components/instant data animations/SimpleInstantBar"
+import { toShortString } from "../Types"
 import { TestTube } from "../components/experiments/TestTube"
 import { useGetProvidersFromAppStore } from "../hooks/ProviderHooks"
-import { SlowLoadingMessage } from "../components/partials/loading/SlowLoadingMessage"
-import { useGetApplicationDataLoadedFromAppStore } from "../hooks/ApplicationStateHooks"
 import { isMobile } from "react-device-detect"
+import { CustomBarAnimation } from "../components/instant data animations/custom bar animation/CustomBarAnimation"
 
 export default function MainPage(): JSX.Element {
   const providers = useGetProvidersFromAppStore()
@@ -71,7 +69,7 @@ export default function MainPage(): JSX.Element {
               <DataModeButtonGroup modeChanged={useSetDataModeMutation} />
             </Paper>
             <Paper elevation={1}>
-              <SimpleInstantBar />
+              <CustomBarAnimation />
             </Paper>
             <Paper elevation={1}>
               <AllProvidersTable

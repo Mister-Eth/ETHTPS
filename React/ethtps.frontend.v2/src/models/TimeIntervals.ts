@@ -1,3 +1,4 @@
+import { DataType } from "../Types"
 export enum TimeInterval {
   Instant,
   _1m,
@@ -27,6 +28,17 @@ export function toShortString(interval: TimeInterval) {
       return "1y"
     default:
       return "Other"
+  }
+}
+
+export function dataTypeToString(type: DataType) {
+  switch (type) {
+    case DataType.TPS:
+      return "TPS"
+    case DataType.GPS:
+      return "GPS"
+    default:
+      return "GTPS"
   }
 }
 
