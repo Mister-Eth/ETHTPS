@@ -1,3 +1,7 @@
+/*
+* Up-to-date schema available at https://dbdiagram.io/d/613dd6b1825b5b0146fdfc5f
+*/
+
 CREATE SCHEMA [dbo]
 GO
 
