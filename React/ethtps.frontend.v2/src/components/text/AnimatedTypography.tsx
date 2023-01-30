@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 interface IAnimatedTypographyConfiguration {
   child: JSX.Element | string
@@ -9,14 +9,11 @@ interface IAnimatedTypographyConfiguration {
 }
 
 export function AnimatedTypography(config: IAnimatedTypographyConfiguration) {
-  const [completed, setCompleted] = useState(false)
   return (
     <Typography
       {...config.standard}
-      onAnimationEnd={() => {
-        setCompleted(true)
-      }}
-      className={completed ? undefined : config.animationClassName}
+      className={config.animationClassName}
+      key={config.child.toString()}
     >
       {config.child}
     </Typography>

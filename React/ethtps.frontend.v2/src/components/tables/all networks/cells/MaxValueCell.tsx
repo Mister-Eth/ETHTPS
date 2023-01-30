@@ -10,6 +10,8 @@ import { tableCellTypographyStandard } from "./Typography.types"
 import { DataPoint } from "../../../../services/api-gen"
 import moment from "moment"
 import { numberFormat } from "../../../../Types"
+import { AnimatedTypography } from "../../../text/AnimatedTypography"
+import { fontWeight } from "@mui/system"
 
 function generateMaxHoverMessage(data?: DataPoint): string {
   if (
@@ -52,15 +54,16 @@ export function MaxValueCell(config: ICustomCellConfiguration) {
       }
     >
       <Tooltip arrow placement="top-start" title={tooltipTypography}>
-        <Typography
-          {...tableCellTypographyStandard}
-          sx={{
+        <AnimatedTypography
+          animationClassName="animated-cell"
+          standard={{
+            fontWeight: "bold",
             textDecoration:
               tooltipTypography !== undefined ? "underline" : undefined,
           }}
-        >
-          {numberFormat(maxData?.value).toString()}
-        </Typography>
+          child={numberFormat(maxData?.value).toString()}
+          durationMs={1000}
+        />
       </Tooltip>
     </TableCell>
   )

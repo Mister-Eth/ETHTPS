@@ -28,7 +28,7 @@ namespace ETHTPS.API.Middlewares
 
         public async Task InvokeAsync(HttpContext context)
         {
-            if (_random.Next(100) < 50)
+            if (_random.Next(100) < 10)
             {
                 await Task.Delay(_random.Next(5000));
                 if (_random.Next(100) < 25) //Drop requests
