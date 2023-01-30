@@ -12,7 +12,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
     public class GasAdjustedTPSService : HistoricalMethodsServiceBase, IPSService
     {
         private readonly GPSService _gpsService;
-        public GasAdjustedTPSService(GPSService gpsService, ETHTPSContext context, IEnumerable<IHistoricalDataProvider> historicalDataProviders) : base(context, historicalDataProviders)
+        public GasAdjustedTPSService(GPSService gpsService, EthtpsContext context, IEnumerable<IHistoricalDataProvider> historicalDataProviders) : base(context, historicalDataProviders)
         {
             _gpsService = gpsService;
         }

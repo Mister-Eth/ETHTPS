@@ -13,9 +13,9 @@ namespace ETHTPS.API.Infrastructure.Services.Experimentation
 {
     public class ExperimentService : IExperimentService
     {
-        private readonly ETHTPSContext _context;
+        private readonly EthtpsContext _context;
 
-        public ExperimentService(ETHTPSContext context)
+        public ExperimentService(EthtpsContext context)
         {
             _context = context;
         }

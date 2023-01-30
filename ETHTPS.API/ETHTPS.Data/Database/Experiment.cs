@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using ETHTPS.Data.Database;
 
 namespace ETHTPS.Data.Database;
 
@@ -19,6 +18,8 @@ public partial class Experiment
     public int RunParameters { get; set; }
 
     public virtual ICollection<ApikeyExperimentBinding> ApikeyExperimentBindings { get; } = new List<ApikeyExperimentBinding>();
+
+    public virtual ICollection<ExperimentFeedback> ExperimentFeedbacks { get; } = new List<ExperimentFeedback>();
 
     public virtual ICollection<ExperimentResult> ExperimentResults { get; } = new List<ExperimentResult>();
 

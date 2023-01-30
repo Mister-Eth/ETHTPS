@@ -14,7 +14,7 @@ namespace ETHTPS.API.Tests.ControllerTests.DataControllerTests
     public class TPSControllerTest
     {
         private readonly Controllers.TPSController _controller;
-        private readonly ETHTPSContext _context;
+        private readonly EthtpsContext _context;
         private IEnumerable<string> _providers;
         private IEnumerable<string> _networks;
 
@@ -22,7 +22,7 @@ namespace ETHTPS.API.Tests.ControllerTests.DataControllerTests
         {
             var serviceProvider = DependencyContainer.GetServiceProvider();
 
-            _context = serviceProvider.GetRequiredService<ETHTPSContext>();
+            _context = serviceProvider.GetRequiredService<EthtpsContext>();
             _providers = _context.Providers.Select(x => x.Name).AsEnumerable();
             _networks = _context.Networks.Select(x => x.Name).AsEnumerable();
             _controller = serviceProvider.GetRequiredService<Controllers.TPSController>();

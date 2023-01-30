@@ -9,7 +9,7 @@ namespace ETHTPS.Data.Database
         public DateTime Date { get; set; }
         public double MaxTps { get; set; }
         public double MaxGps { get; set; }
-        public int? MaxTPSBlockNumber { get; set; }
-        public int? MaxGPSBlockNumber { get; set; }
+        public int? MaxTpsblockNumber { get; set; }
+        public int? MaxGpsblockNumber { get; set; }
     }
 }

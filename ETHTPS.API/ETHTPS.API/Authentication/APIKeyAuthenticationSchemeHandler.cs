@@ -15,13 +15,13 @@ namespace ETHTPS.API.Authentication
 {
     public class APIKeyAuthenticationSchemeHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
-        private readonly ETHTPSContext _context;
+        private readonly EthtpsContext _context;
         public APIKeyAuthenticationSchemeHandler(
             IOptionsMonitor<AuthenticationSchemeOptions> options,
             ILoggerFactory logger,
             UrlEncoder encoder,
             ISystemClock clock,
-            ETHTPSContext context) : base(options, logger, encoder, clock)
+            EthtpsContext context) : base(options, logger, encoder, clock)
         {
             _context = context;
         }

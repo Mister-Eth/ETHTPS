@@ -13,7 +13,7 @@ public partial class Network
 
     public virtual ICollection<OldestLoggedTimeWarpBlock> OldestLoggedTimeWarpBlocks { get; } = new List<OldestLoggedTimeWarpBlock>();
 
-    public virtual ICollection<StarkwareTransactionCountData> StarkwareTransactionCountData { get; } = new List<StarkwareTransactionCountData>();
+    public virtual ICollection<StarkwareTransactionCountDatum> StarkwareTransactionCountData { get; } = new List<StarkwareTransactionCountDatum>();
 
     public virtual ICollection<TimeWarpDatum> TimeWarpData { get; } = new List<TimeWarpDatum>();
 

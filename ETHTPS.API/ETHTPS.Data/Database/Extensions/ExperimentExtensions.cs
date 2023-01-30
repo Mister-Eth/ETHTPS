@@ -9,7 +9,7 @@ namespace ETHTPS.Data.Database.Extensions
     public static class ExperimentExtensions
     {
         private static Random Random = new ();
-        public static IEnumerable<Experiment> GetExperimentsForDeviceType(this ETHTPSContext context, string deviceType)
+        public static IEnumerable<Experiment> GetExperimentsForDeviceType(this EthtpsContext context, string deviceType)
         {
             lock(context.LockObj)
             {
@@ -26,7 +26,7 @@ namespace ETHTPS.Data.Database.Extensions
             return Enumerable.Empty<Experiment>();
         }
 
-        public static bool UserIsEligibleForEnrollmentIn(this ETHTPSContext context, Experiment experiment, int apiKeyId)
+        public static bool UserIsEligibleForEnrollmentIn(this EthtpsContext context, Experiment experiment, int apiKeyId)
         {
             if (context.UserIsEnrolledIn(experiment, apiKeyId))
                 return false; //Already enrolled
@@ -43,7 +43,7 @@ namespace ETHTPS.Data.Database.Extensions
             return !context.UserIsEnrolledIn(experiment, apiKeyId);
         }
 
-        public static bool UserIsEnrolledIn(this ETHTPSContext context, Experiment experiment, int apiKeyId) 
+        public static bool UserIsEnrolledIn(this EthtpsContext context, Experiment experiment, int apiKeyId) 
         {
             lock (context.LockObj)
             {
@@ -52,7 +52,7 @@ namespace ETHTPS.Data.Database.Extensions
             }
         }
 
-        public static IEnumerable<Experiment> GetExperimentsUserIsEnrolledIn(this ETHTPSContext context, int apiKeyId)
+        public static IEnumerable<Experiment> GetExperimentsUserIsEnrolledIn(this EthtpsContext context, int apiKeyId)
         {
             lock (context.LockObj)
             {
@@ -64,7 +64,7 @@ namespace ETHTPS.Data.Database.Extensions
             return Enumerable.Empty<Experiment>();
         }
 
-        public static void EnrollUserIn(this ETHTPSContext context, Experiment experiment, int apiKeyID)
+        public static void EnrollUserIn(this EthtpsContext context, Experiment experiment, int apiKeyID)
         {
             if (!context.UserIsEligibleForEnrollmentIn(experiment, apiKeyID))
                 throw new ApplicationException("Are you sure your logic is valid? You shouldn't be seeing this message.");

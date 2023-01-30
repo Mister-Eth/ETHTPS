@@ -9,15 +9,15 @@ namespace ETHTPS.Data.Database.Extensions
 {
     public static class APIKeyExtensions
     {
-        public static int GetAPIKeyID(this ETHTPSContext context, HttpContext httpContext)=>context.GetAPIKeyID(httpContext.ExtractAPIKey());
-        public static int GetAPIKeyID(this ETHTPSContext context, string apiKey)
+        public static int GetAPIKeyID(this EthtpsContext context, HttpContext httpContext)=>context.GetAPIKeyID(httpContext.ExtractAPIKey());
+        public static int GetAPIKeyID(this EthtpsContext context, string apiKey)
         {
             lock (context.LockObj)
             {
                 return context.Apikeys.First(context => context.KeyHash == apiKey.SHA256()).Id;
             }
         }
-        public static bool ValidateAPIKey(this ETHTPSContext context, string apiKey)
+        public static bool ValidateAPIKey(this EthtpsContext context, string apiKey)
         {
             var keyHash = apiKey.SHA256();
             lock (context.LockObj)
@@ -26,7 +26,7 @@ namespace ETHTPS.Data.Database.Extensions
             }
         }
 
-        public static bool ValidateNumberOfCalls(this ETHTPSContext context, string apiKey)
+        public static bool ValidateNumberOfCalls(this EthtpsContext context, string apiKey)
         {
             var keyHash = apiKey.SHA256();
             lock (context.LockObj)
@@ -36,7 +36,7 @@ namespace ETHTPS.Data.Database.Extensions
             }
         }
 
-        public static void IncrementNumberOfCalls(this ETHTPSContext context, string apiKey)
+        public static void IncrementNumberOfCalls(this EthtpsContext context, string apiKey)
         {
             var keyHash = apiKey.SHA256();
             lock (context.LockObj)

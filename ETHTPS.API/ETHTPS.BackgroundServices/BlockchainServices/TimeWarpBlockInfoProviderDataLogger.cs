@@ -13,7 +13,7 @@ namespace ETHTPS.Services.BlockchainServices
     public class TimeWarpBlockInfoProviderDataLogger<T> : HangfireBlockInfoProviderDataLogger<T>
         where T : IBlockInfoProvider
     {
-        public TimeWarpBlockInfoProviderDataLogger(T instance, ILogger<HangfireBackgroundService> logger, ETHTPSContext context) : base(instance, logger, context)
+        public TimeWarpBlockInfoProviderDataLogger(T instance, ILogger<HangfireBackgroundService> logger, EthtpsContext context) : base(instance, logger, context)
         {
 
         }

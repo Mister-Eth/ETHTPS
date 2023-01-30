@@ -14,10 +14,10 @@ namespace ETHTPS.Services.Ethereum.Starkware
     public abstract class StarkwareBlockInfoProviderBase : IBlockInfoProvider
     {
         private readonly string _productName;
-        private readonly ETHTPSContext _context;
+        private readonly EthtpsContext _context;
         private readonly StarkwareClient _starkwareClient;
 
-        public StarkwareBlockInfoProviderBase(string productName, ETHTPSContext context, IConfiguration configuration)
+        public StarkwareBlockInfoProviderBase(string productName, EthtpsContext context, IConfiguration configuration)
         {
             _productName = productName;
             _context = context;
@@ -49,13 +49,13 @@ namespace ETHTPS.Services.Ethereum.Starkware
             var mainnetID = _context.GetMainnetID();
             if (!_context.StarkwareTransactionCountData.Any(x => x.Product == _productName)) //First time we see this product
             {
-                _context.StarkwareTransactionCountData.Add(new StarkwareTransactionCountData()
+                _context.StarkwareTransactionCountData.Add(new StarkwareTransactionCountDatum()
                 {
                     LastUpdateCount = todaysTransactionCount,
                     LastUpdateTime = DateTime.Now,
                     Network = mainnetID,
                     Product = _productName,
-                    LastUpdateTPS = todaysTransactionCount / DateTime.Now.TimeOfDay.TotalSeconds
+                    LastUpdateTps = todaysTransactionCount / DateTime.Now.TimeOfDay.TotalSeconds
                 });
                 _context.SaveChanges();
             }
@@ -65,11 +65,11 @@ namespace ETHTPS.Services.Ethereum.Starkware
             {
                 if (entry.LastUpdateTime.Day == DateTime.Now.Day)
                 {
-                    entry.LastUpdateTPS = (todaysTransactionCount - entry.LastUpdateCount) / DateTime.Now.Subtract(entry.LastUpdateTime).TotalSeconds;  //TPS since last update
+                    entry.LastUpdateTps = (todaysTransactionCount - entry.LastUpdateCount) / DateTime.Now.Subtract(entry.LastUpdateTime).TotalSeconds;  //TPS since last update
                 }
                 else //New day
                 {
-                    entry.LastUpdateTPS = (double)todaysTransactionCount / 86400;
+                    entry.LastUpdateTps = (double)todaysTransactionCount / 86400;
                 }
 
                 entry.LastUpdateCount = todaysTransactionCount;
@@ -81,7 +81,7 @@ namespace ETHTPS.Services.Ethereum.Starkware
             return new BlockInfo()
             {
                 Settled = true,
-                TransactionCount = (int)(100 * entry.LastUpdateTPS),
+                TransactionCount = (int)(100 * entry.LastUpdateTps),
                 Date = DateTime.Now
             };
         }

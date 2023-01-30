@@ -15,9 +15,9 @@ namespace ETHTPS.API.Controllers
     [ApiController]
     public class IngestionController : ControllerBase
     {
-        private readonly ETHTPSContext _context;
+        private readonly EthtpsContext _context;
 
-        public IngestionController(ETHTPSContext context)
+        public IngestionController(EthtpsContext context)
         {
             _context = context;
         }

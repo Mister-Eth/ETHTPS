@@ -17,11 +17,11 @@ namespace ETHTPS.API.Controllers
     [AllowAnonymous]
     public class APIKeyController : ControllerBase
     {
-        private readonly ETHTPSContext _context;
+        private readonly EthtpsContext _context;
         private const int DEFAULT_REQUEST_LIMIT_24H = 5 * 5 * 3600 * 24; //Equivalent to 1 request per second; should be more than anyone needs
         private readonly IRecaptchaVerificationService _recaptchaVerificationService;
 
-        public APIKeyController(ETHTPSContext context, IRecaptchaVerificationService recaptchaVerificationService)
+        public APIKeyController(EthtpsContext context, IRecaptchaVerificationService recaptchaVerificationService)
         {
             _context = context;
             _recaptchaVerificationService = recaptchaVerificationService;
@@ -32,7 +32,7 @@ namespace ETHTPS.API.Controllers
         {
             lock (_context.LockObj)
             {
-                if (_context.)
+                //if (_context.)
             }
             return false;
         }

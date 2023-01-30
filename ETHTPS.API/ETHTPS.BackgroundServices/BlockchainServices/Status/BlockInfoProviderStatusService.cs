@@ -13,9 +13,9 @@ namespace ETHTPS.Services.BlockchainServices.Status
 {
     public class BlockInfoProviderStatusService : IBlockInfoProviderStatusService
     {
-        private readonly ETHTPSContext _context;
+        private readonly EthtpsContext _context;
 
-        public BlockInfoProviderStatusService(ETHTPSContext context)
+        public BlockInfoProviderStatusService(EthtpsContext context)
         {
             _context = context;
         }

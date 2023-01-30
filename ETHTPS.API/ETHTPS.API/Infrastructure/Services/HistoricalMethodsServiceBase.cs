@@ -10,7 +10,7 @@ namespace ETHTPS.API.Infrastructure.Services
     public abstract class HistoricalMethodsServiceBase : ContextServiceBase
     {
         protected IEnumerable<IHistoricalDataProvider> HistoricalDataProviders { get; set; }
-        protected HistoricalMethodsServiceBase(ETHTPSContext context, IEnumerable<IHistoricalDataProvider> historicalDataProviders) : base(context)
+        protected HistoricalMethodsServiceBase(EthtpsContext context, IEnumerable<IHistoricalDataProvider> historicalDataProviders) : base(context)
         {
             HistoricalDataProviders = historicalDataProviders;
         }

@@ -19,7 +19,7 @@ namespace ETHTPS.Services.BlockchainServices
         protected readonly int _providerID;
         private readonly int _mainnetID;
 
-        public HangfireBlockInfoProviderDataLogger(T instance, ILogger<HangfireBackgroundService> logger, ETHTPSContext context) : base(logger, context)
+        public HangfireBlockInfoProviderDataLogger(T instance, ILogger<HangfireBackgroundService> logger, EthtpsContext context) : base(logger, context)
         {
             _instance = instance;
             _provider = _instance.GetProviderName();
@@ -131,8 +131,8 @@ namespace ETHTPS.Services.BlockchainServices
                     Date = entry.Date,
                     MaxGps = entry.GPS,
                     MaxTps = entry.TPS,
-                    MaxTPSBlockNumber = entry.BlockNumber,
-                    MaxGPSBlockNumber = entry.BlockNumber,
+                    MaxTpsblockNumber = entry.BlockNumber,
+                    MaxGpsblockNumber = entry.BlockNumber,
                     Network = _mainnetID,
                     Provider = _providerID
                 });
@@ -143,12 +143,12 @@ namespace ETHTPS.Services.BlockchainServices
                 if (entry.TPS > targetEntry.MaxTps)
                 {
                     targetEntry.MaxTps = entry.TPS;
-                    targetEntry.MaxTPSBlockNumber = entry.BlockNumber;
+                    targetEntry.MaxTpsblockNumber = entry.BlockNumber;
                 }
                 if (entry.GPS > targetEntry.MaxGps)
                 {
                     targetEntry.MaxGps = entry.GPS;
-                    targetEntry.MaxGPSBlockNumber = entry.BlockNumber;
+                    targetEntry.MaxGpsblockNumber = entry.BlockNumber;
                 }
                 _context.TpsandGasDataMaxes.Update(targetEntry);
             }

@@ -12,7 +12,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
 {
     public class GPSService : HistoricalMethodsServiceBase, IPSService
     {
-        public GPSService(ETHTPSContext context, IEnumerable<IHistoricalDataProvider> historicalDataProviders) : base(context, historicalDataProviders)
+        public GPSService(EthtpsContext context, IEnumerable<IHistoricalDataProvider> historicalDataProviders) : base(context, historicalDataProviders)
         {
         }
 
@@ -36,7 +36,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
                             {
                                 Date = entry.Date,
                                 Value = entry.MaxGps,
-                                BlockNumber = entry.MaxGPSBlockNumber
+                                BlockNumber = entry.MaxGpsblockNumber
                             }
                         }
                         });

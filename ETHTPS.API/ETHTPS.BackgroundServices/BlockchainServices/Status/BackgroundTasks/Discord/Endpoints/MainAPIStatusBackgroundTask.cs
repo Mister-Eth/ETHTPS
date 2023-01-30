@@ -7,7 +7,7 @@ namespace ETHTPS.Services.BlockchainServices.Status.BackgroundTasks.Discord.Endp
 {
     public class MainAPIStatusBackgroundTask : URLMonitoringBackgroundTask
     {
-        public MainAPIStatusBackgroundTask(ILogger<HangfireBackgroundService> logger, ETHTPSContext context, IConfiguration configuration) : base(logger, context, configuration, "https://api.ethtps.info")
+        public MainAPIStatusBackgroundTask(ILogger<HangfireBackgroundService> logger, EthtpsContext context, IConfiguration configuration) : base(logger, context, configuration, "https://api.ethtps.info")
         {
         }
     }

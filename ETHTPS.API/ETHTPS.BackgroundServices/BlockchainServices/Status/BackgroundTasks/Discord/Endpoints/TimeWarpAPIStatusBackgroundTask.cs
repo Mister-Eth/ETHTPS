@@ -7,7 +7,7 @@ namespace ETHTPS.Services.BlockchainServices.Status.BackgroundTasks.Discord.Endp
 {
     public class TimeWarpAPIStatusBackgroundTask : URLMonitoringBackgroundTask
     {
-        public TimeWarpAPIStatusBackgroundTask(ILogger<HangfireBackgroundService> logger, ETHTPSContext context, IConfiguration configuration) : base(logger, context, configuration, "https://api.ethtps.info/API/TimeWarp/GetEarliestDate")
+        public TimeWarpAPIStatusBackgroundTask(ILogger<HangfireBackgroundService> logger, EthtpsContext context, IConfiguration configuration) : base(logger, context, configuration, "https://api.ethtps.info/API/TimeWarp/GetEarliestDate")
         {
         }
     }

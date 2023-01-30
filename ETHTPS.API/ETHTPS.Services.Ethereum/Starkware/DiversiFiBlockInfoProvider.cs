@@ -9,7 +9,7 @@ namespace ETHTPS.Services.Ethereum.Starkware
     [Provider("DeversiFi")]
     public class DeversiFiBlockInfoProvider : StarkwareBlockInfoProviderBase
     {
-        public DeversiFiBlockInfoProvider(ETHTPSContext context, IConfiguration configuration) : base(Products.DeversiFi, context, configuration)
+        public DeversiFiBlockInfoProvider(EthtpsContext context, IConfiguration configuration) : base(Products.DeversiFi, context, configuration)
         {
         }
     }

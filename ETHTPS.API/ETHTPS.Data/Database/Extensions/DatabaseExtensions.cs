@@ -11,7 +11,7 @@ namespace ETHTPS.Data.Database.Extensions
 {
     public static class DatabaseExtensions
     {
-        public static async Task<T> GetCachedResponseAsync<T>(this ETHTPSContext context, params object[] args)
+        public static async Task<T> GetCachedResponseAsync<T>(this EthtpsContext context, params object[] args)
         {
             var name = StringExtensions.AggregateToLowercase(args);
 
@@ -33,9 +33,9 @@ namespace ETHTPS.Data.Database.Extensions
             }
         }
 
-        public static async Task<int> GetProviderIDAsync(this ETHTPSContext context, string provider) => (await context.Providers.FirstAsync(x => x.Name.ToUpper() == provider.ToUpper())).Id;
+        public static async Task<int> GetProviderIDAsync(this EthtpsContext context, string provider) => (await context.Providers.FirstAsync(x => x.Name.ToUpper() == provider.ToUpper())).Id;
 
-        public static int GetMainnetID(this ETHTPSContext context) => context.Networks.First(x => x.Name == "Mainnet").Id;
+        public static int GetMainnetID(this EthtpsContext context) => context.Networks.First(x => x.Name == "Mainnet").Id;
 
      
     }

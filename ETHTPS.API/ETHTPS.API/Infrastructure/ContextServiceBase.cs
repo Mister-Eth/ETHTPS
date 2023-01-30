@@ -9,9 +9,9 @@ namespace ETHTPS.API.Infrastructure
 {
     public abstract class ContextServiceBase
     {
-        protected ETHTPSContext Context { get; private set; }
+        protected EthtpsContext Context { get; private set; }
 
-        protected ContextServiceBase(ETHTPSContext context)
+        protected ContextServiceBase(EthtpsContext context)
         {
             Context = context;
         }

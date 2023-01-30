@@ -9,9 +9,9 @@ namespace ETHTPS.Services
     public abstract class HangfireBackgroundService
     {
         protected readonly ILogger<HangfireBackgroundService> _logger;
-        protected readonly ETHTPSContext _context;
+        protected readonly EthtpsContext _context;
 
-        protected HangfireBackgroundService(ILogger<HangfireBackgroundService> logger, ETHTPSContext context)
+        protected HangfireBackgroundService(ILogger<HangfireBackgroundService> logger, EthtpsContext context)
         {
             _logger = logger;
             _context = context;

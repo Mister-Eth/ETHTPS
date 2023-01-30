@@ -14,7 +14,7 @@ namespace ETHTPS.Services.BlockchainServices.Status.BackgroundTasks.Discord
     {
         private readonly IBlockInfoProviderStatusService _blockInfoProviderStatusService;
 
-        public UpdaterStatusBackgroundTask(ILogger<HangfireBackgroundService> logger, ETHTPSContext context, IConfiguration configuration, IBlockInfoProviderStatusService blockInfoProviderStatusService) : base(logger, context, configuration)
+        public UpdaterStatusBackgroundTask(ILogger<HangfireBackgroundService> logger, EthtpsContext context, IConfiguration configuration, IBlockInfoProviderStatusService blockInfoProviderStatusService) : base(logger, context, configuration)
         {
             _blockInfoProviderStatusService = blockInfoProviderStatusService;
         }

@@ -14,10 +14,10 @@ namespace ETHTPS.Data.Database.TimeWarp
     public abstract class TimeWarpDataProviderBase<TTargetTimeWarpData> : ITimeWarpDataProvider
         where TTargetTimeWarpData : TimeWarpDataBase
     {
-        private readonly ETHTPSContext _context;
-        private readonly Func<ETHTPSContext, DbSet<TTargetTimeWarpData>> _dataSelector;
+        private readonly EthtpsContext _context;
+        private readonly Func<EthtpsContext, DbSet<TTargetTimeWarpData>> _dataSelector;
 
-        protected TimeWarpDataProviderBase(ETHTPSContext context, Func<ETHTPSContext, DbSet<TTargetTimeWarpData>> dataSelector, string interval)
+        protected TimeWarpDataProviderBase(EthtpsContext context, Func<EthtpsContext, DbSet<TTargetTimeWarpData>> dataSelector, string interval)
         {
             _context = context;
             _dataSelector = dataSelector;

@@ -11,11 +11,11 @@ namespace ETHTPS.Data.Database.HistoricalDataProviders
     public abstract class HistoricalTimedTPSAndGasDataProviderBase<TTargetHistoricalData> : IHistoricalDataProvider
         where TTargetHistoricalData : TimedTPSAndGasData
     {
-        private readonly ETHTPSContext _context;
-        private readonly Func<ETHTPSContext, DbSet<TTargetHistoricalData>> _dataSelector;
+        private readonly EthtpsContext _context;
+        private readonly Func<EthtpsContext, DbSet<TTargetHistoricalData>> _dataSelector;
         private readonly TimeSpan _maxAge;
 
-        protected HistoricalTimedTPSAndGasDataProviderBase(string interval, ETHTPSContext context, Func<ETHTPSContext, DbSet<TTargetHistoricalData>> dataSelector, TimeSpan maxAge)
+        protected HistoricalTimedTPSAndGasDataProviderBase(string interval, EthtpsContext context, Func<EthtpsContext, DbSet<TTargetHistoricalData>> dataSelector, TimeSpan maxAge)
         {
             Interval = interval;
             _context = context;

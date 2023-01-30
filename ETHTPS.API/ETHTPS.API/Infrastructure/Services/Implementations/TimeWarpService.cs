@@ -14,10 +14,10 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
 {
     public class TimeWarpService : ITimeWarpService
     {
-        private readonly ETHTPSContext _context;
+        private readonly EthtpsContext _context;
         private readonly IServiceProvider _services;
 
-        public TimeWarpService(ETHTPSContext context, IServiceProvider services)
+        public TimeWarpService(EthtpsContext context, IServiceProvider services)
         {
             _context = context;
             _services = services;

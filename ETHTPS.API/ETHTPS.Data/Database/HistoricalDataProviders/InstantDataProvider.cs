@@ -7,9 +7,9 @@ namespace ETHTPS.Data.Database.HistoricalDataProviders
 {
     public class InstantDataProvider : IHistoricalDataProvider
     {
-        private readonly ETHTPSContext _context;
+        private readonly EthtpsContext _context;
 
-        public InstantDataProvider(ETHTPSContext context)
+        public InstantDataProvider(EthtpsContext context)
         {
             _context = context;
         }

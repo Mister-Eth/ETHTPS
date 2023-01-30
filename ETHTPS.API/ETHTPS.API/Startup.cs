@@ -78,7 +78,7 @@ namespace ETHTPS.API
             {
                 c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             });
-            services.AddDbContext<ETHTPSContext>(options => options.UseSqlServer(defaultConnectionString), ServiceLifetime.Transient);
+            services.AddDbContext<EthtpsContext>(options => options.UseSqlServer(defaultConnectionString), ServiceLifetime.Transient);
             services.AddMemoryCache();
             services.AddAuthentication("APIKey").AddScheme<AuthenticationSchemeOptions, APIKeyAuthenticationSchemeHandler>("APIKey", opts =>
             {

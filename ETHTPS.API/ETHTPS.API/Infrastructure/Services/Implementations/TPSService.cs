@@ -12,7 +12,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
 {
     public class TPSService : HistoricalMethodsServiceBase, IPSService
     {
-        public TPSService(ETHTPSContext context, IEnumerable<IHistoricalDataProvider> historicalDataProviders) : base(context, historicalDataProviders)
+        public TPSService(EthtpsContext context, IEnumerable<IHistoricalDataProvider> historicalDataProviders) : base(context, historicalDataProviders)
         {
 
         }
@@ -38,7 +38,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
                             {
                                 Date = entry.Date,
                                 Value = entry.MaxTps,
-                                BlockNumber = entry.MaxTPSBlockNumber
+                                BlockNumber = entry.MaxTpsblockNumber
                             }
                         }
                         });

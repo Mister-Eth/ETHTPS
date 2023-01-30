@@ -18,7 +18,7 @@ namespace ETHTPS.API.Infrastructure.Services.Implementations
         private readonly GPSService _gpsService;
         private readonly GasAdjustedTPSService _gasAdjustedTPSService;
 
-        public GeneralService(TPSService tpsService, GPSService gpsService, GasAdjustedTPSService gasAdjustedTPSService, ETHTPSContext context, IEnumerable<IHistoricalDataProvider> historicalDataProviders) : base(context, historicalDataProviders)
+        public GeneralService(TPSService tpsService, GPSService gpsService, GasAdjustedTPSService gasAdjustedTPSService, EthtpsContext context, IEnumerable<IHistoricalDataProvider> historicalDataProviders) : base(context, historicalDataProviders)
         {
             _tpsService = tpsService;
             _gpsService = gpsService;

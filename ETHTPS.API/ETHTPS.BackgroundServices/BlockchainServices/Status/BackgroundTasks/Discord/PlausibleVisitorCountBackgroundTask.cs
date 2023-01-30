@@ -19,7 +19,7 @@ namespace ETHTPS.Services.BlockchainServices.Status.BackgroundTasks.Discord
         private readonly string _url;
         private readonly string _apiKey;
 
-        public PlausibleVisitorCountBackgroundTask(ILogger<HangfireBackgroundService> logger, ETHTPSContext context, IConfiguration configuration) : base(logger, context, configuration)
+        public PlausibleVisitorCountBackgroundTask(ILogger<HangfireBackgroundService> logger, EthtpsContext context, IConfiguration configuration) : base(logger, context, configuration)
         {
             var config = configuration.GetSection("Plausible");
             _url = config.GetValue<string>("URL");

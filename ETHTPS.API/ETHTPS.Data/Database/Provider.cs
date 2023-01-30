@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using ETHTPS.Data.Database;
 
 namespace ETHTPS.Data.Database;
 
@@ -33,6 +32,10 @@ public partial class Provider
     public virtual ICollection<OldestLoggedTimeWarpBlock> OldestLoggedTimeWarpBlocks { get; } = new List<OldestLoggedTimeWarpBlock>();
 
     public virtual ICollection<Project> Projects { get; } = new List<Project>();
+
+    public virtual ICollection<ProviderDetailsMarkdownPage> ProviderDetailsMarkdownPages { get; } = new List<ProviderDetailsMarkdownPage>();
+
+    public virtual ICollection<ProviderLink> ProviderLinks { get; } = new List<ProviderLink>();
 
     public virtual Provider SubchainOfNavigation { get; set; }
 

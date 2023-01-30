@@ -16,7 +16,7 @@ namespace ETHTPS.Services.BlockchainServices.Status.BackgroundTasks.Discord
         private readonly HttpClient _httpClient;
         private readonly string _url;
 
-        public URLMonitoringBackgroundTask(ILogger<HangfireBackgroundService> logger, ETHTPSContext context, IConfiguration configuration, string url) : base(logger, context, configuration)
+        public URLMonitoringBackgroundTask(ILogger<HangfireBackgroundService> logger, EthtpsContext context, IConfiguration configuration, string url) : base(logger, context, configuration)
         {
             _httpClient = new HttpClient();
             _url = url;

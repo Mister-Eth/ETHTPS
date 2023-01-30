@@ -18,4 +18,6 @@ public partial class Apikey
     public string RequesterIpaddress { get; set; }
 
     public virtual ICollection<ApikeyExperimentBinding> ApikeyExperimentBindings { get; } = new List<ApikeyExperimentBinding>();
+
+    public virtual ICollection<ApikeyGroup> ApikeyGroups { get; } = new List<ApikeyGroup>();
 }

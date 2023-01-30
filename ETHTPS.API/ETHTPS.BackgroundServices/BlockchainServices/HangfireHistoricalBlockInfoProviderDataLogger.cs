@@ -13,7 +13,7 @@ namespace ETHTPS.Services.BlockchainServices
     public class HangfireHistoricalBlockInfoProviderDataLogger<T> : HangfireBlockInfoProviderDataLogger<T>
         where T : IBlockInfoProvider
     {
-        public HangfireHistoricalBlockInfoProviderDataLogger(T instance, ILogger<HangfireBackgroundService> logger, ETHTPSContext context) : base(instance, logger, context)
+        public HangfireHistoricalBlockInfoProviderDataLogger(T instance, ILogger<HangfireBackgroundService> logger, EthtpsContext context) : base(instance, logger, context)
         {
         }
 

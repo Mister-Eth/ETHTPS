@@ -9,7 +9,7 @@ namespace ETHTPS.Services.BlockchainServices.Status.BackgroundTasks.Discord
     {
         protected readonly DiscordWebhookNotifier _discordWebhookNotifier;
 
-        public BackgroundTaskWithNotifier(ILogger<HangfireBackgroundService> logger, ETHTPSContext context, IConfiguration configuration) : base(logger, context)
+        public BackgroundTaskWithNotifier(ILogger<HangfireBackgroundService> logger, EthtpsContext context, IConfiguration configuration) : base(logger, context)
         {
             _discordWebhookNotifier = new DiscordWebhookNotifier(configuration.GetSection("Discord").GetValue<string>("WebhookURL"));
         }

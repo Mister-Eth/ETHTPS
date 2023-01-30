@@ -9,7 +9,7 @@ namespace ETHTPS.Services.Ethereum.Starkware
     [Provider("Sorare")]
     public class SorareBlockInfoProvider : StarkwareBlockInfoProviderBase
     {
-        public SorareBlockInfoProvider(ETHTPSContext context, IConfiguration configuration) : base(Products.Sorare, context, configuration)
+        public SorareBlockInfoProvider(EthtpsContext context, IConfiguration configuration) : base(Products.Sorare, context, configuration)
         {
         }
     }
