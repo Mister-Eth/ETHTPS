@@ -54,16 +54,15 @@ export function MaxValueCell(config: ICustomCellConfiguration) {
       }
     >
       <Tooltip arrow placement="top-start" title={tooltipTypography}>
-        <AnimatedTypography
-          animationClassName="animated-cell"
-          standard={{
-            fontWeight: "bold",
+        <Typography
+          {...tableCellTypographyStandard}
+          sx={{
             textDecoration:
               tooltipTypography !== undefined ? "underline" : undefined,
           }}
-          child={numberFormat(maxData?.value).toString()}
-          durationMs={1000}
-        />
+        >
+          {numberFormat(maxData?.value).toString()}
+        </Typography>
       </Tooltip>
     </TableCell>
   )
