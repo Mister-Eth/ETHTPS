@@ -1,6 +1,6 @@
-import { PropsWithChildren } from "react"
+import { PropsWithChildren, useEffect } from "react"
 import { setProviders } from "../../../slices/ProvidersSlice"
-import { store } from "../../../store"
+import { store, useAppSelector } from "../../../store"
 import { useLoadValuesHook } from "../../../hooks/useLoadValuesHook"
 import { api } from "../../../services/DependenciesIOC"
 import { setNetworks } from "../../../slices/NetworksSlice"
@@ -16,6 +16,8 @@ import {
   setProviderTypeColorDictionary,
 } from "../../../slices/ColorSlice"
 import { useUpdateLiveData } from "../../../hooks/LiveDataHooks"
+import { useState } from "react"
+import { setApplicationDataLoaded } from "../../../slices/ApplicationStateSlice"
 
 export function LoadingApplicationDataPartial({
   children,
@@ -25,62 +27,70 @@ export function LoadingApplicationDataPartial({
   const rarelyUpdates = 60000
   const frequentlyUpdates = 30000
   const almostLive = 4000
-  useLoadValuesHook(
-    "providers",
-    () => api.getProviders(),
-    (value) => store.dispatch(setProviders(value)),
-    rarelyUpdates,
-    rarelyUpdates,
-  )
-  useLoadValuesHook(
-    "networks",
-    () => api.getNetworks(),
-    (value) => store.dispatch(setNetworks(value)),
-    rarelyUpdates,
-    rarelyUpdates,
-  )
-  useLoadValuesHook(
-    "intervals",
-    () => api.getIntervals(),
-    (value) => store.dispatch(setIntervals(value)),
-    rarelyUpdates,
-    rarelyUpdates,
-  )
-  useLoadValuesHook(
-    "maxTPS",
-    () => api.getMax(DataType.TPS),
-    (value) => store.dispatch(setMaxTPSData(value)),
-    frequentlyUpdates,
-    frequentlyUpdates,
-  )
-  useLoadValuesHook(
-    "maxGPS",
-    () => api.getMax(DataType.GPS),
-    (value) => store.dispatch(setMaxGPSData(value)),
-    frequentlyUpdates,
-    frequentlyUpdates,
-  )
-  useLoadValuesHook(
-    "maxGTPS",
-    () => api.getMax(DataType.GTPS),
-    (value) => store.dispatch(setMaxGTPSData(value)),
-    frequentlyUpdates,
-    frequentlyUpdates,
-  )
-  useLoadValuesHook(
-    "getProviderColorDictionary",
-    () => api.getProviderColorDictionary(),
-    (value) => store.dispatch(setProviderColorDictionary(value)),
-    rarelyUpdates,
-    rarelyUpdates,
-  )
-  useLoadValuesHook(
-    "getProviderTypeColorDictionary",
-    () => api.getProviderTypeColorDictionary(),
-    (value) => store.dispatch(setProviderTypeColorDictionary(value)),
-    rarelyUpdates,
-    rarelyUpdates,
-  )
+  const [loaded, setLoaded] = useState([
+    useLoadValuesHook(
+      "providers",
+      () => api.getProviders(),
+      (value) => store.dispatch(setProviders(value)),
+      rarelyUpdates,
+      rarelyUpdates,
+    ),
+    useLoadValuesHook(
+      "networks",
+      () => api.getNetworks(),
+      (value) => store.dispatch(setNetworks(value)),
+      rarelyUpdates,
+      rarelyUpdates,
+    ),
+    useLoadValuesHook(
+      "intervals",
+      () => api.getIntervals(),
+      (value) => store.dispatch(setIntervals(value)),
+      rarelyUpdates,
+      rarelyUpdates,
+    ),
+    useLoadValuesHook(
+      "maxTPS",
+      () => api.getMax(DataType.TPS),
+      (value) => store.dispatch(setMaxTPSData(value)),
+      frequentlyUpdates,
+      frequentlyUpdates,
+    ),
+    useLoadValuesHook(
+      "maxGPS",
+      () => api.getMax(DataType.GPS),
+      (value) => store.dispatch(setMaxGPSData(value)),
+      frequentlyUpdates,
+      frequentlyUpdates,
+    ),
+    useLoadValuesHook(
+      "maxGTPS",
+      () => api.getMax(DataType.GTPS),
+      (value) => store.dispatch(setMaxGTPSData(value)),
+      frequentlyUpdates,
+      frequentlyUpdates,
+    ),
+    useLoadValuesHook(
+      "getProviderColorDictionary",
+      () => api.getProviderColorDictionary(),
+      (value) => store.dispatch(setProviderColorDictionary(value)),
+      rarelyUpdates,
+      rarelyUpdates,
+    ),
+    useLoadValuesHook(
+      "getProviderTypeColorDictionary",
+      () => api.getProviderTypeColorDictionary(),
+      (value) => store.dispatch(setProviderTypeColorDictionary(value)),
+      rarelyUpdates,
+      rarelyUpdates,
+    ),
+  ])
+  useEffect(() => {
+    let x = loaded.every((y) => y !== undefined)
+    if (x) {
+      store.dispatch(setApplicationDataLoaded(true))
+    }
+  }, loaded)
   useUpdateLiveData(almostLive)
   return <>{children}</>
   /*

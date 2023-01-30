@@ -23,7 +23,6 @@ export function AllProvidersTable(tableData: IProviderTableModel): JSX.Element {
     setShowRowCount(tableData.providerData?.length as number)
   }
   const onSeeLess = () => {
-    console.log(oldShowRowCountValue)
     setShowRowCount(oldShowRowCountValue)
   }
   return (
@@ -48,7 +47,7 @@ export function AllProvidersTable(tableData: IProviderTableModel): JSX.Element {
       </TableContainer>
       {ConditionalRender(
         <SeeMoreButton
-          enabled={appDataLoaded}
+          enabled={(tableData.providerData?.length as number) > 0}
           onSeeMore={onSeeMore}
           onSeeLess={onSeeLess}
         />,
