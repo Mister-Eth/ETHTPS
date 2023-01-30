@@ -26,7 +26,7 @@ const customIcons = [
   },
   {
     icon: <SentimentSatisfiedIcon fontSize="inherit" color="warning" />,
-    label: "Neutral",
+    label: "Meh",
   },
   {
     icon: <SentimentSatisfiedAltIcon fontSize="inherit" color="success" />,
