@@ -26,7 +26,7 @@ export type DataLoadProgress = {
   loadees: Loadee[]
 }
 
-export function useGetDataLoadProgress() {
+export function useGetDataLoadProgress(): DataLoadProgress | undefined {
   const providers = useGetProvidersFromAppStore()
   const networks = useGetNetworksFromAppStore()
   const intervals = useGetIntervalsFromAppStore()
@@ -36,8 +36,9 @@ export function useGetDataLoadProgress() {
   const colorDictionary = useGetProviderColorDictionaryFromAppStore()
   const typeColorDictionary = useGetProviderTypeColorDictionaryFromAppStore()
 
-  function buildResult() {
-    return {
+  const [result, setResult] = useState<DataLoadProgress>()
+  useEffect(() => {
+    setResult({
       loadees: [
         {
           name: "Providers",
@@ -72,11 +73,7 @@ export function useGetDataLoadProgress() {
           completed: typeColorDictionary !== undefined,
         },
       ],
-    }
-  }
-  const [result, setResult] = useState<DataLoadProgress>(buildResult())
-  useEffect(() => {
-    setResult(buildResult())
+    })
   }, [
     providers,
     networks,

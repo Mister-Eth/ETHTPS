@@ -56,13 +56,17 @@ export function AllProvidersRows(model: IProviderTableModel): JSX.Element {
             ))}
         </>
       ) : (
-        <TableRow key={0}>
-          {range(0, 5).map((x) => (
-            <TableCell key={x}>
-              <SkeletonWithTooltip randomDelay rectangular={false} />
-            </TableCell>
-          ))}
-        </TableRow>
+        range(0, 4 + 1).map((y) => {
+          return (
+            <TableRow key={y}>
+              {range(0, 5).map((x) => (
+                <TableCell key={x}>
+                  <SkeletonWithTooltip randomDelay rectangular={false} />
+                </TableCell>
+              ))}
+            </TableRow>
+          )
+        })
       )}
     </>
   )

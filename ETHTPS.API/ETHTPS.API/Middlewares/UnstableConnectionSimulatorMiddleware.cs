@@ -26,13 +26,16 @@ namespace ETHTPS.API.Middlewares
             _next = next;
         }
 
-        public async Task InvokeAsync(HttpContext context, ETHTPSContext dbContext, ILogger<AccesStatsMiddleware> logger, IConfiguration configuration)
+        public async Task InvokeAsync(HttpContext context)
         {
-            await Task.Delay(_random.Next(10000));
-            if (_random.Next(100) < 25) //Drop requests
+            if (_random.Next(100) < 50)
             {
-                context.Abort();
-                return;
+                await Task.Delay(_random.Next(5000));
+                if (_random.Next(100) < 25) //Drop requests
+                {
+                    context.Abort();
+                    return;
+                }
             }
             await _next(context);
         }

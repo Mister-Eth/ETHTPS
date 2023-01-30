@@ -22,6 +22,7 @@ import { TestTube } from "../components/experiments/TestTube"
 import { useGetProvidersFromAppStore } from "../hooks/ProviderHooks"
 import { SlowLoadingMessage } from "../components/partials/loading/SlowLoadingMessage"
 import { useGetApplicationDataLoadedFromAppStore } from "../hooks/ApplicationStateHooks"
+import { isMobile } from "react-device-detect"
 
 export default function MainPage(): JSX.Element {
   const providers = useGetProvidersFromAppStore()
@@ -71,13 +72,12 @@ export default function MainPage(): JSX.Element {
             </Paper>
             <Paper elevation={1}>
               <SimpleInstantBar />
-              <SlowLoadingMessage />
             </Paper>
             <Paper elevation={1}>
               <AllProvidersTable
                 providerData={providers}
                 maxData={max}
-                maxRowsBeforeShowingExpand={20}
+                maxRowsBeforeShowingExpand={isMobile ? 15 : 20}
                 clickCallback={useHandleCellClick}
               />
             </Paper>

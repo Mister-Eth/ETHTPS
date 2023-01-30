@@ -42,10 +42,10 @@ namespace ETHTPS.API.Authentication
                 return Task.FromResult(AuthenticateResult.Fail("Limit reached for today"));
 
             _context.IncrementNumberOfCalls(apiKey);
-            var claims = new[] { new Claim(ClaimTypes.Name, "VALID USER") };
-            var identity = new ClaimsIdentity(claims, Scheme.Name);
-            var principal = new ClaimsPrincipal(identity);
-            var ticket = new AuthenticationTicket(principal, Scheme.Name);
+            Claim[] claims = new[] { new Claim(ClaimTypes.Name, "VALID USER") };
+            ClaimsIdentity identity = new(claims, Scheme.Name);
+            ClaimsPrincipal principal = new (identity);
+            AuthenticationTicket ticket = new(principal, Scheme.Name);
             return Task.FromResult(AuthenticateResult.Success(ticket));
         }
     }

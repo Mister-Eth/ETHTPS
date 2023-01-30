@@ -28,6 +28,14 @@ namespace ETHTPS.API.Controllers
         }
 
         private async Task<bool> ValidateAsync(string humanityProof) => await _recaptchaVerificationService.VerifyRecaptchaAsync(humanityProof);
+        private bool RecaptchaRequired()
+        {
+            lock (_context.LockObj)
+            {
+                if (_context.)
+            }
+            return false;
+        }
 
         [HttpGet("GetNewKey")]
         public async Task<IActionResult> GetNewKey(string humanityProof)
@@ -37,7 +45,7 @@ namespace ETHTPS.API.Controllers
                 return StatusCode(418, "Beep boop");
             }
             var actualKey = KeyGenerator.GetUniqueKey(64);
-            var key = new Apikey()
+            Apikey key = new()
             {
                 KeyHash = actualKey.SHA256(),
                 Limit24h = DEFAULT_REQUEST_LIMIT_24H,

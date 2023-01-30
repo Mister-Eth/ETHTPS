@@ -128,7 +128,7 @@ namespace ETHTPS.Data.Database
             {
                 entity.HasKey(e => e.Id).HasName("PK__APIKeys__3214EC275054A916");
 
-                entity.ToTable("APIKeys");
+                entity.ToTable("APIKeys","Security");
 
                 entity.Property(e => e.Id).HasColumnName("ID");
                 entity.Property(e => e.KeyHash)
@@ -207,7 +207,6 @@ namespace ETHTPS.Data.Database
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__APIKeyExp__Exper__09746778");
             });
-
 
             modelBuilder.Entity<Experiment>(entity =>
             {

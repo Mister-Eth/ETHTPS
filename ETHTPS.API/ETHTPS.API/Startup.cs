@@ -60,6 +60,9 @@ namespace ETHTPS.API
                                       builder.WithOrigins("https://ethtps.info");
                                       builder.WithOrigins("https://ultrasound.money/");
                                       builder.WithOrigins("http://localhost:3007");
+#if DEBUG
+                                      builder.WithOrigins("http://10.2.0.18");
+#endif
                                       builder.AllowAnyHeader();
                                   });
             });

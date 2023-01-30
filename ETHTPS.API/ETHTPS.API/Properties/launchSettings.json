@@ -17,9 +17,9 @@
     },
     "ETHTPS.API": {
       "commandName": "Project",
-      "dotnetRunMessages": "true",
+      "dotnetRunMessages": true,
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:5000",
+      "applicationUrl": "http://0.0.0.0:10202",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

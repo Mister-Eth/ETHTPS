@@ -22,7 +22,7 @@ namespace ETHTPS.API.Middlewares
             _next = next;
         }
 
-        public async Task InvokeAsync(HttpContext context, ETHTPSContext dbContext, ILogger<AccesStatsMiddleware> logger, IConfiguration configuration)
+        public async Task InvokeAsync(HttpContext context, ILogger<AccesStatsMiddleware> logger)
         {
             Stopwatch stopwatch = new();
             stopwatch.Start();

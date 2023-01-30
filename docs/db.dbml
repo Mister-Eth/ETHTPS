@@ -166,12 +166,63 @@ Table dbo.OldestLoggedHistoricalEntries{
 Ref: dbo.OldestLoggedHistoricalEntries.Provider > dbo.Providers.ID
 Ref: dbo.OldestLoggedHistoricalEntries.Network > dbo.Networks.ID
 
-Table dbo.APIKeys {
+Table Security.APIKeys{
   ID int [pk, increment]
   KeyHash varchar [not null]
   TotalCalls int [not null]
   CallsLast24h int [not null]
   Limit24h int [not null]
+  RequesterIPAddress varchar [not null]
+}
+
+Table Security.APIKeyGroups {
+  ID int [pk, increment]
+  APIKeyID int [not null]
+  GroupID int [not null]
+}
+
+Table Security.Roles{
+  ID int [pk, increment]
+  Name varchar [not null]
+  
+}
+
+Ref: Security.APIKeyGroups.APIKeyID > Security.APIKeys.ID
+Ref: Security.APIKeyGroups.GroupID > Security.Groups.ID
+
+
+Table Security.Groups {
+  ID int [pk, increment]
+  Name varchar [not null]
+ }
+ 
+Table Security.Permissions {
+  ID int [pk, increment]
+  Name varchar [not null]
+}
+
+Table Security.PermissionsForRoles{
+  ID int [pk, increment]
+  RoleID int [not null]
+  PermissionID int [not null]
+}
+
+Ref: Security.PermissionsForRoles.RoleID > Security.Roles.ID
+Ref: Security.PermissionsForRoles.PermissionID > Security.Permissions.ID
+
+Table Security.GroupRoles {
+  ID int [pk, increment]
+  GroupID int [not null]
+  RoleID int [not null]
+}
+
+Ref: Security.GroupRoles.GroupID > Security.Groups.ID
+Ref: Security.GroupRoles.RoleID > Security.Roles.ID
+
+Table Configuration.AppConfigurationValues{
+    ID int [pk, increment]
+    Name varchar [not null]
+    Value varchar [not null]
 }
 
 Table dbo.TimeWarpData{
@@ -260,13 +311,81 @@ Table dbo.StarkwareTransactionCountData {
 
 Ref: dbo.StarkwareTransactionCountData.Network > dbo.Networks.ID
 
-Table ProjectManagement.Features {
+Table ABTesting.APIKeyExperimentBinding{
+  ID int [pk, increment]
+  ExperimentID int [not null]
+  APIKeyID int [not null]
+}
+
+Ref: ABTesting.APIKeyExperimentBinding.ExperimentID > ABTesting.Experiments.ID
+Ref: ABTesting.APIKeyExperimentBinding.APIKeyID > Security.APIKeys.ID
+
+Table ABTesting.ExperimentTargetTypes{
+  ID int [pk, increment]
+  TargetTypeName varchar [not null]
+  TargetTypeValue varchar [not null]
+}
+
+Table ABTesting.ExperimentTargets{
+  ID int [pk, increment]
+  Name varchar [not null]
+  Description varchar
+  Type int [not null]
+}
+
+Ref: ABTesting.ExperimentTargets.Type > ABTesting.ExperimentTargetTypes.ID
+
+Table ABTesting.ExperimentRunParameters{
+  ID int [pk, increment]
+  StartDate datetime
+  EndDate datetime
+  Enabled bit [not null]
+  DisplayToNPeopleBeforeEnd int
+  ConsiderFinishedAfterTimeoutSeconds int [not null]
+}
+
+Table ABTesting.Experiments {
   ID int [pk, increment]
   ProjectID int [not null]
-  Enabled bit [not null]
   Name varchar [not null]
-  Details varchar
+  Description varchar
+  Target int [not null]
+  RunParameters int [not null]
 }
+
+Table ABTesting.ExperimentResults{
+   ID int [pk, increment]
+   Experiment int [not null]
+   AverageRetentionSeconds int [not null]
+   SDRetentionSeconds int [not null]
+   AveragePercentageReturnVisitors int [not null]
+   SDPercentageReturnVisitors int [not null]
+}
+
+Table ABTesting.ExperimentalSessions{
+  ID int [pk, increment]
+  Experiment int [not null]
+  TargetIPAddress varchar [not null]
+  RetentionSeconds int [not null]
+}
+
+Table ABTesting.ExperimentFeedback {
+   ID int [pk, increment]
+   Experiment int [not null]
+   Vote bit
+   Rating int
+   Text varchar
+}
+Ref: ABTesting.ExperimentFeedback.Experiment > ABTesting.Experiments.ID
+
+Ref: ABTesting.ExperimentalSessions.ID > ABTesting.Experiments.ID
+Ref: ABTesting.ExperimentResults.Experiment > ABTesting.Experiments.ID
+
+Ref: ABTesting.Experiments.RunParameters > ABTesting.ExperimentRunParameters.ID
+
+Ref: ABTesting.Experiments.Target > ABTesting.ExperimentTargets.ID
+
+Ref: ABTesting.Experiments.ProjectID > dbo.Providers.ID
 
 Table ProjectManagement.Projects {
   ID int [pk, increment]
@@ -278,4 +397,34 @@ Table ProjectManagement.Projects {
 }
 
 Ref: ProjectManagement.Projects.Provider > dbo.Providers.ID
-Ref: ProjectManagement.Features.ProjectID > ProjectManagement.Projects.ID
+
+Table Info.ExternalWebsites {
+  ID int [pk, increment]
+  Name varchar [not null]
+  IconBase64 varchar(max) [not null] 
+  Category varchar [not null]
+  
+}
+
+Table Info.ProviderLinks {
+    ID int [pk, increment]
+    ProviderID int [not null]
+    ExternalWebsiteID int [not null]
+}
+
+Ref: Info.ProviderLinks.ProviderID > dbo.Providers.ID
+Ref: Info.ProviderLinks.ExternalWebsiteID > Info.ExternalWebsites.ID
+
+Table Info.MarkdownPages{
+  ID int [pk, increment]
+  RawMarkdown varchar(max) [not null]
+}
+
+Table Info.ProviderDetailsMarkdownPages {
+  ID int [pk, increment]
+  ProviderID int [not null]
+  MarkdownPageID int [not null]
+}
+
+Ref: Info.ProviderDetailsMarkdownPages.ProviderID > dbo.Providers.ID
+Ref: Info.ProviderDetailsMarkdownPages.MarkdownPageID > Info.MarkdownPages.ID
