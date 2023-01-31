@@ -46,14 +46,16 @@ export function ProviderModal(config: IProviderModalConfiguration) {
     >
       <Box sx={{ ...style }}>
         <Paper elevation={1}>
-          <ProviderCarousel provider={config.provider} />
-          {ConditionalRender(
-            <ProviderDataChart
-              onNoDataAvailable={() => setNoData(true)}
-              provider={config.provider?.name as string}
-            />,
-            config.provider !== undefined,
-          )}
+          <Paper elevation={2}>
+            <ProviderCarousel provider={config.provider} />
+            {ConditionalRender(
+              <ProviderDataChart
+                onNoDataAvailable={() => setNoData(true)}
+                provider={config.provider?.name as string}
+              />,
+              config.provider !== undefined,
+            )}
+          </Paper>
           {ConditionalRender(
             <>
               <Alert severity="warning">

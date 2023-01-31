@@ -17,14 +17,15 @@ import { Line } from "react-chartjs-2"
 import { CategoryScale, Chart } from "chart.js/auto"
 import "chartjs-adapter-moment"
 import { noGrid } from "./ChartTypes"
-import { Chip, Paper, Skeleton } from "@mui/material"
+import { Chip, Paper, Skeleton, Typography } from "@mui/material"
 import { INoDataAvailableEvent } from "../INoDataAvailableEvent"
 import { SkeletonWithTooltip } from "../partials/SkeletonWithTooltip"
 import { useQuery } from "react-query"
 import { DateRange, DateRangePicker, Range as RRange } from "react-date-range"
 import { addDays } from "date-fns"
-import { DoNotDisturbAlt } from "@mui/icons-material"
+import { Diversity1, DoNotDisturbAlt } from "@mui/icons-material"
 import { SpinningArrows } from "../icons/spinning hourglass/SpinningArrows"
+import { Box } from "@mui/system"
 Chart.register(CategoryScale)
 
 interface IProviderDataChartConfiguration extends INoDataAvailableEvent {
@@ -96,7 +97,6 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
           borderBlockColor: "primary",
         }}
       >
-        <SkeletonWithTooltip text="Loading..." />
         <Paper elevation={1} sx={{ display: noData ? "none" : undefined }}>
           {displayNetworksDropdown ? (
             <NetworksDropdown selectionChanged={networkChanged} />
@@ -132,63 +132,71 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
         </Paper>
         <br />
 
-        {ConditionalRender(
-          <Chip
-            label="No data available"
-            sx={CenteredInParent}
-            avatar={<DoNotDisturbAlt />}
-            variant="filled"
-          />,
-          noData,
-        )}
-        {ConditionalRender(
-          <Chip
-            label="Loading..."
-            sx={CenteredInParent}
-            avatar={<SpinningArrows />}
-            variant="filled"
-          />,
-          loading,
-        )}
         <Paper elevation={1}>
-          <Line
-            style={{
-              width: "inherit",
-              height: "100%",
-              maxHeight: "500px",
-            }}
-            data={{
-              datasets: [
-                {
-                  label: `${config.provider}`,
-                  data: data,
-                  fill: true,
-                  borderColor: colorDictionary[config.provider],
-                  tension: 0.3,
-                  pointHoverRadius: 15,
-                  pointRadius: 0,
-                  pointHitRadius: 30,
-                  pointBackgroundColor: colorDictionary[config.provider],
+          <div className="parent">
+            {ConditionalRender(
+              <Chip
+                label={
+                  <Typography sx={{ fontWeight: "bold" }}>
+                    Loading...
+                  </Typography>
+                }
+                color="primary"
+                className="appear-delayed child"
+                avatar={<SpinningArrows />}
+                variant="filled"
+              />,
+              loading,
+            )}
+            {ConditionalRender(
+              <Chip
+                className="appear-delayed child"
+                label="No data available"
+                avatar={<DoNotDisturbAlt />}
+                variant="filled"
+                style={{ opacity: "100%" }}
+              />,
+              noData,
+            )}
+            <Line
+              style={{
+                width: "inherit",
+                height: "100%",
+                maxHeight: "500px",
+              }}
+              data={{
+                datasets: [
+                  {
+                    label: `${config.provider}`,
+                    data: data,
+                    fill: true,
+                    borderColor: colorDictionary[config.provider],
+                    tension: 0.3,
+                    pointHoverRadius: 15,
+                    pointRadius: 0,
+                    pointHitRadius: 30,
+                    pointBackgroundColor: colorDictionary[config.provider],
+                  },
+                ],
+              }}
+              options={{
+                plugins: {
+                  legend: {
+                    display: false,
+                  },
                 },
-              ],
-            }}
-            options={{
-              plugins: {
-                legend: {
-                  display: false,
+                scales: {
+                  x: {
+                    type: "timeseries",
+                    ...noGrid,
+                  },
+                  y: {
+                    ...noGrid,
+                  },
                 },
-              },
-              scales: {
-                x: {
-                  type: "timeseries",
-                  ...noGrid,
-                },
-                y: {
-                  ...noGrid,
-                },
-              },
-            }}
-          />
+              }}
+            />
+          </div>
         </Paper>
       </Container>
     </React.Fragment>

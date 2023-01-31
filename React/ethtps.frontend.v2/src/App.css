@@ -44,3 +44,32 @@
   text-align: center;
 }
 
+.appear-delayed{
+  animation: appear 2s;
+}
+
+@keyframes appear{
+  0% {
+    opacity: 0%;
+  }
+  50% {
+    opacity: 0%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+
+.parent {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.child {
+  flex-shrink: 0;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

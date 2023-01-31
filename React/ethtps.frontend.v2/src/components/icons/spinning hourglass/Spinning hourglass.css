@@ -5,19 +5,15 @@
 @keyframes rotate {
     0% {
         transform: rotate(0deg);
-        color:orange;
-        opacity: 0%;
-    }
-    25% {
-        opacity: 100%;
+        color:white;
     }
     50%{
         transform: rotate(180deg);
-            color: orangered;
+        color: yellow;
     }
 
     100% {
         transform: rotate(360deg);
-        color: orange;
+        color: white;
     }
 }
