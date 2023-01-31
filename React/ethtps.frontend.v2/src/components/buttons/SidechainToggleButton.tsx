@@ -1,6 +1,9 @@
 import { Link, LinkOff } from "@mui/icons-material"
 import { IconButton, Tooltip, Typography } from "@mui/material"
 import { Fragment, useState } from "react"
+import { setIncludeSidechains } from "../../slices/LiveDataSlice"
+import { store } from "../../store"
+import { useSetSidechainsIncluded } from "../../hooks/LiveDataHooks"
 
 interface ISidechainToggleButtonConfiguration {
   toggled?: (on: boolean) => void
@@ -14,6 +17,7 @@ export function SidechainToggleButton(
   const toggle = () => {
     if (config.toggled) {
       config.toggled(!on)
+      store.dispatch(setIncludeSidechains(!on))
     }
     setOn(!on)
   }

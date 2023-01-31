@@ -44,7 +44,7 @@ export function IntervalDropdown(config: IIntervalDropdownConfig) {
         options={
           intervals === undefined
             ? []
-            : intervals?.map((x) => toShortString_2(x))
+            : intervals?.map((x) => toShortString_2(x)).concat(["Custom"])
         }
         selectionChanged={config.selectionChanged}
         conversionFunction={(x) => fromShortString_2(x)}

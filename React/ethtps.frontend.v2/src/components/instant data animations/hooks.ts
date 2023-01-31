@@ -10,6 +10,7 @@ import { useGetProvidersFromAppStore } from "../../hooks/ProviderHooks"
 import { ProviderModel } from "../../services/api-gen/models/ProviderModel"
 import { DataResponseModelDictionary } from "../../Types.dictionaries"
 import { dataTypeToString, toShortString_2 } from "../../models/TimeIntervals"
+import { useGetSidechainsIncludedFromAppStore } from "../../hooks/LiveDataHooks"
 
 export type InstantBarChartDataset = {
   label: string
@@ -33,6 +34,7 @@ export type LiveData = {
   mode: string
   total: number
   data: LiveDataPoint[]
+  sidechainsIncluded: boolean
 }
 
 export const createDataPoint = (
@@ -53,7 +55,7 @@ export function useLiveData() {
   const providers = useGetProvidersFromAppStore()
   const smoothing = useGetLiveDataSmoothingFromAppStore()
   const colors = useGetProviderColorDictionaryFromAppStore()
-
+  const sidechainsIncluded = useGetSidechainsIncludedFromAppStore()
   const mode = useGetLiveDataModeFromAppStore()
   const liveData = useGetLiveDataFromAppStore()
   const [data, setData] = useState(getModeData(liveData, mode))
@@ -61,7 +63,7 @@ export function useLiveData() {
   const [processedData, setProcessedData] = useState<LiveData>()
   useEffect(() => {
     setData(getModeData(liveData, mode))
-  }, [mode, liveData])
+  }, [mode, liveData, sidechainsIncluded])
   useEffect(() => {
     if (data && colors) {
       let d_possiblyUndefined = providers
@@ -79,6 +81,7 @@ export function useLiveData() {
           data: d_possiblyUndefined,
           total,
           mode: dataTypeToString(mode),
+          sidechainsIncluded,
         })
       }
     }

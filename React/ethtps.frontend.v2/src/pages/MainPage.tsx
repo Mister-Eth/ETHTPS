@@ -20,7 +20,7 @@ import { toShortString } from "../Types"
 import { TestTube } from "../components/experiments/TestTube"
 import { useGetProvidersFromAppStore } from "../hooks/ProviderHooks"
 import { isMobile } from "react-device-detect"
-import { CustomBarAnimation } from "../components/instant data animations/custom bar animation/CustomBarAnimation"
+import { SimpleTextDisplay } from "../components/instant data animations/SimpleTextDisplay"
 
 export default function MainPage(): JSX.Element {
   const providers = useGetProvidersFromAppStore()
@@ -69,7 +69,7 @@ export default function MainPage(): JSX.Element {
               <DataModeButtonGroup modeChanged={useSetDataModeMutation} />
             </Paper>
             <Paper elevation={1}>
-              <CustomBarAnimation />
+              <SimpleTextDisplay />
             </Paper>
             <Paper elevation={1}>
               <AllProvidersTable

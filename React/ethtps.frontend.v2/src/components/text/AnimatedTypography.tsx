@@ -6,6 +6,7 @@ interface IAnimatedTypographyConfiguration {
   animationClassName: string
   durationMs: number
   standard?: any
+  centerText?: boolean
 }
 
 export function AnimatedTypography(config: IAnimatedTypographyConfiguration) {
@@ -14,6 +15,7 @@ export function AnimatedTypography(config: IAnimatedTypographyConfiguration) {
       {...config.standard}
       className={config.animationClassName}
       key={config.child.toString()}
+      textAlign={config.centerText ? "center" : undefined}
     >
       {config.child}
     </Typography>

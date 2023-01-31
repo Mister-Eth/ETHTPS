@@ -1,3 +1,5 @@
+import "react-date-range/dist/styles.css" // main style file
+import "react-date-range/dist/theme/default.css" // theme css
 import React, { useEffect, useState } from "react"
 import { IntervalDropdown } from "../dropdowns/IntervalDropdown"
 import { NetworksDropdown } from "../dropdowns/NetworksDropdown"
@@ -5,14 +7,24 @@ import Container from "@mui/material/Container/Container"
 import { ModeDropdown } from "../dropdowns/ModeDropdown"
 import { useGetProviderColorDictionaryFromAppStore } from "../../hooks/ColorHooks"
 import { api } from "../../services/DependenciesIOC"
-import { DataType, TimeValue } from "../../Types"
+import {
+  DataType,
+  TimeValue,
+  ConditionalRender,
+  CenteredInParent,
+} from "../../Types"
 import { Line } from "react-chartjs-2"
 import { CategoryScale, Chart } from "chart.js/auto"
 import "chartjs-adapter-moment"
 import { noGrid } from "./ChartTypes"
-import { Paper } from "@mui/material"
+import { Chip, Paper, Skeleton } from "@mui/material"
 import { INoDataAvailableEvent } from "../INoDataAvailableEvent"
-
+import { SkeletonWithTooltip } from "../partials/SkeletonWithTooltip"
+import { useQuery } from "react-query"
+import { DateRange, DateRangePicker, Range as RRange } from "react-date-range"
+import { addDays } from "date-fns"
+import { DoNotDisturbAlt } from "@mui/icons-material"
+import { SpinningArrows } from "../icons/spinning hourglass/SpinningArrows"
 Chart.register(CategoryScale)
 
 interface IProviderDataChartConfiguration extends INoDataAvailableEvent {
@@ -29,8 +41,15 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
 
   const [data, setData] = useState<TimeValue[]>([])
   const [noData, setNoData] = useState(false)
+  const [usesDatePicker, setUsesDatePicker] = useState(false)
+  const [loading, setLoading] = useState(true)
   const intervalChanged = (interval: string) => {
-    setInterval(interval)
+    const usesDate = interval === "Custom"
+    setUsesDatePicker(usesDate)
+    if (!usesDate) setInterval(interval)
+    else {
+      console.log("Custom")
+    }
   }
   const modeChanged = (mode: DataType) => {
     setMode(mode)
@@ -39,6 +58,7 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
     setNetwork(network)
   }
   useEffect(() => {
+    setLoading(true)
     api
       .getData(mode, interval as string, config.provider, network)
       ?.then((data) => {
@@ -54,7 +74,19 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
         }
       })
       .catch((err) => console.log(err))
+      .finally(() => {
+        setLoading(false)
+      })
   }, [interval, network, mode])
+
+  const [state, setState] = useState<RRange[] | undefined>([
+    {
+      startDate: new Date(),
+      endDate: addDays(new Date(), 7),
+      key: "selection",
+    },
+  ])
+
   return (
     <React.Fragment>
       <Container
@@ -64,6 +96,7 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
           borderBlockColor: "primary",
         }}
       >
+        <SkeletonWithTooltip text="Loading..." />
         <Paper elevation={1} sx={{ display: noData ? "none" : undefined }}>
           {displayNetworksDropdown ? (
             <NetworksDropdown selectionChanged={networkChanged} />
@@ -71,6 +104,17 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
             <></>
           )}
           <div style={{ float: "right" }}>
+            {ConditionalRender(
+              <DateRange
+                onChange={(item) => setState([item.selection])}
+                moveRangeOnFirstSelection={false}
+                months={1}
+                ranges={state}
+                scroll={{ enabled: true }}
+                direction="vertical"
+              />,
+              usesDatePicker,
+            )}
             <IntervalDropdown
               hidden={noData}
               onNoDataAvailable={(p) => {
@@ -87,6 +131,25 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
           </div>
         </Paper>
         <br />
+
+        {ConditionalRender(
+          <Chip
+            label="No data available"
+            sx={CenteredInParent}
+            avatar={<DoNotDisturbAlt />}
+            variant="filled"
+          />,
+          noData,
+        )}
+        {ConditionalRender(
+          <Chip
+            label="Loading..."
+            sx={CenteredInParent}
+            avatar={<SpinningArrows />}
+            variant="filled"
+          />,
+          loading,
+        )}
         <Paper elevation={1}>
           <Line
             style={{

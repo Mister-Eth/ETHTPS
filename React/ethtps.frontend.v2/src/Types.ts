@@ -108,8 +108,15 @@ export const shortTimeIntervalToUIFormat = (interval: string): string => {
     case "1Y":
       return "One year"
     default:
-      return "All-time"
+      return interval
   }
+}
+
+export const CenteredInParent = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
 }
 
 export const ConditionalRender = (

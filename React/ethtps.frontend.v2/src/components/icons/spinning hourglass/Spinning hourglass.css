@@ -1,0 +1,23 @@
+.rotation-animation{
+    animation: rotate 2s infinite;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+        color:orange;
+        opacity: 0%;
+    }
+    25% {
+        opacity: 100%;
+    }
+    50%{
+        transform: rotate(180deg);
+            color: orangered;
+    }
+
+    100% {
+        transform: rotate(360deg);
+        color: orange;
+    }
+}
