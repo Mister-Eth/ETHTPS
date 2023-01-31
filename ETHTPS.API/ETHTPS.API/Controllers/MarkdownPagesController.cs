@@ -7,9 +7,9 @@ namespace ETHTPS.API.Controllers
 {
     [Route("api/info/markdown-pages/")]
     [ApiController]
-    public class MarkdownPagesController : CRUDServiceControllerBase<MarkdownPage>
+    public class MarkdownPagesController : CRUDServiceControllerBase<Provider>
     {
-        public MarkdownPagesController(IMarkdownService serviceImplementation) : base(serviceImplementation)
+        public MarkdownPagesController(IProvidersService serviceImplementation) : base(serviceImplementation)
         {
         }
     }

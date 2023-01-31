@@ -129,6 +129,7 @@ namespace ETHTPS.API
             services.AddScoped<IRecaptchaVerificationService, RecaptchaVerificationService>();
             services.AddScoped<IExternalWebsitesService, ExternalWebsitesService>();
             services.AddScoped<IMarkdownService, MarkdownService>();
+            services.AddScoped<IProvidersService, ProvidersService>();
         }
 
         private void AddHistoricalBlockInfoDataUpdaters(IServiceCollection services)
