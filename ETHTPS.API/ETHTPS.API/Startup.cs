@@ -5,6 +5,7 @@ using ETHTPS.API.Infrastructure.Services.Experimentation;
 using ETHTPS.API.Infrastructure.Services.ExternalWebsites;
 using ETHTPS.API.Infrastructure.Services.Implementations;
 using ETHTPS.API.Infrastructure.Services.Info;
+using ETHTPS.API.Infrastructure.Services.Markdown;
 using ETHTPS.API.Infrastructure.Services.Recaptcha;
 using ETHTPS.API.Middlewares;
 using ETHTPS.Data.Database;
@@ -127,6 +128,7 @@ namespace ETHTPS.API
             services.AddScoped<IInfoService, InfoService>();
             services.AddScoped<IRecaptchaVerificationService, RecaptchaVerificationService>();
             services.AddScoped<IExternalWebsitesService, ExternalWebsitesService>();
+            services.AddScoped<IMarkdownService, MarkdownService>();
         }
 
         private void AddHistoricalBlockInfoDataUpdaters(IServiceCollection services)

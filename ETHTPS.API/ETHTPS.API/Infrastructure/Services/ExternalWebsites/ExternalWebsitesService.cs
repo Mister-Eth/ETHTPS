@@ -12,7 +12,7 @@ namespace ETHTPS.API.Infrastructure.Services.ExternalWebsites
     public class ExternalWebsitesService : EFCoreCRUDServiceBase<ExternalWebsite>, IExternalWebsitesService
     {
         private readonly EthtpsContext _context;
-        public ExternalWebsitesService(EthtpsContext context) : base(context.ExternalWebsites, () => context.SaveChanges(), context.LockObj)
+        public ExternalWebsitesService(EthtpsContext context) : base(context.ExternalWebsites, context)
         {
             _context = context;
         }

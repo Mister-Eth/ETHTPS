@@ -11,12 +11,11 @@ namespace ETHTPS.API.Infrastructure.Services
         private readonly DbSet<TEntity> _entitySet;
         private readonly Action _saveChangesAction;
         private readonly object _lockObject;
-
-        protected EFCoreCRUDServiceBase(DbSet<TEntity> entitySet, Action saveChangesAction, object lockObject)
+        protected EFCoreCRUDServiceBase(DbSet<TEntity> entitySet, EthtpsContext context)
         {
             _entitySet = entitySet;
-            _saveChangesAction = saveChangesAction;
-            _lockObject = lockObject;
+            _saveChangesAction = () => context.SaveChanges();
+            _lockObject = context.LockObj;
         }
 
         public void Create(TEntity entity)

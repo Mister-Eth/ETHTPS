@@ -16,10 +16,11 @@ namespace ETHTPS.API.Controllers
         {
             _serviceImplementation = serviceImplementation;
         }
+
         [Route("[action]")]
         [HttpPut]
         [Authorize(Policy = "EditorsOnly")]
-        public void Create(T entity, [FromQuery] APIKeyRequestModel requestModel)
+        public void Create([FromBody] T entity, [FromQuery] APIKeyRequestModel requestModel)
         {
             _serviceImplementation.Create(entity);
         }
@@ -49,7 +50,7 @@ namespace ETHTPS.API.Controllers
         [Route("[action]")]
         [Authorize(Policy = "EditorsOnly")]
         [HttpPut]
-        public void Update(T entity, [FromQuery] APIKeyRequestModel requestModel)
+        public void Update([FromBody] T entity, [FromQuery] APIKeyRequestModel requestModel)
         {
             _serviceImplementation.Update(entity);
         }
