@@ -2,7 +2,9 @@
 
 using ETHTPS.API.Authentication;
 using ETHTPS.API.Infrastructure.Services.Experimentation;
+using ETHTPS.API.Infrastructure.Services.ExternalWebsites;
 using ETHTPS.API.Infrastructure.Services.Implementations;
+using ETHTPS.API.Infrastructure.Services.Info;
 using ETHTPS.API.Infrastructure.Services.Recaptcha;
 using ETHTPS.API.Middlewares;
 using ETHTPS.Data.Database;
@@ -90,6 +92,7 @@ namespace ETHTPS.API
                     .AddAuthenticationSchemes("APIKey")
                     .RequireAuthenticatedUser()
                     .Build();
+                options.AddPolicy(Constants.EditorPolicy);
             });
 
             AddServices(services);
@@ -121,7 +124,9 @@ namespace ETHTPS.API
             services.AddScoped<IBlockInfoProviderStatusService, BlockInfoProviderStatusService>();
             services.AddScoped<EthereumBlockTimeProvider>();
             services.AddScoped<IExperimentService, ExperimentService>();
-            services.AddSingleton<IRecaptchaVerificationService, RecaptchaVerificationService>();
+            services.AddScoped<IInfoService, InfoService>();
+            services.AddScoped<IRecaptchaVerificationService, RecaptchaVerificationService>();
+            services.AddScoped<IExternalWebsitesService, ExternalWebsitesService>();
         }
 
         private void AddHistoricalBlockInfoDataUpdaters(IServiceCollection services)

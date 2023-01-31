@@ -3,13 +3,14 @@ using System.Collections.Generic;
 
 namespace ETHTPS.Data.Database;
 
-public partial class ProviderLink
+public partial class ProviderLink : EntityWIthId
 {
     public int Id { get; set; }
 
     public int ProviderId { get; set; }
 
     public int ExternalWebsiteId { get; set; }
+    public string Link { get; set; }
 
     public virtual ExternalWebsite ExternalWebsite { get; set; }
 

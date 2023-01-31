@@ -44,6 +44,20 @@
   text-align: center;
 }
 
+.rotate45:hover {
+  animation: r45 0.1s;
+}
+
+@keyframes r45 {
+  0% {
+    transform: rotateZ(0)
+  }
+
+  100% {
+    transform: rotateZ(45deg)
+  }
+}
+
 .appear {
   animation: appear 2s;
 }

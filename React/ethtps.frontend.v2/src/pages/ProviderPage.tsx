@@ -10,6 +10,8 @@ import { Container } from "@mui/system"
 import { ProviderCarousel } from "../components/partials/navigation/ProviderCarousel"
 import { ConditionalSkeletonRender } from "../Types"
 import { ProviderDataChart } from "../components/charts/ProviderDataChart"
+import { LocationBreadcrumb } from "../components/partials/navigation/LocationBreadcrumb"
+import { SocialMediaLinks } from "../components/stats/SocialMediaLinks"
 
 interface IProviderPageModel {
   provider?: string
@@ -40,14 +42,15 @@ export function ProviderPage(model: IProviderPageModel) {
   }, [providers])
   return (
     <>
-      <Paper elevation={0}>
+      <Paper sx={{ marginTop: "20px" }} elevation={1}>
         <Container maxWidth={"md"}>
           {ConditionalSkeletonRender(
             <ProviderCarousel provider={provider} />,
             provider !== undefined,
           )}
-          <ProviderDataChart provider={provider?.name as string} />
         </Container>
+        <ProviderDataChart provider={provider?.name as string} />
+        <SocialMediaLinks providerName={provider?.name} />
       </Paper>
     </>
   )
