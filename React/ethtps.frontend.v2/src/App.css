@@ -44,11 +44,21 @@
   text-align: center;
 }
 
-.appear-delayed{
+.appear {
   animation: appear 2s;
 }
 
-@keyframes appear{
+@keyframes appear {
+  0% {
+    opacity: 0%;
+  }
+
+  100% {
+    opacity: 100%;
+  }
+}
+
+@keyframes appear-d{
   0% {
     opacity: 0%;
   }

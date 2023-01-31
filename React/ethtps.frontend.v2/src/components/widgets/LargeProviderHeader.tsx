@@ -11,7 +11,7 @@ export function LargeProviderHeader(config: ILargeProviderHeaderConfiguration) {
       <div className={"box"}>
         <img
           alt={`${config.provider?.name} image`}
-          src={`provider-icons/${config.provider?.name}.png`}
+          src={`/provider-icons/${config.provider?.name}.png`}
           {...inline}
           {...uniform("2em")}
         ></img>

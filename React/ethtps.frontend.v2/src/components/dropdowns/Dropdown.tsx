@@ -26,6 +26,7 @@ interface IDropdownConfiguration<T> extends IDropdownCallback<T> {
   defaultOption?: string
   hoverText?: string | JSX.Element
   openOnHover?: boolean
+  enabled?: boolean
   selectionChanged?: (value: T) => void
   conversionFunction(value: string): T
   uiFormatFunction?: (value: T) => string
@@ -71,6 +72,7 @@ export function Dropdown<T>(configuration: IDropdownConfiguration<T>) {
   }
   const hoverEvents = {
     onMouseOverCapture: clearHoverAwayTimeout,
+    onClick: handleToggle,
     onMouseOutCapture: setHoverAwayTimeout,
     onMouseDownCapture: () => setOpen(true),
   }
@@ -82,6 +84,7 @@ export function Dropdown<T>(configuration: IDropdownConfiguration<T>) {
         ref={anchorRef}
         aria-label="split button"
         color={"primary"}
+        sx={{ cursor: "pointer" }} //Fix for mobile devices needing to hold tap
       >
         <Tooltip arrow placement="top" title={configuration.hoverText}>
           <Button

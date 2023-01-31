@@ -34,8 +34,10 @@ export default function MainPage(): JSX.Element {
   const useHandleCellClick = (provider?: ProviderModel, cellName?: string) => {
     if ((cellName as string) === "MaxValue" || (cellName as string) === "Index")
       return
+    /*
     setShowProviderModal(true)
-    setModalProvider(provider)
+    setModalProvider(provider)*/
+    window.location.href = "/Providers/" + provider?.name
   }
 
   let [searchParams, setSearchParams] = useSearchParams()
@@ -50,7 +52,6 @@ export default function MainPage(): JSX.Element {
   return (
     <>
       <Paper elevation={0}>
-        <TestTube />
         <DiscordBanner />
 
         <>

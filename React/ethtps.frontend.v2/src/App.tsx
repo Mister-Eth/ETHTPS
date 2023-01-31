@@ -5,16 +5,22 @@ import { About } from "./pages/About"
 import MainPage from "./pages/MainPage"
 import { Fragment } from "react"
 import { RecaptchaAPIKeyAndDataLoader } from "./components/RecaptchaAPIKeyAndDataLoader"
+import { ProviderPage } from "./pages/ProviderPage"
+import { TestTube } from "./components/experiments/TestTube"
 
 export default function App(): JSX.Element {
   return (
     <Fragment>
+      <TestTube />
+      <RecaptchaAPIKeyAndDataLoader />
       <Routes>
         <Route path={"/"} element={<MainPage />} />
+        <Route path={"/Providers/"} element={<ProviderPage />}>
+          <Route path={"*"} element={<ProviderPage />} />
+        </Route>
         <Route path={"/About"} element={<About />} />
         <Route path={"*"} element={<FourOhFour />} />
       </Routes>
-      <RecaptchaAPIKeyAndDataLoader />
     </Fragment>
   )
 }

@@ -8,6 +8,7 @@ import { Fragment, useState, useEffect } from "react"
 import { IDropdownConfig } from "./IDropdownConfig"
 import { shortTimeIntervalToUIFormat } from "../../Types"
 import { INoDataAvailableEvent } from "../INoDataAvailableEvent"
+import { isMobile } from "react-device-detect"
 
 interface IIntervalDropdownConfig
   extends IDropdownCallbackWithProvider<string>,
@@ -44,7 +45,9 @@ export function IntervalDropdown(config: IIntervalDropdownConfig) {
         options={
           intervals === undefined
             ? []
-            : intervals?.map((x) => toShortString_2(x)).concat(["Custom"])
+            : intervals
+                ?.map((x) => toShortString_2(x))
+                .concat(true ? [] : ["Custom"]) //We'll work on this later on
         }
         selectionChanged={config.selectionChanged}
         conversionFunction={(x) => fromShortString_2(x)}

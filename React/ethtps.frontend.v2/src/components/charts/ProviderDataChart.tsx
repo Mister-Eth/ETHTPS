@@ -7,25 +7,16 @@ import Container from "@mui/material/Container/Container"
 import { ModeDropdown } from "../dropdowns/ModeDropdown"
 import { useGetProviderColorDictionaryFromAppStore } from "../../hooks/ColorHooks"
 import { api } from "../../services/DependenciesIOC"
-import {
-  DataType,
-  TimeValue,
-  ConditionalRender,
-  CenteredInParent,
-} from "../../Types"
+import { DataType, TimeValue, ConditionalRender } from "../../Types"
 import { Line } from "react-chartjs-2"
 import { CategoryScale, Chart } from "chart.js/auto"
 import "chartjs-adapter-moment"
 import { noGrid } from "./ChartTypes"
-import { Chip, Paper, Skeleton, Typography } from "@mui/material"
+import { Chip, Paper, Typography } from "@mui/material"
 import { INoDataAvailableEvent } from "../INoDataAvailableEvent"
-import { SkeletonWithTooltip } from "../partials/SkeletonWithTooltip"
-import { useQuery } from "react-query"
-import { DateRange, DateRangePicker, Range as RRange } from "react-date-range"
-import { addDays } from "date-fns"
-import { Diversity1, DoNotDisturbAlt } from "@mui/icons-material"
+import { DoNotDisturbAlt } from "@mui/icons-material"
 import { SpinningArrows } from "../icons/spinning hourglass/SpinningArrows"
-import { Box } from "@mui/system"
+import { DateRangeSelectorDropdown } from "../dropdowns/DateRangeSelectorDropdown"
 Chart.register(CategoryScale)
 
 interface IProviderDataChartConfiguration extends INoDataAvailableEvent {
@@ -48,9 +39,6 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
     const usesDate = interval === "Custom"
     setUsesDatePicker(usesDate)
     if (!usesDate) setInterval(interval)
-    else {
-      console.log("Custom")
-    }
   }
   const modeChanged = (mode: DataType) => {
     setMode(mode)
@@ -60,6 +48,7 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
   }
   useEffect(() => {
     setLoading(true)
+    setNoData(true)
     api
       .getData(mode, interval as string, config.provider, network)
       ?.then((data) => {
@@ -71,22 +60,17 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
                 .filter((x) => x?.value !== undefined)
                 ?.map((x) => new TimeValue(x)),
             )
+            setNoData(false)
           }
         }
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        console.log(err)
+      })
       .finally(() => {
         setLoading(false)
       })
   }, [interval, network, mode])
-
-  const [state, setState] = useState<RRange[] | undefined>([
-    {
-      startDate: new Date(),
-      endDate: addDays(new Date(), 7),
-      key: "selection",
-    },
-  ])
 
   return (
     <React.Fragment>
@@ -103,18 +87,11 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
           ) : (
             <></>
           )}
+          {ConditionalRender(
+            <DateRangeSelectorDropdown hidden={!usesDatePicker} />,
+            usesDatePicker,
+          )}
           <div style={{ float: "right" }}>
-            {ConditionalRender(
-              <DateRange
-                onChange={(item) => setState([item.selection])}
-                moveRangeOnFirstSelection={false}
-                months={1}
-                ranges={state}
-                scroll={{ enabled: true }}
-                direction="vertical"
-              />,
-              usesDatePicker,
-            )}
             <IntervalDropdown
               hidden={noData}
               onNoDataAvailable={(p) => {
@@ -150,13 +127,13 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
             )}
             {ConditionalRender(
               <Chip
-                className="appear-delayed child"
+                className="appear child"
                 label="No data available"
                 avatar={<DoNotDisturbAlt />}
                 variant="filled"
                 style={{ opacity: "100%" }}
               />,
-              noData,
+              noData && !loading,
             )}
             <Line
               style={{
@@ -180,6 +157,9 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
                 ],
               }}
               options={{
+                interaction: {
+                  mode: "index",
+                },
                 plugins: {
                   legend: {
                     display: false,

@@ -20,20 +20,14 @@ export function SimpleTextDisplay() {
               liveData?.sidechainsIncluded ? "and its sidechains are" : "is"
             } doing ${numberFormat(liveData?.total)} ${liveData?.mode}`}
           ></AnimatedTypography>
-          <Tooltip
-            arrow
-            placement="right"
-            title={<Typography>Stay tuned</Typography>}
+          <Typography
+            sx={{
+              fontSize: "0.6em",
+            }}
+            textAlign={"right"}
           >
-            <Typography
-              sx={{
-                fontSize: "0.8em",
-              }}
-              textAlign={"right"}
-            >
-              Animations coming soon
-            </Typography>
-          </Tooltip>
+            Animations coming soon
+          </Typography>
         </Box>,
         liveData !== undefined,
       )}
