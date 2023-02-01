@@ -12,6 +12,7 @@ import { ProviderDataChart } from "../components/charts/ProviderDataChart"
 import { LocationBreadcrumb } from "../components/partials/navigation/LocationBreadcrumb"
 import { SocialMediaLinks } from "../components/stats/SocialMediaLinks"
 import { ProviderModel } from "../services/api-gen/src"
+import { useRefetchWhenDependenciesChange } from "../hooks/queryHooks"
 
 interface IProviderPageModel {
   provider?: string

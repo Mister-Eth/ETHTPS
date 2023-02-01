@@ -1,5 +1,4 @@
 import { Moment } from "moment"
-import { DataPoint } from "./services/api-gen/models/DataPoint"
 import moment from "moment"
 import React, { ReactNode } from "react"
 import { SkeletonWithTooltip } from "./components/partials/SkeletonWithTooltip"
@@ -8,6 +7,7 @@ import { DataResponseModelDictionary } from "./Types.dictionaries"
 import { ILiveDataModeModel } from "./models/interfaces/ILiveDataModeModel"
 import { SvgIconTypeMap } from "@mui/material"
 import { OverridableComponent } from "@mui/material/OverridableComponent"
+import { DataPoint } from "ethtps.api.client"
 
 export enum DataType {
   TPS,

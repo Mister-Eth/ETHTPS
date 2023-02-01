@@ -17,6 +17,8 @@ import { DoNotDisturbAlt } from "@mui/icons-material"
 import { SpinningArrows } from "../icons/spinning hourglass/SpinningArrows"
 import { DateRangeSelectorDropdown } from "../dropdowns/DateRangeSelectorDropdown"
 import { api } from "../../services/DependenciesIOC"
+import { useQuery } from "react-query"
+import { useRefetchWhenDependenciesChange } from "../../hooks/queryHooks"
 Chart.register(CategoryScale)
 
 interface IProviderDataChartConfiguration extends INoDataAvailableEvent {
@@ -31,7 +33,7 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
   const [network, setNetwork] = useState("Mainnet")
   const [mode, setMode] = useState(DataType.TPS)
 
-  const [data, setData] = useState<TimeValue[]>([])
+  const [d, setD] = useState<TimeValue[]>([])
   const [noData, setNoData] = useState(false)
   const [usesDatePicker, setUsesDatePicker] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -46,29 +48,31 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
   const networkChanged = (network: string) => {
     setNetwork(network)
   }
+  const { data, isSuccess, refetch } = useQuery(
+    "get data",
+    () => api.getData(mode, interval as string, config.provider, network),
+    { refetchOnMount: false, refetchInterval: 60 * 1000 },
+  )
+  useEffect(() => {
+    if (isSuccess) {
+      if (data[config.provider] !== undefined) {
+        const values = data[config.provider]?.map((x) => x.data?.at(0))
+        if (values.length > 0) {
+          setD(
+            values
+              .filter((x) => x?.value !== undefined)
+              ?.map((x) => new TimeValue(x)),
+          )
+          setNoData(false)
+        }
+      }
+      setLoading(false)
+    }
+  }, [data])
+
   useEffect(() => {
     setLoading(true)
-    api
-      .getData(mode, interval as string, config.provider, network)
-      ?.then((data) => {
-        if (data[config.provider] !== undefined) {
-          const values = data[config.provider]?.map((x) => x.data?.at(0))
-          if (values.length > 0) {
-            setData(
-              values
-                .filter((x) => x?.value !== undefined)
-                ?.map((x) => new TimeValue(x)),
-            )
-            setNoData(false)
-          }
-        }
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
+    refetch()
   }, [interval, network, mode])
 
   return (
@@ -144,7 +148,7 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
                 datasets: [
                   {
                     label: `${config.provider}`,
-                    data: data,
+                    data: d,
                     fill: true,
                     borderColor: colorDictionary[config.provider],
                     tension: 0.3,
