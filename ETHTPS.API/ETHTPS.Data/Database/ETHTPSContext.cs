@@ -47,6 +47,8 @@ public partial class EthtpsContext : EthtpsContextBase
 
     public virtual DbSet<ExternalWebsite> ExternalWebsites { get; set; }
 
+    public virtual DbSet<ExternalWebsiteCateopry> ExternalWebsiteCateopries { get; set; }
+
     public virtual DbSet<Feature> Features { get; set; }
 
     public virtual DbSet<Group> Groups { get; set; }
@@ -388,12 +390,26 @@ public partial class EthtpsContext : EthtpsContextBase
             entity.ToTable("ExternalWebsites", "Info");
 
             entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.Category)
-                .IsRequired()
-                .HasMaxLength(255);
             entity.Property(e => e.IconBase64)
                 .IsRequired()
                 .IsUnicode(false);
+            entity.Property(e => e.Name)
+                .IsRequired()
+                .HasMaxLength(255);
+
+            entity.HasOne(d => d.CategoryNavigation).WithMany(p => p.ExternalWebsites)
+                .HasForeignKey(d => d.Category)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__ExternalW__Categ__2EA5EC27");
+        });
+
+        modelBuilder.Entity<ExternalWebsiteCateopry>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__External__3214EC27BF25D844");
+
+            entity.ToTable("ExternalWebsiteCateopry", "Info");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(255);
@@ -683,6 +699,10 @@ public partial class EthtpsContext : EthtpsContextBase
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.ExternalWebsiteId).HasColumnName("ExternalWebsiteID");
+            entity.Property(e => e.Link)
+                .IsRequired()
+                .HasMaxLength(1)
+                .IsUnicode(false);
             entity.Property(e => e.ProviderId).HasColumnName("ProviderID");
 
             entity.HasOne(d => d.ExternalWebsite).WithMany(p => p.ProviderLinks)
@@ -1009,9 +1029,9 @@ public partial class EthtpsContext : EthtpsContextBase
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Date).HasColumnType("datetime");
             entity.Property(e => e.MaxGps).HasColumnName("MaxGPS");
-            entity.Property(e => e.MaxGpsblockNumber).HasColumnName("MaxGpsblockNumber");
+            entity.Property(e => e.MaxGpsblockNumber).HasColumnName("MaxGPSBlockNumber");
             entity.Property(e => e.MaxTps).HasColumnName("MaxTPS");
-            entity.Property(e => e.MaxTpsblockNumber).HasColumnName("MaxTpsblockNumber");
+            entity.Property(e => e.MaxTpsblockNumber).HasColumnName("MaxTPSBlockNumber");
 
             entity.HasOne(d => d.NetworkNavigation).WithMany(p => p.TpsandGasDataMaxes)
                 .HasForeignKey(d => d.Network)

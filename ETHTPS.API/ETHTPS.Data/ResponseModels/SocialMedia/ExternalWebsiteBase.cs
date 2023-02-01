@@ -15,6 +15,6 @@ namespace ETHTPS.Data.ResponseModels.SocialMedia
 
         public string IconBase64 { get; set; }
 
-        public string Category { get; set; }
+        public int Category { get; set; }
     }
 }
