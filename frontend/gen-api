@@ -1,0 +1,1 @@
+ openapi-generator-cli generate -g typescript-fetch -i api-def.json -o ethtps.api.client --additional-properties=npmName=ethtps.api.client

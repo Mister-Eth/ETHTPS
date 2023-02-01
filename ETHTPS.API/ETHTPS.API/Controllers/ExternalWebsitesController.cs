@@ -1,9 +1,12 @@
 ﻿using ETHTPS.API.Infrastructure.Services;
 using ETHTPS.API.Infrastructure.Services.ExternalWebsites;
 using ETHTPS.Data.Database;
+using ETHTPS.Data.Models;
 using ETHTPS.Data.ResponseModels.SocialMedia;
 
 using Microsoft.AspNetCore.Mvc;
+
+using System.Collections.Generic;
 
 namespace ETHTPS.API.Controllers
 {
@@ -11,8 +14,17 @@ namespace ETHTPS.API.Controllers
     [ApiController]
     public class ExternalWebsitesController : CRUDServiceControllerBase<ExternalWebsite>
     {
+        private readonly IExternalWebsitesService _externalWebsitesService;
         public ExternalWebsitesController(IExternalWebsitesService serviceImplementation) : base(serviceImplementation)
         {
+            _externalWebsitesService = serviceImplementation;
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public IEnumerable<ExternalWebsite> GetExternalWebsitesFor(string providerName, [FromQuery] APIKeyRequestModel model)
+        {
+            return _externalWebsitesService.GetExternalWebsitesFor(providerName);
         }
     }
 }

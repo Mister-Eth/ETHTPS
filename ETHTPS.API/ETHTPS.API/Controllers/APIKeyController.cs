@@ -38,11 +38,11 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet("GetNewKey")]
-        public async Task<IActionResult> GetNewKey(string humanityProof)
+        public async Task<APIKeyResponseModel> GetNewKey(string humanityProof)
         {
             if (!await ValidateAsync(humanityProof))
             {
-                return StatusCode(418, "Beep boop");
+                BadRequest("Beep boop");
             }
             var actualKey = KeyGenerator.GetUniqueKey(64);
             Apikey key = new()
@@ -56,11 +56,11 @@ namespace ETHTPS.API.Controllers
             _context.Apikeys.Add(key);
             _context.SaveChanges();
             System.Console.WriteLine($"New API key created from {key.RequesterIpaddress}");
-            return Created(string.Empty, new APIKeyResponseModel()
+            return new APIKeyResponseModel()
             {
                 Key = actualKey,
                 RequestLimit24h = key.Limit24h
-            });
+            };
         }
     }
 }
