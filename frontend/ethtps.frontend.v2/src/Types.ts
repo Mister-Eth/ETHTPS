@@ -18,11 +18,11 @@ export enum DataType {
 
 export function toShortString(type: DataType): string {
   switch (type) {
-    case DataType.NUMBER_0:
+    case DataType.TPS:
       return "TPS"
-    case DataType.NUMBER_1:
+    case DataType.GPS:
       return "GPS"
-    case DataType.NUMBER_2:
+    case DataType.GTPS:
       return "GTPS"
     default:
       return "Unknown"
@@ -32,11 +32,11 @@ export function toShortString(type: DataType): string {
 export function fromShortString(typeStr: string): DataType {
   switch (typeStr.toUpperCase()) {
     case "TPS":
-      return DataType.NUMBER_0
+      return DataType.TPS
     case "GPS":
-      return DataType.NUMBER_1
+      return DataType.GPS
     case "GTPS":
-      return DataType.NUMBER_2
+      return DataType.GTPS
     default:
       return DataType.Unknown
   }
@@ -61,11 +61,11 @@ export const getModeData = (
   mode: DataType,
 ): DataResponseModelDictionary | undefined => {
   switch (mode) {
-    case DataType.NUMBER_0:
+    case DataType.TPS:
       return model.data?.tps
-    case DataType.NUMBER_1:
+    case DataType.GPS:
       return model.data?.gps
-    case DataType.NUMBER_2:
+    case DataType.GTPS:
       return model.data?.gasAdjustedTPS
   }
 }

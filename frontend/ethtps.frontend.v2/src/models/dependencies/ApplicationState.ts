@@ -50,8 +50,8 @@ export class ApplicationState implements IApplicationState {
     this.maxTPSData = state?.maxTPSData
     this.maxGPSData = state?.maxGPSData
     this.maxGTPSData = state?.maxGTPSData
-    this.mode = state?.mode ?? DataType.NUMBER_0
+    this.mode = state?.mode ?? DataType.TPS
     this.liveDataSmoothing = state?.liveDataSmoothing ?? TimeInterval._1m
-    this.liveDataType = state?.liveDataType ?? DataType.NUMBER_0
+    this.liveDataType = state?.liveDataType ?? DataType.TPS
   }
 }

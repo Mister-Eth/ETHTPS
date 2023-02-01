@@ -3,7 +3,6 @@ import {
   GPSApi,
   TPSApi,
   GasAdjustedTPSApi,
-  DataType,
   ProviderResponseModel,
   RequestContext,
   ResponseContext,
@@ -26,6 +25,7 @@ import {
   DataPointDictionary,
   StringDictionary,
 } from "../../Types.dictionaries"
+import { DataType } from "../../Types"
 
 export class ETHTPSApi {
   public generalApi: GeneralApi = new GeneralApi()
@@ -93,7 +93,7 @@ export class ETHTPSApi {
     return this.generalApi.aPIV2IntervalsGet()
   }
 
-  public getData<DataType>(
+  public getData(
     dataType: DataType,
     interval: string,
     provider?: string,
@@ -101,22 +101,22 @@ export class ETHTPSApi {
     includeSidechains?: boolean,
   ): Promise<DataResponseModelDictionary> {
     switch (dataType) {
-      case DataType.NUMBER_0:
-        return this.gpsApi.aPIGPSGetGet({
+      case DataType.TPS:
+        return this.tpsApi.aPITPSGetGet({
           provider,
           network,
           includeSidechains,
           interval,
         })
-      case DataType.NUMBER_2:
+      case DataType.GTPS:
         return this.gtpsApi.aPIGasAdjustedTPSGetGet({
           provider,
           network,
           includeSidechains,
           interval,
         })
-      case DataType.NUMBER_0:
-        return this.tpsApi.aPITPSGetGet({
+      case DataType.GPS:
+        return this.gpsApi.aPIGPSGetGet({
           provider,
           network,
           includeSidechains,
@@ -134,19 +134,19 @@ export class ETHTPSApi {
     includeSidechains?: boolean,
   ): Promise<DataPointDictionary> | undefined {
     switch (dataType) {
-      case DataType.NUMBER_0:
+      case DataType.TPS:
         return this.tpsApi.aPITPSMaxGet({
           provider,
           network,
           includeSidechains,
         })
-      case DataType.NUMBER_1:
+      case DataType.GPS:
         return this.gpsApi.aPIGPSMaxGet({
           provider,
           network,
           includeSidechains,
         })
-      case DataType.NUMBER_2:
+      case DataType.GTPS:
         return this.gtpsApi.aPIGasAdjustedTPSMaxGet({
           provider,
           network,

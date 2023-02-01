@@ -33,9 +33,9 @@ export function toShortString(interval: TimeInterval) {
 
 export function dataTypeToString(type: DataType) {
   switch (type) {
-    case DataType.NUMBER_0:
+    case DataType.TPS:
       return "TPS"
-    case DataType.NUMBER_1:
+    case DataType.GPS:
       return "GPS"
     default:
       return "GTPS"

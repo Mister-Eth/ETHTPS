@@ -16,6 +16,7 @@ import { INoDataAvailableEvent } from "../INoDataAvailableEvent"
 import { DoNotDisturbAlt } from "@mui/icons-material"
 import { SpinningArrows } from "../icons/spinning hourglass/SpinningArrows"
 import { DateRangeSelectorDropdown } from "../dropdowns/DateRangeSelectorDropdown"
+import { api } from "../../services/DependenciesIOC"
 Chart.register(CategoryScale)
 
 interface IProviderDataChartConfiguration extends INoDataAvailableEvent {
@@ -28,7 +29,7 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
   const colorDictionary = useGetProviderColorDictionaryFromAppStore() ?? {}
   const [interval, setInterval] = useState<string>()
   const [network, setNetwork] = useState("Mainnet")
-  const [mode, setMode] = useState(DataType.NUMBER_0)
+  const [mode, setMode] = useState(DataType.TPS)
 
   const [data, setData] = useState<TimeValue[]>([])
   const [noData, setNoData] = useState(false)
@@ -46,7 +47,6 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
     setNetwork(network)
   }
   useEffect(() => {
-    /*
     setLoading(true)
     api
       .getData(mode, interval as string, config.provider, network)
@@ -68,7 +68,7 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
       })
       .finally(() => {
         setLoading(false)
-      })*/
+      })
   }, [interval, network, mode])
 
   return (

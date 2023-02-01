@@ -14,7 +14,7 @@ interface IDataModeButtonGroupConfiguration {
 }
 
 export function DataModeButtonGroup(model: IDataModeButtonGroupConfiguration) {
-  const [mode, setMode] = useState(DataType.NUMBER_0)
+  const [mode, setMode] = useState(DataType.TPS)
   const getColorComparedTo = (proposedMode: DataType) =>
     proposedMode == mode ? { color: "primary" } : undefined
   const triggerChange = (mode: DataType) => {
@@ -27,10 +27,10 @@ export function DataModeButtonGroup(model: IDataModeButtonGroupConfiguration) {
         <Tooltip
           arrow
           placement={"top"}
-          {...getColorComparedTo(DataType.NUMBER_0)}
+          {...getColorComparedTo(DataType.TPS)}
           title={<Typography>Transactions per second</Typography>}
         >
-          <IconButton onClick={() => triggerChange(DataType.NUMBER_0)}>
+          <IconButton onClick={() => triggerChange(DataType.TPS)}>
             <Numbers />
           </IconButton>
         </Tooltip>
@@ -38,10 +38,10 @@ export function DataModeButtonGroup(model: IDataModeButtonGroupConfiguration) {
         <Tooltip
           arrow
           placement={"top"}
-          {...getColorComparedTo(DataType.NUMBER_1)}
+          {...getColorComparedTo(DataType.GPS)}
           title={<Typography>Gas per second</Typography>}
         >
-          <IconButton onClick={() => triggerChange(DataType.NUMBER_1)}>
+          <IconButton onClick={() => triggerChange(DataType.GPS)}>
             <LocalGasStation />
           </IconButton>
         </Tooltip>
@@ -49,10 +49,10 @@ export function DataModeButtonGroup(model: IDataModeButtonGroupConfiguration) {
         <Tooltip
           arrow
           placement={"top"}
-          {...getColorComparedTo(DataType.NUMBER_2)}
+          {...getColorComparedTo(DataType.GTPS)}
           title={<Typography>Gas-adjusted transactions per second</Typography>}
         >
-          <IconButton onClick={() => triggerChange(DataType.NUMBER_2)}>
+          <IconButton onClick={() => triggerChange(DataType.GTPS)}>
             <EvStation />
           </IconButton>
         </Tooltip>

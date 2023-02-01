@@ -6,7 +6,7 @@ import { InstantDataResponseModel } from "../Types.dictionaries"
 
 const initialState: ILiveDataModeModel = {
   liveDataSmoothing: TimeInterval.Instant,
-  liveDataType: DataType.NUMBER_0,
+  liveDataType: DataType.TPS,
   includeSidechains: false,
 }
 

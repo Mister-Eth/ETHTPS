@@ -9,7 +9,7 @@ const initialState: IMaxDataModel = {
   maxGTPSData: {},
   getMaxDataFor(provider, type) {
     switch (type) {
-      case DataType.NUMBER_0:
+      case DataType.TPS:
         if (
           this.maxTPSData !== undefined &&
           Object.keys(this.maxGPSData as DataPointDictionary).some(
@@ -18,7 +18,7 @@ const initialState: IMaxDataModel = {
         )
           return this.maxTPSData[provider]
         else break
-      case DataType.NUMBER_1:
+      case DataType.GPS:
         if (
           this.maxGPSData !== undefined &&
           Object.keys(this.maxGPSData as DataPointDictionary).some(
@@ -27,7 +27,7 @@ const initialState: IMaxDataModel = {
         )
           return this.maxGPSData[provider]
         else break
-      case DataType.NUMBER_2:
+      case DataType.GTPS:
         if (
           this.maxGTPSData !== undefined &&
           Object.keys(this.maxGTPSData as DataPointDictionary).some(
