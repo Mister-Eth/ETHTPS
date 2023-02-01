@@ -93,7 +93,8 @@ namespace ETHTPS.API
                     .AddAuthenticationSchemes("APIKey")
                     .RequireAuthenticatedUser()
                     .Build();
-                options.AddPolicy(Constants.EditorPolicy);
+                options.AddPolicy(PolicyConstants.EditorPolicy);
+                options.AddPolicy(PolicyConstants.AdminPolicy);
             });
 
             AddServices(services);
