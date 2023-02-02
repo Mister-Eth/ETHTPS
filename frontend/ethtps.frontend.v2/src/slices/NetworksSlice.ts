@@ -1,12 +1,18 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
-const initialState: Array<string> = []
+import { storage } from "../services/DependenciesIOC"
+import { act } from "react-dom/test-utils"
+const initialState: Array<string> = storage.retrieveItem("networks") ?? []
 
 const networksSlice = createSlice({
   name: "networks",
   initialState,
   reducers: {
     setNetworks(state: string[], action: PayloadAction<string[] | undefined>) {
-      return action.payload
+      if (action.payload !== undefined) {
+        storage.cacheItem(action.payload, "networks")
+        state.length = 0
+        state = [...(action.payload as string[])]
+      }
     },
   },
 })

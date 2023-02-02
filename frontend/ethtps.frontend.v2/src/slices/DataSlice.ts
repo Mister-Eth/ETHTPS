@@ -2,11 +2,12 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { DataType } from "../Types"
 import { DataPointDictionary } from "../Types.dictionaries"
 import { IMaxDataModel } from "../models/interfaces/IMaxDataModel"
+import { storage } from "../services/DependenciesIOC"
 
 const initialState: IMaxDataModel = {
-  maxTPSData: {},
-  maxGPSData: {},
-  maxGTPSData: {},
+  maxTPSData: storage.retrieveItem("maxTPSData") ?? {},
+  maxGPSData: storage.retrieveItem("maxGPSData") ?? {},
+  maxGTPSData: storage.retrieveItem("maxGTPSData") ?? {},
   getMaxDataFor(provider, type) {
     switch (type) {
       case DataType.TPS:
@@ -69,18 +70,21 @@ const dataSlice = createSlice({
       state: IMaxDataModel,
       action: PayloadAction<DataPointDictionary | undefined>,
     ) {
+      storage.cacheItem(action.payload, "maxTPSData")
       return modifyMaxDataState(state, action.payload, (s) => s.maxTPSData)
     },
     setMaxGPSData(
       state: IMaxDataModel,
       action: PayloadAction<DataPointDictionary | undefined>,
     ) {
+      storage.cacheItem(action.payload, "maxGPSData")
       return modifyMaxDataState(state, action.payload, (s) => s.maxGPSData)
     },
     setMaxGTPSData(
       state: IMaxDataModel,
       action: PayloadAction<DataPointDictionary | undefined>,
     ) {
+      storage.cacheItem(action.payload, "maxGTPSData")
       return modifyMaxDataState(state, action.payload, (s) => s.maxGTPSData)
     },
   },

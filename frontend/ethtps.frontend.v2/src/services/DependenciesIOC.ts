@@ -1,9 +1,11 @@
 import { QueryClient } from "react-query"
 import { StorageThemeProvider } from "./themes/StorageThemeProvider"
 import { ETHTPSApi } from "./api/ETHTPSApi"
+import { LocalStorageService } from "./LocalStorageService"
 
 var _api_key: string | undefined | null = ""
 
+export const storage: LocalStorageService = new LocalStorageService()
 export const BASE_PATH = "http://10.2.0.24:10202"
 /*
   process.env.NODE_ENV === "development"

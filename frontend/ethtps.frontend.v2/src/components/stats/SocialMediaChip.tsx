@@ -34,8 +34,8 @@ export function SocialMediaChipCollection(config: {
 
   return (
     <Fragment>
-      {links?.map((x) => (
-        <SocialMediaChip href={x.url} websiteName={x.websiteName} />
+      {links?.map((x, i) => (
+        <SocialMediaChip key={i} href={x.url} websiteName={x.websiteName} />
       ))}
     </Fragment>
   )

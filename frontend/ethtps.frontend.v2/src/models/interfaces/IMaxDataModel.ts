@@ -1,6 +1,6 @@
+import { DataPoint } from "ethtps.api.client"
 import { DataType } from "../../Types"
 import { DataPointDictionary } from "../../Types.dictionaries"
-import { DataPoint } from "../../services/api-gen/models/DataPoint"
 
 export interface IMaxDataModel {
   maxTPSData?: DataPointDictionary

@@ -1,16 +1,17 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
-const initialState: Array<string> = []
+import { storage } from "../services/DependenciesIOC"
+const initialState: Array<string> = storage.retrieveItem("intervals") ?? []
 
 const intervalsSlice = createSlice({
   name: "intervals",
   initialState,
   reducers: {
     setIntervals(state: string[], action: PayloadAction<string[] | undefined>) {
-      if (action.payload === undefined) return state
-
-      state.length = 0
-      state = [...action.payload]
-      return state
+      if (action.payload !== undefined) {
+        storage.cacheItem(action.payload, "intervals")
+        state.length = 0
+        state = [...action.payload]
+      }
     },
   },
 })

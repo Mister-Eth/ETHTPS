@@ -204,6 +204,8 @@ export class ETHTPSApi {
     if (!providerName) {
       return Promise.reject()
     }
-    return this.markdownAPI.apiInfoMarkdownPagesGetAllGet({})
+    return this.markdownAPI.apiInfoMarkdownPagesGetMarkdownPagesForGet({
+      providerName,
+    })
   }
 }

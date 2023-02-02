@@ -1,8 +1,9 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { IProviderModel } from "../models/interfaces/IProviderModel"
-import { ProviderModel, ProviderResponseModel } from "../services/api-gen/src"
+import { storage } from "../services/DependenciesIOC"
+import { ProviderModel, ProviderResponseModel } from "ethtps.api.client"
 
-const initialState: ProviderModel[] = []
+const initialState: ProviderModel[] = storage.retrieveItem("providers") ?? []
 
 const providersSlice = createSlice({
   name: "providers",
@@ -19,6 +20,7 @@ const providersSlice = createSlice({
       state: ProviderModel[],
       action: PayloadAction<ProviderResponseModel[] | undefined>,
     ) {
+      storage.cacheItem(action.payload, "providers")
       return action.payload?.map((x) => {
         let result = {
           name: x?.name,
