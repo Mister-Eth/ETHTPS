@@ -4,21 +4,18 @@ import {
   TPSApi,
   GasAdjustedTPSApi,
   ProviderResponseModel,
-  RequestContext,
-  ResponseContext,
   TimeInterval,
   Configuration,
   ExperimentApi,
   APIKeyApi,
-  ApiAPIKeyGetNewKeyGetRequest,
+  ExternalWebsitesApi,
+  MarkdownPagesApi,
 } from "ethtps.api.client"
 import {
   tryLoadAPIKeyFromLocalStorage,
   getAPIKey,
   BASE_PATH,
 } from "../DependenciesIOC"
-import { Observable } from "@reduxjs/toolkit"
-import { toShortString } from "../../Types"
 import { APIKeyMiddleware } from "./APIKeyMiddleware"
 import {
   DataResponseModelDictionary,
@@ -33,7 +30,10 @@ export class ETHTPSApi {
   public gpsApi: GPSApi = new GPSApi()
   public gtpsApi: GasAdjustedTPSApi = new GasAdjustedTPSApi()
   public experimentAPI: ExperimentApi = new ExperimentApi()
+  public externalWebsitePAI: ExternalWebsitesApi = new ExternalWebsitesApi()
+  public markdownAPI: MarkdownPagesApi = new MarkdownPagesApi()
   public apiKeyAPI: APIKeyApi
+
   public apiKey?: string
   private _url: string
 
@@ -74,6 +74,9 @@ export class ETHTPSApi {
     this.gpsApi = new GPSApi(config)
     this.gtpsApi = new GasAdjustedTPSApi(config)
     this.experimentAPI = new ExperimentApi(config)
+    this.externalWebsitePAI = new ExternalWebsitesApi(config)
+    this.markdownAPI = new MarkdownPagesApi(config)
+
     this.apiKeyAPI = new APIKeyApi(
       new Configuration({
         basePath: url,
@@ -184,5 +187,23 @@ export class ETHTPSApi {
     return this.experimentAPI.apiBetaExperimentsAvailableExperimentsGet({
       deviceType,
     })
+  }
+
+  public getLinksForProvider(providerName?: string) {
+    if (!providerName) {
+      return Promise.reject()
+    }
+    return this.externalWebsitePAI.apiInfoExternalWebsitesGetExternalWebsitesForGet(
+      {
+        providerName,
+      },
+    )
+  }
+
+  public getMarkdownInfoPageFor(providerName?: string) {
+    if (!providerName) {
+      return Promise.reject()
+    }
+    return this.markdownAPI.apiInfoMarkdownPagesGetAllGet({})
   }
 }

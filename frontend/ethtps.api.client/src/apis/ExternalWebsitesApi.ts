@@ -16,10 +16,13 @@
 import * as runtime from '../runtime';
 import type {
   ExternalWebsite,
+  ProviderExternalWebsite,
 } from '../models';
 import {
     ExternalWebsiteFromJSON,
     ExternalWebsiteToJSON,
+    ProviderExternalWebsiteFromJSON,
+    ProviderExternalWebsiteToJSON,
 } from '../models';
 
 export interface ApiInfoExternalWebsitesCreatePutRequest {
@@ -179,7 +182,7 @@ export class ExternalWebsitesApi extends runtime.BaseAPI {
 
     /**
      */
-    async apiInfoExternalWebsitesGetExternalWebsitesForGetRaw(requestParameters: ApiInfoExternalWebsitesGetExternalWebsitesForGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ExternalWebsite>>> {
+    async apiInfoExternalWebsitesGetExternalWebsitesForGetRaw(requestParameters: ApiInfoExternalWebsitesGetExternalWebsitesForGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ProviderExternalWebsite>>> {
         const queryParameters: any = {};
 
         if (requestParameters.providerName !== undefined) {
@@ -199,12 +202,12 @@ export class ExternalWebsitesApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(ExternalWebsiteFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(ProviderExternalWebsiteFromJSON));
     }
 
     /**
      */
-    async apiInfoExternalWebsitesGetExternalWebsitesForGet(requestParameters: ApiInfoExternalWebsitesGetExternalWebsitesForGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ExternalWebsite>> {
+    async apiInfoExternalWebsitesGetExternalWebsitesForGet(requestParameters: ApiInfoExternalWebsitesGetExternalWebsitesForGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ProviderExternalWebsite>> {
         const response = await this.apiInfoExternalWebsitesGetExternalWebsitesForGetRaw(requestParameters, initOverrides);
         return await response.value();
     }

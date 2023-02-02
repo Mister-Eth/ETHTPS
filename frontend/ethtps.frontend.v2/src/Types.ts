@@ -124,7 +124,7 @@ export const ConditionalRender = (
 }
 
 export const ConditionalSkeletonRender = (
-  component: JSX.Element,
+  component?: JSX.Element,
   renderIf?: boolean,
 ) => {
   return renderIf ? component : React.createElement(SkeletonWithTooltip)

@@ -13,6 +13,12 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { ExternalWebsiteCateopry } from './ExternalWebsiteCateopry';
+import {
+    ExternalWebsiteCateopryFromJSON,
+    ExternalWebsiteCateopryFromJSONTyped,
+    ExternalWebsiteCateopryToJSON,
+} from './ExternalWebsiteCateopry';
 import type { ProviderLink } from './ProviderLink';
 import {
     ProviderLinkFromJSON,
@@ -46,10 +52,16 @@ export interface ExternalWebsite {
     iconBase64?: string | null;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof ExternalWebsite
      */
-    category?: string | null;
+    category?: number;
+    /**
+     * 
+     * @type {ExternalWebsiteCateopry}
+     * @memberof ExternalWebsite
+     */
+    categoryNavigation?: ExternalWebsiteCateopry;
     /**
      * 
      * @type {Array<ProviderLink>}
@@ -81,6 +93,7 @@ export function ExternalWebsiteFromJSONTyped(json: any, ignoreDiscriminator: boo
         'name': !exists(json, 'name') ? undefined : json['name'],
         'iconBase64': !exists(json, 'iconBase64') ? undefined : json['iconBase64'],
         'category': !exists(json, 'category') ? undefined : json['category'],
+        'categoryNavigation': !exists(json, 'categoryNavigation') ? undefined : ExternalWebsiteCateopryFromJSON(json['categoryNavigation']),
         'providerLinks': !exists(json, 'providerLinks') ? undefined : (json['providerLinks'] === null ? null : (json['providerLinks'] as Array<any>).map(ProviderLinkFromJSON)),
     };
 }
@@ -98,6 +111,7 @@ export function ExternalWebsiteToJSON(value?: ExternalWebsite | null): any {
         'name': value.name,
         'iconBase64': value.iconBase64,
         'category': value.category,
+        'categoryNavigation': ExternalWebsiteCateopryToJSON(value.categoryNavigation),
     };
 }
 

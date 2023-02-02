@@ -1,15 +1,30 @@
 import { Edit, Link } from "@mui/icons-material"
 import { Box, Chip, Paper, Tooltip, Typography } from "@mui/material"
-import { Fragment } from "react"
+import { Fragment, useEffect } from "react"
 import { useState } from "react"
 import { ConditionalSkeletonRender, ConditionalRender } from "../../Types"
+import { useGetQueryWithAutoRefetch } from "../../hooks/QueryHooks"
+import { api } from "../../services/DependenciesIOC"
+import { SocialMediaChipCollection } from "./SocialMediaChip"
 
 interface ISocialMediaLinksConfiguration {
-  providerName?: string
+  providerName: string
 }
 
 export function SocialMediaLinks(config: ISocialMediaLinksConfiguration) {
+  const links = useGetQueryWithAutoRefetch(`${config.providerName} links`, () =>
+    api.getLinksForProvider(config.providerName),
+  )
+  const markdown = useGetQueryWithAutoRefetch(
+    `${config.providerName} markdown`,
+    () => api.getMarkdownInfoPageFor(config.providerName),
+  )
   const [loaded, setLoaded] = useState(false)
+  useEffect(() => {
+    if (links && markdown) {
+      setLoaded(true)
+    }
+  }, [links, markdown])
   return (
     <Fragment>
       <Paper
@@ -32,7 +47,9 @@ export function SocialMediaLinks(config: ISocialMediaLinksConfiguration) {
             deleteIcon={ConditionalRender(
               <Tooltip
                 placement="top"
-                title={<Typography>Propose changes</Typography>}
+                title={
+                  <Typography>Something's wrong? Propose changes</Typography>
+                }
                 arrow
               >
                 <Edit />
@@ -48,20 +65,14 @@ export function SocialMediaLinks(config: ISocialMediaLinksConfiguration) {
             }
             //variant="outlined"
             color="primary"
+            sx={{
+              marginBottom: "1em",
+            }}
           />
 
           {ConditionalSkeletonRender(
-            <Chip
-              className="spaced-vertically"
-              label={
-                <Typography sx={{ fontWeight: "bold", fontSize: "1.25em" }}>
-                  Social media
-                </Typography>
-              }
-              variant="outlined"
-              color="primary"
-            />,
-            loaded,
+            <SocialMediaChipCollection links={links} />,
+            links !== undefined,
           )}
         </Box>
       </Paper>

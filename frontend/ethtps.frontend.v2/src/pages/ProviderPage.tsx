@@ -1,7 +1,4 @@
 import { useLocation } from "react-router"
-import { ProviderList } from "../components/partials/navigation/ProviderList"
-import { getSearchParamsForLocation } from "react-router-dom/dist/dom"
-import { string } from "yargs"
 import { useState, useEffect } from "react"
 import { useGetProvidersFromAppStore } from "../hooks/ProviderHooks"
 import { Box, Paper, Typography } from "@mui/material"
@@ -9,10 +6,8 @@ import { Container } from "@mui/system"
 import { ProviderCarousel } from "../components/partials/navigation/ProviderCarousel"
 import { ConditionalSkeletonRender } from "../Types"
 import { ProviderDataChart } from "../components/charts/ProviderDataChart"
-import { LocationBreadcrumb } from "../components/partials/navigation/LocationBreadcrumb"
 import { SocialMediaLinks } from "../components/stats/SocialMediaLinks"
-import { ProviderModel } from "../services/api-gen/src"
-import { useRefetchWhenDependenciesChange } from "../hooks/queryHooks"
+import { ProviderModel } from "ethtps.api.client"
 
 interface IProviderPageModel {
   provider?: string
@@ -53,7 +48,7 @@ export function ProviderPage(model: IProviderPageModel) {
         </Container>
         <ProviderDataChart provider={provider?.name as string} />
         <Box className={"flexbox flex-horizontal spaced-vertically"}>
-          <SocialMediaLinks providerName={provider?.name} />
+          <SocialMediaLinks providerName={provider?.name as string} />
           <Paper key={"markdown section"} elevation={1}>
             <Typography className={"w-hundred"}>
               This establishes the main-axis, thus defining the direction flex

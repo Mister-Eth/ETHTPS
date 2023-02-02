@@ -15,16 +15,16 @@
 
 import * as runtime from '../runtime';
 import type {
-  Provider,
+  MarkdownPage,
 } from '../models';
 import {
-    ProviderFromJSON,
-    ProviderToJSON,
+    MarkdownPageFromJSON,
+    MarkdownPageToJSON,
 } from '../models';
 
 export interface ApiInfoMarkdownPagesCreatePutRequest {
     xAPIKey?: string;
-    provider?: Provider;
+    markdownPage?: MarkdownPage;
 }
 
 export interface ApiInfoMarkdownPagesDeleteByIdPutRequest {
@@ -41,9 +41,14 @@ export interface ApiInfoMarkdownPagesGetByIdGetRequest {
     xAPIKey?: string;
 }
 
+export interface ApiInfoMarkdownPagesGetMarkdownPagesForGetRequest {
+    providerName?: string;
+    xAPIKey?: string;
+}
+
 export interface ApiInfoMarkdownPagesUpdatePutRequest {
     xAPIKey?: string;
-    provider?: Provider;
+    markdownPage?: MarkdownPage;
 }
 
 /**
@@ -69,7 +74,7 @@ export class MarkdownPagesApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: ProviderToJSON(requestParameters.provider),
+            body: MarkdownPageToJSON(requestParameters.markdownPage),
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -114,7 +119,7 @@ export class MarkdownPagesApi extends runtime.BaseAPI {
 
     /**
      */
-    async apiInfoMarkdownPagesGetAllGetRaw(requestParameters: ApiInfoMarkdownPagesGetAllGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Provider>>> {
+    async apiInfoMarkdownPagesGetAllGetRaw(requestParameters: ApiInfoMarkdownPagesGetAllGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<MarkdownPage>>> {
         const queryParameters: any = {};
 
         if (requestParameters.xAPIKey !== undefined) {
@@ -130,19 +135,19 @@ export class MarkdownPagesApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(ProviderFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(MarkdownPageFromJSON));
     }
 
     /**
      */
-    async apiInfoMarkdownPagesGetAllGet(requestParameters: ApiInfoMarkdownPagesGetAllGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Provider>> {
+    async apiInfoMarkdownPagesGetAllGet(requestParameters: ApiInfoMarkdownPagesGetAllGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<MarkdownPage>> {
         const response = await this.apiInfoMarkdownPagesGetAllGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async apiInfoMarkdownPagesGetByIdGetRaw(requestParameters: ApiInfoMarkdownPagesGetByIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Provider>> {
+    async apiInfoMarkdownPagesGetByIdGetRaw(requestParameters: ApiInfoMarkdownPagesGetByIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MarkdownPage>> {
         const queryParameters: any = {};
 
         if (requestParameters.id !== undefined) {
@@ -162,13 +167,45 @@ export class MarkdownPagesApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => ProviderFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MarkdownPageFromJSON(jsonValue));
     }
 
     /**
      */
-    async apiInfoMarkdownPagesGetByIdGet(requestParameters: ApiInfoMarkdownPagesGetByIdGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Provider> {
+    async apiInfoMarkdownPagesGetByIdGet(requestParameters: ApiInfoMarkdownPagesGetByIdGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MarkdownPage> {
         const response = await this.apiInfoMarkdownPagesGetByIdGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
+    async apiInfoMarkdownPagesGetMarkdownPagesForGetRaw(requestParameters: ApiInfoMarkdownPagesGetMarkdownPagesForGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<MarkdownPage>>> {
+        const queryParameters: any = {};
+
+        if (requestParameters.providerName !== undefined) {
+            queryParameters['providerName'] = requestParameters.providerName;
+        }
+
+        if (requestParameters.xAPIKey !== undefined) {
+            queryParameters['XAPIKey'] = requestParameters.xAPIKey;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/api/info/markdown-pages/GetMarkdownPagesFor`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(MarkdownPageFromJSON));
+    }
+
+    /**
+     */
+    async apiInfoMarkdownPagesGetMarkdownPagesForGet(requestParameters: ApiInfoMarkdownPagesGetMarkdownPagesForGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<MarkdownPage>> {
+        const response = await this.apiInfoMarkdownPagesGetMarkdownPagesForGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -190,7 +227,7 @@ export class MarkdownPagesApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: ProviderToJSON(requestParameters.provider),
+            body: MarkdownPageToJSON(requestParameters.markdownPage),
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);

@@ -18,7 +18,6 @@ import { SpinningArrows } from "../icons/spinning hourglass/SpinningArrows"
 import { DateRangeSelectorDropdown } from "../dropdowns/DateRangeSelectorDropdown"
 import { api } from "../../services/DependenciesIOC"
 import { useQuery } from "react-query"
-import { useRefetchWhenDependenciesChange } from "../../hooks/queryHooks"
 Chart.register(CategoryScale)
 
 interface IProviderDataChartConfiguration extends INoDataAvailableEvent {
@@ -48,6 +47,7 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
   const networkChanged = (network: string) => {
     setNetwork(network)
   }
+
   const { data, isSuccess, refetch } = useQuery(
     "get data",
     () => api.getData(mode, interval as string, config.provider, network),
@@ -64,11 +64,18 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
               ?.map((x) => new TimeValue(x)),
           )
           setNoData(false)
+          setLoading(false)
         }
       }
-      setLoading(false)
     }
   }, [data])
+
+  useEffect(() => {
+    if (!isSuccess) {
+      setLoading(true)
+      refetch()
+    }
+  }, [isSuccess])
 
   useEffect(() => {
     setLoading(true)

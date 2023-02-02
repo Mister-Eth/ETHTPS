@@ -36,6 +36,7 @@ src/models/ExperimentTarget.ts
 src/models/ExperimentTargetType.ts
 src/models/ExperimentalSession.ts
 src/models/ExternalWebsite.ts
+src/models/ExternalWebsiteCateopry.ts
 src/models/Feature.ts
 src/models/Group.ts
 src/models/GroupRole.ts
@@ -49,6 +50,7 @@ src/models/PermissionsForRole.ts
 src/models/Project.ts
 src/models/Provider.ts
 src/models/ProviderDetailsMarkdownPage.ts
+src/models/ProviderExternalWebsite.ts
 src/models/ProviderLink.ts
 src/models/ProviderModel.ts
 src/models/ProviderResponseModel.ts
