@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 
 using System.Collections.Generic;
 
-namespace ETHTPS.API.Controllers
+namespace ETHTPS.API.Controllers.CRUD
 {
-    public class CRUDServiceControllerBase<T> :  APIControllerBase, ICRUDController<T> where T : class
+    public class CRUDServiceControllerBase<T> : APIControllerBase, ICRUDController<T> where T : class
     {
         private readonly ICRUDService<T> _serviceImplementation;
-        public CRUDServiceControllerBase(ICRUDService<T> serviceImplementation) 
+        public CRUDServiceControllerBase(ICRUDService<T> serviceImplementation)
         {
             _serviceImplementation = serviceImplementation;
         }

@@ -1,4 +1,5 @@
 ﻿using ETHTPS.Data.Database;
+using ETHTPS.Data.Extensions.StringExtensions;
 using ETHTPS.Data.ResponseModels.SocialMedia;
 
 using Microsoft.EntityFrameworkCore;
@@ -17,13 +18,20 @@ namespace ETHTPS.API.Infrastructure.Services.ExternalWebsites
             _context = context;
         }
 
-        public IEnumerable<ExternalWebsite> GetExternalWebsitesFor(string providerName)
+        public IEnumerable<ProviderExternalWebsite> GetExternalWebsitesFor(string providerName)
         {
             lock (_context.LockObj)
             {
-                var linkProviders = _context.ProviderLinks.Where(x => x.Provider.Name == providerName).ToList().Select(x => x.ProviderId).Distinct();
-                return _context.ExternalWebsites.Where(x => linkProviders.Contains(x.Id
-                    ));
+                var links = _context.ProviderLinks.ToList()
+                    .Where(x => x.Provider.Name.LossyCompareTo(providerName));
+                return links
+                    .Select(link => new ProviderExternalWebsite()
+                    {
+                        Category = link.ExternalWebsite.CategoryNavigation.Name,
+                        WebsiteName = link.ExternalWebsite.Name,
+                        IconBase64 = (link.ExternalWebsite.IconBase64.Length == 0)?null: link.ExternalWebsite.IconBase64,
+                        Url = link.Link
+                    });
             }
         }
     }

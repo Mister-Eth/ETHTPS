@@ -3,9 +3,8 @@ using System.Collections.Generic;
 
 namespace ETHTPS.Data.Database;
 
-public partial class ExperimentalSession
+public partial class ExperimentalSession :EntityWIthId
 {
-    public int Id { get; set; }
 
     public int Experiment { get; set; }
 

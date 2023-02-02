@@ -1,4 +1,5 @@
-﻿using ETHTPS.API.Infrastructure.Services;
+﻿using ETHTPS.API.Controllers.CRUD;
+using ETHTPS.API.Infrastructure.Services;
 using ETHTPS.API.Infrastructure.Services.ExternalWebsites;
 using ETHTPS.Data.Database;
 using ETHTPS.Data.Models;
@@ -22,7 +23,7 @@ namespace ETHTPS.API.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        public IEnumerable<ExternalWebsite> GetExternalWebsitesFor(string providerName, [FromQuery] APIKeyRequestModel model)
+        public IEnumerable<ProviderExternalWebsite> GetExternalWebsitesFor(string providerName, [FromQuery] APIKeyRequestModel model)
         {
             return _externalWebsitesService.GetExternalWebsitesFor(providerName);
         }

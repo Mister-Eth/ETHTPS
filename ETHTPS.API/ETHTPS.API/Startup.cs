@@ -1,6 +1,7 @@
 
 
 using ETHTPS.API.Authentication;
+using ETHTPS.API.Controllers.CRUD;
 using ETHTPS.API.Infrastructure.Services.Experimentation;
 using ETHTPS.API.Infrastructure.Services.ExternalWebsites;
 using ETHTPS.API.Infrastructure.Services.Implementations;
@@ -70,7 +71,9 @@ namespace ETHTPS.API
                                   });
             });
 
-            services.AddControllers().AddNewtonsoftJson(options =>
+            services.AddControllersWithViews()
+                .AddControllersAsServices()
+                .AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
             }).AddJsonOptions(options =>

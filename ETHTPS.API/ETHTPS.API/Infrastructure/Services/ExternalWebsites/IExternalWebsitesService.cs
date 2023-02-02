@@ -6,6 +6,6 @@ namespace ETHTPS.API.Infrastructure.Services.ExternalWebsites
 {
     public interface IExternalWebsitesService : ICRUDService<ExternalWebsite>
     {
-        public IEnumerable<ExternalWebsite> GetExternalWebsitesFor(string providerName);
+        public IEnumerable<ProviderExternalWebsite> GetExternalWebsitesFor(string providerName);
     }
 }
