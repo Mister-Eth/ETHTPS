@@ -11,7 +11,9 @@ import { ApiAPIKeyGetNewKeyGetRequest } from "ethtps.api.client"
 import { getAPIKey } from "../services/DependenciesIOC"
 
 export function RecaptchaAPIKeyAndDataLoader() {
-  const [hasAPIKey, setHasAPIKey] = useState(getAPIKey() !== undefined)
+  const [hasAPIKey, setHasAPIKey] = useState(
+    getAPIKey() !== undefined && getAPIKey() !== null,
+  )
   const [ready, setReady] = useState(hasAPIKey)
   if (hasAPIKey) {
     api.resetConfig()

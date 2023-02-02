@@ -20,6 +20,7 @@ export function ProviderPage(model: IProviderPageModel) {
   const providerName = location.pathname
     .toUpperCase()
     .replace("/PROVIDERS/", "")
+    .replace("%20", " ")
   const providers = useGetProvidersFromAppStore()
   useEffect(() => {
     if (providers && providerName && !provider) {
@@ -40,12 +41,11 @@ export function ProviderPage(model: IProviderPageModel) {
   return (
     <>
       <Paper sx={{ marginTop: "20px" }} elevation={1}>
-        <Container maxWidth={"md"}>
-          {ConditionalSkeletonRender(
-            <ProviderCarousel provider={provider} />,
-            provider !== undefined,
-          )}
-        </Container>
+        <Paper elevation={1}>
+          <Container>
+            <ProviderCarousel provider={provider} />
+          </Container>
+        </Paper>
         <ProviderDataChart provider={provider?.name as string} />
         <Box className={"flexbox flex-horizontal spaced-vertically"}>
           <SocialMediaLinks providerName={provider?.name as string} />

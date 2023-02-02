@@ -47,9 +47,7 @@ export function SocialMediaLinks(config: ISocialMediaLinksConfiguration) {
             deleteIcon={ConditionalRender(
               <Tooltip
                 placement="top"
-                title={
-                  <Typography>Something's wrong? Propose changes</Typography>
-                }
+                title={<Typography>Something's wrong?</Typography>}
                 arrow
               >
                 <Edit />
@@ -60,7 +58,7 @@ export function SocialMediaLinks(config: ISocialMediaLinksConfiguration) {
             className={"spaced-vertically"}
             label={
               <Typography sx={{ fontWeight: "bold", fontSize: "1.25em" }}>
-                Social media
+                Links
               </Typography>
             }
             //variant="outlined"

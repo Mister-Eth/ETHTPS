@@ -2,7 +2,6 @@ import { DiscordBanner } from "../components/partials/banners/DiscordBanner"
 import { AllProvidersTable } from "../components/tables/all networks/AllProvidersTable"
 import { Container, Paper } from "@mui/material"
 import { useGetMaxDataFromAppStore } from "../hooks/DataHooks"
-import { ProviderModel } from "../services/api-gen"
 import { useState, useEffect } from "react"
 import { ProviderModal } from "../components/partials/dialogs/modals/ProviderModal"
 import { DataModeButtonGroup } from "../components/buttons/DataModeButtonGroup"
@@ -21,6 +20,7 @@ import { TestTube } from "../components/experiments/TestTube"
 import { useGetProvidersFromAppStore } from "../hooks/ProviderHooks"
 import { isMobile } from "react-device-detect"
 import { SimpleTextDisplay } from "../components/instant data animations/SimpleTextDisplay"
+import { ProviderModel } from "ethtps.api.client"
 
 export default function MainPage(): JSX.Element {
   const providers = useGetProvidersFromAppStore()

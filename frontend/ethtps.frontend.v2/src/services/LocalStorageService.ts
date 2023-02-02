@@ -15,7 +15,7 @@ export class LocalStorageService {
   public cacheItem<T>(item: T, key: string) {
     if (this._enabled) {
       localStorage.setItem(key, JSON.stringify(item))
-      console.log("Set " + key)
+      //console.log("Set " + key)
     }
   }
 
@@ -23,7 +23,7 @@ export class LocalStorageService {
     if (this._enabled) {
       let str = localStorage.getItem(key)
       if (str !== null) {
-        console.log("Retrieved " + key)
+        //console.log("Retrieved " + key)
         return JSON.parse(str) as T
       }
     }

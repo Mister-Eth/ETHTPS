@@ -18,6 +18,9 @@ import { SpinningArrows } from "../icons/spinning hourglass/SpinningArrows"
 import { DateRangeSelectorDropdown } from "../dropdowns/DateRangeSelectorDropdown"
 import { api } from "../../services/DependenciesIOC"
 import { useQuery } from "react-query"
+import { Box } from "@mui/system"
+import { ModeButton } from "../buttons/ModeButton"
+import { DataModeButtonGroup } from "../buttons/DataModeButtonGroup"
 Chart.register(CategoryScale)
 
 interface IProviderDataChartConfiguration extends INoDataAvailableEvent {
@@ -114,7 +117,7 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
               provider={config.provider}
               selectionChanged={intervalChanged}
             />
-            <ModeDropdown hidden={noData} selectionChanged={modeChanged} />
+            <DataModeButtonGroup modeChanged={modeChanged} />
           </div>
         </Paper>
         <br />

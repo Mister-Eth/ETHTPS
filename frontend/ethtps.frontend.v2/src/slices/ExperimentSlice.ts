@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
+import { storage } from "../services/DependenciesIOC"
 
-const initialState: number[] = []
+const initialState: number[] = storage.retrieveItem("experiments") ?? []
 
 const experimentSlice = createSlice({
   name: "experiments",
@@ -12,9 +13,9 @@ const experimentSlice = createSlice({
     ) {
       if (action.payload === undefined) return state
 
+      storage.cacheItem(action.payload, "experiments")
       state.length = 0
       state = [...action.payload]
-      return state
     },
   },
 })
