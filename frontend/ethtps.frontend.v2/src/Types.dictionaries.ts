@@ -1,4 +1,4 @@
-import { DataPoint, DataResponseModel } from "./services/api-gen"
+import { DataPoint, DataResponseModel } from "ethtps.api.client"
 
 export type GenericDictionary<T> = { [key: string]: T }
 export type DataPointDictionary = GenericDictionary<DataPoint>

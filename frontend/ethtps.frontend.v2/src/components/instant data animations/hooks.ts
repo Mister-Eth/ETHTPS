@@ -7,7 +7,6 @@ import {
   useGetLiveDataFromAppStore,
 } from "../../hooks/LiveDataHooks"
 import { useGetProvidersFromAppStore } from "../../hooks/ProviderHooks"
-import { ProviderModel } from "../../services/api-gen/models/ProviderModel"
 import { DataResponseModelDictionary } from "../../Types.dictionaries"
 import { dataTypeToString, toShortString_2 } from "../../models/TimeIntervals"
 import { useGetSidechainsIncludedFromAppStore } from "../../hooks/LiveDataHooks"

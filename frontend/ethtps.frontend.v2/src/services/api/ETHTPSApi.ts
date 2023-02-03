@@ -67,7 +67,7 @@ export class ETHTPSApi {
     return config
   }
 
-  public resetConfig(url: string = BASE_PATH) {
+  public resetConfig(url: string = BASE_PATH as string) {
     let config = this._genConfig(url)
     this.generalApi = new GeneralApi(config)
     this.tpsApi = new TPSApi(config)
@@ -187,6 +187,23 @@ export class ETHTPSApi {
     return this.experimentAPI.apiBetaExperimentsAvailableExperimentsGet({
       deviceType,
     })
+  }
+
+  public getLastMinuteData(dataType: DataType) {
+    switch (dataType) {
+      case DataType.TPS:
+        return this.tpsApi.aPITPSGetGet({
+          interval: "OneMinute",
+        })
+      case DataType.GPS:
+        return this.gpsApi.aPIGPSGetGet({
+          interval: "OneMinute",
+        })
+      default:
+        return this.gtpsApi.aPIGasAdjustedTPSGetGet({
+          interval: "OneMinute",
+        })
+    }
   }
 
   public getLinksForProvider(providerName?: string) {

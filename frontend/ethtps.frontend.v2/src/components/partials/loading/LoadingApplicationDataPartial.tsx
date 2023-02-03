@@ -18,12 +18,14 @@ import {
 import { useUpdateLiveData } from "../../../hooks/LiveDataHooks"
 import { useState } from "react"
 import { setApplicationDataLoaded } from "../../../slices/ApplicationStateSlice"
+import { setLastMinuteData } from "../../../slices/LiveDataSlice"
 
 export function LoadingApplicationDataPartial({
   children,
   ...props
 }: PropsWithChildren): JSX.Element {
   const defaultRefetch = 4000
+  const neverUpdates = 99999999999999
   const rarelyUpdates = 60000
   const frequentlyUpdates = 30000
   const almostLive = 4000
@@ -83,6 +85,27 @@ export function LoadingApplicationDataPartial({
       (value) => store.dispatch(setProviderTypeColorDictionary(value)),
       rarelyUpdates,
       rarelyUpdates,
+    ),
+    useLoadValuesHook(
+      "getLastMinuteTPSData",
+      () => api.getLastMinuteData(DataType.TPS),
+      (value) => store.dispatch(setLastMinuteData(value)),
+      neverUpdates,
+      neverUpdates,
+    ),
+    useLoadValuesHook(
+      "getLastMinuteGPSData",
+      () => api.getLastMinuteData(DataType.GPS),
+      (value) => store.dispatch(setLastMinuteData(value)),
+      neverUpdates,
+      neverUpdates,
+    ),
+    useLoadValuesHook(
+      "getLastMinuteGTPSData",
+      () => api.getLastMinuteData(DataType.GTPS),
+      (value) => store.dispatch(setLastMinuteData(value)),
+      neverUpdates,
+      neverUpdates,
     ),
   ])
   useEffect(() => {
