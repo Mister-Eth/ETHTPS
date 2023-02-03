@@ -21,6 +21,7 @@ import { useGetProvidersFromAppStore } from "../hooks/ProviderHooks"
 import { isMobile } from "react-device-detect"
 import { SimpleTextDisplay } from "../components/instant data animations/SimpleTextDisplay"
 import { ProviderModel } from "ethtps.api.client"
+import { StreamgraphAnimation } from "../components/instant data animations/streamgraph/StreamgraphAnimation"
 
 export default function MainPage(): JSX.Element {
   const providers = useGetProvidersFromAppStore()
@@ -71,6 +72,7 @@ export default function MainPage(): JSX.Element {
             </Paper>
             <Paper elevation={1}>
               <SimpleTextDisplay />
+              <StreamgraphAnimation />
             </Paper>
             <Paper elevation={1}>
               <AllProvidersTable

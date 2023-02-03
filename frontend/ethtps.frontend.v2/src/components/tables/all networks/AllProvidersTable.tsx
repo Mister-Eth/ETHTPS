@@ -29,6 +29,7 @@ export function AllProvidersTable(tableData: IProviderTableModel): JSX.Element {
     <>
       <TableContainer component={Paper}>
         <Table
+          //size="small"
           sx={{
             minWidth: 750,
           }}

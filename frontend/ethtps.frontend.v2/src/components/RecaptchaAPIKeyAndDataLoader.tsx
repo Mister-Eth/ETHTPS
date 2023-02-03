@@ -2,12 +2,7 @@ import { Fragment, createRef, useState, useEffect } from "react"
 import { ConditionalRender } from "../Types"
 import Recaptcha from "react-google-invisible-recaptcha"
 import { LoadingApplicationDataPartial } from "./partials/loading/LoadingApplicationDataPartial"
-import {
-  api,
-  setAPIKey,
-  tryLoadAPIKeyFromLocalStorage,
-} from "../services/DependenciesIOC"
-import { ApiAPIKeyGetNewKeyGetRequest } from "ethtps.api.client"
+import { api, setAPIKey } from "../services/DependenciesIOC"
 import { getAPIKey } from "../services/DependenciesIOC"
 
 export function RecaptchaAPIKeyAndDataLoader() {

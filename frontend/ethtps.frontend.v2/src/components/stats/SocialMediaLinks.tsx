@@ -15,16 +15,7 @@ export function SocialMediaLinks(config: ISocialMediaLinksConfiguration) {
   const links = useGetQueryWithAutoRefetch(`${config.providerName} links`, () =>
     api.getLinksForProvider(config.providerName),
   )
-  const markdown = useGetQueryWithAutoRefetch(
-    `${config.providerName} markdown`,
-    () => api.getMarkdownInfoPageFor(config.providerName),
-  )
-  const [loaded, setLoaded] = useState(false)
-  useEffect(() => {
-    if (links && markdown) {
-      setLoaded(true)
-    }
-  }, [links, markdown])
+
   return (
     <Fragment>
       <Paper
@@ -52,7 +43,7 @@ export function SocialMediaLinks(config: ISocialMediaLinksConfiguration) {
               >
                 <Edit />
               </Tooltip>,
-              loaded,
+              links !== undefined,
             )}
             onDelete={() => {}}
             className={"spaced-vertically"}

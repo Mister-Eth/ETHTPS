@@ -4,10 +4,14 @@ import { useGetProvidersFromAppStore } from "../hooks/ProviderHooks"
 import { Box, Paper, Typography } from "@mui/material"
 import { Container } from "@mui/system"
 import { ProviderCarousel } from "../components/partials/navigation/ProviderCarousel"
-import { ConditionalSkeletonRender } from "../Types"
+import { ConditionalSkeletonRender, ConditionalRender } from "../Types"
 import { ProviderDataChart } from "../components/charts/ProviderDataChart"
 import { SocialMediaLinks } from "../components/stats/SocialMediaLinks"
 import { ProviderModel } from "ethtps.api.client"
+import { config } from "process"
+import { useGetQueryWithAutoRefetch } from "../hooks/QueryHooks"
+import { api } from "../services/DependenciesIOC"
+import ReactMarkdown from "react-markdown"
 
 interface IProviderPageModel {
   provider?: string
@@ -38,6 +42,12 @@ export function ProviderPage(model: IProviderPageModel) {
       }
     }
   }, [providers])
+
+  const markdown = useGetQueryWithAutoRefetch(
+    `${provider?.name} markdown`,
+    () => api.getMarkdownInfoPageFor(provider?.name as string),
+  )
+
   return (
     <>
       <Paper sx={{ marginTop: "20px" }} elevation={1}>
@@ -49,14 +59,39 @@ export function ProviderPage(model: IProviderPageModel) {
         <ProviderDataChart provider={provider?.name as string} />
         <Box className={"flexbox flex-horizontal spaced-vertically"}>
           <SocialMediaLinks providerName={provider?.name as string} />
-          <Paper key={"markdown section"} elevation={1}>
-            <Typography className={"w-hundred"}>
-              This establishes the main-axis, thus defining the direction flex
-              items are placed in the flex container. Flexbox is (aside from
-              optional wrapping) a single-direction layout concept. Think of
-              flex items as primarily laying out either in horizontal rows or
-              vertical columns.
-            </Typography>
+          <Paper
+            key={"markdown section"}
+            elevation={1}
+            sx={{
+              padding: "20px",
+              marginRight: "20px",
+              width: "90%",
+            }}
+          >
+            {markdown?.length === 0 ? (
+              <>
+                <Typography
+                  sx={{
+                    fontWeight: "bold",
+                  }}
+                >
+                  No data available for {provider?.name}
+                </Typography>
+                <Typography>
+                  If you want to help, click the edit button and suggest some
+                  changes. Any help is greatly appreciated :)
+                </Typography>
+              </>
+            ) : (
+              ConditionalSkeletonRender(
+                <ReactMarkdown
+                  children={
+                    markdown?.map((x) => x.rawMarkdown).join("\r\n") as string
+                  }
+                />,
+                markdown !== undefined,
+              )
+            )}
           </Paper>
         </Box>
       </Paper>

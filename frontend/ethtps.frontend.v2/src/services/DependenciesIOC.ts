@@ -6,11 +6,10 @@ import { LocalStorageService } from "./LocalStorageService"
 var _api_key: string | undefined | null = ""
 
 export const storage: LocalStorageService = new LocalStorageService()
-export const BASE_PATH = "http://10.2.0.24:10202"
-/*
+export const BASE_PATH = //"http://10.2.0.24:10202"
   process.env.NODE_ENV === "development"
     ? process.env.REACT_APP_API_DEV_ENDPOINT?.toString()
-    : process.env.REACT_APP_API_ENDPOINT?.toString()*/
+    : process.env.REACT_APP_API_ENDPOINT?.toString()
 export const api = new ETHTPSApi(BASE_PATH)
 
 export function getAPIKey() {
