@@ -1,9 +1,7 @@
 import * as d3 from "d3"
-// Copyright 2021 Observable, Inc.
-// Released under the ISC license.
-// https://observablehq.com/@d3/streamgraph
-export function Streamgraph(
-  data,
+
+export function renderStreamgraph(
+  svgRef,
   {
     x = ([x]) => x, // given d in data, returns the (ordinal) x-value
     y = ([, y]) => y, // given d in data, returns the (quantitative) y-value
@@ -28,7 +26,9 @@ export function Streamgraph(
     yLabel, // a label for the y-axis
     colors = d3.schemeTableau10,
   } = {},
+  data,
 ) {
+  if (svgRef === undefined) return
   // Compute values.
   const X = d3.map(data, x)
   const Y = d3.map(data, y)
@@ -79,14 +79,14 @@ export function Streamgraph(
     .x(({ i }) => xScale(X[i]))
     .y0(([y1]) => yScale(y1))
     .y1(([, y2]) => yScale(y2))
-  const svg = d3
-    .create("svg")
+
+  svgRef
     .attr("width", width)
     .attr("height", height)
     .attr("viewBox", [0, 0, width, height])
     .attr("style", "max-width: 100%; height: auto; height: intrinsic;")
 
-  svg
+  svgRef
     .append("g")
     .selectAll("path")
     .data(series)
@@ -96,13 +96,13 @@ export function Streamgraph(
     .append("title")
     .text(([{ i }]) => Z[i])
 
-  svg
+  svgRef
     .append("g")
     .attr("transform", `translate(0,${height - marginBottom})`)
     .call(xAxis)
     .call((g) => g.select(".domain").remove())
 
-  svg
+  svgRef
     .append("g")
     .attr("transform", `translate(${marginLeft},0)`)
     .call((g) =>
@@ -114,6 +114,4 @@ export function Streamgraph(
         .attr("font-size", 10)
         .text(yLabel),
     )
-  return svg
-  return Object.assign(svg.node(), { scales: { color } })
 }
