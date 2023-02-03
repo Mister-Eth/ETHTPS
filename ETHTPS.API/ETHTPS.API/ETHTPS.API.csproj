@@ -46,4 +46,8 @@
     <Folder Include="Infrastructure\Services\Recaptcha\Extensions\" />
   </ItemGroup>
 
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="taskkill /f /im ETHTPS.API.exe 2&gt;nul 1&gt;nul &amp;set errorlevel=0" />
+  </Target>
+
 </Project>

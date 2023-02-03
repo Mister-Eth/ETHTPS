@@ -35,6 +35,8 @@ public partial class Network
 
     public virtual ICollection<TpsandGasDataMax> TpsandGasDataMaxes { get; } = new List<TpsandGasDataMax>();
 
+    public virtual ICollection<TpsandGasDataMinute> TpsandGasDataMinutes { get; } = new List<TpsandGasDataMinute>();
+
     public virtual ICollection<TpsandGasDataMonth> TpsandGasDataMonths { get; } = new List<TpsandGasDataMonth>();
 
     public virtual ICollection<TpsandGasDataWeek> TpsandGasDataWeeks { get; } = new List<TpsandGasDataWeek>();

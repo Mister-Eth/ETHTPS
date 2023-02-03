@@ -37,6 +37,7 @@ namespace ETHTPS.Services.BlockchainServices
                 UpdateMaxEntry(delta);
                 UpdateLatestEntries(delta);
 
+                AddOrUpdateMinuteTPSEntry(delta);
                 AddOrUpdateHourTPSEntry(delta);
                 AddOrUpdateDayTPSEntry(delta);
                 AddOrUpdateWeekTPSEntry(delta);
@@ -44,7 +45,6 @@ namespace ETHTPS.Services.BlockchainServices
                 AddOrUpdateYearTPSEntry(delta);
                 AddOrUpdateAllTPSEntry(delta);
                 await _context.SaveChangesAsync();
-
                 _logger.LogInformation($"{_provider}: {delta.TPS}TPS {delta.GPS}GPS");
             }
             catch (Exception e)
@@ -151,6 +151,42 @@ namespace ETHTPS.Services.BlockchainServices
                     targetEntry.MaxGpsblockNumber = entry.BlockNumber;
                 }
                 _context.TpsandGasDataMaxes.Update(targetEntry);
+            }
+        }
+
+        protected void AddOrUpdateMinuteTPSEntry(TPSGPSInfo entry)
+        {
+            DateTime targetDate = entry.Date
+                .Subtract(TimeSpan.FromMilliseconds(entry.Date.Millisecond));
+            Func<TpsandGasDataMinute, bool> selector = x => x.NetworkNavigation.Id == _mainnetID && x.Provider == _providerID && x.StartDate.Second == targetDate.Second;
+            if (!_context.TpsandGasDataMinutes.Any(selector))
+            {
+                _context.TpsandGasDataMinutes.Add(new TpsandGasDataMinute()
+                {
+                    Network = _mainnetID,
+                    AverageTps = entry.TPS,
+                    AverageGps = entry.GPS,
+                    Provider = _providerID,
+                    StartDate = targetDate,
+                    ReadingsCount = 1
+                });
+            }
+            else
+            {
+                TpsandGasDataMinute x = _context.TpsandGasDataMinutes.First(selector);
+                if (x.StartDate.Second == targetDate.Second && x.StartDate.Minute == targetDate.Minute)
+                {
+                    x.AverageTps = ((x.AverageTps * x.ReadingsCount) + entry.TPS) / ++x.ReadingsCount;
+                    x.AverageGps = ((x.AverageGps * x.ReadingsCount) + entry.GPS) / ++x.ReadingsCount;
+                }
+                else
+                {
+                    x.AverageTps = entry.TPS;
+                    x.AverageGps = entry.GPS;
+                    x.ReadingsCount = 1;
+                    x.StartDate = entry.Date;
+                }
+                _context.TpsandGasDataMinutes.Update(x);
             }
         }
 

@@ -124,9 +124,12 @@ public partial class EthtpsContext : EthtpsContextBase
     public virtual DbSet<TpsandGasDataWeek> TpsandGasDataWeeks { get; set; }
 
     public virtual DbSet<TpsandGasDataYear> TpsandGasDataYears { get; set; }
+    public virtual DbSet<TpsandGasDataMinute> TpsandGasDataMinutes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+       
+
         modelBuilder.Entity<AggregatedCounter>(entity =>
         {
             entity.HasKey(e => e.Key).HasName("PK_HangFire_CounterAggregated");
@@ -954,9 +957,6 @@ public partial class EthtpsContext : EthtpsContextBase
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.AverageGps).HasColumnName("AverageGPS");
             entity.Property(e => e.AverageTps).HasColumnName("AverageTPS");
-            entity.Property(e => e.OclhJson)
-                .HasMaxLength(255)
-                .HasColumnName("OCLH_JSON");
             entity.Property(e => e.StartDate).HasColumnType("datetime");
 
             entity.HasOne(d => d.NetworkNavigation).WithMany(p => p.TpsandGasDataDays)
@@ -979,9 +979,6 @@ public partial class EthtpsContext : EthtpsContextBase
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.AverageGps).HasColumnName("AverageGPS");
             entity.Property(e => e.AverageTps).HasColumnName("AverageTPS");
-            entity.Property(e => e.OclhJson)
-                .HasMaxLength(255)
-                .HasColumnName("OCLH_JSON");
             entity.Property(e => e.StartDate).HasColumnType("datetime");
 
             entity.HasOne(d => d.NetworkNavigation).WithMany(p => p.TpsandGasDataHours)
@@ -1053,9 +1050,6 @@ public partial class EthtpsContext : EthtpsContextBase
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.AverageGps).HasColumnName("AverageGPS");
             entity.Property(e => e.AverageTps).HasColumnName("AverageTPS");
-            entity.Property(e => e.OclhJson)
-                .HasMaxLength(255)
-                .HasColumnName("OCLH_JSON");
             entity.Property(e => e.StartDate).HasColumnType("datetime");
 
             entity.HasOne(d => d.NetworkNavigation).WithMany(p => p.TpsandGasDataMonths)
@@ -1078,9 +1072,6 @@ public partial class EthtpsContext : EthtpsContextBase
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.AverageGps).HasColumnName("AverageGPS");
             entity.Property(e => e.AverageTps).HasColumnName("AverageTPS");
-            entity.Property(e => e.OclhJson)
-                .HasMaxLength(255)
-                .HasColumnName("OCLH_JSON");
             entity.Property(e => e.StartDate).HasColumnType("datetime");
 
             entity.HasOne(d => d.NetworkNavigation).WithMany(p => p.TpsandGasDataWeeks)
@@ -1115,6 +1106,29 @@ public partial class EthtpsContext : EthtpsContextBase
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__TPSAndGas__Provi__58D1301D");
         });
+
+        modelBuilder.Entity<TpsandGasDataMinute>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__TPSAndGa__3214EC273B83501B");
+
+            entity.ToTable("TPSAndGasData_Minute");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.AverageGps).HasColumnName("AverageGPS");
+            entity.Property(e => e.AverageTps).HasColumnName("AverageTPS");
+            entity.Property(e => e.StartDate).HasColumnType("datetime");
+
+            entity.HasOne(d => d.NetworkNavigation).WithMany(p => p.TpsandGasDataMinutes)
+                .HasForeignKey(d => d.Network)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__TPSAndGas__Netwo__32767D0B");
+
+            entity.HasOne(d => d.ProviderNavigation).WithMany(p => p.TpsandGasDataMinutes)
+                .HasForeignKey(d => d.Provider)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__TPSAndGas__Provi__318258D2");
+        });
+
 
         OnModelCreatingPartial(modelBuilder);
     }

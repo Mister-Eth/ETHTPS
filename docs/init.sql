@@ -76,7 +76,8 @@ CREATE TABLE [dbo].[TPSAndGasData_Latest] (
   [Provider] int UNIQUE NOT NULL,
   [Network] int NOT NULL,
   [TPS] float NOT NULL,
-  [GPS] float NOT NULL
+  [GPS] float NOT NULL,
+  [LastUpdate] datetime
 )
 GO
 
@@ -125,6 +126,17 @@ CREATE TABLE [dbo].[TPSAndGasData_Week] (
   [AverageGPS] float NOT NULL,
   [ReadingsCount] int NOT NULL,
   [OCLH_JSON] nvarchar(255)
+)
+GO
+
+CREATE TABLE [dbo].[TPSAndGasData_Minute] (
+  [ID] int PRIMARY KEY IDENTITY(1, 1),
+  [Network] int NOT NULL,
+  [Provider] int NOT NULL,
+  [StartDate] datetime NOT NULL,
+  [AverageTPS] float NOT NULL,
+  [AverageGPS] float NOT NULL,
+  [ReadingsCount] int NOT NULL
 )
 GO
 
@@ -381,14 +393,21 @@ CREATE TABLE [Info].[ExternalWebsites] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [Name] nvarchar(255) NOT NULL,
   [IconBase64] varchar(max) NOT NULL,
-  [Category] nvarchar(255) NOT NULL
+  [Category] int NOT NULL
+)
+GO
+
+CREATE TABLE [Info].[ExternalWebsiteCateopry] (
+  [ID] int PRIMARY KEY IDENTITY(1, 1),
+  [Name] nvarchar(255) NOT NULL
 )
 GO
 
 CREATE TABLE [Info].[ProviderLinks] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [ProviderID] int NOT NULL,
-  [ExternalWebsiteID] int NOT NULL
+  [ExternalWebsiteID] int NOT NULL,
+  [Link] nvarchar(255) NOT NULL
 )
 GO
 
@@ -439,6 +458,12 @@ ALTER TABLE [dbo].[TPSAndGasData_Week] ADD FOREIGN KEY ([Provider]) REFERENCES [
 GO
 
 ALTER TABLE [dbo].[TPSAndGasData_Week] ADD FOREIGN KEY ([Network]) REFERENCES [dbo].[Networks] ([ID])
+GO
+
+ALTER TABLE [dbo].[TPSAndGasData_Minute] ADD FOREIGN KEY ([Provider]) REFERENCES [dbo].[Providers] ([ID])
+GO
+
+ALTER TABLE [dbo].[TPSAndGasData_Minute] ADD FOREIGN KEY ([Network]) REFERENCES [dbo].[Networks] ([ID])
 GO
 
 ALTER TABLE [dbo].[TPSAndGasData_Month] ADD FOREIGN KEY ([Provider]) REFERENCES [dbo].[Providers] ([ID])
@@ -550,6 +575,9 @@ ALTER TABLE [ABTesting].[Experiments] ADD FOREIGN KEY ([ProjectID]) REFERENCES [
 GO
 
 ALTER TABLE [ProjectManagement].[Projects] ADD FOREIGN KEY ([Provider]) REFERENCES [dbo].[Providers] ([ID])
+GO
+
+ALTER TABLE [Info].[ExternalWebsites] ADD FOREIGN KEY ([Category]) REFERENCES [Info].[ExternalWebsiteCateopry] ([ID])
 GO
 
 ALTER TABLE [Info].[ProviderLinks] ADD FOREIGN KEY ([ProviderID]) REFERENCES [dbo].[Providers] ([ID])

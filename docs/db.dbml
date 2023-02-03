@@ -52,6 +52,7 @@ Table dbo.TPSAndGasData_Latest {
   Network int [not null]
   TPS float [not null]
   GPS float [not null]
+  LastUpdate datetime
 }
 
 Ref: dbo.TPSAndGasData_Latest.Provider > dbo.Providers.ID
@@ -116,6 +117,19 @@ Table dbo.TPSAndGasData_Week{
 
 Ref: dbo.TPSAndGasData_Week.Provider > dbo.Providers.ID
 Ref: dbo.TPSAndGasData_Week.Network > dbo.Networks.ID
+
+Table dbo.TPSAndGasData_Minute {
+  ID int [pk, increment]
+  Network int [not null]
+  Provider int [not null]
+  StartDate datetime [not null]
+  AverageTPS float [not null]
+  AverageGPS float [not null]
+  ReadingsCount int [not null]
+}
+
+Ref: dbo.TPSAndGasData_Minute.Provider > dbo.Providers.ID
+Ref: dbo.TPSAndGasData_Minute.Network > dbo.Networks.ID
 
 Table dbo.TPSAndGasData_Month{
   ID int [pk, increment]
@@ -402,14 +416,21 @@ Table Info.ExternalWebsites {
   ID int [pk, increment]
   Name varchar [not null]
   IconBase64 varchar(max) [not null] 
-  Category varchar [not null]
-  
+  Category int [not null]
 }
 
+
+Table Info.ExternalWebsiteCateopry {
+  ID int [pk, increment]
+  Name varchar [not null]
+}
+
+Ref: Info.ExternalWebsites.Category > Info.ExternalWebsiteCateopry.ID
 Table Info.ProviderLinks {
     ID int [pk, increment]
     ProviderID int [not null]
     ExternalWebsiteID int [not null]
+    Link varchar [not null]
 }
 
 Ref: Info.ProviderLinks.ProviderID > dbo.Providers.ID
