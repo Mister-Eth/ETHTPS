@@ -11,6 +11,7 @@ import { ProviderModel } from "../../services/api-gen/models/ProviderModel"
 import { DataResponseModelDictionary } from "../../Types.dictionaries"
 import { dataTypeToString, toShortString_2 } from "../../models/TimeIntervals"
 import { useGetSidechainsIncludedFromAppStore } from "../../hooks/LiveDataHooks"
+import { ProviderResponseModel } from "ethtps.api.client"
 
 export type InstantBarChartDataset = {
   label: string
@@ -39,10 +40,10 @@ export type LiveData = {
 
 export const createDataPoint = (
   data: DataResponseModelDictionary,
-  provider: ProviderModel,
+  provider: ProviderResponseModel,
   color: string,
 ) => {
-  let value = extractData(data, provider.name)
+  let value = extractData(data, provider.name as string)
   if (value === 0) return undefined
   return {
     providerName: provider.name,
@@ -67,7 +68,9 @@ export function useLiveData() {
   useEffect(() => {
     if (data && colors) {
       let d_possiblyUndefined = providers
-        .map((provider) => createDataPoint(data, provider, colors))
+        .map((provider) =>
+          createDataPoint(data, provider, provider.color as string),
+        )
         .filter((x) => x !== undefined)
         .map((x) => x as LiveDataPoint)
       if (
