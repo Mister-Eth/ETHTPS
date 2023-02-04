@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -7,13 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\Recaptcha\Extensions\" />
+    <Folder Include="Database\" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ETHTPS.Data.Database\ETHTPS.Data.Database.csproj" />
+    <ProjectReference Include="..\ETHTPS.Data.Models\ETHTPS.Data.Models.csproj" />
     <ProjectReference Include="..\ETHTPS.Data\ETHTPS.Data.Core.csproj" />
-    <ProjectReference Include="..\ETHTPS.Services.Ethereum\ETHTPS.Services.Ethereum.csproj" />
   </ItemGroup>
 
 </Project>

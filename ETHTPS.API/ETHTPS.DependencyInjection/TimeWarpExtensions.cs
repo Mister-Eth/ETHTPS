@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using static ETHTPS.API.Core.Constants;
 using ETHTPS.Services.Infrastructure.Extensions;
 
-namespace ETHTPS.DependencyInjection
+namespace ETHTPS.API.DependencyInjection
 {
     public static class TimeWarpExtensions
     {

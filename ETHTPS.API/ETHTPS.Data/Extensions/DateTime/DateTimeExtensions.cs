@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ETHTPS.Data.Extensions
+namespace ETHTPS.Data.Core.Extensions
 {
     public static class DateTimeExtensions
     {

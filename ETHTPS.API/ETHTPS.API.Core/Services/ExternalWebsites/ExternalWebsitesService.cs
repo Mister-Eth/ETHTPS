@@ -1,5 +1,5 @@
 ﻿using ETHTPS.Data.Database;
-using ETHTPS.Data.Extensions.StringExtensions;
+using ETHTPS.Data.Core.Extensions.StringExtensions;
 using ETHTPS.Data.ResponseModels.SocialMedia;
 
 using Microsoft.EntityFrameworkCore;

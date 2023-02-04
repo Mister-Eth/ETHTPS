@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ETHTPS.Data.Models;
+
+using System;
 using System.Collections.Generic;
 
 namespace ETHTPS.Data.Database;

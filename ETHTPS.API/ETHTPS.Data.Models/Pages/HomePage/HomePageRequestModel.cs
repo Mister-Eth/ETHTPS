@@ -1,4 +1,5 @@
-﻿using ETHTPS.Data.Models.Pages.Chart;
+﻿using ETHTPS.Data.Core;
+using ETHTPS.Data.Models.Pages.Chart;
 
 namespace ETHTPS.Data.Models.Pages.HomePage
 {

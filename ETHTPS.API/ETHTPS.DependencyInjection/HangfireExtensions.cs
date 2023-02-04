@@ -3,7 +3,7 @@ using Hangfire.SqlServer;
 using Hangfire;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ETHTPS.DependencyInjection
+namespace ETHTPS.API.DependencyInjection
 {
     public static class HangfireExtensions
     {

@@ -1,4 +1,6 @@
-﻿namespace ETHTPS.Data.Models.Query
+﻿using ETHTPS.Data.Core;
+
+namespace ETHTPS.Data.Models.Query
 {
     public class ProviderQueryModel : APIKeyRequestModel
     {

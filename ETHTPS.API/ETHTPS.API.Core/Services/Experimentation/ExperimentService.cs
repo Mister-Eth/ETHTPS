@@ -1,6 +1,6 @@
 ﻿using ETHTPS.Data.Database;
 using ETHTPS.Data.Database.Extensions;
-using ETHTPS.Data.Extensions;
+using ETHTPS.Data.Core.Extensions;
 using ETHTPS.Services;
 using ETHTPS.Services.BlockchainServices;
 using ETHTPS.Services.Ethereum;

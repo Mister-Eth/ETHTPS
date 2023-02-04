@@ -1,4 +1,4 @@
-﻿using ETHTPS.Security.Policies;
+﻿using ETHTPS.API.Security.Policies;
 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;

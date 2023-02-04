@@ -1,4 +1,4 @@
-﻿using ETHTPS.Data.Extensions.StringExtensions;
+﻿using ETHTPS.Data.Core.Extensions.StringExtensions;
 
 using Microsoft.EntityFrameworkCore;
 

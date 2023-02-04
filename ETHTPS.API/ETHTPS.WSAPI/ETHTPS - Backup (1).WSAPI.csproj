@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ETHTPS.DependencyInjection\ETHTPS..API.DependencyInjection.csproj" />
-    <ProjectReference Include="..\ETHTPS.Security\ETHTPS.API.Security.csproj" />
+    <ProjectReference Include="..\ETHTPS.API.DependencyInjection\ETHTPS.API.DependencyInjection.csproj" />
+    <ProjectReference Include="..\ETHTPS.API.Security\ETHTPS.API.Security.csproj" />
   </ItemGroup>
 
 </Project>

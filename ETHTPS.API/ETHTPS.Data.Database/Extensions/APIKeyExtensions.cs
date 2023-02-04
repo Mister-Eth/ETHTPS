@@ -1,5 +1,5 @@
-﻿using ETHTPS.Data.Extensions;
-using ETHTPS.Data.Extensions.StringExtensions;
+﻿using ETHTPS.Data.Core.Extensions;
+using ETHTPS.Data.Core.Extensions.StringExtensions;
 
 using Microsoft.AspNetCore.Http;
 

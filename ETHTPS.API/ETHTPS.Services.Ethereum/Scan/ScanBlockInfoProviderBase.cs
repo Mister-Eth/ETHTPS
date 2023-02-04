@@ -1,4 +1,4 @@
-﻿using ETHTPS.Data.Extensions.StringExtensions;
+﻿using ETHTPS.Data.Core.Extensions.StringExtensions;
 using ETHTPS.Services.BlockchainServices;
 using ETHTPS.Services.Ethereum.Scan.Extensions;
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ETHTPS.Data
+namespace ETHTPS.Data.Core
 {
     public static class Constants
     {

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace ETHTPS.Data.Extensions.StringExtensions
+namespace ETHTPS.Data.Core.Extensions.StringExtensions
 {
     public static class StringExtensions
     {

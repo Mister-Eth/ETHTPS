@@ -1,4 +1,4 @@
-﻿using ETHTPS.Data.Extensions;
+﻿using ETHTPS.Data.Core.Extensions;
 using ETHTPS.Services.BlockchainServices;
 using ETHTPS.Services.Ethereum.Models.JSONRPC;
 using ETHTPS.Services.Ethereum.Models.JSONRPC.Exceptions;

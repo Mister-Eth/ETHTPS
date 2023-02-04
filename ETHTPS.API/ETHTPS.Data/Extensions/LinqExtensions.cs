@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ETHTPS.Data.Extensions
+namespace ETHTPS.Data.Core.Extensions
 {
     public static class LinqExtensions
     {

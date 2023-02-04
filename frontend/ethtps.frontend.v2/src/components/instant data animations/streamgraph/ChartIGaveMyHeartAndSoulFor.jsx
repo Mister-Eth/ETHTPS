@@ -9,14 +9,19 @@ export const ChartIGaveMyHeartAndSoulFor = ({ data = [], dimensions = {} }) => {
   const svgHeight = height + margin.top + margin.bottom
 
   //Let's try a simple thing first
-  console.log(data)
+  //console.log(data)
   React.useEffect(() => {
+    if (data?.length === 0) return
     //Range: -60s > 0s
     //We need a linear scale
     const xScale = d3.scaleLinear().domain([-60, 0]).range([0, width]) //We'll change this later
+    console.log(data)
     const yScale = d3
       .scaleLinear()
-      .domain([d3.min(data, (d) => d.y) - 0, d3.max(data, (d) => d.y) + 0])
+      .domain([
+        d3.min(data, (d) => d3.min(d.yArrays, (q) => q)) - 0,
+        d3.max(data, (d) => d3.max(d.yArrays, (q) => q)) + 0,
+      ])
       .range([height, 0])
     // Create root container where we will append all other chart elements
     const svgEl = d3.select(svgRef.current)
@@ -66,9 +71,9 @@ export const ChartIGaveMyHeartAndSoulFor = ({ data = [], dimensions = {} }) => {
       .enter()
       .append("path")
       .attr("fill", "none")
-      .attr("stroke", (d) => d.color)
+      .attr("stroke", (d) => d.c)
       .attr("stroke-width", 3)
-      .attr("d", (d) => line(d.items))
+      .attr("d", (d) => line(d.z))
   }, [data])
 
   return <svg ref={svgRef} width={svgWidth} height={svgHeight} />

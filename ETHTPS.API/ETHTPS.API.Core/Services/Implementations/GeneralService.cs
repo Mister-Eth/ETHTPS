@@ -1,14 +1,15 @@
 ﻿using ETHTPS.Data;
 using ETHTPS.Data.Database;
 using ETHTPS.Data.Database.HistoricalDataProviders;
-using ETHTPS.Data.Extensions;
-using ETHTPS.Data.Extensions.StringExtensions;
+using ETHTPS.Data.Core.Extensions;
+using ETHTPS.Data.Core.Extensions.StringExtensions;
 using ETHTPS.Data.Models.Query;
 using ETHTPS.Data.ResponseModels;
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ETHTPS.Data.Core;
 
 namespace ETHTPS.API.Core.Infrastructure.Services.Implementations
 {

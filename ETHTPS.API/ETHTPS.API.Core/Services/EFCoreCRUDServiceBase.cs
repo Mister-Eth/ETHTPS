@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using ETHTPS.Data.Models;
 
 namespace ETHTPS.API.Core.Infrastructure.Services
 {

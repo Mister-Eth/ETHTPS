@@ -1,4 +1,5 @@
-﻿using ETHTPS.Data.ResponseModels;
+﻿using ETHTPS.Data.Core;
+using ETHTPS.Data.ResponseModels;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;

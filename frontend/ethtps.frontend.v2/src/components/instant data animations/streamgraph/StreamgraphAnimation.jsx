@@ -1,40 +1,43 @@
 import { useLiveData } from "../hooks"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ChartIGaveMyHeartAndSoulFor } from "./ChartIGaveMyHeartAndSoulFor"
 import { useGetProviderColorDictionaryFromAppStore } from "../../../hooks/ColorHooks"
 import { ConditionalRender } from "../../../Types"
 
-function createPoint(x, d) {
+function createPointArray(x, d) {
   if (d[x]?.length === 0) return undefined
   if (d[x][0]?.data?.length === 0) return undefined
   return {
     provider: x,
-    value: d[x][0].data[0],
+    values: d[x].map((h) => h.data[0]),
   }
 }
 
 function createXYZCPoint(o, colorDictionary) {
   return {
     x: new Date(o.value.date).getSeconds() - 60,
-    y: o.value.value,
+    yArrays: o.values,
     z: o.provider,
     c: colorDictionary[o.provider],
   }
 }
 
 export function StreamgraphAnimation({ data }) {
-  console.clear()
   const liveData = useLiveData()
   const colorDictionary = useGetProviderColorDictionaryFromAppStore()
-  const [processed, setProcessed] = useState(
-    Array.from(
-      [...Array.from(Object.keys(data))]
-        .map((key) => createPoint(key, data))
-        .filter((x) => x !== undefined)
-        .filter((x) => x.value.value !== NaN)
-        .map((o) => createXYZCPoint(o, colorDictionary)),
-    ),
-  )
+  const getProcessedData = () =>
+    [...Array.from(Object.keys(data))]
+      .map((key) => createPointArray(key, data))
+      .filter((x) => x !== undefined)
+      .filter((x) => !x.values.some((q) => q === undefined))
+      .flatMap((o) => createXYZCPoint(o, colorDictionary))
+
+  const [processed, setProcessed] = useState()
+  useEffect(() => {
+    if (colorDictionary && liveData) {
+      setProcessed(getProcessedData())
+    }
+  }, [colorDictionary, liveData])
   return (
     <>
       {ConditionalRender(

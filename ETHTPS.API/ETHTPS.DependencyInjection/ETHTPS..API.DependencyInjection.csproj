@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -15,7 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ETHTPS.API.Core\ETHTPS.API.Core.csproj" />
     <ProjectReference Include="..\ETHTPS.BackgroundServices\ETHTPS.Services.csproj" />
-    <ProjectReference Include="..\ETHTPS.Data\ETHTPS.Data.csproj" />
+    <ProjectReference Include="..\ETHTPS.Data\ETHTPS.Data.Core.csproj" />
     <ProjectReference Include="..\ETHTPS.Services.Ethereum\ETHTPS.Services.Ethereum.csproj" />
   </ItemGroup>
 

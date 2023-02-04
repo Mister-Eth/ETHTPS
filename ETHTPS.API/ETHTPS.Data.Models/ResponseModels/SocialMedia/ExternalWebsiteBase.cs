@@ -1,4 +1,4 @@
-﻿using ETHTPS.Data.Database;
+﻿using ETHTPS.Data.Models;
 
 using System;
 using System.Collections.Generic;

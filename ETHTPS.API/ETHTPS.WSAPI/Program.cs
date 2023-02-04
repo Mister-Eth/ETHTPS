@@ -1,6 +1,6 @@
 using ETHTPS.API.Authentication;
-using ETHTPS.DependencyInjection;
-using ETHTPS.Security.Policies;
+using ETHTPS.API.DependencyInjection;
+using ETHTPS.API.Security.Policies;
 using ETHTPS.WSAPI.BackgroundServices;
 using ETHTPS.WSAPI.Queuing;
 using ETHTPS.WSAPI.Services;
@@ -43,8 +43,8 @@ WebSocketOptions webSocketOptions = new ()
     KeepAliveInterval = TimeSpan.FromMinutes(2)
 };
 
-webSocketOptions.AllowedOrigins.Add("https://client.com");
-webSocketOptions.AllowedOrigins.Add("https://www.client.com");
+webSocketOptions.AllowedOrigins.Add("https://localhost");
+webSocketOptions.AllowedOrigins.Add("https://ethtps.info");
 
 app.UseWebSockets(webSocketOptions);
 

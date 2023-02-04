@@ -8,7 +8,7 @@ using static ETHTPS.API.Core.Constants;
 using ETHTPS.Services.Infrastructure.Extensions;
 using ETHTPS.Data.Database.HistoricalDataProviders;
 
-namespace ETHTPS.DependencyInjection
+namespace ETHTPS.API.DependencyInjection
 {
     public static class HistoricalUpdaterExtensions
     {

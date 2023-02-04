@@ -1,4 +1,4 @@
-﻿namespace ETHTPS.Security.Policies
+﻿namespace ETHTPS.API.Security.Policies
 {
     public class PolicyDescriptor
     {

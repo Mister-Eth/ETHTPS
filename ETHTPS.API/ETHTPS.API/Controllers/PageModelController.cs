@@ -1,7 +1,8 @@
 ﻿using ETHTPS.API.Core.Infrastructure.Services;
 using ETHTPS.API.Core.Infrastructure.Services.Implementations;
 using ETHTPS.Data;
-using ETHTPS.Data.Extensions.StringExtensions;
+using ETHTPS.Data.Core;
+using ETHTPS.Data.Core.Extensions.StringExtensions;
 using ETHTPS.Data.Models.Pages.Chart;
 using ETHTPS.Data.Models.Pages.HomePage;
 using ETHTPS.Data.Models.Pages.ProviderPage;

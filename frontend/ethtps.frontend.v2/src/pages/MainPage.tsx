@@ -82,7 +82,10 @@ export default function MainPage(): JSX.Element {
             </Paper>
             <Paper elevation={1}>
               <SimpleTextDisplay />
-              {ConditionalRender(<StreamgraphAnimation data={_1mtps} />, false)}
+              {ConditionalRender(
+                <StreamgraphAnimation data={_1mtps} />,
+                _1mtps !== undefined,
+              )}
             </Paper>
             <Paper elevation={1}>
               <AllProvidersTable

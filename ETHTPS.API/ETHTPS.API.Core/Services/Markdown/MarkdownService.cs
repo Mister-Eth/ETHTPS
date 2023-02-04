@@ -1,11 +1,5 @@
-﻿using ETHTPS.Data.Database;
-using ETHTPS.Data.Extensions.StringExtensions;
-
-using Microsoft.EntityFrameworkCore;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using ETHTPS.Data.Core.Extensions.StringExtensions;
+using ETHTPS.Data.Database;
 
 namespace ETHTPS.API.Core.Infrastructure.Services.Markdown
 {

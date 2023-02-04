@@ -1,4 +1,4 @@
-﻿using ETHTPS.Data.Extensions;
+﻿using ETHTPS.Data.Core.Extensions;
 using ETHTPS.Services.BlockchainServices;
 
 using Microsoft.Extensions.Configuration;

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ETHTPS.Data.Extensions
+namespace ETHTPS.Data.Core.Extensions
 {
     public static class HttpContextExtensions
     {

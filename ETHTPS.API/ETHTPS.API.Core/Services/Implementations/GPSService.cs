@@ -1,7 +1,7 @@
 ﻿using ETHTPS.Data;
 using ETHTPS.Data.Database;
 using ETHTPS.Data.Database.HistoricalDataProviders;
-using ETHTPS.Data.Extensions;
+using ETHTPS.Data.Core.Extensions;
 using ETHTPS.Data.Models.Query;
 using ETHTPS.Data.ResponseModels;
 

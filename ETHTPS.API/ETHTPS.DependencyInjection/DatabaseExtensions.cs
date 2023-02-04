@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ETHTPS.DependencyInjection
+namespace ETHTPS.API.DependencyInjection
 {
     public static class DatabaseExtensions
     {

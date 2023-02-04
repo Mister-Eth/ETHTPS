@@ -1,4 +1,5 @@
 ﻿using ETHTPS.Data;
+using ETHTPS.Data.Core;
 using ETHTPS.Data.Models.Query;
 
 using System.Collections.Generic;
