@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 services.AddDatabaseContext(builder.Configuration);
 services.AddCoreServices();
-services.AddScoped<TimeWarpService>();
+services.AddScoped<TPSService>();
 services.AddCustomCORSPolicies();
 services.AddAPIKeyAuthenticationAndAuthorization();
 services.AddControllers().AddControllersAsServices();

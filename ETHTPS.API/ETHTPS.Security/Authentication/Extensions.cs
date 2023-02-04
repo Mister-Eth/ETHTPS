@@ -1,10 +1,10 @@
-﻿using ETHTPS.API.Security.Policies;
+﻿using ETHTPS.API.Security.Core.Policies;
 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ETHTPS.API.Authentication
+namespace ETHTPS.API.Security.Core.Authentication
 {
     public static class Extensions
     {

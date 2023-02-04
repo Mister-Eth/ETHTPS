@@ -1,4 +1,4 @@
-﻿using ETHTPS.API.Core.Controllers;
+﻿using ETHTPS.API.Controllers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,7 +20,6 @@ namespace ETHTPS.API.Tests
             Startup startup = new(configuration);
             startup.ConfigureServices(services);
             services.AddScoped<GeneralController>();
-            services.AddScoped<TPSController>();
             services.AddScoped<GPSController>();
             services.AddScoped<GasAdjustedTPSController>();
             services.AddScoped<StatusController>();

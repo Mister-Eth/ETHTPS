@@ -1,9 +1,9 @@
 
 
-using ETHTPS.API.Authentication;
+using ETHTPS.API.Security.Core.Authentication;
 using ETHTPS.API.Core.Middlewares;
 using ETHTPS.API.DependencyInjection;
-using ETHTPS.API.Security.Policies;
+using ETHTPS.API.Security.Core.Policies;
 
 using Hangfire;
 

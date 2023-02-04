@@ -9,8 +9,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 using System.Threading.Tasks;
+using System;
 
-namespace ETHTPS.API.Core.Controllers
+namespace ETHTPS.API.Security.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

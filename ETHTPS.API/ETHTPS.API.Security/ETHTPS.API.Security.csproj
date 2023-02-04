@@ -9,13 +9,26 @@
   <ItemGroup>
     <ProjectReference Include="..\ETHTPS.API.Core\ETHTPS.API.Core.csproj" />
     <ProjectReference Include="..\ETHTPS.Data.Database\ETHTPS.Data.Database.csproj" />
-    <ProjectReference Include="..\ETHTPS.Data.Models\ETHTPS.Data.Models.csproj" />
+    <ProjectReference Include="..\ETHTPS.Data\ETHTPS.Data.Core.csproj" />
     <ProjectReference Include="..\ETHTPS.DependencyInjection\ETHTPS..API.DependencyInjection.csproj" />
     <ProjectReference Include="..\ETHTPS.Security\ETHTPS.API.Security.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.Development.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

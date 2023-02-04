@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ETHTPS.API.Core.Controllers
+namespace ETHTPS.API.General.Controllers
 {
     [Route("api/beta/experiments")]
     [ApiController]

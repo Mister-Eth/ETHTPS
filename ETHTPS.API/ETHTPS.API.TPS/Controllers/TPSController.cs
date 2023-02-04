@@ -5,9 +5,7 @@ using ETHTPS.Data.ResponseModels;
 
 using Microsoft.AspNetCore.Mvc;
 
-using System.Collections.Generic;
-
-namespace ETHTPS.API.Core.Controllers
+namespace ETHTPS.API.Controllers
 {
     [Route("API/TPS/[action]")]
     public class TPSController : IPSService

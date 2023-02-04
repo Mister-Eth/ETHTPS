@@ -7,37 +7,40 @@ using Microsoft.AspNetCore.Mvc;
 
 using System.Collections.Generic;
 
-namespace ETHTPS.API.Core.Controllers
+namespace ETHTPS.API.GPS.Controllers
 {
-    [Route("API/GasAdjustedTPS/[action]")]
-    public class GasAdjustedTPSController : IPSService
+    [Route("API/GPS/[action]")]
+    public class GPSController : IPSService
     {
-        private readonly GasAdjustedTPSService _gasAdjustedTPSService;
+        private readonly GPSService _gpsService;
 
-        public GasAdjustedTPSController(GasAdjustedTPSService gasAdjustedTPSService)
+        public GPSController(GPSService gpsService)
         {
-            _gasAdjustedTPSService = gasAdjustedTPSService;
+            _gpsService = gpsService;
         }
 
         [HttpGet]
         public IDictionary<string, IEnumerable<DataResponseModel>> GeMonthlyDataByYear([FromQuery] ProviderQueryModel model, int year)
         {
-            return ((IPSController<DataPoint, DataResponseModel>)_gasAdjustedTPSService).GeMonthlyDataByYear(model, year);
+            return ((IPSController<DataPoint, DataResponseModel>)_gpsService).GeMonthlyDataByYear(model, year);
         }
+
         [HttpGet]
         public IDictionary<string, IEnumerable<DataResponseModel>> Get([FromQuery] ProviderQueryModel model, string interval)
         {
-            return ((IPSController<DataPoint, DataResponseModel>)_gasAdjustedTPSService).Get(model, interval);
+            return ((IPSController<DataPoint, DataResponseModel>)_gpsService).Get(model, interval);
         }
+
         [HttpGet]
         public IDictionary<string, IEnumerable<DataPoint>> Instant([FromQuery] ProviderQueryModel model)
         {
-            return ((IPSController<DataPoint, DataResponseModel>)_gasAdjustedTPSService).Instant(model);
+            return ((IPSController<DataPoint, DataResponseModel>)_gpsService).Instant(model);
         }
+
         [HttpGet]
         public IDictionary<string, DataPoint> Max([FromQuery] ProviderQueryModel model)
         {
-            return ((IPSController<DataPoint, DataResponseModel>)_gasAdjustedTPSService).Max(model);
+            return ((IPSController<DataPoint, DataResponseModel>)_gpsService).Max(model);
         }
     }
 }

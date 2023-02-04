@@ -21,4 +21,8 @@
     <ProjectReference Include="..\ETHTPS.API\ETHTPS.API.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ControllerTests\DataControllerTests\" />
+  </ItemGroup>
+
 </Project>

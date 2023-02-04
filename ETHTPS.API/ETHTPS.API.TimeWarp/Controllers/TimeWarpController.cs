@@ -11,7 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ETHTPS.API.Core.Controllers
+namespace ETHTPS.API.TimeWarp.Controllers
 {
     [Route("API/TimeWarp/[action]")]
     public class TimeWarpController

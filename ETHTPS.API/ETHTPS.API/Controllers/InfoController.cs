@@ -1,7 +1,8 @@
-﻿using ETHTPS.API.Core.Infrastructure.Services.Info;
+﻿using ETHTPS.API.Core.Controllers;
+using ETHTPS.API.Core.Infrastructure.Services.Info;
 using Microsoft.AspNetCore.Components;
 
-namespace ETHTPS.API.Core.Controllers
+namespace ETHTPS.API.General.Controllers
 {
     [Route("api/info/[action]")]
     public class InfoController : APIControllerBase

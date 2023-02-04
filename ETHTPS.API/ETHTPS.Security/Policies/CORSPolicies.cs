@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace ETHTPS.API.Security.Policies
+namespace ETHTPS.API.Security.Core.Policies
 {
     public static class CORSPolicies
     {

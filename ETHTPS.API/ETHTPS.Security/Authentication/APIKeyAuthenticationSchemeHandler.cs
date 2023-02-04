@@ -11,7 +11,7 @@ using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
-namespace ETHTPS.API.Authentication
+namespace ETHTPS.API.Security.Core.Authentication
 {
     public class APIKeyAuthenticationSchemeHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {

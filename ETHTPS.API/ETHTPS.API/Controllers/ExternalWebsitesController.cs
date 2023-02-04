@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using System.Collections.Generic;
 
-namespace ETHTPS.API.Core.Controllers
+namespace ETHTPS.API.General.Controllers
 {
     [Route("api/info/external-websites/")]
     [ApiController]
