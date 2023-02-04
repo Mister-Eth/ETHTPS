@@ -3,6 +3,8 @@
 ##
 ## Get latest from 
 node_modules
+ConfigurationExtensions.cs
+PrivateData.cs
 appsettings - Copy.default.json
 cloc-1.64.exe
 appsettings - Copy.json

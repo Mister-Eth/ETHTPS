@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+
+using ETHTPS.Data.Core;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace ETHTPS.Data.Database;
 
-public partial class EthtpsContext : EthtpsContextBase
+public partial class EthtpsContext : ContextBase<EthtpsContext>
 {
     public EthtpsContext()
     {

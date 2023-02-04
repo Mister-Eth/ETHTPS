@@ -4,16 +4,19 @@ using ETHTPS.API.Core.Infrastructure.Services.Implementations;
 using ETHTPS.API.Core.Infrastructure.Services.Info;
 using ETHTPS.API.Core.Infrastructure.Services.Markdown;
 using ETHTPS.API.Core.Infrastructure.Services.Recaptcha;
+using ETHTPS.Configuration;
+using ETHTPS.Configuration.Database;
 using ETHTPS.Services.BlockchainServices.BlockTime;
 using ETHTPS.Services.BlockchainServices.Status;
 
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ETHTPS.API.DependencyInjection
 {
-    public static class CoreServicesExtensions
+    public static partial class CoreServicesExtensions
     {
-        public static IServiceCollection AddCoreServices(this IServiceCollection services)=> 
+        public static IServiceCollection AddCoreServices(this IServiceCollection services) =>
             services.AddEssentialServices()
             .AddScoped<TPSService>()
             .AddScoped<GPSService>()
@@ -28,6 +31,10 @@ namespace ETHTPS.API.DependencyInjection
             .AddScoped<IMarkdownService, MarkdownService>()
             .AddScoped<IProvidersService, ProvidersService>();
 
-        public static IServiceCollection AddEssentialServices(this IServiceCollection services) => services.AddScoped<IRecaptchaVerificationService, RecaptchaVerificationService>();
+        public static IServiceCollection AddEssentialServices(this IServiceCollection services) => 
+            services.AddScoped<IRecaptchaVerificationService, RecaptchaVerificationService>()
+            .AddDbContext<ConfigurationContext>(options => options.UseSqlServer(GetConfigurationServiceConnectionString()))
+            .AddScoped<IDBConfigurationProvider, DBConfigurationProvider>();
+            
     }
 }

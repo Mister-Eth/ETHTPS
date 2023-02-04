@@ -1,22 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ETHTPS.Data.Database
+namespace ETHTPS.Data.Core
 {
-    public abstract class EthtpsContextBase : DbContext
+    public abstract class ContextBase<TContext> : DbContext
+        where TContext : DbContext
     {
         public readonly object LockObj = new object();
-        public EthtpsContextBase()
+        public ContextBase()
         {
             Database.SetCommandTimeout(TimeSpan.FromSeconds(10));
         }
 
-        public EthtpsContextBase(DbContextOptions<EthtpsContext> options)
+        public ContextBase(DbContextOptions<TContext> options)
             : base(options)
         {
             Database.SetCommandTimeout(TimeSpan.FromSeconds(60));

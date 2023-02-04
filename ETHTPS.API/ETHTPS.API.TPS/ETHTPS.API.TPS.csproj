@@ -11,7 +11,7 @@
     <ProjectReference Include="..\ETHTPS.API.Core\ETHTPS.API.Core.csproj" />
     <ProjectReference Include="..\ETHTPS.Data.Database\ETHTPS.Data.Database.csproj" />
     <ProjectReference Include="..\ETHTPS.Data.Models\ETHTPS.Data.Models.csproj" />
-    <ProjectReference Include="..\ETHTPS.DependencyInjection\ETHTPS..API.DependencyInjection.csproj" />
+    <ProjectReference Include="..\ETHTPS.DependencyInjection\ETHTPS.API.DependencyInjection.csproj" />
     <ProjectReference Include="..\ETHTPS.Security\ETHTPS.API.Security.Core.csproj" />
   </ItemGroup>
 
