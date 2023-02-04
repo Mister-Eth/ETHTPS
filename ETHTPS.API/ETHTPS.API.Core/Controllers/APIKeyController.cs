@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using System.Threading.Tasks;
 
-namespace ETHTPS.API.Controllers
+namespace ETHTPS.API.Core.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -55,7 +55,7 @@ namespace ETHTPS.API.Controllers
             };
             _context.Apikeys.Add(key);
             _context.SaveChanges();
-            System.Console.WriteLine($"New API key created from {key.RequesterIpaddress}");
+            Console.WriteLine($"New API key created from {key.RequesterIpaddress}");
             return new APIKeyResponseModel()
             {
                 Key = actualKey,

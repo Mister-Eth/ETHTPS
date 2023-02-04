@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using System.Collections.Generic;
 
-namespace ETHTPS.API.Controllers
+namespace ETHTPS.API.Core.Controllers
 {
     [Route("API/v2/[action]")]
     public class GeneralController

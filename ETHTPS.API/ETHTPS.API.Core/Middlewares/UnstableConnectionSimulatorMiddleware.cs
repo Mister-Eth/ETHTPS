@@ -1,18 +1,6 @@
-﻿
+﻿using Microsoft.AspNetCore.Http;
 
-using ETHTPS.Data.Database;
-
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-
-using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-
-namespace ETHTPS.API.Middlewares
+namespace ETHTPS.API.Core.Middlewares
 {
     /// <summary>
     /// Testing how the frontend behaves when data loads slowly or doesn't even load at all

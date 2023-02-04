@@ -1,4 +1,4 @@
-﻿using ETHTPS.API.Controllers.CRUD;
+﻿using ETHTPS.API.Core.Controllers.CRUD;
 using ETHTPS.API.Core.Infrastructure.Services.Markdown;
 using ETHTPS.Data.Database;
 using ETHTPS.Data.Models;
@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using System.Collections.Generic;
 
-namespace ETHTPS.API.Controllers
+namespace ETHTPS.API.Core.Controllers
 {
     [Route("api/info/markdown-pages/")]
     [ApiController]

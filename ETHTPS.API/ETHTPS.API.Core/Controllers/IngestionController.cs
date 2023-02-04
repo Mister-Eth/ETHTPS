@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using System.Linq;
 
-namespace ETHTPS.API.Controllers
+namespace ETHTPS.API.Core.Controllers
 {
     /// <summary>
     /// Used in prod ingesting data processed somewhere else. Saves prod work.

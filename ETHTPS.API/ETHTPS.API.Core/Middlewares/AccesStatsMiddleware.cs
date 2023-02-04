@@ -1,17 +1,9 @@
-﻿
-
-using ETHTPS.Data.Database;
-
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
 using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 
-namespace ETHTPS.API.Middlewares
+namespace ETHTPS.API.Core.Middlewares
 {
     public class AccesStatsMiddleware
     {

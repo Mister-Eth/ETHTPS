@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ETHTPS.API.Controllers
+namespace ETHTPS.API.Core.Controllers
 {
     [Route("api/beta/experiments")]
     [ApiController]
@@ -20,7 +20,7 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet("AvailableExperiments")]
-        public async Task<IEnumerable<int>>  GetAvailableExperiments([FromQuery] ExperimentRequesterParameters parameters)
+        public async Task<IEnumerable<int>> GetAvailableExperiments([FromQuery] ExperimentRequesterParameters parameters)
         {
             return await _experimentService.GetAvailableExperimentsAsync(parameters, HttpContext);
         }

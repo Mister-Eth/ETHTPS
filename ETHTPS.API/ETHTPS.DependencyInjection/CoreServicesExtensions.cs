@@ -6,34 +6,28 @@ using ETHTPS.API.Core.Infrastructure.Services.Markdown;
 using ETHTPS.API.Core.Infrastructure.Services.Recaptcha;
 using ETHTPS.Services.BlockchainServices.BlockTime;
 using ETHTPS.Services.BlockchainServices.Status;
-using Microsoft.Extensions.DependencyInjection;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ETHTPS.API.DependencyInjection
 {
     public static class CoreServicesExtensions
     {
-        public static IServiceCollection AddCoreServices(this IServiceCollection services)
-        {
-            services.AddScoped<TPSService>();
-            services.AddScoped<GPSService>();
-            services.AddScoped<GasAdjustedTPSService>();
-            services.AddScoped<GeneralService>();
-            services.AddScoped<TimeWarpService>();
-            services.AddScoped<IBlockInfoProviderStatusService, BlockInfoProviderStatusService>();
-            services.AddScoped<EthereumBlockTimeProvider>();
-            services.AddScoped<IExperimentService, ExperimentService>();
-            services.AddScoped<IInfoService, InfoService>();
-            services.AddScoped<IRecaptchaVerificationService, RecaptchaVerificationService>();
-            services.AddScoped<IExternalWebsitesService, ExternalWebsitesService>();
-            services.AddScoped<IMarkdownService, MarkdownService>();
-            services.AddScoped<IProvidersService, ProvidersService>();
-            return services;
-        }
+        public static IServiceCollection AddCoreServices(this IServiceCollection services)=> 
+            services.AddEssentialServices()
+            .AddScoped<TPSService>()
+            .AddScoped<GPSService>()
+            .AddScoped<GasAdjustedTPSService>()
+            .AddScoped<GeneralService>()
+            .AddScoped<TimeWarpService>()
+            .AddScoped<IBlockInfoProviderStatusService, BlockInfoProviderStatusService>()
+            .AddScoped<EthereumBlockTimeProvider>()
+            .AddScoped<IExperimentService, ExperimentService>()
+            .AddScoped<IInfoService, InfoService>()
+            .AddScoped<IExternalWebsitesService, ExternalWebsitesService>()
+            .AddScoped<IMarkdownService, MarkdownService>()
+            .AddScoped<IProvidersService, ProvidersService>();
+
+        public static IServiceCollection AddEssentialServices(this IServiceCollection services) => services.AddScoped<IRecaptchaVerificationService, RecaptchaVerificationService>();
     }
 }

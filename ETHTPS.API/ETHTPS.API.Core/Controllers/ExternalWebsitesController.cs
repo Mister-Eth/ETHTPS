@@ -1,4 +1,4 @@
-﻿using ETHTPS.API.Controllers.CRUD;
+﻿using ETHTPS.API.Core.Controllers.CRUD;
 using ETHTPS.API.Core.Infrastructure.Services;
 using ETHTPS.API.Core.Infrastructure.Services.ExternalWebsites;
 using ETHTPS.Data.Database;
@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using System.Collections.Generic;
 
-namespace ETHTPS.API.Controllers
+namespace ETHTPS.API.Core.Controllers
 {
     [Route("api/info/external-websites/")]
     [ApiController]

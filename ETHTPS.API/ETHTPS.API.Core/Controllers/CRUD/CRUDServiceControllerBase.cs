@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using System.Collections.Generic;
 
-namespace ETHTPS.API.Controllers.CRUD
+namespace ETHTPS.API.Core.Controllers.CRUD
 {
     public class CRUDServiceControllerBase<T> : APIControllerBase, ICRUDController<T> where T : class
     {

@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-namespace ETHTPS.API.Controllers.CRUD
+namespace ETHTPS.API.Core.Controllers.CRUD
 {
     public interface ICRUDController<T>
     {

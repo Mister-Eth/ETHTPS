@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using System.Collections.Generic;
 
-namespace ETHTPS.API.Controllers
+namespace ETHTPS.API.Core.Controllers
 {
     [Route("api/Status/[action]")]
     public class StatusController : IBlockInfoProviderStatusService

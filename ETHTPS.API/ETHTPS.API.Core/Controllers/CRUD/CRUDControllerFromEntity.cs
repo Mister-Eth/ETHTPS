@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 
-namespace ETHTPS.API.Controllers.CRUD
+namespace ETHTPS.API.Core.Controllers.CRUD
 {
     public class CRUDControllerFromEntity<TEntity> : EFCoreCRUDServiceBase<TEntity>, ICRUDController<TEntity>
          where TEntity : EntityWIthId, new()
@@ -21,20 +21,20 @@ namespace ETHTPS.API.Controllers.CRUD
         [Route("[action]")]
         [HttpPut]
         [Authorize(Policy = "EditorsOnly")]
-        public void Create(TEntity entity, APIKeyRequestModel requestModel) => base.Create(entity);
+        public void Create(TEntity entity, APIKeyRequestModel requestModel) => Create(entity);
         [Route("[action]")]
         [HttpPut]
         [Authorize(Policy = "EditorsOnly")]
-        public void DeleteById(int id, APIKeyRequestModel requestModel) => base.DeleteById(id);
+        public void DeleteById(int id, APIKeyRequestModel requestModel) => DeleteById(id);
         [Route("[action]")]
         [HttpGet]
-        public IEnumerable<TEntity> GetAll(APIKeyRequestModel requestModel) => base.GetAll();
+        public IEnumerable<TEntity> GetAll(APIKeyRequestModel requestModel) => GetAll();
         [HttpGet]
         [Route("[action]")]
-        public TEntity GetById(int id, APIKeyRequestModel requestModel) => base.GetById(id);
+        public TEntity GetById(int id, APIKeyRequestModel requestModel) => GetById(id);
         [Route("[action]")]
         [Authorize(Policy = "EditorsOnly")]
         [HttpPut]
-        public void Update(TEntity entity, APIKeyRequestModel requestModel) => base.Update(entity);
+        public void Update(TEntity entity, APIKeyRequestModel requestModel) => Update(entity);
     }
 }

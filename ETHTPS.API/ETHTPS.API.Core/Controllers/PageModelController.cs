@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using System.Linq;
 
-namespace ETHTPS.API.Controllers
+namespace ETHTPS.API.Core.Controllers
 {
     [Route("API/Pages/[action]")]
     public class PageModelController : ControllerBase

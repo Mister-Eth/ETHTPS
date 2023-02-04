@@ -5,11 +5,8 @@ using ETHTPS.WSAPI.BackgroundServices;
 using ETHTPS.WSAPI.Queuing;
 using ETHTPS.WSAPI.Services;
 
-using Microsoft.Extensions.Configuration;
-
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
-var defaultConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 services.AddCustomCORSPolicies();
 services.AddAPIKeyAuthenticationAndAuthorization();
 services.AddCoreServices();
