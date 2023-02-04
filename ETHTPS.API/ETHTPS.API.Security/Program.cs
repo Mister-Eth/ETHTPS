@@ -2,6 +2,7 @@ using ETHTPS.API.Security.Core.Authentication;
 using ETHTPS.API.Core.Infrastructure.Services.Implementations;
 using ETHTPS.API.DependencyInjection;
 using ETHTPS.API.Security.Core.Policies;
+using ETHTPS.Configuration.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +14,7 @@ services.AddAPIKeyAuthenticationAndAuthorization();
 services.AddControllers().AddControllersAsServices();
 services.AddSwagger();
 builder.Services.AddRazorPages();
-
+services.RegisterMicroservice("ETHTPS.API.Security", "Security API");
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())

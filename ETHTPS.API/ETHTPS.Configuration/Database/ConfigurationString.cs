@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ETHTPS.Configuration.Database;
 
-public partial class ConfigurationString
+public partial class ConfigurationString : IConfigurationString
 {
     public int Id { get; set; }
 

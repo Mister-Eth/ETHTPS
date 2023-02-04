@@ -1,0 +1,32 @@
+﻿using ETHTPS.API.Core.Controllers;
+using ETHTPS.Configuration.Database;
+using ETHTPS.Data.Models;
+
+using Microsoft.AspNetCore.Mvc;
+
+namespace ETHTPS.API.General.Controllers
+{
+#if DEBUG
+    [Route("api/[controller]")]
+    public class DataInitialization : APIControllerBase
+    {
+        private readonly PublicDataInitializer _publicDataInitializer;
+        private readonly PrivateDataInitializer _privateDataInitializer;
+
+        public DataInitialization(PublicDataInitializer publicDataInitializer, PrivateDataInitializer privateDataInitializer)
+        {
+            _publicDataInitializer = publicDataInitializer;
+            _privateDataInitializer = privateDataInitializer;
+        }
+
+        [Route("[action]")]
+        [HttpPut]
+        public IActionResult Initialize([FromQuery] APIKeyRequestModel model)
+        {
+            _publicDataInitializer.Initialize();
+            _privateDataInitializer.Initialize();
+            return Created(string.Empty, null);
+        }
+    }
+#endif
+}

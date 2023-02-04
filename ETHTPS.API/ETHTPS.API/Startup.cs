@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ETHTPS.Configuration.Extensions;
+using ETHTPS.Configuration.Database;
 
 namespace ETHTPS.API
 {
@@ -42,7 +44,12 @@ namespace ETHTPS.API
                     .AddAPIKeyAuthenticationAndAuthorization()
                     .AddCoreServices()
                     .AddHistoricalDataProviders();
+            services.RegisterMicroservice("ETHTPS.API.General", "General API");
 
+#if DEBUG
+            services.AddScoped<PublicDataInitializer>()
+                    .AddScoped<PrivateDataInitializer>();
+#endif
             if (ConfigurationQueues?.Length > 0)
             {
                 Configuration.InitializeHangfire();

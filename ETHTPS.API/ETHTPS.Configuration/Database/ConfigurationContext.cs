@@ -8,15 +8,13 @@ public partial class ConfigurationContext : ContextBase<ConfigurationContext>
 {
     public ConfigurationContext()
     {
-        InitializePublicDataIfNecessary();
-        InitializePrivateDataIfNecessary();
+
     }
 
     public ConfigurationContext(DbContextOptions<ConfigurationContext> options)
         : base(options)
     {
-        InitializePublicDataIfNecessary();
-        InitializePrivateDataIfNecessary();
+
     }
 
     public virtual DbSet<Environment> Environments { get; set; }
@@ -26,6 +24,7 @@ public partial class ConfigurationContext : ContextBase<ConfigurationContext>
     public virtual DbSet<MicroserviceConfigurationString> MicroserviceConfigurationStrings { get; set; }
 
     public virtual DbSet<Provider> Providers { get; set; }
+    public virtual DbSet<ConfigurationString> ConfigurationStrings { get; set; }
 
     public virtual DbSet<ProviderConfigurationString> ProviderConfigurationStrings { get; set; }
 
@@ -52,10 +51,6 @@ public partial class ConfigurationContext : ContextBase<ConfigurationContext>
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Name).HasMaxLength(255);
         });
-
-       
-
-      
 
         modelBuilder.Entity<Microservice>(entity =>
         {

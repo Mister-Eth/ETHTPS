@@ -4,6 +4,7 @@ using ETHTPS.API.Security.Core.Policies;
 using ETHTPS.WSAPI.BackgroundServices;
 using ETHTPS.WSAPI.Queuing;
 using ETHTPS.WSAPI.Services;
+using ETHTPS.Configuration.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -21,6 +22,7 @@ services.AddSingleton<IBackgroundTaskQueue>(ctx =>
         queueCapacity = 100;
     return new BackgroundTaskQueue(queueCapacity);
 });
+services.RegisterMicroservice("ETHTPS.WSAPI", "Websockets API");
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())

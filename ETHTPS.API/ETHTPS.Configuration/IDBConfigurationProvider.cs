@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ETHTPS.Configuration.Database;
 
 namespace ETHTPS.Configuration
 {
-    public interface IDBConfigurationProvider
+    public interface IDBConfigurationProvider : IEnvironmentConfiguration, IMicroserviceProvider, IMicroserviceConfigurationProvider, IEnvironmentProvider, IProviderConfigurationStringProvider
     {
-
+        IDBConfigurationProvider this[string environment]
+        {
+            get;
+        }
     }
 }
