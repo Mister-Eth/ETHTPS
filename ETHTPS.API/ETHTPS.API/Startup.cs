@@ -62,13 +62,7 @@ namespace ETHTPS.API
 
             services.AddControllersWithViews()
                 .AddControllersAsServices()
-                .AddNewtonsoftJson(options =>
-            {
-                options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
-            }).AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
-            });
+                .ConfigureNewtonsoftJson();
             services.AddSwaggerGen(c =>
             {
                 c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
@@ -84,30 +78,12 @@ namespace ETHTPS.API
                 Configuration.InitializeHangFire();
                 services.ConfigureHangfire(Configuration);
                 services.AddTPSDataUpdaters(Configuration);
-                //AddCacheUpdaters(services);
                 services.AddHistoricalBlockInfoDataUpdaters(ConfigurationQueues);
                 services.AddTimeWarpUpdaters(ConfigurationQueues)
                 .AddStatusNotifiers(ConfigurationQueues);
             }
 
         }
-
-       
-
-     
-
-       
-        /*
-        private void AddCacheUpdaters(IServiceCollection services)
-        {
-            if (ConfigurationQueues.Contains(CACHEUPDATERQUEUE))
-            {
-
-            }
-        }*/
-
-       
-     
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
