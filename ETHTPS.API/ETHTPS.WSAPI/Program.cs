@@ -5,10 +5,11 @@ using ETHTPS.WSAPI.BackgroundServices;
 using ETHTPS.WSAPI.Queuing;
 using ETHTPS.WSAPI.Services;
 using ETHTPS.Configuration.Extensions;
-
+const string APP_NAME = "ETHTPS.WSAPI";
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 services.AddCustomCORSPolicies();
+services.AddDatabaseContext(APP_NAME);
 services.AddAPIKeyAuthenticationAndAuthorization();
 services.AddCoreServices();
 services.AddRazorPages();
@@ -22,7 +23,7 @@ services.AddSingleton<IBackgroundTaskQueue>(ctx =>
         queueCapacity = 100;
     return new BackgroundTaskQueue(queueCapacity);
 });
-services.RegisterMicroservice("ETHTPS.WSAPI", "Websockets API");
+services.RegisterMicroservice(APP_NAME, "Websockets API");
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -33,8 +34,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
-
+app.UseAuthorization(); 
+app.UseCustomCORSPolicies();
+app.MapControllers().RequireAuthorization();
 app.MapRazorPages();
 
 WebSocketOptions webSocketOptions = new ()

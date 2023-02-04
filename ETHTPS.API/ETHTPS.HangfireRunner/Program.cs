@@ -35,7 +35,7 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
 }
 app.UseStaticFiles();
-
+app.ConfigureHangfire(builder.Configuration);
 app.UseRouting();
 app.ConfigureSwagger();
 app.UseAuthorization();

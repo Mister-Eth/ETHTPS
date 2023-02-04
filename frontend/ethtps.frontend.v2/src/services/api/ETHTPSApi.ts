@@ -26,23 +26,34 @@ import { DataType } from "../../Types"
 
 export class ETHTPSApi {
   public generalApi: GeneralApi = new GeneralApi()
+  private _generalApiEndpoint: string
   public tpsApi: TPSApi = new TPSApi()
+  private _tpsApiEndpoint: string
   public gpsApi: GPSApi = new GPSApi()
+  private _gpsApiEndpoint: string
   public gtpsApi: GasAdjustedTPSApi = new GasAdjustedTPSApi()
+  private _gtpsApiEndpoint: string
   public experimentAPI: ExperimentApi = new ExperimentApi()
   public externalWebsitePAI: ExternalWebsitesApi = new ExternalWebsitesApi()
   public markdownAPI: MarkdownPagesApi = new MarkdownPagesApi()
   public apiKeyAPI: APIKeyApi
-
+  private _apiKeyApiEndpoint: string
   public apiKey?: string
-  private _url: string
 
   constructor(
-    url?: string,
+    generalApiUrl: string,
+    tpsApiUrl: string,
+    gpsApiUrl: string,
+    gtpsApiUrl: string,
+    apiKeyApiUrl: string,
     apiKey?: string,
     useArtificialDelay: boolean = true,
   ) {
-    this._url = url as string
+    this._generalApiEndpoint = generalApiUrl;
+    this._tpsApiEndpoint = tpsApiUrl;
+    this._gpsApiEndpoint = gpsApiUrl
+    this._gtpsApiEndpoint = gtpsApiUrl
+    this._apiKeyApiEndpoint = apiKeyApiUrl
     if (!apiKey) {
       tryLoadAPIKeyFromLocalStorage()
       let supposedlyAKey = getAPIKey()
@@ -52,10 +63,10 @@ export class ETHTPSApi {
     }
     this.apiKeyAPI = new APIKeyApi(
       new Configuration({
-        basePath: url,
+        basePath: this._apiKeyApiEndpoint,
       }),
     )
-    this.resetConfig(this._url)
+    this.resetConfig()
   }
 
   private _genConfig(url: string) {
@@ -67,19 +78,22 @@ export class ETHTPSApi {
     return config
   }
 
-  public resetConfig(url: string = BASE_PATH as string) {
-    let config = this._genConfig(url)
-    this.generalApi = new GeneralApi(config)
-    this.tpsApi = new TPSApi(config)
-    this.gpsApi = new GPSApi(config)
-    this.gtpsApi = new GasAdjustedTPSApi(config)
-    this.experimentAPI = new ExperimentApi(config)
-    this.externalWebsitePAI = new ExternalWebsitesApi(config)
-    this.markdownAPI = new MarkdownPagesApi(config)
+  public resetConfig() {
+    this.generalApi = new GeneralApi(this._genConfig(this._generalApiEndpoint))
+    this.tpsApi = new TPSApi(this._genConfig(this._tpsApiEndpoint))
+    this.gpsApi = new GPSApi(this._genConfig(this._gpsApiEndpoint))
+    this.gtpsApi = new GasAdjustedTPSApi(
+      this._genConfig(this._gtpsApiEndpoint),
+    )
+    this.experimentAPI = new ExperimentApi(
+      this._genConfig(this._generalApiEndpoint),
+    )
+    this.externalWebsitePAI = new ExternalWebsitesApi(this._genConfig(this._generalApiEndpoint))
+    this.markdownAPI = new MarkdownPagesApi(this._genConfig(this._generalApiEndpoint))
 
     this.apiKeyAPI = new APIKeyApi(
       new Configuration({
-        basePath: url,
+        basePath: this._apiKeyApiEndpoint,
       }),
     )
   }

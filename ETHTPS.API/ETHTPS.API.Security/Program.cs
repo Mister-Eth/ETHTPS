@@ -28,5 +28,6 @@ app.ConfigureSwagger();
 app.UseAuthorization();
 
 app.MapRazorPages();
-
+app.UseCustomCORSPolicies();
+app.MapControllers().RequireAuthorization();
 app.Run();

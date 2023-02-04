@@ -27,7 +27,8 @@ app.UseStaticFiles();
 app.UseRouting();
 app.ConfigureSwagger();
 app.UseAuthorization();
-
+app.UseCustomCORSPolicies();
+app.MapControllers().RequireAuthorization();
 app.MapRazorPages();
 
 app.Run();

@@ -9,7 +9,7 @@ const string APP_NAME = "ETHTPS.API.TPS";
 var services = builder.Services;
 services.AddCoreServices();
 services.AddDatabaseContext(APP_NAME);
-services.AddScoped<TimeWarpService>();
+services.AddScoped<TPSService>();
 services.AddCustomCORSPolicies();
 services.AddAPIKeyAuthenticationAndAuthorization();
 services.AddControllers().AddControllersAsServices();
@@ -27,7 +27,8 @@ app.UseStaticFiles();
 app.UseRouting();
 app.ConfigureSwagger();
 app.UseAuthorization();
-app.MapControllers();
+app.UseCustomCORSPolicies();
+app.MapControllers().RequireAuthorization();
 app.MapRazorPages();
 
 app.Run();

@@ -8,10 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 const string APP_NAME = "ETHTPS.API.GPS";
 var services = builder.Services;
 services.AddDatabaseContext(APP_NAME);
+services.AddAPIKeyAuthenticationAndAuthorization();
 services.AddCoreServices();
 services.AddScoped<GPSService>();
 services.AddCustomCORSPolicies();
-services.AddAPIKeyAuthenticationAndAuthorization();
 services.AddControllers().AddControllersAsServices();
 services.AddSwagger();
 builder.Services.AddRazorPages();
@@ -27,7 +27,8 @@ app.UseStaticFiles();
 app.UseRouting();
 app.ConfigureSwagger();
 app.UseAuthorization();
-
+app.UseCustomCORSPolicies();
+app.MapControllers().RequireAuthorization();
 app.MapRazorPages();
 
 app.Run();

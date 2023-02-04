@@ -5,11 +5,8 @@ using ETHTPS.API.Core.Middlewares;
 using ETHTPS.API.DependencyInjection;
 using ETHTPS.API.Security.Core.Policies;
 
-using Hangfire;
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -62,7 +59,6 @@ namespace ETHTPS.API
             app.RequestsAreForwardedByReverseProxy();
             app.UseMiddleware<UnstableConnectionSimulatorMiddleware>(); //Simulating high server load
             app.UseMiddleware<AccesStatsMiddleware>();
-            app.ConfigureHangfire(Configuration);
             app.ConfigureSwagger();
             app.UseRouting();
             app.UseAuthorization();

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ETHTPS.API.Security.Core.Policies
 {
@@ -19,5 +20,7 @@ namespace ETHTPS.API.Security.Core.Policies
                           builder.AllowAnyHeader();
                       });
         });
+
+        public static IApplicationBuilder UseCustomCORSPolicies(this IApplicationBuilder app) => app.UseCors(MyAllowSpecificOrigins);
     }
 }
