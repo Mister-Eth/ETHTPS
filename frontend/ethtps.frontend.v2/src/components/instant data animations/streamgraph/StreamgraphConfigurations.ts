@@ -1,0 +1,3 @@
+interface StreamgraphConfiguration {
+  min: number
+}

@@ -1,5 +1,5 @@
-﻿using ETHTPS.API.Infrastructure.Services;
-using ETHTPS.API.Infrastructure.Services.Implementations;
+﻿using ETHTPS.API.Core.Infrastructure.Services;
+using ETHTPS.API.Core.Infrastructure.Services.Implementations;
 using ETHTPS.Data;
 using ETHTPS.Data.Extensions.StringExtensions;
 using ETHTPS.Data.Models.Pages.Chart;

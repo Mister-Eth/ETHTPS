@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { extractData, getModeData } from "../../Types"
+import { DataType, extractData, getModeData } from "../../Types"
 import { useGetProviderColorDictionaryFromAppStore } from "../../hooks/ColorHooks"
 import {
   useGetLiveDataSmoothingFromAppStore,
@@ -11,6 +11,7 @@ import { DataResponseModelDictionary } from "../../Types.dictionaries"
 import { dataTypeToString, toShortString_2 } from "../../models/TimeIntervals"
 import { useGetSidechainsIncludedFromAppStore } from "../../hooks/LiveDataHooks"
 import { ProviderResponseModel } from "ethtps.api.client"
+import { useAppSelector } from "../../store"
 
 export type InstantBarChartDataset = {
   label: string
@@ -49,6 +50,18 @@ export const createDataPoint = (
     providerColor: color,
     value,
   } as LiveDataPoint
+}
+
+export function useGet1mTPS() {
+  return useAppSelector((state) => state.liveData.oneMinuteTPSData)
+}
+
+export function useGet1mGPS() {
+  return useAppSelector((state) => state.liveData.oneMinuteGPSData)
+}
+
+export function useGet1mGTPS() {
+  return useAppSelector((state) => state.liveData.oneMinuteGTPSData)
 }
 
 export function useLiveData() {

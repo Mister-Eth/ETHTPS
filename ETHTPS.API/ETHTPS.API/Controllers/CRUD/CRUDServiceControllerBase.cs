@@ -1,5 +1,4 @@
-﻿using ETHTPS.API.Authentication;
-using ETHTPS.API.Infrastructure.Services;
+﻿using ETHTPS.API.Core.Infrastructure.Services;
 using ETHTPS.Data.Models;
 
 using Microsoft.AspNetCore.Authorization;

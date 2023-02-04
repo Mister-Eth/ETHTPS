@@ -67,7 +67,7 @@ const liveDataSlice = createSlice({
           state.oneMinuteGPSData = action.payload
           break
         default:
-          storage.cacheItem(action.payload, "oneMinuteGTPSData")
+          storage.cacheItem(action.payload, "oneMinuteTPSData")
           state.oneMinuteGTPSData = action.payload
           break
       }

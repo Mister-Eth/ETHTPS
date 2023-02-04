@@ -1,6 +1,6 @@
 ﻿using ETHTPS.API.Controllers.CRUD;
-using ETHTPS.API.Infrastructure.Services;
-using ETHTPS.API.Infrastructure.Services.ExternalWebsites;
+using ETHTPS.API.Core.Infrastructure.Services;
+using ETHTPS.API.Core.Infrastructure.Services.ExternalWebsites;
 using ETHTPS.Data.Database;
 using ETHTPS.Data.Models;
 using ETHTPS.Data.ResponseModels.SocialMedia;

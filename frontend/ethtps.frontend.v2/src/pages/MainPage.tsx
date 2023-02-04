@@ -15,13 +15,18 @@ import {
   useGetLiveDataModeFromAppStore,
 } from "../hooks/LiveDataHooks"
 import { createSearchParams, useSearchParams } from "react-router-dom"
-import { toShortString } from "../Types"
-import { TestTube } from "../components/experiments/TestTube"
+import { toShortString, ConditionalRender } from "../Types"
 import { useGetProvidersFromAppStore } from "../hooks/ProviderHooks"
 import { isMobile } from "react-device-detect"
 import { SimpleTextDisplay } from "../components/instant data animations/SimpleTextDisplay"
 import { ProviderModel } from "ethtps.api.client"
 import { StreamgraphAnimation } from "../components/instant data animations/streamgraph/StreamgraphAnimation"
+import {
+  useLiveData,
+  useGet1mTPS,
+  useGet1mGPS,
+  useGet1mGTPS,
+} from "../components/instant data animations/hooks"
 
 export default function MainPage(): JSX.Element {
   const providers = useGetProvidersFromAppStore()
@@ -29,6 +34,12 @@ export default function MainPage(): JSX.Element {
   const sidechainsIncluded = useGetSidechainsIncludedFromAppStore()
   const [showProviderModal, setShowProviderModal] = useState(false)
   const mode = useGetLiveDataModeFromAppStore()
+  const data = useLiveData()
+  const [_1mtps, _1mgps, _1mgtps] = [
+    useGet1mTPS(),
+    useGet1mGPS(),
+    useGet1mGTPS(),
+  ]
   const [modalProvider, setModalProvider] = useState<
     ProviderModel | undefined
   >()
@@ -49,7 +60,6 @@ export default function MainPage(): JSX.Element {
     ])
     setSearchParams(createSearchParams(params))
   }, [sidechainsIncluded, mode])
-
   return (
     <>
       <Paper elevation={0}>
@@ -72,7 +82,7 @@ export default function MainPage(): JSX.Element {
             </Paper>
             <Paper elevation={1}>
               <SimpleTextDisplay />
-              <StreamgraphAnimation />
+              {ConditionalRender(<StreamgraphAnimation data={_1mtps} />, false)}
             </Paper>
             <Paper elevation={1}>
               <AllProvidersTable

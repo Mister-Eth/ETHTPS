@@ -36,14 +36,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ETHTPS.API.Core\ETHTPS.API.Core.csproj" />
     <ProjectReference Include="..\ETHTPS.BackgroundServices\ETHTPS.Services.csproj" />
     <ProjectReference Include="..\ETHTPS.Data\ETHTPS.Data.csproj" />
+    <ProjectReference Include="..\ETHTPS.DependencyInjection\ETHTPS.DependencyInjection.csproj" />
+    <ProjectReference Include="..\ETHTPS.Security\ETHTPS.Security.csproj" />
     <ProjectReference Include="..\ETHTPS.Services.Ethereum\ETHTPS.Services.Ethereum.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Infrastructure\Models\" />
-    <Folder Include="Infrastructure\Services\Recaptcha\Extensions\" />
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">

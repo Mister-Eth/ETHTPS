@@ -1,4 +1,4 @@
-﻿using ETHTPS.API.Infrastructure.Services.Experimentation;
+﻿using ETHTPS.API.Core.Infrastructure.Services.Experimentation;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

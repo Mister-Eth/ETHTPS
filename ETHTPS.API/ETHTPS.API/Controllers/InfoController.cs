@@ -1,4 +1,4 @@
-﻿using ETHTPS.API.Infrastructure.Services.Info;
+﻿using ETHTPS.API.Core.Infrastructure.Services.Info;
 using Microsoft.AspNetCore.Components;
 
 namespace ETHTPS.API.Controllers

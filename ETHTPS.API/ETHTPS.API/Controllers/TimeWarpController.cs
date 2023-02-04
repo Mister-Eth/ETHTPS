@@ -1,4 +1,4 @@
-﻿using ETHTPS.API.Infrastructure.Services.Implementations;
+﻿using ETHTPS.API.Core.Infrastructure.Services.Implementations;
 using ETHTPS.Data.Database.TimeWarp;
 using ETHTPS.Data.Database.TimeWarp.Models;
 using ETHTPS.Data.Models;
