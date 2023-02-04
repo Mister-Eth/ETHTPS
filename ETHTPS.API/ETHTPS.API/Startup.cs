@@ -28,7 +28,6 @@ namespace ETHTPS.API
         }
 
         public IConfiguration Configuration { get; }
-        public string[] ConfigurationQueues => Configuration.GetSection("Hangfire").GetSection("Queues").Get<string[]>();
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -50,15 +49,7 @@ namespace ETHTPS.API
             services.AddScoped<PublicDataInitializer>()
                     .AddScoped<PrivateDataInitializer>();
 #endif
-            if (ConfigurationQueues?.Length > 0)
-            {
-                services.InitializeHangfire(APP_NAME);
-                services.AddHangfireServer(APP_NAME);
-                services.AddTPSDataUpdaters(Configuration);
-                services.AddHistoricalBlockInfoDataUpdaters(ConfigurationQueues);
-                services.AddTimeWarpUpdaters(ConfigurationQueues)
-                .AddStatusNotifiers(ConfigurationQueues);
-            }
+          
 
         }
 

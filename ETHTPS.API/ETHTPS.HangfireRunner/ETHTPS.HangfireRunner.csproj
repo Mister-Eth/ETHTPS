@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="appsettings.default.Development.json" />
+    <_ContentIncludedByDefault Remove="appsettings.default.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ETHTPS.API.Security\ETHTPS.API.Security.csproj" />
+    <ProjectReference Include="..\ETHTPS.Configuration\ETHTPS.Configuration.csproj" />
+    <ProjectReference Include="..\ETHTPS.DependencyInjection\ETHTPS.API.DependencyInjection.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>
