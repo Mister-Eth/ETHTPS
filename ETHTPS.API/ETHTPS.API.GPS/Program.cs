@@ -5,9 +5,9 @@ using ETHTPS.API.Security.Core.Policies;
 using ETHTPS.Configuration.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
-
+const string APP_NAME = "ETHTPS.API.GPS";
 var services = builder.Services;
-services.AddDatabaseContext(builder.Configuration);
+services.AddDatabaseContext(APP_NAME);
 services.AddCoreServices();
 services.AddScoped<GPSService>();
 services.AddCustomCORSPolicies();
@@ -15,7 +15,7 @@ services.AddAPIKeyAuthenticationAndAuthorization();
 services.AddControllers().AddControllersAsServices();
 services.AddSwagger();
 builder.Services.AddRazorPages();
-services.RegisterMicroservice("ETHTPS.API.GPS", "GPS API");
+services.RegisterMicroservice(APP_NAME, "GPS API");
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())

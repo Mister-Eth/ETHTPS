@@ -3,11 +3,13 @@ using ETHTPS.API.Core.Infrastructure.Services.Implementations;
 using ETHTPS.Data.Models.Query;
 using ETHTPS.Data.ResponseModels;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ETHTPS.API.Controllers
 {
     [Route("API/TPS/[action]")]
+    [Authorize(AuthenticationSchemes = "APIKey")]
     public class TPSController : IPSService
     {
         private readonly TPSService _tpsService;

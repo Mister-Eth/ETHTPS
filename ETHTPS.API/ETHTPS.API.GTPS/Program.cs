@@ -5,9 +5,9 @@ using ETHTPS.API.Security.Core.Policies;
 using ETHTPS.Configuration.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
-
+const string APP_NAME = "ETHTPS.API.GTPS";
 var services = builder.Services;
-services.AddDatabaseContext(builder.Configuration);
+services.AddDatabaseContext(APP_NAME);
 services.AddCoreServices();
 services.AddScoped<GasAdjustedTPSService>();
 services.AddCustomCORSPolicies();
@@ -15,7 +15,7 @@ services.AddAPIKeyAuthenticationAndAuthorization();
 services.AddControllers().AddControllersAsServices();
 services.AddSwagger();
 builder.Services.AddRazorPages();
-services.RegisterMicroservice("ETHTPS.API.GTPS", "Gas-adjusted TPS API");
+services.RegisterMicroservice(APP_NAME, "Gas-adjusted TPS API");
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())

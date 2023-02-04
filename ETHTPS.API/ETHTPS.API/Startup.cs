@@ -21,7 +21,7 @@ namespace ETHTPS.API
     public class Startup
     {
         private readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
+        const string APP_NAME = "ETHTPS.API.General";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -32,7 +32,7 @@ namespace ETHTPS.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDatabaseContext(Configuration);
+            services.AddDatabaseContext(APP_NAME);
             services.AddCustomCORSPolicies();
 
             services.AddControllersWithViews()
@@ -44,7 +44,7 @@ namespace ETHTPS.API
                     .AddAPIKeyAuthenticationAndAuthorization()
                     .AddCoreServices()
                     .AddHistoricalDataProviders();
-            services.RegisterMicroservice("ETHTPS.API.General", "General API");
+            services.RegisterMicroservice(APP_NAME, "General API");
 
 #if DEBUG
             services.AddScoped<PublicDataInitializer>()
@@ -52,8 +52,8 @@ namespace ETHTPS.API
 #endif
             if (ConfigurationQueues?.Length > 0)
             {
-                Configuration.InitializeHangfire();
-                services.AddHangfireServer(Configuration);
+                services.InitializeHangfire(APP_NAME);
+                services.AddHangfireServer(APP_NAME);
                 services.AddTPSDataUpdaters(Configuration);
                 services.AddHistoricalBlockInfoDataUpdaters(ConfigurationQueues);
                 services.AddTimeWarpUpdaters(ConfigurationQueues)

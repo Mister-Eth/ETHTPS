@@ -3,6 +3,8 @@ using ETHTPS.Data.Core;
 using ETHTPS.Data.Models.Query;
 using ETHTPS.Data.ResponseModels;
 
+using Microsoft.AspNetCore.Authorization;
+
 using System.Collections.Generic;
 
 namespace ETHTPS.API.Core.Infrastructure.Services

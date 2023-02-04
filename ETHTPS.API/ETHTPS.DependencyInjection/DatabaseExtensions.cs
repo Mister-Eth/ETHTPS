@@ -1,4 +1,5 @@
-﻿using ETHTPS.Data.Database;
+﻿using ETHTPS.Configuration;
+using ETHTPS.Data.Database;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -8,12 +9,19 @@ namespace ETHTPS.API.DependencyInjection
 {
     public static class DatabaseExtensions
     {
-        public static string? GetDefaultConnectionString(this IConfiguration configuration) => configuration.GetConnectionString("DefaultConnection");
-        public static IServiceCollection AddDatabaseContext(this IServiceCollection services, IConfiguration configuration)
+        public static string GetDefaultConnectionString(this IServiceCollection services, string appName)
         {
-            var defaultConnectionString = configuration.GetDefaultConnectionString();
-            services.AddDbContext<EthtpsContext>(options => options.UseSqlServer(defaultConnectionString), ServiceLifetime.Transient);
+            using (var built = services.BuildServiceProvider())
+            {
+                var provider = built.GetRequiredService<IDBConfigurationProvider>();
+                return provider.GetConfigurationStringsForMicroservice(appName).First(x => x.Name == "ConnectionString").Value;
+            }
+        }
+        public static IServiceCollection AddDatabaseContext(this IServiceCollection services, string appName)
+        {
+            services.AddDbContext<EthtpsContext>(options => options.UseSqlServer(services.GetDefaultConnectionString(appName)), ServiceLifetime.Transient);
             return services;
+
         }
     }
 }

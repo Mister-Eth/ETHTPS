@@ -5,17 +5,17 @@ using ETHTPS.API.Security.Core.Policies;
 using ETHTPS.Configuration.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
-
+const string APP_NAME = "ETHTPS.API.TPS";
 var services = builder.Services;
-services.AddDatabaseContext(builder.Configuration);
 services.AddCoreServices();
+services.AddDatabaseContext(APP_NAME);
 services.AddScoped<TimeWarpService>();
 services.AddCustomCORSPolicies();
 services.AddAPIKeyAuthenticationAndAuthorization();
 services.AddControllers().AddControllersAsServices();
 services.AddSwagger();
 builder.Services.AddRazorPages();
-services.RegisterMicroservice("ETHTPS.API.TPS", "TPS API");
+services.RegisterMicroservice(APP_NAME, "TPS API");
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -27,7 +27,7 @@ app.UseStaticFiles();
 app.UseRouting();
 app.ConfigureSwagger();
 app.UseAuthorization();
-
+app.MapControllers();
 app.MapRazorPages();
 
 app.Run();

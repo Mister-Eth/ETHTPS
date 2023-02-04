@@ -14,11 +14,11 @@ namespace ETHTPS.API.Security.Core.Authentication
         {
             services.AddAuthentication("APIKey").AddScheme<AuthenticationSchemeOptions, APIKeyAuthenticationSchemeHandler>("APIKey", opts =>
             {
-
+                
             });
             services.AddAuthorizationCore(options =>
             {
-                options.DefaultPolicy = new AuthorizationPolicyBuilder()
+                options.DefaultPolicy = new AuthorizationPolicyBuilder("APIKey")
                     .AddAuthenticationSchemes("APIKey")
                     .RequireAuthenticatedUser()
                     .Build();

@@ -13,8 +13,7 @@ namespace ETHTPS.Configuration.Database
 
         public override void Initialize()
         {
-            InitializeRecaptcha();
-            InitializeStarkware();
+
         }
         private void InitializeStarkware()
         {

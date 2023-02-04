@@ -8,15 +8,15 @@ namespace ETHTPS.API.DependencyInjection
 {
     public static class HangfireExtensions
     {
-        public static void InitializeHangfire(this IConfiguration configuration)
+        public static void InitializeHangfire(this IServiceCollection services, string appName)
         {
-            SqlServerStorage sqlStorage = new(configuration.GetDefaultConnectionString());
+            SqlServerStorage sqlStorage = new(services.GetDefaultConnectionString(appName));
             JobStorage.Current = sqlStorage;
         }
 
-        public static IServiceCollection AddHangfireServer(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddHangfireServer(this IServiceCollection services, string appName)
         {
-            services.AddHangfire(x => x.UseSqlServerStorage(configuration.GetDefaultConnectionString()));
+            services.AddHangfire(x => x.UseSqlServerStorage(services.GetDefaultConnectionString(appName)));
             services.AddHangfireServer(options =>
             {
                 options.SchedulePollingInterval = TimeSpan.FromSeconds(5);

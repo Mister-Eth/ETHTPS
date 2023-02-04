@@ -59,7 +59,7 @@ namespace ETHTPS.Configuration
             {
                 return _context.MicroserviceConfigurationStrings
                     .Where(x => x.Microservice.Name.ToUpper() == microserviceName.ToUpper() && x.Environment.Name.ToUpper() == _environment.ToUpper() || x.Environment.Name.ToUpper() == "ALL")
-                    .Select(x => (IConfigurationString)x)
+                    .Select(x => (IConfigurationString)x.ConfigurationString)
                     .ToList();
             }
         }
@@ -70,7 +70,7 @@ namespace ETHTPS.Configuration
             {
                 return _context.ProviderConfigurationStrings
                     .Where(x => x.Provider.Name.ToUpper() == provider.ToUpper() && x.Environment.Name.ToUpper() == _environment.ToUpper() || x.Environment.Name.ToUpper() == "ALL")
-                    .Select(x => (IConfigurationString)x)
+                    .Select(x => (IConfigurationString)x.ConfigurationString)
                     .ToList();
             }
         }
