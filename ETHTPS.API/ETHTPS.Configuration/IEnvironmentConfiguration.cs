@@ -2,6 +2,6 @@
 {
     public interface IEnvironmentConfiguration
     {
-
+        int GetEnvironmentID(string name);
     }
 }

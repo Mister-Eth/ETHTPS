@@ -7,7 +7,8 @@ namespace ETHTPS.Configuration
         private readonly ConfigurationContext _context;
         private readonly string _environment;
         private readonly int _environmentID;
-        public DBConfigurationProvider(ConfigurationContext context, string environment)
+        public DBConfigurationProvider(ConfigurationContext context, string environment = Constants
+            .ENVIRONMENT)
         {
             _context = context;
             _environment = environment;
@@ -51,6 +52,14 @@ namespace ETHTPS.Configuration
             }
         }
 
+        public IEnumerable<IConfigurationString> GetConfigurationStrings(string name)
+        {
+            lock (_context.LockObj)
+            {
+                return _context.ConfigurationStrings.Where(x => x.Name.ToUpper() == name.ToUpper()).ToList();
+            }
+        }
+
         public IEnumerable<IConfigurationString> GetConfigurationStringsForMicroservice(IMicroservice microservice) => GetConfigurationStringsForMicroservice(microservice.Name);
 
         public IEnumerable<IConfigurationString> GetConfigurationStringsForMicroservice(string microserviceName)
@@ -75,11 +84,42 @@ namespace ETHTPS.Configuration
             }
         }
 
+        public int GetEnvironmentID(string name)
+        {
+            lock (_context.LockObj)
+            {
+                return _context.Environments.First(x => x.Name.ToUpper() == name.ToUpper()).Id
+                    ;
+            }
+        }
+
         public IEnumerable<string> GetEnvironments()
         {
             lock (_context.LockObj)
             {
                 return _context.Environments.Select(x => x.Name).ToList();
+            }
+        }
+
+        public int GetMicroserviceID(string name, bool addIfItDoesntExist = false)
+        {
+            lock (_context.LockObj)
+            {
+                Func<Microservice, bool> selector = x => x.Name.ToUpper() == name.ToUpper();
+                if (!_context.Microservices.Any(selector))
+                {
+                    if (addIfItDoesntExist)
+                    {
+                        AddMicroservice(name, string.Empty);
+                    }
+                    else
+                    {
+                        throw new ArgumentOutOfRangeException($"Microservice {name} doesn't exist and {nameof(addIfItDoesntExist)} is false");
+                    }
+                }
+
+                return _context.Microservices.First(selector).Id
+                    ;
             }
         }
 

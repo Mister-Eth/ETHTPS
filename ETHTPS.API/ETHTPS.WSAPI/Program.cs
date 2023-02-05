@@ -5,8 +5,11 @@ using ETHTPS.WSAPI.BackgroundServices;
 using ETHTPS.WSAPI.Queuing;
 using ETHTPS.WSAPI.Services;
 using ETHTPS.Configuration.Extensions;
+using NLog.Extensions.Hosting;
+
 const string APP_NAME = "ETHTPS.WSAPI";
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseNLog();
 var services = builder.Services;
 services.AddCustomCORSPolicies();
 services.AddDatabaseContext(APP_NAME);

@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ETHTPS.Configuration.Extensions;
 using ETHTPS.Configuration.Database;
+using Microsoft.Extensions.Logging;
 
 namespace ETHTPS.API
 {
@@ -34,19 +35,16 @@ namespace ETHTPS.API
             services.AddControllersWithViews()
                 .AddControllersAsServices()
                 .ConfigureNewtonsoftJson();
-            services.AddSwagger();
-
-            services.AddMemoryCache()
+            services.AddSwagger()
+                    .AddMemoryCache()
                     .AddAPIKeyAuthenticationAndAuthorization()
-                    .AddCoreServices();
-            services.RegisterMicroservice(APP_NAME, "General API");
-
+                    .AddCoreServices()
+                    .RegisterMicroservice(APP_NAME, "General API");
+            
 #if DEBUG
             services.AddScoped<PublicDataInitializer>()
                     .AddScoped<PrivateDataInitializer>();
 #endif
-          
-
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

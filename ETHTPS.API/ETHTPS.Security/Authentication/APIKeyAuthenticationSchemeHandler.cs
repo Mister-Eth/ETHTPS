@@ -16,6 +16,7 @@ namespace ETHTPS.API.Security.Core.Authentication
     public class APIKeyAuthenticationSchemeHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
         private readonly EthtpsContext _context;
+        private readonly ILogger _logger;
         public APIKeyAuthenticationSchemeHandler(
             IOptionsMonitor<AuthenticationSchemeOptions> options,
             ILoggerFactory logger,
@@ -24,6 +25,7 @@ namespace ETHTPS.API.Security.Core.Authentication
             EthtpsContext context) : base(options, logger, encoder, clock)
         {
             _context = context;
+            _logger = logger.CreateLogger<APIKeyAuthenticationSchemeHandler>();
         }
 
         private bool ValidateAPIKey(StringValues apikey)
@@ -36,10 +38,16 @@ namespace ETHTPS.API.Security.Core.Authentication
         {
             var apiKey = Context.ExtractAPIKey();
             if (!ValidateAPIKey(apiKey))
+            {
+                _logger.LogWarning($"API call with invalid key", Request.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString());
                 return Task.FromResult(AuthenticateResult.Fail("No X-API-KEY header specified or API key is invalid"));
+            }
 
             if (!_context.ValidateNumberOfCalls(apiKey))
+            {
+                _logger.LogWarning($"Limit rate exceeded", Request.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString());
                 return Task.FromResult(AuthenticateResult.Fail("Limit reached for today"));
+            }
 
             _context.IncrementNumberOfCalls(apiKey);
             Claim[] claims = new[] { new Claim(ClaimTypes.Name, "VALID USER") };

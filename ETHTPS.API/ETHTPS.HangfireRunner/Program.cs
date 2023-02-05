@@ -1,10 +1,13 @@
-using ETHTPS.API.Security.Core.Authentication;
 using ETHTPS.API.Core.Infrastructure.Services.Implementations;
 using ETHTPS.API.DependencyInjection;
+using ETHTPS.API.Security.Core.Authentication;
 using ETHTPS.API.Security.Core.Policies;
 using ETHTPS.Configuration.Extensions;
 
+using NLog.Extensions.Hosting;
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseNLog();
 const string APP_NAME = "ETHTPS.HangfireRunner";
 var services = builder.Services;
 services.AddCoreServices();

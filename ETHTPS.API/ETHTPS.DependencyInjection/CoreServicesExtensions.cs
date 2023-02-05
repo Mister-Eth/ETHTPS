@@ -34,7 +34,8 @@ namespace ETHTPS.API.DependencyInjection
 
         public static IServiceCollection AddEssentialServices(this IServiceCollection services) =>
             services.AddScoped<IRecaptchaVerificationService, RecaptchaVerificationService>()
-            .AddDbContext<ConfigurationContext>(options => options.UseSqlServer(GetConfigurationServiceConnectionString()))
-            .AddScoped<IDBConfigurationProvider, DBConfigurationProvider>((s) => new DBConfigurationProvider(s.GetRequiredService<ConfigurationContext>(), Constants.ENVIRONMENT));
+            .AddDbContext<ConfigurationContext>(options => options.UseSqlServer(GetConfigurationServiceConnectionString()), ServiceLifetime.Singleton)
+            .AddSingleton<IDBConfigurationProvider, DBConfigurationProvider>()
+            ;
     }
 }
