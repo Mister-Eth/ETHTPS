@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ETHTPS.API.Security\ETHTPS.API.Security.csproj" />
     <ProjectReference Include="..\ETHTPS.Configuration\ETHTPS.Configuration.csproj" />
     <ProjectReference Include="..\ETHTPS.DependencyInjection\ETHTPS.API.DependencyInjection.csproj" />
   </ItemGroup>

@@ -29,7 +29,8 @@ namespace ETHTPS.API.DependencyInjection
             .AddScoped<IInfoService, InfoService>()
             .AddScoped<IExternalWebsitesService, ExternalWebsitesService>()
             .AddScoped<IMarkdownService, MarkdownService>()
-            .AddScoped<IProvidersService, ProvidersService>();
+            .AddScoped<IProvidersService, ProvidersService>()
+            .AddHistoricalDataProviders();
 
         public static IServiceCollection AddEssentialServices(this IServiceCollection services) =>
             services.AddScoped<IRecaptchaVerificationService, RecaptchaVerificationService>()

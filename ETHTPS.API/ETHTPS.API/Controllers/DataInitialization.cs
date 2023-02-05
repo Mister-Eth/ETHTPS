@@ -4,7 +4,7 @@ using ETHTPS.Data.Models;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace ETHTPS.API.General.Controllers
+namespace ETHTPS.API.Controllers
 {
 #if DEBUG
     [Route("api/[controller]")]

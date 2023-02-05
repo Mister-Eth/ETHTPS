@@ -4,23 +4,22 @@ import * as d3 from "d3"
 
 export const ChartIGaveMyHeartAndSoulFor = ({ data = [], dimensions = {} }) => {
   const svgRef = React.useRef(null)
+  // to detect what line to animate we should store previous data state
+  const [prevItems, setPrevItems] = React.useState([])
   const { width, height, margin = {} } = dimensions
   const svgWidth = width + margin.left + margin.right
   const svgHeight = height + margin.top + margin.bottom
 
-  //Let's try a simple thing first
-  //console.log(data)
   React.useEffect(() => {
-    if (data?.length === 0) return
-    //Range: -60s > 0s
-    //We need a linear scale
-    const xScale = d3.scaleLinear().domain([-60, 0]).range([0, width]) //We'll change this later
-    console.log(data)
+    const xScale = d3
+      .scaleTime()
+      .domain(d3.extent(data[0].items, (d) => d.date))
+      .range([0, width])
     const yScale = d3
       .scaleLinear()
       .domain([
-        d3.min(data, (d) => d3.min(d.yArrays, (q) => q)) - 0,
-        d3.max(data, (d) => d3.max(d.yArrays, (q) => q)) + 0,
+        d3.min(data[0].items, (d) => d.value) - 50,
+        d3.max(data[0].items, (d) => d.value) + 50,
       ])
       .range([height, 0])
     // Create root container where we will append all other chart elements
@@ -43,7 +42,7 @@ export const ChartIGaveMyHeartAndSoulFor = ({ data = [], dimensions = {} }) => {
     xAxisGroup
       .selectAll("text")
       .attr("opacity", 0.5)
-      .attr("color", "black")
+      .attr("color", "white")
       .attr("font-size", "0.75rem")
     // Add Y grid lines with labels
     const yAxis = d3
@@ -57,23 +56,37 @@ export const ChartIGaveMyHeartAndSoulFor = ({ data = [], dimensions = {} }) => {
     yAxisGroup
       .selectAll("text")
       .attr("opacity", 0.5)
-      .attr("color", "black")
+      .attr("color", "white")
       .attr("font-size", "0.75rem")
     // Draw the lines
     const line = d3
       .line()
       .x((d) => xScale(d.date))
       .y((d) => yScale(d.value))
-
-    svg
+    const lines = svg
       .selectAll(".line")
       .data(data)
       .enter()
       .append("path")
       .attr("fill", "none")
-      .attr("stroke", (d) => d.c)
+      .attr("stroke", (d) => d.color)
       .attr("stroke-width", 3)
-      .attr("d", (d) => line(d.z))
+      .attr("d", (d) => line(d.items))
+    // Use stroke-dashoffset for transition
+    lines.each((d, i, nodes) => {
+      const element = nodes[i]
+      const length = element.getTotalLength()
+      if (!prevItems.includes(d.name)) {
+        d3.select(element)
+          .attr("stroke-dasharray", `${length},${length}`)
+          .attr("stroke-dashoffset", length)
+          .transition()
+          .duration(750)
+          .ease(d3.easeLinear)
+          .attr("stroke-dashoffset", 0)
+      }
+    })
+    setPrevItems(data.map(({ name }) => name))
   }, [data])
 
   return <svg ref={svgRef} width={svgWidth} height={svgHeight} />

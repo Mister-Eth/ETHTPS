@@ -35,11 +35,10 @@ namespace ETHTPS.API
                 .AddControllersAsServices()
                 .ConfigureNewtonsoftJson();
             services.AddSwagger();
-            
+
             services.AddMemoryCache()
                     .AddAPIKeyAuthenticationAndAuthorization()
-                    .AddCoreServices()
-                    .AddHistoricalDataProviders();
+                    .AddCoreServices();
             services.RegisterMicroservice(APP_NAME, "General API");
 
 #if DEBUG

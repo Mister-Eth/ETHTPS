@@ -13,13 +13,22 @@ function createPointArray(x, d) {
   }
 }
 
-function createXYZCPoint(o, colorDictionary) {
+function createYZCPoint(o, colorDictionary) {
   return {
-    x: new Date(o.value.date).getSeconds() - 60,
-    yArrays: o.values,
+    yData: o.values,
     z: o.provider,
     c: colorDictionary[o.provider],
   }
+}
+
+function convert(point) {
+  return {
+    date: point.date,
+    value: point.value
+  }
+}
+function transform(yzcPoint) {
+  return yzcPoint.yData.map(convert)
 }
 
 export function StreamgraphAnimation({ data }) {
@@ -30,7 +39,7 @@ export function StreamgraphAnimation({ data }) {
       .map((key) => createPointArray(key, data))
       .filter((x) => x !== undefined)
       .filter((x) => !x.values.some((q) => q === undefined))
-      .flatMap((o) => createXYZCPoint(o, colorDictionary))
+      .map((o) => transform(createYZCPoint(o, colorDictionary)))
 
   const [processed, setProcessed] = useState()
   useEffect(() => {

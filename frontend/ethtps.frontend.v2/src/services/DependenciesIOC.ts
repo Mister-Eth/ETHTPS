@@ -8,10 +8,10 @@ var _api_key: string | undefined | null = ""
 export const storage: LocalStorageService = new LocalStorageService()
 export const api = new ETHTPSApi(
   process.env.REACT_APP_API_DEV_GENERAL_ENDPOINT,
-  process.env.REACT_APP_API_DEV_TPS_ENDPOINT,
-  process.env.REACT_APP_API_DEV_GPS_ENDPOINT,
-  process.env.REACT_APP_API_DEV_GTPS_ENDPOINT,
-  process.env.REACT_APP_API_DEV_SECURITY_ENDPOINT,
+  process.env.REACT_APP_API_DEV_GENERAL_ENDPOINT,
+  process.env.REACT_APP_API_DEV_GENERAL_ENDPOINT,
+  process.env.REACT_APP_API_DEV_GENERAL_ENDPOINT,
+  process.env.REACT_APP_API_DEV_GENERAL_ENDPOINT,
 )
 
 export function getAPIKey() {
