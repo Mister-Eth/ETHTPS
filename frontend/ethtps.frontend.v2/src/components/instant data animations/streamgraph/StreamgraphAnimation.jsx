@@ -4,7 +4,7 @@ import { ChartIGaveMyHeartAndSoulFor } from "./ChartIGaveMyHeartAndSoulFor"
 import { useGetProviderColorDictionaryFromAppStore } from "../../../hooks/ColorHooks"
 import { ConditionalRender } from "../../../Types"
 
-function createPointArray(x, d) {
+export function createPointArray(x, d) {
   if (d[x]?.length === 0) return undefined
   if (d[x][0]?.data?.length === 0) return undefined
   return {
@@ -13,7 +13,7 @@ function createPointArray(x, d) {
   }
 }
 
-function createYZCPoint(o, colorDictionary) {
+export function createYZCPoint(o, colorDictionary) {
   return {
     yData: o.values,
     z: o.provider,
@@ -21,13 +21,13 @@ function createYZCPoint(o, colorDictionary) {
   }
 }
 
-function convert(point) {
+export function convert(point) {
   return {
     date: point.date,
     value: point.value
   }
 }
-function transform(yzcPoint) {
+export function transform(yzcPoint) {
   return yzcPoint.yData.map(convert)
 }
 

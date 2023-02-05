@@ -27,6 +27,8 @@ import {
   useGet1mGPS,
   useGet1mGTPS,
 } from "../components/instant data animations/hooks"
+import { P5Streamgraph } from "../components/instant data animations/p5streamgraph/P5Streamgraph"
+import { DataResponseModelDictionary } from '../Types.dictionaries';
 
 export default function MainPage(): JSX.Element {
   const providers = useGetProvidersFromAppStore()
@@ -81,11 +83,7 @@ export default function MainPage(): JSX.Element {
               <DataModeButtonGroup modeChanged={useSetDataModeMutation} />
             </Paper>
             <Paper elevation={1}>
-              <SimpleTextDisplay />
-              {ConditionalRender(
-                <StreamgraphAnimation data={_1mtps} />,
-                false,
-              )}
+              <P5Streamgraph data={_1mtps as DataResponseModelDictionary} />
             </Paper>
             <Paper elevation={1}>
               <AllProvidersTable

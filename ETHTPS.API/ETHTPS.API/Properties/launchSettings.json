@@ -14,15 +14,15 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "http://0.0.0.0:10202"
+      "applicationUrl": "http://localhost:10202"
     },
     "WSL": {
       "commandName": "WSL2",
       "launchBrowser": true,
-      "launchUrl": "http://0.0.0.0:10202",
+      "launchUrl": "http://localhost:10202",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_URLS": "http://0.0.0.0:10202"
+        "ASPNETCORE_URLS": "http://localhost:10202"
       },
       "distributionName": ""
     }
