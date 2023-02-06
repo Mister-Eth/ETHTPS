@@ -3,34 +3,56 @@ using ETHTPS.API.DependencyInjection;
 using ETHTPS.API.Security.Core.Authentication;
 using ETHTPS.API.Security.Core.Policies;
 using ETHTPS.Configuration.Extensions;
+using static ETHTPS.HangfireRunner.Constants;
 
 using NLog.Extensions.Hosting;
+using ETHTPS.Configuration;
+using ETHTPS.Services.InfluxWrapper;
+using ETHTPS.HangfireRunner.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseNLog();
-const string APP_NAME = "ETHTPS.HangfireRunner";
 var services = builder.Services;
 services.AddCoreServices();
-services.AddDatabaseContext(APP_NAME);
+services.AddDatabaseContext(CURRENT_APP_NAME);
 services.AddScoped<TimeWarpService>();
 services.AddCustomCORSPolicies();
 services.AddAPIKeyAuthenticationAndAuthorization();
 services.AddControllers().AddControllersAsServices();
 services.AddSwagger();
+services.AddScoped<IInfluxWrapper, InfluxWrapper>((s) => 
+{ 
+    using (var p = s.GetRequiredService<IDBConfigurationProvider>())
+    {
+        return new InfluxWrapper(new InfluxWrapperConfiguration()
+        {
+            Bucket = p.GetFirstConfigurationStringForCurrentEnvironment("InfluxDB_prod_bucket"),
+            URL = p.GetFirstConfigurationStringForCurrentEnvironment("InfluxDB_prod_url"),
+            Org = p.GetFirstConfigurationStringForCurrentEnvironment("InfluxDB_prod_org")
+        });
+    }
+});
 builder.Services.AddRazorPages();
-
-var configurationQueues = builder.Configuration.GetSection("Hangfire").GetSection("Queues").Get<string[]>();
+var configurationQueues = new string[] { "default" };
+#pragma warning disable ASP0000 // Do not call 'IServiceCollection.BuildServiceProvider' in 'ConfigureServices'
+using (var built = services.BuildServiceProvider())
+{
+    var config = built.GetRequiredService<IDBConfigurationProvider>();
+    configurationQueues = config.GetConfigurationStringsForMicroservice(CURRENT_APP_NAME).Where(x => x.Name == "Hangfire queue")?.Select(x => x.Value).ToArray();
+}
+#pragma warning restore ASP0000 // Do not call 'IServiceCollection.BuildServiceProvider' in 'ConfigureServices'
 if (configurationQueues?.Length > 0)
 {
-    services.InitializeHangfire(APP_NAME);
-    services.AddHangfireServer(APP_NAME);
-    services.AddTPSDataUpdaters(builder.Configuration);
-    services.AddHistoricalBlockInfoDataUpdaters(configurationQueues);
-    services.AddTimeWarpUpdaters(configurationQueues)
-    .AddStatusNotifiers(configurationQueues);
+    services.InitializeHangfire(CURRENT_APP_NAME);
+    services.AddHangfireServer(CURRENT_APP_NAME);
+    //services.AddTPSDataUpdaters(builder.Configuration);
+    //services.AddHistoricalBlockInfoDataUpdaters(configurationQueues);
+    //services.AddTimeWarpUpdaters(configurationQueues)
+   
+    services.AddStatusNotifiers(configurationQueues);
 }
 
-services.RegisterMicroservice(APP_NAME, "Hangfire runner web app");
+services.RegisterMicroservice(CURRENT_APP_NAME, "Hangfire runner web app");
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -38,7 +60,10 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
 }
 app.UseStaticFiles();
-app.ConfigureHangfire(builder.Configuration);
+if (configurationQueues?.Length > 0)
+{
+    app.ConfigureHangfire(builder.Configuration);
+}
 app.UseRouting();
 app.ConfigureSwagger();
 app.UseAuthorization();

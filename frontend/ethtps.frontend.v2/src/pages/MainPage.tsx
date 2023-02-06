@@ -83,7 +83,7 @@ export default function MainPage(): JSX.Element {
               <DataModeButtonGroup modeChanged={useSetDataModeMutation} />
             </Paper>
             <Paper elevation={1}>
-              <P5Streamgraph data={_1mtps as DataResponseModelDictionary} />
+              <P5Streamgraph data={_1mtps as DataResponseModelDictionary} maxAgeSeconds={60}/>
             </Paper>
             <Paper elevation={1}>
               <AllProvidersTable
