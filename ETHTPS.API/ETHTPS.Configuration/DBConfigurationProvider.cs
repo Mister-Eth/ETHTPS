@@ -54,7 +54,7 @@ namespace ETHTPS.Configuration
 
         public void Dispose()
         {
-            _context?.Dispose();
+
         }
 
         public IEnumerable<IConfigurationString> GetConfigurationStrings(string name)

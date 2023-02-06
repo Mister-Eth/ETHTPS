@@ -40,7 +40,7 @@ namespace ETHTPS.Services.BlockchainServices.Status
         private BlockInfoProviderStatusResult GetStatus(ProviderQueryModel model)
         {
             IStorageConnection connection = JobStorage.Current.GetConnection();
-            Func<RecurringJobDto, bool> selector = x => x.Job.Type.GetProviderNameFromFirstGenericArgument() == model.Provider && typeof(HangfireBlockInfoProviderDataLogger<>).IsAssignableFrom(x.Job.Type);
+            Func<RecurringJobDto, bool> selector = x => x.Job.Type.GetProviderNameFromFirstGenericArgument() == model.Provider && typeof(MSSQLLogger<>).IsAssignableFrom(x.Job.Type);
             var result = new BlockInfoProviderStatusResult()
             {
                 Status = BlockInfoProviderStatus.NotImplemented,

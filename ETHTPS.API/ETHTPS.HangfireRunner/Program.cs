@@ -28,7 +28,8 @@ services.AddScoped<IInfluxWrapper, InfluxWrapper>((s) =>
         {
             Bucket = p.GetFirstConfigurationStringForCurrentEnvironment("InfluxDB_prod_bucket"),
             URL = p.GetFirstConfigurationStringForCurrentEnvironment("InfluxDB_prod_url"),
-            Org = p.GetFirstConfigurationStringForCurrentEnvironment("InfluxDB_prod_org")
+            Org = p.GetFirstConfigurationStringForCurrentEnvironment("InfluxDB_prod_org"),
+            Token = p.GetFirstConfigurationStringForCurrentEnvironment("InfluxDB_token")
         });
     }
 });
@@ -45,6 +46,7 @@ if (configurationQueues?.Length > 0)
 {
     services.InitializeHangfire(CURRENT_APP_NAME);
     services.AddHangfireServer(CURRENT_APP_NAME);
+    services.AddInfluxTPSDataUpdaters();
     //services.AddTPSDataUpdaters(builder.Configuration);
     //services.AddHistoricalBlockInfoDataUpdaters(configurationQueues);
     //services.AddTimeWarpUpdaters(configurationQueues)

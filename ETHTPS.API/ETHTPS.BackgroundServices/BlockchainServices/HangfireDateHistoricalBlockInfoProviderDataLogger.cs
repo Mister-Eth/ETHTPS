@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ETHTPS.Services.BlockchainServices
 {
-    public class HangfireDateHistoricalBlockInfoProviderDataLogger<T> : HangfireBlockInfoProviderDataLogger<T>
+    public class HangfireDateHistoricalBlockInfoProviderDataLogger<T> : MSSQLLogger<T>
         where T : IBlockInfoProvider
     {
         public HangfireDateHistoricalBlockInfoProviderDataLogger(T instance, ILogger<HangfireBackgroundService> logger, EthtpsContext context) : base(instance, logger, context)

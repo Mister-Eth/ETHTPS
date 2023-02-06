@@ -1,4 +1,5 @@
 ﻿using ETHTPS.Services.BlockchainServices;
+using ETHTPS.Services.InfluxWrapper;
 
 using Hangfire;
 
@@ -11,7 +12,16 @@ namespace ETHTPS.Services.Infrastructure.Extensions
 #pragma warning disable CS0618
         public static void RegisterHangfireBackgroundService<T, V>(this IServiceCollection services, string cronExpression, string queue)
             where V : class, IBlockInfoProvider
-            where T : HangfireBlockInfoProviderDataLogger<V>
+            where T : MSSQLLogger<V>
+        {
+            services.AddScoped<V>();
+            services.AddScoped<T>();
+            RecurringJob.AddOrUpdate<T>(typeof(V).Name, x => x.RunAsync(), cronExpression, queue: queue);
+        }
+
+        public static void RegisterInfluxHangfireBackgroundService<T, V>(this IServiceCollection services, string cronExpression, string queue)
+           where V : class, IBlockInfoProvider
+           where T : InfluxLogger<V>
         {
             services.AddScoped<V>();
             services.AddScoped<T>();

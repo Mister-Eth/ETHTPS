@@ -1,4 +1,6 @@
-﻿namespace ETHTPS.Services.BlockchainServices
+﻿using ETHTPS.Services.BlockchainServices;
+
+namespace ETHTPS.Services
 {
     /// <summary>
     /// Provides information about blocks.

@@ -2,5 +2,7 @@
 {
     public interface IInfluxWrapper
     {
+        void Log<T>(T entry)
+            where T: IMeasurement;
     }
 }
