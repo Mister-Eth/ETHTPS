@@ -1,4 +1,4 @@
-﻿using ETHTPS.Data.Database;
+﻿using ETHTPS.Data.Integrations.MSSQL;
 using ETHTPS.Services.BlockchainServices;
 using ETHTPS.Services.BlockchainServices.Extensions;
 using ETHTPS.Services.BlockchainServices.Models;

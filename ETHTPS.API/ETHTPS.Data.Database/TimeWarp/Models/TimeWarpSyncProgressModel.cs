@@ -1,4 +1,4 @@
-﻿namespace ETHTPS.Data.Database.TimeWarp.Models
+﻿namespace ETHTPS.Data.Integrations.MSSQL.TimeWarp.Models
 {
     public class TimeWarpSyncProgressModel
     {

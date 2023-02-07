@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ETHTPS.Services.InfluxWrapper
+namespace ETHTPS.Data.Integrations.InfluxIntegration
 {
     public interface IInfluxWrapper
     {
         Task LogAsync<T>(T entry, string bucket)
-            where T: IMeasurement;
+            where T : IMeasurement;
         Task LogAsync<T>(T entry)
             where T : IMeasurement => LogAsync(entry, null);
         Task<IEnumerable<string>> GetBucketsAsync();

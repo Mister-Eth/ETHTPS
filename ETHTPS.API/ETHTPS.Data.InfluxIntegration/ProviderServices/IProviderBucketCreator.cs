@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace ETHTPS.Services.InfluxWrapper.ProviderServices
+namespace ETHTPS.Data.Integrations.InfluxIntegration.ProviderServices
 {
     public interface IProviderBucketCreator
     {

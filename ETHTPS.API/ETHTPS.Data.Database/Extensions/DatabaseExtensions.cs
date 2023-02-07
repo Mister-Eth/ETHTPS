@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ETHTPS.Data.Database.Extensions
+namespace ETHTPS.Data.Integrations.MSSQL.Extensions
 {
     public static class DatabaseExtensions
     {

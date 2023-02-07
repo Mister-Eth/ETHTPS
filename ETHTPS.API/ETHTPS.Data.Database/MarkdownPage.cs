@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ETHTPS.Data.Database;
+namespace ETHTPS.Data.Integrations.MSSQL;
 
 public partial class MarkdownPage : EntityWIthId
 {

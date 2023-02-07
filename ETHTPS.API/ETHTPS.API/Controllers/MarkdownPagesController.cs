@@ -1,6 +1,6 @@
 ﻿using ETHTPS.API.Core.Controllers.CRUD;
 using ETHTPS.API.Core.Infrastructure.Services.Markdown;
-using ETHTPS.Data.Database;
+using ETHTPS.Data.Integrations.MSSQL;
 using ETHTPS.Data.Models;
 
 using Microsoft.AspNetCore.Mvc;

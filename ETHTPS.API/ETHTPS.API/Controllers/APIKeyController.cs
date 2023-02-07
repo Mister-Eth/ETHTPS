@@ -1,6 +1,6 @@
 ﻿using ETHTPS.API.Core.Infrastructure;
 using ETHTPS.API.Core.Infrastructure.Services.Recaptcha;
-using ETHTPS.Data.Database;
+using ETHTPS.Data.Integrations.MSSQL;
 using ETHTPS.Data.Core.Extensions.StringExtensions;
 using ETHTPS.Data.ResponseModels.APIKey;
 

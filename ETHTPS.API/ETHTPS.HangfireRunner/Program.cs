@@ -7,7 +7,7 @@ using static ETHTPS.HangfireRunner.Constants;
 
 using NLog.Extensions.Hosting;
 using ETHTPS.Configuration;
-using ETHTPS.Services.InfluxWrapper;
+using ETHTPS.Data.Integrations.InfluxIntegration;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseNLog();

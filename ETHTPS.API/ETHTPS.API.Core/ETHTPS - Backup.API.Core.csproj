@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Configurations>Debug;Release;Staging</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\Recaptcha\Extensions\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NLog.Database" Version="5.1.1" />
+    <PackageReference Include="NLog.Extensions.Hosting" Version="5.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ETHTPS.Data.Integrations.MSSQL\ETHTPS.Data.Integrations.MSSQL.csproj" />
+    <ProjectReference Include="..\ETHTPS.Data\ETHTPS.Data.Core.csproj" />
+    <ProjectReference Include="..\ETHTPS.Services.Ethereum\ETHTPS.Services.Ethereum.csproj" />
+  </ItemGroup>
+
+</Project>

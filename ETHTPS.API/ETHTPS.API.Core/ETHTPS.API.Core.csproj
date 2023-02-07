@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -13,10 +13,11 @@
 
   <ItemGroup>
     <PackageReference Include="NLog.Database" Version="5.1.1" />
+    <PackageReference Include="NLog.Extensions.Hosting" Version="5.2.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ETHTPS.Data.Database\ETHTPS.Data.Database.csproj" />
+    <ProjectReference Include="..\ETHTPS.Data.Database\ETHTPS.Data.Integrations.MSSQL.csproj" />
     <ProjectReference Include="..\ETHTPS.Data\ETHTPS.Data.Core.csproj" />
     <ProjectReference Include="..\ETHTPS.Services.Ethereum\ETHTPS.Services.Ethereum.csproj" />
   </ItemGroup>

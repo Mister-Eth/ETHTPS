@@ -1,5 +1,4 @@
 ﻿using ETHTPS.Services.BlockchainServices;
-using ETHTPS.Services.InfluxWrapper;
 
 using Hangfire;
 

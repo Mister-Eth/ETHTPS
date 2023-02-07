@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 
 using System.Linq;
 
-namespace ETHTPS.Data.Database.Extensions
+namespace ETHTPS.Data.Integrations.MSSQL.Extensions
 {
     public static class APIKeyExtensions
     {

@@ -1,11 +1,7 @@
-﻿using ETHTPS.Data.Database;
-using ETHTPS.Services.InfluxWrapper.ProviderServices.Extensions;
+﻿using ETHTPS.Data.Integrations.MSSQL;
+using static ETHTPS.Data.Integrations.InfluxIntegration.Extensions.IntegrationExtensions;
 
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace ETHTPS.Services.InfluxWrapper.ProviderServices
+namespace ETHTPS.Data.Integrations.InfluxIntegration.ProviderServices
 {
     public class ProviderBucketCreator : IProviderBucketCreator
     {
@@ -26,9 +22,9 @@ namespace ETHTPS.Services.InfluxWrapper.ProviderServices
                 var existing = await _influxWrapper.GetBucketsAsync();
                 var whatShouldBeAll = _providers.SelectMany(x => new[]
                 {
-                    InfluxWrapperProviderExtensions.GetTPSBucketNameFor(x),
-                    InfluxWrapperProviderExtensions.GetGPSBucketNameFor(x),
-                    InfluxWrapperProviderExtensions.GetBlockBucketNameFor(x),
+                    GetTPSBucketNameFor(x),
+                    GetGPSBucketNameFor(x),
+                    GetBlockBucketNameFor(x),
                 }); //This adds a suffix which needs to be removed in order to not end up with Name_X_X buckets
                 foreach (var provider in whatShouldBeAll.Where(x => !existing.Contains(x)).ToArray())
                 {

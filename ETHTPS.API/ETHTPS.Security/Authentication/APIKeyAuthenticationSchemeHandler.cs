@@ -1,6 +1,6 @@
 ﻿using ETHTPS.Data.Core.Extensions;
-using ETHTPS.Data.Database;
-using ETHTPS.Data.Database.Extensions;
+using ETHTPS.Data.Integrations.MSSQL;
+using ETHTPS.Data.Integrations.MSSQL.Extensions;
 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;

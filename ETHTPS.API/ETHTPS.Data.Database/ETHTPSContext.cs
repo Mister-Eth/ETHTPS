@@ -5,7 +5,7 @@ using ETHTPS.Data.Core;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace ETHTPS.Data.Database;
+namespace ETHTPS.Data.Integrations.MSSQL;
 
 public partial class EthtpsContext : ContextBase<EthtpsContext>
 {

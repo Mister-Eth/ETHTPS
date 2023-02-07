@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using static ETHTPS.API.Core.Constants;
 using ETHTPS.Services.Infrastructure.Extensions;
 using Microsoft.Extensions.Configuration;
-using ETHTPS.Services.InfluxWrapper;
 
 namespace ETHTPS.API.DependencyInjection
 {

@@ -1,26 +1,14 @@
 ﻿using ETHTPS.Configuration;
-using ETHTPS.Data.Core.Extensions;
-using ETHTPS.Services.BlockchainServices;
-using ETHTPS.Services.InfluxWrapper.ProviderServices.Extensions;
+using ETHTPS.Data.Integrations.InfluxIntegration.Extensions;
 
 using InfluxDB.Client;
 using InfluxDB.Client.Api.Domain;
-using InfluxDB.Client.Writes;
 
 using Microsoft.Extensions.Logging;
 
-using Newtonsoft.Json;
-
-using ServiceStack;
-
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace ETHTPS.Services.InfluxWrapper
+namespace ETHTPS.Data.Integrations.InfluxIntegration
 {
     /// <summary>
     /// Calling it a wrapper so we don't conflict with the library
@@ -56,7 +44,7 @@ namespace ETHTPS.Services.InfluxWrapper
         private async Task WaitForClientAsync()
         {
             int c = 0;
-            while(await _influxClient.ReadyAsync() == null)
+            while (await _influxClient.ReadyAsync() == null)
             {
                 _logger.LogInformation($"[{++c}] Waiting for client...");
                 await Task.Delay(2500);
@@ -66,7 +54,7 @@ namespace ETHTPS.Services.InfluxWrapper
         public async Task<bool> BucketExistsAsync(string name)
         {
             await WaitForClientAsync();
-            return (await _bucketsApi.FindBucketByNameAsync(name)) != default(Bucket);
+            return await _bucketsApi.FindBucketByNameAsync(name) != default(Bucket);
         }
 
         public async Task CreateBucketAsync(string name)
@@ -91,13 +79,13 @@ namespace ETHTPS.Services.InfluxWrapper
                     entry
                 }, WritePrecision.Ms, bucket ?? _configuration.Bucket, _configuration.Org, cancellationTokenSource.Token);
                 _stopwatch.Stop();
-               if (!response.IsSuccessful)
+                if (!response.IsSuccessful)
                 {
                     throw new Exception("Error writing to InfluxDB: " + response.ErrorMessage);
                 }
                 else
                 {
-                    _logger.LogInformation($"[InfluxWrapper]: Logged {typeof(T).Name} in {_stopwatch.Elapsed.TotalMilliseconds}ms");
+                    _logger.LogInformation($"Logged {typeof(T).Name} in {_stopwatch.Elapsed.TotalMilliseconds}ms");
                 }
             }
             catch (Exception e)
@@ -126,10 +114,10 @@ namespace ETHTPS.Services.InfluxWrapper
 
         class OrganizationHack : Organization
         {
-            public OrganizationHack() :base() { }
-           public static Organization HackOrganization(string id)
+            public OrganizationHack() : base() { }
+            public static Organization HackOrganization(string id)
             {
-                OrganizationHack result = new ();
+                OrganizationHack result = new();
                 typeof(Organization).GetProperty("Id").SetValue(result, id);
                 return result;
             }

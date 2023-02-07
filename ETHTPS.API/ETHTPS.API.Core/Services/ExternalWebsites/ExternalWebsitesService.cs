@@ -1,4 +1,4 @@
-﻿using ETHTPS.Data.Database;
+﻿using ETHTPS.Data.Integrations.MSSQL;
 using ETHTPS.Data.Core.Extensions.StringExtensions;
 using ETHTPS.Data.ResponseModels.SocialMedia;
 

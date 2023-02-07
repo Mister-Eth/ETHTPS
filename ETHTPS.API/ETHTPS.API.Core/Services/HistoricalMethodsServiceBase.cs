@@ -1,5 +1,5 @@
-﻿using ETHTPS.Data.Database;
-using ETHTPS.Data.Database.HistoricalDataProviders;
+﻿using ETHTPS.Data.Integrations.MSSQL;
+using ETHTPS.Data.Integrations.MSSQL.HistoricalDataProviders;
 using ETHTPS.Data.Models.Query;
 
 using System.Collections.Generic;

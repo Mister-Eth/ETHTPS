@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace ETHTPS.Data.Database
+namespace ETHTPS.Data.Integrations.MSSQL
 {
     public abstract class TimeWarpDataBase
     {

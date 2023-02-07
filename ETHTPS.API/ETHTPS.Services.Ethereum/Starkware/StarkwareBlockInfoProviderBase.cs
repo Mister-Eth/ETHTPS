@@ -1,5 +1,5 @@
-﻿using ETHTPS.Data.Database;
-using ETHTPS.Data.Database.Extensions;
+﻿using ETHTPS.Data.Integrations.MSSQL;
+using ETHTPS.Data.Integrations.MSSQL.Extensions;
 using ETHTPS.Services.BlockchainServices;
 using ETHTPS.Services.Ethereum.Starkware.API;
 

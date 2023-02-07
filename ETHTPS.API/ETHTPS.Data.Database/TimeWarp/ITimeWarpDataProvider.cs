@@ -1,4 +1,4 @@
-﻿namespace ETHTPS.Data.Database.TimeWarp
+﻿namespace ETHTPS.Data.Integrations.MSSQL.TimeWarp
 {
     public interface ITimeWarpDataProvider : ITimeWarpService
     {

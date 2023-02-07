@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-namespace ETHTPS.Data.Database.HistoricalDataProviders
+namespace ETHTPS.Data.Integrations.MSSQL.HistoricalDataProviders
 {
     public interface IHistoricalDataProvider
     {

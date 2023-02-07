@@ -1,4 +1,6 @@
-﻿using InfluxDB.Client.Core;
+﻿using ETHTPS.Data.Integrations.InfluxIntegration;
+
+using InfluxDB.Client.Core;
 
 using System;
 

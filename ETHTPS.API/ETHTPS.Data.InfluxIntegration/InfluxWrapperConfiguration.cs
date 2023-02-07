@@ -3,7 +3,7 @@ using ETHTPS.Configuration.Extensions;
 
 using System;
 
-namespace ETHTPS.Services.InfluxWrapper
+namespace ETHTPS.Data.Integrations.InfluxIntegration
 {
     public sealed class InfluxWrapperConfiguration
     {
@@ -17,7 +17,7 @@ namespace ETHTPS.Services.InfluxWrapper
 
         public static InfluxWrapperConfiguration FromConfigurationProvider(IDBConfigurationProvider configurationProvider)
         {
-            Func<string, string> getConfigurationString = (string key) => configurationProvider.GetFirstConfigurationStringForCurrentEnvironment(key, "ETHTPS.Services.dll");
+            Func<string, string> getConfigurationString = (key) => configurationProvider.GetFirstConfigurationStringForCurrentEnvironment(key, "ETHTPS.Services.dll");
             return new InfluxWrapperConfiguration()
             {
                 Bucket = getConfigurationString("InfluxDB_prod_bucket"),

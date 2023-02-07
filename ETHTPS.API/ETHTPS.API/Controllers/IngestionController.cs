@@ -1,5 +1,5 @@
 ﻿using ETHTPS.Data;
-using ETHTPS.Data.Database;
+using ETHTPS.Data.Integrations.MSSQL;
 using ETHTPS.Data.Models;
 
 using Microsoft.AspNetCore.Mvc;

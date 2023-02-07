@@ -1,4 +1,4 @@
-﻿using ETHTPS.Data.Database.TimeWarp.Models;
+﻿using ETHTPS.Data.Integrations.MSSQL.TimeWarp.Models;
 using ETHTPS.Data.Models.Query;
 using ETHTPS.Data.ResponseModels;
 
@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ETHTPS.Data.Database.TimeWarp
+namespace ETHTPS.Data.Integrations.MSSQL.TimeWarp
 {
     public abstract class TimeWarpDataProviderBase<TTargetTimeWarpData> : ITimeWarpDataProvider
         where TTargetTimeWarpData : TimeWarpDataBase

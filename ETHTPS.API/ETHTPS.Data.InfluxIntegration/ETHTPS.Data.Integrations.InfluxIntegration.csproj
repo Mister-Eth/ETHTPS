@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="InfluxWrapper\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="InfluxDB.Client.Core" Version="4.10.0" />
+    <PackageReference Include="InfluxDB.Client.Flux" Version="4.10.0" />
+    <PackageReference Include="InfluxDB.Client.Linq" Version="4.10.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ETHTPS.Configuration\ETHTPS.Configuration.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,5 +1,5 @@
 ﻿using ETHTPS.Data.Core.Extensions.StringExtensions;
-using ETHTPS.Data.Database;
+using ETHTPS.Data.Integrations.MSSQL;
 
 namespace ETHTPS.API.Core.Infrastructure.Services.Markdown
 {

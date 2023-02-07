@@ -1,6 +1,6 @@
 ﻿using ETHTPS.Data;
 using ETHTPS.Data.Core;
-using ETHTPS.Data.Database;
+using ETHTPS.Data.Integrations.MSSQL;
 
 using System;
 using System.Collections.Generic;

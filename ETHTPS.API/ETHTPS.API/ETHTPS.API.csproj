@@ -32,7 +32,6 @@
     <PackageReference Include="NetTelegramBotApi" Version="5.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="NLog.Database" Version="5.1.1" />
-    <PackageReference Include="NLog.Extensions.Hosting" Version="5.1.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.5.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.0" />
@@ -42,7 +41,6 @@
   <ItemGroup>
     <ProjectReference Include="..\ETHTPS.API.Core\ETHTPS.API.Core.csproj" />
     <ProjectReference Include="..\ETHTPS.BackgroundServices\ETHTPS.Services.csproj" />
-    <ProjectReference Include="..\ETHTPS.Data.Database\ETHTPS.Data.Database.csproj" />
     <ProjectReference Include="..\ETHTPS.Data\ETHTPS.Data.Core.csproj" />
     <ProjectReference Include="..\ETHTPS.DependencyInjection\ETHTPS.API.DependencyInjection.csproj" />
     <ProjectReference Include="..\ETHTPS.Security\ETHTPS.API.Security.Core.csproj" />

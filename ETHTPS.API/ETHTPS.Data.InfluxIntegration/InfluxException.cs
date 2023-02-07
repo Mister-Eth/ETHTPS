@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ETHTPS.Services.InfluxWrapper
+namespace ETHTPS.Data.Integrations.InfluxIntegration
 {
     public class InfluxException : Exception
     {

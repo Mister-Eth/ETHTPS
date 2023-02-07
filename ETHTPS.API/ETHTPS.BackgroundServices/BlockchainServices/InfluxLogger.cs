@@ -1,17 +1,16 @@
-﻿using ETHTPS.Data.Database;
-using ETHTPS.Services.BlockchainServices;
+﻿using ETHTPS.Data.Integrations.MSSQL;
+using ETHTPS.Data.Integrations.InfluxIntegration;
+using ETHTPS.Data.Integrations.InfluxIntegration.ProviderServices;
+using ETHTPS.Services.BlockchainServices.Extensions;
 using ETHTPS.Services.BlockchainServices.Models;
-using ETHTPS.Services.InfluxWrapper.ProviderServices;
-using ETHTPS.Services.InfluxWrapper.ProviderServices.Extensions;
 
 using Hangfire;
 
 using Microsoft.Extensions.Logging;
 
-using System;
 using System.Threading.Tasks;
 
-namespace ETHTPS.Services.InfluxWrapper
+namespace ETHTPS.Services.BlockchainServices
 {
     public class InfluxLogger<T> : BlockInfoProviderDataLoggerBase<T>
          where T : IBlockInfoProvider

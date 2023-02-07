@@ -1,7 +1,7 @@
-﻿using ETHTPS.Data.Core.Extensions;
+﻿using ETHTPS.Data.Integrations.InfluxIntegration;
 using ETHTPS.Services.BlockchainServices.Models;
+
 using InfluxDB.Client.Core;
-using InfluxDB.Client.Writes;
 
 using System;
 

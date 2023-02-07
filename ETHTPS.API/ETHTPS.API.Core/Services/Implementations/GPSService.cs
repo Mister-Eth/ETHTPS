@@ -1,6 +1,6 @@
 ﻿using ETHTPS.Data;
-using ETHTPS.Data.Database;
-using ETHTPS.Data.Database.HistoricalDataProviders;
+using ETHTPS.Data.Integrations.MSSQL;
+using ETHTPS.Data.Integrations.MSSQL.HistoricalDataProviders;
 using ETHTPS.Data.Core.Extensions;
 using ETHTPS.Data.Models.Query;
 using ETHTPS.Data.ResponseModels;

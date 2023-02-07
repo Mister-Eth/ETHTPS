@@ -1,5 +1,5 @@
 ﻿using ETHTPS.Configuration;
-using ETHTPS.Data.Database;
+using ETHTPS.Data.Integrations.MSSQL;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

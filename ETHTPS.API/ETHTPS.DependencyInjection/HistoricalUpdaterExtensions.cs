@@ -6,7 +6,7 @@ using ETHTPS.Services;
 using Microsoft.Extensions.DependencyInjection;
 using static ETHTPS.API.Core.Constants;
 using ETHTPS.Services.Infrastructure.Extensions;
-using ETHTPS.Data.Database.HistoricalDataProviders;
+using ETHTPS.Data.Integrations.MSSQL.HistoricalDataProviders;
 
 namespace ETHTPS.API.DependencyInjection
 {

@@ -2,7 +2,7 @@
 
 using System;
 
-namespace ETHTPS.Data.Database
+namespace ETHTPS.Data.Integrations.MSSQL
 {
     public partial class TpsandGasDataLatest : TPSAndGasDataBase, IEquatable<TimedTPSAndGasData>
     {
