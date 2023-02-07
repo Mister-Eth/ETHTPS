@@ -14,6 +14,8 @@ export const api = new ETHTPSApi(
   process.env.REACT_APP_API_DEV_GENERAL_ENDPOINT,
 )
 
+//export const websocketsService = new WebsocketsService()
+
 export function getAPIKey() {
   if (_api_key === null || _api_key === undefined)
     tryLoadAPIKeyFromLocalStorage()
