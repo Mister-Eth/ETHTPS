@@ -1,5 +1,7 @@
 ﻿using ETHTPS.Data.Database;
 
+using Hangfire;
+
 using Microsoft.Extensions.Logging;
 
 using System.Threading.Tasks;
@@ -17,6 +19,7 @@ namespace ETHTPS.Services
             _context = context;
         }
 
+        [AutomaticRetry(Attempts = 1, OnAttemptsExceeded = AttemptsExceededAction.Delete)]
         public abstract Task RunAsync();
     }
 }

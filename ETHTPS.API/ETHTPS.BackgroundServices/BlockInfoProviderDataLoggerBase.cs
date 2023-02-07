@@ -1,7 +1,7 @@
 ﻿using ETHTPS.Data.Database;
 using ETHTPS.Services.BlockchainServices;
 using ETHTPS.Services.BlockchainServices.Extensions;
-
+using ETHTPS.Services.BlockchainServices.Models;
 using Microsoft.Extensions.Logging;
 
 using System;
@@ -39,14 +39,16 @@ namespace ETHTPS.Services
                     BlockNumber = latestBlock.BlockNumber,
                     Date = latestBlock.Date,
                     GPS = latestBlock.GasUsed / _instance.BlockTimeSeconds,
-                    TPS = latestBlock.TransactionCount / _instance.BlockTimeSeconds
+                    TPS = latestBlock.TransactionCount / _instance.BlockTimeSeconds,
+                    Provider = _provider
                 };
             }
             else //Add up all blocks submitted at the same time
             {
                 TPSGPSInfo result = new()
                 {
-                    Date = latestBlock.Date
+                    Date = latestBlock.Date,
+                    Provider = _provider
                 };
                 BlockInfo secondToLatestBlock;
                 int count = 0;

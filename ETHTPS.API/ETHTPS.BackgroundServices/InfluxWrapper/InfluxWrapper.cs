@@ -1,9 +1,24 @@
-﻿using InfluxDB.Client;
+﻿using ETHTPS.Configuration;
+using ETHTPS.Data.Core.Extensions;
+using ETHTPS.Services.BlockchainServices;
+using ETHTPS.Services.InfluxWrapper.ProviderServices.Extensions;
+
+using InfluxDB.Client;
 using InfluxDB.Client.Api.Domain;
+using InfluxDB.Client.Writes;
+
+using Microsoft.Extensions.Logging;
+
+using Newtonsoft.Json;
 
 using ServiceStack;
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ETHTPS.Services.InfluxWrapper
 {
@@ -14,27 +29,119 @@ namespace ETHTPS.Services.InfluxWrapper
     {
         private readonly InfluxWrapperConfiguration _configuration;
         private readonly InfluxDBClient _influxClient;
+        private readonly WriteApiAsync _writeApi;
+        private readonly BucketsApi _bucketsApi;
+        private readonly ILogger<InfluxWrapper> _logger;
+        private readonly Stopwatch _stopwatch = new();
 
-        public InfluxWrapper(InfluxWrapperConfiguration configuration)
+        public InfluxWrapper(IDBConfigurationProvider configurationProvider, ILogger<InfluxWrapper> logger) : this(InfluxWrapperConfiguration.FromConfigurationProvider(configurationProvider), logger)
         {
-            _configuration = configuration;
-            _influxClient = new InfluxDBClient(_configuration.URL, _configuration.Token);
+
         }
 
-        public void Log<T>(T entry)
+        public InfluxWrapper(InfluxWrapperConfiguration configuration, ILogger<InfluxWrapper> logger)
+        {
+            _configuration = configuration;
+            _influxClient = new InfluxDBClient(new InfluxDBClientOptions(_configuration.URL)
+            {
+                Org = _configuration.Org,
+                Token = _configuration.Token,
+                Bucket = _configuration.Bucket,
+            });
+            _writeApi = _influxClient.GetWriteApiAsync();
+            _bucketsApi = _influxClient.GetBucketsApi();
+            _logger = logger;
+        }
+
+        private async Task WaitForClientAsync()
+        {
+            int c = 0;
+            while(await _influxClient.ReadyAsync() == null)
+            {
+                _logger.LogInformation($"[{++c}] Waiting for client...");
+                await Task.Delay(2500);
+            }
+        }
+
+        public async Task<bool> BucketExistsAsync(string name)
+        {
+            await WaitForClientAsync();
+            return (await _bucketsApi.FindBucketByNameAsync(name)) != default(Bucket);
+        }
+
+        public async Task CreateBucketAsync(string name)
+        {
+            await WaitForClientAsync();
+            await _bucketsApi.CreateBucketAsync(name, _configuration.OrgID);
+            _logger.LogInformation($"Created InfluxDB bucket [{_configuration.OrgID}].[{name}]");
+        }
+
+        public async Task<IEnumerable<string>> GetBucketsAsync() => (await _bucketsApi.FindBucketsAsync(org: _configuration.Org))?.Select(x => x.Name);
+
+        public async Task LogAsync<T>(T entry, string bucket = null)
             where T : IMeasurement
         {
             try
             {
-                using (var writeApi = _influxClient.GetWriteApi())
+                _stopwatch.Restart();
+                CancellationTokenSource cancellationTokenSource = new(TimeSpan.FromSeconds(15));
+                await WaitForClientAsync();
+                var response = await _writeApi.WriteMeasurementsAsyncWithIRestResponse(new[]
                 {
-                    writeApi.WriteMeasurement(entry.ToLineProtocol(), WritePrecision.Ms, _configuration.Bucket, _configuration.Org);
+                    entry
+                }, WritePrecision.Ms, bucket ?? _configuration.Bucket, _configuration.Org, cancellationTokenSource.Token);
+                _stopwatch.Stop();
+               if (!response.IsSuccessful)
+                {
+                    throw new Exception("Error writing to InfluxDB: " + response.ErrorMessage);
+                }
+                else
+                {
+                    _logger.LogInformation($"[InfluxWrapper]: Logged {typeof(T).Name} in {_stopwatch.Elapsed.TotalMilliseconds}ms");
                 }
             }
             catch (Exception e)
             {
                 throw new InfluxException("Influx write failed", e);
             }
+        }
+
+        public async Task DeleteBucketAsync(string name)
+        {
+            await WaitForClientAsync();
+            await DeleteAllDataInBucketAsync(name);
+            _logger.LogInformation($"Deleting bucket {name}...");
+            await _bucketsApi.DeleteBucketAsync(name);
+            _logger.LogInformation("Done");
+        }
+
+        public async Task DeleteAllBucketsAsync()
+        {
+            var buckets = await GetBucketsAsync();
+            foreach (var bucket in buckets)
+            {
+                await DeleteBucketAsync(bucket);
+            }
+        }
+
+        class OrganizationHack : Organization
+        {
+            public OrganizationHack() :base() { }
+           public static Organization HackOrganization(string id)
+            {
+                OrganizationHack result = new ();
+                typeof(Organization).GetProperty("Id").SetValue(result, id);
+                return result;
+            }
+        }
+
+        public async Task DeleteAllDataInBucketAsync(string bucket)
+        {
+            await WaitForClientAsync();
+            _logger.LogInformation($"Deleting all data in bucket {bucket}...");
+            await _influxClient.GetDeleteApi().Delete(DateTime.Now.Subtract(TimeSpan.FromDays(30)), DateTime.Now, $"_measurement=\"{bucket.ClearBucketNameSuffix().ToLower()}\"", await _bucketsApi.FindBucketByNameAsync(bucket), OrganizationHack.HackOrganization(_configuration.OrgID));
+            //await _influxClient.GetDeleteApi().Delete(new DeletePredicateRequest(DateTime.MinValue, DateTime.Now, "true"),new )
+            _logger.LogInformation("Done");
         }
     }
 }

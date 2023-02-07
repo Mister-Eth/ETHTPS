@@ -1,6 +1,6 @@
 ﻿using ETHTPS.Data.Database;
 using ETHTPS.Services.BlockchainServices.Extensions;
-
+using ETHTPS.Services.BlockchainServices.Models;
 using Hangfire;
 
 using Microsoft.Extensions.Logging;
@@ -17,7 +17,6 @@ namespace ETHTPS.Services.BlockchainServices
         public MSSQLLogger(T instance, ILogger<HangfireBackgroundService> logger, EthtpsContext context) : base(instance, logger, context)
         {
         }
-
         [AutomaticRetry(Attempts = 1, OnAttemptsExceeded = AttemptsExceededAction.Delete)]
         public override async Task RunAsync()
         {

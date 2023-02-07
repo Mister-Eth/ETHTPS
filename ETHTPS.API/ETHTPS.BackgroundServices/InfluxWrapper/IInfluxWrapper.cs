@@ -1,8 +1,20 @@
-﻿namespace ETHTPS.Services.InfluxWrapper
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace ETHTPS.Services.InfluxWrapper
 {
     public interface IInfluxWrapper
     {
-        void Log<T>(T entry)
+        Task LogAsync<T>(T entry, string bucket)
             where T: IMeasurement;
+        Task LogAsync<T>(T entry)
+            where T : IMeasurement => LogAsync(entry, null);
+        Task<IEnumerable<string>> GetBucketsAsync();
+        Task<bool> BucketExistsAsync(string bucket);
+        Task CreateBucketAsync(string bucket);
+        Task DeleteBucketAsync(string bucket);
+        Task DeleteAllBucketsAsync();
+        Task DeleteAllDataInBucketAsync(string bucket);
     }
 }

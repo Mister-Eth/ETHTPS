@@ -1,13 +1,24 @@
-﻿using System;
+﻿using ETHTPS.Data.Core.Extensions;
+using ETHTPS.Services.BlockchainServices.Models;
+using InfluxDB.Client.Core;
+using InfluxDB.Client.Writes;
+
+using System;
 
 namespace ETHTPS.Services.BlockchainServices
 {
-    public class BlockInfo
+    [Measurement("blockinfo")]
+    public class BlockInfo : IMeasurement
     {
+        [Column("blocknumber")]
         public int BlockNumber { get; set; }
+        [Column("transactioncount")]
         public int TransactionCount { get; set; }
+        [Column("gasused")]
         public double GasUsed { get; set; }
+        [Column("date", IsTimestamp = true)]
         public DateTime Date { get; set; }
+        [Column("settled")]
         public bool Settled { get; set; } = true;
 
         public static TPSGPSInfo operator -(BlockInfo a, BlockInfo b)

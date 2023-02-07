@@ -8,7 +8,6 @@ using static ETHTPS.HangfireRunner.Constants;
 using NLog.Extensions.Hosting;
 using ETHTPS.Configuration;
 using ETHTPS.Services.InfluxWrapper;
-using ETHTPS.HangfireRunner.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseNLog();
@@ -20,19 +19,7 @@ services.AddCustomCORSPolicies();
 services.AddAPIKeyAuthenticationAndAuthorization();
 services.AddControllers().AddControllersAsServices();
 services.AddSwagger();
-services.AddScoped<IInfluxWrapper, InfluxWrapper>((s) => 
-{ 
-    using (var p = s.GetRequiredService<IDBConfigurationProvider>())
-    {
-        return new InfluxWrapper(new InfluxWrapperConfiguration()
-        {
-            Bucket = p.GetFirstConfigurationStringForCurrentEnvironment("InfluxDB_prod_bucket"),
-            URL = p.GetFirstConfigurationStringForCurrentEnvironment("InfluxDB_prod_url"),
-            Org = p.GetFirstConfigurationStringForCurrentEnvironment("InfluxDB_prod_org"),
-            Token = p.GetFirstConfigurationStringForCurrentEnvironment("InfluxDB_token")
-        });
-    }
-});
+services.AddScoped<IInfluxWrapper, InfluxWrapper>();
 builder.Services.AddRazorPages();
 var configurationQueues = new string[] { "default" };
 #pragma warning disable ASP0000 // Do not call 'IServiceCollection.BuildServiceProvider' in 'ConfigureServices'

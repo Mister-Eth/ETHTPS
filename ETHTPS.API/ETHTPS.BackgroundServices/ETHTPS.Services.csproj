@@ -26,6 +26,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="NLog.Database" Version="5.1.1" />
+    <PackageReference Include="NLog.Targets.InfluxDB" Version="1.0.9" />
     <PackageReference Include="ServiceStack.Text" Version="6.5.0" />
   </ItemGroup>
 
