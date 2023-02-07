@@ -13,6 +13,7 @@ builder.Host.UseNLog();
 var services = builder.Services;
 services.AddCustomCORSPolicies();
 services.AddDatabaseContext(APP_NAME);
+services.AddAPIKeyProvider();
 services.AddAPIKeyAuthenticationAndAuthorization();
 services.AddCoreServices();
 services.AddRazorPages();

@@ -1,5 +1,4 @@
-﻿using ETHTPS.API.Core.Infrastructure.Services;
-using ETHTPS.API.Core.Infrastructure.Services.Implementations;
+﻿using ETHTPS.API.Core.Integrations.MSSQL.Services;
 using ETHTPS.Data.Models.Query;
 using ETHTPS.Data.ResponseModels;
 
@@ -7,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using System.Collections.Generic;
+using ETHTPS.API.BIL.Infrastructure.Services;
 
 namespace ETHTPS.API.Controllers
 {

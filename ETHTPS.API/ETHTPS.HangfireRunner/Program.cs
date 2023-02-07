@@ -1,4 +1,4 @@
-using ETHTPS.API.Core.Infrastructure.Services.Implementations;
+using ETHTPS.API.Core.Integrations.MSSQL.Services;
 using ETHTPS.API.DependencyInjection;
 using ETHTPS.API.Security.Core.Authentication;
 using ETHTPS.API.Security.Core.Policies;

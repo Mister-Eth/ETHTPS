@@ -1,5 +1,4 @@
-﻿using ETHTPS.API.Core.Infrastructure.Services;
-using ETHTPS.API.Core.Infrastructure.Services.Implementations;
+﻿using ETHTPS.API.Core.Integrations.MSSQL.Services;
 using ETHTPS.Data;
 using ETHTPS.Data.Core;
 using ETHTPS.Data.Core.Extensions.StringExtensions;
@@ -11,6 +10,7 @@ using ETHTPS.Data.Models.Query;
 using Microsoft.AspNetCore.Mvc;
 
 using System.Linq;
+using ETHTPS.API.BIL.Infrastructure.Services;
 
 namespace ETHTPS.API.Controllers
 {

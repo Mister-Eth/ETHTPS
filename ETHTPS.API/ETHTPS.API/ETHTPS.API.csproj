@@ -39,16 +39,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ETHTPS.API.Core\ETHTPS.API.Core.csproj" />
-    <ProjectReference Include="..\ETHTPS.BackgroundServices\ETHTPS.Services.csproj" />
-    <ProjectReference Include="..\ETHTPS.Data\ETHTPS.Data.Core.csproj" />
-    <ProjectReference Include="..\ETHTPS.DependencyInjection\ETHTPS.API.DependencyInjection.csproj" />
-    <ProjectReference Include="..\ETHTPS.Security\ETHTPS.API.Security.Core.csproj" />
-    <ProjectReference Include="..\ETHTPS.Services.Ethereum\ETHTPS.Services.Ethereum.csproj" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <ProjectReference Include="..\ETHTPS.DependencyInjection\ETHTPS.API.DependencyInjection.csproj" />
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">

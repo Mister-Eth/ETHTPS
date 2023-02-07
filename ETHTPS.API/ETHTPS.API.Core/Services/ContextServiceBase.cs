@@ -1,12 +1,7 @@
-﻿using ETHTPS.Data;
-using ETHTPS.Data.Core;
+﻿using ETHTPS.Data.Core;
 using ETHTPS.Data.Integrations.MSSQL;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace ETHTPS.API.Core.Infrastructure
+namespace ETHTPS.API.Core.Services
 {
     public abstract class ContextServiceBase
     {

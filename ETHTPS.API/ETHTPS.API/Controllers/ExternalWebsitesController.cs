@@ -1,6 +1,5 @@
-﻿using ETHTPS.API.Core.Controllers.CRUD;
-using ETHTPS.API.Core.Infrastructure.Services;
-using ETHTPS.API.Core.Infrastructure.Services.ExternalWebsites;
+﻿using ETHTPS.API.BIL.Infrastructure.Services;
+using ETHTPS.API.Core.Integrations.MSSQL.Controllers.CRUD;
 using ETHTPS.Data.Integrations.MSSQL;
 using ETHTPS.Data.Models;
 using ETHTPS.Data.ResponseModels.SocialMedia;

@@ -1,8 +1,14 @@
-﻿using ETHTPS.API.Security.Core.Policies;
+﻿using ETHTPS.API.Security.Core.APIKeyProvider;
+using ETHTPS.API.Security.Core.APIKeys;
+using ETHTPS.API.Security.Core.Humanity;
+using ETHTPS.API.Security.Core.Humanity.Recaptcha;
+using ETHTPS.API.Security.Core.Policies;
+using ETHTPS.Configuration;
 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace ETHTPS.API.Security.Core.Authentication
 {
@@ -14,7 +20,7 @@ namespace ETHTPS.API.Security.Core.Authentication
         {
             services.AddAuthentication("APIKey").AddScheme<AuthenticationSchemeOptions, APIKeyAuthenticationSchemeHandler>("APIKey", opts =>
             {
-                
+
             });
             services.AddAuthorizationCore(options =>
             {
@@ -26,6 +32,12 @@ namespace ETHTPS.API.Security.Core.Authentication
                 options.AddPolicy(PolicyConstants.AdminPolicy);
             });
             return services;
+        }
+        public static IServiceCollection AddAPIKeyProvider(this IServiceCollection services)
+        {
+            services.TryAddScoped<IDBConfigurationProvider, DBConfigurationProvider>();
+            return services.AddScoped<IRecaptchaVerificationService, RecaptchaVerificationService>()
+            .AddScoped<IExtendedAPIKeyService, APIKeyServiceWithRecaptchaValidation>();
         }
     }
 }

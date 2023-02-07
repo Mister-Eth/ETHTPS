@@ -1,4 +1,4 @@
-﻿using ETHTPS.API.Core.Infrastructure.Services.Implementations;
+﻿using ETHTPS.API.Core.Integrations.MSSQL.Services;
 using ETHTPS.Data.Models;
 using ETHTPS.Data.Models.Query;
 using ETHTPS.Data.ResponseModels;

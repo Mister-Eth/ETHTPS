@@ -1,9 +1,7 @@
-﻿using ETHTPS.API.Core.Infrastructure.Services.Experimentation;
-using ETHTPS.API.Core.Infrastructure.Services.ExternalWebsites;
-using ETHTPS.API.Core.Infrastructure.Services.Implementations;
-using ETHTPS.API.Core.Infrastructure.Services.Info;
-using ETHTPS.API.Core.Infrastructure.Services.Markdown;
-using ETHTPS.API.Core.Infrastructure.Services.Recaptcha;
+﻿using ETHTPS.API.BIL.Infrastructure.Services;
+using ETHTPS.API.Core.Integrations.MSSQL.Services;
+using ETHTPS.API.Security.Core.Humanity;
+using ETHTPS.API.Security.Core.Humanity.Recaptcha;
 using ETHTPS.Configuration;
 using ETHTPS.Configuration.Database;
 using ETHTPS.Services.BlockchainServices.BlockTime;
@@ -33,7 +31,7 @@ namespace ETHTPS.API.DependencyInjection
             .AddHistoricalDataProviders();
 
         public static IServiceCollection AddEssentialServices(this IServiceCollection services) =>
-            services.AddScoped<IRecaptchaVerificationService, RecaptchaVerificationService>()
+            services.AddScoped<IHumanityCheckService, RecaptchaVerificationService>()
             .AddDbContext<ConfigurationContext>(options => options.UseSqlServer(GetConfigurationServiceConnectionString()), ServiceLifetime.Singleton)
             .AddSingleton<IDBConfigurationProvider, DBConfigurationProvider>()
             ;

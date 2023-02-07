@@ -1,4 +1,4 @@
-﻿using ETHTPS.API.Core.Infrastructure.Services.Implementations;
+﻿using ETHTPS.API.Core.Integrations.MSSQL.Services;
 using ETHTPS.Data.Integrations.MSSQL.TimeWarp;
 using ETHTPS.Data.Integrations.MSSQL.TimeWarp.Models;
 using ETHTPS.Data.Models;

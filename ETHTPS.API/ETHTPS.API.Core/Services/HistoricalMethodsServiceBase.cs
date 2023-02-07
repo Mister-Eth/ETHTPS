@@ -2,10 +2,7 @@
 using ETHTPS.Data.Integrations.MSSQL.HistoricalDataProviders;
 using ETHTPS.Data.Models.Query;
 
-using System.Collections.Generic;
-using System.Linq;
-
-namespace ETHTPS.API.Core.Infrastructure.Services
+namespace ETHTPS.API.Core.Services
 {
     public abstract class HistoricalMethodsServiceBase : ContextServiceBase
     {

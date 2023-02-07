@@ -1,10 +1,5 @@
 
 
-using ETHTPS.API.Security.Core.Authentication;
-using ETHTPS.API.Core.Middlewares;
-using ETHTPS.API.DependencyInjection;
-using ETHTPS.API.Security.Core.Policies;
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -12,7 +7,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ETHTPS.Configuration.Extensions;
 using ETHTPS.Configuration.Database;
-using Microsoft.Extensions.Logging;
+using ETHTPS.API.Core.Middlewares;
+using ETHTPS.API.Security.Core.Policies;
+using ETHTPS.API.DependencyInjection;
+using ETHTPS.API.Security.Core.Authentication;
 
 namespace ETHTPS.API
 {
@@ -37,6 +35,7 @@ namespace ETHTPS.API
                 .ConfigureNewtonsoftJson();
             services.AddSwagger()
                     .AddMemoryCache()
+                    .AddAPIKeyProvider()
                     .AddAPIKeyAuthenticationAndAuthorization()
                     .AddCoreServices()
                     .RegisterMicroservice(APP_NAME, "General API");
