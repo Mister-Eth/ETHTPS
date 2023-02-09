@@ -31,6 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ETHTPS.BIL\ETHTPS.API.BIL.csproj" />
     <ProjectReference Include="..\ETHTPS.Configuration\ETHTPS.Configuration.csproj" />
     <ProjectReference Include="..\ETHTPS.Data.Database\ETHTPS.Data.Integrations.MSSQL.csproj" />
     <ProjectReference Include="..\ETHTPS.Data.InfluxIntegration\ETHTPS.Data.Integrations.InfluxIntegration.csproj" />

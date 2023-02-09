@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-
-using ETHTPS.Data.Core;
-
 using Microsoft.EntityFrameworkCore;
 
-namespace ETHTPS.Data.Integrations.MSSQL;
+namespace ETHTPS.Data.Integrations.MSSQL.Temp;
 
-public partial class EthtpsContext : ContextBase<EthtpsContext>
+public partial class EthtpsContext : DbContext
 {
     public EthtpsContext()
     {
@@ -26,13 +23,21 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
 
     public virtual DbSet<ApikeyGroup> ApikeyGroups { get; set; }
 
-    public virtual DbSet<AppConfigurationValue> AppConfigurationValues { get; set; }
-
     public virtual DbSet<CachedResponse> CachedResponses { get; set; }
+
+    public virtual DbSet<ConfigurationString> ConfigurationStrings { get; set; }
 
     public virtual DbSet<Counter> Counters { get; set; }
 
+    public virtual DbSet<DataUpdater> DataUpdaters { get; set; }
+
+    public virtual DbSet<DataUpdaterStatus> DataUpdaterStatuses { get; set; }
+
+    public virtual DbSet<DataUpdaterType> DataUpdaterTypes { get; set; }
+
     public virtual DbSet<DetailedAccessStat> DetailedAccessStats { get; set; }
+
+    public virtual DbSet<Environment> Environments { get; set; }
 
     public virtual DbSet<Experiment> Experiments { get; set; }
 
@@ -68,7 +73,15 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
 
     public virtual DbSet<List> Lists { get; set; }
 
+    public virtual DbSet<LiveDataUpdaterStatus> LiveDataUpdaterStatuses { get; set; }
+
+    public virtual DbSet<Log> Logs { get; set; }
+
     public virtual DbSet<MarkdownPage> MarkdownPages { get; set; }
+
+    public virtual DbSet<Microservice> Microservices { get; set; }
+
+    public virtual DbSet<MicroserviceConfigurationString> MicroserviceConfigurationStrings { get; set; }
 
     public virtual DbSet<Network> Networks { get; set; }
 
@@ -83,6 +96,8 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
     public virtual DbSet<Project> Projects { get; set; }
 
     public virtual DbSet<Provider> Providers { get; set; }
+
+    public virtual DbSet<ProviderConfigurationString> ProviderConfigurationStrings { get; set; }
 
     public virtual DbSet<ProviderDetailsMarkdownPage> ProviderDetailsMarkdownPages { get; set; }
 
@@ -122,84 +137,20 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
 
     public virtual DbSet<TpsandGasDataMax> TpsandGasDataMaxes { get; set; }
 
+    public virtual DbSet<TpsandGasDataMinute> TpsandGasDataMinutes { get; set; }
+
     public virtual DbSet<TpsandGasDataMonth> TpsandGasDataMonths { get; set; }
 
     public virtual DbSet<TpsandGasDataWeek> TpsandGasDataWeeks { get; set; }
 
     public virtual DbSet<TpsandGasDataYear> TpsandGasDataYears { get; set; }
-    public virtual DbSet<TpsandGasDataMinute> TpsandGasDataMinutes { get; set; }
-    public virtual DbSet<DataUpdater> DataUpdaters { get; set; }
 
-    public virtual DbSet<DataUpdaterStatus> DataUpdaterStatuses { get; set; }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=10.2.0.28;Initial Catalog=ETHTPS;User Id=ethtps_prod;Password=EB4s8ESTQxbnDPUcaMHP5m7yVRucR8j86kufFvmLuVb8gdsjAS6xBXJL5T73AEQy;Trusted_Connection=True;Integrated Security=False;MultipleActiveResultSets=True;TrustServerCertificate=True;");
 
-    public virtual DbSet<DataUpdaterType> DataUpdaterTypes { get; set; }
-    public virtual DbSet<LiveDataUpdaterStatus> LiveDataUpdaterStatuses { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-
-        modelBuilder.Entity<DataUpdater>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__DataUpda__3214EC2739E457A8");
-
-            entity.ToTable("DataUpdaters", "DataUpdaters");
-
-            entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.ProviderId).HasColumnName("ProviderID");
-            entity.Property(e => e.TypeId).HasColumnName("TypeID");
-
-            entity.HasOne(d => d.Provider).WithMany(p => p.DataUpdaters)
-                .HasForeignKey(d => d.ProviderId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__DataUpdat__Provi__5D60DB10");
-
-            entity.HasOne(d => d.Type).WithMany(p => p.DataUpdaters)
-                .HasForeignKey(d => d.TypeId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__DataUpdat__TypeI__5C6CB6D7");
-        });
-
-        modelBuilder.Entity<DataUpdaterStatus>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__DataUpda__3214EC27FA247EA4");
-
-            entity.ToTable("DataUpdaterStatuses", "DataUpdaters");
-
-            entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.Name).HasMaxLength(255);
-        });
-
-        modelBuilder.Entity<LiveDataUpdaterStatus>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__LiveData__3214EC27242E551C");
-
-            entity.ToTable("LiveDataUpdaterStatuses", "DataUpdaters");
-
-            entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.LastSuccessfulRunTime).HasColumnType("datetime");
-            entity.Property(e => e.StatusId).HasColumnName("StatusID");
-            entity.Property(e => e.UpdaterId).HasColumnName("UpdaterID");
-
-            entity.HasOne(d => d.Status).WithMany(p => p.LiveDataUpdaterStatuses)
-                .HasForeignKey(d => d.StatusId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__LiveDataU__Statu__5F492382");
-
-            entity.HasOne(d => d.Updater).WithMany(p => p.LiveDataUpdaterStatuses)
-                .HasForeignKey(d => d.UpdaterId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__LiveDataU__Updat__5E54FF49");
-        });
-
-        modelBuilder.Entity<DataUpdaterType>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__DataUpda__3214EC27C05DB102");
-
-            entity.ToTable("DataUpdaterTypes", "DataUpdaters");
-
-            entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.TypeName).HasMaxLength(255);
-        });
-
         modelBuilder.Entity<AggregatedCounter>(entity =>
         {
             entity.HasKey(e => e.Key).HasName("PK_HangFire_CounterAggregated");
@@ -219,11 +170,8 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
             entity.ToTable("APIKeys", "Security");
 
             entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.KeyHash)
-                .IsRequired()
-                .HasMaxLength(255);
+            entity.Property(e => e.KeyHash).HasMaxLength(255);
             entity.Property(e => e.RequesterIpaddress)
-                .IsRequired()
                 .HasMaxLength(255)
                 .HasColumnName("RequesterIPAddress");
         });
@@ -270,21 +218,6 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
                 .HasConstraintName("FK__APIKeyGro__Group__2BC97F7C");
         });
 
-        modelBuilder.Entity<AppConfigurationValue>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__AppConfi__3214EC273CB2D48A");
-
-            entity.ToTable("AppConfigurationValues", "Configuration");
-
-            entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(255);
-            entity.Property(e => e.Value)
-                .IsRequired()
-                .HasMaxLength(255);
-        });
-
         modelBuilder.Entity<CachedResponse>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__CachedRe__3214EC27DAB81A21");
@@ -293,16 +226,23 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.KeyJson)
-                .IsRequired()
                 .IsUnicode(false)
                 .HasColumnName("KeyJSON");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(255);
+            entity.Property(e => e.Name).HasMaxLength(255);
             entity.Property(e => e.ValueJson)
-                .IsRequired()
                 .IsUnicode(false)
                 .HasColumnName("ValueJSON");
+        });
+
+        modelBuilder.Entity<ConfigurationString>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Configur__3214EC270FABEC9B");
+
+            entity.ToTable("ConfigurationStrings", "Configuration");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Name).HasMaxLength(255);
+            entity.Property(e => e.Value).IsUnicode(false);
         });
 
         modelBuilder.Entity<Counter>(entity =>
@@ -316,6 +256,47 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
             entity.Property(e => e.ExpireAt).HasColumnType("datetime");
         });
 
+        modelBuilder.Entity<DataUpdater>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__DataUpda__3214EC2739E457A8");
+
+            entity.ToTable("DataUpdaters", "DataUpdaters");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.ProviderId).HasColumnName("ProviderID");
+            entity.Property(e => e.TypeId).HasColumnName("TypeID");
+
+            entity.HasOne(d => d.Provider).WithMany(p => p.DataUpdaters)
+                .HasForeignKey(d => d.ProviderId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__DataUpdat__Provi__5D60DB10");
+
+            entity.HasOne(d => d.Type).WithMany(p => p.DataUpdaters)
+                .HasForeignKey(d => d.TypeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__DataUpdat__TypeI__5C6CB6D7");
+        });
+
+        modelBuilder.Entity<DataUpdaterStatus>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__DataUpda__3214EC27FA247EA4");
+
+            entity.ToTable("DataUpdaterStatuses", "DataUpdaters");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Name).HasMaxLength(255);
+        });
+
+        modelBuilder.Entity<DataUpdaterType>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__DataUpda__3214EC27C05DB102");
+
+            entity.ToTable("DataUpdaterTypes", "DataUpdaters");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.TypeName).HasMaxLength(255);
+        });
+
         modelBuilder.Entity<DetailedAccessStat>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Detailed__3214EC270F45AD2B");
@@ -323,12 +304,19 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Date).HasColumnType("datetime");
             entity.Property(e => e.Ipaddress)
-                .IsRequired()
                 .HasMaxLength(255)
                 .HasColumnName("IPAddress");
-            entity.Property(e => e.Path)
-                .IsRequired()
-                .HasMaxLength(255);
+            entity.Property(e => e.Path).HasMaxLength(255);
+        });
+
+        modelBuilder.Entity<Environment>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Environm__3214EC27D353D7B2");
+
+            entity.ToTable("Environments", "Configuration");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Name).HasMaxLength(255);
         });
 
         modelBuilder.Entity<Experiment>(entity =>
@@ -339,9 +327,7 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Description).HasMaxLength(255);
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(255);
+            entity.Property(e => e.Name).HasMaxLength(255);
             entity.Property(e => e.ProjectId).HasColumnName("ProjectID");
 
             entity.HasOne(d => d.Project).WithMany(p => p.Experiments)
@@ -411,9 +397,7 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Description).HasMaxLength(255);
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(255);
+            entity.Property(e => e.Name).HasMaxLength(255);
 
             entity.HasOne(d => d.TypeNavigation).WithMany(p => p.ExperimentTargets)
                 .HasForeignKey(d => d.Type)
@@ -428,12 +412,8 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
             entity.ToTable("ExperimentTargetTypes", "ABTesting");
 
             entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.TargetTypeName)
-                .IsRequired()
-                .HasMaxLength(255);
-            entity.Property(e => e.TargetTypeValue)
-                .IsRequired()
-                .HasMaxLength(255);
+            entity.Property(e => e.TargetTypeName).HasMaxLength(255);
+            entity.Property(e => e.TargetTypeValue).HasMaxLength(255);
         });
 
         modelBuilder.Entity<ExperimentalSession>(entity =>
@@ -446,7 +426,6 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
                 .ValueGeneratedOnAdd()
                 .HasColumnName("ID");
             entity.Property(e => e.TargetIpaddress)
-                .IsRequired()
                 .HasMaxLength(255)
                 .HasColumnName("TargetIPAddress");
 
@@ -463,12 +442,8 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
             entity.ToTable("ExternalWebsites", "Info");
 
             entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.IconBase64)
-                .IsRequired()
-                .IsUnicode(false);
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(255);
+            entity.Property(e => e.IconBase64).IsUnicode(false);
+            entity.Property(e => e.Name).HasMaxLength(255);
 
             entity.HasOne(d => d.CategoryNavigation).WithMany(p => p.ExternalWebsites)
                 .HasForeignKey(d => d.Category)
@@ -483,9 +458,7 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
             entity.ToTable("ExternalWebsiteCateopry", "Info");
 
             entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(255);
+            entity.Property(e => e.Name).HasMaxLength(255);
         });
 
         modelBuilder.Entity<Feature>(entity =>
@@ -496,9 +469,7 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Details).HasMaxLength(255);
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(255);
+            entity.Property(e => e.Name).HasMaxLength(255);
             entity.Property(e => e.ProjectId).HasColumnName("ProjectID");
 
             entity.HasOne(d => d.Project).WithMany(p => p.Features)
@@ -514,9 +485,7 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
             entity.ToTable("Groups", "Security");
 
             entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(255);
+            entity.Property(e => e.Name).HasMaxLength(255);
         });
 
         modelBuilder.Entity<GroupRole>(entity =>
@@ -562,10 +531,8 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
 
             entity.HasIndex(e => e.StateName, "IX_HangFire_Job_StateName");
 
-            entity.Property(e => e.Arguments).IsRequired();
             entity.Property(e => e.CreatedAt).HasColumnType("datetime");
             entity.Property(e => e.ExpireAt).HasColumnType("datetime");
-            entity.Property(e => e.InvocationData).IsRequired();
             entity.Property(e => e.StateName).HasMaxLength(20);
         });
 
@@ -606,6 +573,19 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
             entity.Property(e => e.ExpireAt).HasColumnType("datetime");
         });
 
+       
+        modelBuilder.Entity<Log>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_dbo.Log");
+
+            entity.ToTable("Logs", "Logging");
+
+            entity.Property(e => e.Level).HasMaxLength(50);
+            entity.Property(e => e.Logged).HasColumnType("datetime");
+            entity.Property(e => e.Logger).HasMaxLength(250);
+            entity.Property(e => e.MachineName).HasMaxLength(50);
+        });
+
         modelBuilder.Entity<MarkdownPage>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Markdown__3214EC2759E148E2");
@@ -613,9 +593,45 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
             entity.ToTable("MarkdownPages", "Info");
 
             entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.RawMarkdown)
-                .IsRequired()
-                .IsUnicode(false);
+            entity.Property(e => e.RawMarkdown).IsUnicode(false);
+        });
+
+        modelBuilder.Entity<Microservice>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Microser__3214EC27B5F7310C");
+
+            entity.ToTable("Microservices", "Microservices");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Description).HasMaxLength(255);
+            entity.Property(e => e.Name).HasMaxLength(255);
+        });
+
+        modelBuilder.Entity<MicroserviceConfigurationString>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Microser__3214EC271CD0FBDD");
+
+            entity.ToTable("MicroserviceConfigurationStrings", "Configuration");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.ConfigurationStringId).HasColumnName("ConfigurationStringID");
+            entity.Property(e => e.EnvironmentId).HasColumnName("EnvironmentID");
+            entity.Property(e => e.MicroserviceId).HasColumnName("MicroserviceID");
+
+            entity.HasOne(d => d.ConfigurationString).WithMany(p => p.MicroserviceConfigurationStrings)
+                .HasForeignKey(d => d.ConfigurationStringId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Microserv__Confi__4959E263");
+
+            entity.HasOne(d => d.Environment).WithMany(p => p.MicroserviceConfigurationStrings)
+                .HasForeignKey(d => d.EnvironmentId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Microserv__Envir__4A4E069C");
+
+            entity.HasOne(d => d.Microservice).WithMany(p => p.MicroserviceConfigurationStrings)
+                .HasForeignKey(d => d.MicroserviceId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Microserv__Micro__4865BE2A");
         });
 
         modelBuilder.Entity<Network>(entity =>
@@ -625,9 +641,7 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
             entity.HasIndex(e => e.Name, "UQ__Networks__737584F6490B5C53").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(255);
+            entity.Property(e => e.Name).HasMaxLength(255);
         });
 
         modelBuilder.Entity<OldestLoggedHistoricalEntry>(entity =>
@@ -671,9 +685,7 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
             entity.ToTable("Permissions", "Security");
 
             entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(255);
+            entity.Property(e => e.Name).HasMaxLength(255);
         });
 
         modelBuilder.Entity<PermissionsForRole>(entity =>
@@ -705,12 +717,8 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Details).HasMaxLength(255);
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(255);
-            entity.Property(e => e.Website)
-                .IsRequired()
-                .HasMaxLength(255);
+            entity.Property(e => e.Name).HasMaxLength(255);
+            entity.Property(e => e.Website).HasMaxLength(255);
 
             entity.HasOne(d => d.ProviderNavigation).WithMany(p => p.Projects)
                 .HasForeignKey(d => d.Provider)
@@ -738,6 +746,33 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
                 .HasForeignKey(d => d.Type)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Providers__Type__4D5F7D71");
+        });
+
+        modelBuilder.Entity<ProviderConfigurationString>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Provider__3214EC27FE2E13DB");
+
+            entity.ToTable("ProviderConfigurationStrings", "Configuration");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.ConfigurationStringId).HasColumnName("ConfigurationStringID");
+            entity.Property(e => e.EnvironmentId).HasColumnName("EnvironmentID");
+            entity.Property(e => e.ProviderId).HasColumnName("ProviderID");
+
+            entity.HasOne(d => d.ConfigurationString).WithMany(p => p.ProviderConfigurationStrings)
+                .HasForeignKey(d => d.ConfigurationStringId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__ProviderC__Confi__3A179ED3");
+
+            entity.HasOne(d => d.Environment).WithMany(p => p.ProviderConfigurationStrings)
+                .HasForeignKey(d => d.EnvironmentId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__ProviderC__Envir__3B0BC30C");
+
+            entity.HasOne(d => d.Provider).WithMany(p => p.ProviderConfigurationStrings)
+                .HasForeignKey(d => d.ProviderId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__ProviderC__Provi__39237A9A");
         });
 
         modelBuilder.Entity<ProviderDetailsMarkdownPage>(entity =>
@@ -769,10 +804,7 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.ExternalWebsiteId).HasColumnName("ExternalWebsiteID");
-            entity.Property(e => e.Link)
-                .IsRequired()
-                .HasMaxLength(1)
-                .IsUnicode(false);
+            entity.Property(e => e.Link).IsUnicode(false);
             entity.Property(e => e.ProviderId).HasColumnName("ProviderID");
 
             entity.HasOne(d => d.ExternalWebsite).WithMany(p => p.ProviderLinks)
@@ -794,12 +826,9 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Color)
-                .IsRequired()
                 .HasMaxLength(16)
                 .IsUnicode(false);
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(255);
+            entity.Property(e => e.Name).HasMaxLength(255);
         });
 
         modelBuilder.Entity<Role>(entity =>
@@ -809,9 +838,7 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
             entity.ToTable("Roles", "Security");
 
             entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(255);
+            entity.Property(e => e.Name).HasMaxLength(255);
         });
 
         modelBuilder.Entity<Schema>(entity =>
@@ -857,9 +884,7 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.LastUpdateTime).HasColumnType("datetime");
             entity.Property(e => e.LastUpdateTps).HasColumnName("LastUpdateTPS");
-            entity.Property(e => e.Product)
-                .IsRequired()
-                .HasMaxLength(255);
+            entity.Property(e => e.Product).HasMaxLength(255);
 
             entity.HasOne(d => d.NetworkNavigation).WithMany(p => p.StarkwareTransactionCountData)
                 .HasForeignKey(d => d.Network)
@@ -875,9 +900,7 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
 
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.CreatedAt).HasColumnType("datetime");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(20);
+            entity.Property(e => e.Name).HasMaxLength(20);
             entity.Property(e => e.Reason).HasMaxLength(100);
 
             entity.HasOne(d => d.Job).WithMany(p => p.States)
@@ -1024,6 +1047,9 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.AverageGps).HasColumnName("AverageGPS");
             entity.Property(e => e.AverageTps).HasColumnName("AverageTPS");
+            entity.Property(e => e.OclhJson)
+                .HasMaxLength(255)
+                .HasColumnName("OCLH_JSON");
             entity.Property(e => e.StartDate).HasColumnType("datetime");
 
             entity.HasOne(d => d.NetworkNavigation).WithMany(p => p.TpsandGasDataDays)
@@ -1046,6 +1072,9 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.AverageGps).HasColumnName("AverageGPS");
             entity.Property(e => e.AverageTps).HasColumnName("AverageTPS");
+            entity.Property(e => e.OclhJson)
+                .HasMaxLength(255)
+                .HasColumnName("OCLH_JSON");
             entity.Property(e => e.StartDate).HasColumnType("datetime");
 
             entity.HasOne(d => d.NetworkNavigation).WithMany(p => p.TpsandGasDataHours)
@@ -1108,6 +1137,28 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
                 .HasConstraintName("FK__TPSAndGas__Provi__51300E55");
         });
 
+        modelBuilder.Entity<TpsandGasDataMinute>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__TPSAndGa__3214EC273B83501B");
+
+            entity.ToTable("TPSAndGasData_Minute");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.AverageGps).HasColumnName("AverageGPS");
+            entity.Property(e => e.AverageTps).HasColumnName("AverageTPS");
+            entity.Property(e => e.StartDate).HasColumnType("datetime");
+
+            entity.HasOne(d => d.NetworkNavigation).WithMany(p => p.TpsandGasDataMinutes)
+                .HasForeignKey(d => d.Network)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__TPSAndGas__Netwo__32767D0B");
+
+            entity.HasOne(d => d.ProviderNavigation).WithMany(p => p.TpsandGasDataMinutes)
+                .HasForeignKey(d => d.Provider)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__TPSAndGas__Provi__318258D2");
+        });
+
         modelBuilder.Entity<TpsandGasDataMonth>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__TPSAndGa__3214EC27B1986F97");
@@ -1117,6 +1168,9 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.AverageGps).HasColumnName("AverageGPS");
             entity.Property(e => e.AverageTps).HasColumnName("AverageTPS");
+            entity.Property(e => e.OclhJson)
+                .HasMaxLength(255)
+                .HasColumnName("OCLH_JSON");
             entity.Property(e => e.StartDate).HasColumnType("datetime");
 
             entity.HasOne(d => d.NetworkNavigation).WithMany(p => p.TpsandGasDataMonths)
@@ -1139,6 +1193,9 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.AverageGps).HasColumnName("AverageGPS");
             entity.Property(e => e.AverageTps).HasColumnName("AverageTPS");
+            entity.Property(e => e.OclhJson)
+                .HasMaxLength(255)
+                .HasColumnName("OCLH_JSON");
             entity.Property(e => e.StartDate).HasColumnType("datetime");
 
             entity.HasOne(d => d.NetworkNavigation).WithMany(p => p.TpsandGasDataWeeks)
@@ -1173,29 +1230,6 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__TPSAndGas__Provi__58D1301D");
         });
-
-        modelBuilder.Entity<TpsandGasDataMinute>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__TPSAndGa__3214EC273B83501B");
-
-            entity.ToTable("TPSAndGasData_Minute");
-
-            entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.AverageGps).HasColumnName("AverageGPS");
-            entity.Property(e => e.AverageTps).HasColumnName("AverageTPS");
-            entity.Property(e => e.StartDate).HasColumnType("datetime");
-
-            entity.HasOne(d => d.NetworkNavigation).WithMany(p => p.TpsandGasDataMinutes)
-                .HasForeignKey(d => d.Network)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__TPSAndGas__Netwo__32767D0B");
-
-            entity.HasOne(d => d.ProviderNavigation).WithMany(p => p.TpsandGasDataMinutes)
-                .HasForeignKey(d => d.Provider)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__TPSAndGas__Provi__318258D2");
-        });
-
 
         OnModelCreatingPartial(modelBuilder);
     }

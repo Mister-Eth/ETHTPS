@@ -14,7 +14,7 @@ namespace ETHTPS.API.DependencyInjection
 {
     public static class DataUpdaterExtensions
     {
-        public static void AddDataUpdaterStatusService(this IServiceCollection services) => services.AddScoped<IDataUpdaterService, DataUpdaterService>();
+        public static void AddDataUpdaterStatusService(this IServiceCollection services) => services.AddScoped<IDataUpdaterStatusService, DataUpdaterService>();
         public static void AddInfluxTPSDataUpdaters(this IServiceCollection services)
         {
             services.RegisterInfluxHangfireBackgroundService<InfluxLogger<InfuraBlockInfoProvider>, InfuraBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);

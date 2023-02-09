@@ -15,7 +15,7 @@ namespace ETHTPS.API.Controllers
     {
         private readonly IDataUpdaterStatusGetter _dataUpdaterService;
 
-        public UpdaterStatusController(IDataUpdaterService dataUpdaterService)
+        public UpdaterStatusController(IDataUpdaterStatusService dataUpdaterService)
         {
             _dataUpdaterService = dataUpdaterService;
         }

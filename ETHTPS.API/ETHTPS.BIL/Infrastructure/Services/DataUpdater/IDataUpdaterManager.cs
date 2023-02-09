@@ -4,6 +4,7 @@
     {
         void IncrementNumberOfSuccesses(string provider, string updaterType);
         void IncrementNumberOfFailures(string provider, string updaterType);
+        void MarkAsFailed(string provider, string updaterType);
         void MarkAsRanSuccessfully(string provider, string updaterType);
     }
 }

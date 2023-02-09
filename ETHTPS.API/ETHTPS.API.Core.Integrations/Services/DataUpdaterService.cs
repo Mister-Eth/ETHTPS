@@ -6,7 +6,7 @@ using ETHTPS.Data.Integrations.MSSQL.Extensions;
 
 namespace ETHTPS.API.Core.Integrations.MSSQL.Services
 {
-    public class DataUpdaterService : IDataUpdaterService
+    public class DataUpdaterService : IDataUpdaterStatusService
     {
         private readonly EthtpsContext _context;
 
@@ -61,6 +61,7 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services
             {
                 var x = _context.LiveDataUpdaterStatuses.First(x => x.UpdaterId == updater.Id);
                 x.NumberOfSuccesses++;
+                x.LastSuccessfulRunTime = DateTime.Now;
                 _context.LiveDataUpdaterStatuses.Update(x);
                 _context.SaveChanges();
             }
@@ -70,6 +71,12 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services
         {
             SetStatusFor(provider, "Ran successfully", updaterType);
             IncrementNumberOfSuccesses(provider, updaterType);
+        }
+
+        public void MarkAsFailed(string provider, string updaterType)
+        {
+            SetStatusFor(provider, "Failed", updaterType);
+            IncrementNumberOfFailures(provider, updaterType);
         }
 
         public void SetStatusFor(string provider, string status, string updaterType)
