@@ -39,6 +39,7 @@ namespace ETHTPS.API
                     .AddAPIKeyAuthenticationAndAuthorization()
                     .AddCoreServices()
                     .RegisterMicroservice(APP_NAME, "General API");
+            services.AddDataUpdaterStatusService();
             
 #if DEBUG
             services.AddScoped<PublicDataInitializer>()

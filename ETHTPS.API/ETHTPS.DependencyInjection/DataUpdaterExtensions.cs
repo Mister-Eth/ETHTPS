@@ -7,11 +7,14 @@ using Microsoft.Extensions.DependencyInjection;
 using static ETHTPS.API.Core.Constants;
 using ETHTPS.Services.Infrastructure.Extensions;
 using Microsoft.Extensions.Configuration;
+using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater;
+using ETHTPS.API.Core.Integrations.MSSQL.Services;
 
 namespace ETHTPS.API.DependencyInjection
 {
     public static class DataUpdaterExtensions
     {
+        public static void AddDataUpdaterStatusService(this IServiceCollection services) => services.AddScoped<IDataUpdaterService, DataUpdaterService>();
         public static void AddInfluxTPSDataUpdaters(this IServiceCollection services)
         {
             services.RegisterInfluxHangfireBackgroundService<InfluxLogger<InfuraBlockInfoProvider>, InfuraBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
