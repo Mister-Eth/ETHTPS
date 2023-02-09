@@ -5,7 +5,7 @@ using ETHTPS.Data.Integrations.MSSQL.HistoricalDataProviders;
 using ETHTPS.Data.Models.Query;
 using ETHTPS.Data.ResponseModels;
 
-namespace ETHTPS.API.Core.Integrations.MSSQL.Services
+namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Data
 {
     public class GasAdjustedTPSService : HistoricalMethodsServiceBase, IPSService
     {

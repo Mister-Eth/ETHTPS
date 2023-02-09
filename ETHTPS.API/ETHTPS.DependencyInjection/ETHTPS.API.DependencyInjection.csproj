@@ -22,6 +22,7 @@
     <ProjectReference Include="..\ETHTPS.BackgroundServices\ETHTPS.Services.csproj" />
     <ProjectReference Include="..\ETHTPS.BIL\ETHTPS.API.BIL.csproj" />
     <ProjectReference Include="..\ETHTPS.Security\ETHTPS.API.Security.Core.csproj" />
+    <ProjectReference Include="..\ETHTPS.Services.BackgroundTasks\ETHTPS.Services.BackgroundTasks.csproj" />
   </ItemGroup>
 
 </Project>

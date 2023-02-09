@@ -1,5 +1,6 @@
 ﻿using ETHTPS.API.BIL.Infrastructure.Services;
 using ETHTPS.API.Core.Integrations.MSSQL.Services;
+using ETHTPS.API.Core.Integrations.MSSQL.Services.Data;
 using ETHTPS.API.Security.Core.Humanity;
 using ETHTPS.API.Security.Core.Humanity.Recaptcha;
 using ETHTPS.Configuration;

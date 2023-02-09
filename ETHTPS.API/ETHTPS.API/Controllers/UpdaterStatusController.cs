@@ -21,7 +21,7 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<string> GetAllStatuses([FromQuery] APIKeyRequestModel model)
+        public IEnumerable<LiveUpdaterStatus> GetAllStatuses([FromQuery] APIKeyRequestModel model)
         {
             return _dataUpdaterService.GetAllStatuses();
         }

@@ -8,13 +8,16 @@ using static ETHTPS.API.Core.Constants;
 using ETHTPS.Services.Infrastructure.Extensions;
 using Microsoft.Extensions.Configuration;
 using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater;
-using ETHTPS.API.Core.Integrations.MSSQL.Services;
+using Hangfire;
+using ETHTPS.Services.BackgroundTasks.Recurring.Database;
+using ETHTPS.API.Core.Integrations.MSSQL.Services.DataUpdater;
 
 namespace ETHTPS.API.DependencyInjection
 {
     public static class DataUpdaterExtensions
     {
-        public static void AddDataUpdaterStatusService(this IServiceCollection services) => services.AddScoped<IDataUpdaterStatusService, DataUpdaterService>();
+        public static void AddDataUpdaterStatusService(this IServiceCollection services) =>
+            services.AddScoped<IDataUpdaterStatusService, DataUpdaterService>();
         public static void AddInfluxTPSDataUpdaters(this IServiceCollection services)
         {
             services.RegisterInfluxHangfireBackgroundService<InfluxLogger<InfuraBlockInfoProvider>, InfuraBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
@@ -43,15 +46,8 @@ namespace ETHTPS.API.DependencyInjection
             services.RegisterInfluxHangfireBackgroundService<InfluxLogger<DeversiFiBlockInfoProvider>, DeversiFiBlockInfoProvider>(CronConstants.EveryHour, TPSUPDATERQUEUE);
             services.RegisterInfluxHangfireBackgroundService<InfluxLogger<PolygonHermezBlockInfoProvider>, PolygonHermezBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
         }
-        public static void AddMSSQLTPSDataUpdaters(this IServiceCollection services, IConfiguration configuration)
+        public static void AddMSSQLTPSDataUpdaters(this IServiceCollection services)
         {
-            var configurationQueues = configuration.GetSection("Hangfire").GetSection("Queues").Get<string[]>();
-            if (configurationQueues is null)
-                return;
-            if (!configurationQueues.Contains(TPSUPDATERQUEUE))
-                return;
-
-            //services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<EtherscanBlockInfoProvider>, EtherscanBlockInfoProvider>(CronConstants.Every13s, TPSUPDATERQUEUE);
             services.RegisterHangfireBackgroundService<MSSQLLogger<InfuraBlockInfoProvider>, InfuraBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
             //services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<HabitatBlockInfoProvider>, HabitatBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
             services.RegisterHangfireBackgroundService<MSSQLLogger<PolygonScanBlockInfoProvider>, PolygonScanBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);

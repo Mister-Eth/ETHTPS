@@ -1,5 +1,5 @@
 ﻿using ETHTPS.API.BIL.Infrastructure.Services;
-using ETHTPS.API.Core.Integrations.MSSQL.Services;
+using ETHTPS.API.Core.Integrations.MSSQL.Services.Data;
 using ETHTPS.Data.Models.Query;
 using ETHTPS.Data.ResponseModels;
 

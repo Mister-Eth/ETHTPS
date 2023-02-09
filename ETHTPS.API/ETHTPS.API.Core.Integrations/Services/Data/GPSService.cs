@@ -5,7 +5,7 @@ using ETHTPS.Data.Integrations.MSSQL.HistoricalDataProviders;
 using ETHTPS.Data.Models.Query;
 using ETHTPS.Data.ResponseModels;
 
-namespace ETHTPS.API.Core.Integrations.MSSQL.Services
+namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Data
 {
     public class GPSService : HistoricalMethodsServiceBase, IPSService
     {
@@ -18,7 +18,7 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services
             List<DataResponseModel> result = new();
             lock (Context.LockObj)
             {
-                IEnumerable<Provider> providers = (model.Provider.ToUpper() == "ALL") ? Context.Providers.AsEnumerable() : new Provider[] { Context.Providers.First(x => x.Name.ToUpper() == model.Provider.ToUpper()) };
+                IEnumerable<Provider> providers = model.Provider.ToUpper() == "ALL" ? Context.Providers.AsEnumerable() : new Provider[] { Context.Providers.First(x => x.Name.ToUpper() == model.Provider.ToUpper()) };
                 foreach (Provider p in providers.ToArray())
                 {
                     TpsandGasDataMax entry = Context.TpsandGasDataMaxes.FirstOrDefault(x => x.Provider == p.Id && x.NetworkNavigation.Name == model.Network);
@@ -93,7 +93,7 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services
             IDictionary<string, IEnumerable<DataResponseModel>> data = Get(model, Constants.All);
             foreach (string key in data.Keys)
             {
-                data[key] = Enumerable.Where(data[key], x => x.Data.First().Date.Year == year);
+                data[key] = data[key].Where(x => x.Data.First().Date.Year == year);
             }
             return data;
         }

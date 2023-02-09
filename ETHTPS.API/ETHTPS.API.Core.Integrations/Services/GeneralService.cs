@@ -5,6 +5,7 @@ using ETHTPS.Data.Models.Query;
 using ETHTPS.Data.ResponseModels;
 using ETHTPS.Data.Core;
 using ETHTPS.API.Core.Services;
+using ETHTPS.API.Core.Integrations.MSSQL.Services.Data;
 
 namespace ETHTPS.API.Core.Integrations.MSSQL.Services
 {
