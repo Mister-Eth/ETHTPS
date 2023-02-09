@@ -2,8 +2,8 @@
 {
     public interface IDataUpdaterManager
     {
-        void IncrementNumberOfSuccesses(string provider);
-        void IncrementNumberOfFailures(string provider);
-        void MarkAsRanSuccessfully();
+        void IncrementNumberOfSuccesses(string provider, string updaterType);
+        void IncrementNumberOfFailures(string provider, string updaterType);
+        void MarkAsRanSuccessfully(string provider, string updaterType);
     }
 }

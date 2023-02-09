@@ -32,7 +32,7 @@ namespace ETHTPS.Data.Integrations.MSSQL.Extensions
                 return default(T);
             }
         }
-
+        public static int GetProviderID(this EthtpsContext context, string provider) => (context.Providers.First(x => x.Name.ToUpper() == provider.ToUpper())).Id;
         public static async Task<int> GetProviderIDAsync(this EthtpsContext context, string provider) => (await context.Providers.FirstAsync(x => x.Name.ToUpper() == provider.ToUpper())).Id;
 
         public static int GetMainnetID(this EthtpsContext context) => context.Networks.First(x => x.Name == "Mainnet").Id;

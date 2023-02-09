@@ -27,7 +27,13 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
-        public LiveUpdaterStatus GetStatusFor(string provider, [FromQuery] APIKeyRequestModel model)
+        public LiveUpdaterStatus GetStatusFor(string provider, string updaterType, [FromQuery] APIKeyRequestModel model)
+        {
+            return _dataUpdaterService.GetStatusFor(provider, updaterType);
+        }
+
+        [HttpGet]
+        public IEnumerable<LiveUpdaterStatus> GetStatusesFor(string provider, [FromQuery] APIKeyRequestModel model)
         {
             return _dataUpdaterService.GetStatusFor(provider);
         }

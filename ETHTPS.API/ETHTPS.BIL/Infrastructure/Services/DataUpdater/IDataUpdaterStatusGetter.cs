@@ -5,6 +5,7 @@ namespace ETHTPS.API.BIL.Infrastructure.Services.DataUpdater
     public interface IDataUpdaterStatusGetter
     {
         IEnumerable<string> GetAllStatuses();
-        LiveUpdaterStatus GetStatusFor(string provider);
+        IEnumerable<LiveUpdaterStatus> GetStatusFor(string provider);
+        LiveUpdaterStatus? GetStatusFor(string provider, string updaterType);
     }
 }
