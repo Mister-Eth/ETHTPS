@@ -128,10 +128,55 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
 
     public virtual DbSet<TpsandGasDataYear> TpsandGasDataYears { get; set; }
     public virtual DbSet<TpsandGasDataMinute> TpsandGasDataMinutes { get; set; }
+    public virtual DbSet<DataUpdater> DataUpdaters { get; set; }
 
+    public virtual DbSet<DataUpdaterStatus> DataUpdaterStatuses { get; set; }
+
+    public virtual DbSet<DataUpdaterType> DataUpdaterTypes { get; set; }
+    public virtual DbSet<LiveDataUpdaterStatus> LiveDataUpdaterStatuses { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-       
+
+        modelBuilder.Entity<DataUpdater>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__DataUpda__3214EC2739E457A8");
+
+            entity.ToTable("DataUpdaters", "DataUpdaters");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.ProviderId).HasColumnName("ProviderID");
+            entity.Property(e => e.TypeId).HasColumnName("TypeID");
+
+            entity.HasOne(d => d.Provider).WithMany(p => p.DataUpdaters)
+                .HasForeignKey(d => d.ProviderId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__DataUpdat__Provi__5D60DB10");
+
+            entity.HasOne(d => d.Type).WithMany(p => p.DataUpdaters)
+                .HasForeignKey(d => d.TypeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__DataUpdat__TypeI__5C6CB6D7");
+        });
+
+        modelBuilder.Entity<DataUpdaterStatus>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__DataUpda__3214EC27FA247EA4");
+
+            entity.ToTable("DataUpdaterStatuses", "DataUpdaters");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Name).HasMaxLength(255);
+        });
+
+        modelBuilder.Entity<DataUpdaterType>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__DataUpda__3214EC27C05DB102");
+
+            entity.ToTable("DataUpdaterTypes", "DataUpdaters");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.TypeName).HasMaxLength(255);
+        });
 
         modelBuilder.Entity<AggregatedCounter>(entity =>
         {
@@ -658,12 +703,9 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Color)
-                .IsRequired()
                 .HasMaxLength(16)
                 .IsUnicode(false);
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(255);
+            entity.Property(e => e.Name).HasMaxLength(255);
             entity.Property(e => e.TheoreticalMaxTps).HasColumnName("TheoreticalMaxTPS");
 
             entity.HasOne(d => d.SubchainOfNavigation).WithMany(p => p.InverseSubchainOfNavigation)

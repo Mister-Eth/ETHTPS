@@ -1,17 +1,15 @@
 ﻿using ETHTPS.Data.Models;
 
-using System;
-using System.Collections.Generic;
-
 namespace ETHTPS.Data.Integrations.MSSQL;
 
 public partial class Provider : EntityWIthId
 {
-    public string Name { get; set; }
+
+    public string Name { get; set; } = null!;
 
     public int Type { get; set; }
 
-    public string Color { get; set; }
+    public string Color { get; set; } = null!;
 
     public bool? IsGeneralPurpose { get; set; }
 
@@ -22,6 +20,8 @@ public partial class Provider : EntityWIthId
     public int? SubchainOf { get; set; }
 
     public int TheoreticalMaxTps { get; set; }
+
+    public virtual ICollection<DataUpdater> DataUpdaters { get; } = new List<DataUpdater>();
 
     public virtual ICollection<Experiment> Experiments { get; } = new List<Experiment>();
 
@@ -37,7 +37,7 @@ public partial class Provider : EntityWIthId
 
     public virtual ICollection<ProviderLink> ProviderLinks { get; } = new List<ProviderLink>();
 
-    public virtual Provider SubchainOfNavigation { get; set; }
+    public virtual Provider? SubchainOfNavigation { get; set; }
 
     public virtual ICollection<TimeWarpDatum> TimeWarpData { get; } = new List<TimeWarpDatum>();
 
@@ -55,9 +55,9 @@ public partial class Provider : EntityWIthId
 
     public virtual ICollection<TpsandGasDataHour> TpsandGasDataHours { get; } = new List<TpsandGasDataHour>();
 
-    public virtual TpsandGasDataLatest TpsandGasDataLatest { get; set; }
+    public virtual TpsandGasDataLatest? TpsandGasDataLatest { get; set; }
 
-    public virtual TpsandGasDataMax TpsandGasDataMax { get; set; }
+    public virtual TpsandGasDataMax? TpsandGasDataMax { get; set; }
 
     public virtual ICollection<TpsandGasDataMinute> TpsandGasDataMinutes { get; } = new List<TpsandGasDataMinute>();
 
@@ -67,5 +67,5 @@ public partial class Provider : EntityWIthId
 
     public virtual ICollection<TpsandGasDataYear> TpsandGasDataYears { get; } = new List<TpsandGasDataYear>();
 
-    public virtual ProviderType TypeNavigation { get; set; }
+    public virtual ProviderType TypeNavigation { get; set; } = null!;
 }
