@@ -1,6 +1,6 @@
 ﻿namespace ETHTPS.API.BIL.Infrastructure.Models.DataUpdater
 {
-    public class LiveDataUpdaterStatus
+    public class LiveUpdaterStatus
     {
         public string Updater { get; set; }
         public string Status { get; set; }

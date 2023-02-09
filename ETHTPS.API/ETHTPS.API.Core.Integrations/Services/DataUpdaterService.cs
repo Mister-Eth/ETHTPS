@@ -10,7 +10,7 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services
             throw new NotImplementedException();
         }
 
-        public LiveDataUpdaterStatus GetStatusFor(string provider)
+        public LiveUpdaterStatus GetStatusFor(string provider)
         {
             throw new NotImplementedException();
         }
@@ -30,7 +30,7 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services
             throw new NotImplementedException();
         }
 
-        public LiveDataUpdaterStatus SetStatusFor(string provider, string status)
+        public LiveUpdaterStatus SetStatusFor(string provider, string status)
         {
             throw new NotImplementedException();
         }
