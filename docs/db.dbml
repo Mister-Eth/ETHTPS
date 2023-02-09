@@ -233,12 +233,6 @@ Table Security.GroupRoles {
 Ref: Security.GroupRoles.GroupID > Security.Groups.ID
 Ref: Security.GroupRoles.RoleID > Security.Roles.ID
 
-Table Configuration.AppConfigurationValues{
-    ID int [pk, increment]
-    Name varchar [not null]
-    Value varchar [not null]
-}
-
 Table dbo.TimeWarpData{
    ID int [pk, increment]
    Network int [not null]
@@ -449,3 +443,84 @@ Table Info.ProviderDetailsMarkdownPages {
 
 Ref: Info.ProviderDetailsMarkdownPages.ProviderID > dbo.Providers.ID
 Ref: Info.ProviderDetailsMarkdownPages.MarkdownPageID > Info.MarkdownPages.ID
+
+Table Configuration.ConfigurationStrings {
+  ID int [pk, increment]
+  Name varchar [not null]
+  Value varchar [not null]
+}
+
+Table Configuration.Environments {
+  ID int [pk, increment]
+  Name varchar [not null]
+}
+
+Table Microservices.Microservices {
+  ID int [pk, increment]
+  Name varchar [not null]
+  Description varchar
+}
+
+Table Configuration.MicroserviceConfigurationStrings {
+  ID int [pk, increment]
+  MicroserviceID int [not null]
+  ConfigurationStringID int [not null]
+  EnvironmentID int [not null]
+}
+
+Ref: Configuration.MicroserviceConfigurationStrings.MicroserviceID > Microservices.Microservices.ID
+Ref: Configuration.MicroserviceConfigurationStrings.ConfigurationStringID > Configuration.ConfigurationStrings.ID
+Ref: Configuration.MicroserviceConfigurationStrings.EnvironmentID > Configuration.Environments.ID
+
+Table Configuration.ProviderConfigurationStrings {
+  ID int [pk, increment]
+  ProviderID int [not null]
+  ConfigurationStringID int [not null]
+  EnvironmentID int [not null]
+}
+
+Ref: Configuration.ProviderConfigurationStrings.ProviderID > dbo.Providers.ID
+Ref: Configuration.ProviderConfigurationStrings.ConfigurationStringID > Configuration.ConfigurationStrings.ID
+
+Table Logging.Logs{
+  ID int [pk, increment]
+  Values varchar(max) [not null]
+  Created datetime [not null]
+  EnvironmentID int [not null]
+  CreatedBy int [not null]
+}
+
+Ref: Logging.Logs.EnvironmentID > Configuration.Environments.ID
+Ref: Logging.Logs.CreatedBy > Microservices.Microservices.ID
+Ref: Configuration.ProviderConfigurationStrings.EnvironmentID > Configuration.Environments.ID
+
+Table DataUpdaters.DataUpdaterTypes{
+  ID int [pk, increment]
+  TypeName varchar [not null]
+}
+
+Table DataUpdaters.DataUpdaters{
+  ID int [pk, increment]
+  TypeID int [not null]
+  ProviderID int [not null]
+}
+
+Ref: DataUpdaters.DataUpdaters.TypeID > DataUpdaters.DataUpdaterTypes.ID
+Ref: DataUpdaters.DataUpdaters.ProviderID > dbo.Providers.ID
+
+Table DataUpdaters.DataUpdaterStatuses{
+  ID int [pk, increment]
+  Name varchar [not null]
+}
+
+Table DataUpdaters.LiveDataUpdaterStatuses{
+  ID int [pk, increment]
+  UpdaterID int [not null]
+  StatusID int [not null]
+  LastSuccessfulRunTime datetime
+  NumberOfSuccesses int [not null, default: 0]
+  NumberOfFailures int [not null, default: 0]
+}
+
+Ref: DataUpdaters.LiveDataUpdaterStatuses.UpdaterID > DataUpdaters.DataUpdaters.ID
+Ref: DataUpdaters.LiveDataUpdaterStatuses.StatusID > DataUpdaters.DataUpdaterStatuses.ID

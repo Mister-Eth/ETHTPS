@@ -1,14 +1,10 @@
 /*
 * Up-to-date schema available at https://dbdiagram.io/d/613dd6b1825b5b0146fdfc5f
 */
-
 CREATE SCHEMA [dbo]
 GO
 
 CREATE SCHEMA [Security]
-GO
-
-CREATE SCHEMA [Configuration]
 GO
 
 CREATE SCHEMA [ABTesting]
@@ -18,6 +14,18 @@ CREATE SCHEMA [ProjectManagement]
 GO
 
 CREATE SCHEMA [Info]
+GO
+
+CREATE SCHEMA [Configuration]
+GO
+
+CREATE SCHEMA [Microservices]
+GO
+
+CREATE SCHEMA [Logging]
+GO
+
+CREATE SCHEMA [DataUpdaters]
 GO
 
 CREATE TABLE [dbo].[Providers] (
@@ -303,13 +311,6 @@ CREATE TABLE [Security].[GroupRoles] (
 )
 GO
 
-CREATE TABLE [Configuration].[AppConfigurationValues] (
-  [ID] int PRIMARY KEY IDENTITY(1, 1),
-  [Name] nvarchar(255) NOT NULL,
-  [Value] nvarchar(255) NOT NULL
-)
-GO
-
 CREATE TABLE [ABTesting].[APIKeyExperimentBinding] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [ExperimentID] int NOT NULL,
@@ -421,6 +422,80 @@ CREATE TABLE [Info].[ProviderDetailsMarkdownPages] (
   [ID] int PRIMARY KEY IDENTITY(1, 1),
   [ProviderID] int NOT NULL,
   [MarkdownPageID] int NOT NULL
+)
+GO
+
+CREATE TABLE [Configuration].[ConfigurationStrings] (
+  [ID] int PRIMARY KEY IDENTITY(1, 1),
+  [Name] nvarchar(255) NOT NULL,
+  [Value] nvarchar(255) NOT NULL
+)
+GO
+
+CREATE TABLE [Configuration].[Environments] (
+  [ID] int PRIMARY KEY IDENTITY(1, 1),
+  [Name] nvarchar(255) NOT NULL
+)
+GO
+
+CREATE TABLE [Configuration].[MicroserviceConfigurationStrings] (
+  [ID] int PRIMARY KEY IDENTITY(1, 1),
+  [MicroserviceID] int NOT NULL,
+  [ConfigurationStringID] int NOT NULL,
+  [EnvironmentID] int NOT NULL
+)
+GO
+
+CREATE TABLE [Configuration].[ProviderConfigurationStrings] (
+  [ID] int PRIMARY KEY IDENTITY(1, 1),
+  [ProviderID] int NOT NULL,
+  [ConfigurationStringID] int NOT NULL,
+  [EnvironmentID] int NOT NULL
+)
+GO
+
+CREATE TABLE [Microservices].[Microservices] (
+  [ID] int PRIMARY KEY IDENTITY(1, 1),
+  [Name] nvarchar(255) NOT NULL,
+  [Description] nvarchar(255)
+)
+GO
+
+CREATE TABLE [Logging].[Logs] (
+  [ID] int PRIMARY KEY IDENTITY(1, 1),
+  [Values] varchar(max) NOT NULL,
+  [Created] datetime NOT NULL,
+  [EnvironmentID] int NOT NULL,
+  [CreatedBy] int NOT NULL
+)
+GO
+
+CREATE TABLE [DataUpdaters].[DataUpdaterTypes] (
+  [ID] int PRIMARY KEY IDENTITY(1, 1),
+  [TypeName] nvarchar(255) NOT NULL
+)
+GO
+
+CREATE TABLE [DataUpdaters].[DataUpdaters] (
+  [ID] int PRIMARY KEY IDENTITY(1, 1),
+  [TypeID] int NOT NULL,
+  [ProviderID] int NOT NULL
+)
+GO
+
+CREATE TABLE [DataUpdaters].[DataUpdaterStatuses] (
+  [ID] int PRIMARY KEY IDENTITY(1, 1),
+  [Name] nvarchar(255) NOT NULL
+)
+GO
+
+CREATE TABLE [DataUpdaters].[LiveDataUpdaterStatuses] (
+  [ID] int PRIMARY KEY IDENTITY(1, 1),
+  [UpdaterID] int NOT NULL,
+  [StatusID] int NOT NULL,
+  [LastSuccessfulRunTime] datetime,
+  [NumberOfSuccesses] int NOT NULL DEFAULT (0),
+  [NumberOfFailures] int NOT NULL DEFAULT (0)
 )
 GO
 
@@ -590,4 +665,40 @@ ALTER TABLE [Info].[ProviderDetailsMarkdownPages] ADD FOREIGN KEY ([ProviderID])
 GO
 
 ALTER TABLE [Info].[ProviderDetailsMarkdownPages] ADD FOREIGN KEY ([MarkdownPageID]) REFERENCES [Info].[MarkdownPages] ([ID])
+GO
+
+ALTER TABLE [Configuration].[MicroserviceConfigurationStrings] ADD FOREIGN KEY ([MicroserviceID]) REFERENCES [Microservices].[Microservices] ([ID])
+GO
+
+ALTER TABLE [Configuration].[MicroserviceConfigurationStrings] ADD FOREIGN KEY ([ConfigurationStringID]) REFERENCES [Configuration].[ConfigurationStrings] ([ID])
+GO
+
+ALTER TABLE [Configuration].[MicroserviceConfigurationStrings] ADD FOREIGN KEY ([EnvironmentID]) REFERENCES [Configuration].[Environments] ([ID])
+GO
+
+ALTER TABLE [Configuration].[ProviderConfigurationStrings] ADD FOREIGN KEY ([ProviderID]) REFERENCES [dbo].[Providers] ([ID])
+GO
+
+ALTER TABLE [Configuration].[ProviderConfigurationStrings] ADD FOREIGN KEY ([ConfigurationStringID]) REFERENCES [Configuration].[ConfigurationStrings] ([ID])
+GO
+
+ALTER TABLE [Configuration].[ProviderConfigurationStrings] ADD FOREIGN KEY ([EnvironmentID]) REFERENCES [Configuration].[Environments] ([ID])
+GO
+
+ALTER TABLE [Logging].[Logs] ADD FOREIGN KEY ([EnvironmentID]) REFERENCES [Configuration].[Environments] ([ID])
+GO
+
+ALTER TABLE [Logging].[Logs] ADD FOREIGN KEY ([CreatedBy]) REFERENCES [Microservices].[Microservices] ([ID])
+GO
+
+ALTER TABLE [DataUpdaters].[DataUpdaters] ADD FOREIGN KEY ([TypeID]) REFERENCES [DataUpdaters].[DataUpdaterTypes] ([ID])
+GO
+
+ALTER TABLE [DataUpdaters].[DataUpdaters] ADD FOREIGN KEY ([ProviderID]) REFERENCES [dbo].[Providers] ([ID])
+GO
+
+ALTER TABLE [DataUpdaters].[LiveDataUpdaterStatuses] ADD FOREIGN KEY ([UpdaterID]) REFERENCES [DataUpdaters].[DataUpdaters] ([ID])
+GO
+
+ALTER TABLE [DataUpdaters].[LiveDataUpdaterStatuses] ADD FOREIGN KEY ([StatusID]) REFERENCES [DataUpdaters].[DataUpdaterStatuses] ([ID])
 GO
