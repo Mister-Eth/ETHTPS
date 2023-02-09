@@ -9,6 +9,7 @@ using Hangfire;
 using Microsoft.Extensions.Logging;
 
 using System.Threading.Tasks;
+using System;
 
 namespace ETHTPS.Services.BlockchainServices
 {
@@ -35,12 +36,16 @@ namespace ETHTPS.Services.BlockchainServices
                 var block = await _instance.GetLatestBlockInfoAsync();
                 await _influxWrapper.LogBlockAsync(block, _provider);
                 TPSGPSInfo delta = await CalculateTPSGPSAsync(block);
-                await _influxWrapper.LogTPSGPSInfoAsync(delta);
+
             }
             catch (InfluxException e)
             {
                 _logger.LogError("InfluxLogger exception", e);
                 throw;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"InfluxLogger<{typeof(T).Name}>: {e.GetType().Name} {e.Message}");
             }
         }
         private static async Task CreateBucketsIfNeededAsync()

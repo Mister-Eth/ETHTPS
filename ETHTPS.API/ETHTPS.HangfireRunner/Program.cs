@@ -51,7 +51,7 @@ if (!app.Environment.IsDevelopment())
 app.UseStaticFiles();
 if (configurationQueues?.Length > 0)
 {
-    app.ConfigureHangfire(builder.Configuration);
+    app.ConfigureHangfire(configurationQueues);
 }
 app.UseRouting();
 app.ConfigureSwagger();

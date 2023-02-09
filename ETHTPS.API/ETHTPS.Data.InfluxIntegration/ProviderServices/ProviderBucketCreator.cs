@@ -22,9 +22,7 @@ namespace ETHTPS.Data.Integrations.InfluxIntegration.ProviderServices
                 var existing = await _influxWrapper.GetBucketsAsync();
                 var whatShouldBeAll = _providers.SelectMany(x => new[]
                 {
-                    GetTPSBucketNameFor(x),
-                    GetGPSBucketNameFor(x),
-                    GetBlockBucketNameFor(x),
+                    GetBlockBucketNameFor(x)
                 }); //This adds a suffix which needs to be removed in order to not end up with Name_X_X buckets
                 foreach (var provider in whatShouldBeAll.Where(x => !existing.Contains(x)).ToArray())
                 {

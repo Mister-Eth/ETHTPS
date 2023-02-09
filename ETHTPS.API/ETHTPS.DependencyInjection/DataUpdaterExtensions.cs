@@ -40,7 +40,7 @@ namespace ETHTPS.API.DependencyInjection
             services.RegisterInfluxHangfireBackgroundService<InfluxLogger<DeversiFiBlockInfoProvider>, DeversiFiBlockInfoProvider>(CronConstants.EveryHour, TPSUPDATERQUEUE);
             services.RegisterInfluxHangfireBackgroundService<InfluxLogger<PolygonHermezBlockInfoProvider>, PolygonHermezBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
         }
-        public static void AddTPSDataUpdaters(this IServiceCollection services, IConfiguration configuration)
+        public static void AddMSSQLTPSDataUpdaters(this IServiceCollection services, IConfiguration configuration)
         {
             var configurationQueues = configuration.GetSection("Hangfire").GetSection("Queues").Get<string[]>();
             if (configurationQueues is null)

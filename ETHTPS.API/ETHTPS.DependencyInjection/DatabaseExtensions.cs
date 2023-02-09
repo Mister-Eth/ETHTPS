@@ -2,19 +2,19 @@
 using ETHTPS.Data.Integrations.MSSQL;
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ETHTPS.API.DependencyInjection
 {
     public static class DatabaseExtensions
     {
-        public static string GetDefaultConnectionString(this IServiceCollection services, string appName)
+        public static string GetDefaultConnectionString(this IServiceCollection services, string appName) => services.GetConnectionString(appName, "ConnectionString");
+        public static string GetConnectionString(this IServiceCollection services, string appName, string connectionStringName)
         {
             using (var built = services.BuildServiceProvider())
             {
                 var provider = built.GetRequiredService<IDBConfigurationProvider>();
-                return provider.GetConfigurationStringsForMicroservice(appName).First(x => x.Name == "ConnectionString").Value;
+                return provider.GetConfigurationStringsForMicroservice(appName).First(x => x.Name == connectionStringName).Value;
             }
         }
         public static IServiceCollection AddDatabaseContext(this IServiceCollection services, string appName)
