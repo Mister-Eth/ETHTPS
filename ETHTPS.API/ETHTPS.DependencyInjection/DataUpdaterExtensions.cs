@@ -6,18 +6,15 @@ using ETHTPS.Services;
 using Microsoft.Extensions.DependencyInjection;
 using static ETHTPS.API.Core.Constants;
 using ETHTPS.Services.Infrastructure.Extensions;
-using Microsoft.Extensions.Configuration;
 using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater;
-using Hangfire;
-using ETHTPS.Services.BackgroundTasks.Recurring.Database;
-using ETHTPS.API.Core.Integrations.MSSQL.Services.DataUpdater;
+using ETHTPS.API.Core.Integrations.MSSQL.Services.Updater;
 
 namespace ETHTPS.API.DependencyInjection
 {
     public static class DataUpdaterExtensions
     {
         public static void AddDataUpdaterStatusService(this IServiceCollection services) =>
-            services.AddScoped<IDataUpdaterStatusService, DataUpdaterService>();
+            services.AddTransient<IDataUpdaterStatusService, DataUpdaterService>();
         public static void AddInfluxTPSDataUpdaters(this IServiceCollection services)
         {
             services.RegisterInfluxHangfireBackgroundService<InfluxLogger<InfuraBlockInfoProvider>, InfuraBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);

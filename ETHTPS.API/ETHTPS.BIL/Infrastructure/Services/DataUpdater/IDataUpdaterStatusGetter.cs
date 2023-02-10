@@ -6,6 +6,6 @@ namespace ETHTPS.API.BIL.Infrastructure.Services.DataUpdater
     {
         IEnumerable<LiveUpdaterStatus> GetAllStatuses();
         IEnumerable<LiveUpdaterStatus> GetStatusFor(string provider);
-        LiveUpdaterStatus? GetStatusFor(string provider, string updaterType);
+        LiveUpdaterStatus? GetStatusFor(string provider, UpdaterType updaterType);
     }
 }

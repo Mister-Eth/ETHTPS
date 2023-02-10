@@ -1,4 +1,6 @@
-﻿using ETHTPS.Data.Integrations.MSSQL;
+﻿using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater;
+using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater.ProviderSpecific;
+using ETHTPS.Data.Integrations.MSSQL;
 using ETHTPS.Services.BlockchainServices;
 using ETHTPS.Services.BlockchainServices.Extensions;
 using ETHTPS.Services.BlockchainServices.Models;
@@ -17,14 +19,16 @@ namespace ETHTPS.Services
         protected readonly string _provider;
         protected readonly int _providerID;
         protected readonly int _mainnetID;
+        protected readonly IProviderTypeDataUpdaterStatusService _statusService;
 
-        protected BlockInfoProviderDataLoggerBase(T instance, ILogger<HangfireBackgroundService> logger, EthtpsContext context) : base(logger, context)
+        protected BlockInfoProviderDataLoggerBase(T instance, ILogger<HangfireBackgroundService> logger, EthtpsContext context, IDataUpdaterStatusService statusService, UpdaterType updaterType) : base(logger, context)
         {
             _instance = instance;
             _provider = _instance.GetProviderName();
             _providerID = _context.Providers.First(x => x.Name == _provider).Id;
 
             _mainnetID = context.Networks.First(x => x.Name == "Mainnet").Id;
+            _statusService = statusService.MakeProviderSpecific(_provider).MakeUpdaterSpecific(updaterType);
         }
 
         protected async Task<TPSGPSInfo> CalculateTPSGPSAsync() => await CalculateTPSGPSAsync(await _instance.GetLatestBlockInfoAsync());

@@ -176,6 +176,7 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.LastSuccessfulRunTime).HasColumnType("datetime");
+            entity.Property(e => e.LastRunTime).HasColumnType("datetime");
             entity.Property(e => e.StatusId).HasColumnName("StatusID");
             entity.Property(e => e.UpdaterId).HasColumnName("UpdaterID");
 

@@ -1,4 +1,5 @@
-﻿using ETHTPS.Data.Integrations.MSSQL;
+﻿using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater;
+using ETHTPS.Data.Integrations.MSSQL;
 
 using Hangfire;
 
@@ -13,7 +14,7 @@ namespace ETHTPS.Services.BlockchainServices
     public class TimeWarpBlockInfoProviderDataLogger<T> : MSSQLLogger<T>
         where T : IBlockInfoProvider
     {
-        public TimeWarpBlockInfoProviderDataLogger(T instance, ILogger<HangfireBackgroundService> logger, EthtpsContext context) : base(instance, logger, context)
+        public TimeWarpBlockInfoProviderDataLogger(T instance, ILogger<HangfireBackgroundService> logger, EthtpsContext context, IDataUpdaterStatusService statusService) : base(instance, logger, context, statusService)
         {
 
         }

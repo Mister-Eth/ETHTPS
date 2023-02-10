@@ -1,7 +1,12 @@
-﻿namespace ETHTPS.API.BIL.Infrastructure.Services.DataUpdater
+﻿using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater.ProviderSpecific;
+
+namespace ETHTPS.API.BIL.Infrastructure.Services.DataUpdater
 {
     public interface IDataUpdaterStatusManager : IDataUpdaterStatusGetter
     {
-        void SetStatusFor(string provider, string status, string updaterType);
+        void SetStatusFor(string provider, UpdaterType updaterType, UpdaterStatus status);
+        void MarkAsRunning(string provider, UpdaterType updaterType);
+        void MarkAsRanSuccessfully(string provider, UpdaterType updaterType);
+        void MarkAsFailed(string provider, UpdaterType updaterType);
     }
 }

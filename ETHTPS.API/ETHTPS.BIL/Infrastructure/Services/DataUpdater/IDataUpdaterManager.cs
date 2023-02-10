@@ -1,10 +1,8 @@
 ﻿namespace ETHTPS.API.BIL.Infrastructure.Services.DataUpdater
 {
-    public interface IDataUpdaterManager
+    public interface IDataUpdaterManager : IDataUpdaterStatusManager
     {
-        void IncrementNumberOfSuccesses(string provider, string updaterType);
-        void IncrementNumberOfFailures(string provider, string updaterType);
-        void MarkAsFailed(string provider, string updaterType);
-        void MarkAsRanSuccessfully(string provider, string updaterType);
+        void IncrementNumberOfSuccesses(string provider, UpdaterType updaterType);
+        void IncrementNumberOfFailures(string provider, UpdaterType updaterType);
     }
 }

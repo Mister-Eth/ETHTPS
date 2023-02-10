@@ -5,6 +5,7 @@ using ETHTPS.Data.Models;
 
 using Microsoft.AspNetCore.Mvc;
 
+using System;
 using System.Collections.Generic;
 
 namespace ETHTPS.API.Controllers
@@ -29,7 +30,7 @@ namespace ETHTPS.API.Controllers
         [HttpGet]
         public LiveUpdaterStatus GetStatusFor(string provider, string updaterType, [FromQuery] APIKeyRequestModel model)
         {
-            return _dataUpdaterService.GetStatusFor(provider, updaterType);
+            return _dataUpdaterService.GetStatusFor(provider, Enum.Parse<UpdaterType>(updaterType));
         }
 
         [HttpGet]

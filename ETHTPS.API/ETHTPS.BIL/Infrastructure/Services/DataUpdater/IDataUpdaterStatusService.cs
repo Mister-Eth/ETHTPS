@@ -1,6 +1,10 @@
-﻿namespace ETHTPS.API.BIL.Infrastructure.Services.DataUpdater
+﻿using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater.ProviderSpecific;
+
+namespace ETHTPS.API.BIL.Infrastructure.Services.DataUpdater
 {
-    public interface IDataUpdaterStatusService : IDataUpdaterManager, IDataUpdaterStatusManager
+    public interface IDataUpdaterStatusService : IDataUpdaterManager
     {
+        IProviderDataUpdaterStatusService MakeProviderSpecific(string provider);
     }
+
 }

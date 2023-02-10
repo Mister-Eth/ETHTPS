@@ -9,6 +9,7 @@ public partial class LiveDataUpdaterStatus
     public int StatusId { get; set; }
 
     public DateTime? LastSuccessfulRunTime { get; set; }
+    public DateTime? LastRunTime { get; set; }
 
     public int NumberOfSuccesses { get; set; }
 

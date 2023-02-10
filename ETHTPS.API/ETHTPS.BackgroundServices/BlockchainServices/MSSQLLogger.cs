@@ -1,4 +1,5 @@
-﻿using ETHTPS.Data.Integrations.MSSQL;
+﻿using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater;
+using ETHTPS.Data.Integrations.MSSQL;
 using ETHTPS.Services.BlockchainServices.Extensions;
 using ETHTPS.Services.BlockchainServices.Models;
 using Hangfire;
@@ -14,7 +15,7 @@ namespace ETHTPS.Services.BlockchainServices
     public class MSSQLLogger<T> : BlockInfoProviderDataLoggerBase<T>
          where T : IBlockInfoProvider
     {
-        public MSSQLLogger(T instance, ILogger<HangfireBackgroundService> logger, EthtpsContext context) : base(instance, logger, context)
+        public MSSQLLogger(T instance, ILogger<HangfireBackgroundService> logger, EthtpsContext context, IDataUpdaterStatusService statusService) : base(instance, logger, context, statusService, UpdaterType.TPSGPS)
         {
         }
         [AutomaticRetry(Attempts = 1, OnAttemptsExceeded = AttemptsExceededAction.Delete)]
