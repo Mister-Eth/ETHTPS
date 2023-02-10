@@ -20,6 +20,8 @@ namespace ETHTPS.Services.BlockchainServices
         public DateTime Date { get; set; }
         [Column("settled")]
         public bool Settled { get; set; } = true;
+        [Column("provider", IsTag = true)]
+        public string Provider { get; set; }
 
         public static TPSGPSInfo operator -(BlockInfo a, BlockInfo b)
         {
@@ -29,6 +31,7 @@ namespace ETHTPS.Services.BlockchainServices
                 BlockNumber = a.BlockNumber,
                 TPS = (a.TransactionCount) / (a.Date.Subtract(b.Date).TotalSeconds),
                 GPS = (a.GasUsed) / (a.Date.Subtract(b.Date).TotalSeconds),
+                Provider = a.Provider,
             };
         }
     }

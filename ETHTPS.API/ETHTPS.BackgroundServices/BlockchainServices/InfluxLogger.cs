@@ -18,13 +18,13 @@ namespace ETHTPS.Services.BlockchainServices
     public class InfluxLogger<T> : BlockInfoProviderDataLoggerBase<T>
          where T : IBlockInfoProvider
     {
-        private static IProviderBucketCreator _bucketCreator;
+        private static IBucketCreator _bucketCreator;
         private readonly IInfluxWrapper _influxWrapper;
         protected override string ServiceName { get => $"InfluxLogger<{typeof(T).Name}>"; }
         public InfluxLogger(T instance, ILogger<HangfireBackgroundService> logger, EthtpsContext context, IInfluxWrapper influxWrapper, IDataUpdaterStatusService statusService) : base(instance, logger, context, statusService, UpdaterType.BlockInfo)
         {
             _influxWrapper = influxWrapper;
-            _bucketCreator ??= new ProviderBucketCreator(influxWrapper, context);
+            _bucketCreator ??= new MeasurementBucketCreator(influxWrapper);
         }
 
         [AutomaticRetry(Attempts = 3, OnAttemptsExceeded = AttemptsExceededAction.Delete)]
@@ -39,7 +39,8 @@ namespace ETHTPS.Services.BlockchainServices
                     _statusService.MarkAsRunning();
                     var block = await _instance.GetLatestBlockInfoAsync();
                     _statusService.MarkAsRanSuccessfully();
-                    await _influxWrapper.LogBlockAsync(block, _provider);
+                    block.Provider = _provider;
+                    await _influxWrapper.LogBlockAsync(block);
                     TPSGPSInfo delta = await CalculateTPSGPSAsync(block);
 
                 }
@@ -64,7 +65,7 @@ namespace ETHTPS.Services.BlockchainServices
         {
             if (!_bucketCreator.Created)
             {
-                await _bucketCreator.CreateBucketsForProvidersAsync();
+                await _bucketCreator.CreateBucketsAsync();
             }
         }
     }

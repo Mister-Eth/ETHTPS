@@ -3,7 +3,7 @@ using static ETHTPS.Data.Integrations.InfluxIntegration.Extensions.IntegrationEx
 
 namespace ETHTPS.Data.Integrations.InfluxIntegration.ProviderServices
 {
-    public class ProviderBucketCreator : IProviderBucketCreator
+    public class ProviderBucketCreator : IBucketCreator
     {
         private readonly IEnumerable<string> _providers;
         private readonly IInfluxWrapper _influxWrapper;
@@ -14,7 +14,7 @@ namespace ETHTPS.Data.Integrations.InfluxIntegration.ProviderServices
         }
         public bool Created { get; private set; } = false;
 
-        public async Task CreateBucketsForProvidersAsync()
+        public async Task CreateBucketsAsync()
         {
             if (!Created)
             {

@@ -2,9 +2,9 @@
 
 namespace ETHTPS.Data.Integrations.InfluxIntegration.ProviderServices
 {
-    public interface IProviderBucketCreator
+    public interface IBucketCreator
     {
         bool Created { get; }
-        Task CreateBucketsForProvidersAsync();
+        Task CreateBucketsAsync();
     }
 }

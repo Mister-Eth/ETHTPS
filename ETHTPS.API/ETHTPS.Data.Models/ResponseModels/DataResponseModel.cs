@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json;
 
-using System.Collections.Generic;
-
 namespace ETHTPS.Data.ResponseModels
 {
     public class DataResponseModel

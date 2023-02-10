@@ -1,4 +1,5 @@
 ﻿using ETHTPS.API.BIL.Infrastructure.Services;
+using ETHTPS.API.BIL.Infrastructure.Services.ChartData;
 using ETHTPS.API.Core.Integrations.MSSQL.Services;
 using ETHTPS.API.Core.Integrations.MSSQL.Services.Data;
 using ETHTPS.API.Security.Core.Humanity;
@@ -28,6 +29,7 @@ namespace ETHTPS.API.DependencyInjection
             .AddScoped<IExternalWebsitesService, ExternalWebsitesService>()
             .AddScoped<IMarkdownService, MarkdownService>()
             .AddScoped<IProvidersService, ProvidersService>()
+            .AddScoped<IChartDataProviderService, ChartDataProviderService>()
             .AddHistoricalDataProviders();
 
         public static IServiceCollection AddEssentialServices(this IServiceCollection services) =>
