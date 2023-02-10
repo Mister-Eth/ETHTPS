@@ -1,5 +1,5 @@
-import { ProviderResponseModel } from "ethtps.api.client"
 import { ICellClickedEvent } from "./ICellClickedEvent"
+import { ProviderResponseModel } from "ethtps.api.client"
 
 export const buildClassNames = (config: ICustomCellConfiguration) => {
   return {

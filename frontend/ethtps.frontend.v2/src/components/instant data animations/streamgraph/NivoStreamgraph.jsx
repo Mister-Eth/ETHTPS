@@ -1,27 +1,38 @@
 import { ResponsiveStream } from "@nivo/stream"
 import { useLiveData } from "../hooks"
 import { useEffect, useState } from "react"
-
-function createDataset(arr) {
-  let x = {}
-  for (let i = 0; i < arr.length; i++) {
-    let data = arr[i]
-    x[data.providerName] = data.value
-  }
-  return x
-}
+import { useGetLiveDataModeFromAppStore } from "../../../hooks/LiveDataHooks"
+import {
+  createDatasetFromLiveData,
+  transformInitialData,
+  newValues,
+} from "./utils"
 
 export function NivoStreamgraph({ initialData }) {
   const liveData = useLiveData()
-  const [providerNames, setProviderNames] = useState([])
+  const mode = useGetLiveDataModeFromAppStore()
   const [data, setData] = useState([])
+  const [providerNames, setProviderNames] = useState([])
+  /*
+  useEffect(() => {
+    const transformed = transformInitialData(initialData)
+    setData(transformed.data)
+    setProviderNames(transformed.providerNames)
+  }, [initialData])
+*/
   useEffect(() => {
     if (liveData !== undefined) {
       let filtered = liveData.data.filter((x) => x !== undefined)
-      setProviderNames(filtered.map((x) => x.providerName))
-      setData(data.concat(createDataset(filtered)))
+      if (filtered.length > 12) {
+        filtered = filtered.slice(-12)
+      }
+      const dataset = createDatasetFromLiveData(filtered)
+      const newNames = newValues(providerNames, dataset.providerNames)
+      setProviderNames(providerNames.concat(newNames))
+      setData(data.concat(dataset.data).slice(-12))
     }
   }, [liveData])
+
   if (
     liveData === undefined ||
     providerNames === null ||
@@ -58,7 +69,7 @@ export function NivoStreamgraph({ initialData }) {
           enableGridY={false}
           offsetType="silhouette"
           colors={{ scheme: "nivo" }}
-          fillOpacity={0.85}
+          fillOpacity={0.65}
           borderColor={{ theme: "background" }}
           defs={[
             {
@@ -97,6 +108,7 @@ export function NivoStreamgraph({ initialData }) {
           dotSize={8}
           dotColor={{ from: "color" }}
           dotBorderWidth={2}
+          motionConfig="slow"
           dotBorderColor={{
             from: "color",
             modifiers: [["darker", 0.7]],

@@ -15,23 +15,6 @@ interface IP5StreamgraphProperties {
 let x = 50
 const y = 50
 
-function createDatedLiveDataPoint(
-  data: LiveDataPoint,
-  initialX: number,
-): DatedLiveDataPoint {
-  return {
-    date: new Date(),
-    x: initialX,
-    dataPoints: data,
-  }
-}
-
-type DatedLiveDataPoint = {
-  date: Date
-  x: number
-  dataPoints: LiveDataPoint
-}
-
 let xOffset = 0
 let offsetCurrentTime = 0
 
