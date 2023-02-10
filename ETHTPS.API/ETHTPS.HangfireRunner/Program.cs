@@ -33,9 +33,10 @@ if (configurationQueues?.Length > 0)
 {
     services.InitializeHangfire(CURRENT_APP_NAME);
     services.AddHangfireServer(CURRENT_APP_NAME);
-    services.AddInfluxTPSDataUpdaters()
-            .AddDataUpdaterStatusService()
-            .AddUpdaterMonitoringTask();
+    services//AddInfluxTPSDataUpdaters()
+        .AddMSSQLTPSDataUpdaters()    
+        .AddDataUpdaterStatusService()
+        .AddUpdaterMonitoringTask();
     //services.AddTPSDataUpdaters(builder.Configuration);
     //services.AddHistoricalBlockInfoDataUpdaters(configurationQueues);
     //services.AddTimeWarpUpdaters(configurationQueues)

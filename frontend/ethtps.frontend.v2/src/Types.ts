@@ -43,7 +43,7 @@ export function fromShortString(typeStr: string): DataType {
 }
 
 // Have to use any because it has a weird structure. Whose fault could it be?
-export const extractData = (dict?: any, providerName?: string) => {
+export const extractData = (dict?: any, providerName?: string | null) => {
   if (dict && providerName && dict[providerName]) {
     if (dict[providerName].at(0)) {
       let q = dict[providerName].at(0)

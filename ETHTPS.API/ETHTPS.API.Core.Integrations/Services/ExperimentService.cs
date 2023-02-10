@@ -4,7 +4,7 @@ using ETHTPS.Data.Core.Extensions;
 
 using Microsoft.AspNetCore.Http;
 using ETHTPS.API.BIL.Infrastructure.Services;
-using ETHTPS.API.BIL.Infrastructure.Models;
+using ETHTPS.Data.Models;
 
 namespace ETHTPS.API.Core.Integrations.MSSQL.Services
 {

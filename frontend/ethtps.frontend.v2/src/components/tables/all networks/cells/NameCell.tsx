@@ -7,12 +7,23 @@ import { useGetProviderColorDictionaryFromAppStore } from "../../../../hooks/Col
 
 import { centered } from "../../Cells.Types"
 import { tableCellTypographyStandard } from "./Typography.types"
+import { useEffect } from "react"
+import { ConditionalRender } from "../../../../Types"
+import * as icons from "@mui/icons-material"
 
 export function NameCell(config: ICustomCellConfiguration) {
   const colorDictionary = useGetProviderColorDictionaryFromAppStore()
   const name = config.provider?.name ?? ""
-  const color: string =
-    colorDictionary !== undefined ? colorDictionary[name] : "primary"
+  let color: string = config.provider?.color ?? "primary"
+  useEffect(() => {
+    if (colorDictionary) {
+      color = colorDictionary[name]
+    }
+  }, [colorDictionary])
+  const hasIssues =
+    (config.provider?.status?.isUnreliable ?? false) &&
+    (config.provider?.status?.isProbablyDown ?? false)
+  const noDataProvider = config.provider?.status === undefined
   return (
     <Tooltip
       arrow
@@ -45,6 +56,39 @@ export function NameCell(config: ICustomCellConfiguration) {
             >
               {config.provider?.name}
             </Typography>
+            {ConditionalRender(
+              <>
+                <Tooltip
+                  arrow
+                  placement="top"
+                  className="spaced-horizontally"
+                  title={
+                    <Typography>
+                      There are issues getting data for {config.provider?.name}
+                    </Typography>
+                  }
+                >
+                  <icons.CloudOff className="inline small centered-vertically" />
+                </Tooltip>
+              </>,
+              hasIssues && !noDataProvider,
+            )}
+            {ConditionalRender(
+              <>
+                <Tooltip
+                  arrow
+                  placement="top"
+                  title={
+                    <Typography>
+                      There is no data provider for {config.provider?.name} :/
+                    </Typography>
+                  }
+                >
+                  <icons.Warning className="spaced-horizontally" />
+                </Tooltip>
+              </>,
+              noDataProvider,
+            )}
           </div>
         </>
       </TableCell>

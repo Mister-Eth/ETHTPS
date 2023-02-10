@@ -6,6 +6,8 @@ using ETHTPS.Data.ResponseModels;
 using ETHTPS.Data.Core;
 using ETHTPS.API.Core.Services;
 using ETHTPS.API.Core.Integrations.MSSQL.Services.Data;
+using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater;
+using ETHTPS.Data.Models.DataUpdater;
 
 namespace ETHTPS.API.Core.Integrations.MSSQL.Services
 {
@@ -14,12 +16,14 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services
         private readonly TPSService _tpsService;
         private readonly GPSService _gpsService;
         private readonly GasAdjustedTPSService _gasAdjustedTPSService;
+        private readonly IDataUpdaterStatusService _dataUpdaterStatusService;
 
-        public GeneralService(TPSService tpsService, GPSService gpsService, GasAdjustedTPSService gasAdjustedTPSService, EthtpsContext context, IEnumerable<IHistoricalDataProvider> historicalDataProviders) : base(context, historicalDataProviders)
+        public GeneralService(TPSService tpsService, GPSService gpsService, GasAdjustedTPSService gasAdjustedTPSService, EthtpsContext context, IEnumerable<IHistoricalDataProvider> historicalDataProviders, IDataUpdaterStatusService dataUpdaterStatusService) : base(context, historicalDataProviders)
         {
             _tpsService = tpsService;
             _gpsService = gpsService;
             _gasAdjustedTPSService = gasAdjustedTPSService;
+            _dataUpdaterStatusService = dataUpdaterStatusService;
         }
 
 
@@ -47,8 +51,9 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services
                     Type = x.TypeNavigation.Name,
                     Color = x.Color,
                     TheoreticalMaxTPS = x.TheoreticalMaxTps,
-                    IsGeneralPurpose = x.IsGeneralPurpose.HasValue ? x.IsGeneralPurpose.Value : x.TypeNavigation.IsGeneralPurpose,
-                    IsSubchainOf = x.SubchainOfNavigation?.Name
+                    IsGeneralPurpose = x.IsGeneralPurpose ?? x.TypeNavigation.IsGeneralPurpose,
+                    IsSubchainOf = x.SubchainOfNavigation?.Name,
+                    Status = _dataUpdaterStatusService.GetStatusFor(x.Name, UpdaterType.BlockInfo) 
                 });
             }
             return result;

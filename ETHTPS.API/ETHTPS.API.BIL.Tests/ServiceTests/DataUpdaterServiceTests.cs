@@ -1,4 +1,5 @@
 using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater;
+using ETHTPS.Data.Models.DataUpdater;
 
 using Microsoft.Extensions.DependencyInjection;
 

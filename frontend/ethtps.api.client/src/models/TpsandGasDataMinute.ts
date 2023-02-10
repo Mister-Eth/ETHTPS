@@ -29,79 +29,79 @@ import {
 /**
  * 
  * @export
- * @interface TpsandGasDataHour
+ * @interface TpsandGasDataMinute
  */
-export interface TpsandGasDataHour {
+export interface TpsandGasDataMinute {
     /**
      * 
      * @type {number}
-     * @memberof TpsandGasDataHour
+     * @memberof TpsandGasDataMinute
      */
     id?: number;
     /**
      * 
      * @type {number}
-     * @memberof TpsandGasDataHour
+     * @memberof TpsandGasDataMinute
      */
     network?: number;
     /**
      * 
      * @type {number}
-     * @memberof TpsandGasDataHour
+     * @memberof TpsandGasDataMinute
      */
     provider?: number;
     /**
      * 
      * @type {Network}
-     * @memberof TpsandGasDataHour
+     * @memberof TpsandGasDataMinute
      */
     networkNavigation?: Network;
     /**
      * 
      * @type {Provider}
-     * @memberof TpsandGasDataHour
+     * @memberof TpsandGasDataMinute
      */
     providerNavigation?: Provider;
     /**
      * 
      * @type {Date}
-     * @memberof TpsandGasDataHour
+     * @memberof TpsandGasDataMinute
      */
     startDate?: Date;
     /**
      * 
      * @type {number}
-     * @memberof TpsandGasDataHour
+     * @memberof TpsandGasDataMinute
      */
     averageTps?: number;
     /**
      * 
      * @type {number}
-     * @memberof TpsandGasDataHour
+     * @memberof TpsandGasDataMinute
      */
     averageGps?: number;
     /**
      * 
      * @type {number}
-     * @memberof TpsandGasDataHour
+     * @memberof TpsandGasDataMinute
      */
     readingsCount?: number;
 }
 
 /**
- * Check if a given object implements the TpsandGasDataHour interface.
+ * Check if a given object implements the TpsandGasDataMinute interface.
  */
-export function instanceOfTpsandGasDataHour(value: object): boolean {
+export function instanceOfTpsandGasDataMinute(value: object): boolean {
     let isInstance = true;
 
     return isInstance;
 }
 
-export function TpsandGasDataHourFromJSON(json: any): TpsandGasDataHour {
-    return TpsandGasDataHourFromJSONTyped(json, false);
+export function TpsandGasDataMinuteFromJSON(json: any): TpsandGasDataMinute {
+    return TpsandGasDataMinuteFromJSONTyped(json, false);
 }
 
-export function TpsandGasDataHourFromJSONTyped(json: any, ignoreDiscriminator: boolean): TpsandGasDataHour {
+export function TpsandGasDataMinuteFromJSONTyped(json: any, ignoreDiscriminator: boolean): TpsandGasDataMinute {
     if ((json === undefined) || (json === null)) {
         return json;
     }
@@ -119,7 +119,7 @@ export function TpsandGasDataHourFromJSONTyped(json: any, ignoreDiscriminator: b
     };
 }
 
-export function TpsandGasDataHourToJSON(value?: TpsandGasDataHour | null): any {
+export function TpsandGasDataMinuteToJSON(value?: TpsandGasDataMinute | null): any {
     if (value === undefined) {
         return undefined;
     }

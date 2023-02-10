@@ -1,4 +1,5 @@
-﻿using ETHTPS.API.BIL.Infrastructure.Models;
+﻿
+using ETHTPS.Data.Models;
 
 using Microsoft.AspNetCore.Http;
 

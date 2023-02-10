@@ -11,11 +11,7 @@ import {
   ExternalWebsitesApi,
   MarkdownPagesApi,
 } from "ethtps.api.client"
-import {
-  tryLoadAPIKeyFromLocalStorage,
-  getAPIKey,
-  BASE_PATH,
-} from "../DependenciesIOC"
+import { tryLoadAPIKeyFromLocalStorage, getAPIKey } from "../DependenciesIOC"
 import { APIKeyMiddleware } from "./APIKeyMiddleware"
 import {
   DataResponseModelDictionary,
@@ -38,6 +34,8 @@ export class ETHTPSApi {
   public markdownAPI: MarkdownPagesApi = new MarkdownPagesApi()
   public apiKeyAPI: APIKeyApi
   private _apiKeyApiEndpoint: string
+  //public statusAPI: StatusApi
+  private _statusAPIEndpoint: string
   public apiKey?: string
 
   constructor(
@@ -46,14 +44,16 @@ export class ETHTPSApi {
     gpsApiUrl: string,
     gtpsApiUrl: string,
     apiKeyApiUrl: string,
+    statusAPIEndpoint: string,
     apiKey?: string,
     useArtificialDelay: boolean = true,
   ) {
-    this._generalApiEndpoint = generalApiUrl;
-    this._tpsApiEndpoint = tpsApiUrl;
+    this._generalApiEndpoint = generalApiUrl
+    this._tpsApiEndpoint = tpsApiUrl
     this._gpsApiEndpoint = gpsApiUrl
     this._gtpsApiEndpoint = gtpsApiUrl
     this._apiKeyApiEndpoint = apiKeyApiUrl
+    this._statusAPIEndpoint = statusAPIEndpoint
     if (!apiKey) {
       tryLoadAPIKeyFromLocalStorage()
       let supposedlyAKey = getAPIKey()
@@ -82,20 +82,28 @@ export class ETHTPSApi {
     this.generalApi = new GeneralApi(this._genConfig(this._generalApiEndpoint))
     this.tpsApi = new TPSApi(this._genConfig(this._tpsApiEndpoint))
     this.gpsApi = new GPSApi(this._genConfig(this._gpsApiEndpoint))
-    this.gtpsApi = new GasAdjustedTPSApi(
-      this._genConfig(this._gtpsApiEndpoint),
-    )
+    this.gtpsApi = new GasAdjustedTPSApi(this._genConfig(this._gtpsApiEndpoint))
     this.experimentAPI = new ExperimentApi(
       this._genConfig(this._generalApiEndpoint),
     )
-    this.externalWebsitePAI = new ExternalWebsitesApi(this._genConfig(this._generalApiEndpoint))
-    this.markdownAPI = new MarkdownPagesApi(this._genConfig(this._generalApiEndpoint))
+    this.externalWebsitePAI = new ExternalWebsitesApi(
+      this._genConfig(this._generalApiEndpoint),
+    )
+    this.markdownAPI = new MarkdownPagesApi(
+      this._genConfig(this._generalApiEndpoint),
+    )
 
     this.apiKeyAPI = new APIKeyApi(
       new Configuration({
         basePath: this._apiKeyApiEndpoint,
       }),
     )
+    /*
+    this.statusAPI = new StatusApi(
+      new Configuration({
+        basePath: this._statusAPIEndpoint,
+      }),
+    )*/
   }
 
   public getProviders(): Promise<ProviderResponseModel[]> {

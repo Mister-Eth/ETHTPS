@@ -91,6 +91,12 @@ import {
     TpsandGasDataMaxFromJSONTyped,
     TpsandGasDataMaxToJSON,
 } from './TpsandGasDataMax';
+import type { TpsandGasDataMinute } from './TpsandGasDataMinute';
+import {
+    TpsandGasDataMinuteFromJSON,
+    TpsandGasDataMinuteFromJSONTyped,
+    TpsandGasDataMinuteToJSON,
+} from './TpsandGasDataMinute';
 import type { TpsandGasDataMonth } from './TpsandGasDataMonth';
 import {
     TpsandGasDataMonthFromJSON,
@@ -208,6 +214,12 @@ export interface Network {
     readonly tpsandGasDataMaxes?: Array<TpsandGasDataMax> | null;
     /**
      * 
+     * @type {Array<TpsandGasDataMinute>}
+     * @memberof Network
+     */
+    readonly tpsandGasDataMinutes?: Array<TpsandGasDataMinute> | null;
+    /**
+     * 
      * @type {Array<TpsandGasDataMonth>}
      * @memberof Network
      */
@@ -260,6 +272,7 @@ export function NetworkFromJSONTyped(json: any, ignoreDiscriminator: boolean): N
         'tpsandGasDataHours': !exists(json, 'tpsandGasDataHours') ? undefined : (json['tpsandGasDataHours'] === null ? null : (json['tpsandGasDataHours'] as Array<any>).map(TpsandGasDataHourFromJSON)),
         'tpsandGasDataLatests': !exists(json, 'tpsandGasDataLatests') ? undefined : (json['tpsandGasDataLatests'] === null ? null : (json['tpsandGasDataLatests'] as Array<any>).map(TpsandGasDataLatestFromJSON)),
         'tpsandGasDataMaxes': !exists(json, 'tpsandGasDataMaxes') ? undefined : (json['tpsandGasDataMaxes'] === null ? null : (json['tpsandGasDataMaxes'] as Array<any>).map(TpsandGasDataMaxFromJSON)),
+        'tpsandGasDataMinutes': !exists(json, 'tpsandGasDataMinutes') ? undefined : (json['tpsandGasDataMinutes'] === null ? null : (json['tpsandGasDataMinutes'] as Array<any>).map(TpsandGasDataMinuteFromJSON)),
         'tpsandGasDataMonths': !exists(json, 'tpsandGasDataMonths') ? undefined : (json['tpsandGasDataMonths'] === null ? null : (json['tpsandGasDataMonths'] as Array<any>).map(TpsandGasDataMonthFromJSON)),
         'tpsandGasDataWeeks': !exists(json, 'tpsandGasDataWeeks') ? undefined : (json['tpsandGasDataWeeks'] === null ? null : (json['tpsandGasDataWeeks'] as Array<any>).map(TpsandGasDataWeekFromJSON)),
         'tpsandGasDataYears': !exists(json, 'tpsandGasDataYears') ? undefined : (json['tpsandGasDataYears'] === null ? null : (json['tpsandGasDataYears'] as Array<any>).map(TpsandGasDataYearFromJSON)),

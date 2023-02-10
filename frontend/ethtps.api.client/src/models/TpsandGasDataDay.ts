@@ -86,12 +86,6 @@ export interface TpsandGasDataDay {
      * @memberof TpsandGasDataDay
      */
     readingsCount?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof TpsandGasDataDay
-     */
-    oclhJson?: string | null;
 }
 
 /**
@@ -122,7 +116,6 @@ export function TpsandGasDataDayFromJSONTyped(json: any, ignoreDiscriminator: bo
         'averageTps': !exists(json, 'averageTps') ? undefined : json['averageTps'],
         'averageGps': !exists(json, 'averageGps') ? undefined : json['averageGps'],
         'readingsCount': !exists(json, 'readingsCount') ? undefined : json['readingsCount'],
-        'oclhJson': !exists(json, 'oclhJson') ? undefined : json['oclhJson'],
     };
 }
 
@@ -144,7 +137,6 @@ export function TpsandGasDataDayToJSON(value?: TpsandGasDataDay | null): any {
         'averageTps': value.averageTps,
         'averageGps': value.averageGps,
         'readingsCount': value.readingsCount,
-        'oclhJson': value.oclhJson,
     };
 }
 

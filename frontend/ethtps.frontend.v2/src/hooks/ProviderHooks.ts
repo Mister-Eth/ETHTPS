@@ -1,7 +1,7 @@
 import { useAppSelector } from "../store"
-import { ProviderResponseModel } from "../services/api-gen"
 import { api } from "../services/DependenciesIOC"
 import { useGetSidechainsIncludedFromAppStore } from "./LiveDataHooks"
+import { ProviderResponseModel } from "ethtps.api.client"
 
 export function useGetProvidersFromAppStore() {
   const sidechainsIncluded = useGetSidechainsIncludedFromAppStore()

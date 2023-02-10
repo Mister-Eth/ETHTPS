@@ -24,19 +24,25 @@ export interface APIKeyResponseModel {
      * @type {string}
      * @memberof APIKeyResponseModel
      */
-    key?: string | null;
+    readonly key?: string | null;
     /**
      * 
      * @type {number}
      * @memberof APIKeyResponseModel
      */
-    requestLimit24h?: number;
+    readonly requestLimit24h?: number | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof APIKeyResponseModel
+     */
+    readonly success?: boolean;
     /**
      * 
      * @type {string}
      * @memberof APIKeyResponseModel
      */
-    requesterIP?: string | null;
+    readonly failureReason?: string | null;
 }
 
 /**
@@ -60,7 +66,8 @@ export function APIKeyResponseModelFromJSONTyped(json: any, ignoreDiscriminator:
         
         'key': !exists(json, 'key') ? undefined : json['key'],
         'requestLimit24h': !exists(json, 'requestLimit24h') ? undefined : json['requestLimit24h'],
-        'requesterIP': !exists(json, 'requesterIP') ? undefined : json['requesterIP'],
+        'success': !exists(json, 'success') ? undefined : json['success'],
+        'failureReason': !exists(json, 'failureReason') ? undefined : json['failureReason'],
     };
 }
 
@@ -73,9 +80,6 @@ export function APIKeyResponseModelToJSON(value?: APIKeyResponseModel | null): a
     }
     return {
         
-        'key': value.key,
-        'requestLimit24h': value.requestLimit24h,
-        'requesterIP': value.requesterIP,
     };
 }
 

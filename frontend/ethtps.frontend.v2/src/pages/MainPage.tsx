@@ -15,12 +15,10 @@ import {
   useGetLiveDataModeFromAppStore,
 } from "../hooks/LiveDataHooks"
 import { createSearchParams, useSearchParams } from "react-router-dom"
-import { toShortString, ConditionalRender } from "../Types"
+import { toShortString } from "../Types"
 import { useGetProvidersFromAppStore } from "../hooks/ProviderHooks"
 import { isMobile } from "react-device-detect"
-import { SimpleTextDisplay } from "../components/instant data animations/SimpleTextDisplay"
 import { ProviderModel } from "ethtps.api.client"
-import { StreamgraphAnimation } from "../components/instant data animations/streamgraph/StreamgraphAnimation"
 import {
   useLiveData,
   useGet1mTPS,
@@ -28,7 +26,8 @@ import {
   useGet1mGTPS,
 } from "../components/instant data animations/hooks"
 import { P5Streamgraph } from "../components/instant data animations/p5streamgraph/P5Streamgraph"
-import { DataResponseModelDictionary } from '../Types.dictionaries';
+import { DataResponseModelDictionary } from "../Types.dictionaries"
+import { NivoStreamgraph } from "../components/instant data animations/streamgraph/NivoStreamgraph"
 
 export default function MainPage(): JSX.Element {
   const providers = useGetProvidersFromAppStore()
@@ -83,7 +82,9 @@ export default function MainPage(): JSX.Element {
               <DataModeButtonGroup modeChanged={useSetDataModeMutation} />
             </Paper>
             <Paper elevation={1}>
-              <P5Streamgraph data={_1mtps as DataResponseModelDictionary} maxAgeSeconds={60}/>
+              <NivoStreamgraph
+                initialData={_1mtps as DataResponseModelDictionary}
+              />
             </Paper>
             <Paper elevation={1}>
               <AllProvidersTable

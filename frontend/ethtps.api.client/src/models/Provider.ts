@@ -13,6 +13,12 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { DataUpdater } from './DataUpdater';
+import {
+    DataUpdaterFromJSON,
+    DataUpdaterFromJSONTyped,
+    DataUpdaterToJSON,
+} from './DataUpdater';
 import type { Experiment } from './Experiment';
 import {
     ExperimentFromJSON,
@@ -115,6 +121,12 @@ import {
     TpsandGasDataMaxFromJSONTyped,
     TpsandGasDataMaxToJSON,
 } from './TpsandGasDataMax';
+import type { TpsandGasDataMinute } from './TpsandGasDataMinute';
+import {
+    TpsandGasDataMinuteFromJSON,
+    TpsandGasDataMinuteFromJSONTyped,
+    TpsandGasDataMinuteToJSON,
+} from './TpsandGasDataMinute';
 import type { TpsandGasDataMonth } from './TpsandGasDataMonth';
 import {
     TpsandGasDataMonthFromJSON,
@@ -194,6 +206,12 @@ export interface Provider {
      * @memberof Provider
      */
     theoreticalMaxTps?: number;
+    /**
+     * 
+     * @type {Array<DataUpdater>}
+     * @memberof Provider
+     */
+    readonly dataUpdaters?: Array<DataUpdater> | null;
     /**
      * 
      * @type {Array<Experiment>}
@@ -304,6 +322,12 @@ export interface Provider {
     tpsandGasDataMax?: TpsandGasDataMax;
     /**
      * 
+     * @type {Array<TpsandGasDataMinute>}
+     * @memberof Provider
+     */
+    readonly tpsandGasDataMinutes?: Array<TpsandGasDataMinute> | null;
+    /**
+     * 
      * @type {Array<TpsandGasDataMonth>}
      * @memberof Provider
      */
@@ -356,6 +380,7 @@ export function ProviderFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'enabled': !exists(json, 'enabled') ? undefined : json['enabled'],
         'subchainOf': !exists(json, 'subchainOf') ? undefined : json['subchainOf'],
         'theoreticalMaxTps': !exists(json, 'theoreticalMaxTps') ? undefined : json['theoreticalMaxTps'],
+        'dataUpdaters': !exists(json, 'dataUpdaters') ? undefined : (json['dataUpdaters'] === null ? null : (json['dataUpdaters'] as Array<any>).map(DataUpdaterFromJSON)),
         'experiments': !exists(json, 'experiments') ? undefined : (json['experiments'] === null ? null : (json['experiments'] as Array<any>).map(ExperimentFromJSON)),
         'inverseSubchainOfNavigation': !exists(json, 'inverseSubchainOfNavigation') ? undefined : (json['inverseSubchainOfNavigation'] === null ? null : (json['inverseSubchainOfNavigation'] as Array<any>).map(ProviderFromJSON)),
         'oldestLoggedHistoricalEntries': !exists(json, 'oldestLoggedHistoricalEntries') ? undefined : (json['oldestLoggedHistoricalEntries'] === null ? null : (json['oldestLoggedHistoricalEntries'] as Array<any>).map(OldestLoggedHistoricalEntryFromJSON)),
@@ -374,6 +399,7 @@ export function ProviderFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'tpsandGasDataHours': !exists(json, 'tpsandGasDataHours') ? undefined : (json['tpsandGasDataHours'] === null ? null : (json['tpsandGasDataHours'] as Array<any>).map(TpsandGasDataHourFromJSON)),
         'tpsandGasDataLatest': !exists(json, 'tpsandGasDataLatest') ? undefined : TpsandGasDataLatestFromJSON(json['tpsandGasDataLatest']),
         'tpsandGasDataMax': !exists(json, 'tpsandGasDataMax') ? undefined : TpsandGasDataMaxFromJSON(json['tpsandGasDataMax']),
+        'tpsandGasDataMinutes': !exists(json, 'tpsandGasDataMinutes') ? undefined : (json['tpsandGasDataMinutes'] === null ? null : (json['tpsandGasDataMinutes'] as Array<any>).map(TpsandGasDataMinuteFromJSON)),
         'tpsandGasDataMonths': !exists(json, 'tpsandGasDataMonths') ? undefined : (json['tpsandGasDataMonths'] === null ? null : (json['tpsandGasDataMonths'] as Array<any>).map(TpsandGasDataMonthFromJSON)),
         'tpsandGasDataWeeks': !exists(json, 'tpsandGasDataWeeks') ? undefined : (json['tpsandGasDataWeeks'] === null ? null : (json['tpsandGasDataWeeks'] as Array<any>).map(TpsandGasDataWeekFromJSON)),
         'tpsandGasDataYears': !exists(json, 'tpsandGasDataYears') ? undefined : (json['tpsandGasDataYears'] === null ? null : (json['tpsandGasDataYears'] as Array<any>).map(TpsandGasDataYearFromJSON)),

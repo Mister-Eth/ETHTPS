@@ -1,4 +1,4 @@
-﻿using ETHTPS.API.BIL.Infrastructure.Models.DataUpdater;
+﻿using ETHTPS.Data.Models.DataUpdater;
 
 namespace ETHTPS.API.BIL.Infrastructure.Services.DataUpdater
 {

@@ -1,8 +1,6 @@
-﻿using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater;
-
-namespace ETHTPS.API.BIL.Infrastructure.Models.DataUpdater
+﻿namespace ETHTPS.Data.Models.DataUpdater
 {
-    public class LiveUpdaterStatus : IComparable<UpdaterStatus>, IEquatable<UpdaterStatus>
+    public class LiveUpdaterStatus : IBasicLiveUpdaterStatus, IComparable<UpdaterStatus>, IEquatable<UpdaterStatus>
     {
         private const double UNRELIABILITY_RATIO_THRESHOLD = 1;
         public string Updater { get; set; }

@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { IProviderModel } from "../models/interfaces/IProviderModel"
 import { storage } from "../services/DependenciesIOC"
-import { ProviderResponseModel, ProviderModel } from "ethtps.api.client"
+import { ProviderResponseModel } from "ethtps.api.client"
 
 const initialState: ProviderResponseModel[] =
   storage.retrieveItem("providers") ?? []
@@ -11,8 +11,8 @@ const providersSlice = createSlice({
   initialState,
   reducers: {
     addProvider: (
-      state: ProviderModel[],
-      action: PayloadAction<IProviderModel>,
+      state: ProviderResponseModel[],
+      action: PayloadAction<ProviderResponseModel>,
     ) => {
       state = [...state, action.payload]
       return [...state]

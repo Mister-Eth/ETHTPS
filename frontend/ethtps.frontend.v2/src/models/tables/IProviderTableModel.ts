@@ -1,9 +1,9 @@
 import { ICellClickedEvent } from "../../components/tables/all networks/cells/ICellClickedEvent"
-import { ProviderModel } from "../../services/api-gen"
 import { IMaxDataModel } from "../interfaces/IMaxDataModel"
 import { IMaxRowsModel } from "./IMaxRowsModel"
+import { ProviderResponseModel } from "ethtps.api.client"
 
 export interface IProviderTableModel extends ICellClickedEvent, IMaxRowsModel {
-  providerData?: ProviderModel[]
+  providerData?: ProviderResponseModel[]
   maxData?: IMaxDataModel
 }

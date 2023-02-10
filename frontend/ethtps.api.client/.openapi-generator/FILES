@@ -1,8 +1,10 @@
 .gitignore
 .npmignore
+.openapi-generator-ignore
 README.md
 package.json
 src/apis/APIKeyApi.ts
+src/apis/DataInitializationApi.ts
 src/apis/ExperimentApi.ts
 src/apis/ExternalWebsitesApi.ts
 src/apis/GPSApi.ts
@@ -12,9 +14,9 @@ src/apis/IngestionApi.ts
 src/apis/MarkdownPagesApi.ts
 src/apis/PageModelApi.ts
 src/apis/ProvidersApi.ts
-src/apis/StatusApi.ts
 src/apis/TPSApi.ts
 src/apis/TimeWarpApi.ts
+src/apis/UpdaterStatusApi.ts
 src/apis/index.ts
 src/index.ts
 src/models/APIKeyResponseModel.ts
@@ -22,12 +24,13 @@ src/models/AllDataModel.ts
 src/models/Apikey.ts
 src/models/ApikeyExperimentBinding.ts
 src/models/ApikeyGroup.ts
-src/models/BlockInfoProviderStatus.ts
-src/models/BlockInfoProviderStatusResult.ts
 src/models/ChartData.ts
 src/models/DataPoint.ts
 src/models/DataResponseModel.ts
 src/models/DataType.ts
+src/models/DataUpdater.ts
+src/models/DataUpdaterStatus.ts
+src/models/DataUpdaterType.ts
 src/models/Experiment.ts
 src/models/ExperimentFeedback.ts
 src/models/ExperimentResult.ts
@@ -41,6 +44,9 @@ src/models/Feature.ts
 src/models/Group.ts
 src/models/GroupRole.ts
 src/models/HomePageResponseModel.ts
+src/models/IBasicLiveUpdaterStatus.ts
+src/models/LiveDataUpdaterStatus.ts
+src/models/LiveUpdaterStatus.ts
 src/models/MarkdownPage.ts
 src/models/Network.ts
 src/models/OldestLoggedHistoricalEntry.ts
@@ -69,6 +75,7 @@ src/models/TpsandGasDataDay.ts
 src/models/TpsandGasDataHour.ts
 src/models/TpsandGasDataLatest.ts
 src/models/TpsandGasDataMax.ts
+src/models/TpsandGasDataMinute.ts
 src/models/TpsandGasDataMonth.ts
 src/models/TpsandGasDataWeek.ts
 src/models/TpsandGasDataYear.ts

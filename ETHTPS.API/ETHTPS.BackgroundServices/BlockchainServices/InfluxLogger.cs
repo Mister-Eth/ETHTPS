@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using System;
 using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater;
+using ETHTPS.Data.Models.DataUpdater;
 
 namespace ETHTPS.Services.BlockchainServices
 {

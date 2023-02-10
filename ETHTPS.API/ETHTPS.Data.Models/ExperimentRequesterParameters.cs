@@ -1,6 +1,4 @@
-﻿using ETHTPS.Data.Models;
-
-namespace ETHTPS.API.BIL.Infrastructure.Models
+﻿namespace ETHTPS.Data.Models
 {
     public class ExperimentRequesterParameters
         : APIKeyRequestModel

@@ -1,4 +1,6 @@
-﻿namespace ETHTPS.Data.ResponseModels
+﻿using ETHTPS.Data.Models.DataUpdater;
+
+namespace ETHTPS.Data.ResponseModels
 {
     public class ProviderResponseModel
     {
@@ -8,5 +10,6 @@
         public string Type { get; set; }
         public bool IsGeneralPurpose { get; set; }
         public string? IsSubchainOf { get; set; }
+        public IBasicLiveUpdaterStatus? Status { get; set; }
     }
 }

@@ -15,4 +15,8 @@
     <ProjectReference Include="..\ETHTPS.Data.Models\ETHTPS.Data.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Infrastructure\Models\" />
+  </ItemGroup>
+
 </Project>

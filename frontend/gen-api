@@ -1,1 +1,10 @@
- openapi-generator-cli generate -g typescript-fetch -i api-def.json -o ethtps.api.client --additional-properties=npmName=ethtps.api.client
+curl http://localhost:10202/swagger/v1/swagger.json -o api-def.json
+openapi-generator-cli generate -g typescript-fetch -i api-def.json -o ethtps.api.client --additional-properties=npmName=ethtps.api.client
+cd ethtps.api.client
+npm i
+npm run build
+npm publish
+
+#then
+
+npm i --save ../ethtps.api.client/

@@ -1,4 +1,6 @@
-﻿namespace ETHTPS.API.BIL.Infrastructure.Services.DataUpdater
+﻿using ETHTPS.Data.Models.DataUpdater;
+
+namespace ETHTPS.API.BIL.Infrastructure.Services.DataUpdater
 {
     public interface IDataUpdaterManager : IDataUpdaterStatusManager
     {

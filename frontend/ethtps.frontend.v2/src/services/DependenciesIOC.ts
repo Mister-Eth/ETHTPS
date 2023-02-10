@@ -7,11 +7,12 @@ var _api_key: string | undefined | null = ""
 
 export const storage: LocalStorageService = new LocalStorageService()
 export const api = new ETHTPSApi(
-  process.env.REACT_APP_API_DEV_GENERAL_ENDPOINT,
-  process.env.REACT_APP_API_DEV_GENERAL_ENDPOINT,
-  process.env.REACT_APP_API_DEV_GENERAL_ENDPOINT,
-  process.env.REACT_APP_API_DEV_GENERAL_ENDPOINT,
-  process.env.REACT_APP_API_DEV_GENERAL_ENDPOINT,
+  process.env.REACT_APP_API_DEV_GENERAL_ENDPOINT as string,
+  process.env.REACT_APP_API_DEV_GENERAL_ENDPOINT as string,
+  process.env.REACT_APP_API_DEV_GENERAL_ENDPOINT as string,
+  process.env.REACT_APP_API_DEV_GENERAL_ENDPOINT as string,
+  process.env.REACT_APP_API_DEV_GENERAL_ENDPOINT as string,
+  process.env.REACT_APP_API_DEV_GENERAL_ENDPOINT as string,
 )
 
 //export const websocketsService = new WebsocketsService()

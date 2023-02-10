@@ -13,6 +13,13 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { IBasicLiveUpdaterStatus } from './IBasicLiveUpdaterStatus';
+import {
+    IBasicLiveUpdaterStatusFromJSON,
+    IBasicLiveUpdaterStatusFromJSONTyped,
+    IBasicLiveUpdaterStatusToJSON,
+} from './IBasicLiveUpdaterStatus';
+
 /**
  * 
  * @export
@@ -55,6 +62,12 @@ export interface ProviderResponseModel {
      * @memberof ProviderResponseModel
      */
     isSubchainOf?: string | null;
+    /**
+     * 
+     * @type {IBasicLiveUpdaterStatus}
+     * @memberof ProviderResponseModel
+     */
+    status?: IBasicLiveUpdaterStatus;
 }
 
 /**
@@ -82,6 +95,7 @@ export function ProviderResponseModelFromJSONTyped(json: any, ignoreDiscriminato
         'type': !exists(json, 'type') ? undefined : json['type'],
         'isGeneralPurpose': !exists(json, 'isGeneralPurpose') ? undefined : json['isGeneralPurpose'],
         'isSubchainOf': !exists(json, 'isSubchainOf') ? undefined : json['isSubchainOf'],
+        'status': !exists(json, 'status') ? undefined : IBasicLiveUpdaterStatusFromJSON(json['status']),
     };
 }
 
@@ -100,6 +114,7 @@ export function ProviderResponseModelToJSON(value?: ProviderResponseModel | null
         'type': value.type,
         'isGeneralPurpose': value.isGeneralPurpose,
         'isSubchainOf': value.isSubchainOf,
+        'status': IBasicLiveUpdaterStatusToJSON(value.status),
     };
 }
 

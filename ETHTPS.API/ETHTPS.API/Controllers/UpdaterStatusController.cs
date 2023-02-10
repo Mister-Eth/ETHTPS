@@ -1,7 +1,7 @@
-﻿using ETHTPS.API.BIL.Infrastructure.Models.DataUpdater;
-using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater;
+﻿using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater;
 using ETHTPS.API.Core.Controllers;
 using ETHTPS.Data.Models;
+using ETHTPS.Data.Models.DataUpdater;
 
 using Microsoft.AspNetCore.Mvc;
 

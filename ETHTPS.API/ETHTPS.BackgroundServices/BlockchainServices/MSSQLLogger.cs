@@ -1,5 +1,6 @@
 ﻿using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater;
 using ETHTPS.Data.Integrations.MSSQL;
+using ETHTPS.Data.Models.DataUpdater;
 using ETHTPS.Services.BlockchainServices.Models;
 using Hangfire;
 
@@ -29,12 +30,13 @@ namespace ETHTPS.Services.BlockchainServices
                 UpdateLatestEntries(delta);
 
                 AddOrUpdateMinuteTPSEntry(delta);
+                /*
                 AddOrUpdateHourTPSEntry(delta);
                 AddOrUpdateDayTPSEntry(delta);
                 AddOrUpdateWeekTPSEntry(delta);
                 AddOrUpdateMonthTPSEntry(delta);
                 AddOrUpdateYearTPSEntry(delta);
-                AddOrUpdateAllTPSEntry(delta);
+                AddOrUpdateAllTPSEntry(delta);*/
                 await _context.SaveChangesAsync();
                 _logger.LogInformation($"{_provider}: {delta.TPS}TPS {delta.GPS}GPS");
             }
