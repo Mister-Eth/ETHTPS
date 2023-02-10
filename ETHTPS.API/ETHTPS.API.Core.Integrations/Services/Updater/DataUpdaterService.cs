@@ -178,5 +178,11 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Updater
         public void MarkAsRunning(string provider, UpdaterType updaterType) => SetStatusFor(provider, updaterType, UpdaterStatus.Running);
 
         public IProviderDataUpdaterStatusService MakeProviderSpecific(string provider) => ProviderDataUpdaterStatusService.From(this, provider);
+
+        public DateTime? GetLastRunTimeFor(string provider, UpdaterType updaterType)
+        {
+            var info = GetStatusFor(provider, updaterType);
+            return info?.LastSuccessfulRunTime;
+        }
     }
 }

@@ -22,7 +22,6 @@ namespace ETHTPS.API.DependencyInjection
             .AddScoped<GasAdjustedTPSService>()
             .AddScoped<GeneralService>()
             .AddScoped<TimeWarpService>()
-            .AddScoped<IBlockInfoProviderStatusService, BlockInfoProviderStatusService>()
             .AddScoped<EthereumBlockTimeProvider>()
             .AddScoped<IExperimentService, ExperimentService>()
             .AddScoped<IInfoService, InfoService>()

@@ -14,4 +14,8 @@
     <ProjectReference Include="..\ETHTPS.BackgroundServices\ETHTPS.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Recurring\Database\" />
+  </ItemGroup>
+
 </Project>

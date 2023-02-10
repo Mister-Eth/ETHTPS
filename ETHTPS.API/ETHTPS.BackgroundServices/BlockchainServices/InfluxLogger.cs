@@ -19,7 +19,7 @@ namespace ETHTPS.Services.BlockchainServices
     {
         private static IProviderBucketCreator _bucketCreator;
         private readonly IInfluxWrapper _influxWrapper;
-
+        protected override string ServiceName { get => $"InfluxLogger<{typeof(T).Name}>"; }
         public InfluxLogger(T instance, ILogger<HangfireBackgroundService> logger, EthtpsContext context, IInfluxWrapper influxWrapper, IDataUpdaterStatusService statusService) : base(instance, logger, context, statusService, UpdaterType.BlockInfo)
         {
             _influxWrapper = influxWrapper;
@@ -29,27 +29,34 @@ namespace ETHTPS.Services.BlockchainServices
         [AutomaticRetry(Attempts = 3, OnAttemptsExceeded = AttemptsExceededAction.Delete)]
         public override async Task RunAsync()
         {
-            try
+           if (TimeSinceLastRan?.TotalSeconds >= 5)
             {
-                await CreateBucketsIfNeededAsync();
+                try
+                {
+                    await CreateBucketsIfNeededAsync();
 
-                _statusService.MarkAsRunning();
-                var block = await _instance.GetLatestBlockInfoAsync();
-                _statusService.MarkAsRanSuccessfully();
-                await _influxWrapper.LogBlockAsync(block, _provider);
-                TPSGPSInfo delta = await CalculateTPSGPSAsync(block);
+                    _statusService.MarkAsRunning();
+                    var block = await _instance.GetLatestBlockInfoAsync();
+                    _statusService.MarkAsRanSuccessfully();
+                    await _influxWrapper.LogBlockAsync(block, _provider);
+                    TPSGPSInfo delta = await CalculateTPSGPSAsync(block);
 
+                }
+                catch (InfluxException e)
+                {
+                    _statusService.MarkAsFailed();
+                    _logger.LogError("InfluxLogger exception", e);
+                    throw;
+                }
+                catch (Exception e)
+                {
+                    _statusService.MarkAsFailed();
+                    _logger.LogError($":{ServiceName} {e.GetType().Name} {e.Message}");
+                }
             }
-            catch (InfluxException e)
+            else
             {
-                _statusService.MarkAsFailed();
-                _logger.LogError("InfluxLogger exception", e);
-                throw;
-            }
-            catch (Exception e)
-            {
-                _statusService.MarkAsFailed();
-                _logger.LogError($"InfluxLogger<{typeof(T).Name}>: {e.GetType().Name} {e.Message}");
+                _logger.LogInformation($"Skipping {ServiceName} run because it was reran too quickly");
             }
         }
         private static async Task CreateBucketsIfNeededAsync()

@@ -67,5 +67,15 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Updater
         public IProviderDataUpdaterStatusService MakeProviderSpecific(string provider) => From(this, provider);
 
         public IProviderTypeDataUpdaterStatusService MakeUpdaterSpecific(UpdaterType type) => ProviderTypeDataUpdaterStatusService.From(this, type);
+
+        public DateTime? GetLastRunTimeFor(UpdaterType updaterType)
+        {
+            return _statusService.GetLastRunTimeFor(ProviderName, updaterType);
+        }
+
+        public DateTime? GetLastRunTimeFor(string provider, UpdaterType updaterType)
+        {
+           return _statusService.GetLastRunTimeFor(provider, updaterType);
+        }
     }
 }

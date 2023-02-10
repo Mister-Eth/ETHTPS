@@ -27,6 +27,8 @@ namespace ETHTPS.Services.BlockchainServices.Status.BackgroundTasks.Discord
             _httpClient = new HttpClient();
         }
 
+        protected override string ServiceName => "PlausibleVisitorCountBackgroundTask";
+
         [AutomaticRetry(Attempts = 1, OnAttemptsExceeded = AttemptsExceededAction.Delete)]
         public override async Task RunAsync()
         {

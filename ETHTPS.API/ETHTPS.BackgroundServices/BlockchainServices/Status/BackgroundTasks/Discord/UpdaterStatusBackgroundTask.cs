@@ -1,10 +1,10 @@
-﻿using ETHTPS.Data.Integrations.MSSQL;
-using ETHTPS.Data.Models.Query;
+﻿using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater;
+using ETHTPS.Data.Core.Extensions;
+using ETHTPS.Data.Integrations.MSSQL;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,31 +12,19 @@ namespace ETHTPS.Services.BlockchainServices.Status.BackgroundTasks.Discord
 {
     public class UpdaterStatusBackgroundTask : BackgroundTaskWithNotifier
     {
-        private readonly IBlockInfoProviderStatusService _blockInfoProviderStatusService;
+        private readonly IDataUpdaterStatusService _dataUpdaterStatusService;
 
-        public UpdaterStatusBackgroundTask(ILogger<HangfireBackgroundService> logger, EthtpsContext context, IConfiguration configuration, IBlockInfoProviderStatusService blockInfoProviderStatusService) : base(logger, context, configuration)
+        public UpdaterStatusBackgroundTask(ILogger<HangfireBackgroundService> logger, EthtpsContext context, IConfiguration configuration, IDataUpdaterStatusService dataUpdaterStatusService) : base(logger, context, configuration)
         {
-            _blockInfoProviderStatusService = blockInfoProviderStatusService;
+            _dataUpdaterStatusService = dataUpdaterStatusService;
         }
+
+        protected override string ServiceName => "UpdaterStatusBackgroundTask";
 
         public override async Task RunAsync()
         {
-            var status = _blockInfoProviderStatusService.GetBlockInfoProviderStatus(ProviderQueryModel.All);
-            var embeds = new List<Embed>();
-            foreach (var key in status.Keys)
-            {
-                var x = status[key];
-                if (x.Status == BlockInfoProviderStatus.NeedsAttention || x.Status == BlockInfoProviderStatus.Down)
-                {
-                    embeds.Add(new Embed()
-                    {
-                        color = 5814783,
-                        title = key,
-                        description = x.Status.ToString()
-                    });
-                }
-            }
-            if (embeds.Count > 0)
+            var statuses = _dataUpdaterStatusService.GetAllStatuses().SafeWhere(x => x == UpdaterStatus.Failed);
+            if (statuses?.Count() > 0)
             {
                 var message = new WebhookMessage()
                 {
@@ -47,7 +35,7 @@ namespace ETHTPS.Services.BlockchainServices.Status.BackgroundTasks.Discord
                         {
                             color = 5814783,
                             title = "List",
-                            description = string.Join("\n", embeds.Select(x=>string.Format($"{x.title}: {x.description}")))
+                            description = string.Join("\n", statuses.Select(x=>string.Format($"{x.Updater}: Successful:Failed - {x.NumberOfSuccesses}:{x.NumberOfFailures}")))
                         }
                     }
                 };

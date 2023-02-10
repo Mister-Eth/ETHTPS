@@ -61,5 +61,20 @@ namespace ETHTPS.API.BIL.Infrastructure.Services.DataUpdater.ProviderSpecific.Ty
         {
             _providerDataUpdaterStatusManager.IncrementNumberOfFailures(provider, updaterType);
         }
+
+        public DateTime? GetLastRunTime()
+        {
+            return _providerDataUpdaterStatusManager.GetLastRunTimeFor(UpdaterType);
+        }
+
+        public DateTime? GetLastRunTimeFor(UpdaterType updaterType)
+        {
+            return _providerDataUpdaterStatusManager.GetLastRunTimeFor(updaterType);
+        }
+
+        public DateTime? GetLastRunTimeFor(string provider, UpdaterType updaterType)
+        {
+            return _providerDataUpdaterStatusManager.GetLastRunTimeFor(provider, updaterType);
+        }
     }
 }

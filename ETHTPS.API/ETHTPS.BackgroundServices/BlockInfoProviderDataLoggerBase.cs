@@ -20,6 +20,15 @@ namespace ETHTPS.Services
         protected readonly int _providerID;
         protected readonly int _mainnetID;
         protected readonly IProviderTypeDataUpdaterStatusService _statusService;
+        protected DateTime? LastRunTime
+        {
+            get => _statusService.GetLastRunTime();
+        }
+
+        protected TimeSpan? TimeSinceLastRan
+        {
+            get => _statusService.GetTimeSinceLastRan();
+        }
 
         protected BlockInfoProviderDataLoggerBase(T instance, ILogger<HangfireBackgroundService> logger, EthtpsContext context, IDataUpdaterStatusService statusService, UpdaterType updaterType) : base(logger, context)
         {

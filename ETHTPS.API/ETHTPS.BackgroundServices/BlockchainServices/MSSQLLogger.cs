@@ -1,6 +1,5 @@
 ﻿using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater;
 using ETHTPS.Data.Integrations.MSSQL;
-using ETHTPS.Services.BlockchainServices.Extensions;
 using ETHTPS.Services.BlockchainServices.Models;
 using Hangfire;
 
@@ -15,6 +14,8 @@ namespace ETHTPS.Services.BlockchainServices
     public class MSSQLLogger<T> : BlockInfoProviderDataLoggerBase<T>
          where T : IBlockInfoProvider
     {
+        protected override string ServiceName { get=> $"MSSQLLogger<{typeof(T).Name}>"; }
+
         public MSSQLLogger(T instance, ILogger<HangfireBackgroundService> logger, EthtpsContext context, IDataUpdaterStatusService statusService) : base(instance, logger, context, statusService, UpdaterType.TPSGPS)
         {
         }

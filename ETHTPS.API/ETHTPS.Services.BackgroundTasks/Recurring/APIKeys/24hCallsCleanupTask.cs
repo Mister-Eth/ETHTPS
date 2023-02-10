@@ -18,6 +18,8 @@ namespace ETHTPS.Services.BackgroundTasks.Recurring.APIKeys
         {
         }
 
+        protected override string? ServiceName => "24h Calls cleanup task";
+
         [AutomaticRetry(Attempts = 5, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         public override Task RunAsync()
         {
