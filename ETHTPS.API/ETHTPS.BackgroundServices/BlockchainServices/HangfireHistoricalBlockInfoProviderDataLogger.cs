@@ -1,4 +1,6 @@
-﻿using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater;
+﻿using ETHTPS.API.BIL.Infrastructure.Services.BlockInfo;
+using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater;
+using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater.TimeBuckets;
 using ETHTPS.Data.Integrations.MSSQL;
 
 using Hangfire;
@@ -14,7 +16,7 @@ namespace ETHTPS.Services.BlockchainServices
     public class HangfireHistoricalBlockInfoProviderDataLogger<T> : MSSQLLogger<T>
         where T : IBlockInfoProvider
     {
-        public HangfireHistoricalBlockInfoProviderDataLogger(T instance, ILogger<HangfireBackgroundService> logger, EthtpsContext context, IDataUpdaterStatusService statusService) : base(instance, logger, context, statusService)
+        public HangfireHistoricalBlockInfoProviderDataLogger(T instance, ILogger<HangfireBackgroundService> logger, EthtpsContext context, IDataUpdaterStatusService statusService, ITimeBucketDataUpdaterService<T> timeBucketService) : base(instance, logger, context, statusService, timeBucketService)
         {
         }
 
@@ -47,30 +49,7 @@ namespace ETHTPS.Services.BlockchainServices
                     stopwatch.Start();
 
                     var delta = await CalculateTPSGPSAsync(oldestEntry.OldestBlock);
-                    UpdateMaxEntry(delta);
-
-                    if (DateTime.Now.Subtract(delta.Date).TotalMinutes < 60)
-                    {
-                        AddOrUpdateHourTPSEntry(delta);
-                    }
-                    if (DateTime.Now.Subtract(delta.Date).TotalHours < 24)
-                    {
-                        AddOrUpdateDayTPSEntry(delta);
-                    }
-                    if (DateTime.Now.Subtract(delta.Date).TotalDays < 7)
-                    {
-                        AddOrUpdateWeekTPSEntry(delta);
-                    }
-                    if (DateTime.Now.Subtract(delta.Date).TotalDays < 30)
-                    {
-                        AddOrUpdateMonthTPSEntry(delta);
-                    }
-                    if (DateTime.Now.Subtract(delta.Date).TotalDays < 366)
-                    {
-                        AddOrUpdateYearTPSEntry(delta);
-                    }
-                    AddOrUpdateAllTPSEntry(delta);
-
+                    _timeBucketService.UpdateAllEntries(delta);
                     stopwatch.Stop();
                     var eta = TimeSpan.FromMilliseconds(oldestEntry.OldestBlock * (stopwatch.Elapsed.TotalMilliseconds + 350) / step);
                     _logger.LogInformation($"{_provider} [{oldestEntry.OldestBlock}] @{delta.Date} ETA: [{eta}] {delta.TPS}TPS {delta.GPS}GPS");

@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace ETHTPS.Services.Ethereum.Models.JSONRPC
+namespace ETHTPS.Services.Ethereum.JSONRPC.Models
 {
     public class JSONRPCRequestModel
     {

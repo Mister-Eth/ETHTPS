@@ -1,5 +1,5 @@
 ﻿using ETHTPS.Data.Integrations.InfluxIntegration;
-using ETHTPS.Services.BlockchainServices.Models;
+using ETHTPS.Data.Models.DataEntries;
 
 using System.Threading.Tasks;
 

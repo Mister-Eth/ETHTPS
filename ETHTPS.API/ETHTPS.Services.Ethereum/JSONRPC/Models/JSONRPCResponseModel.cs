@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace ETHTPS.Services.Ethereum.Models.JSONRPC
+namespace ETHTPS.Services.Ethereum.JSONRPC.Models
 {
     public class JSONRPCResponseModel
     {

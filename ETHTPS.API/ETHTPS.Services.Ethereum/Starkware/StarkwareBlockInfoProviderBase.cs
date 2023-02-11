@@ -1,8 +1,9 @@
-﻿using ETHTPS.Data.Integrations.MSSQL;
+﻿using ETHTPS.API.BIL.Infrastructure.Services.BlockInfo;
+using ETHTPS.Data.Integrations.MSSQL;
 using ETHTPS.Data.Integrations.MSSQL.Extensions;
 using ETHTPS.Services.BlockchainServices;
 using ETHTPS.Services.Ethereum.Starkware.API;
-
+using ETHTPS.Data.Models.DataEntries;
 using Microsoft.Extensions.Configuration;
 
 using System;

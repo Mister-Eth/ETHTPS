@@ -1,6 +1,6 @@
 ﻿using InfluxDB.Client.Core;
 
-namespace ETHTPS.Services.BlockchainServices.Models
+namespace ETHTPS.Data.Models.DataEntries
 {
     [Measurement("gps")]
     public class GPSInfo : InfoBase

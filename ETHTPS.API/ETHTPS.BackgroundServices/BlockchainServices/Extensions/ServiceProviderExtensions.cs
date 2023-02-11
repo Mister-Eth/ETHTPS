@@ -1,4 +1,5 @@
-﻿using ETHTPS.Services.Extensions;
+﻿using ETHTPS.API.BIL.Infrastructure.Services.BlockInfo;
+using ETHTPS.Services.Extensions;
 
 using Microsoft.Extensions.DependencyInjection;
 

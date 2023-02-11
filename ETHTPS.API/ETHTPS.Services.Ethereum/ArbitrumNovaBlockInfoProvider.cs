@@ -1,5 +1,6 @@
-﻿using ETHTPS.Services.BlockchainServices;
-
+﻿using ETHTPS.Data.Models.DataEntries;
+using ETHTPS.Services.BlockchainServices;
+using ETHTPS.Services.Ethereum.JSONRPC;
 using Fizzler.Systems.HtmlAgilityPack;
 
 using HtmlAgilityPack;

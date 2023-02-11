@@ -1,4 +1,6 @@
-﻿using ETHTPS.Data.Core.Extensions.StringExtensions;
+﻿using ETHTPS.API.BIL.Infrastructure.Services.BlockInfo;
+using ETHTPS.Data.Core.Extensions.StringExtensions;
+using ETHTPS.Data.Models.DataEntries;
 using ETHTPS.Services.BlockchainServices;
 
 using Fizzler.Systems.HtmlAgilityPack;

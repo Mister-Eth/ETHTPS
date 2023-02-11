@@ -1,7 +1,7 @@
 ﻿using ETHTPS.Services.BlockchainServices;
 
 using Fizzler.Systems.HtmlAgilityPack;
-
+using ETHTPS.Data.Models.DataEntries;
 using HtmlAgilityPack;
 
 using Microsoft.Extensions.Configuration;
@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 namespace ETHTPS.Services.Ethereum.Scan.Implementations
 {
     [Provider("Optimism")]
+    [Obsolete("Use JSONRPC.OptimismBlockInfoProvider instead", true)]
     public class OptimisticEthereumBlockInfoProvider : ScanBlockInfoProviderBase
     {
         private readonly string _targetElementSelector;

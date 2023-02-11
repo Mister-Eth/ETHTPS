@@ -1,7 +1,8 @@
-﻿using ETHTPS.Services.BlockchainServices;
-using ETHTPS.Services.Ethereum.Models.JSONRPC;
+﻿using ETHTPS.API.BIL.Infrastructure.Services.BlockInfo;
+using ETHTPS.Services.BlockchainServices;
+using ETHTPS.Services.Ethereum.JSONRPC.Models;
 using ETHTPS.Services.Infrastructure.Serialization;
-
+using ETHTPS.Data.Models.DataEntries;
 using Fizzler.Systems.HtmlAgilityPack;
 
 using HtmlAgilityPack;

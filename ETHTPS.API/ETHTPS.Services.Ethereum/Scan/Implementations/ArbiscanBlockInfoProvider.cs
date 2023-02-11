@@ -2,12 +2,15 @@
 
 using Microsoft.Extensions.Configuration;
 
+using System;
+
 namespace ETHTPS.Services.Ethereum.Scan.Implementations
 {
-    [Provider("Polygon")]
-    public class PolygonScanBlockInfoProvider : ScanBlockInfoProviderBase
+    [Provider("Arbitrum One")]
+    [Obsolete("Use JSONRPC.PolygonBlockInfoProvider instead", true)]
+    public class ArbiscanBlockInfoProvider : ScanBlockInfoProviderBase
     {
-        public PolygonScanBlockInfoProvider(IConfiguration configuration) : base(configuration, "Polygonscan")
+        public ArbiscanBlockInfoProvider(IConfiguration configuration) : base(configuration, "Arbiscan")
         {
         }
     }

@@ -1,5 +1,6 @@
 ﻿using ETHTPS.Configuration;
 using ETHTPS.Data.Integrations.InfluxIntegration.Extensions;
+using ETHTPS.Data.Models;
 
 using InfluxDB.Client;
 using InfluxDB.Client.Api.Domain;
@@ -85,7 +86,7 @@ namespace ETHTPS.Data.Integrations.InfluxIntegration
                 }
                 else
                 {
-                    _logger.LogInformation($"Logged {typeof(T).Name} in {_stopwatch.Elapsed.TotalMilliseconds}ms");
+                    _logger.LogInformation($"Logged {typeof(T).Name} {entry.ToString()} in {_stopwatch.Elapsed.TotalMilliseconds}ms");
                 }
             }
             catch (Exception e)

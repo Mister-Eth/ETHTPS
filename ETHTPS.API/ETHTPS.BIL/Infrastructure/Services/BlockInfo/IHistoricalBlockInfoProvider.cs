@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using ETHTPS.Data.Models.DataEntries;
 
 namespace ETHTPS.Services.BlockchainServices
 {

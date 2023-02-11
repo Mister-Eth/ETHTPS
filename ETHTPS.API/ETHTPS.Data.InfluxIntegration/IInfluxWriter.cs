@@ -1,4 +1,6 @@
-﻿namespace ETHTPS.Data.Integrations.InfluxIntegration
+﻿using ETHTPS.Data.Models;
+
+namespace ETHTPS.Data.Integrations.InfluxIntegration
 {
     /// <summary>
     /// Provides InfluxDB write operations

@@ -1,8 +1,12 @@
-﻿using ETHTPS.Services.BlockchainServices;
+﻿using ETHTPS.API.BIL.Infrastructure.Services.BlockInfo;
+using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater.TimeBuckets;
+using ETHTPS.Services.BlockchainServices;
+using ETHTPS.Services.BlockchainServices.Status;
 
 using Hangfire;
 
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace ETHTPS.Services.Infrastructure.Extensions
 {
@@ -25,6 +29,15 @@ namespace ETHTPS.Services.Infrastructure.Extensions
             services.AddScoped<V>();
             services.AddScoped<T>();
             RecurringJob.AddOrUpdate<T>(typeof(V).Name, x => x.RunAsync(), cronExpression, queue: queue);
+        }
+
+        public static void RegisterInfluxHangfireHistoricalBackgroundService<T, V>(this IServiceCollection services)
+           where V : class, IBlockInfoProvider
+           where T : HistoricalInfluxLogger<V>
+        {
+            services.TryAddScoped<V>();
+            services.AddScoped<T>();
+            BackgroundJob.Enqueue<T>(x => x.RunAsync());
         }
 
         public static void RegisterHistoricalHangfireBackgroundService<T, V>(this IServiceCollection services, string cronExpression, string queue)

@@ -2,7 +2,7 @@
 using ETHTPS.Data.Integrations.InfluxIntegration;
 using ETHTPS.Data.Integrations.InfluxIntegration.ProviderServices;
 using ETHTPS.Services.BlockchainServices.Extensions;
-using ETHTPS.Services.BlockchainServices.Models;
+using ETHTPS.Data.Models.DataEntries;
 
 using Hangfire;
 
@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 using System;
 using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater;
 using ETHTPS.Data.Models.DataUpdater;
+using System.Collections.Generic;
+using ETHTPS.API.BIL.Infrastructure.Services.BlockInfo;
+using ETHTPS.Data.Models.DataEntries.BlockchainServices.Models;
 
 namespace ETHTPS.Services.BlockchainServices
 {
@@ -19,6 +22,8 @@ namespace ETHTPS.Services.BlockchainServices
          where T : IBlockInfoProvider
     {
         private static IBucketCreator _bucketCreator;
+        private static object _lockObj = new object();
+        private static Dictionary<string, int> _lastBlockNumberDictionary = new();
         private readonly IInfluxWrapper _influxWrapper;
         protected override string ServiceName { get => $"InfluxLogger<{typeof(T).Name}>"; }
         public InfluxLogger(T instance, ILogger<HangfireBackgroundService> logger, EthtpsContext context, IInfluxWrapper influxWrapper, IDataUpdaterStatusService statusService) : base(instance, logger, context, statusService, UpdaterType.BlockInfo)
@@ -28,6 +33,7 @@ namespace ETHTPS.Services.BlockchainServices
         }
 
         [AutomaticRetry(Attempts = 3, OnAttemptsExceeded = AttemptsExceededAction.Delete)]
+//        [DisableConcurrentExecution(15)]
         public override async Task RunAsync()
         {
            if (TimeSinceLastRan?.TotalSeconds >= 5)
@@ -35,14 +41,27 @@ namespace ETHTPS.Services.BlockchainServices
                 try
                 {
                     await CreateBucketsIfNeededAsync();
-
+                    
                     _statusService.MarkAsRunning();
                     var block = await _instance.GetLatestBlockInfoAsync();
-                    _statusService.MarkAsRanSuccessfully();
-                    block.Provider = _provider;
-                    await _influxWrapper.LogBlockAsync(block);
-                    TPSGPSInfo delta = await CalculateTPSGPSAsync(block);
-
+                    if (block != null)
+                    {
+                        block.Provider = _provider;
+                        if (ShouldSkipBlock(block))
+                        {
+                            _logger.LogInformation($"Skipping {ServiceName} run because block {block} was already logged");
+                            _statusService.MarkAsRanSuccessfully();
+                            return;
+                        }
+                        await _influxWrapper.LogBlockAsync(block);
+                        TPSGPSInfo delta = await CalculateTPSGPSAsync(block);
+                        _statusService.MarkAsRanSuccessfully();
+                    }
+                    else
+                    {
+                        _logger.LogError($"{ServiceName}: no data returned");
+                        _statusService.MarkAsFailed();
+                    }
                 }
                 catch (InfluxException e)
                 {
@@ -58,9 +77,26 @@ namespace ETHTPS.Services.BlockchainServices
             }
             else
             {
-                _logger.LogInformation($"Skipping {ServiceName} run because it was reran too quickly");
+                _logger.LogTrace($"Skipping {ServiceName} run because it was reran too quickly");
             }
         }
+        private static bool ShouldSkipBlock(BlockInfo blockInfo) => ShouldSkipBlock(blockInfo.Provider, blockInfo.BlockNumber);
+        private static bool ShouldSkipBlock(string provider, int block)
+        {
+            lock (_lockObj)
+            {
+                if (!_lastBlockNumberDictionary.ContainsKey(provider))
+                {
+                    _lastBlockNumberDictionary.Add(provider, block);
+                    return false;
+                }
+                if (_lastBlockNumberDictionary[provider] == block)
+                    return true;
+                _lastBlockNumberDictionary[provider] = block;
+                return false;
+            }
+        }
+
         private static async Task CreateBucketsIfNeededAsync()
         {
             if (!_bucketCreator.Created)

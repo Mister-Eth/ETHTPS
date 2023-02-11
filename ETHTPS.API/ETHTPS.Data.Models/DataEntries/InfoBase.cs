@@ -1,10 +1,9 @@
-﻿using ETHTPS.Data.Integrations.InfluxIntegration;
-
+﻿
 using InfluxDB.Client.Core;
 
 using System;
 
-namespace ETHTPS.Services.BlockchainServices.Models
+namespace ETHTPS.Data.Models.DataEntries
 {
     public abstract class InfoBase : IMeasurement
     {

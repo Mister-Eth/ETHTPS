@@ -1,12 +1,6 @@
 ﻿using InfluxDB.Client.Core;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ETHTPS.Services.BlockchainServices.Models
+namespace ETHTPS.Data.Models.DataEntries
 {
     [Measurement("tps")]
     public class TPSInfo : InfoBase

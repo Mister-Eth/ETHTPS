@@ -1,6 +1,7 @@
-﻿using ETHTPS.Data.Core.Extensions;
+﻿using ETHTPS.API.BIL.Infrastructure.Services.BlockInfo;
+using ETHTPS.Data.Core.Extensions;
 using ETHTPS.Services.BlockchainServices;
-
+using ETHTPS.Data.Models.DataEntries;
 using Newtonsoft.Json;
 
 using System;

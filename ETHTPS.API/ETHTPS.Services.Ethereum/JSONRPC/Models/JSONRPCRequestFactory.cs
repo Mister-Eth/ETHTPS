@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ETHTPS.Services.Ethereum.Models.JSONRPC
+namespace ETHTPS.Services.Ethereum.JSONRPC.Models
 {
     public static class JSONRPCRequestFactory
     {

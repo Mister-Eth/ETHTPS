@@ -1,4 +1,4 @@
-﻿namespace ETHTPS.Services.BlockchainServices.Models
+﻿namespace ETHTPS.Data.Models.DataEntries.BlockchainServices.Models
 {
     public class TPSGPSInfo : InfoBase
     {

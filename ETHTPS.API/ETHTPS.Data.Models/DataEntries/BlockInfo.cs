@@ -1,11 +1,11 @@
-﻿using ETHTPS.Data.Integrations.InfluxIntegration;
-using ETHTPS.Services.BlockchainServices.Models;
+﻿using ETHTPS.Data.Models;
+using ETHTPS.Data.Models.DataEntries.BlockchainServices.Models;
 
 using InfluxDB.Client.Core;
 
 using System;
 
-namespace ETHTPS.Services.BlockchainServices
+namespace ETHTPS.Data.Models.DataEntries
 {
     [Measurement("blockinfo")]
     public class BlockInfo : IMeasurement
@@ -23,6 +23,7 @@ namespace ETHTPS.Services.BlockchainServices
         [Column("provider", IsTag = true)]
         public string Provider { get; set; }
 
+        public override string ToString() => $"{Provider} #{BlockNumber}";
         public static TPSGPSInfo operator -(BlockInfo a, BlockInfo b)
         {
             return new TPSGPSInfo()

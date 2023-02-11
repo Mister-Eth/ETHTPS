@@ -10,6 +10,10 @@ using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater;
 using ETHTPS.API.Core.Integrations.MSSQL.Services.Updater;
 using Hangfire;
 using ETHTPS.Services.BlockchainServices.Status.BackgroundTasks.Discord;
+using ETHTPS.Services.BlockchainServices.Status;
+using ETHTPS.Services.Ethereum.JSONRPC;
+using ETHTPS.API.Core.Integrations.MSSQL.Services.TimeBuckets.Extensions;
+using ETHTPS.API.BIL.Infrastructure.Services.BlockInfo;
 
 namespace ETHTPS.API.DependencyInjection
 {
@@ -24,14 +28,41 @@ namespace ETHTPS.API.DependencyInjection
 #pragma warning restore CS0618 // Type or member is obsolete
             return services;
         }
-        public static IServiceCollection AddInfluxTPSDataUpdaters(this IServiceCollection services)
+        public static IServiceCollection AddInfluxTPSDataUpdaters(this IServiceCollection services, bool injectTimeBucketService = true)
         {
-            services.RegisterInfluxHangfireBackgroundService<InfluxLogger<InfuraBlockInfoProvider>, InfuraBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
-            services.RegisterInfluxHangfireBackgroundService<InfluxLogger<PolygonScanBlockInfoProvider>, PolygonScanBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
-            services.RegisterInfluxHangfireBackgroundService<InfluxLogger<ArbiscanBlockInfoProvider>, ArbiscanBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
+            if (injectTimeBucketService)
+            {
+                services.InjectTimeBucketService<EthereumBlockInfoProvider>();
+                services.InjectTimeBucketService<NEARBlockInfoProvider>();
+                services.InjectTimeBucketService<AuroraBlockInfoProvider>();
+                services.InjectTimeBucketService<PalmBlockInfoProvider>();
+                services.InjectTimeBucketService<CeloBlockInfoProvider>();
+                services.InjectTimeBucketService<AVAXBlockInfoProvider>();
+                services.InjectTimeBucketService<ArbitrumBlockInfoProvider>();
+                services.InjectTimeBucketService<OptimismBlockInfoProvider>();
+            }
+            services.RegisterInfluxHangfireBackgroundService<InfluxLogger<EthereumBlockInfoProvider>, EthereumBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
+            services.RegisterInfluxHangfireBackgroundService<InfluxLogger<NEARBlockInfoProvider>, NEARBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
+            services.RegisterInfluxHangfireBackgroundService<InfluxLogger<AuroraBlockInfoProvider>, AuroraBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
+            services.RegisterInfluxHangfireBackgroundService<InfluxLogger<PalmBlockInfoProvider>, PalmBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
+            services.RegisterInfluxHangfireBackgroundService<InfluxLogger<CeloBlockInfoProvider>, CeloBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
+            services.RegisterInfluxHangfireBackgroundService<InfluxLogger<AVAXBlockInfoProvider>, AVAXBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
+            services.RegisterInfluxHangfireBackgroundService<InfluxLogger<ArbitrumBlockInfoProvider>, ArbitrumBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
+            services.RegisterInfluxHangfireBackgroundService<InfluxLogger<OptimismBlockInfoProvider>, OptimismBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
+            services.RegisterInfluxHangfireHistoricalBackgroundService<HistoricalInfluxLogger<EthereumBlockInfoProvider>, EthereumBlockInfoProvider>();
+            services.RegisterInfluxHangfireHistoricalBackgroundService<HistoricalInfluxLogger<NEARBlockInfoProvider>, NEARBlockInfoProvider>();
+            services.RegisterInfluxHangfireHistoricalBackgroundService<HistoricalInfluxLogger<AuroraBlockInfoProvider>, AuroraBlockInfoProvider>();
+            services.RegisterInfluxHangfireHistoricalBackgroundService<HistoricalInfluxLogger<PalmBlockInfoProvider>, PalmBlockInfoProvider>();
+            services.RegisterInfluxHangfireHistoricalBackgroundService<HistoricalInfluxLogger<CeloBlockInfoProvider>, CeloBlockInfoProvider>();
+            services.RegisterInfluxHangfireHistoricalBackgroundService<HistoricalInfluxLogger<AVAXBlockInfoProvider>, AVAXBlockInfoProvider>();
+            services.RegisterInfluxHangfireHistoricalBackgroundService<HistoricalInfluxLogger<OptimismBlockInfoProvider>, OptimismBlockInfoProvider>();
+            services.RegisterInfluxHangfireHistoricalBackgroundService<HistoricalInfluxLogger<StarknetBlockInfoProvider>, StarknetBlockInfoProvider>();
+            services.RegisterInfluxHangfireHistoricalBackgroundService<HistoricalInfluxLogger<PolygonBlockInfoProvider>, PolygonBlockInfoProvider>();
+
+
+            services.RegisterInfluxHangfireBackgroundService<InfluxLogger<PolygonBlockInfoProvider>, PolygonBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
             services.RegisterInfluxHangfireBackgroundService<InfluxLogger<ArbitrumNovaBlockInfoProvider>, ArbitrumNovaBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
-            services.RegisterInfluxHangfireBackgroundService<InfluxLogger<OptimisticEthereumBlockInfoProvider>, OptimisticEthereumBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
-            services.RegisterInfluxHangfireBackgroundService<InfluxLogger<SnowTraceBlockInfoProvider>, SnowTraceBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
+            services.RegisterInfluxHangfireBackgroundService<InfluxLogger<StarknetBlockInfoProvider>, StarknetBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
             services.RegisterInfluxHangfireBackgroundService<InfluxLogger<LoopringBlockInfoProvider>, LoopringBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
             services.RegisterInfluxHangfireBackgroundService<InfluxLogger<BobaNetworkBlockInfoProvider>, BobaNetworkBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
             services.RegisterInfluxHangfireBackgroundService<InfluxLogger<XDAIBlockInfoProvider>, XDAIBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
@@ -55,33 +86,44 @@ namespace ETHTPS.API.DependencyInjection
         }
         public static IServiceCollection AddMSSQLTPSDataUpdaters(this IServiceCollection services)
         {
-            services.RegisterHangfireBackgroundService<MSSQLLogger<InfuraBlockInfoProvider>, InfuraBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
-            //services.RegisterHangfireBackgroundService<HangfireBlockInfoProviderDataLogger<HabitatBlockInfoProvider>, HabitatBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
-            services.RegisterHangfireBackgroundService<MSSQLLogger<PolygonScanBlockInfoProvider>, PolygonScanBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
-            services.RegisterHangfireBackgroundService<MSSQLLogger<ArbiscanBlockInfoProvider>, ArbiscanBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
-            services.RegisterHangfireBackgroundService<MSSQLLogger<ArbitrumNovaBlockInfoProvider>, ArbitrumNovaBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
-            services.RegisterHangfireBackgroundService<MSSQLLogger<OptimisticEthereumBlockInfoProvider>, OptimisticEthereumBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
-            services.RegisterHangfireBackgroundService<MSSQLLogger<SnowTraceBlockInfoProvider>, SnowTraceBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
-            services.RegisterHangfireBackgroundService<MSSQLLogger<LoopringBlockInfoProvider>, LoopringBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
-            services.RegisterHangfireBackgroundService<MSSQLLogger<BobaNetworkBlockInfoProvider>, BobaNetworkBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
-            services.RegisterHangfireBackgroundService<MSSQLLogger<XDAIBlockInfoProvider>, XDAIBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
-            services.RegisterHangfireBackgroundService<MSSQLLogger<ZKSwapBlockInfoProvider>, ZKSwapBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
-            services.RegisterHangfireBackgroundService<MSSQLLogger<ZKSpaceBlockInfoProvider>, ZKSpaceBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
-            services.RegisterHangfireBackgroundService<MSSQLLogger<ZKSsyncBlockInfoProvider>, ZKSsyncBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
-            services.RegisterHangfireBackgroundService<MSSQLLogger<AztecBlockInfoProvider>, AztecBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
-            services.RegisterHangfireBackgroundService<MSSQLLogger<ImmutableXBlockInfoProvider>, ImmutableXBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
-            services.RegisterHangfireBackgroundService<MSSQLLogger<MetisBlockInfoProvider>, MetisBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
-            services.RegisterHangfireBackgroundService<MSSQLLogger<RoninBlockInfoProvider>, RoninBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
-            services.RegisterHangfireBackgroundService<MSSQLLogger<VoyagerBlockInfoProvider>, VoyagerBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
-            services.RegisterHangfireBackgroundService<MSSQLLogger<Nahmii20BlockInfoProvider>, Nahmii20BlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
-            services.RegisterHangfireBackgroundService<MSSQLLogger<BSCScanBlockInfoProvider>, BSCScanBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
-            services.RegisterHangfireBackgroundService<MSSQLLogger<OMGNetworkBlockInfoProvider>, OMGNetworkBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
-            services.RegisterHangfireBackgroundService<MSSQLLogger<ZKTubeBlockInfoProvider>, ZKTubeBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
-            services.RegisterHangfireBackgroundService<MSSQLLogger<FTMScanBlockInfoProvider>, FTMScanBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
-            services.RegisterHangfireBackgroundService<MSSQLLogger<SorareBlockInfoProvider>, SorareBlockInfoProvider>(CronConstants.EveryHour, TPSUPDATERQUEUE);
-            services.RegisterHangfireBackgroundService<MSSQLLogger<DeversiFiBlockInfoProvider>, DeversiFiBlockInfoProvider>(CronConstants.EveryHour, TPSUPDATERQUEUE);
-            services.RegisterHangfireBackgroundService<MSSQLLogger<PolygonHermezBlockInfoProvider>, PolygonHermezBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
+            services.RegisterHangfireBackgroundServiceAndTimeBucket<MSSQLLogger<InfuraBlockInfoProviderBase>, InfuraBlockInfoProviderBase>(CronConstants.Every5s, TPSUPDATERQUEUE);
+            services.RegisterHangfireBackgroundServiceAndTimeBucket<MSSQLLogger<PolygonBlockInfoProvider>, PolygonBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
+            services.RegisterHangfireBackgroundServiceAndTimeBucket<MSSQLLogger<ArbitrumBlockInfoProvider>, ArbitrumBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
+            services.RegisterHangfireBackgroundServiceAndTimeBucket<MSSQLLogger<ArbitrumNovaBlockInfoProvider>, ArbitrumNovaBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
+            services.RegisterHangfireBackgroundServiceAndTimeBucket<MSSQLLogger<OptimismBlockInfoProvider>, OptimismBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
+            //services.RegisterHangfireBackgroundServiceAndTimeBucket<MSSQLLogger<SnowTraceBlockInfoProvider>, SnowTraceBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
+            services.RegisterHangfireBackgroundServiceAndTimeBucket<MSSQLLogger<LoopringBlockInfoProvider>, LoopringBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
+            services.RegisterHangfireBackgroundServiceAndTimeBucket<MSSQLLogger<BobaNetworkBlockInfoProvider>, BobaNetworkBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
+            services.RegisterHangfireBackgroundServiceAndTimeBucket<MSSQLLogger<XDAIBlockInfoProvider>, XDAIBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
+            services.RegisterHangfireBackgroundServiceAndTimeBucket<MSSQLLogger<ZKSwapBlockInfoProvider>, ZKSwapBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
+            services.RegisterHangfireBackgroundServiceAndTimeBucket<MSSQLLogger<ZKSpaceBlockInfoProvider>, ZKSpaceBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
+            services.RegisterHangfireBackgroundServiceAndTimeBucket<MSSQLLogger<ZKSsyncBlockInfoProvider>, ZKSsyncBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
+            services.RegisterHangfireBackgroundServiceAndTimeBucket<MSSQLLogger<AztecBlockInfoProvider>, AztecBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
+            services.RegisterHangfireBackgroundServiceAndTimeBucket<MSSQLLogger<ImmutableXBlockInfoProvider>, ImmutableXBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
+            services.RegisterHangfireBackgroundServiceAndTimeBucket<MSSQLLogger<MetisBlockInfoProvider>, MetisBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
+            services.RegisterHangfireBackgroundServiceAndTimeBucket<MSSQLLogger<RoninBlockInfoProvider>, RoninBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
+            services.RegisterHangfireBackgroundServiceAndTimeBucket<MSSQLLogger<VoyagerBlockInfoProvider>, VoyagerBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
+            services.RegisterHangfireBackgroundServiceAndTimeBucket<MSSQLLogger<Nahmii20BlockInfoProvider>, Nahmii20BlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
+            services.RegisterHangfireBackgroundServiceAndTimeBucket<MSSQLLogger<BSCScanBlockInfoProvider>, BSCScanBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
+            services.RegisterHangfireBackgroundServiceAndTimeBucket<MSSQLLogger<OMGNetworkBlockInfoProvider>, OMGNetworkBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
+            services.RegisterHangfireBackgroundServiceAndTimeBucket<MSSQLLogger<ZKTubeBlockInfoProvider>, ZKTubeBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
+            services.RegisterHangfireBackgroundServiceAndTimeBucket<MSSQLLogger<FTMScanBlockInfoProvider>, FTMScanBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
+            services.RegisterHangfireBackgroundServiceAndTimeBucket<MSSQLLogger<SorareBlockInfoProvider>, SorareBlockInfoProvider>(CronConstants.EveryHour, TPSUPDATERQUEUE);
+            services.RegisterHangfireBackgroundServiceAndTimeBucket<MSSQLLogger<DeversiFiBlockInfoProvider>, DeversiFiBlockInfoProvider>(CronConstants.EveryHour, TPSUPDATERQUEUE);
+            services.RegisterHangfireBackgroundServiceAndTimeBucket<MSSQLLogger<PolygonHermezBlockInfoProvider>, PolygonHermezBlockInfoProvider>(CronConstants.EveryMinute, TPSUPDATERQUEUE);
             return services;
+        }
+
+        public static void RegisterHangfireBackgroundServiceAndTimeBucket<T, V>(this IServiceCollection services, string cronExpression, string queue)
+            where V : class, IBlockInfoProvider
+            where T : MSSQLLogger<V>
+        {
+            services.AddScoped<V>();
+            services.InjectTimeBucketService<V>();
+            services.AddScoped<T>();
+#pragma warning disable CS0618 // Type or member is obsolete
+            RecurringJob.AddOrUpdate<T>(typeof(V).Name, x => x.RunAsync(), cronExpression, queue: queue);
+#pragma warning restore CS0618 // Type or member is obsolete
         }
     }
 }

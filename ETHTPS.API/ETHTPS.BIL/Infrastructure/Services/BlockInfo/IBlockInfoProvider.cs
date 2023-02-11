@@ -1,6 +1,6 @@
 ﻿using ETHTPS.Services.BlockchainServices;
 
-namespace ETHTPS.Services
+namespace ETHTPS.API.BIL.Infrastructure.Services.BlockInfo
 {
     /// <summary>
     /// Provides information about blocks.

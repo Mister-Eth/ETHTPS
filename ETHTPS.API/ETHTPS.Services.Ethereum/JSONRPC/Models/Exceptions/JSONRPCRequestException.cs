@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ETHTPS.Services.Ethereum.Models.JSONRPC.Exceptions
+namespace ETHTPS.Services.Ethereum.JSONRPC.Models.Exceptions
 {
     public class JSONRPCRequestException : Exception
     {

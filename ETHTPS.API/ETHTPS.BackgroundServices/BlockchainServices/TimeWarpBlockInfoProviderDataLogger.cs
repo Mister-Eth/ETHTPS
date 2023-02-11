@@ -1,4 +1,6 @@
-﻿using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater;
+﻿using ETHTPS.API.BIL.Infrastructure.Services.BlockInfo;
+using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater;
+using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater.TimeBuckets;
 using ETHTPS.Data.Integrations.MSSQL;
 
 using Hangfire;
@@ -14,7 +16,7 @@ namespace ETHTPS.Services.BlockchainServices
     public class TimeWarpBlockInfoProviderDataLogger<T> : MSSQLLogger<T>
         where T : IBlockInfoProvider
     {
-        public TimeWarpBlockInfoProviderDataLogger(T instance, ILogger<HangfireBackgroundService> logger, EthtpsContext context, IDataUpdaterStatusService statusService) : base(instance, logger, context, statusService)
+        public TimeWarpBlockInfoProviderDataLogger(T instance, ILogger<HangfireBackgroundService> logger, EthtpsContext context, IDataUpdaterStatusService statusService, ITimeBucketDataUpdaterService<T> timeBucketService) : base(instance, logger, context, statusService, timeBucketService)
         {
 
         }
@@ -42,7 +44,7 @@ namespace ETHTPS.Services.BlockchainServices
                     stopwatch.Start();
 
                     var delta = await CalculateTPSGPSAsync(oldestEntry.OldestBlock);
-                    UpdateMaxEntry(delta);
+                    _timeBucketService.UpdateMaxEntry(delta);
                     _context.TimeWarpData.Add(new TimeWarpDatum()
                     {
                         AverageGps = delta.GPS,

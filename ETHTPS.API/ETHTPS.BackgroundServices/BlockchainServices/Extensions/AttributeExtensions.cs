@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using ETHTPS.API.BIL.Infrastructure.Services.BlockInfo;
 
 namespace ETHTPS.Services.BlockchainServices.Extensions
 {
