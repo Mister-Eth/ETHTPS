@@ -1,5 +1,7 @@
-﻿using ETHTPS.API.DependencyInjection;
+﻿using ETHTPS.API.BIL.Infrastructure.Services.BlockInfo;
+using ETHTPS.API.DependencyInjection;
 using ETHTPS.Data.Integrations.InfluxIntegration;
+using ETHTPS.Data.Integrations.InfluxIntegration.HistoricalDataProviders;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,9 +22,10 @@ namespace ETHTPS.API.BIL.Tests
             builder.Host.UseNLog();
             var services = builder.Services;
             services.AddDatabaseContext("ETHTPS.API.General")
-                    .AddCoreServices()
+                    .AddMixedCoreServices()
                     .AddDataUpdaterStatusService()
-                    .AddScoped<IInfluxWrapper, InfluxWrapper>();
+                    .AddScoped<IInfluxWrapper, InfluxWrapper>()
+                    .AddScoped<IAsyncHistoricalBlockInfoProvider, HistoricalInfluxProvider>();
             ServiceProvider = services.BuildServiceProvider();
         }
     }

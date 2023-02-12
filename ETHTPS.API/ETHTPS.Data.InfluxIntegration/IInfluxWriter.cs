@@ -1,4 +1,4 @@
-﻿using ETHTPS.Data.Models;
+﻿using ETHTPS.Data.Core;
 
 namespace ETHTPS.Data.Integrations.InfluxIntegration
 {

@@ -11,13 +11,13 @@ namespace ETHTPS.Services.BlockchainServices
         ///  Gets information about a block asynchronously.
         /// </summary>
         /// <param name="blockNumber">The number of the block.</param>
-        Task<BlockInfo> GetBlockInfoAsync(int blockNumber);
+        Task<Block> GetBlockInfoAsync(int blockNumber);
 
         /// <summary>
         /// Gets information about a block asynchronously.
         /// </summary>
         /// <param name="time">The time of the block.</param>
         /// <returns></returns>
-        Task<BlockInfo> GetBlockInfoAsync(DateTime time);
+        Task<Block> GetBlockInfoAsync(DateTime time);
     }
 }

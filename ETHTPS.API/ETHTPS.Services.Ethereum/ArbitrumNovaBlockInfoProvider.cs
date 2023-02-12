@@ -30,7 +30,7 @@ namespace ETHTPS.Services.Ethereum
         }
 
         //Arbitrum Nova doesn't have an implementation for eth_getBlockByNumber yet
-        public override Task<BlockInfo> GetBlockInfoAsync(int blockNumber)
+        public override Task<Block> GetBlockInfoAsync(int blockNumber)
         {
             HtmlWeb web = new HtmlWeb();
             HtmlDocument doc = web.Load($"https://nova-explorer.arbitrum.io/block/{blockNumber}/transactions");
@@ -42,7 +42,7 @@ namespace ETHTPS.Services.Ethereum
 
             var dateNode = doc.DocumentNode.QuerySelectorAll(_dateSelector);
             var date = string.Join(" ", dateNode.Select(x => x.Attributes["data-from-now"].Value));
-            return Task.FromResult(new BlockInfo()
+            return Task.FromResult(new Block()
             {
                 TransactionCount = int.Parse(txCount),
                 Date = DateTime.Parse(date),

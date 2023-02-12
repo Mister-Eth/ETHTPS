@@ -44,7 +44,7 @@ namespace ETHTPS.Services.Ethereum
 
         public double BlockTimeSeconds { get; set; }
 
-        public async Task<BlockInfo> GetBlockInfoAsync(int blockNumber)
+        public async Task<Block> GetBlockInfoAsync(int blockNumber)
         {
             HtmlWeb web = new HtmlWeb();
             HtmlDocument doc = web.Load($"{_baseURL}/block/{blockNumber}/transactions");
@@ -59,7 +59,7 @@ namespace ETHTPS.Services.Ethereum
 
             var txCount = int.Parse(JsonConvert.DeserializeObject<dynamic>(await _httpClient.GetStringAsync($"{_baseURL}/block/{blockNumber}/transactions?type=JSON")).items.Count.ToString());
 
-            return new BlockInfo()
+            return new Block()
             {
                 BlockNumber = blockNumber,
                 Date = dateTime,
@@ -69,12 +69,12 @@ namespace ETHTPS.Services.Ethereum
             };
         }
 
-        public Task<BlockInfo> GetBlockInfoAsync(DateTime time)
+        public Task<Block> GetBlockInfoAsync(DateTime time)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<BlockInfo> GetLatestBlockInfoAsync()
+        public async Task<Block> GetLatestBlockInfoAsync()
         {
             var requestModel = JSONRPCRequestFactory.CreateGetBlockHeightRequest();
             var json = requestModel.SerializeAsJsonWithEmptyArray();

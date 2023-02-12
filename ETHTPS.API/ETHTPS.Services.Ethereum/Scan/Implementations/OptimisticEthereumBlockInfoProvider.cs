@@ -25,14 +25,14 @@ namespace ETHTPS.Services.Ethereum.Scan.Implementations
             _baseURL = config.GetValue<string>("URL");
         }
 
-        public override Task<BlockInfo> GetLatestBlockInfoAsync()
+        public override Task<Block> GetLatestBlockInfoAsync()
         {
             HtmlWeb web = new();
             HtmlDocument doc = web.Load(_baseURL);
 
             var nodes = doc.DocumentNode.QuerySelectorAll(_targetElementSelector);
             var x = new string(nodes.First().InnerText.Where(c => char.IsNumber(c) || c == '.').ToArray());
-            var data = new BlockInfo()
+            var data = new Block()
             {
                 Date = DateTime.Now,
                 TransactionCount = (int)(5 * float.Parse(x))

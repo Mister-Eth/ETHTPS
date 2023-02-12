@@ -28,15 +28,15 @@ namespace ETHTPS.Services.Ethereum.Starkware
 
         public double BlockTimeSeconds { get; set; } = 100;
 
-        public Task<BlockInfo> GetBlockInfoAsync(int blockNumber)
+        public Task<Block> GetBlockInfoAsync(int blockNumber)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<BlockInfo> GetBlockInfoAsync(DateTime time)
+        public async Task<Block> GetBlockInfoAsync(DateTime time)
         {
             var txCountForDay = await _starkwareClient.GetTransactionCountForAllTokensAsync(time, _productName);
-            return new BlockInfo()
+            return new Block()
             {
                 Date = time,
                 Settled = true,
@@ -44,7 +44,7 @@ namespace ETHTPS.Services.Ethereum.Starkware
             };
         }
 
-        public async Task<BlockInfo> GetLatestBlockInfoAsync()
+        public async Task<Block> GetLatestBlockInfoAsync()
         {
             var todaysTransactionCount = await _starkwareClient.GetTodayTransactionCountForAllTokensAsync(_productName);
             var mainnetID = _context.GetMainnetID();
@@ -79,7 +79,7 @@ namespace ETHTPS.Services.Ethereum.Starkware
                 _context.StarkwareTransactionCountData.Update(entry);
                 _context.SaveChanges();
             }
-            return new BlockInfo()
+            return new Block()
             {
                 Settled = true,
                 TransactionCount = (int)(100 * entry.LastUpdateTps),

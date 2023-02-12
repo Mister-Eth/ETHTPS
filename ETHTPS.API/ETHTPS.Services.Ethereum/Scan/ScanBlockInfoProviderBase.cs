@@ -51,7 +51,7 @@ namespace ETHTPS.Services.Ethereum.Scan
 
         public double BlockTimeSeconds { get; set; }
 
-        public Task<BlockInfo> GetBlockInfoAsync(int blockNumber)
+        public Task<Block> GetBlockInfoAsync(int blockNumber)
         {
 
             HtmlWeb web = new HtmlWeb();
@@ -83,7 +83,7 @@ namespace ETHTPS.Services.Ethereum.Scan
                 transactionCount -= 1;
             }
 
-            return Task.FromResult(new BlockInfo()
+            return Task.FromResult(new Block()
             {
                 BlockNumber = blockNumber,
                 GasUsed = double.Parse(gasUsed),
@@ -92,7 +92,7 @@ namespace ETHTPS.Services.Ethereum.Scan
             });
         }
 
-        public async Task<BlockInfo> GetBlockInfoAsync(DateTime time)
+        public async Task<Block> GetBlockInfoAsync(DateTime time)
         {
             var requestModel = _requestModelFactory.CreateGetBlockNumberByTimestampRequest(time);
             var requestString = requestModel.ToQueryString();
@@ -106,6 +106,6 @@ namespace ETHTPS.Services.Ethereum.Scan
             return await GetBlockInfoAsync(blockNumber);
         }
 
-        public virtual async Task<BlockInfo> GetLatestBlockInfoAsync() => await GetBlockInfoAsync(DateTime.Now.ToUniversalTime());
+        public virtual async Task<Block> GetLatestBlockInfoAsync() => await GetBlockInfoAsync(DateTime.Now.ToUniversalTime());
     }
 }

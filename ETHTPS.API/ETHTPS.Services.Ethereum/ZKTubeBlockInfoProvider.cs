@@ -21,7 +21,7 @@ namespace ETHTPS.Services.Ethereum
 
         public double BlockTimeSeconds { get; set; }
 
-        public async Task<BlockInfo> GetBlockInfoAsync(int blockNumber)
+        public async Task<Block> GetBlockInfoAsync(int blockNumber)
         {
             var responseString = await _httpClient.GetStringAsync($"https://api.zktube.io/api/v0.1/blocks/{blockNumber}/transactions");
             var transactionsResponse = JsonConvert.DeserializeObject<dynamic>(responseString);
@@ -37,7 +37,7 @@ namespace ETHTPS.Services.Ethereum
             {
                 ;
             }
-            return new BlockInfo()
+            return new Block()
             {
                 TransactionCount = txCount,
                 Date = blockSummary.committed_at,
@@ -45,12 +45,12 @@ namespace ETHTPS.Services.Ethereum
             };
         }
 
-        public Task<BlockInfo> GetBlockInfoAsync(DateTime time)
+        public Task<Block> GetBlockInfoAsync(DateTime time)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<BlockInfo> GetLatestBlockInfoAsync()
+        public async Task<Block> GetLatestBlockInfoAsync()
         {
             var responseString = await _httpClient.GetStringAsync("https://api.zktube.io/api/v0.1/status");
             var response = JsonConvert.DeserializeObject<StatusResponse>(responseString);

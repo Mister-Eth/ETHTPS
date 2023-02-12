@@ -47,7 +47,7 @@ namespace ETHTPS.Services.Ethereum.JSONRPC
 
         public double BlockTimeSeconds { get; set; }
 
-        public virtual async Task<BlockInfo> GetBlockInfoAsync(int blockNumber)
+        public virtual async Task<Block> GetBlockInfoAsync(int blockNumber)
         {
             try
             {
@@ -65,9 +65,9 @@ namespace ETHTPS.Services.Ethereum.JSONRPC
                 {
                     var responseString = await response.Content.ReadAsStringAsync();
                     var responseObject = JsonConvert.DeserializeObject<JSONRPCGetBlockByNumberResponseModel>(responseString);
-                    if (responseObject == null||responseObject.result == null)
+                    if (responseObject == null || responseObject.result == null)
                         return null;
-                    BlockInfo result = new()
+                    Block result = new()
                     {
                         BlockNumber = blockNumber,
                         Date = DateTimeExtensions.FromUnixTime(Convert.ToInt64(responseObject.result.timestamp, 16)),
@@ -86,12 +86,12 @@ namespace ETHTPS.Services.Ethereum.JSONRPC
             throw new JSONRPCRequestException(_httpClient.BaseAddress.ToString());
         }
 
-        public Task<BlockInfo> GetBlockInfoAsync(DateTime time)
+        public Task<Block> GetBlockInfoAsync(DateTime time)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<BlockInfo> GetLatestBlockInfoAsync()
+        public async Task<Block> GetLatestBlockInfoAsync()
         {
             var requestModel = JSONRPCRequestFactory.CreateGetBlockHeightRequest();
             var json = requestModel.SerializeAsJsonWithEmptyArray();

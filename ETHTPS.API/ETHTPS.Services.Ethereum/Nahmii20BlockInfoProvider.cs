@@ -27,7 +27,7 @@ namespace ETHTPS.Services.Ethereum
 
         public double BlockTimeSeconds { get; set; }
 
-        public Task<BlockInfo> GetBlockInfoAsync(int blockNumber)
+        public Task<Block> GetBlockInfoAsync(int blockNumber)
         {
             HtmlWeb web = new HtmlWeb();
             HtmlDocument doc = web.Load($"https://explorer.nahmii.io/blocks/{blockNumber}/transactions");
@@ -41,7 +41,7 @@ namespace ETHTPS.Services.Ethereum
             var gasNode = doc.DocumentNode.QuerySelectorAll("div.card:nth-child(2) > div:nth-child(1) > div:nth-child(2) > h3:nth-child(1)");
             var gas = new string(string.Join(" ", gasNode.Select(x => x.InnerText.UntilParanthesis())).Where(Char.IsNumber).ToArray());
 
-            return Task.FromResult(new BlockInfo()
+            return Task.FromResult(new Block()
             {
                 TransactionCount = (int)ValueOrZero(txCount),
                 Date = DateTime.Parse(date),
@@ -59,7 +59,7 @@ namespace ETHTPS.Services.Ethereum
             else return double.Parse(value);
         }
 
-        public Task<BlockInfo> GetBlockInfoAsync(DateTime time)
+        public Task<Block> GetBlockInfoAsync(DateTime time)
         {
             throw new NotImplementedException();
         }
@@ -74,7 +74,7 @@ namespace ETHTPS.Services.Ethereum
             return int.Parse(new string(targetString.Where(char.IsDigit).ToArray()));
         }
 
-        public async Task<BlockInfo> GetLatestBlockInfoAsync()
+        public async Task<Block> GetLatestBlockInfoAsync()
         {
             var responseString = await _httpClient.GetStringAsync("https://explorer.nahmii.io/blocks?type=JSON");
             var response = JsonConvert.DeserializeObject<dynamic>(responseString);

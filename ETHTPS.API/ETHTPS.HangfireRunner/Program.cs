@@ -12,7 +12,7 @@ using ETHTPS.Data.Integrations.InfluxIntegration;
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseNLog();
 var services = builder.Services;
-services.AddCoreServices();
+services.AddMixedCoreServices();
 services.AddDatabaseContext(CURRENT_APP_NAME);
 services.AddScoped<TimeWarpService>();
 services.AddCustomCORSPolicies();
@@ -40,7 +40,7 @@ if (configurationQueues?.Length > 0)
     //services.AddTPSDataUpdaters(builder.Configuration);
     //services.AddHistoricalBlockInfoDataUpdaters(configurationQueues);
     //services.AddTimeWarpUpdaters(configurationQueues)
-   
+
     services.AddStatusNotifiers(configurationQueues);
 }
 

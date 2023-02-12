@@ -12,5 +12,6 @@ namespace ETHTPS.Data.Integrations.InfluxIntegration
         Task<bool> BucketExistsAsync(string bucket);
         IAsyncEnumerable<TMeasurement> GetEntriesBetween<TMeasurement>(string bucket, string measurement, DateTime start, DateTime end) where TMeasurement : IMeasurement;
         IAsyncEnumerable<TMeasurement> GetEntriesForPeriod<TMeasurement>(string bucket, string measurement, TimeInterval period) where TMeasurement : IMeasurement;
+        IAsyncEnumerable<T> QueryAsync<T>(string query);
     }
 }

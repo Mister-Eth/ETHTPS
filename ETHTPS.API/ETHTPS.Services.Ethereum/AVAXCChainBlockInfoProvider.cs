@@ -49,7 +49,7 @@ namespace ETHTPS.Services.Ethereum
             return int.Parse(new string(targetString.Where(char.IsDigit).ToArray()));
         }
 
-        public Task<BlockInfo> GetBlockInfoAsync(int blockNumber)
+        public Task<Block> GetBlockInfoAsync(int blockNumber)
         {
             HtmlWeb web = new HtmlWeb();
             HtmlDocument doc = web.Load($"https://cchain.explorer.avax.network/block/{blockNumber}/transactions");
@@ -61,7 +61,7 @@ namespace ETHTPS.Services.Ethereum
 
             var dateNode = doc.DocumentNode.QuerySelectorAll(_dateSelector);
             var date = string.Join(" ", dateNode.Select(x => x.Attributes["data-from-now"].Value));
-            return Task.FromResult(new BlockInfo()
+            return Task.FromResult(new Block()
             {
                 TransactionCount = int.Parse(txCount),
                 Date = DateTime.Parse(date),
@@ -70,12 +70,12 @@ namespace ETHTPS.Services.Ethereum
             });
         }
 
-        public Task<BlockInfo> GetBlockInfoAsync(DateTime time)
+        public Task<Block> GetBlockInfoAsync(DateTime time)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<BlockInfo> GetLatestBlockInfoAsync()
+        public async Task<Block> GetLatestBlockInfoAsync()
         {
             var obj = JsonConvert.DeserializeObject<dynamic>(await _httpClient.GetStringAsync("https://cchain.explorer.avax.network/blocks?type=JSON"));
             var latest = obj.items[0].ToString();

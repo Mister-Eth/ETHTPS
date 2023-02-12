@@ -33,15 +33,15 @@ namespace ETHTPS.Services.BlockchainServices
         }
 
         [AutomaticRetry(Attempts = 3, OnAttemptsExceeded = AttemptsExceededAction.Delete)]
-//        [DisableConcurrentExecution(15)]
+        //        [DisableConcurrentExecution(15)]
         public override async Task RunAsync()
         {
-           if (TimeSinceLastRan?.TotalSeconds >= 5)
+            if (TimeSinceLastRan?.TotalSeconds >= 5)
             {
                 try
                 {
                     await CreateBucketsIfNeededAsync();
-                    
+
                     _statusService.MarkAsRunning();
                     var block = await _instance.GetLatestBlockInfoAsync();
                     if (block != null)
@@ -80,7 +80,7 @@ namespace ETHTPS.Services.BlockchainServices
                 _logger.LogTrace($"Skipping {ServiceName} run because it was reran too quickly");
             }
         }
-        private static bool ShouldSkipBlock(BlockInfo blockInfo) => ShouldSkipBlock(blockInfo.Provider, blockInfo.BlockNumber);
+        private static bool ShouldSkipBlock(Block blockInfo) => ShouldSkipBlock(blockInfo.Provider, blockInfo.BlockNumber);
         private static bool ShouldSkipBlock(string provider, int block)
         {
             lock (_lockObj)

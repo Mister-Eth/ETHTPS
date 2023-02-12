@@ -21,24 +21,24 @@ namespace ETHTPS.Services.Ethereum
 
         public double BlockTimeSeconds { get; set; }
 
-        public Task<BlockInfo> GetBlockInfoAsync(int blockNumber)
+        public Task<Block> GetBlockInfoAsync(int blockNumber)
         {
             throw new NotImplementedException();
         }
 
-        public Task<BlockInfo> GetBlockInfoAsync(DateTime time)
+        public Task<Block> GetBlockInfoAsync(DateTime time)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<BlockInfo> GetLatestBlockInfoAsync()
+        public async Task<Block> GetLatestBlockInfoAsync()
         {
             var response = await _httpClient.PostAsync("https://watcher-info.mainnet.v1.omg.network/block.all", null);
             var responseObject = JsonConvert.DeserializeObject<OMGResponseObject>(await response.Content.ReadAsStringAsync());
             var latestBlock = responseObject.data[0];
             var secondToLatestBlock = responseObject.data[1];
             BlockTimeSeconds = latestBlock.inserted_at.Subtract(secondToLatestBlock.inserted_at).TotalSeconds;
-            return new BlockInfo()
+            return new Block()
             {
                 BlockNumber = latestBlock.blknum,
                 Date = latestBlock.inserted_at,

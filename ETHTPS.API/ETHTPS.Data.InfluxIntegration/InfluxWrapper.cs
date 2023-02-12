@@ -2,6 +2,7 @@
 
 using ETHTPS.Configuration;
 using ETHTPS.Data.Core;
+using ETHTPS.Data.Core.Extensions;
 using ETHTPS.Data.Integrations.InfluxIntegration.Extensions;
 using ETHTPS.Data.Models;
 using ETHTPS.Data.Models.DataEntries;
@@ -178,9 +179,15 @@ namespace ETHTPS.Data.Integrations.InfluxIntegration
             }
         }
 
-        public IAsyncEnumerable<T> GetEntriesForPeriod<T>(string bucket, string measurement, TimeInterval period) where T : IMeasurement
+        public IAsyncEnumerable<T> GetEntriesForPeriod<T>(string bucket, string measurement, TimeInterval period) where T : IMeasurement => GetEntriesBetween<T>(bucket, measurement, DateTime.Now - period.ExtractTimeGrouping().ToTimeSpan(), DateTime.Now);
+
+        public async IAsyncEnumerable<T> QueryAsync<T>(string query)
         {
-            throw new NotImplementedException();
+            await WaitForClientAsync();
+            await foreach (var entry in _queryApi.QueryAsyncEnumerable<T>(query))
+            {
+                yield return entry;
+            }
         }
     }
 }

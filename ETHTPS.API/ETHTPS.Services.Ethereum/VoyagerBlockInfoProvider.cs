@@ -22,17 +22,17 @@ namespace ETHTPS.Services.Ethereum
             _httpClient = new HttpClient();
         }
 
-        public Task<BlockInfo> GetBlockInfoAsync(int blockNumber)
+        public Task<Block> GetBlockInfoAsync(int blockNumber)
         {
             throw new NotImplementedException();
         }
 
-        public Task<BlockInfo> GetBlockInfoAsync(DateTime time)
+        public Task<Block> GetBlockInfoAsync(DateTime time)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<BlockInfo> GetLatestBlockInfoAsync()
+        public async Task<Block> GetLatestBlockInfoAsync()
         {
             var responseString = await _httpClient.GetStringAsync("https://voyager.online/api/blocks?ps=10&p=1");
             var response = JsonConvert.DeserializeObject<StarknetResponse>(responseString);
@@ -40,7 +40,7 @@ namespace ETHTPS.Services.Ethereum
             var first = settledBlocks.ElementAt(0);
             var second = settledBlocks.ElementAt(1);
             BlockTimeSeconds = DateTimeExtensions.FromUnixTime(first.timestamp).Subtract(DateTimeExtensions.FromUnixTime(second.timestamp)).TotalSeconds;
-            return new BlockInfo()
+            return new Block()
             {
                 Date = DateTimeExtensions.FromUnixTime(first.timestamp),
                 TransactionCount = first.txnCount

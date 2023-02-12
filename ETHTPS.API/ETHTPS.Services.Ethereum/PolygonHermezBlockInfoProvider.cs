@@ -18,14 +18,14 @@ namespace ETHTPS.Services.Ethereum
 
         public double BlockTimeSeconds { get; set; }
 
-        public async Task<BlockInfo> GetBlockInfoAsync(int blockNumber)
+        public async Task<Block> GetBlockInfoAsync(int blockNumber)
         {
             var response = await _httpClient.GetAsync($"https://api.hermez.io/v1/batches/{blockNumber}");
             if (response.IsSuccessStatusCode)
             {
                 var res = JsonConvert.DeserializeObject<Batch>(await response.Content.ReadAsStringAsync());
                 var txCount = res.forgedTransactions;
-                return new BlockInfo()
+                return new Block()
                 {
                     BlockNumber = blockNumber,
                     Date = res.timestamp,
@@ -39,12 +39,12 @@ namespace ETHTPS.Services.Ethereum
             }
         }
 
-        public Task<BlockInfo> GetBlockInfoAsync(DateTime time)
+        public Task<Block> GetBlockInfoAsync(DateTime time)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<BlockInfo> GetLatestBlockInfoAsync()
+        public async Task<Block> GetLatestBlockInfoAsync()
         {
             var response = await _httpClient.GetAsync("https://api.hermez.io/v1/batches?order=DESC&limit=20");
             if (response.IsSuccessStatusCode)

@@ -1,4 +1,4 @@
-﻿namespace ETHTPS.Data.Models
+﻿namespace ETHTPS.Data.Core
 {
     public interface IMeasurement
     {

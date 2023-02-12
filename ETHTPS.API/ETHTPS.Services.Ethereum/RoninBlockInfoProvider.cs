@@ -38,7 +38,7 @@ namespace ETHTPS.Services.Ethereum
         }
         public double BlockTimeSeconds { get; set; } = 3;
 
-        public Task<BlockInfo> GetBlockInfoAsync(int blockNumber)
+        public Task<Block> GetBlockInfoAsync(int blockNumber)
         {
             HtmlWeb web = new HtmlWeb();
             //HtmlDocument doc = web.Load($"{_baseURL}/block/{blockNumber}");
@@ -47,19 +47,19 @@ namespace ETHTPS.Services.Ethereum
             var txCountNode = txPage.DocumentNode.QuerySelectorAll(_transactionCountSelector);
             var txCount = new string(string.Join(" ", txCountNode.Select(x => x.InnerText)).Where(Char.IsNumber).ToArray());
 
-            return Task.FromResult(new BlockInfo()
+            return Task.FromResult(new Block()
             {
                 BlockNumber = blockNumber,
                 TransactionCount = int.Parse(txCount)
             });
         }
 
-        public Task<BlockInfo> GetBlockInfoAsync(DateTime time)
+        public Task<Block> GetBlockInfoAsync(DateTime time)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<BlockInfo> GetLatestBlockInfoAsync()
+        public async Task<Block> GetLatestBlockInfoAsync()
         {
             HtmlWeb web = new HtmlWeb();
             HtmlDocument doc = web.Load($"{_baseURL}/blocks");

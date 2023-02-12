@@ -6,7 +6,7 @@ namespace ETHTPS.API.BIL.Infrastructure.Services
     {
         public IEnumerable<IMarkdownPage> GetMarkdownPagesFor(string providerName);
     }
-    public interface IMarkdownService<TMarkdownPage> : ICRUDService<TMarkdownPage>
+    public interface IMarkdownService<TMarkdownPage> : ICRUDService<TMarkdownPage>, IMarkdownService
         where TMarkdownPage : IMarkdownPage
     {
     }

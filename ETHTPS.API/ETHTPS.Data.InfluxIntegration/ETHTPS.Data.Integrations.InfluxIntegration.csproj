@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ETHTPS.BIL\ETHTPS.API.BIL.csproj" />
     <ProjectReference Include="..\ETHTPS.Configuration\ETHTPS.Configuration.csproj" />
   </ItemGroup>
 

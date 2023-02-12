@@ -45,9 +45,9 @@ namespace ETHTPS.Services.Ethereum
             return 0;
         }
 
-        public async Task<BlockInfo> GetLatestBlockInfoAsync() => await GetBlockInfoAsync(await GetLatestBlockHeightAsync());
+        public async Task<ETHTPS.Data.Models.DataEntries.Block> GetLatestBlockInfoAsync() => await GetBlockInfoAsync(await GetLatestBlockHeightAsync());
 
-        public async Task<BlockInfo> GetBlockInfoAsync(int blockNumber)
+        public async Task<ETHTPS.Data.Models.DataEntries.Block> GetBlockInfoAsync(int blockNumber)
         {
             var payload = new GraphQLPayload()
             {
@@ -63,7 +63,7 @@ namespace ETHTPS.Services.Ethereum
             if (response.IsSuccessStatusCode)
             {
                 var obj = JsonConvert.DeserializeObject<BlocksRootobject>(await response.Content.ReadAsStringAsync());
-                return new BlockInfo()
+                return new ETHTPS.Data.Models.DataEntries.Block()
                 {
                     TransactionCount = int.Parse(obj.data.blocks[0].transactionCount),
                     Date = DateTimeExtensions.FromUnixTime(int.Parse(obj.data.blocks[0].timestamp)),
@@ -74,7 +74,7 @@ namespace ETHTPS.Services.Ethereum
             return null;
         }
 
-        public Task<BlockInfo> GetBlockInfoAsync(DateTime time)
+        public Task<ETHTPS.Data.Models.DataEntries.Block> GetBlockInfoAsync(DateTime time)
         {
             throw new NotImplementedException();
         }

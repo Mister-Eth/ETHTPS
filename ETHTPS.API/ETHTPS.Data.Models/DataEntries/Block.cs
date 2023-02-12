@@ -1,14 +1,12 @@
-﻿using ETHTPS.Data.Models;
+﻿using ETHTPS.Data.Core;
 using ETHTPS.Data.Models.DataEntries.BlockchainServices.Models;
 
 using InfluxDB.Client.Core;
 
-using System;
-
 namespace ETHTPS.Data.Models.DataEntries
 {
     [Measurement("blockinfo")]
-    public class BlockInfo : IMeasurement
+    public class Block : IBlock
     {
         [Column("blocknumber")]
         public int BlockNumber { get; set; }
@@ -24,16 +22,13 @@ namespace ETHTPS.Data.Models.DataEntries
         public string Provider { get; set; }
 
         public override string ToString() => $"{Provider} #{BlockNumber}";
-        public static TPSGPSInfo operator -(BlockInfo a, BlockInfo b)
+        public static TPSGPSInfo operator -(Block a, Block b) => new()
         {
-            return new TPSGPSInfo()
-            {
-                Date = a.Date,
-                BlockNumber = a.BlockNumber,
-                TPS = (a.TransactionCount) / (a.Date.Subtract(b.Date).TotalSeconds),
-                GPS = (a.GasUsed) / (a.Date.Subtract(b.Date).TotalSeconds),
-                Provider = a.Provider,
-            };
-        }
+            Date = a.Date,
+            BlockNumber = a.BlockNumber,
+            TPS = (a.TransactionCount) / (a.Date.Subtract(b.Date).TotalSeconds),
+            GPS = (a.GasUsed) / (a.Date.Subtract(b.Date).TotalSeconds),
+            Provider = a.Provider,
+        };
     }
 }

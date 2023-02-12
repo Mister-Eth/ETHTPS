@@ -13,6 +13,6 @@ namespace ETHTPS.Services.BlockchainServices
         /// Gets information about the latest block asynchronously.
         /// </summary>
         /// <returns></returns>
-        Task<BlockInfo> GetLatestBlockInfoAsync();
+        Task<Block> GetLatestBlockInfoAsync();
     }
 }

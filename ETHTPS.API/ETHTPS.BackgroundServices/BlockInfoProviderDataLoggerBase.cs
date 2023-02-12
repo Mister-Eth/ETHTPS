@@ -7,6 +7,7 @@ using ETHTPS.Data.Models.DataEntries.BlockchainServices.Models;
 using ETHTPS.Data.Models.DataUpdater;
 using ETHTPS.Services.BlockchainServices;
 using ETHTPS.Services.BlockchainServices.Extensions;
+
 using Microsoft.Extensions.Logging;
 
 using System;
@@ -46,7 +47,7 @@ namespace ETHTPS.Services
         protected async Task<TPSGPSInfo> CalculateTPSGPSAsync() => await CalculateTPSGPSAsync(await _instance.GetLatestBlockInfoAsync());
         protected async Task<TPSGPSInfo> CalculateTPSGPSAsync(int blockNumber) => await CalculateTPSGPSAsync(await _instance.GetBlockInfoAsync(blockNumber));
         protected async Task<TPSGPSInfo> CalculateTPSGPSAsync(DateTime atTime) => await CalculateTPSGPSAsync(await _instance.GetBlockInfoAsync(atTime));
-        protected async Task<TPSGPSInfo> CalculateTPSGPSAsync(BlockInfo latestBlock)
+        protected async Task<TPSGPSInfo> CalculateTPSGPSAsync(Block latestBlock)
         {
             if (_instance.BlockTimeSeconds > 0)
             {
@@ -66,7 +67,7 @@ namespace ETHTPS.Services
                     Date = latestBlock.Date,
                     Provider = _provider
                 };
-                BlockInfo secondToLatestBlock;
+                Block secondToLatestBlock;
                 int count = 0;
                 do
                 {

@@ -8,6 +8,10 @@ using static ETHTPS.API.Core.Constants;
 using ETHTPS.Services.Infrastructure.Extensions;
 using ETHTPS.Data.Integrations.MSSQL.HistoricalDataProviders;
 using ETHTPS.Services.Ethereum.JSONRPC.Infura;
+using ETHTPS.API.BIL.Infrastructure.Services.BlockInfo;
+using ETHTPS.Data.Integrations.InfluxIntegration.HistoricalDataProviders;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using ETHTPS.Data.Integrations.InfluxIntegration;
 
 namespace ETHTPS.API.DependencyInjection
 {
@@ -42,7 +46,7 @@ namespace ETHTPS.API.DependencyInjection
         }
 
 
-        public static IServiceCollection AddHistoricalDataProviders(this IServiceCollection services)
+        public static IServiceCollection AddMSSQLHistoricalDataProviders(this IServiceCollection services)
         {
             services.AddScoped<IHistoricalDataProvider, OneHourHistoricalDataProvider>();
             services.AddScoped<IHistoricalDataProvider, OneDayHistoricalDataProvider>();
@@ -55,5 +59,10 @@ namespace ETHTPS.API.DependencyInjection
             return services;
         }
 
+        public static IServiceCollection AddInfluxHistoricalDataProvider(this IServiceCollection services)
+        {
+            services.TryAddScoped<IInfluxWrapper, InfluxWrapper>();
+            return services.AddScoped<IAsyncHistoricalBlockInfoProvider, HistoricalInfluxProvider>();
+        }
     }
 }

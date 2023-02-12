@@ -23,7 +23,7 @@ namespace ETHTPS.Services.Ethereum
             _httpClient.BaseAddress = new Uri("https://api.aztec.network/falafel-mainnet/graphql");
         }
 
-        public async Task<BlockInfo> GetBlockInfoAsync(int blockNumber)
+        public async Task<Block> GetBlockInfoAsync(int blockNumber)
         {
             var payload = new GraphQLPayload()
             {
@@ -46,7 +46,7 @@ namespace ETHTPS.Services.Ethereum
                 var obj = JsonConvert.DeserializeObject<dynamic>(str);
                 try
                 {
-                    return new BlockInfo()
+                    return new Block()
                     {
                         BlockNumber = blockNumber,
                         TransactionCount = obj.data.block.txs.Count,
@@ -62,12 +62,12 @@ namespace ETHTPS.Services.Ethereum
             return null;
         }
 
-        public Task<BlockInfo> GetBlockInfoAsync(DateTime time)
+        public Task<Block> GetBlockInfoAsync(DateTime time)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<BlockInfo> GetLatestBlockInfoAsync()
+        public async Task<Block> GetLatestBlockInfoAsync()
         {
             var payload = new GraphQLPayload()
             {

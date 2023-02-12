@@ -35,17 +35,17 @@ namespace ETHTPS.Services.Ethereum
             _httpClient.DefaultRequestHeaders.Add("x-api-key", _apiKey);
         }
 
-        public Task<BlockInfo> GetBlockInfoAsync(int blockNumber)
+        public Task<Block> GetBlockInfoAsync(int blockNumber)
         {
             throw new NotImplementedException();
         }
 
-        public Task<BlockInfo> GetBlockInfoAsync(DateTime time)
+        public Task<Block> GetBlockInfoAsync(DateTime time)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<BlockInfo> GetLatestBlockInfoAsync()
+        public async Task<Block> GetLatestBlockInfoAsync()
         {
             var txLimit = 200;
             var block = await GenerateFakeBlockAsync(txLimit);
@@ -61,7 +61,7 @@ namespace ETHTPS.Services.Ethereum
             return block;
         }
 
-        private async Task<BlockInfo> GenerateFakeBlockAsync(int txLimit)
+        private async Task<Block> GenerateFakeBlockAsync(int txLimit)
         {
             var payload = new GraphQLPayload()
             {
@@ -82,7 +82,7 @@ namespace ETHTPS.Services.Ethereum
             {
                 var obj = JsonConvert.DeserializeObject<Rootobject>(await response.Content.ReadAsStringAsync());
                 var lastMinuteItems = obj.data.listTransactions.items.Where(x => DateTimeExtensions.FromUnixTime(long.Parse(x.txn_time.Substring(0, x.txn_time.Length - 3))).ToUniversalTime() >= DateTime.Now.ToUniversalTime().Subtract(TimeSpan.FromMinutes(1)));
-                return new BlockInfo()
+                return new Block()
                 {
                     TransactionCount = lastMinuteItems.Count(),
                     Date = DateTime.Now.Subtract(TimeSpan.FromSeconds(DateTime.Now.Second)).Subtract(TimeSpan.FromMilliseconds(DateTime.Now.Millisecond)),

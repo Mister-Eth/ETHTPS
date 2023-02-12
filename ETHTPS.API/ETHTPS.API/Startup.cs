@@ -37,10 +37,11 @@ namespace ETHTPS.API
                     .AddMemoryCache()
                     .AddAPIKeyProvider()
                     .AddAPIKeyAuthenticationAndAuthorization()
-                    .AddCoreServices()
+                    .AddMixedCoreServices()
+                    .AddInfluxHistoricalDataProvider()
                     .RegisterMicroservice(APP_NAME, "General API");
             services.AddDataUpdaterStatusService();
-            
+
 #if DEBUG
             services.AddScoped<PublicDataInitializer>()
                     .AddScoped<PrivateDataInitializer>();

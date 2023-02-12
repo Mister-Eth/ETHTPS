@@ -21,7 +21,7 @@ services.AddSwagger()
         .AddMemoryCache()
         .AddAPIKeyProvider()
         .AddAPIKeyAuthenticationAndAuthorization()
-        .AddCoreServices()
+        .AddMixedCoreServices()
         .AddDataUpdaterStatusService()
         .RegisterMicroservice(APP_NAME, "Websockets API");
 var app = builder.Build();
