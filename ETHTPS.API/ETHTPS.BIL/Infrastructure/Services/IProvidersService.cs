@@ -1,8 +1,10 @@
-﻿using ETHTPS.Data.Integrations.MSSQL;
+﻿using ETHTPS.Data.Models.Providers;
 
 namespace ETHTPS.API.BIL.Infrastructure.Services
 {
-    public interface IProvidersService : ICRUDService<Provider>
+    public interface IProvidersService { }
+    public interface IProvidersService<TProvider> : ICRUDService<TProvider>
+        where TProvider : IProvider
     {
 
     }

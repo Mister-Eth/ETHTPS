@@ -3,7 +3,7 @@ using ETHTPS.Services;
 using Microsoft.Extensions.DependencyInjection;
 using static ETHTPS.API.Core.Constants;
 using ETHTPS.Services.Infrastructure.Extensions;
-using ETHTPS.Services.Ethereum.JSONRPC;
+using ETHTPS.Services.Ethereum.JSONRPC.Infura;
 
 namespace ETHTPS.API.DependencyInjection
 {

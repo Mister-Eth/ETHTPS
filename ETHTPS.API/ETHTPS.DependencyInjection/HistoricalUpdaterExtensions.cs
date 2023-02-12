@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using static ETHTPS.API.Core.Constants;
 using ETHTPS.Services.Infrastructure.Extensions;
 using ETHTPS.Data.Integrations.MSSQL.HistoricalDataProviders;
-using ETHTPS.Services.Ethereum.JSONRPC;
+using ETHTPS.Services.Ethereum.JSONRPC.Infura;
 
 namespace ETHTPS.API.DependencyInjection
 {

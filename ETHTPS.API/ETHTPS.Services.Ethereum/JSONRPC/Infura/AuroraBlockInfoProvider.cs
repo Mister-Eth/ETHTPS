@@ -3,12 +3,12 @@ using ETHTPS.Services.BlockchainServices.BlockTime;
 
 using Microsoft.Extensions.Configuration;
 
-namespace ETHTPS.Services.Ethereum.JSONRPC
+namespace ETHTPS.Services.Ethereum.JSONRPC.Infura
 {
     [Provider("Aurora")]
     public class AuroraBlockInfoProvider : InfuraBlockInfoProviderBase
     {
-        public AuroraBlockInfoProvider(IConfiguration configuration) :base(configuration, "AuroraEndpoint")
+        public AuroraBlockInfoProvider(IConfiguration configuration) : base(configuration, "AuroraEndpoint")
         {
 
         }

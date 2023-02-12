@@ -1,11 +1,13 @@
-﻿using ETHTPS.Data.Integrations.MSSQL;
-using ETHTPS.Data.ResponseModels.SocialMedia;
-using System.Collections.Generic;
+﻿using ETHTPS.Data.Models.ExternalWebsites;
 
 namespace ETHTPS.API.BIL.Infrastructure.Services
 {
-    public interface IExternalWebsitesService : ICRUDService<ExternalWebsite>
+    public interface IExternalWebsitesService
     {
-        public IEnumerable<ProviderExternalWebsite> GetExternalWebsitesFor(string providerName);
+        public IEnumerable<IProviderExternalWebsite> GetExternalWebsitesFor(string providerName);
+    }
+    public interface IExternalWebsitesService<TExternalWebsite> : ICRUDService<TExternalWebsite>, IExternalWebsitesService
+        where TExternalWebsite : IExternalWebsite
+    {
     }
 }

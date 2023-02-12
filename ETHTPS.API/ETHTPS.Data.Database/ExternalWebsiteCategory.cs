@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ETHTPS.Data.Integrations.MSSQL;
 
-public partial class ExternalWebsiteCateopry
+public partial class ExternalWebsiteCategory
 {
     public int Id { get; set; }
 

@@ -11,5 +11,6 @@ namespace ETHTPS.Services.BlockchainServices.Extensions
     {
         public static async Task LogProviderBlockAsync(this IInfluxWrapper influxWrapper, BlockInfo blockInfo, string provider) => await influxWrapper.LogAsync(blockInfo, GetBlockBucketNameFor(provider));
         public static async Task LogBlockAsync(this IInfluxWrapper influxWrapper, BlockInfo blockInfo) => await influxWrapper.LogAsync(blockInfo, "blockinfo");
+        public static async Task LogBlocksAsync(this IInfluxWrapper influxWrapper, params BlockInfo[] blockInfo) => await influxWrapper.LogAsync(blockInfo, "blockinfo");
     }
 }

@@ -14,6 +14,7 @@ using Hangfire;
 using ETHTPS.Services.BlockchainServices.Extensions;
 using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater.TimeBuckets;
 using ETHTPS.API.BIL.Infrastructure.Services.BlockInfo;
+using InfluxDB.Client.Api.Domain;
 
 namespace ETHTPS.Services.BlockchainServices.Status
 {
@@ -48,6 +49,8 @@ namespace ETHTPS.Services.BlockchainServices.Status
                     return;
                 }
             }
+            if (typeof(T).FullName.Contains("EthereumGenericJSONRPCBlockInfoProvider"))
+                DELAY = 10;
             if (!_context.OldestLoggedHistoricalEntries.Any(x => x.Network == _mainnetID && x.Provider == _providerID))
             {
                 _context.OldestLoggedHistoricalEntries.Add(new OldestLoggedHistoricalEntry()
@@ -66,44 +69,57 @@ namespace ETHTPS.Services.BlockchainServices.Status
                 step = _context.Providers.First(x => x.Id == _providerID).HistoricalAggregationDeltaBlock.Value;
             }
 
+            int parallelQueriesCount = 25;
+
             while (oldestEntry.OldestBlock > 0)
             {
+                var stopwatch = new System.Diagnostics.Stopwatch();
                 try
                 {
-                    var stopwatch = new System.Diagnostics.Stopwatch();
-                    stopwatch.Start();
+                    stopwatch.Restart();
 
                     _statusService.MarkAsRunning();
-                    var block = await _instance.GetBlockInfoAsync(oldestEntry.OldestBlock);
-                    if (block == null)
+                    var tasks = Enumerable.Range(1, parallelQueriesCount).Select(i => Task.Run(async () => await _instance.GetBlockInfoAsync(oldestEntry.OldestBlock - i * step)));
+                    var results = await Task.WhenAll(tasks);
+                    if (results.Any(x=> x== null))
                     {
-                        _logger.LogInformation($"{ServiceName} - Null block @{block.BlockNumber}");
+                        _logger.LogInformation($"{ServiceName} - Null block(s) count: {string.Join(", ", results.Where(x => x == null).Count())}");
                         await Task.Delay(DELAY);
                         continue;
                     }
-                    block.Provider = _provider;
-                    await _influxWrapper.LogBlockAsync(block);
-                    if (_timeBucketService != null)
+                    results = results.OrderByDescending(x => x.Date).ToArray();
+                    var list = results.ToList();
+                    list.ForEach(block=> block.Provider = _provider);
+                    await _influxWrapper.LogBlocksAsync(list.ToArray());
+                    var insertResult = await Task.WhenAll(list.Select(block => Task.Run(async () =>
                     {
-                        try
+                        if (_timeBucketService != null)
                         {
-                            var delta = await CalculateTPSGPSAsync(block);
-                            _timeBucketService?.UpdateAllEntries(delta);
+                            try
+                            {
+                                var delta = await CalculateTPSGPSAsync(block);
+                                _timeBucketService?.UpdateAllEntries(delta);
 
+                            }
+                            catch (Exception e)
+                            {
+                                _logger.LogError($"{ServiceName} Error logging to MSSQL", e);
+                                return false;
+                            }
                         }
-                        catch (Exception e)
-                        {
-                            _logger.LogError($"{ServiceName} Error logging to MSSQL", e);
-                        }
-                    }
+                        return true;
+                    })));                    
                     stopwatch.Stop();
-                    var eta = TimeSpan.FromMilliseconds(oldestEntry.OldestBlock * (stopwatch.Elapsed.TotalMilliseconds + 350) / step);
-                    _logger.LogInformation($"{ServiceName} - Logged block #{block.BlockNumber} ETA: {eta.Days}d {eta.Hours}h {eta.Minutes}m");
+                    if (!insertResult.All(x => x))
+                        throw new Exception($"Error logging data");
+                    var dt = results.First().Date - results.Last().Date;
+                    var eta = TimeSpan.FromMilliseconds(oldestEntry.OldestBlock * (stopwatch.Elapsed.TotalMilliseconds + DELAY) / step);
 
-
-                    oldestEntry.OldestBlock -= step;
-                    oldestEntry.OldestBlockDate = block.Date;
+                    oldestEntry.OldestBlock -= parallelQueriesCount * step;
+                    oldestEntry.OldestBlockDate = list.Last().Date;
                     await _context.SaveChangesAsync(); //no gaps
+
+                    _logger.LogInformation($"{ServiceName} - Logged blocks [#{list.First().BlockNumber}, ...,#{list.Last().BlockNumber}]\nDelta: -{dt.Hours}h {dt.Minutes}m {dt.Seconds}s\nETA: {eta.Days}d {eta.Hours}h {eta.Minutes}m\nCompleted: {Math.Round((double)(16607138-oldestEntry.OldestBlock) * 100 / 16607138, 2)}%\nAverage speed: {Math.Round((double)parallelQueriesCount/stopwatch.Elapsed.TotalSeconds,2)} req/s");
                 }
                 catch (Exception e)
                 {

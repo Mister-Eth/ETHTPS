@@ -49,6 +49,7 @@ export function NivoStreamgraph({ initialData }) {
           margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
           axisTop={null}
           axisRight={null}
+          offsetType="expand"
           axisBottom={{
             orient: "bottom",
             tickSize: 5,
@@ -67,7 +68,6 @@ export function NivoStreamgraph({ initialData }) {
           }}
           enableGridX={true}
           enableGridY={false}
-          offsetType="silhouette"
           colors={{ scheme: "nivo" }}
           fillOpacity={0.65}
           borderColor={{ theme: "background" }}

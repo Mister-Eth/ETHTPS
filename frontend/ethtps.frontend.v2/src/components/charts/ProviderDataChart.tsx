@@ -6,7 +6,12 @@ import { NetworksDropdown } from "../dropdowns/NetworksDropdown"
 import Container from "@mui/material/Container/Container"
 import { ModeDropdown } from "../dropdowns/ModeDropdown"
 import { useGetProviderColorDictionaryFromAppStore } from "../../hooks/ColorHooks"
-import { DataType, TimeValue, ConditionalRender } from "../../Types"
+import {
+  DataType,
+  TimeValue,
+  ConditionalRender,
+  StringTimeValue,
+} from "../../Types"
 import { Line } from "react-chartjs-2"
 import { CategoryScale, Chart } from "chart.js/auto"
 import "chartjs-adapter-moment"
@@ -17,10 +22,10 @@ import { DoNotDisturbAlt } from "@mui/icons-material"
 import { SpinningArrows } from "../icons/spinning hourglass/SpinningArrows"
 import { DateRangeSelectorDropdown } from "../dropdowns/DateRangeSelectorDropdown"
 import { api } from "../../services/DependenciesIOC"
-import { useQuery } from "react-query"
-import { Box } from "@mui/system"
 import { ModeButton } from "../buttons/ModeButton"
 import { DataModeButtonGroup } from "../buttons/DataModeButtonGroup"
+import { CustomLineChart } from "./CustomLineChart"
+import { useQuery } from "react-query"
 Chart.register(CategoryScale)
 
 interface IProviderDataChartConfiguration extends INoDataAvailableEvent {
@@ -35,7 +40,7 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
   const [network, setNetwork] = useState("Mainnet")
   const [mode, setMode] = useState(DataType.TPS)
 
-  const [d, setD] = useState<TimeValue[]>([])
+  const [d, setD] = useState<StringTimeValue[]>([])
   const [noData, setNoData] = useState(false)
   const [usesDatePicker, setUsesDatePicker] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -64,7 +69,7 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
           setD(
             values
               .filter((x) => x?.value !== undefined)
-              ?.map((x) => new TimeValue(x)),
+              ?.map((x) => new StringTimeValue(x)),
           )
           setNoData(false)
           setLoading(false)
@@ -148,46 +153,13 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
               />,
               noData && !loading,
             )}
-            <Line
-              style={{
-                width: "inherit",
-                height: "100%",
-                maxHeight: "500px",
-              }}
-              data={{
-                datasets: [
-                  {
-                    label: `${config.provider}`,
-                    data: d,
-                    fill: true,
-                    borderColor: colorDictionary[config.provider],
-                    tension: 0.3,
-                    pointHoverRadius: 15,
-                    pointRadius: 0,
-                    pointHitRadius: 30,
-                    pointBackgroundColor: colorDictionary[config.provider],
-                  },
-                ],
-              }}
-              options={{
-                interaction: {
-                  mode: "index",
+            <CustomLineChart
+              data={[
+                {
+                  id: "test",
+                  data: d,
                 },
-                plugins: {
-                  legend: {
-                    display: false,
-                  },
-                },
-                scales: {
-                  x: {
-                    type: "timeseries",
-                    ...noGrid,
-                  },
-                  y: {
-                    ...noGrid,
-                  },
-                },
-              }}
+              ]}
             />
           </div>
         </Paper>

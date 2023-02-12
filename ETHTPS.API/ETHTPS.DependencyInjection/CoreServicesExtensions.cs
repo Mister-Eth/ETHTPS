@@ -6,6 +6,8 @@ using ETHTPS.API.Security.Core.Humanity;
 using ETHTPS.API.Security.Core.Humanity.Recaptcha;
 using ETHTPS.Configuration;
 using ETHTPS.Configuration.Database;
+using ETHTPS.Data.Integrations.MSSQL;
+using ETHTPS.Data.Models.Markdown;
 using ETHTPS.Services.BlockchainServices.BlockTime;
 using ETHTPS.Services.BlockchainServices.Status;
 
@@ -26,13 +28,13 @@ namespace ETHTPS.API.DependencyInjection
             .AddScoped<EthereumBlockTimeProvider>()
             .AddScoped<IExperimentService, ExperimentService>()
             .AddScoped<IInfoService, InfoService>()
-            .AddScoped<IExternalWebsitesService, ExternalWebsitesService>()
-            .AddScoped<IMarkdownService, MarkdownService>()
-            .AddScoped<IProvidersService, ProvidersService>()
+            .AddScoped<IExternalWebsitesService<ExternalWebsite>, ExternalWebsitesService>()
+            .AddScoped<IMarkdownService<MarkdownPage>, MarkdownService>()
+            .AddScoped<IProvidersService<Data.Integrations.MSSQL.Provider>, ProvidersService>()
             .AddScoped<IChartDataProviderService, ChartDataProviderService>()
             .AddHistoricalDataProviders();
 
-        public static IServiceCollection AddEssentialServices(this IServiceCollection services) =>
+        private static IServiceCollection AddEssentialServices(this IServiceCollection services) =>
             services.AddScoped<IHumanityCheckService, RecaptchaVerificationService>()
             .AddDbContext<ConfigurationContext>(options => options.UseSqlServer(GetConfigurationServiceConnectionString()), ServiceLifetime.Singleton)
             .AddSingleton<IDBConfigurationProvider, DBConfigurationProvider>()

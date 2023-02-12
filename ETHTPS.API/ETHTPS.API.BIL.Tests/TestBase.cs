@@ -1,6 +1,10 @@
 ﻿using ETHTPS.API.DependencyInjection;
+using ETHTPS.Data.Integrations.InfluxIntegration;
 
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+
+using NLog.Extensions.Hosting;
 
 namespace ETHTPS.API.BIL.Tests
 {
@@ -12,10 +16,13 @@ namespace ETHTPS.API.BIL.Tests
         protected ServiceProvider ServiceProvider { get; private set; }
         protected TestBase()
         {
-            IServiceCollection services = new ServiceCollection();
+            var builder = WebApplication.CreateBuilder(new WebApplicationOptions() { });
+            builder.Host.UseNLog();
+            var services = builder.Services;
             services.AddDatabaseContext("ETHTPS.API.General")
                     .AddCoreServices()
-                    .AddDataUpdaterStatusService();
+                    .AddDataUpdaterStatusService()
+                    .AddScoped<IInfluxWrapper, InfluxWrapper>();
             ServiceProvider = services.BuildServiceProvider();
         }
     }

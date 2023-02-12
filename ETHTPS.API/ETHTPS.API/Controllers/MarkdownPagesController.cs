@@ -2,6 +2,7 @@
 using ETHTPS.API.Core.Integrations.MSSQL.Controllers.CRUD;
 using ETHTPS.Data.Integrations.MSSQL;
 using ETHTPS.Data.Models;
+using ETHTPS.Data.Models.Markdown;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,14 +15,10 @@ namespace ETHTPS.API.Controllers
     public class MarkdownPagesController : CRUDServiceControllerBase<MarkdownPage>
     {
         private readonly IMarkdownService _markdownService;
-        public MarkdownPagesController(IMarkdownService serviceImplementation) : base(serviceImplementation)
-        {
-
-            _markdownService = serviceImplementation;
-        }
+        public MarkdownPagesController(IMarkdownService serviceImplementation) : base((ICRUDService<MarkdownPage>)serviceImplementation) => _markdownService = serviceImplementation;
 
         [HttpGet]
         [Route("[action]")]
-        public IEnumerable<MarkdownPage> GetMarkdownPagesFor(string providerName, [FromQuery] APIKeyRequestModel model) => _markdownService.GetMarkdownPagesFor(providerName);
+        public IEnumerable<IMarkdownPage> GetMarkdownPagesFor(string providerName, [FromQuery] APIKeyRequestModel model) => _markdownService.GetMarkdownPagesFor(providerName);
     }
 }

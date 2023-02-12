@@ -1,11 +1,13 @@
 ﻿using ETHTPS.Data.Integrations.MSSQL;
 using Microsoft.EntityFrameworkCore;
-using ETHTPS.Data.Models;
 using ETHTPS.API.BIL.Infrastructure.Services;
+using ETHTPS.Data.Core;
 
 namespace ETHTPS.API.Core.Integrations.MSSQL.Services
 {
-    public abstract class EFCoreCRUDServiceBase<TEntity> : ICRUDService<TEntity> where TEntity : EntityWIthId, new()
+    public abstract class EFCoreCRUDServiceBase<TEntity> :
+        ICRUDService<TEntity> where TEntity : class, IIndexed
+
     {
         private readonly DbSet<TEntity> _entitySet;
         private readonly Action _saveChangesAction;

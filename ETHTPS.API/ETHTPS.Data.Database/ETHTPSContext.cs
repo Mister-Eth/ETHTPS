@@ -50,7 +50,7 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
 
     public virtual DbSet<ExternalWebsite> ExternalWebsites { get; set; }
 
-    public virtual DbSet<ExternalWebsiteCateopry> ExternalWebsiteCateopries { get; set; }
+    public virtual DbSet<ExternalWebsiteCategory> ExternalWebsiteCateopries { get; set; }
 
     public virtual DbSet<Feature> Features { get; set; }
 
@@ -477,7 +477,7 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
                 .HasConstraintName("FK__ExternalW__Categ__2EA5EC27");
         });
 
-        modelBuilder.Entity<ExternalWebsiteCateopry>(entity =>
+        modelBuilder.Entity<ExternalWebsiteCategory>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__External__3214EC27BF25D844");
 

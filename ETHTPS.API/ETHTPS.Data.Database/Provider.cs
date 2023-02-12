@@ -1,10 +1,11 @@
-﻿using ETHTPS.Data.Models;
+﻿using ETHTPS.Data.Core;
+using ETHTPS.Data.Models;
+using ETHTPS.Data.Models.Providers;
 
 namespace ETHTPS.Data.Integrations.MSSQL;
 
-public partial class Provider : EntityWIthId
+public partial class Provider : IProvider
 {
-
     public string Name { get; set; } = null!;
 
     public int Type { get; set; }
@@ -68,4 +69,5 @@ public partial class Provider : EntityWIthId
     public virtual ICollection<TpsandGasDataYear> TpsandGasDataYears { get; } = new List<TpsandGasDataYear>();
 
     public virtual ProviderType TypeNavigation { get; set; } = null!;
+    public int Id { get; set; }
 }

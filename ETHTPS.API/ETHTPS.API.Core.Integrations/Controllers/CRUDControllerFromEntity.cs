@@ -1,5 +1,6 @@
 ﻿using ETHTPS.API.Core.Controllers.CRUD;
 using ETHTPS.API.Core.Integrations.MSSQL.Services;
+using ETHTPS.Data.Core;
 using ETHTPS.Data.Integrations.MSSQL;
 using ETHTPS.Data.Models;
 
@@ -10,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 namespace ETHTPS.API.Core.Integrations.MSSQL.Controllers.CRUD
 {
     public class CRUDControllerFromEntity<TEntity> : EFCoreCRUDServiceBase<TEntity>, ICRUDController<TEntity>
-         where TEntity : EntityWIthId, new()
+         where TEntity : class, IIndexed
     {
         public CRUDControllerFromEntity(EthtpsContext context, Func<EthtpsContext, DbSet<TEntity>> setSelector) : base(setSelector(context), context)
         {

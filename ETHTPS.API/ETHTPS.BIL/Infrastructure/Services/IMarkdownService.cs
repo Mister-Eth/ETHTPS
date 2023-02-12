@@ -1,11 +1,13 @@
-﻿using ETHTPS.Data.Integrations.MSSQL;
-
-using System.Collections.Generic;
+﻿using ETHTPS.Data.Models.Markdown;
 
 namespace ETHTPS.API.BIL.Infrastructure.Services
 {
-    public interface IMarkdownService : ICRUDService<MarkdownPage>
+    public interface IMarkdownService
     {
-        public IEnumerable<MarkdownPage> GetMarkdownPagesFor(string providerName);
+        public IEnumerable<IMarkdownPage> GetMarkdownPagesFor(string providerName);
+    }
+    public interface IMarkdownService<TMarkdownPage> : ICRUDService<TMarkdownPage>
+        where TMarkdownPage : IMarkdownPage
+    {
     }
 }

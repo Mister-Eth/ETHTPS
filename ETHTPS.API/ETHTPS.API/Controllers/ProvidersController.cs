@@ -12,7 +12,7 @@ namespace ETHTPS.API.Controllers
     [Authorize(Policy = "AdminsOnly")]
     public class ProvidersController : CRUDServiceControllerBase<Provider>
     {
-        public ProvidersController(IProvidersService serviceImplementation) : base(serviceImplementation)
+        public ProvidersController(IProvidersService serviceImplementation) : base((ICRUDService<Provider>)serviceImplementation)
         {
         }
     }

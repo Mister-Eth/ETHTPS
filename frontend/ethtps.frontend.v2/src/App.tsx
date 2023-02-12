@@ -5,7 +5,7 @@ import { About } from "./pages/About"
 import MainPage from "./pages/MainPage"
 import { Fragment } from "react"
 import { RecaptchaAPIKeyAndDataLoader } from "./components/RecaptchaAPIKeyAndDataLoader"
-import { ProviderPage } from "./pages/ProviderPage"
+import { ProviderPage } from "./pages/provider/ProviderPage"
 import { TestTube } from "./components/experiments/TestTube"
 
 export default function App(): JSX.Element {

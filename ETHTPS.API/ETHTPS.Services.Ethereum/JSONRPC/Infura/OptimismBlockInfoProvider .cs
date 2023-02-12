@@ -3,12 +3,12 @@ using ETHTPS.Services.BlockchainServices.BlockTime;
 
 using Microsoft.Extensions.Configuration;
 
-namespace ETHTPS.Services.Ethereum.JSONRPC
+namespace ETHTPS.Services.Ethereum.JSONRPC.Infura
 {
     [Provider("Optimism")]
     public class OptimismBlockInfoProvider : InfuraBlockInfoProviderBase
     {
-        public OptimismBlockInfoProvider(IConfiguration configuration) :base(configuration, "OptimismEndpoint")
+        public OptimismBlockInfoProvider(IConfiguration configuration) : base(configuration, "OptimismEndpoint")
         {
 
         }

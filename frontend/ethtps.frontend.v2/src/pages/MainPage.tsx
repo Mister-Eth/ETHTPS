@@ -68,11 +68,6 @@ export default function MainPage(): JSX.Element {
 
         <>
           <br />
-          <ProviderModal
-            open={showProviderModal}
-            provider={modalProvider}
-            onClose={() => setShowProviderModal(false)}
-          />
           <Container maxWidth={"md"}>
             <Paper elevation={1}>
               <SidechainToggleButton

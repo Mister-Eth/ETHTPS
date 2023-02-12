@@ -26,7 +26,13 @@ namespace ETHTPS.Services.Ethereum.JSONRPC
         private static bool CanCall => TimeSinceLastCall > TIME_BETWEEN;
         private static bool Busy { get; set; }
         private static TimeSpan TimeSinceLastCall => DateTime.Now - LastCallTime;
-
+        public JSONRPCBlockInfoProviderBase(string endpoint)
+        {
+            _httpClient = new HttpClient()
+            {
+                BaseAddress = new Uri(endpoint)
+            };
+        }
         public JSONRPCBlockInfoProviderBase(IConfiguration configuration, string sectionName, string endpointFieldName = "Endpoint")
         {
             var config = configuration.GetSection(sectionName);

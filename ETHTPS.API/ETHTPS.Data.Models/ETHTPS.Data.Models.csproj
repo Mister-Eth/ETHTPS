@@ -1,19 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <Configurations>Debug;Release;Staging</Configurations>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<Configurations>Debug;Release;Staging</Configurations>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="InfluxDB.Client.Core" Version="4.10.0" />
-    <PackageReference Include="NLog.Database" Version="5.1.1" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="InfluxDB.Client.Core" Version="4.10.0" />
+		<PackageReference Include="NLog.Database" Version="5.1.1" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ETHTPS.Data\ETHTPS.Data.Core.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\ETHTPS.Data\ETHTPS.Data.Core.csproj" />
+	</ItemGroup>
 
 </Project>

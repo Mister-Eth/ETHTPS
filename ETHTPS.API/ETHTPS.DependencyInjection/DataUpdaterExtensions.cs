@@ -11,9 +11,10 @@ using ETHTPS.API.Core.Integrations.MSSQL.Services.Updater;
 using Hangfire;
 using ETHTPS.Services.BlockchainServices.Status.BackgroundTasks.Discord;
 using ETHTPS.Services.BlockchainServices.Status;
-using ETHTPS.Services.Ethereum.JSONRPC;
 using ETHTPS.API.Core.Integrations.MSSQL.Services.TimeBuckets.Extensions;
 using ETHTPS.API.BIL.Infrastructure.Services.BlockInfo;
+using ETHTPS.Services.Ethereum.JSONRPC.Infura;
+using ETHTPS.Services.Ethereum.JSONRPC.Generic;
 
 namespace ETHTPS.API.DependencyInjection
 {
@@ -42,6 +43,7 @@ namespace ETHTPS.API.DependencyInjection
                 services.InjectTimeBucketService<OptimismBlockInfoProvider>();
             }
             services.RegisterInfluxHangfireBackgroundService<InfluxLogger<EthereumBlockInfoProvider>, EthereumBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
+            /*
             services.RegisterInfluxHangfireBackgroundService<InfluxLogger<NEARBlockInfoProvider>, NEARBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
             services.RegisterInfluxHangfireBackgroundService<InfluxLogger<AuroraBlockInfoProvider>, AuroraBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
             services.RegisterInfluxHangfireBackgroundService<InfluxLogger<PalmBlockInfoProvider>, PalmBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
@@ -49,7 +51,7 @@ namespace ETHTPS.API.DependencyInjection
             services.RegisterInfluxHangfireBackgroundService<InfluxLogger<AVAXBlockInfoProvider>, AVAXBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
             services.RegisterInfluxHangfireBackgroundService<InfluxLogger<ArbitrumBlockInfoProvider>, ArbitrumBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
             services.RegisterInfluxHangfireBackgroundService<InfluxLogger<OptimismBlockInfoProvider>, OptimismBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
-            services.RegisterInfluxHangfireHistoricalBackgroundService<HistoricalInfluxLogger<EthereumBlockInfoProvider>, EthereumBlockInfoProvider>();
+            
             services.RegisterInfluxHangfireHistoricalBackgroundService<HistoricalInfluxLogger<NEARBlockInfoProvider>, NEARBlockInfoProvider>();
             services.RegisterInfluxHangfireHistoricalBackgroundService<HistoricalInfluxLogger<AuroraBlockInfoProvider>, AuroraBlockInfoProvider>();
             services.RegisterInfluxHangfireHistoricalBackgroundService<HistoricalInfluxLogger<PalmBlockInfoProvider>, PalmBlockInfoProvider>();
@@ -59,6 +61,9 @@ namespace ETHTPS.API.DependencyInjection
             services.RegisterInfluxHangfireHistoricalBackgroundService<HistoricalInfluxLogger<StarknetBlockInfoProvider>, StarknetBlockInfoProvider>();
             services.RegisterInfluxHangfireHistoricalBackgroundService<HistoricalInfluxLogger<PolygonBlockInfoProvider>, PolygonBlockInfoProvider>();
 
+            */
+
+            services.RegisterInfluxHangfireHistoricalBackgroundService<HistoricalInfluxLogger<EthereumMultiEndpointJSONRPC>, EthereumMultiEndpointJSONRPC>();
 
             services.RegisterInfluxHangfireBackgroundService<InfluxLogger<PolygonBlockInfoProvider>, PolygonBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);
             services.RegisterInfluxHangfireBackgroundService<InfluxLogger<ArbitrumNovaBlockInfoProvider>, ArbitrumNovaBlockInfoProvider>(CronConstants.Every5s, TPSUPDATERQUEUE);

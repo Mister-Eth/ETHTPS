@@ -1,14 +1,8 @@
-﻿using ETHTPS.Data.Models;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ETHTPS.Data.Models.ExternalWebsites;
 
 namespace ETHTPS.Data.ResponseModels.SocialMedia
 {
-    public class ExternalWebsiteBase : EntityWIthId
+    public class ExternalWebsiteBase : IExternalWebsite
     {
 
         public string Name { get; set; }
@@ -16,5 +10,6 @@ namespace ETHTPS.Data.ResponseModels.SocialMedia
         public string IconBase64 { get; set; }
 
         public int Category { get; set; }
+        public int Id { get; set; }
     }
 }

@@ -2,10 +2,11 @@
 using ETHTPS.Data.Core.Extensions.StringExtensions;
 using ETHTPS.Data.ResponseModels.SocialMedia;
 using ETHTPS.API.BIL.Infrastructure.Services;
+using ETHTPS.Data.Models.ExternalWebsites;
 
 namespace ETHTPS.API.Core.Integrations.MSSQL.Services
 {
-    public class ExternalWebsitesService : EFCoreCRUDServiceBase<ExternalWebsite>, IExternalWebsitesService
+    public class ExternalWebsitesService : EFCoreCRUDServiceBase<ExternalWebsite>, IExternalWebsitesService<ExternalWebsite>
     {
         private readonly EthtpsContext _context;
         public ExternalWebsitesService(EthtpsContext context) : base(context.ExternalWebsites, context)
@@ -13,7 +14,7 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services
             _context = context;
         }
 
-        public IEnumerable<ProviderExternalWebsite> GetExternalWebsitesFor(string providerName)
+        public IEnumerable<IProviderExternalWebsite> GetExternalWebsitesFor(string providerName)
         {
             lock (_context.LockObj)
             {
@@ -22,9 +23,9 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services
                 return links
                     .Select(link => new ProviderExternalWebsite()
                     {
-                        Category = link.ExternalWebsite.CategoryNavigation.Name,
-                        WebsiteName = link.ExternalWebsite.Name,
-                        IconBase64 = (link.ExternalWebsite.IconBase64.Length == 0)?null: link.ExternalWebsite.IconBase64,
+                        Category = link.ExternalWebsite.CategoryNavigation.Id,
+                        Name = link.ExternalWebsite.Name,
+                        IconBase64 = (link.ExternalWebsite.IconBase64.Length == 0) ? null : link.ExternalWebsite.IconBase64,
                         Url = link.Link
                     });
             }

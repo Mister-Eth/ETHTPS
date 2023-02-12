@@ -1,9 +1,10 @@
 ﻿using ETHTPS.API.BIL.Infrastructure.Services;
 using ETHTPS.Data.Integrations.MSSQL;
+using ETHTPS.Data.Models.Providers;
 
 namespace ETHTPS.API.Core.Integrations.MSSQL.Services
 {
-    public class ProvidersService : EFCoreCRUDServiceBase<Provider>, IProvidersService
+    public class ProvidersService : EFCoreCRUDServiceBase<Provider>, IProvidersService<Provider>
     {
         public ProvidersService(EthtpsContext context) : base(context.Providers, context)
         {
