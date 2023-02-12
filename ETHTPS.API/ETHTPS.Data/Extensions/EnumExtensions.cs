@@ -49,34 +49,35 @@ namespace ETHTPS.Data.Core.Extensions
 
         public static TimeSpan ToTimeSpan(this TimeGrouping grouping)
         {
-            switch (grouping)
+            return grouping switch
             {
-                case TimeGrouping.Second:
-                    return TimeSpan.FromSeconds(1);
-                    break;
-                case TimeGrouping.Minute:
-                    return TimeSpan.FromSeconds(60);
-                    break;
-                case TimeGrouping.Hour:
-                    return TimeSpan.FromMinutes(60);
-                    break;
-                case TimeGrouping.Day:
-                    TimeSpan.FromHours(24);
-                    break;
-                case TimeGrouping.Week:
-                    TimeSpan.FromDays(7);
-                    break;
-                case TimeGrouping.Month:
-                    TimeSpan.FromDays(30);
-                    break;
-                case TimeGrouping.Year:
-                    TimeSpan.FromDays(365);
-                    break;
-                case TimeGrouping.Decade:
-                    TimeSpan.FromDays(3652);
-                    break;
-            }
-            throw new ArgumentOutOfRangeException($"No definition for {grouping}");
+                TimeGrouping.Second => TimeSpan.FromSeconds(1),
+                TimeGrouping.Minute => TimeSpan.FromSeconds(60),
+                TimeGrouping.Hour => TimeSpan.FromMinutes(60),
+                TimeGrouping.Day => TimeSpan.FromHours(24),
+                TimeGrouping.Week => TimeSpan.FromDays(7),
+                TimeGrouping.Month => TimeSpan.FromDays(30),
+                TimeGrouping.Year => TimeSpan.FromDays(365),
+                TimeGrouping.Decade => TimeSpan.FromDays(3652),
+                _ => throw new ArgumentOutOfRangeException($"No definition for {grouping}"),
+            };
+        }
+
+        public static string ToFluxTimeUnit(this TimeSpan timeSpan)
+        {
+            if (timeSpan <= TimeGrouping.Minute.ToTimeSpan())
+                return "s";
+            if (timeSpan <= TimeGrouping.Hour.ToTimeSpan())
+                return "m";
+            if (timeSpan <= TimeGrouping.Day.ToTimeSpan())
+                return "h";
+            if (timeSpan <= TimeGrouping.Week.ToTimeSpan())
+                return "d";
+            if (timeSpan <= TimeGrouping.Month.ToTimeSpan())
+                return "d";
+            if (timeSpan <= TimeGrouping.Year.ToTimeSpan())
+                return "mo";
+            return "y";
         }
     }
 }

@@ -17,21 +17,33 @@ namespace ETHTPS.Data.Integrations.InfluxIntegration.HistoricalDataProviders
         {
             _influxWrapper = influxWrapper;
         }
-
-        public async IAsyncEnumerable<IBlock> GetBlocksBetweenAsync(ProviderQueryModel model, DateTime start, DateTime end)
+        /*
+         from(bucket: "blockinfo")
+  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+  |> filter(fn: (r) => r["_measurement"] == "blockinfo")
+  |> filter(fn: (r) => r["_field"] == "transactioncount")
+  |> filter(fn: (r) => r["provider"] == "Ethereum")
+  |> window(timeColumn: "_time", createEmpty: false, every: 1h)
+  |> mean()
+  |> group(columns: ["provider"])
+  |> yield(name: "Time buckets")
+         */
+        public async Task<IEnumerable<IBlock>> GetBlocksBetweenAsync(ProviderQueryModel model, DateTime start, DateTime end)
         {
             var query = @$"from(bucket: ""blockinfo"")
   |> range(start: {start.ToInfluxDateTime()}, stop: {end.ToInfluxDateTime()})
   |> filter(fn: (r) => r[""_measurement""] == ""blockinfo"")
+  |> filter(fn: (r) => r[""_field""] == ""transactioncount"")
   |> filter(fn: (r) => r[""provider""] == ""{model.Provider}"")
-  |> yield(name: ""mean"")
+  |> window(timeColumn: ""_time"", createEmpty: false, every: 1{(end - start).ToFluxTimeUnit()})
+  |> mean()
+  |> group(columns: [""provider""])
+  |> yield(name: ""Time buckets"")
  ";
-            await foreach (var entry in _influxWrapper.QueryAsync<Block>(query))
-            {
-                yield return entry;
-            }
+            var result = await _influxWrapper.QueryAsync<Block>(query);
+            return result;
         }
 
-        public IAsyncEnumerable<IBlock> GetLatestBlocksAsync(ProviderQueryModel model, TimeInterval period) => GetBlocksBetweenAsync(model, DateTime.Now - period.ExtractTimeGrouping().ToTimeSpan(), DateTime.Now);
+        public async Task<IEnumerable<IBlock>> GetLatestBlocksAsync(ProviderQueryModel model, TimeInterval period) => await GetBlocksBetweenAsync(model, DateTime.Now - period.ExtractTimeGrouping().ToTimeSpan(), DateTime.Now);
     }
 }

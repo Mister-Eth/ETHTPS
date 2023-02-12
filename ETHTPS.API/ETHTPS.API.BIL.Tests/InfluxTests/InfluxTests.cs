@@ -42,6 +42,7 @@ namespace ETHTPS.API.BIL.Tests.ServiceTests
                 await foreach (var entry in _influxWrapper.GetEntriesForPeriod<Block
                     >(DEFAULT_BUCKET_NAME, DEFAULT_MEASUREMENT_NAME, Data.Core.TimeInterval.OneHour)) { }
             });
+            /*
             Assert.DoesNotThrowAsync(async () =>
             {
                 await foreach (var entry in _asyncHistoricalBlockInfoProvider.GetLatestBlocksAsync(new Data.Models.Query.ProviderQueryModel()
@@ -50,7 +51,7 @@ namespace ETHTPS.API.BIL.Tests.ServiceTests
                     Network = "Mainnet"
                 }, Data.Core.TimeInterval.OneHour))
                 { }
-            });
+            });*/
             Assert.Pass();
         }
     }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ETHTPS.API.Controllers
 {
@@ -20,20 +21,20 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
-        public IAsyncEnumerable<IBlock> GetBlocksBetweenAsync(ProviderQueryModel model, DateTime start, DateTime end)
+        public async Task<IEnumerable<IBlock>> GetBlocksBetweenAsync(ProviderQueryModel model, DateTime start, DateTime end)
         {
-            return _asyncHistoricalBlockInfoProvider.GetBlocksBetweenAsync(model, start, end);
+            return await _asyncHistoricalBlockInfoProvider.GetBlocksBetweenAsync(model, start, end);
         }
 
         [HttpGet]
-        public IAsyncEnumerable<IBlock> GetLatestBlocksAsync(ProviderQueryModel model, string period)
+        public async Task<IEnumerable<IBlock>> GetLatestBlocksAsync(ProviderQueryModel model, string period)
         {
             var result = TryParse(period);
             if (result == null)
             {
-                return (IAsyncEnumerable<IBlock>)BadRequest();
+                return (IEnumerable<IBlock>)Task.FromResult((IAsyncEnumerable<IBlock>)BadRequest());
             }
-            return _asyncHistoricalBlockInfoProvider.GetLatestBlocksAsync(model, result.Value);
+            return await _asyncHistoricalBlockInfoProvider.GetLatestBlocksAsync(model, result.Value);
         }
 
         private static TimeInterval? TryParse(string value)
