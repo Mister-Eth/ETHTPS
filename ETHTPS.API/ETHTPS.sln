@@ -49,7 +49,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Public", "Public", "{203EA8
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETHTPS.Configuration", "ETHTPS.Configuration\ETHTPS.Configuration.csproj", "{CE04AF86-4E86-4DB2-8010-A46F70A8267A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETHTPS.HangfireRunner", "ETHTPS.HangfireRunner\ETHTPS.HangfireRunner.csproj", "{BAE3197C-B54C-4F3E-BEFE-B268DF2ECDB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETHTPS.TaskRunner", "ETHTPS.HangfireRunner\ETHTPS.TaskRunner.csproj", "{BAE3197C-B54C-4F3E-BEFE-B268DF2ECDB3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETHTPS.Services.BackgroundTasks", "ETHTPS.Services.BackgroundTasks\ETHTPS.Services.BackgroundTasks.csproj", "{3AB3B23C-3F25-4AFF-9F44-9D7E0B03D286}"
 EndProject

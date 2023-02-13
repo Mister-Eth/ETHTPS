@@ -182,6 +182,7 @@ namespace ETHTPS.Data.Integrations.InfluxIntegration
         public IAsyncEnumerable<T> GetEntriesForPeriod<T>(string bucket, string measurement, TimeInterval period) where T : IMeasurement => GetEntriesBetween<T>(bucket, measurement, DateTime.Now - period.ExtractTimeGrouping().ToTimeSpan(), DateTime.Now);
 
         public async IAsyncEnumerable<T> QueryAsyncEnumerable<T>(string query)
+             where T : IMeasurement
         {
             await WaitForClientAsync();
             await foreach (var entry in _queryApi.QueryAsyncEnumerable<T>(query))
@@ -191,6 +192,7 @@ namespace ETHTPS.Data.Integrations.InfluxIntegration
         }
 
         public async Task<IEnumerable<T>> QueryAsync<T>(string query)
+            where T : IMeasurement
         {
             await WaitForClientAsync();
             var table = await _queryApi.QueryAsync(query);

@@ -1,7 +1,7 @@
-﻿namespace ETHTPS.HangfireRunner
+﻿namespace ETHTPS.TaskRunner
 {
     public static class Constants
     {
-        public const string CURRENT_APP_NAME = "ETHTPS.HangfireRunner";
+        public const string CURRENT_APP_NAME = "ETHTPS.TaskRunner";
     }
 }

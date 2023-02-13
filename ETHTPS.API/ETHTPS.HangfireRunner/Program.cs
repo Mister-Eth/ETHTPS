@@ -3,7 +3,7 @@ using ETHTPS.API.DependencyInjection;
 using ETHTPS.API.Security.Core.Authentication;
 using ETHTPS.API.Security.Core.Policies;
 using ETHTPS.Configuration.Extensions;
-using static ETHTPS.HangfireRunner.Constants;
+using static ETHTPS.TaskRunner.Constants;
 
 using NLog.Extensions.Hosting;
 using ETHTPS.Configuration;
