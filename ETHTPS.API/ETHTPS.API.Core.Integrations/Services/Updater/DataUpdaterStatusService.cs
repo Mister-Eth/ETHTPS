@@ -7,11 +7,11 @@ using ETHTPS.Data.Integrations.MSSQL.Extensions;
 
 namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Updater
 {
-    public class DataUpdaterService : IDataUpdaterStatusService
+    public class DataUpdaterStatusService : IDataUpdaterStatusService
     {
         private readonly EthtpsContext _context;
 
-        public DataUpdaterService(EthtpsContext context)
+        public DataUpdaterStatusService(EthtpsContext context)
         {
             _context = context;
         }

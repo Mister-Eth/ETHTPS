@@ -1,5 +1,4 @@
-﻿using ETHTPS.Services.BlockchainServices;
-using ETHTPS.Services.Ethereum.Scan.Implementations;
+﻿using ETHTPS.Services.Ethereum.Scan.Implementations;
 using ETHTPS.Services.Ethereum.Starkware;
 using ETHTPS.Services.Ethereum;
 using ETHTPS.Services;
@@ -12,6 +11,7 @@ using ETHTPS.API.BIL.Infrastructure.Services.BlockInfo;
 using ETHTPS.Data.Integrations.InfluxIntegration.HistoricalDataProviders;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using ETHTPS.Data.Integrations.InfluxIntegration;
+using ETHTPS.Services.BlockchainServices.HangfireLogging;
 
 namespace ETHTPS.API.DependencyInjection
 {

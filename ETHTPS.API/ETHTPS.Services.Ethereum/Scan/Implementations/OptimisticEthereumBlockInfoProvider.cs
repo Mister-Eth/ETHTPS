@@ -9,10 +9,12 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using ETHTPS.Services.Attributes;
 
 namespace ETHTPS.Services.Ethereum.Scan.Implementations
 {
     [Provider("Optimism")]
+    [Disabled]
     [Obsolete("Use JSONRPC.OptimismBlockInfoProvider instead", true)]
     public class OptimisticEthereumBlockInfoProvider : ScanBlockInfoProviderBase
     {

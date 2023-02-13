@@ -16,10 +16,12 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using ETHTPS.Services.Attributes;
 
 namespace ETHTPS.Services.Ethereum
 {
     [Provider("Metis")]
+    [RunsEvery(CronConstants.Every13s)]
     public class MetisBlockInfoProvider : IBlockInfoProvider
     {
         private readonly HttpClient _httpClient;

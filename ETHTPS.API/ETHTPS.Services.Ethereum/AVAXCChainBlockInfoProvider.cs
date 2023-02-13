@@ -1,6 +1,7 @@
 ﻿using ETHTPS.API.BIL.Infrastructure.Services.BlockInfo;
 using ETHTPS.Data.Core.Extensions.StringExtensions;
 using ETHTPS.Data.Models.DataEntries;
+using ETHTPS.Services.Attributes;
 using ETHTPS.Services.BlockchainServices;
 
 using Fizzler.Systems.HtmlAgilityPack;
@@ -19,6 +20,8 @@ using System.Threading.Tasks;
 namespace ETHTPS.Services.Ethereum
 {
     [Provider("AVAX C-chain")]
+    [Disabled]
+    [RunsEvery(CronConstants.Every30s)]
     [Obsolete("This implementation is obsolete. Please use SnowtraceBlockInfoProvider.", error: true)]
     public class AVAXCChainBlockInfoProvider : IBlockInfoProvider
     {

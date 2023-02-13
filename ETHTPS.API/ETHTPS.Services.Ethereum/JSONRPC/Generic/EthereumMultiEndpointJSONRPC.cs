@@ -1,6 +1,7 @@
 ﻿
 using ETHTPS.API.BIL.Infrastructure.Services.BlockInfo;
 using ETHTPS.Data.Models.DataEntries;
+using ETHTPS.Services.Attributes;
 using ETHTPS.Services.BlockchainServices;
 
 using Microsoft.Extensions.Configuration;
@@ -17,6 +18,7 @@ using static System.Net.Mime.MediaTypeNames;
 namespace ETHTPS.Services.Ethereum.JSONRPC.Generic
 {
     [Provider("Ethereum")]
+    [RunsEvery(CronConstants.Every5s)]
     public class EthereumMultiEndpointJSONRPC : IBlockInfoProvider
     {
         private readonly IEnumerable<(IBlockInfoProvider Provider, int FailureCount)> _children;

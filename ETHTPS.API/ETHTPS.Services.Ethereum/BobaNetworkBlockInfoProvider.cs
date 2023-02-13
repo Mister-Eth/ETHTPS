@@ -1,6 +1,7 @@
 ﻿using ETHTPS.API.BIL.Infrastructure.Services.BlockInfo;
 using ETHTPS.Data.Core.Extensions.StringExtensions;
 using ETHTPS.Data.Models.DataEntries;
+using ETHTPS.Services.Attributes;
 using ETHTPS.Services.BlockchainServices;
 
 using Fizzler.Systems.HtmlAgilityPack;
@@ -19,6 +20,7 @@ using System.Threading.Tasks;
 namespace ETHTPS.Services.Ethereum
 {
     [Provider("Boba Network")]
+    [RunsEvery(CronConstants.Every13s)]
     public class BobaNetworkBlockInfoProvider : IBlockInfoProvider
     {
         public double BlockTimeSeconds { get; set; }

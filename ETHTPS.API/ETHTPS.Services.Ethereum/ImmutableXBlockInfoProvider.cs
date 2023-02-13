@@ -12,6 +12,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using ETHTPS.Services.Attributes;
 
 namespace ETHTPS.Services.Ethereum
 {
@@ -19,6 +20,7 @@ namespace ETHTPS.Services.Ethereum
     /// Immutable X doesn't have blocks but we can work around this by getting all transactions made in the past minute and assuming they are part of a block.
     /// </summary>
     [Provider("Immutable X")]
+    [RunsEvery(CronConstants.Every13s)]
     public class ImmutableXBlockInfoProvider : IBlockInfoProvider
     {
         private readonly HttpClient _httpClient;

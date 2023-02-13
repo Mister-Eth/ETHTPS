@@ -12,10 +12,12 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using ETHTPS.Services.Attributes;
 
 namespace ETHTPS.Services.Ethereum
 {
     [Provider("Nahmii 2.0")]
+    [RunsEvery(CronConstants.Every13s)]
     public class Nahmii20BlockInfoProvider : IBlockInfoProvider
     {
         private readonly HttpClient _httpClient;

@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 
-namespace ETHTPS.Services.BlockchainServices
+namespace ETHTPS.Services.BlockchainServices.HangfireLogging
 {
     public class HangfireDateHistoricalBlockInfoProviderDataLogger<T> : MSSQLLogger<T>
         where T : IBlockInfoProvider

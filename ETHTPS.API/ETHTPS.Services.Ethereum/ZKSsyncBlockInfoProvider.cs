@@ -6,10 +6,12 @@ using Newtonsoft.Json;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using ETHTPS.Services.Attributes;
 
 namespace ETHTPS.Services.Ethereum
 {
     [Provider("ZKSync")]
+    [RunsEvery(CronConstants.Every5s)]
     public class ZKSsyncBlockInfoProvider : IBlockInfoProvider
     {
         private readonly HttpClient _httpClient;

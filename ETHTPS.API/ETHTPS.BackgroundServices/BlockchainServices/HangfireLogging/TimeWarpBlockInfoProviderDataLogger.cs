@@ -11,7 +11,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ETHTPS.Services.BlockchainServices
+namespace ETHTPS.Services.BlockchainServices.HangfireLogging
 {
     public class TimeWarpBlockInfoProviderDataLogger<T> : MSSQLLogger<T>
         where T : IBlockInfoProvider

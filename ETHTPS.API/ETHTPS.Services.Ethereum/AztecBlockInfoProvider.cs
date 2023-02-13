@@ -1,5 +1,6 @@
 ﻿using ETHTPS.API.BIL.Infrastructure.Services.BlockInfo;
 using ETHTPS.Data.Models.DataEntries;
+using ETHTPS.Services.Attributes;
 using ETHTPS.Services.BlockchainServices;
 
 using Newtonsoft.Json;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 namespace ETHTPS.Services.Ethereum
 {
     [Provider("Aztec")]
+    [RunsEvery(CronConstants.Every13s)]
     public class AztecBlockInfoProvider : IBlockInfoProvider
     {
         private readonly HttpClient _httpClient;

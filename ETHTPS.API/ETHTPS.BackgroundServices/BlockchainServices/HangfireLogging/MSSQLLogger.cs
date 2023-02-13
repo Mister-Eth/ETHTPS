@@ -4,6 +4,7 @@ using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater.TimeBuckets;
 using ETHTPS.Data.Integrations.MSSQL;
 using ETHTPS.Data.Models.DataEntries.BlockchainServices.Models;
 using ETHTPS.Data.Models.DataUpdater;
+
 using Hangfire;
 
 using Microsoft.Extensions.Logging;
@@ -12,12 +13,12 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ETHTPS.Services.BlockchainServices
+namespace ETHTPS.Services.BlockchainServices.HangfireLogging
 {
     public class MSSQLLogger<T> : BlockInfoProviderDataLoggerBase<T>
          where T : IBlockInfoProvider
     {
-        protected override string ServiceName { get=> $"MSSQLLogger<{typeof(T).Name}>"; }
+        protected override string ServiceName { get => $"MSSQLLogger<{typeof(T).Name}>"; }
         protected readonly ITimeBucketDataUpdaterService<T> _timeBucketService;
 
         public MSSQLLogger(T instance, ILogger<HangfireBackgroundService> logger, EthtpsContext context, IDataUpdaterStatusService statusService, ITimeBucketDataUpdaterService<T> timeBucketService) : base(instance, logger, context, statusService, UpdaterType.TPSGPS)
@@ -30,7 +31,7 @@ namespace ETHTPS.Services.BlockchainServices
             try
             {
                 TPSGPSInfo delta = await CalculateTPSGPSAsync();
-                
+                _timeBucketService.UpdateAllEntries(delta);
                 await _context.SaveChangesAsync();
                 _logger.LogInformation($"{_provider}: {delta.TPS}TPS {delta.GPS}GPS");
             }
@@ -40,6 +41,6 @@ namespace ETHTPS.Services.BlockchainServices
             }
         }
 
-        
+
     }
 }

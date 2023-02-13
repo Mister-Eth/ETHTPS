@@ -1,5 +1,4 @@
-﻿using ETHTPS.Services.BlockchainServices;
-using ETHTPS.Services.BlockchainServices.BlockTime;
+﻿using ETHTPS.Services.Attributes;
 
 using Microsoft.Extensions.Configuration;
 

@@ -6,13 +6,13 @@ using Microsoft.Extensions.Logging;
 
 using System.Threading.Tasks;
 
-namespace ETHTPS.Services
+namespace ETHTPS.Services.BlockchainServices.HangfireLogging
 {
     public abstract class HangfireBackgroundService
     {
         protected readonly ILogger<HangfireBackgroundService> _logger;
         protected readonly EthtpsContext _context;
-        protected abstract string? ServiceName { get; }
+        protected abstract string ServiceName { get; }
 
         protected HangfireBackgroundService(ILogger<HangfireBackgroundService> logger, EthtpsContext context)
         {

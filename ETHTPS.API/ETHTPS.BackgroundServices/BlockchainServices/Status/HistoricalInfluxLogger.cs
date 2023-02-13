@@ -15,6 +15,7 @@ using ETHTPS.Services.BlockchainServices.Extensions;
 using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater.TimeBuckets;
 using ETHTPS.API.BIL.Infrastructure.Services.BlockInfo;
 using InfluxDB.Client.Api.Domain;
+using ETHTPS.Services.BlockchainServices.HangfireLogging;
 
 namespace ETHTPS.Services.BlockchainServices.Status
 {
@@ -24,7 +25,7 @@ namespace ETHTPS.Services.BlockchainServices.Status
         private readonly IInfluxWrapper _influxWrapper;
         private readonly ITimeBucketDataUpdaterService<T>? _timeBucketService;
 
-        private int DELAY = 15*1000;
+        private int DELAY = 15 * 1000;
         public HistoricalInfluxLogger(T instance, ILogger<HangfireBackgroundService> logger, EthtpsContext context, IInfluxWrapper influxWrapper, IDataUpdaterStatusService statusService, ITimeBucketDataUpdaterService<T> timeBucketService = null) : base(instance, logger, context, statusService, UpdaterType.Historical)
         {
             _influxWrapper = influxWrapper;
@@ -81,7 +82,7 @@ namespace ETHTPS.Services.BlockchainServices.Status
                     _statusService.MarkAsRunning();
                     var tasks = Enumerable.Range(1, parallelQueriesCount).Select(i => Task.Run(async () => await _instance.GetBlockInfoAsync(oldestEntry.OldestBlock - i * step)));
                     var results = await Task.WhenAll(tasks);
-                    if (results.Any(x=> x== null))
+                    if (results.Any(x => x == null))
                     {
                         _logger.LogInformation($"{ServiceName} - Null block(s) count: {string.Join(", ", results.Where(x => x == null).Count())}");
                         await Task.Delay(DELAY);
@@ -89,7 +90,7 @@ namespace ETHTPS.Services.BlockchainServices.Status
                     }
                     results = results.OrderByDescending(x => x.Date).ToArray();
                     var list = results.ToList();
-                    list.ForEach(block=> block.Provider = _provider);
+                    list.ForEach(block => block.Provider = _provider);
                     await _influxWrapper.LogBlocksAsync(list.ToArray());
                     var insertResult = await Task.WhenAll(list.Select(block => Task.Run(async () =>
                     {
@@ -108,7 +109,7 @@ namespace ETHTPS.Services.BlockchainServices.Status
                             }
                         }
                         return true;
-                    })));                    
+                    })));
                     stopwatch.Stop();
                     if (!insertResult.All(x => x))
                         throw new Exception($"Error logging data");
@@ -119,7 +120,7 @@ namespace ETHTPS.Services.BlockchainServices.Status
                     oldestEntry.OldestBlockDate = list.Last().Date;
                     await _context.SaveChangesAsync(); //no gaps
 
-                    _logger.LogInformation($"{ServiceName} - Logged blocks [#{list.First().BlockNumber}, ...,#{list.Last().BlockNumber}]\nDelta: -{dt.Hours}h {dt.Minutes}m {dt.Seconds}s\nETA: {eta.Days}d {eta.Hours}h {eta.Minutes}m\nCompleted: {Math.Round((double)(16607138-oldestEntry.OldestBlock) * 100 / 16607138, 2)}%\nAverage speed: {Math.Round((double)parallelQueriesCount/stopwatch.Elapsed.TotalSeconds,2)} req/s");
+                    _logger.LogInformation($"{ServiceName} - Logged blocks [#{list.First().BlockNumber}, ...,#{list.Last().BlockNumber}]\nDelta: -{dt.Hours}h {dt.Minutes}m {dt.Seconds}s\nETA: {eta.Days}d {eta.Hours}h {eta.Minutes}m\nCompleted: {Math.Round((double)(16607138 - oldestEntry.OldestBlock) * 100 / 16607138, 2)}%\nAverage speed: {Math.Round((double)parallelQueriesCount / stopwatch.Elapsed.TotalSeconds, 2)} req/s");
                 }
                 catch (Exception e)
                 {

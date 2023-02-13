@@ -8,10 +8,12 @@ using System;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using ETHTPS.Services.Attributes;
 
 namespace ETHTPS.Services.Ethereum
 {
     [Provider("Loopring")]
+    [RunsEvery(CronConstants.Every13s)]
     public class LoopringBlockInfoProvider : IBlockInfoProvider
     {
         private readonly HttpClient _httpClient;

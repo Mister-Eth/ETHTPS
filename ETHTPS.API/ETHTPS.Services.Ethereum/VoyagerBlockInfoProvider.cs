@@ -8,10 +8,12 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using ETHTPS.Services.Attributes;
 
 namespace ETHTPS.Services.Ethereum
 {
     [Provider("Starknet")]
+    [RunsEvery(CronConstants.Every13s)]
     public class VoyagerBlockInfoProvider : IBlockInfoProvider
     {
         private readonly HttpClient _httpClient;

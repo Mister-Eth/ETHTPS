@@ -6,10 +6,12 @@ using Newtonsoft.Json;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using ETHTPS.Services.Attributes;
 
 namespace ETHTPS.Services.Ethereum
 {
     [Provider("zkTube")]
+    [RunsEvery(CronConstants.Every30s)]
     public class ZKTubeBlockInfoProvider : IBlockInfoProvider
     {
         private readonly HttpClient _httpClient;

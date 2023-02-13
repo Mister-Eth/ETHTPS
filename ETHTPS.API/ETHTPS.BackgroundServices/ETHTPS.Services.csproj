@@ -1,42 +1,46 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <Configurations>Debug;Release;Staging</Configurations>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<Configurations>Debug;Release;Staging</Configurations>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="CacheUpdaters\**" />
-    <EmbeddedResource Remove="CacheUpdaters\**" />
-    <None Remove="CacheUpdaters\**" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Remove="CacheUpdaters\**" />
+		<EmbeddedResource Remove="CacheUpdaters\**" />
+		<None Remove="CacheUpdaters\**" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Coravel" Version="4.2.0" />
-    <PackageReference Include="Fizzler.Systems.HtmlAgilityPack" Version="1.2.1" />
-    <PackageReference Include="Hangfire" Version="1.8.0-beta3" />
-    <PackageReference Include="Hangfire.AspNetCore" Version="1.8.0-beta3" />
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
-    <PackageReference Include="InfluxDB.Client.Core" Version="4.10.0" />
-    <PackageReference Include="InfluxDB.Client.Flux" Version="4.10.0" />
-    <PackageReference Include="InfluxDB.Client.Linq" Version="4.10.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.2" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-    <PackageReference Include="NLog.Database" Version="5.1.1" />
-    <PackageReference Include="NLog.Targets.InfluxDB" Version="1.0.9" />
-    <PackageReference Include="ServiceStack.Text" Version="6.5.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Coravel" Version="4.2.0" />
+		<PackageReference Include="Fizzler.Systems.HtmlAgilityPack" Version="1.2.1" />
+		<PackageReference Include="Hangfire" Version="1.8.0-beta3" />
+		<PackageReference Include="Hangfire.AspNetCore" Version="1.8.0-beta3" />
+		<PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
+		<PackageReference Include="InfluxDB.Client.Core" Version="4.10.0" />
+		<PackageReference Include="InfluxDB.Client.Flux" Version="4.10.0" />
+		<PackageReference Include="InfluxDB.Client.Linq" Version="4.10.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.2" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+		<PackageReference Include="NLog.Database" Version="5.1.1" />
+		<PackageReference Include="NLog.Targets.InfluxDB" Version="1.0.9" />
+		<PackageReference Include="ServiceStack.Text" Version="6.5.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ETHTPS.BIL\ETHTPS.API.BIL.csproj" />
-    <ProjectReference Include="..\ETHTPS.Configuration\ETHTPS.Configuration.csproj" />
-    <ProjectReference Include="..\ETHTPS.Data.Database\ETHTPS.Data.Integrations.MSSQL.csproj" />
-    <ProjectReference Include="..\ETHTPS.Data.InfluxIntegration\ETHTPS.Data.Integrations.InfluxIntegration.csproj" />
-    <ProjectReference Include="..\ETHTPS.Data\ETHTPS.Data.Core.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\ETHTPS.BIL\ETHTPS.API.BIL.csproj" />
+		<ProjectReference Include="..\ETHTPS.Configuration\ETHTPS.Configuration.csproj" />
+		<ProjectReference Include="..\ETHTPS.Data.Database\ETHTPS.Data.Integrations.MSSQL.csproj" />
+		<ProjectReference Include="..\ETHTPS.Data.InfluxIntegration\ETHTPS.Data.Integrations.InfluxIntegration.csproj" />
+		<ProjectReference Include="..\ETHTPS.Data\ETHTPS.Data.Core.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="BlockchainServices\InfluxLoggers\" />
+	</ItemGroup>
 
 </Project>

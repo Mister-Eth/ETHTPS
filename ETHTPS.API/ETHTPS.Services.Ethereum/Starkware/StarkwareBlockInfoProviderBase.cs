@@ -9,9 +9,11 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using ETHTPS.Services.Attributes;
 
 namespace ETHTPS.Services.Ethereum.Starkware
 {
+    [RunsEvery(CronConstants.Every30s)]
     public abstract class StarkwareBlockInfoProviderBase : IBlockInfoProvider
     {
         private readonly string _productName;

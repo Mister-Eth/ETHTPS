@@ -11,10 +11,12 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using ETHTPS.Services.Attributes;
 
 namespace ETHTPS.Services.Ethereum
 {
     [Provider("Ronin")]
+    [RunsEvery(CronConstants.Every5s)]
     public class RoninBlockInfoProvider : IBlockInfoProvider
     {
         private readonly HttpClient _httpClient;

@@ -3,7 +3,6 @@ using ETHTPS.Data.Core.Extensions.StringExtensions;
 using ETHTPS.Services.BlockchainServices;
 using ETHTPS.Data.Models.DataEntries;
 using Fizzler.Systems.HtmlAgilityPack;
-using ETHTPS.Data.Models.DataEntries;
 using HtmlAgilityPack;
 
 using Microsoft.Extensions.Configuration;
@@ -14,10 +13,12 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using ETHTPS.Services.Attributes;
 
 namespace ETHTPS.Services.Ethereum
 {
     [Provider("XDAI")]
+    [RunsEvery(CronConstants.Every5s)]
     public class XDAIBlockInfoProvider : IBlockInfoProvider
     {
         private readonly HttpClient _httpClient;

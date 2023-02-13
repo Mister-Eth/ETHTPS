@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using ETHTPS.API.BIL.Infrastructure.Services.BlockInfo;
 using ETHTPS.Data.Models.DataEntries.BlockchainServices.Models;
 
-namespace ETHTPS.Services.BlockchainServices
+namespace ETHTPS.Services.BlockchainServices.HangfireLogging
 {
     public class InfluxLogger<T> : BlockInfoProviderDataLoggerBase<T>
          where T : IBlockInfoProvider

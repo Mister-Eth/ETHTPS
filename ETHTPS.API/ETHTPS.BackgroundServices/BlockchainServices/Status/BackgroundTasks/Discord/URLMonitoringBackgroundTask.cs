@@ -1,5 +1,5 @@
 ﻿using ETHTPS.Data.Integrations.MSSQL;
-
+using ETHTPS.Services.BlockchainServices.HangfireLogging;
 using Hangfire;
 
 using Microsoft.Extensions.Configuration;
