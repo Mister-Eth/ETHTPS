@@ -2,7 +2,6 @@ import { ResponsiveLine } from "@nivo/line"
 import { commonNivoProperties } from "./ChartTypes"
 import { NivoStreamgraph } from "../instant data animations/streamgraph/NivoStreamgraph"
 export function CustomLineChart({ data /* see data tab */ }) {
-  console.log(data)
   return (
     <>
       <NivoStreamgraph />

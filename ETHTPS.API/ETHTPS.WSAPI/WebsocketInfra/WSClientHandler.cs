@@ -1,4 +1,5 @@
-﻿using ETHTPS.API.Core.Integrations.MSSQL.Services;
+﻿using ETHTPS.API.BIL.Infrastructure.Services;
+using ETHTPS.API.Core.Integrations.MSSQL.Services;
 using ETHTPS.Data.Integrations.MSSQL;
 using ETHTPS.WSAPI.Infrastructure;
 
@@ -11,38 +12,41 @@ namespace ETHTPS.WSAPI.WebsocketInfra
     {
         private readonly ILogger<WSClientHandler>? _logger;
         private readonly GeneralService? _generalService;
+        private readonly IWebsiteStatisticsService? _statisticsService;
 
-        public WSClientHandler(ILogger<WSClientHandler>? logger, GeneralService? generalService)
+        public WSClientHandler(ILogger<WSClientHandler>? logger, GeneralService? generalService, IWebsiteStatisticsService? statisticsService)
         {
             _logger = logger;
             _generalService = generalService;
+            _statisticsService = statisticsService;
         }
 
         protected override void OnOpen()
         {
             base.OnOpen();
-            if (DateTime.Now - LastLogTime > TimeSpan.FromSeconds(1))
-            {
-                _logger?.LogInformation($"New ws connection: " + this.ID);
-                _logger?.LogInformation($"Total: " + this.Sessions.ActiveIDs.Count());
-                LastLogTime = DateTime.Now;
-            }
+            _statisticsService?.IncrementNumberOfCurrentVisitors();
+            _logger?.LogInformation($"New ws connection: " + this.ID);
+            _logger?.LogInformation($"Total: " + this.Sessions.ActiveIDs.Count());
         }
         protected override void OnMessage(MessageEventArgs e)
         {
             base.OnMessage(e);
             _logger?.LogTrace($"Message from ws connection {ID}: {e.Data.ToString()}");
-            //Send(WebsocketClientMessage.FromString("Echo", e.Data));
         }
-        private static DateTime LastLogTime = DateTime.Now;
         protected override void OnClose(CloseEventArgs e)
         {
             base.OnClose(e);
-            if (DateTime.Now - LastLogTime > TimeSpan.FromSeconds(1))
+            _statisticsService?.DecrementNumberOfCurrentVisitors();
+            _logger?.LogInformation($"Closed ws connection: " + this.ID);
+            _logger?.LogInformation($"Remaining: " + this.Sessions.ActiveIDs.Count());
+        }
+
+        protected override void OnError(WebSocketSharp.ErrorEventArgs e)
+        {
+            base.OnError(e);
+            if (this.State != WebSocketState.Open)
             {
-                _logger?.LogInformation($"Closed ws connection: " + this.ID);
-                _logger?.LogInformation($"Remaining: " + this.Sessions.ActiveIDs.Count());
-                LastLogTime = DateTime.Now;
+                _statisticsService.DecrementNumberOfCurrentVisitors();
             }
         }
 

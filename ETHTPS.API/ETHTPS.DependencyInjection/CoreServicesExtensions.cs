@@ -35,6 +35,6 @@ namespace ETHTPS.API.DependencyInjection
             services.AddScoped<IHumanityCheckService, RecaptchaVerificationService>()
             .AddDbContext<ConfigurationContext>(options => options.UseSqlServer(GetConfigurationServiceConnectionString()), ServiceLifetime.Singleton)
             .AddSingleton<IDBConfigurationProvider, DBConfigurationProvider>()
-            ;
+            .AddScoped<IWebsiteStatisticsService, WebsiteStatisticsService>();
     }
 }

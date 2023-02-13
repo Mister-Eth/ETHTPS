@@ -1,12 +1,13 @@
 using Coravel;
 
+using ETHTPS.API.BIL.Infrastructure.Services;
 using ETHTPS.API.Core.Integrations.MSSQL.Services;
 using ETHTPS.API.Core.Middlewares;
 using ETHTPS.API.DependencyInjection;
 using ETHTPS.API.Security.Core.Authentication;
 using ETHTPS.API.Security.Core.Policies;
 using ETHTPS.Configuration.Extensions;
-using ETHTPS.WSAPI.Infrastructure;
+using ETHTPS.WSAPI.Infrastructure.BackgroundTasks;
 using ETHTPS.WSAPI.WebsocketInfra;
 
 using WebSocketSharp.Server;
@@ -26,6 +27,7 @@ builder.Services.AddCustomCORSPolicies()
                 .AddScheduler()
                 .AddScoped<PingAllClientsTask>()
                 .AddScoped<SendLiveDataTask>()
+                .AddScoped<UpdateVisitorCountTask>()
                 .RegisterMicroservice(APP_NAME);
 
 WebSocketServer websocketServer = new("ws://localhost:2000")
@@ -41,7 +43,10 @@ websocketServer.AddWebSocketService("/LiveData",
     () =>
     {
         var scope = app.Services.CreateScope();
-        return new WSClientHandler(scope?.ServiceProvider?.GetRequiredService<ILogger<WSClientHandler>>(), scope?.ServiceProvider?.GetRequiredService<GeneralService>());
+        return new WSClientHandler(scope?.ServiceProvider?.GetRequiredService<ILogger<WSClientHandler>>(),
+                                       scope?.ServiceProvider?.GetRequiredService<GeneralService>(),
+                                       scope?.ServiceProvider?.GetRequiredService<IWebsiteStatisticsService>());
+
     });
 websocketServer.Start();
 
@@ -55,6 +60,15 @@ provider.UseScheduler(scheduler =>
 {
     scheduler.Schedule<PingAllClientsTask>().EverySeconds(8);
     scheduler.Schedule<SendLiveDataTask>().EverySeconds(4);
+    using (var scope = provider.CreateScope())
+    {
+        var visitorService = scope.ServiceProvider.GetRequiredService<IWebsiteStatisticsService>();
+        if (visitorService.Enabled)
+        {
+            scheduler.Schedule<SendLiveDataTask>().EverySeconds(30);
+            visitorService.SetNumberOfCurrentVisitors(0);
+        }
+    }
 });
 
 app.UseCors("_myAllowSpecificOrigins");

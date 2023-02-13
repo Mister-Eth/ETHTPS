@@ -6,7 +6,7 @@ using System.Text;
 
 using WebSocketSharp.Server;
 
-namespace ETHTPS.WSAPI.Infrastructure
+namespace ETHTPS.WSAPI.Infrastructure.BackgroundTasks
 {
     public class PingAllClientsTask : WebsocketInvocable
     {
@@ -18,10 +18,10 @@ namespace ETHTPS.WSAPI.Infrastructure
 
         public override Task Invoke()
         {
-            _webSocketServer.WebSocketServices.BroadcastAsync((new WebsocketClientMessage()
+            _webSocketServer.WebSocketServices.BroadcastAsync(new WebsocketClientMessage()
             {
                 Type = "keep_alive"
-            }).ToJSON(), () =>
+            }.ToJSON(), () =>
             {
 
             });

@@ -15,12 +15,20 @@ const initialState: ILiveDataModeModel = {
   oneMinuteTPSData: storage.retrieveItem("oneMinuteTPSData"),
   oneMinuteGPSData: storage.retrieveItem("oneMinuteGPSData"),
   oneMinuteGTPSData: storage.retrieveItem("oneMinuteGTPSData"),
+  currentVisitors: 0,
 }
 
 const liveDataSlice = createSlice({
   name: "live data",
   initialState,
   reducers: {
+    setCurrentVisitors(
+      state: ILiveDataModeModel,
+      action: PayloadAction<number>,
+    ) {
+      state.currentVisitors = action.payload
+    },
+
     setLiveDataSmoothing(
       state: ILiveDataModeModel,
       action: PayloadAction<TimeInterval | undefined>,
@@ -76,6 +84,7 @@ const liveDataSlice = createSlice({
 })
 
 export const {
+  setCurrentVisitors,
   setLiveDataSmoothing,
   setLiveDataType,
   setLiveData,

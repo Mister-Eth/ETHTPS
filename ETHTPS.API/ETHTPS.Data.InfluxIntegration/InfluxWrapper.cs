@@ -191,11 +191,11 @@ namespace ETHTPS.Data.Integrations.InfluxIntegration
             }
         }
 
-        public async Task<IEnumerable<T>> QueryAsync<T>(string query)
+        public async Task<IEnumerable<T>> QueryAsync<T>(string query, IDomainObjectMapper mapper)
             where T : IMeasurement
         {
             await WaitForClientAsync();
-            var table = await _queryApi.QueryAsync(query);
+            var table = await _influxClient.GetQueryApi().QueryAsync(query, typeof(T), org: _configuration.Org);
             return await _queryApi.QueryAsync<T>(query);
         }
     }

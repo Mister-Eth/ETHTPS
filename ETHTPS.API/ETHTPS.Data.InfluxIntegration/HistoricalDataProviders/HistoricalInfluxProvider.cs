@@ -40,7 +40,7 @@ namespace ETHTPS.Data.Integrations.InfluxIntegration.HistoricalDataProviders
   |> group(columns: [""provider""])
   |> yield(name: ""Time buckets"")
  ";
-            var result = await _influxWrapper.QueryAsync<Block>(query);
+            var result = await _influxWrapper.QueryAsync<Block>(query, new DomainEntityConverter());
             return result;
         }
 

@@ -54,5 +54,13 @@ namespace ETHTPS.API.BIL.Tests.ServiceTests
             });*/
             Assert.Pass();
         }
+
+        [Test]
+        public async Task ValuesOkAsync()
+        {
+            var x = await _asyncHistoricalBlockInfoProvider.GetLatestBlocksAsync(new Data.Models.Query.ProviderQueryModel(), Data.Core.TimeInterval.OneWeek);
+            Assert.That(x.Any(x => x.TransactionCount > 0));
+            Assert.Pass();
+        }
     }
 }

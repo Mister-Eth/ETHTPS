@@ -1,29 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ETHTPS.Data.Integrations.MSSQL.Extensions
+﻿namespace ETHTPS.Data.Integrations.MSSQL.Extensions
 {
     public static class ExperimentExtensions
     {
-        private static Random Random = new ();
+        private static Random Random = new();
         public static IEnumerable<Experiment> GetExperimentsForDeviceType(this EthtpsContext context, string deviceType)
         {
-            lock(context.LockObj)
+            lock (context.LockObj)
             {
-                var targetType = context.ExperimentTargetTypes.FirstOrDefault(x => x.TargetTypeName == "Device" && x.TargetTypeValue == deviceType);
-                if (targetType != null)
+                var targetTypes = context.ExperimentTargetTypes.Where(x => x.TargetTypeName == "Device" && (x.TargetTypeValue == deviceType || x.TargetTypeValue == "All"));
+                if (targetTypes.Any())
                 {
-                    var target = context.ExperimentTargets.FirstOrDefault(x => x.Type == targetType.Id);
-                    if (target != null)
+                    foreach (var targetType in targetTypes)
                     {
-                        return context.Experiments.Where(x => x.Target == target.Id).ToArray();
+                        var target = context.ExperimentTargets.FirstOrDefault(x => x.Type == targetType.Id);
+                        if (target != null)
+                        {
+                            foreach (var experiment in context.Experiments.Where(x => x.Target == target.Id).ToArray())
+                            {
+                                yield return experiment;
+                            }
+                        }
                     }
                 }
             }
-            return Enumerable.Empty<Experiment>();
         }
 
         public static bool UserIsEligibleForEnrollmentIn(this EthtpsContext context, Experiment experiment, int apiKeyId)
@@ -43,7 +42,7 @@ namespace ETHTPS.Data.Integrations.MSSQL.Extensions
             return !context.UserIsEnrolledIn(experiment, apiKeyId);
         }
 
-        public static bool UserIsEnrolledIn(this EthtpsContext context, Experiment experiment, int apiKeyId) 
+        public static bool UserIsEnrolledIn(this EthtpsContext context, Experiment experiment, int apiKeyId)
         {
             lock (context.LockObj)
             {
@@ -56,9 +55,9 @@ namespace ETHTPS.Data.Integrations.MSSQL.Extensions
         {
             lock (context.LockObj)
             {
-                if (context.ApikeyExperimentBindings.Any(x=>x.ApikeyId == apiKeyId))
+                if (context.ApikeyExperimentBindings.Any(x => x.ApikeyId == apiKeyId))
                 {
-                    return context.ApikeyExperimentBindings.Where(x => x.ApikeyId == apiKeyId).Select(x=>x.Experiment).ToList();
+                    return context.ApikeyExperimentBindings.Where(x => x.ApikeyId == apiKeyId).Select(x => x.Experiment).ToList();
                 }
             }
             return Enumerable.Empty<Experiment>();
@@ -86,11 +85,11 @@ namespace ETHTPS.Data.Integrations.MSSQL.Extensions
         public static bool IsRunning(this Experiment experiment)
         {
             var parameters = experiment.RunParametersNavigation;
-            if (!parameters.Enabled) 
+            if (!parameters.Enabled)
                 return false;
             if (parameters.EndDate.HasValue)
             {
-                if (DateTime.Now > parameters.EndDate.Value) 
+                if (DateTime.Now > parameters.EndDate.Value)
                     return false;
             }
             return true;

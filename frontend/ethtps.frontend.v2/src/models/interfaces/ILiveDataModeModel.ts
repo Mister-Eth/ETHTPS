@@ -13,4 +13,5 @@ export interface ILiveDataModeModel {
   oneMinuteTPSData?: DataResponseModelDictionary
   oneMinuteGPSData?: DataResponseModelDictionary
   oneMinuteGTPSData?: DataResponseModelDictionary
+  currentVisitors: number
 }

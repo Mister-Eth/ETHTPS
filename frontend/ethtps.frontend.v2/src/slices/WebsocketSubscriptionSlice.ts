@@ -40,6 +40,7 @@ export enum WebsocketEvent {
   KeepAlive = "keep_alive",
   ReceivedPingRequest = "ping_request",
   LiveDataReceived = "post_live_data",
+  VisitorCountChanged = "new_visitor_count",
 }
 
 export const websocketActions = websocketSlice.actions

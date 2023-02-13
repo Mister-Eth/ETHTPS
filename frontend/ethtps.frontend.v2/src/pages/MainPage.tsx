@@ -15,7 +15,7 @@ import {
   useGetLiveDataModeFromAppStore,
 } from "../hooks/LiveDataHooks"
 import { createSearchParams, useSearchParams } from "react-router-dom"
-import { toShortString } from "../Types"
+import { toShortString, ConditionalRender } from "../Types"
 import { useGetProvidersFromAppStore } from "../hooks/ProviderHooks"
 import { isMobile } from "react-device-detect"
 import { ProviderModel } from "ethtps.api.client"
@@ -29,6 +29,8 @@ import { P5Streamgraph } from "../components/instant data animations/p5streamgra
 import { DataResponseModelDictionary } from "../Types.dictionaries"
 import { NivoStreamgraph } from "../components/instant data animations/streamgraph/NivoStreamgraph"
 import { CurrentViewersIcon } from "../components/buttons/CurrentViewersIcon"
+import { useGetExperimentsFromAppStore } from "../components/experiments/ExperimentHooks"
+import { TestTube } from "../components/experiments/TestTube"
 
 export default function MainPage(): JSX.Element {
   const providers = useGetProvidersFromAppStore()
@@ -53,7 +55,7 @@ export default function MainPage(): JSX.Element {
     setModalProvider(provider)*/
     window.location.href = "/Providers/" + provider?.name
   }
-
+  const experimentsAppStoreValue = useGetExperimentsFromAppStore()
   let [searchParams, setSearchParams] = useSearchParams()
   useEffect(() => {
     const params = new URLSearchParams([
@@ -66,7 +68,6 @@ export default function MainPage(): JSX.Element {
     <>
       <Paper elevation={0}>
         <DiscordBanner />
-
         <>
           <br />
           <Container maxWidth={"md"}>
@@ -75,7 +76,10 @@ export default function MainPage(): JSX.Element {
                 toggled={useSetSidechainsIncluded}
                 defaultIncluded={sidechainsIncluded}
               />
-              <CurrentViewersIcon />
+              {ConditionalRender(
+                <CurrentViewersIcon />,
+                experimentsAppStoreValue.includes(5),
+              )}
               <DataModeButtonGroup modeChanged={useSetDataModeMutation} />
             </Paper>
             <Paper elevation={1}>
