@@ -2,6 +2,7 @@ import { QueryClient } from "react-query"
 import { StorageThemeProvider } from "./themes/StorageThemeProvider"
 import { ETHTPSApi } from "./api/ETHTPSApi"
 import { LocalStorageService } from "./LocalStorageService"
+import { WebsocketsService } from "./WebsocketsService"
 
 var _api_key: string | undefined | null = ""
 
@@ -41,6 +42,7 @@ export function tryLoadAPIKeyFromLocalStorage() {
   }
 }
 
-export const queryClient = new QueryClient()
+export const websocketServiceURL = "ws://localhost:2000/LiveData"
 
+export const queryClient = new QueryClient()
 export const themeProvider = new StorageThemeProvider()

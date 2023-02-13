@@ -9,6 +9,8 @@ import { colorReducer } from "./slices/ColorSlice"
 import { experimentReducer } from "./slices/ExperimentSlice"
 import { applicationStateReducer } from "./slices/ApplicationStateSlice"
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux"
+import websocketMiddleware from "./slices/WebsocketSubscriptionMiddleware"
+import { websocketReducer } from "./slices/WebsocketSubscriptionSlice"
 
 const preloadedState = new ApplicationState()
 
@@ -22,12 +24,13 @@ export const store = configureStore({
     colors: colorReducer,
     experiments: experimentReducer,
     applicationState: applicationStateReducer,
+    websockets: websocketReducer,
   },
   ...preloadedState,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }),
+    }).concat(websocketMiddleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

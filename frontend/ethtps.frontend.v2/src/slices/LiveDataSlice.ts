@@ -41,6 +41,7 @@ const liveDataSlice = createSlice({
       state: ILiveDataModeModel,
       action: PayloadAction<InstantDataResponseModel | undefined>,
     ) {
+      console.log(action.payload)
       state.data = action.payload
     },
 
@@ -82,4 +83,5 @@ export const {
   setIncludeSidechains,
   setLastMinuteData,
 } = liveDataSlice.actions
+
 export const liveDataReducer = liveDataSlice.reducer

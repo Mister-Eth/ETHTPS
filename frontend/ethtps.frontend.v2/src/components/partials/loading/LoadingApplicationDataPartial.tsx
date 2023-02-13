@@ -19,6 +19,7 @@ import { useUpdateLiveData } from "../../../hooks/LiveDataHooks"
 import { useState } from "react"
 import { setApplicationDataLoaded } from "../../../slices/ApplicationStateSlice"
 import { setLastMinuteData } from "../../../slices/LiveDataSlice"
+import { websocketActions } from "../../../slices/WebsocketSubscriptionSlice"
 
 export function LoadingApplicationDataPartial({
   children,
@@ -112,9 +113,10 @@ export function LoadingApplicationDataPartial({
     let x = loaded.every((y) => y !== undefined)
     if (x) {
       store.dispatch(setApplicationDataLoaded(true))
+      store.dispatch(websocketActions.connecting())
     }
   }, loaded)
-  useUpdateLiveData(almostLive)
+  //useUpdateLiveData(almostLive)
   return <>{children}</>
   /*
   if (loadees.every((x) => x)) return <>{children}</>

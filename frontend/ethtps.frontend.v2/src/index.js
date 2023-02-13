@@ -12,9 +12,9 @@ import { SignatureFooter } from "./components/partials/footers/SignatureFooter"
 import { queryClient, themeProvider } from "./services/DependenciesIOC"
 import { QueryClientProvider } from "react-query"
 import { Provider as ReduxQueryProvider } from "redux-query-react"
-
 const container = document.getElementById("root")
 const root = createRoot(container) //
+
 root.render(
   <BrowserRouter>
     <Provider store={store}>

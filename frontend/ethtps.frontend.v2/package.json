@@ -51,6 +51,7 @@
     "react-scripts": "5.0.1",
     "react-tap-event-plugin": "^3.0.3",
     "react-transition-group": "^4.4.5",
+    "reconnecting-websocket": "^4.4.0",
     "redux-query": "^3.5.0-alpha.3",
     "redux-query-interface-superagent": "^3.5.0-alpha.3",
     "redux-query-react": "^3.5.0-alpha.3",
