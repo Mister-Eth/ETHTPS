@@ -72,7 +72,6 @@ export function useLiveData() {
   const mode = useGetLiveDataModeFromAppStore()
   const liveData = useGetLiveDataFromAppStore()
   const [data, setData] = useState(getModeData(liveData, mode))
-
   const [processedData, setProcessedData] = useState<LiveData>()
   useEffect(() => {
     setData(getModeData(liveData, mode))

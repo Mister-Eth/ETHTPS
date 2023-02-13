@@ -28,6 +28,7 @@ import {
 import { P5Streamgraph } from "../components/instant data animations/p5streamgraph/P5Streamgraph"
 import { DataResponseModelDictionary } from "../Types.dictionaries"
 import { NivoStreamgraph } from "../components/instant data animations/streamgraph/NivoStreamgraph"
+import { CurrentViewersIcon } from "../components/buttons/CurrentViewersIcon"
 
 export default function MainPage(): JSX.Element {
   const providers = useGetProvidersFromAppStore()
@@ -74,6 +75,7 @@ export default function MainPage(): JSX.Element {
                 toggled={useSetSidechainsIncluded}
                 defaultIncluded={sidechainsIncluded}
               />
+              <CurrentViewersIcon />
               <DataModeButtonGroup modeChanged={useSetDataModeMutation} />
             </Paper>
             <Paper elevation={1}>

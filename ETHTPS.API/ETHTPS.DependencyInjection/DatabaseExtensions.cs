@@ -3,6 +3,7 @@ using ETHTPS.Data.Integrations.MSSQL;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace ETHTPS.API.DependencyInjection
 {
@@ -19,7 +20,7 @@ namespace ETHTPS.API.DependencyInjection
         }
         public static IServiceCollection AddDatabaseContext(this IServiceCollection services, string appName)
         {
-            services.AddDbContext<EthtpsContext>(options => options.UseSqlServer(services.GetDefaultConnectionString(appName)), ServiceLifetime.Transient);
+            services.AddDbContext<EthtpsContext>(options => options.UseSqlServer(services.GetDefaultConnectionString(appName)), ServiceLifetime.Scoped);
             return services;
 
         }

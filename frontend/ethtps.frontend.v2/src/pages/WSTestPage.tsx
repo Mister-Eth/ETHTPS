@@ -4,12 +4,13 @@ import { StringDictionary } from "../Types.dictionaries"
 import { useLiveData } from "../components/instant data animations/hooks"
 import { useState } from "react"
 import { Typography } from "@mui/material"
+import { useGetLiveDataFromAppStore } from "../hooks/LiveDataHooks"
 
 export function WSTestPage() {
-  const liveData = useLiveData()
+  const liveData = useGetLiveDataFromAppStore()
   const [text, setText] = useState("ready")
   useEffect(() => {
-    setText(JSON.stringify(liveData))
+    setText(JSON.stringify(liveData.data))
   }, [liveData])
   return (
     <Fragment>

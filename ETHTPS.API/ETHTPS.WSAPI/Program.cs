@@ -12,6 +12,7 @@ using ETHTPS.WSAPI.WebsocketInfra;
 using WebSocketSharp.Server;
 
 var builder = WebApplication.CreateBuilder(args);
+
 const string APP_NAME = "ETHTPS.WSAPI";
 builder.Services.AddRazorPages();
 builder.Services.AddControllers();
@@ -52,7 +53,7 @@ app.UseAuthorization();
 var provider = app.Services;
 provider.UseScheduler(scheduler =>
 {
-    scheduler.Schedule<PingAllClientsTask>().EveryFifteenSeconds();
+    scheduler.Schedule<PingAllClientsTask>().EverySeconds(8);
     scheduler.Schedule<SendLiveDataTask>().EverySeconds(4);
 });
 

@@ -1,7 +1,10 @@
 import { ResponsiveStream } from "@nivo/stream"
 import { useLiveData } from "../hooks"
 import { useEffect, useState } from "react"
-import { useGetLiveDataModeFromAppStore } from "../../../hooks/LiveDataHooks"
+import {
+  useGetLiveDataFromAppStore,
+  useGetLiveDataModeFromAppStore,
+} from "../../../hooks/LiveDataHooks"
 import {
   createDatasetFromLiveData,
   transformInitialData,
@@ -9,7 +12,7 @@ import {
 } from "./utils"
 
 export function NivoStreamgraph({ initialData }) {
-  const liveData = useLiveData()
+  const liveData = null
   const mode = useGetLiveDataModeFromAppStore()
   const [data, setData] = useState([])
   const [providerNames, setProviderNames] = useState([])
@@ -21,7 +24,7 @@ export function NivoStreamgraph({ initialData }) {
   }, [initialData])
 */
   useEffect(() => {
-    if (liveData !== undefined) {
+    if (liveData && liveData.data?.length > 0) {
       let filtered = liveData.data.filter((x) => x !== undefined)
       if (filtered.length > 12) {
         filtered = filtered.slice(-12)

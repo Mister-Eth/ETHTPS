@@ -30,18 +30,22 @@ const websocketMiddleware: Middleware = (store) => (next) => (action) => {
     })
 
     rws.addEventListener("message", (e) => {
-      let obj = JSON.parse(e.data)
-      let type: string = obj.Type ?? "unknown"
-      switch (type) {
-        case WebsocketEvent.LiveDataReceived:
-          store.dispatch(setLiveData(obj.Data))
-          break
-        case WebsocketEvent.KeepAlive:
-          rws.send("ack")
-          break
-        default:
-          console.log(`Unhandled event of type "${type}"`)
-          break
+      try {
+        let obj = JSON.parse(e.data)
+        let type: string = obj.Type ?? "unknown"
+        switch (type) {
+          case WebsocketEvent.LiveDataReceived:
+            store.dispatch(setLiveData(obj.Data))
+            break
+          case WebsocketEvent.KeepAlive:
+            rws.send("ack")
+            break
+          default:
+            console.log(`Unhandled event of type "${type}"`)
+            break
+        }
+      } catch (e) {
+        console.log("Error: " + e)
       }
     })
   }
