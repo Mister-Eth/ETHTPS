@@ -7,6 +7,7 @@ import { Fragment } from "react"
 import { RecaptchaAPIKeyAndDataLoader } from "./components/RecaptchaAPIKeyAndDataLoader"
 import { ProviderPage } from "./pages/provider/ProviderPage"
 import { TestTube } from "./components/experiments/TestTube"
+import { WSTestPage } from "./pages/WSTestPage"
 
 export default function App(): JSX.Element {
   return (
@@ -19,6 +20,7 @@ export default function App(): JSX.Element {
           <Route path={"*"} element={<ProviderPage />} />
         </Route>
         <Route path={"/About"} element={<About />} />
+        <Route path={"/WSTest"} element={<WSTestPage />} />
         <Route path={"*"} element={<FourOhFour />} />
       </Routes>
     </Fragment>

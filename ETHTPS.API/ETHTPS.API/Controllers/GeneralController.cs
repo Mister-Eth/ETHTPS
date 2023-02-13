@@ -1,10 +1,8 @@
 ﻿using ETHTPS.API.Core.Integrations.MSSQL.Services;
-using ETHTPS.Data.Models;
 using ETHTPS.Data.Models.Query;
+using ETHTPS.Data.Models;
 using ETHTPS.Data.ResponseModels;
-
 using Microsoft.AspNetCore.Mvc;
-
 using System.Collections.Generic;
 
 namespace ETHTPS.API.Controllers
@@ -63,11 +61,9 @@ namespace ETHTPS.API.Controllers
         public IDictionary<string, object> Max([FromQuery] ProviderQueryModel model)
         {
             return _generalService.Max(model);
-        }
-
-        /// <summary>
-        /// Used for displaying chart buttons.
-        /// </summary>
+        }   /// <summary>
+            /// Used for displaying chart buttons.
+            /// </summary>
         [HttpGet]
         public IEnumerable<string> GetIntervalsWithData([FromQuery] ProviderQueryModel model)
         {

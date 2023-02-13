@@ -33,6 +33,7 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
     public virtual DbSet<Counter> Counters { get; set; }
 
     public virtual DbSet<DetailedAccessStat> DetailedAccessStats { get; set; }
+    public virtual DbSet<AggregatedEnpointStat> AggregatedEnpointStats { get; set; }
 
     public virtual DbSet<Experiment> Experiments { get; set; }
 
@@ -696,6 +697,23 @@ public partial class EthtpsContext : ContextBase<EthtpsContext>
                 .HasForeignKey(d => d.RoleId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Permissio__RoleI__214BF109");
+        });
+
+        modelBuilder.Entity<AggregatedEnpointStat>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+
+            entity.ToTable("AggregatedEnpointStats", "Statistics");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Path).IsRequired().HasMaxLength(255);
+
+            entity.Property(e => e.AverageRequestTimeMs)
+            .IsRequired()
+            .HasDefaultValue(0);
+            entity.Property(e => e.RequestCount)
+           .IsRequired()
+           .HasDefaultValue(0);
         });
 
         modelBuilder.Entity<Project>(entity =>

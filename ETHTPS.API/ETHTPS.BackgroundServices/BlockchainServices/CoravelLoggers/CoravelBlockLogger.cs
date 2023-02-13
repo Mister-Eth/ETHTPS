@@ -19,6 +19,8 @@ namespace ETHTPS.Services.BlockchainServices.CoravelLoggers
     {
         private static Dictionary<string, int> _lastBlockNumberDictionary = new();
         private static IBucketCreator _bucketCreator;
+        private static Dictionary<string, int> _consecutiveFailureCountDictionary = new();
+        private const int MAX_CONSECUTIVE_FAILURE_COUNT = 5;
         private static object _lockObj = new object();
 
         private readonly ILogger<CoravelBlockLogger<T>> _logger;
@@ -43,6 +45,8 @@ namespace ETHTPS.Services.BlockchainServices.CoravelLoggers
         {
             try
             {
+                if (ShouldSkipRun(_serviceName))
+                    return;
                 _logger.LogTrace(Format("Running"));
                 _statusService.MarkAsRunning();
 
@@ -60,6 +64,7 @@ namespace ETHTPS.Services.BlockchainServices.CoravelLoggers
                     await _influxWrapper.LogBlockAsync(block);
 
                     _statusService.MarkAsRanSuccessfully();
+                    _consecutiveFailureCountDictionary[_serviceName] = 0;
                 }
                 else
                 {
@@ -72,11 +77,18 @@ namespace ETHTPS.Services.BlockchainServices.CoravelLoggers
             }
             catch (Exception e)
             {
-                _logger.LogError(Format("Failed"), e);
+                _logger.LogError(Format($"Failed ({++_consecutiveFailureCountDictionary[_serviceName]})"), e);
                 _statusService.MarkAsFailed();
             }
         }
-
+        private static bool ShouldSkipRun(string serviceName)
+        {
+            if (!_consecutiveFailureCountDictionary.ContainsKey(serviceName))
+            {
+                _consecutiveFailureCountDictionary.Add(serviceName, 0);
+            }
+            return _consecutiveFailureCountDictionary[serviceName] >= MAX_CONSECUTIVE_FAILURE_COUNT;
+        }
         private static bool ShouldSkipBlock(IBlock blockInfo) => ShouldSkipBlock(blockInfo.Provider, blockInfo.BlockNumber);
         private static bool ShouldSkipBlock(string provider, int block)
         {

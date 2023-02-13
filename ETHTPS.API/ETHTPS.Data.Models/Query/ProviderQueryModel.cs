@@ -20,5 +20,7 @@ namespace ETHTPS.Data.Models.Query
         {
             Provider = Constants.All
         };
+
+        public string ToCacheKey() => $"{Provider}{Network}{IncludeSidechains}";
     }
 }

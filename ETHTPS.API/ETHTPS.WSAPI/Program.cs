@@ -1,52 +1,35 @@
-using ETHTPS.API.Security.Core.Authentication;
+using Coravel;
+
+using ETHTPS.API.Core.Middlewares;
 using ETHTPS.API.DependencyInjection;
+using ETHTPS.API.Security.Core.Authentication;
 using ETHTPS.API.Security.Core.Policies;
 using ETHTPS.Configuration.Extensions;
-using NLog.Extensions.Hosting;
-using ETHTPS.API.Core.Middlewares;
+using ETHTPS.WSAPI.WebsocketBehaviors;
 
-const string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-const string APP_NAME = "ETHTPS.WSAPI";
+using WebSocketSharp.Server;
+
 var builder = WebApplication.CreateBuilder(args);
-builder.Host.UseNLog();
-var services = builder.Services;
-
-services.AddDatabaseContext(APP_NAME);
-services.AddCustomCORSPolicies();
-
-services.AddControllersWithViews()
-    .AddControllersAsServices()
-    .ConfigureNewtonsoftJson();
-services.AddSwagger()
-        .AddMemoryCache()
-        .AddAPIKeyProvider()
-        .AddAPIKeyAuthenticationAndAuthorization()
-        .AddMixedCoreServices()
-        .AddDataUpdaterStatusService()
-        .RegisterMicroservice(APP_NAME, "Websockets API");
+const string APP_NAME = "ETHTPS.WSAPI";
+builder.Services.AddRazorPages();
+builder.Services.AddControllers();
+builder.Services.AddCustomCORSPolicies()
+                .AddDatabaseContext(APP_NAME)
+                .AddSwagger()
+                .AddAPIKeyAuthenticationAndAuthorization()
+                .AddMixedCoreServices()
+                .AddDataUpdaterStatusService()
+                .AddQueue()
+                .RegisterMicroservice(APP_NAME);
 var app = builder.Build();
 
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Error");
-}
-app.UseStaticFiles();
 app.UseMiddleware<AccesStatsMiddleware>();
-app.ConfigureSwagger();
 app.UseRouting();
 app.UseAuthorization();
-app.UseCors(MyAllowSpecificOrigins);
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers().RequireAuthorization();
-});
-
-WebSocketOptions webSocketOptions = new ()
-{
-    KeepAliveInterval = TimeSpan.FromMinutes(2)
-};
-
-webSocketOptions.AllowedOrigins.Add("https://localhost");
-webSocketOptions.AllowedOrigins.Add("https://ethtps.info");
-
-app.UseWebSockets(webSocketOptions);
+app.ConfigureSwagger();
+app.UseAuthorization();
+var websocketServer = new WebSocketServer("ws://localhost:2000");
+websocketServer.AddWebSocketService<LiveData>("/LiveData");
+websocketServer.Start();
+app.UseCors("_myAllowSpecificOrigins");
+app.Run();

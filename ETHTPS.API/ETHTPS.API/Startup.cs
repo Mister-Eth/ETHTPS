@@ -11,6 +11,11 @@ using ETHTPS.API.Core.Middlewares;
 using ETHTPS.API.Security.Core.Policies;
 using ETHTPS.API.DependencyInjection;
 using ETHTPS.API.Security.Core.Authentication;
+using Coravel;
+using Coravel.Queuing.Interfaces;
+using ETHTPS.Data.Integrations.MSSQL;
+using Microsoft.Extensions.Logging;
+using ETHTPS.Services.BackgroundTasks.Recurring.Aggregated;
 
 namespace ETHTPS.API
 {
@@ -38,6 +43,9 @@ namespace ETHTPS.API
                     .AddAPIKeyProvider()
                     .AddAPIKeyAuthenticationAndAuthorization()
                     .AddMixedCoreServices()
+                    .AddQueue()
+                    .AddCache()
+                    .AddScoped<AggregatedEndpointStatsBuilder>()
                     .AddInfluxHistoricalDataProvider()
                     .RegisterMicroservice(APP_NAME, "General API");
             services.AddDataUpdaterStatusService();
@@ -55,7 +63,7 @@ namespace ETHTPS.API
                 app.UseDeveloperExceptionPage();
             }
             app.RequestsAreForwardedByReverseProxy();
-            app.UseMiddleware<UnstableConnectionSimulatorMiddleware>(); //Simulating high server load
+            //app.UseMiddleware<UnstableConnectionSimulatorMiddleware>(); //Simulating high server load
             app.UseMiddleware<AccesStatsMiddleware>();
             app.ConfigureSwagger();
             app.UseRouting();

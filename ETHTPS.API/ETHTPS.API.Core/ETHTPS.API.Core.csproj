@@ -16,6 +16,7 @@
     <ProjectReference Include="..\ETHTPS.BIL\ETHTPS.API.BIL.csproj" />
     <ProjectReference Include="..\ETHTPS.Data.Database\ETHTPS.Data.Integrations.MSSQL.csproj" />
     <ProjectReference Include="..\ETHTPS.Data\ETHTPS.Data.Core.csproj" />
+    <ProjectReference Include="..\ETHTPS.Services.BackgroundTasks\ETHTPS.Services.BackgroundTasks.csproj" />
     <ProjectReference Include="..\ETHTPS.Services.Ethereum\ETHTPS.Services.Ethereum.csproj" />
   </ItemGroup>
 
