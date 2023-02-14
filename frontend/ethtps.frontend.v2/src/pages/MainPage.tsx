@@ -25,6 +25,7 @@ import {
 } from "../components/instant data animations/hooks"
 import { CurrentViewersIcon } from "../components/buttons/CurrentViewersIcon"
 import { useGetExperimentsFromAppStore } from "../components/experiments/ExperimentHooks"
+import Streamgraph from "../components/instant data animations/VISXStreamgraph"
 
 export default function MainPage(): JSX.Element {
   const providers = useGetProvidersFromAppStore()
@@ -71,7 +72,9 @@ export default function MainPage(): JSX.Element {
               )}
               <DataModeButtonGroup modeChanged={useSetDataModeMutation} />
             </Paper>
-            <Paper elevation={1}></Paper>
+            <Paper elevation={1}>
+              <Streamgraph width={750} height={500} />
+            </Paper>
             <Paper elevation={1}>
               <AllProvidersTable
                 providerData={providers}
