@@ -4,6 +4,7 @@
 ## Get latest from 
 nlog.config
 node_modules
+ServiceCreator.cs
 ConfigurationExtensions.cs
 PrivateData.cs
 appsettings - Copy.default.json
