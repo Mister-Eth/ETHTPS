@@ -154,12 +154,6 @@ import {
 export interface Provider {
     /**
      * 
-     * @type {number}
-     * @memberof Provider
-     */
-    id?: number;
-    /**
-     * 
      * @type {string}
      * @memberof Provider
      */
@@ -350,6 +344,12 @@ export interface Provider {
      * @memberof Provider
      */
     typeNavigation?: ProviderType;
+    /**
+     * 
+     * @type {number}
+     * @memberof Provider
+     */
+    id?: number;
 }
 
 /**
@@ -371,7 +371,6 @@ export function ProviderFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     }
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'type': !exists(json, 'type') ? undefined : json['type'],
         'color': !exists(json, 'color') ? undefined : json['color'],
@@ -404,6 +403,7 @@ export function ProviderFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'tpsandGasDataWeeks': !exists(json, 'tpsandGasDataWeeks') ? undefined : (json['tpsandGasDataWeeks'] === null ? null : (json['tpsandGasDataWeeks'] as Array<any>).map(TpsandGasDataWeekFromJSON)),
         'tpsandGasDataYears': !exists(json, 'tpsandGasDataYears') ? undefined : (json['tpsandGasDataYears'] === null ? null : (json['tpsandGasDataYears'] as Array<any>).map(TpsandGasDataYearFromJSON)),
         'typeNavigation': !exists(json, 'typeNavigation') ? undefined : ProviderTypeFromJSON(json['typeNavigation']),
+        'id': !exists(json, 'id') ? undefined : json['id'],
     };
 }
 
@@ -416,7 +416,6 @@ export function ProviderToJSON(value?: Provider | null): any {
     }
     return {
         
-        'id': value.id,
         'name': value.name,
         'type': value.type,
         'color': value.color,
@@ -429,6 +428,7 @@ export function ProviderToJSON(value?: Provider | null): any {
         'tpsandGasDataLatest': TpsandGasDataLatestToJSON(value.tpsandGasDataLatest),
         'tpsandGasDataMax': TpsandGasDataMaxToJSON(value.tpsandGasDataMax),
         'typeNavigation': ProviderTypeToJSON(value.typeNavigation),
+        'id': value.id,
     };
 }
 

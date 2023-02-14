@@ -15,9 +15,12 @@
 
 import * as runtime from '../runtime';
 import type {
+  IMarkdownPage,
   MarkdownPage,
 } from '../models';
 import {
+    IMarkdownPageFromJSON,
+    IMarkdownPageToJSON,
     MarkdownPageFromJSON,
     MarkdownPageToJSON,
 } from '../models';
@@ -179,7 +182,7 @@ export class MarkdownPagesApi extends runtime.BaseAPI {
 
     /**
      */
-    async apiInfoMarkdownPagesGetMarkdownPagesForGetRaw(requestParameters: ApiInfoMarkdownPagesGetMarkdownPagesForGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<MarkdownPage>>> {
+    async apiInfoMarkdownPagesGetMarkdownPagesForGetRaw(requestParameters: ApiInfoMarkdownPagesGetMarkdownPagesForGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<IMarkdownPage>>> {
         const queryParameters: any = {};
 
         if (requestParameters.providerName !== undefined) {
@@ -199,12 +202,12 @@ export class MarkdownPagesApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(MarkdownPageFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(IMarkdownPageFromJSON));
     }
 
     /**
      */
-    async apiInfoMarkdownPagesGetMarkdownPagesForGet(requestParameters: ApiInfoMarkdownPagesGetMarkdownPagesForGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<MarkdownPage>> {
+    async apiInfoMarkdownPagesGetMarkdownPagesForGet(requestParameters: ApiInfoMarkdownPagesGetMarkdownPagesForGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<IMarkdownPage>> {
         const response = await this.apiInfoMarkdownPagesGetMarkdownPagesForGetRaw(requestParameters, initOverrides);
         return await response.value();
     }

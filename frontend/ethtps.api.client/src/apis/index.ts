@@ -1,6 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 export * from './APIKeyApi';
+export * from './BlockInfoApi';
+export * from './ChartDataApi';
 export * from './DataInitializationApi';
 export * from './ExperimentApi';
 export * from './ExternalWebsitesApi';

@@ -59,11 +59,11 @@
 }
 
 .appear {
-  animation: appear 2s forwards;
+  animation: appear 1s forwards;
 }
 
 .disappear {
-  animation: disappear 2s 2s forwards;
+  animation: disappear 3s 5s forwards;
 }
 
 @keyframes disappear {

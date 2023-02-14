@@ -28,10 +28,10 @@ import {
 export interface MarkdownPage {
     /**
      * 
-     * @type {number}
+     * @type {Array<ProviderDetailsMarkdownPage>}
      * @memberof MarkdownPage
      */
-    id?: number;
+    readonly providerDetailsMarkdownPages?: Array<ProviderDetailsMarkdownPage> | null;
     /**
      * 
      * @type {string}
@@ -40,10 +40,10 @@ export interface MarkdownPage {
     rawMarkdown?: string | null;
     /**
      * 
-     * @type {Array<ProviderDetailsMarkdownPage>}
+     * @type {number}
      * @memberof MarkdownPage
      */
-    readonly providerDetailsMarkdownPages?: Array<ProviderDetailsMarkdownPage> | null;
+    id?: number;
 }
 
 /**
@@ -65,9 +65,9 @@ export function MarkdownPageFromJSONTyped(json: any, ignoreDiscriminator: boolea
     }
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
-        'rawMarkdown': !exists(json, 'rawMarkdown') ? undefined : json['rawMarkdown'],
         'providerDetailsMarkdownPages': !exists(json, 'providerDetailsMarkdownPages') ? undefined : (json['providerDetailsMarkdownPages'] === null ? null : (json['providerDetailsMarkdownPages'] as Array<any>).map(ProviderDetailsMarkdownPageFromJSON)),
+        'rawMarkdown': !exists(json, 'rawMarkdown') ? undefined : json['rawMarkdown'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
     };
 }
 
@@ -80,8 +80,8 @@ export function MarkdownPageToJSON(value?: MarkdownPage | null): any {
     }
     return {
         
-        'id': value.id,
         'rawMarkdown': value.rawMarkdown,
+        'id': value.id,
     };
 }
 

@@ -15,8 +15,12 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\ETHTPS.Data\ETHTPS.Data.Core.csproj">
-		  <CopyLocalSatelliteAssemblies>True</CopyLocalSatelliteAssemblies>
+			<CopyLocalSatelliteAssemblies>True</CopyLocalSatelliteAssemblies>
 		</ProjectReference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Charts\" />
 	</ItemGroup>
 
 </Project>

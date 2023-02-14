@@ -58,6 +58,12 @@ export interface OldestLoggedHistoricalEntry {
     oldestBlock?: number;
     /**
      * 
+     * @type {Date}
+     * @memberof OldestLoggedHistoricalEntry
+     */
+    oldestBlockDate?: Date | null;
+    /**
+     * 
      * @type {Network}
      * @memberof OldestLoggedHistoricalEntry
      */
@@ -93,6 +99,7 @@ export function OldestLoggedHistoricalEntryFromJSONTyped(json: any, ignoreDiscri
         'network': !exists(json, 'network') ? undefined : json['network'],
         'provider': !exists(json, 'provider') ? undefined : json['provider'],
         'oldestBlock': !exists(json, 'oldestBlock') ? undefined : json['oldestBlock'],
+        'oldestBlockDate': !exists(json, 'oldestBlockDate') ? undefined : (json['oldestBlockDate'] === null ? null : new Date(json['oldestBlockDate'])),
         'networkNavigation': !exists(json, 'networkNavigation') ? undefined : NetworkFromJSON(json['networkNavigation']),
         'providerNavigation': !exists(json, 'providerNavigation') ? undefined : ProviderFromJSON(json['providerNavigation']),
     };
@@ -111,6 +118,7 @@ export function OldestLoggedHistoricalEntryToJSON(value?: OldestLoggedHistorical
         'network': value.network,
         'provider': value.provider,
         'oldestBlock': value.oldestBlock,
+        'oldestBlockDate': value.oldestBlockDate === undefined ? undefined : (value.oldestBlockDate === null ? null : value.oldestBlockDate.toISOString()),
         'networkNavigation': NetworkToJSON(value.networkNavigation),
         'providerNavigation': ProviderToJSON(value.providerNavigation),
     };

@@ -43,6 +43,240 @@
         }
       }
     },
+    "/api/v3/BlockInfo/GetBlocksBetween": {
+      "get": {
+        "tags": [
+          "BlockInfo"
+        ],
+        "parameters": [
+          {
+            "name": "Provider",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Network",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IncludeSidechains",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "XAPIKey",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IBlock"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IBlock"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IBlock"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3/BlockInfo/GetLatestBlocks": {
+      "get": {
+        "tags": [
+          "BlockInfo"
+        ],
+        "parameters": [
+          {
+            "name": "Provider",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Network",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IncludeSidechains",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "XAPIKey",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "period",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IBlock"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IBlock"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IBlock"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ChartData/GetStreamchartData": {
+      "get": {
+        "tags": [
+          "ChartData"
+        ],
+        "parameters": [
+          {
+            "name": "Provider",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Network",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IncludeSidechains",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "XAPIKey",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "interval",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 15
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StreamchartModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StreamchartModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StreamchartModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/DataInitialization/Initialize": {
       "put": {
         "tags": [
@@ -150,7 +384,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ProviderExternalWebsite"
+                    "$ref": "#/components/schemas/IProviderExternalWebsite"
                   }
                 }
               },
@@ -158,7 +392,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ProviderExternalWebsite"
+                    "$ref": "#/components/schemas/IProviderExternalWebsite"
                   }
                 }
               },
@@ -166,7 +400,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ProviderExternalWebsite"
+                    "$ref": "#/components/schemas/IProviderExternalWebsite"
                   }
                 }
               }
@@ -193,22 +427,22 @@
           "content": {
             "application/json-patch+json": {
               "schema": {
-                "$ref": "#/components/schemas/ExternalWebsite"
+                "$ref": "#/components/schemas/IExternalWebsite"
               }
             },
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ExternalWebsite"
+                "$ref": "#/components/schemas/IExternalWebsite"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/ExternalWebsite"
+                "$ref": "#/components/schemas/IExternalWebsite"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/ExternalWebsite"
+                "$ref": "#/components/schemas/IExternalWebsite"
               }
             }
           }
@@ -271,7 +505,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ExternalWebsite"
+                    "$ref": "#/components/schemas/IExternalWebsite"
                   }
                 }
               },
@@ -279,7 +513,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ExternalWebsite"
+                    "$ref": "#/components/schemas/IExternalWebsite"
                   }
                 }
               },
@@ -287,7 +521,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ExternalWebsite"
+                    "$ref": "#/components/schemas/IExternalWebsite"
                   }
                 }
               }
@@ -324,17 +558,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/ExternalWebsite"
+                  "$ref": "#/components/schemas/IExternalWebsite"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ExternalWebsite"
+                  "$ref": "#/components/schemas/IExternalWebsite"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ExternalWebsite"
+                  "$ref": "#/components/schemas/IExternalWebsite"
                 }
               }
             }
@@ -360,22 +594,22 @@
           "content": {
             "application/json-patch+json": {
               "schema": {
-                "$ref": "#/components/schemas/ExternalWebsite"
+                "$ref": "#/components/schemas/IExternalWebsite"
               }
             },
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ExternalWebsite"
+                "$ref": "#/components/schemas/IExternalWebsite"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/ExternalWebsite"
+                "$ref": "#/components/schemas/IExternalWebsite"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/ExternalWebsite"
+                "$ref": "#/components/schemas/IExternalWebsite"
               }
             }
           }
@@ -1621,7 +1855,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/MarkdownPage"
+                    "$ref": "#/components/schemas/IMarkdownPage"
                   }
                 }
               },
@@ -1629,7 +1863,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/MarkdownPage"
+                    "$ref": "#/components/schemas/IMarkdownPage"
                   }
                 }
               },
@@ -1637,7 +1871,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/MarkdownPage"
+                    "$ref": "#/components/schemas/IMarkdownPage"
                   }
                 }
               }
@@ -3608,10 +3842,6 @@
       "ExperimentalSession": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
           "experiment": {
             "type": "integer",
             "format": "int32"
@@ -3626,6 +3856,10 @@
           },
           "idNavigation": {
             "$ref": "#/components/schemas/Experiment"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -3633,10 +3867,6 @@
       "ExternalWebsite": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
           "name": {
             "type": "string",
             "nullable": true
@@ -3649,8 +3879,12 @@
             "type": "integer",
             "format": "int32"
           },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
           "categoryNavigation": {
-            "$ref": "#/components/schemas/ExternalWebsiteCateopry"
+            "$ref": "#/components/schemas/ExternalWebsiteCategory"
           },
           "providerLinks": {
             "type": "array",
@@ -3663,7 +3897,7 @@
         },
         "additionalProperties": false
       },
-      "ExternalWebsiteCateopry": {
+      "ExternalWebsiteCategory": {
         "type": "object",
         "properties": {
           "id": {
@@ -3826,6 +4060,117 @@
         },
         "additionalProperties": false
       },
+      "IBlock": {
+        "type": "object",
+        "properties": {
+          "blockNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "transactionCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "gasUsed": {
+            "type": "number",
+            "format": "double"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "settled": {
+            "type": "boolean"
+          },
+          "provider": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IExternalWebsite": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "iconBase64": {
+            "type": "string",
+            "nullable": true
+          },
+          "category": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "IMarkdownPage": {
+        "type": "object",
+        "properties": {
+          "rawMarkdown": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "IProviderExternalWebsite": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "iconBase64": {
+            "type": "string",
+            "nullable": true
+          },
+          "category": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LegendModel": {
+        "type": "object",
+        "properties": {
+          "keys": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "colors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "LiveDataUpdaterStatus": {
         "type": "object",
         "properties": {
@@ -3910,14 +4255,6 @@
       "MarkdownPage": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "rawMarkdown": {
-            "type": "string",
-            "nullable": true
-          },
           "providerDetailsMarkdownPages": {
             "type": "array",
             "items": {
@@ -3925,6 +4262,14 @@
             },
             "nullable": true,
             "readOnly": true
+          },
+          "rawMarkdown": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -4098,6 +4443,11 @@
             "type": "integer",
             "format": "int32"
           },
+          "oldestBlockDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
           "networkNavigation": {
             "$ref": "#/components/schemas/Network"
           },
@@ -4225,10 +4575,6 @@
       "Provider": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
           "name": {
             "type": "string",
             "nullable": true
@@ -4433,6 +4779,10 @@
           },
           "typeNavigation": {
             "$ref": "#/components/schemas/ProviderType"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -4457,28 +4807,6 @@
           },
           "provider": {
             "$ref": "#/components/schemas/Provider"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ProviderExternalWebsite": {
-        "type": "object",
-        "properties": {
-          "websiteName": {
-            "type": "string",
-            "nullable": true
-          },
-          "category": {
-            "type": "string",
-            "nullable": true
-          },
-          "url": {
-            "type": "string",
-            "nullable": true
-          },
-          "iconBase64": {
-            "type": "string",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -4648,6 +4976,48 @@
           },
           "networkNavigation": {
             "$ref": "#/components/schemas/Network"
+          }
+        },
+        "additionalProperties": false
+      },
+      "StreamchartModel": {
+        "type": "object",
+        "properties": {
+          "legend": {
+            "$ref": "#/components/schemas/LegendModel"
+          },
+          "tpsData": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "number",
+                "format": "double"
+              }
+            },
+            "nullable": true
+          },
+          "gpsData": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "number",
+                "format": "double"
+              }
+            },
+            "nullable": true
+          },
+          "gtpsData": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "number",
+                "format": "double"
+              }
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false

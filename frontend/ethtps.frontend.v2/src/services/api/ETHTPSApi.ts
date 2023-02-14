@@ -10,6 +10,8 @@ import {
   APIKeyApi,
   ExternalWebsitesApi,
   MarkdownPagesApi,
+  ChartDataApi,
+  ApiChartDataGetStreamchartDataGetRequest,
 } from "ethtps.api.client"
 import { tryLoadAPIKeyFromLocalStorage, getAPIKey } from "../DependenciesIOC"
 import { APIKeyMiddleware } from "./APIKeyMiddleware"
@@ -32,6 +34,10 @@ export class ETHTPSApi {
   public experimentAPI: ExperimentApi = new ExperimentApi()
   public externalWebsitePAI: ExternalWebsitesApi = new ExternalWebsitesApi()
   public markdownAPI: MarkdownPagesApi = new MarkdownPagesApi()
+
+  public chartDataAPI: ChartDataApi = new ChartDataApi()
+  private _chartDataAPIEndpoint: string
+
   public apiKeyAPI: APIKeyApi
   private _apiKeyApiEndpoint: string
   //public statusAPI: StatusApi
@@ -45,6 +51,7 @@ export class ETHTPSApi {
     gtpsApiUrl: string,
     apiKeyApiUrl: string,
     statusAPIEndpoint: string,
+    chartDataAPIEndpoint: string,
     apiKey?: string,
     useArtificialDelay: boolean = true,
   ) {
@@ -54,6 +61,7 @@ export class ETHTPSApi {
     this._gtpsApiEndpoint = gtpsApiUrl
     this._apiKeyApiEndpoint = apiKeyApiUrl
     this._statusAPIEndpoint = statusAPIEndpoint
+    this._chartDataAPIEndpoint = chartDataAPIEndpoint
     if (!apiKey) {
       tryLoadAPIKeyFromLocalStorage()
       let supposedlyAKey = getAPIKey()
@@ -97,6 +105,10 @@ export class ETHTPSApi {
       new Configuration({
         basePath: this._apiKeyApiEndpoint,
       }),
+    )
+
+    this.chartDataAPI = new ChartDataApi(
+      this._genConfig(this._chartDataAPIEndpoint),
     )
     /*
     this.statusAPI = new StatusApi(
@@ -246,5 +258,13 @@ export class ETHTPSApi {
     return this.markdownAPI.apiInfoMarkdownPagesGetMarkdownPagesForGet({
       providerName,
     })
+  }
+
+  public getStreamChartData(
+    requestParameters?: ApiChartDataGetStreamchartDataGetRequest,
+  ) {
+    return this.chartDataAPI.apiChartDataGetStreamchartDataGet(
+      requestParameters,
+    )
   }
 }

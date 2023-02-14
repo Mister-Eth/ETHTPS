@@ -13,12 +13,12 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { ExternalWebsiteCateopry } from './ExternalWebsiteCateopry';
+import type { ExternalWebsiteCategory } from './ExternalWebsiteCategory';
 import {
-    ExternalWebsiteCateopryFromJSON,
-    ExternalWebsiteCateopryFromJSONTyped,
-    ExternalWebsiteCateopryToJSON,
-} from './ExternalWebsiteCateopry';
+    ExternalWebsiteCategoryFromJSON,
+    ExternalWebsiteCategoryFromJSONTyped,
+    ExternalWebsiteCategoryToJSON,
+} from './ExternalWebsiteCategory';
 import type { ProviderLink } from './ProviderLink';
 import {
     ProviderLinkFromJSON,
@@ -32,12 +32,6 @@ import {
  * @interface ExternalWebsite
  */
 export interface ExternalWebsite {
-    /**
-     * 
-     * @type {number}
-     * @memberof ExternalWebsite
-     */
-    id?: number;
     /**
      * 
      * @type {string}
@@ -58,10 +52,16 @@ export interface ExternalWebsite {
     category?: number;
     /**
      * 
-     * @type {ExternalWebsiteCateopry}
+     * @type {number}
      * @memberof ExternalWebsite
      */
-    categoryNavigation?: ExternalWebsiteCateopry;
+    id?: number;
+    /**
+     * 
+     * @type {ExternalWebsiteCategory}
+     * @memberof ExternalWebsite
+     */
+    categoryNavigation?: ExternalWebsiteCategory;
     /**
      * 
      * @type {Array<ProviderLink>}
@@ -89,11 +89,11 @@ export function ExternalWebsiteFromJSONTyped(json: any, ignoreDiscriminator: boo
     }
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'iconBase64': !exists(json, 'iconBase64') ? undefined : json['iconBase64'],
         'category': !exists(json, 'category') ? undefined : json['category'],
-        'categoryNavigation': !exists(json, 'categoryNavigation') ? undefined : ExternalWebsiteCateopryFromJSON(json['categoryNavigation']),
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'categoryNavigation': !exists(json, 'categoryNavigation') ? undefined : ExternalWebsiteCategoryFromJSON(json['categoryNavigation']),
         'providerLinks': !exists(json, 'providerLinks') ? undefined : (json['providerLinks'] === null ? null : (json['providerLinks'] as Array<any>).map(ProviderLinkFromJSON)),
     };
 }
@@ -107,11 +107,11 @@ export function ExternalWebsiteToJSON(value?: ExternalWebsite | null): any {
     }
     return {
         
-        'id': value.id,
         'name': value.name,
         'iconBase64': value.iconBase64,
         'category': value.category,
-        'categoryNavigation': ExternalWebsiteCateopryToJSON(value.categoryNavigation),
+        'id': value.id,
+        'categoryNavigation': ExternalWebsiteCategoryToJSON(value.categoryNavigation),
     };
 }
 

@@ -12,6 +12,8 @@ import { dataTypeToString, toShortString_2 } from "../../models/TimeIntervals"
 import { useGetSidechainsIncludedFromAppStore } from "../../hooks/LiveDataHooks"
 import { ProviderResponseModel } from "ethtps.api.client"
 import { useAppSelector } from "../../store"
+import { useQuery } from "react-query"
+import { api } from "../../services/DependenciesIOC"
 
 export type InstantBarChartDataset = {
   label: string
@@ -62,6 +64,20 @@ export function useGet1mGPS() {
 
 export function useGet1mGTPS() {
   return useAppSelector((state) => state.liveData.oneMinuteGTPSData)
+}
+
+export function useStreamchartData(interval: string) {
+  const sidechainsIncluded = useGetSidechainsIncludedFromAppStore()
+  const { data, status, refetch } = useQuery("get streamchart data", () =>
+    api.getStreamChartData({
+      interval,
+      includeSidechains: sidechainsIncluded,
+    }),
+  )
+  useEffect(() => {
+    refetch()
+  }, [sidechainsIncluded])
+  return { data, status }
 }
 
 export function useLiveData() {

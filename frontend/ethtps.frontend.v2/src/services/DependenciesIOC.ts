@@ -2,12 +2,12 @@ import { QueryClient } from "react-query"
 import { StorageThemeProvider } from "./themes/StorageThemeProvider"
 import { ETHTPSApi } from "./api/ETHTPSApi"
 import { LocalStorageService } from "./LocalStorageService"
-import { WebsocketsService } from "./WebsocketsService"
 
 var _api_key: string | undefined | null = ""
 
 export const storage: LocalStorageService = new LocalStorageService()
 export const api = new ETHTPSApi(
+  process.env.REACT_APP_API_DEV_GENERAL_ENDPOINT as string,
   process.env.REACT_APP_API_DEV_GENERAL_ENDPOINT as string,
   process.env.REACT_APP_API_DEV_GENERAL_ENDPOINT as string,
   process.env.REACT_APP_API_DEV_GENERAL_ENDPOINT as string,

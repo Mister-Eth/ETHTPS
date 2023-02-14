@@ -1,7 +1,6 @@
-﻿using ETHTPS.Data.Core.Extensions;
-using ETHTPS.Data.ResponseModels;
+﻿using ETHTPS.Data.ResponseModels;
 
-namespace ETHTPS.Data.Models.ResponseModels.ChartData.Nivo.Extensions
+namespace ETHTPS.Data.Models.ResponseModels.ChartData.Streamchart.Extensions
 {
     public static class DataFormatExtensions
     {
@@ -9,7 +8,7 @@ namespace ETHTPS.Data.Models.ResponseModels.ChartData.Nivo.Extensions
         {
             foreach (var key in source.Keys)
             {
-                if (!source[key].Any() || source[key].FirstOrDefault() == null) 
+                if (!source[key].Any() || source[key].FirstOrDefault() == null)
                 {
                     source.Remove(key);
                 }
@@ -19,7 +18,7 @@ namespace ETHTPS.Data.Models.ResponseModels.ChartData.Nivo.Extensions
 
         public static IDictionary<string, IEnumerable<DataResponseModel>> OrderEachSet(this IDictionary<string, IEnumerable<DataResponseModel>> source)
         {
-            foreach(var key in source.Keys)
+            foreach (var key in source.Keys)
             {
                 source[key] = source[key].OrderByDescending(x => x.Data.FirstOrDefault()?.Date);
             }
@@ -52,7 +51,7 @@ namespace ETHTPS.Data.Models.ResponseModels.ChartData.Nivo.Extensions
                         {
                             if (source[key].ElementAt(i).Data.Count() > 0)
                             {
-                                if (source[key].ElementAt(i).Data.FirstOrDefault()!= null)
+                                if (source[key].ElementAt(i).Data.FirstOrDefault() != null)
                                 {
                                     temp.Add(key, source[key].ElementAt(i).Data.First());
                                 }

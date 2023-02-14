@@ -22,9 +22,13 @@ export function WebsocketStatusPartial() {
         }}
         className={connected ? "disappear box" : "appear box"}
       >
-        {connected ? <SyncAlt /> : <MobiledataOff />}
-        <Typography className="inline">
-          {connected ? "Connected" : "Connecting..."}
+        {connected ? (
+          <SyncAlt color={connected ? "primary" : "error"} />
+        ) : (
+          <MobiledataOff color={connected ? "primary" : "error"} />
+        )}
+        <Typography color={connected ? "primary" : "error"} className="inline">
+          {connected ? "Connected" : "Disconnected"}
         </Typography>
       </div>
     </Fragment>

@@ -15,19 +15,19 @@
 
 import * as runtime from '../runtime';
 import type {
-  ExternalWebsite,
-  ProviderExternalWebsite,
+  IExternalWebsite,
+  IProviderExternalWebsite,
 } from '../models';
 import {
-    ExternalWebsiteFromJSON,
-    ExternalWebsiteToJSON,
-    ProviderExternalWebsiteFromJSON,
-    ProviderExternalWebsiteToJSON,
+    IExternalWebsiteFromJSON,
+    IExternalWebsiteToJSON,
+    IProviderExternalWebsiteFromJSON,
+    IProviderExternalWebsiteToJSON,
 } from '../models';
 
 export interface ApiInfoExternalWebsitesCreatePutRequest {
     xAPIKey?: string;
-    externalWebsite?: ExternalWebsite;
+    iExternalWebsite?: IExternalWebsite;
 }
 
 export interface ApiInfoExternalWebsitesDeleteByIdPutRequest {
@@ -51,7 +51,7 @@ export interface ApiInfoExternalWebsitesGetExternalWebsitesForGetRequest {
 
 export interface ApiInfoExternalWebsitesUpdatePutRequest {
     xAPIKey?: string;
-    externalWebsite?: ExternalWebsite;
+    iExternalWebsite?: IExternalWebsite;
 }
 
 /**
@@ -77,7 +77,7 @@ export class ExternalWebsitesApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: ExternalWebsiteToJSON(requestParameters.externalWebsite),
+            body: IExternalWebsiteToJSON(requestParameters.iExternalWebsite),
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -122,7 +122,7 @@ export class ExternalWebsitesApi extends runtime.BaseAPI {
 
     /**
      */
-    async apiInfoExternalWebsitesGetAllGetRaw(requestParameters: ApiInfoExternalWebsitesGetAllGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ExternalWebsite>>> {
+    async apiInfoExternalWebsitesGetAllGetRaw(requestParameters: ApiInfoExternalWebsitesGetAllGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<IExternalWebsite>>> {
         const queryParameters: any = {};
 
         if (requestParameters.xAPIKey !== undefined) {
@@ -138,19 +138,19 @@ export class ExternalWebsitesApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(ExternalWebsiteFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(IExternalWebsiteFromJSON));
     }
 
     /**
      */
-    async apiInfoExternalWebsitesGetAllGet(requestParameters: ApiInfoExternalWebsitesGetAllGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ExternalWebsite>> {
+    async apiInfoExternalWebsitesGetAllGet(requestParameters: ApiInfoExternalWebsitesGetAllGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<IExternalWebsite>> {
         const response = await this.apiInfoExternalWebsitesGetAllGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async apiInfoExternalWebsitesGetByIdGetRaw(requestParameters: ApiInfoExternalWebsitesGetByIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ExternalWebsite>> {
+    async apiInfoExternalWebsitesGetByIdGetRaw(requestParameters: ApiInfoExternalWebsitesGetByIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IExternalWebsite>> {
         const queryParameters: any = {};
 
         if (requestParameters.id !== undefined) {
@@ -170,19 +170,19 @@ export class ExternalWebsitesApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => ExternalWebsiteFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => IExternalWebsiteFromJSON(jsonValue));
     }
 
     /**
      */
-    async apiInfoExternalWebsitesGetByIdGet(requestParameters: ApiInfoExternalWebsitesGetByIdGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ExternalWebsite> {
+    async apiInfoExternalWebsitesGetByIdGet(requestParameters: ApiInfoExternalWebsitesGetByIdGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<IExternalWebsite> {
         const response = await this.apiInfoExternalWebsitesGetByIdGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async apiInfoExternalWebsitesGetExternalWebsitesForGetRaw(requestParameters: ApiInfoExternalWebsitesGetExternalWebsitesForGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ProviderExternalWebsite>>> {
+    async apiInfoExternalWebsitesGetExternalWebsitesForGetRaw(requestParameters: ApiInfoExternalWebsitesGetExternalWebsitesForGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<IProviderExternalWebsite>>> {
         const queryParameters: any = {};
 
         if (requestParameters.providerName !== undefined) {
@@ -202,12 +202,12 @@ export class ExternalWebsitesApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(ProviderExternalWebsiteFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(IProviderExternalWebsiteFromJSON));
     }
 
     /**
      */
-    async apiInfoExternalWebsitesGetExternalWebsitesForGet(requestParameters: ApiInfoExternalWebsitesGetExternalWebsitesForGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ProviderExternalWebsite>> {
+    async apiInfoExternalWebsitesGetExternalWebsitesForGet(requestParameters: ApiInfoExternalWebsitesGetExternalWebsitesForGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<IProviderExternalWebsite>> {
         const response = await this.apiInfoExternalWebsitesGetExternalWebsitesForGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -230,7 +230,7 @@ export class ExternalWebsitesApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: ExternalWebsiteToJSON(requestParameters.externalWebsite),
+            body: IExternalWebsiteToJSON(requestParameters.iExternalWebsite),
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);

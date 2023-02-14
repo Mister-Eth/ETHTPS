@@ -1,6 +1,6 @@
 ﻿namespace ETHTPS.API.BIL.Infrastructure.Services.ChartData
 {
-    public interface IChartDataProviderService : INivoStreamchartDataProvider
+    public interface IChartDataProviderService : IStreamchartDataProvider
     {
     }
 }

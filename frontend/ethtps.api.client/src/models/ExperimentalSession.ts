@@ -31,12 +31,6 @@ export interface ExperimentalSession {
      * @type {number}
      * @memberof ExperimentalSession
      */
-    id?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ExperimentalSession
-     */
     experiment?: number;
     /**
      * 
@@ -56,6 +50,12 @@ export interface ExperimentalSession {
      * @memberof ExperimentalSession
      */
     idNavigation?: Experiment;
+    /**
+     * 
+     * @type {number}
+     * @memberof ExperimentalSession
+     */
+    id?: number;
 }
 
 /**
@@ -77,11 +77,11 @@ export function ExperimentalSessionFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
         'experiment': !exists(json, 'experiment') ? undefined : json['experiment'],
         'targetIpaddress': !exists(json, 'targetIpaddress') ? undefined : json['targetIpaddress'],
         'retentionSeconds': !exists(json, 'retentionSeconds') ? undefined : json['retentionSeconds'],
         'idNavigation': !exists(json, 'idNavigation') ? undefined : ExperimentFromJSON(json['idNavigation']),
+        'id': !exists(json, 'id') ? undefined : json['id'],
     };
 }
 
@@ -94,11 +94,11 @@ export function ExperimentalSessionToJSON(value?: ExperimentalSession | null): a
     }
     return {
         
-        'id': value.id,
         'experiment': value.experiment,
         'targetIpaddress': value.targetIpaddress,
         'retentionSeconds': value.retentionSeconds,
         'idNavigation': ExperimentToJSON(value.idNavigation),
+        'id': value.id,
     };
 }
 

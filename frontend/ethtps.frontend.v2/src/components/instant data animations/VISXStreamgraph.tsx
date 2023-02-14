@@ -12,7 +12,7 @@ import { animated, useSpring } from "@react-spring/web"
 
 import useForceUpdate from "./useForceUpdate"
 import generateData from "./generateData"
-import { StreamGraphProps } from "./types"
+import { StreamGraphProps, range } from "./types"
 
 // constants
 const NUM_LAYERS = 10
@@ -21,7 +21,6 @@ const BUMPS_PER_LAYER = 10
 export const BACKGROUND = "#ffdede"
 
 // utils
-const range = (n: number) => Array.from(new Array(n), (_, i) => i)
 
 const keys = range(NUM_LAYERS)
 

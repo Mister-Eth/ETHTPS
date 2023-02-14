@@ -146,7 +146,7 @@ export class BaseAPI {
             credentials: this.configuration.credentials,
         };
 
-        const overriddenInit: RequestInit = {
+        const overridedInit: RequestInit = {
             ...initParams,
             ...(await initOverrideFn({
                 init: initParams,
@@ -155,13 +155,13 @@ export class BaseAPI {
         };
 
         const init: RequestInit = {
-            ...overriddenInit,
+            ...overridedInit,
             body:
-                isFormData(overriddenInit.body) ||
-                overriddenInit.body instanceof URLSearchParams ||
-                isBlob(overriddenInit.body)
-                    ? overriddenInit.body
-                    : JSON.stringify(overriddenInit.body),
+                isFormData(overridedInit.body) ||
+                overridedInit.body instanceof URLSearchParams ||
+                isBlob(overridedInit.body)
+                    ? overridedInit.body
+                    : JSON.stringify(overridedInit.body),
         };
 
         return { url, init };
@@ -177,7 +177,7 @@ export class BaseAPI {
                 }) || fetchParams;
             }
         }
-        let response: Response | undefined = undefined;
+        let response = undefined;
         try {
             response = await (this.configuration.fetchApi || fetch)(fetchParams.url, fetchParams.init);
         } catch (e) {
