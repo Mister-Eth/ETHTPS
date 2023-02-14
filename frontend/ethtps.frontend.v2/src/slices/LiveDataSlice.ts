@@ -54,11 +54,10 @@ const liveDataSlice = createSlice({
 
     setIncludeSidechains(
       state: ILiveDataModeModel,
-      action: PayloadAction<boolean>,
+      action: PayloadAction<boolean | undefined>,
     ) {
-      if (action.payload === undefined) return state
       storage.cacheItem(action.payload, "includeSidechains")
-      state.includeSidechains = action.payload
+      state.includeSidechains = action.payload ?? false
     },
 
     setLastMinuteData(
