@@ -9,7 +9,7 @@ namespace ETHTPS.Runner
         {
             var services = new[]
             {
-                ServiceCreator.GetTaskRunner(),
+                //ServiceCreator.GetTaskRunner(),
                 ServiceCreator.GetAPI(),
                 ServiceCreator.GetWSAPI()
             };
@@ -23,14 +23,17 @@ namespace ETHTPS.Runner
                 SY = 0
             };
             var w = Window.OpenBox("Services", settings);
-            var consoles = w.SplitColumns(services.Select(x => x.Name).ToArray()).ToList();
-            var windowedServices = services.Select((s, i) => new WindowedService(s, consoles[i]));
-            Console.CancelKeyPress += (sender, e) =>
+            var consoles = w.SplitColumns(services.Select(x => new Split(size.width / services.Length - 1, x.Name)).ToArray()).ToList();
+            var windowedServices = services.Select((s, i) => new WindowedService(s, consoles[i])).ToList();
+            var exit = false;
+            Console.CancelKeyPress += async (sender, e) =>
             {
-                windowedServices.ToList().ForEach(w => w.Kill());
-                Console.Clear();
+                e.Cancel = true;
+                await Task.WhenAll(windowedServices.Select(s => Task.Run(() => s.Kill())));
+                Environment.Exit(0);
             };
-            while (windowedServices.All(x => x.Running))
+            await Task.WhenAll(windowedServices.Select(s => Task.Run(() => s.Start())));
+            while (windowedServices.All(x => x.Running) && !exit)
             {
                 await Task.Delay(-1);
             }

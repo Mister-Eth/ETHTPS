@@ -80,10 +80,6 @@ export class TimeValue implements TV {
     this.x = moment(p?.date)
     this.y = p?.value ?? 0
   }
-
-  toStringTimeValue(format?: string): StringTimeValue {
-    return new StringTimeValue(this.x.toString(), this.y)
-  }
 }
 
 export class StringTimeValue {

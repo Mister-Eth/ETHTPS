@@ -12,24 +12,29 @@ namespace ETHTPS.Runner
         private readonly IConsole _logWindow;
         private List<ExtendedProgressBar> _resourceProgressBars;
         public bool Running => _child.IsRunning;
+        public ServiceState State => _child.State;
 
         public WindowedService(Service child, IConsole window)
         {
             _child = child;
             _window = window;
+            _logWindow = _window;//_window.OpenBox("Log");
+            /*
             _statusWindow = _window.SplitTop("Status");
-            _logWindow = _window.SplitBottom("Log");
             _resourceProgressBars = new List<ExtendedProgressBar>()
             {
                 _child.ResourceUsage.CPU.ToProgressBar(_statusWindow),
                 _child.ResourceUsage.MemoryMB.ToProgressBar(_statusWindow),
                 _child.ResourceUsage.NetworkMbit.ToProgressBar(_statusWindow),
             };
-
+            */
             _child.OutputChanged += _child_OutputChanged;
             _child.OnEvent += _child_OnEvent;
+        }
 
-            if (!child.IsRunning)
+        public void Start()
+        {
+            if (!_child.IsRunning)
             {
                 _child.Start();
                 PrintResourceUse();
@@ -48,6 +53,10 @@ namespace ETHTPS.Runner
                 case ServiceEventType.StateChanged:
                     _logWindow.WriteLine($"State changed to {Enum.Parse<ServiceState>(sender?.ToString() ?? "")}");
                     break;
+                case ServiceEventType.Error:
+                    _logWindow.WriteLine(ConsoleColor.Red, $"Error: {sender}");
+                    _logWindow.ForegroundColor = ConsoleColor.White;
+                    break;
             }
         }
 
@@ -58,6 +67,7 @@ namespace ETHTPS.Runner
 
         private void PrintResourceUse()
         {
+            if (_statusWindow == null) return;
             int padding = 8;
             _statusWindow.PrintAt(0, 0, $"{"CPU: ".PadLeft(padding)}{_child.ResourceUsage.CPU.Value}%");
             _statusWindow.PrintAt(0, 1, $"{"Memory: ".PadLeft(padding)}{_child.ResourceUsage.MemoryMB.Value}MB/{_child.ResourceUsage.MemoryMB.Max}MB");

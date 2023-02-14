@@ -13,12 +13,14 @@ namespace ETHTPS.WSAPI.WebsocketInfra
         private readonly ILogger<WSClientHandler>? _logger;
         private readonly GeneralService? _generalService;
         private readonly IWebsiteStatisticsService? _statisticsService;
+        private readonly DateTime _connectionTime;
 
         public WSClientHandler(ILogger<WSClientHandler>? logger, GeneralService? generalService, IWebsiteStatisticsService? statisticsService)
         {
             _logger = logger;
             _generalService = generalService;
             _statisticsService = statisticsService;
+            _connectionTime = DateTime.Now;
         }
 
         protected override void OnOpen()
@@ -37,7 +39,7 @@ namespace ETHTPS.WSAPI.WebsocketInfra
         {
             base.OnClose(e);
             _statisticsService?.DecrementNumberOfCurrentVisitors();
-            _logger?.LogInformation($"Closed ws connection: " + this.ID);
+            _logger?.LogInformation($"Closed ws connection {ID} after {DateTime.Now - _connectionTime}");
             _logger?.LogInformation($"Remaining: " + this.Sessions.ActiveIDs.Count());
         }
 

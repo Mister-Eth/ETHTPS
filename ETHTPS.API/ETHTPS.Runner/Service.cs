@@ -16,7 +16,9 @@ namespace ETHTPS.Runner
         public string?[] Parameters { get; private set; }
         public bool IsRunning => State != ServiceState.Stopped;
         public SystemResources ResourceUsage { get; private set; } = new();
-        private ServiceState _state;
+        private ServiceState _state = ServiceState.Stopped;
+        private readonly ProcessStartInfo _processStartInfo;
+        private bool _outputsRedirected = false;
         public ServiceState State
         {
             get { return _state; }
@@ -38,19 +40,45 @@ namespace ETHTPS.Runner
                 throw new ArgumentException($"File {_filePath} not found");
 
             _process = new Process();
+            _processStartInfo = new ProcessStartInfo(_filePath)
+            {
+                WorkingDirectory = Directory,
+                Arguments = string.Join(" ", Parameters),
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                CreateNoWindow = true
+            };
+            _process.StartInfo = _processStartInfo;
         }
         public void Start()
         {
+            if (State == ServiceState.Stopped)
+                KillRunningInstances(); //An instance is already running so we have to kill it
+
             State = ServiceState.Starting;
-            _process.StartInfo = new ProcessStartInfo(_filePath, string.Join(" ", Parameters))
+            if (_process.Start())
             {
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
-                CreateNoWindow = true
-            };
-            _process.OutputDataReceived += _process_OutputDataReceived;
-            _process.Start();
-            State = ServiceState.Running;
+                State = ServiceState.Running;
+                if (!_outputsRedirected)
+                {
+                    _process.OutputDataReceived += _process_OutputDataReceived;
+                    _process.ErrorDataReceived += _process_ErrorDataReceived;
+                    _process.BeginErrorReadLine();
+                    _process.BeginOutputReadLine();
+                    _outputsRedirected = true;
+                }
+            }
+        }
+
+        private void _process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            OnEvent?.Invoke(e.Data, ServiceEventType.Error);
+            if (_process.HasExited)
+            {
+                State = ServiceState.Dead;
+                Start();
+            }
         }
 
         private void _process_OutputDataReceived(object sender, DataReceivedEventArgs e)
@@ -66,9 +94,25 @@ namespace ETHTPS.Runner
         public void Kill()
         {
             //Kill
+            OutputChanged?.Invoke(this, $"Terminating {ExecutableName}...");
             State = ServiceState.Stopping;
-            _process.Kill();
+            if (!_process.WaitForExit(TimeSpan.FromSeconds(3)))
+            {
+                _process.Kill();
+                OutputChanged?.Invoke(this, $"Force stopped {ExecutableName}");
+            }
             State = ServiceState.Stopped;
+        }
+
+        private void KillRunningInstances()
+        {
+            var chromeDriverProcesses = Process.GetProcesses().
+    Where(pr => pr.ProcessName == ExecutableName.Replace(".exe", string.Empty));
+
+            foreach (var process in chromeDriverProcesses)
+            {
+                process.Kill();
+            }
         }
     }
 }

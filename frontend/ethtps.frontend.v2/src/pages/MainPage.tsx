@@ -2,8 +2,7 @@ import { DiscordBanner } from "../components/partials/banners/DiscordBanner"
 import { AllProvidersTable } from "../components/tables/all networks/AllProvidersTable"
 import { Container, Paper } from "@mui/material"
 import { useGetMaxDataFromAppStore } from "../hooks/DataHooks"
-import { useState, useEffect } from "react"
-import { ProviderModal } from "../components/partials/dialogs/modals/ProviderModal"
+import { useEffect } from "react"
 import { DataModeButtonGroup } from "../components/buttons/DataModeButtonGroup"
 import {
   useGetSidechainsIncludedFromAppStore,
@@ -20,33 +19,23 @@ import { useGetProvidersFromAppStore } from "../hooks/ProviderHooks"
 import { isMobile } from "react-device-detect"
 import { ProviderModel } from "ethtps.api.client"
 import {
-  useLiveData,
   useGet1mTPS,
   useGet1mGPS,
   useGet1mGTPS,
 } from "../components/instant data animations/hooks"
-import { P5Streamgraph } from "../components/instant data animations/p5streamgraph/P5Streamgraph"
-import { DataResponseModelDictionary } from "../Types.dictionaries"
-import { NivoStreamgraph } from "../components/instant data animations/streamgraph/NivoStreamgraph"
 import { CurrentViewersIcon } from "../components/buttons/CurrentViewersIcon"
 import { useGetExperimentsFromAppStore } from "../components/experiments/ExperimentHooks"
-import { TestTube } from "../components/experiments/TestTube"
 
 export default function MainPage(): JSX.Element {
   const providers = useGetProvidersFromAppStore()
   const max = useGetMaxDataFromAppStore()
   const sidechainsIncluded = useGetSidechainsIncludedFromAppStore()
-  const [showProviderModal, setShowProviderModal] = useState(false)
   const mode = useGetLiveDataModeFromAppStore()
-  const data = useLiveData()
   const [_1mtps, _1mgps, _1mgtps] = [
     useGet1mTPS(),
     useGet1mGPS(),
     useGet1mGTPS(),
   ]
-  const [modalProvider, setModalProvider] = useState<
-    ProviderModel | undefined
-  >()
   const useHandleCellClick = (provider?: ProviderModel, cellName?: string) => {
     if ((cellName as string) === "MaxValue" || (cellName as string) === "Index")
       return
@@ -82,11 +71,7 @@ export default function MainPage(): JSX.Element {
               )}
               <DataModeButtonGroup modeChanged={useSetDataModeMutation} />
             </Paper>
-            <Paper elevation={1}>
-              <NivoStreamgraph
-                initialData={_1mtps as DataResponseModelDictionary}
-              />
-            </Paper>
+            <Paper elevation={1}></Paper>
             <Paper elevation={1}>
               <AllProvidersTable
                 providerData={providers}

@@ -4,29 +4,16 @@ import React, { useEffect, useState } from "react"
 import { IntervalDropdown } from "../dropdowns/IntervalDropdown"
 import { NetworksDropdown } from "../dropdowns/NetworksDropdown"
 import Container from "@mui/material/Container/Container"
-import { ModeDropdown } from "../dropdowns/ModeDropdown"
 import { useGetProviderColorDictionaryFromAppStore } from "../../hooks/ColorHooks"
-import {
-  DataType,
-  TimeValue,
-  ConditionalRender,
-  StringTimeValue,
-} from "../../Types"
-import { Line } from "react-chartjs-2"
-import { CategoryScale, Chart } from "chart.js/auto"
-import "chartjs-adapter-moment"
-import { noGrid } from "./ChartTypes"
+import { DataType, ConditionalRender, StringTimeValue } from "../../Types"
 import { Chip, Paper, Typography } from "@mui/material"
 import { INoDataAvailableEvent } from "../INoDataAvailableEvent"
 import { DoNotDisturbAlt } from "@mui/icons-material"
 import { SpinningArrows } from "../icons/spinning hourglass/SpinningArrows"
 import { DateRangeSelectorDropdown } from "../dropdowns/DateRangeSelectorDropdown"
 import { api } from "../../services/DependenciesIOC"
-import { ModeButton } from "../buttons/ModeButton"
 import { DataModeButtonGroup } from "../buttons/DataModeButtonGroup"
-import { CustomLineChart } from "./CustomLineChart"
 import { useQuery } from "react-query"
-Chart.register(CategoryScale)
 
 interface IProviderDataChartConfiguration extends INoDataAvailableEvent {
   provider: string
@@ -153,14 +140,6 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
               />,
               noData && !loading,
             )}
-            <CustomLineChart
-              data={[
-                {
-                  id: "test",
-                  data: d,
-                },
-              ]}
-            />
           </div>
         </Paper>
       </Container>

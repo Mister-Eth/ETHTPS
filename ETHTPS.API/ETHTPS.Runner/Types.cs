@@ -2,10 +2,10 @@
 {
     public enum ServiceEventType
     {
-        OutputChanged, StateChanged
+        OutputChanged, StateChanged, Error
     }
     public enum ServiceState
     {
-        Stopped, Stopping, Starting, Running
+        Stopped, Stopping, Starting, Running, Dead
     }
 }
