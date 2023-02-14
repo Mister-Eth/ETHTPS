@@ -11,11 +11,8 @@ const experimentSlice = createSlice({
       state: number[],
       action: PayloadAction<number[] | undefined>,
     ) {
-      if (action.payload === undefined) return state
-
       storage.cacheItem(action.payload, "experiments")
-      state.length = 0
-      state = [...action.payload]
+      return action.payload
     },
   },
 })

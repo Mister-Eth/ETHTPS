@@ -7,6 +7,7 @@ using ETHTPS.API.DependencyInjection;
 using ETHTPS.API.Security.Core.Authentication;
 using ETHTPS.API.Security.Core.Policies;
 using ETHTPS.Configuration.Extensions;
+using ETHTPS.Data.Integrations.MSSQL;
 using ETHTPS.WSAPI.Infrastructure.BackgroundTasks;
 using ETHTPS.WSAPI.WebsocketInfra;
 
@@ -45,7 +46,8 @@ websocketServer.AddWebSocketService("/LiveData",
         var scope = app.Services.CreateScope();
         return new WSClientHandler(scope?.ServiceProvider?.GetRequiredService<ILogger<WSClientHandler>>(),
                                        scope?.ServiceProvider?.GetRequiredService<GeneralService>(),
-                                       scope?.ServiceProvider?.GetRequiredService<IWebsiteStatisticsService>());
+                                       scope?.ServiceProvider?.GetRequiredService<IWebsiteStatisticsService>(),
+                                       scope?.ServiceProvider.GetRequiredService<EthtpsContext>());
 
     });
 websocketServer.Start();

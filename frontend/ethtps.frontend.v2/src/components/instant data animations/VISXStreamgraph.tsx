@@ -12,10 +12,11 @@ import { animated, useSpring } from "@react-spring/web"
 
 import useForceUpdate from "./useForceUpdate"
 import generateData from "./generateData"
+import { StreamGraphProps } from "./types"
 
 // constants
-const NUM_LAYERS = 20
-const SAMPLES_PER_LAYER = 200
+const NUM_LAYERS = 10
+const SAMPLES_PER_LAYER = 12
 const BUMPS_PER_LAYER = 10
 export const BACKGROUND = "#ffdede"
 
@@ -29,7 +30,7 @@ const xScale = scaleLinear<number>({
   domain: [0, SAMPLES_PER_LAYER - 1],
 })
 const yScale = scaleLinear<number>({
-  domain: [-30, 50],
+  domain: [-15, 30],
 })
 const colorScale = scaleOrdinal<number, string>({
   domain: keys,
@@ -60,12 +61,6 @@ const patternScale = scaleOrdinal<number, string>({
 type Datum = number[]
 const getY0 = (d: Datum) => yScale(d[0]) ?? 0
 const getY1 = (d: Datum) => yScale(d[1]) ?? 0
-
-export type StreamGraphProps = {
-  width: number
-  height: number
-  animate?: boolean
-}
 
 export default function Streamgraph({
   width,

@@ -2,7 +2,7 @@ import { DiscordBanner } from "../components/partials/banners/DiscordBanner"
 import { AllProvidersTable } from "../components/tables/all networks/AllProvidersTable"
 import { Container, Paper } from "@mui/material"
 import { useGetMaxDataFromAppStore } from "../hooks/DataHooks"
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { DataModeButtonGroup } from "../components/buttons/DataModeButtonGroup"
 import {
   useGetSidechainsIncludedFromAppStore,
@@ -26,6 +26,8 @@ import {
 import { CurrentViewersIcon } from "../components/buttons/CurrentViewersIcon"
 import { useGetExperimentsFromAppStore } from "../components/experiments/ExperimentHooks"
 import Streamgraph from "../components/instant data animations/VISXStreamgraph"
+import { useState } from "react"
+import { CustomVISXStreamgraph } from "../components/instant data animations/CustomVISXStreamgraph"
 
 export default function MainPage(): JSX.Element {
   const providers = useGetProvidersFromAppStore()
@@ -45,7 +47,6 @@ export default function MainPage(): JSX.Element {
     setModalProvider(provider)*/
     window.location.href = "/Providers/" + provider?.name
   }
-  const experimentsAppStoreValue = useGetExperimentsFromAppStore()
   let [searchParams, setSearchParams] = useSearchParams()
   useEffect(() => {
     const params = new URLSearchParams([
@@ -54,6 +55,13 @@ export default function MainPage(): JSX.Element {
     ])
     setSearchParams(createSearchParams(params))
   }, [sidechainsIncluded, mode])
+  const [containerWidth, setContainerWidth] = useState(0)
+  const containerRef = useRef<any>(null)
+  useEffect(() => {
+    setContainerWidth(
+      containerRef.current ? containerRef.current.offsetWidth : 0,
+    )
+  }, [containerRef.current])
   return (
     <>
       <Paper elevation={0}>
@@ -66,14 +74,11 @@ export default function MainPage(): JSX.Element {
                 toggled={useSetSidechainsIncluded}
                 defaultIncluded={sidechainsIncluded}
               />
-              {ConditionalRender(
-                <CurrentViewersIcon />,
-                experimentsAppStoreValue.includes(5),
-              )}
               <DataModeButtonGroup modeChanged={useSetDataModeMutation} />
             </Paper>
-            <Paper elevation={1}>
-              <Streamgraph width={750} height={500} />
+            <Paper ref={containerRef} elevation={1}>
+              <Streamgraph width={containerWidth} height={500} />
+              <CustomVISXStreamgraph width={containerWidth} height={500} />
             </Paper>
             <Paper elevation={1}>
               <AllProvidersTable

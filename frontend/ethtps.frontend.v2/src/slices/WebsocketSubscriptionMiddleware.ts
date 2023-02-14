@@ -19,12 +19,10 @@ const websocketMiddleware: Middleware = (store) => (next) => (action) => {
     store.dispatch(websocketActions.connecting())
 
     rws.addEventListener("open", () => {
-      console.log("ws connected")
       store.dispatch(websocketActions.connected())
     })
 
     rws.addEventListener("close", () => {
-      console.log("ws closed")
       store.dispatch(websocketActions.disconnected())
       store.dispatch(websocketActions.connecting())
     })
@@ -45,7 +43,7 @@ const websocketMiddleware: Middleware = (store) => (next) => (action) => {
             break
         }
       } catch (e) {
-        console.log("Error: " + e)
+        console.log("WS Error: " + e)
       }
     })
   }

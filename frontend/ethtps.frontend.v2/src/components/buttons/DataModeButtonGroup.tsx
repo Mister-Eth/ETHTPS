@@ -1,5 +1,5 @@
 import { Fragment, useState } from "react"
-import { DataType, inline } from "../../Types"
+import { ConditionalRender, DataType, inline } from "../../Types"
 import { CustomButtonGroup } from "./CustomButtonGroup"
 import { Box, IconButton, Tooltip, Typography } from "@mui/material"
 import {
@@ -8,6 +8,8 @@ import {
   Numbers,
   PhotoCamera,
 } from "@mui/icons-material"
+import { CurrentViewersIcon } from "./CurrentViewersIcon"
+import { useGetExperimentsFromAppStore } from "../experiments/ExperimentHooks"
 
 interface IDataModeButtonGroupConfiguration {
   modeChanged: (mode: DataType) => void
@@ -21,9 +23,14 @@ export function DataModeButtonGroup(model: IDataModeButtonGroupConfiguration) {
     setMode(mode)
     model.modeChanged(mode)
   }
+  const experimentsAppStoreValue = useGetExperimentsFromAppStore()
   return (
     <Fragment>
       <Box sx={{ float: "right" }}>
+        {ConditionalRender(
+          <CurrentViewersIcon />,
+          experimentsAppStoreValue.includes(5),
+        )}
         <Tooltip
           arrow
           placement={"top"}

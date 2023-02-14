@@ -59,7 +59,21 @@
 }
 
 .appear {
-  animation: appear 2s;
+  animation: appear 2s forwards;
+}
+
+.disappear {
+  animation: disappear 2s 2s forwards;
+}
+
+@keyframes disappear {
+  0% {
+    opacity: 100%;
+  }
+
+  100% {
+    opacity: 0%;
+  }
 }
 
 @keyframes appear {

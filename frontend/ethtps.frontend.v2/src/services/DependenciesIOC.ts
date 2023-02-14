@@ -42,7 +42,8 @@ export function tryLoadAPIKeyFromLocalStorage() {
   }
 }
 
-export const websocketServiceURL = "ws://localhost:2000/LiveData"
+export const websocketServiceURL =
+  "ws://localhost:2000/LiveData?XAPIKEY=" + getAPIKey()
 
 export const queryClient = new QueryClient()
 export const themeProvider = new StorageThemeProvider()
