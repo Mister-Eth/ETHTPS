@@ -7,7 +7,7 @@ using Flux.Net;
 
 using Block = ETHTPS.Data.Core.Models.DataEntries.Block;
 
-namespace ETHTPS.Data.Integrations.InfluxIntegration.HistoricalDataProviders
+namespace ETHTPS.Data.Integrations.InfluxIntegration.HistoricalDataServices
 {
     public class HistoricalInfluxProvider : IAsyncHistoricalBlockInfoProvider
     {

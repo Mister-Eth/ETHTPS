@@ -1,16 +1,17 @@
-﻿using ETHTPS.API.BIL.Infrastructure.Services.DataProviders;
+﻿using ETHTPS.API.BIL.Infrastructure.Services.DataServices;
 using ETHTPS.API.Core.Services;
 using ETHTPS.Data.Integrations.MSSQL;
-using ETHTPS.Data.Integrations.MSSQL.HistoricalDataProviders;
+using ETHTPS.Data.Integrations.MSSQL.HistoricalDataServices;
 using ETHTPS.Data.Core.Models.Queries.Data.Requests;
 using ETHTPS.Data.Core.Models.ResponseModels.DataPoints;
+using ETHTPS.API.BIL.Infrastructure.Services.DataServices.GTPS;
 
 namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Data
 {
-    public class GasAdjustedTPSService : HistoricalMethodsServiceBase, IPSService
+    public class GasAdjustedTPSService : HistoricalMethodsServiceBase, IGTPSService
     {
         private readonly GPSService _gpsService;
-        public GasAdjustedTPSService(GPSService gpsService, EthtpsContext context, IEnumerable<IHistoricalDataProvider> historicalDataProviders) : base(context, historicalDataProviders)
+        public GasAdjustedTPSService(GPSService gpsService, EthtpsContext context, IEnumerable<IHistoricalDataProvider> historicalDataServices) : base(context, historicalDataServices)
         {
             _gpsService = gpsService;
         }
@@ -77,6 +78,11 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Data
                 });
             }
             return gasAdjustedTPS;
+        }
+
+        public ETHTPS.Data.Core.Models.Queries.Responses.DataResponseModel GetGTPS(DataRequestModel requestModel)
+        {
+            throw new NotImplementedException();
         }
     }
 }

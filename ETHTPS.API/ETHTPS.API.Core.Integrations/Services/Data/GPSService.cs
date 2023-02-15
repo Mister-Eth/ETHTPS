@@ -1,15 +1,16 @@
-﻿using ETHTPS.API.BIL.Infrastructure.Services.DataProviders;
+﻿using ETHTPS.API.BIL.Infrastructure.Services.DataServices;
 using ETHTPS.API.Core.Services;
 using ETHTPS.Data.Integrations.MSSQL;
-using ETHTPS.Data.Integrations.MSSQL.HistoricalDataProviders;
+using ETHTPS.Data.Integrations.MSSQL.HistoricalDataServices;
 using ETHTPS.Data.Core.Models.Queries.Data.Requests;
 using ETHTPS.Data.Core.Models.ResponseModels.DataPoints;
+using ETHTPS.API.BIL.Infrastructure.Services.DataServices.GPS;
 
 namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Data
 {
-    public class GPSService : HistoricalMethodsServiceBase, IPSService
+    public class GPSService : HistoricalMethodsServiceBase, IGPSService
     {
-        public GPSService(EthtpsContext context, IEnumerable<IHistoricalDataProvider> historicalDataProviders) : base(context, historicalDataProviders)
+        public GPSService(EthtpsContext context, IEnumerable<IHistoricalDataProvider> historicalDataServices) : base(context, historicalDataServices)
         {
         }
 
@@ -135,6 +136,11 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Data
                 }
             }
             return result;
+        }
+
+        public ETHTPS.Data.Core.Models.Queries.Responses.DataResponseModel GetGPS(DataRequestModel requestModel)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -14,8 +14,9 @@ using Coravel;
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseNLog();
 var services = builder.Services;
-services.AddMixedCoreServices()
-        .AddDatabaseContext(CURRENT_APP_NAME)
+services.AddDatabaseContext(CURRENT_APP_NAME)
+        .AddDataProviderServices(DatabaseProvider.MSSQL)
+        .AddMixedCoreServices()
         .AddCustomCORSPolicies()
         .AddAPIKeyAuthenticationAndAuthorization()
         .AddControllers().AddControllersAsServices();
@@ -23,7 +24,7 @@ services.AddMixedCoreServices()
 services.AddSwagger()
         .AddScoped<IInfluxWrapper, InfluxWrapper>()
         .AddDataUpdaterStatusService()
-        .AddDataProviders()
+        .AddDataServices()
         .WithStore(DatabaseProvider.InfluxDB)
         .AddRunner(BackgroundServiceType.Coravel)
         .RegisterMicroservice(CURRENT_APP_NAME, "Task runner web app");

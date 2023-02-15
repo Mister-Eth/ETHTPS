@@ -1,5 +1,5 @@
 ﻿using ETHTPS.Data.Integrations.MSSQL;
-using ETHTPS.Data.Integrations.MSSQL.HistoricalDataProviders;
+using ETHTPS.Data.Integrations.MSSQL.HistoricalDataServices;
 using ETHTPS.Data.Core.Extensions.StringExtensions;
 using ETHTPS.Data.ResponseModels;
 using ETHTPS.Data.Core;
@@ -19,7 +19,7 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services
         private readonly GasAdjustedTPSService _gasAdjustedTPSService;
         private readonly IDataUpdaterStatusService _dataUpdaterStatusService;
 
-        public GeneralService(TPSService tpsService, GPSService gpsService, GasAdjustedTPSService gasAdjustedTPSService, EthtpsContext context, IEnumerable<IHistoricalDataProvider> historicalDataProviders, IDataUpdaterStatusService dataUpdaterStatusService) : base(context, historicalDataProviders)
+        public GeneralService(TPSService tpsService, GPSService gpsService, GasAdjustedTPSService gasAdjustedTPSService, EthtpsContext context, IEnumerable<IHistoricalDataProvider> historicalDataServices, IDataUpdaterStatusService dataUpdaterStatusService) : base(context, historicalDataServices)
         {
             _tpsService = tpsService;
             _gpsService = gpsService;

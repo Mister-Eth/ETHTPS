@@ -4,7 +4,7 @@ using ETHTPS.Data.Core.Models.Queries.Data.Requests;
 
 using System.Collections.Generic;
 
-namespace ETHTPS.API.BIL.Infrastructure.Services.DataProviders
+namespace ETHTPS.API.BIL.Infrastructure.Services.DataServices
 {
     /// <summary>
     /// Represents a (p)er-(s)econd controller. This interface is used for making sure both TPS and GPS controller methods always return the same types.

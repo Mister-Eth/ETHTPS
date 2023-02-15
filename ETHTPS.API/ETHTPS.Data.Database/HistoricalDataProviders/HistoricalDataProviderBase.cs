@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ETHTPS.Data.Integrations.MSSQL.HistoricalDataProviders
+namespace ETHTPS.Data.Integrations.MSSQL.HistoricalDataServices
 {
     public abstract class HistoricalTimedTPSAndGasDataProviderBase<TTargetHistoricalData> : IHistoricalDataProvider
         where TTargetHistoricalData : TimedTPSAndGasData

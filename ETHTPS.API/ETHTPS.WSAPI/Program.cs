@@ -1,6 +1,7 @@
 using Coravel;
 
 using ETHTPS.API.BIL.Infrastructure.Services;
+using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater;
 using ETHTPS.API.Core.Integrations.MSSQL.Services;
 using ETHTPS.API.Core.Middlewares;
 using ETHTPS.API.DependencyInjection;
@@ -22,6 +23,7 @@ builder.Services.AddCustomCORSPolicies()
                 .AddDatabaseContext(APP_NAME)
                 .AddSwagger()
                 .AddAPIKeyAuthenticationAndAuthorization()
+                .AddDataProviderServices(DatabaseProvider.MSSQL)
                 .AddMixedCoreServices()
                 .AddDataUpdaterStatusService()
                 .AddQueue()

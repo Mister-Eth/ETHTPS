@@ -13,23 +13,23 @@ namespace ETHTPS.API.Controllers
     [Route("api/[controller]/[action]")]
     public class ChartDataController : APIControllerBase
     {
-        private readonly IChartDataProviderService _chartDataProviderService;
+        private readonly IChartDataServiceservice _chartDataServiceservice;
 
-        public ChartDataController(IChartDataProviderService chartDataProviderService)
+        public ChartDataController(IChartDataServiceservice chartDataServiceservice)
         {
-            _chartDataProviderService = chartDataProviderService;
+            _chartDataServiceservice = chartDataServiceservice;
         }
 
         [HttpGet]
         public StreamchartModel GetStreamchartData([FromQuery] ChartDataRequestModel model)
         {
-            return _chartDataProviderService.GetStreamchartData(model);
+            return _chartDataServiceservice.GetStreamchartData(model);
         }
 
         [HttpGet]
         public StackedChartModel GetStackedChartData([FromQuery] ChartDataRequestModel model)
         {
-            return _chartDataProviderService.GetStackedChartData(model);
+            return _chartDataServiceservice.GetStackedChartData(model);
         }
     }
 }

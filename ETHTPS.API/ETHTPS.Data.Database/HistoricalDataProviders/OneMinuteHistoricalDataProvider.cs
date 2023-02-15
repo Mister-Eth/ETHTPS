@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ETHTPS.Data.Integrations.MSSQL.HistoricalDataProviders
+namespace ETHTPS.Data.Integrations.MSSQL.HistoricalDataServices
 {
     public class OneMinuteHistoricalDataProvider : HistoricalTimedTPSAndGasDataProviderBase<TpsandGasDataMinute>
     {

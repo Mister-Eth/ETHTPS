@@ -16,6 +16,7 @@ using Coravel.Queuing.Interfaces;
 using ETHTPS.Data.Integrations.MSSQL;
 using Microsoft.Extensions.Logging;
 using ETHTPS.Services.BackgroundTasks.Recurring.Aggregated;
+using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater;
 
 namespace ETHTPS.API
 {
@@ -42,12 +43,13 @@ namespace ETHTPS.API
                     .AddMemoryCache()
                     .AddAPIKeyProvider()
                     .AddAPIKeyAuthenticationAndAuthorization()
+                    .AddDataProviderServices(DatabaseProvider.MSSQL)
                     .AddMixedCoreServices()
                     .AddQueue()
                     .AddCache()
                     .AddScoped<AggregatedEndpointStatsBuilder>()
                     .AddInfluxHistoricalDataProvider() //Not working r/n
-                    .AddMSSQLHistoricalDataProviders()
+                    .AddMSSQLHistoricalDataServices()
                     .RegisterMicroservice(APP_NAME, "General API");
             services.AddDataUpdaterStatusService();
 

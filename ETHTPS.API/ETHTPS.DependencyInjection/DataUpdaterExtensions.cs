@@ -62,7 +62,7 @@ namespace ETHTPS.API.DependencyInjection
             typeof(DeversiFiBlockInfoProvider),
             typeof(PolygonHermezBlockInfoProvider),
         };
-        public static IServiceCollection AddDataProviders(this IServiceCollection services) => services.AddScoped(_enabledUpdaters);
+        public static IServiceCollection AddDataServices(this IServiceCollection services) => services.AddScoped(_enabledUpdaters);
         public static IServiceCollection AddRunner(this IServiceCollection services, BackgroundServiceType type)
         {
             switch (type)

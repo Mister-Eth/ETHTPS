@@ -1,6 +1,6 @@
 ﻿using ETHTPS.API.BIL.Infrastructure.Services.BlockInfo;
 using ETHTPS.Data.Integrations.InfluxIntegration;
-using ETHTPS.Data.Integrations.MSSQL.HistoricalDataProviders;
+using ETHTPS.Data.Integrations.MSSQL.HistoricalDataServices;
 using ETHTPS.Data.Core.Models.Queries;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -15,18 +15,18 @@ namespace ETHTPS.Tests.DataTransformation
 {
     public class DataTransformationTests : TestBase
     {
-        private IEnumerable<IHistoricalDataProvider> _dataProviders;
+        private IEnumerable<IHistoricalDataProvider> _DataServices;
 
         [SetUp]
         public void Setup()
         {
-            _dataProviders = ServiceProvider.GetRequiredService<IEnumerable<IHistoricalDataProvider>>();
+            _DataServices = ServiceProvider.GetRequiredService<IEnumerable<IHistoricalDataProvider>>();
         }
 
         [Test]
         public void NotNullTest()
         {
-            Assert.That(_dataProviders != null);
+            Assert.That(_DataServices != null);
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace ETHTPS.Tests.DataTransformation
         {
             Assert.DoesNotThrow(() =>
             {
-                //   _dataProviders.GetData(ProviderQueryModel.All);
+                //   _DataServices.GetData(ProviderQueryModel.All);
             });
         }
     }

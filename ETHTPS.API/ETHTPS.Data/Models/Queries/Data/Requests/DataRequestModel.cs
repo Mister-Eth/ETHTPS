@@ -1,4 +1,4 @@
-﻿using ETHTPS.Data.Core.Models.DataPoints.XYPoints.Attributes;
+﻿using ETHTPS.Data.Core.Models.DataPoints.XYPoints;
 
 using System;
 
@@ -10,5 +10,6 @@ namespace ETHTPS.Data.Core.Models.Queries.Data.Requests
         public DateTime? EndDate { get; set; }
         public BucketOptions BucketOptions { get; set; } = new();
         public XPointType ReturnTypeXAxisType { get; set; } = XPointType.Date;
+        public ReturnCollectionType ReturnCollectionType { get; set; }
     }
 }

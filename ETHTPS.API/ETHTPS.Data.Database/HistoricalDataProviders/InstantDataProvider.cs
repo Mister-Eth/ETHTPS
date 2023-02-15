@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ETHTPS.Data.Integrations.MSSQL.HistoricalDataProviders
+namespace ETHTPS.Data.Integrations.MSSQL.HistoricalDataServices
 {
     public class InstantDataProvider : IHistoricalDataProvider
     {

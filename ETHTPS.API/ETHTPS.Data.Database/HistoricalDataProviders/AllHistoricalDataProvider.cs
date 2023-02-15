@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ETHTPS.Data.Integrations.MSSQL.HistoricalDataProviders
+namespace ETHTPS.Data.Integrations.MSSQL.HistoricalDataServices
 {
     public class AllHistoricalDataProvider : HistoricalTimedTPSAndGasDataProviderBase<TpsandGasDataAll>
     {

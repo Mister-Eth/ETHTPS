@@ -1,7 +1,7 @@
 ﻿using Castle.Core.Logging;
 
 using ETHTPS.API.BIL.Infrastructure.Services.ChartData;
-using ETHTPS.API.BIL.Infrastructure.Services.DataProviders;
+using ETHTPS.API.BIL.Infrastructure.Services.DataServices;
 using ETHTPS.API.Core.Integrations.MSSQL.Services.Data;
 using ETHTPS.Data.Core;
 using ETHTPS.Data.Core.Models.Queries.Data.Requests;
@@ -16,15 +16,15 @@ using System.Linq;
 
 namespace ETHTPS.API.Core.Integrations.MSSQL.Services
 {
-    public class ChartDataProviderService : IChartDataProviderService
+    public class ChartDataServiceservice : IChartDataServiceservice
     {
         private readonly TPSService _tpsService;
         private readonly GPSService _gpsService;
         private readonly GasAdjustedTPSService _gtpsService;
         private readonly GeneralService _generalService;
-        private readonly ILogger<ChartDataProviderService> _logger;
+        private readonly ILogger<ChartDataServiceservice> _logger;
 
-        public ChartDataProviderService(TPSService tpsService, GPSService gpsService, GasAdjustedTPSService gtpsService, GeneralService generalService, ILogger<ChartDataProviderService> logger)
+        public ChartDataServiceservice(TPSService tpsService, GPSService gpsService, GasAdjustedTPSService gtpsService, GeneralService generalService, ILogger<ChartDataServiceservice> logger)
         {
             _tpsService = tpsService;
             _gpsService = gpsService;

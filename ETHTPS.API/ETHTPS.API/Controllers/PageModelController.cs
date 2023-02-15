@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using System.Linq;
 using ETHTPS.API.Core.Integrations.MSSQL.Services.Data;
-using ETHTPS.API.BIL.Infrastructure.Services.DataProviders;
+using ETHTPS.API.BIL.Infrastructure.Services.DataServices;
 using ETHTPS.Data.Core.Models.Queries.Data.Requests;
 
 namespace ETHTPS.API.Controllers
