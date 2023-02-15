@@ -28,6 +28,7 @@ import { useGetExperimentsFromAppStore } from "../components/experiments/Experim
 import Streamgraph from "../components/instant data animations/VISXStreamgraph"
 import { useState } from "react"
 import { CustomVISXStreamgraph } from "../components/instant data animations/CustomVISXStreamgraph"
+import { MultiProviderVSIXChart } from "../components/charts/MultiProviderVSIXChart"
 
 export default function MainPage(): JSX.Element {
   const providers = useGetProvidersFromAppStore()
@@ -39,14 +40,7 @@ export default function MainPage(): JSX.Element {
     useGet1mGPS(),
     useGet1mGTPS(),
   ]
-  const useHandleCellClick = (provider?: ProviderModel, cellName?: string) => {
-    if ((cellName as string) === "MaxValue" || (cellName as string) === "Index")
-      return
-    /*
-    setShowProviderModal(true)
-    setModalProvider(provider)*/
-    window.location.href = "/Providers/" + provider?.name
-  }
+  const useHandleCellClick = (provider?: ProviderModel, cellName?: string) => {}
   let [searchParams, setSearchParams] = useSearchParams()
   useEffect(() => {
     const params = new URLSearchParams([
@@ -69,6 +63,9 @@ export default function MainPage(): JSX.Element {
         <>
           <br />
           <Container maxWidth={"md"}>
+            <Paper elevation={1}>
+              <MultiProviderVSIXChart />
+            </Paper>
             <Paper elevation={1}>
               <SidechainToggleButton
                 toggled={useSetSidechainsIncluded}

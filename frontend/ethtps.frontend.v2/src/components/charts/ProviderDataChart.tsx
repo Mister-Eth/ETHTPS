@@ -1,7 +1,7 @@
 import "react-date-range/dist/styles.css" // main style file
 import "react-date-range/dist/theme/default.css" // theme css
 import React, { useEffect, useState } from "react"
-import { IntervalDropdown } from "../dropdowns/IntervalDropdown"
+import { ProviderIntervalDropdown } from "../dropdowns/ProviderIntervalDropdown"
 import { NetworksDropdown } from "../dropdowns/NetworksDropdown"
 import Container from "@mui/material/Container/Container"
 import { useGetProviderColorDictionaryFromAppStore } from "../../hooks/ColorHooks"
@@ -97,7 +97,7 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
             usesDatePicker,
           )}
           <div style={{ float: "right" }}>
-            <IntervalDropdown
+            <ProviderIntervalDropdown
               hidden={noData}
               onNoDataAvailable={(p) => {
                 setNoData(true)

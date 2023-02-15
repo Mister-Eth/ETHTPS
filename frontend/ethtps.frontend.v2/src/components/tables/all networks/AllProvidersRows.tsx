@@ -13,6 +13,7 @@ import {
 } from "../../../hooks/LiveDataHooks"
 import { useEffect, useState } from "react"
 import { range } from "lodash"
+import { Link } from "react-router-dom"
 
 export function AllProvidersRows(model: IProviderTableModel): JSX.Element {
   const hasData = (model.providerData?.length as number) > 0

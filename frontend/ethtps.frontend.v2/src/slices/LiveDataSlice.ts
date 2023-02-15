@@ -24,9 +24,9 @@ const liveDataSlice = createSlice({
   reducers: {
     setCurrentVisitors(
       state: ILiveDataModeModel,
-      action: PayloadAction<number>,
+      action: PayloadAction<number | undefined>,
     ) {
-      state.currentVisitors = action.payload
+      state.currentVisitors = action.payload ?? 1
     },
 
     setLiveDataSmoothing(

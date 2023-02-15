@@ -1,59 +1,46 @@
+import { Container, Typography } from "@mui/material"
+import { Fragment } from "react"
+import { config } from "react-transition-group"
+import { DataType, shortTimeIntervalToUIFormat } from "../../Types"
+import { toShortString_2, fromShortString_2 } from "../../models/TimeIntervals"
 import { Dropdown } from "./Dropdown"
-import { fromShortString_2, toShortString_2 } from "../../models/TimeIntervals"
-import { IDropdownCallbackWithProvider } from "./IDropdownCallbackWithProvider"
-import { Typography } from "@mui/material"
-import { useQuery } from "react-query"
-import { api } from "../../services/DependenciesIOC"
-import { Fragment, useState, useEffect } from "react"
-import { IDropdownConfig } from "./IDropdownConfig"
-import { shortTimeIntervalToUIFormat } from "../../Types"
-import { INoDataAvailableEvent } from "../INoDataAvailableEvent"
-import { isMobile } from "react-device-detect"
+import { DataModeButtonGroup } from "../buttons/DataModeButtonGroup"
 
-interface IIntervalDropdownConfig
-  extends IDropdownCallbackWithProvider<string>,
-    IDropdownConfig<string>,
-    INoDataAvailableEvent {
-  onDataLoaded?: (availableIntervals: string[]) => void
+interface IIntervalDropdownProperties {
+  onChanged?: (value: string) => void
 }
 
-export function IntervalDropdown(config: IIntervalDropdownConfig) {
-  const [intervals, setIntervals] = useState<string[]>()
-  const { data, status } = useQuery(
-    `${config.provider}-intervals`,
-    () => api.getIntervalsWithData(config.provider as string),
-    {},
-  )
-  useEffect(() => {
-    if (status === "success") {
-      setIntervals(data)
-      if (data === undefined || data.length === 0) {
-        if (config.onNoDataAvailable !== undefined) {
-          config.onNoDataAvailable(config.provider)
-        }
-      } else {
-        if (config.onDataLoaded !== undefined) {
-          config.onDataLoaded(data)
-        }
-      }
-    }
-  }, [data, status])
+export function IntervalDropdown(config: IIntervalDropdownProperties) {
+  const intervals = [
+    "OneMinute",
+    "OneHour",
+    "OneDay",
+    "OneWeek",
+    "OneMonth",
+    "OneYear",
+    "All",
+    "Custom",
+  ]
+  const modeChanged = (mode: DataType) => {}
   return (
-    <Fragment>
-      <Dropdown<string>
-        hidden={intervals === undefined}
-        options={
-          intervals === undefined
-            ? []
-            : intervals
-                ?.map((x) => toShortString_2(x))
-                .concat(true ? [] : ["Custom"]) //We'll work on this later on
-        }
-        selectionChanged={config.selectionChanged}
-        conversionFunction={(x) => fromShortString_2(x)}
-        uiFormatFunction={shortTimeIntervalToUIFormat}
-        hoverText={<Typography>{"Select time interval"}</Typography>}
-      />
-    </Fragment>
+    <Container
+      sx={{
+        borderThickness: "1px",
+        borderColor: "primary",
+        borderBlockColor: "primary",
+      }}
+    >
+      <DataModeButtonGroup modeChanged={modeChanged} />
+      <div style={{ float: "right" }}>
+        <Dropdown<string>
+          options={intervals?.map((x) => toShortString_2(x))}
+          selectionChanged={config.onChanged}
+          conversionFunction={(x) => fromShortString_2(x)}
+          uiFormatFunction={shortTimeIntervalToUIFormat}
+          hoverText={<Typography>{"Select time interval"}</Typography>}
+        />
+      </div>
+      <div className="parent"></div>
+    </Container>
   )
 }

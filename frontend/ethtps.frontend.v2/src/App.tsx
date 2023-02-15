@@ -5,9 +5,15 @@ import { About } from "./pages/About"
 import MainPage from "./pages/MainPage"
 import { Fragment } from "react"
 import { RecaptchaAPIKeyAndDataLoader } from "./components/RecaptchaAPIKeyAndDataLoader"
-import { ProviderPage } from "./pages/provider/ProviderPage"
+import {
+  ProviderPage,
+  providerPageHandler,
+  providerPageTabs,
+} from "./pages/provider/ProviderPage"
 import { TestTube } from "./components/experiments/TestTube"
 import { WSTestPage } from "./pages/WSTestPage"
+import { ProviderOverview } from "./pages/provider/ProviderOverview"
+import { TabPanel } from "./components/partials/TabPanel"
 
 export default function App(): JSX.Element {
   return (
@@ -16,8 +22,12 @@ export default function App(): JSX.Element {
       <RecaptchaAPIKeyAndDataLoader />
       <Routes>
         <Route path={"/"} element={<MainPage />} />
-        <Route path={"/Providers/"} element={<ProviderPage />}>
-          <Route path={"*"} element={<ProviderPage />} />
+        <Route path={"/Providers/:providerName/*"}>
+          <Route
+            path={":subsection/*"}
+            element={<ProviderPage />}
+            handle={providerPageHandler}
+          />
         </Route>
         <Route path={"/About"} element={<About />} />
         <Route path={"/WSTest"} element={<WSTestPage />} />

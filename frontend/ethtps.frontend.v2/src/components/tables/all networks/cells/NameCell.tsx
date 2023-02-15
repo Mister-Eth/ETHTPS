@@ -10,6 +10,7 @@ import { tableCellTypographyStandard } from "./Typography.types"
 import { useEffect } from "react"
 import { ConditionalRender } from "../../../../Types"
 import * as icons from "@mui/icons-material"
+import { Link } from "react-router-dom"
 
 export function NameCell(config: ICustomCellConfiguration) {
   const colorDictionary = useGetProviderColorDictionaryFromAppStore()
@@ -41,21 +42,25 @@ export function NameCell(config: ICustomCellConfiguration) {
       >
         <>
           <div className={"box"}>
-            <img
-              alt={`${config.provider?.name} icon`}
-              src={`provider-icons/${config.provider?.name}.png`}
-              className={"tiny-img inline"}
-              style={{ marginRight: "15px" }}
-            ></img>
-            <Typography
-              className={`inline ${
-                config.clickCallback !== undefined ? "pointable" : ""
-              }`}
-              color={color}
-              {...tableCellTypographyStandard}
-            >
-              {config.provider?.name}
-            </Typography>
+            <Link to={`/Providers/${config.provider?.name as string}/Overview`}>
+              <div>
+                <img
+                  alt={`${config.provider?.name} icon`}
+                  src={`provider-icons/${config.provider?.name}.png`}
+                  className={"tiny-img inline"}
+                  style={{ marginRight: "15px" }}
+                ></img>
+                <Typography
+                  className={`inline ${
+                    config.clickCallback !== undefined ? "pointable" : ""
+                  }`}
+                  color={color}
+                  {...tableCellTypographyStandard}
+                >
+                  {config.provider?.name}
+                </Typography>
+              </div>
+            </Link>
             {ConditionalRender(
               <>
                 <Tooltip

@@ -1,80 +1,91 @@
 import { ProviderOverview } from "./ProviderOverview"
 import { Tabs, Tab, Box, Typography, Paper, Container } from "@mui/material"
 import { ProviderModel } from "ethtps.api.client"
-import { useState, useEffect } from "react"
-import { useLocation } from "react-router"
+import { useState, useEffect, Fragment } from "react"
+import {
+  Outlet,
+  Route,
+  Router,
+  Routes,
+  useLocation,
+  useParams,
+  useResolvedPath,
+} from "react-router"
 import { useGetProvidersFromAppStore } from "../../hooks/ProviderHooks"
 import { TabPanelProps, a11yProps } from "../../components/tab panel/TabPanel"
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  )
+import { ProviderAnalysis } from "./ProviderAnalysis"
+import { TabPanel } from "../../components/partials/TabPanel"
+import { Link } from "react-router-dom"
+
+interface IProviderPageModel extends TabPanelProps {
+  provider?: string
 }
-export function ProviderPage(model: IProviderPageModel) {
-  const [value, setValue] = useState(0)
+export const providerPageHandler = (url: any) => {
+  console.log(url)
+}
+export const providerPageTabs = ["Overview", "Details", "Analysis"]
+
+export function ProviderPage({ index }: IProviderPageModel) {
+  const { providerName, subsection } = useParams()
+  const [currentValue, setCurrentValue] = useState(
+    providerPageTabs.indexOf(subsection ?? "Overview"),
+  )
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue)
+    setCurrentValue(newValue)
+    window.history.pushState(
+      providerPageTabs[newValue],
+      `${providerName} ${providerPageTabs[newValue].toLowerCase()}`,
+      `/Providers/${providerName}/${providerPageTabs[newValue]}`,
+    )
   }
-  const location = useLocation()
-  const [validProvider, setValidProvider] = useState(true)
-  const [provider, setProvider] = useState<ProviderModel>()
-  const providerName = location.pathname
-    .toUpperCase()
-    .replace("/PROVIDERS/", "")
-    .replace("%20", " ")
-  const providers = useGetProvidersFromAppStore()
-  useEffect(() => {
-    if (providers && providerName && !provider) {
-      let x = providers.find(
-        (y) => y.name?.toUpperCase() === providerName.toUpperCase(),
-      )
 
-      if (x) {
-        // If we don't copy it, React calls this function again and again
-        let p = {
-          name: x?.name,
-          type: x.type,
-        }
-        setProvider(p)
-      }
-    }
-  }, [providers])
   return (
     <>
       <Container maxWidth={"lg"}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
-            value={value}
+            value={currentValue}
             onChange={handleChange}
             aria-label="basic tabs example"
           >
-            <Tab label="Overview" {...a11yProps(0)} />
-            <Tab label="Details" {...a11yProps(1)} />
-            <Tab label="Analysis" {...a11yProps(2)} />
+            <Tab
+              value={0}
+              label={
+                <Link to={`/Providers/${providerName}/Overview`}>
+                  {providerPageTabs[0]}
+                </Link>
+              }
+              {...a11yProps(0)}
+            />
+            <Tab
+              value={1}
+              label={
+                <Link to={`/Providers/${providerName}/Details`}>
+                  {providerPageTabs[1]}
+                </Link>
+              }
+              {...a11yProps(1)}
+            />
+            <Tab
+              value={2}
+              label={
+                <Link to={`/Providers/${providerName}/Analysis`}>
+                  {providerPageTabs[2]}
+                </Link>
+              }
+              {...a11yProps(2)}
+            />
           </Tabs>
         </Box>
-        <TabPanel value={value} index={0}>
-          <ProviderOverview provider={provider?.name as string} />
+        <TabPanel value={currentValue} index={0}>
+          <ProviderOverview provider={providerName as string} />
         </TabPanel>
-        <TabPanel value={value} index={1}>
-          Item Two
+        <TabPanel value={currentValue} index={1}>
+          <>Item Two</>
         </TabPanel>
-        <TabPanel value={value} index={2}>
-          Item Three
+        <TabPanel value={currentValue} index={2}>
+          <ProviderAnalysis provider={providerName as string} />
         </TabPanel>
       </Container>
     </>
