@@ -12,7 +12,7 @@ using System.Diagnostics;
 
 using WebSocketSharp;
 
-namespace ETHTPS.API.BIL.Tests.WSTests
+namespace ETHTPS.Tests.WSTests
 {
     public class WebsocketsTests : TestBase
     {

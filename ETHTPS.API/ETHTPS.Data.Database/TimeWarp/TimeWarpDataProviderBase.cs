@@ -1,6 +1,6 @@
 ﻿using ETHTPS.Data.Integrations.MSSQL.TimeWarp.Models;
 using ETHTPS.Data.Models.Query;
-using ETHTPS.Data.ResponseModels;
+using ETHTPS.Data.Models.ResponseModels.DataPoints;
 
 using Microsoft.EntityFrameworkCore;
 

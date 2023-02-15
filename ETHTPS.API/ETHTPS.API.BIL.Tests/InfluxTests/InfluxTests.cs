@@ -6,7 +6,7 @@ using ETHTPS.Data.Models.DataUpdater;
 
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ETHTPS.API.BIL.Tests.ServiceTests
+namespace ETHTPS.Tests.ServiceTests
 {
     public class InfluxTests : TestBase
     {

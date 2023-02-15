@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace ETHTPS.Data.ResponseModels
+namespace ETHTPS.Data.Models.ResponseModels.DataPoints
 {
     public class DataResponseModel
     {

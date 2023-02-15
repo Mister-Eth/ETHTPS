@@ -1,7 +1,7 @@
-﻿using ETHTPS.API.BIL.Infrastructure.Services;
+﻿using ETHTPS.API.BIL.Infrastructure.Services.DataProviders;
 using ETHTPS.API.Core.Integrations.MSSQL.Services.Data;
 using ETHTPS.Data.Models.Query;
-using ETHTPS.Data.ResponseModels;
+using ETHTPS.Data.Models.ResponseModels.DataPoints;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,25 +22,25 @@ namespace ETHTPS.API.Controllers
         [HttpGet]
         public IDictionary<string, IEnumerable<DataResponseModel>> GeMonthlyDataByYear([FromQuery] ProviderQueryModel model, int year)
         {
-            return ((IPSController<DataPoint, DataResponseModel>)_gpsService).GeMonthlyDataByYear(model, year);
+            return ((IPSDataProvider<DataPoint, DataResponseModel>)_gpsService).GeMonthlyDataByYear(model, year);
         }
 
         [HttpGet]
         public IDictionary<string, IEnumerable<DataResponseModel>> Get([FromQuery] ProviderQueryModel model, string interval)
         {
-            return ((IPSController<DataPoint, DataResponseModel>)_gpsService).Get(model, interval);
+            return ((IPSDataProvider<DataPoint, DataResponseModel>)_gpsService).Get(model, interval);
         }
 
         [HttpGet]
         public IDictionary<string, IEnumerable<DataPoint>> Instant([FromQuery] ProviderQueryModel model)
         {
-            return ((IPSController<DataPoint, DataResponseModel>)_gpsService).Instant(model);
+            return ((IPSDataProvider<DataPoint, DataResponseModel>)_gpsService).Instant(model);
         }
 
         [HttpGet]
         public IDictionary<string, DataPoint> Max([FromQuery] ProviderQueryModel model)
         {
-            return ((IPSController<DataPoint, DataResponseModel>)_gpsService).Max(model);
+            return ((IPSDataProvider<DataPoint, DataResponseModel>)_gpsService).Max(model);
         }
     }
 }

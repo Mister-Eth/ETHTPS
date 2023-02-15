@@ -10,8 +10,8 @@ using ETHTPS.Data.Models.Query;
 using Microsoft.AspNetCore.Mvc;
 
 using System.Linq;
-using ETHTPS.API.BIL.Infrastructure.Services;
 using ETHTPS.API.Core.Integrations.MSSQL.Services.Data;
+using ETHTPS.API.BIL.Infrastructure.Services.DataProviders;
 
 namespace ETHTPS.API.Controllers
 {

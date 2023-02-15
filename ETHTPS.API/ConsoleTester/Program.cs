@@ -1,4 +1,4 @@
-﻿using ETHTPS.API.BIL.Tests.WSTests;
+﻿using ETHTPS.Tests.WSTests;
 
 using System.Diagnostics;
 

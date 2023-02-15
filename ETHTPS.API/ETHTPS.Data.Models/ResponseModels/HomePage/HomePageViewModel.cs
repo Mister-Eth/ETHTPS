@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ETHTPS.Data.Models.ResponseModels.DataPoints;
 
 namespace ETHTPS.Data.ResponseModels.HomePage
 {

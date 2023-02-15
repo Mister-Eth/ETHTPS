@@ -2,7 +2,7 @@
 using ETHTPS.Data.Integrations.MSSQL.TimeWarp;
 using ETHTPS.Data.Integrations.MSSQL.TimeWarp.Models;
 using ETHTPS.Data.Models.Query;
-using ETHTPS.Data.ResponseModels;
+using ETHTPS.Data.Models.ResponseModels.DataPoints;
 using ETHTPS.Services.BlockchainServices.Extensions;
 
 namespace ETHTPS.API.Core.Integrations.MSSQL.Services

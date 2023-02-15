@@ -1,9 +1,9 @@
-﻿using ETHTPS.API.BIL.Infrastructure.Services;
+﻿using ETHTPS.API.BIL.Infrastructure.Services.DataProviders;
 using ETHTPS.API.Core.Services;
 using ETHTPS.Data.Integrations.MSSQL;
 using ETHTPS.Data.Integrations.MSSQL.HistoricalDataProviders;
 using ETHTPS.Data.Models.Query;
-using ETHTPS.Data.ResponseModels;
+using ETHTPS.Data.Models.ResponseModels.DataPoints;
 
 namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Data
 {

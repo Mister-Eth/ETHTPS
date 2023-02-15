@@ -4,6 +4,7 @@ using ETHTPS.Data.Models;
 using ETHTPS.Data.ResponseModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using ETHTPS.Data.Models.ResponseModels.DataPoints;
 
 namespace ETHTPS.API.Controllers
 {

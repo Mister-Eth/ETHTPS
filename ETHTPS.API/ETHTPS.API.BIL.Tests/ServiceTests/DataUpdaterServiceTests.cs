@@ -3,7 +3,7 @@ using ETHTPS.Data.Models.DataUpdater;
 
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ETHTPS.API.BIL.Tests.ServiceTests
+namespace ETHTPS.Tests.ServiceTests
 {
     public class DataUpdaterService : TestBase
     {
@@ -59,7 +59,7 @@ namespace ETHTPS.API.BIL.Tests.ServiceTests
             Assert.DoesNotThrow(() =>
             {
                 _statusService.SetStatusFor(TEST_PROVIDER_NAME, TEST_UPDATERTYPE_NAME, UpdaterStatus.RanSuccessfully);
-            }); 
+            });
             _statusService.SetStatusFor(TEST_PROVIDER_NAME, TEST_UPDATERTYPE_NAME, UpdaterStatus.Idle);
             Assert.Pass();
         }
@@ -68,7 +68,7 @@ namespace ETHTPS.API.BIL.Tests.ServiceTests
         public void UniquenessTest()
         {
             var groups = _statusService.GetAllStatuses().GroupBy(x => x.Updater + x.UpdaterType);
-            if (groups.Any(x=>x.Count() > 1))
+            if (groups.Any(x => x.Count() > 1))
             {
                 Assert.Fail("Multiple entries for the same updater found", groups.Where(x => x.Count() > 1));
             }

@@ -1,4 +1,4 @@
-﻿using ETHTPS.Data.ResponseModels;
+﻿using ETHTPS.Data.Models.ResponseModels.DataPoints;
 
 namespace ETHTPS.Data.Models.ResponseModels.ChartData.Streamchart.Extensions
 {

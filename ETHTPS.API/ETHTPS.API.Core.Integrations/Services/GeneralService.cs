@@ -8,6 +8,7 @@ using ETHTPS.API.Core.Services;
 using ETHTPS.API.Core.Integrations.MSSQL.Services.Data;
 using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater;
 using ETHTPS.Data.Models.DataUpdater;
+using ETHTPS.Data.Models.ResponseModels.DataPoints;
 
 namespace ETHTPS.API.Core.Integrations.MSSQL.Services
 {
@@ -53,7 +54,7 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services
                     TheoreticalMaxTPS = x.TheoreticalMaxTps,
                     IsGeneralPurpose = x.IsGeneralPurpose ?? x.TypeNavigation.IsGeneralPurpose,
                     IsSubchainOf = x.SubchainOfNavigation?.Name,
-                    Status = _dataUpdaterStatusService.GetStatusFor(x.Name, UpdaterType.BlockInfo) 
+                    Status = _dataUpdaterStatusService.GetStatusFor(x.Name, UpdaterType.BlockInfo)
                 });
             }
             return result;

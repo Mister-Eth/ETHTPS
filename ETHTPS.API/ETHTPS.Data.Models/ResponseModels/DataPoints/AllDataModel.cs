@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ETHTPS.Data.ResponseModels
+namespace ETHTPS.Data.Models.ResponseModels.DataPoints
 {
     public class AllDataModel
     {

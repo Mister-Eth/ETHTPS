@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 using NLog.Extensions.Hosting;
 
-namespace ETHTPS.API.BIL.Tests
+namespace ETHTPS.Tests
 {
     /// <summary>
     /// A base test class for the BIL part of the framework
@@ -25,7 +25,8 @@ namespace ETHTPS.API.BIL.Tests
                     .AddMixedCoreServices()
                     .AddDataUpdaterStatusService()
                     .AddScoped<IInfluxWrapper, InfluxWrapper>()
-                    .AddScoped<IAsyncHistoricalBlockInfoProvider, HistoricalInfluxProvider>();
+                    .AddScoped<IAsyncHistoricalBlockInfoProvider, HistoricalInfluxProvider>()
+                    .AddMSSQLHistoricalDataProviders();
             ServiceProvider = services.BuildServiceProvider();
         }
     }

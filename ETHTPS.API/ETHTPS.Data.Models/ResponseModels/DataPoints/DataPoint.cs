@@ -2,12 +2,12 @@
 
 using System;
 
-namespace ETHTPS.Data.ResponseModels
+namespace ETHTPS.Data.Models.ResponseModels.DataPoints
 {
     /// <summary>
     /// Represents a TPS/GPS/GTPS data point
     /// </summary>
-    public class DataPoint
+    public class DataPoint : IDataPoint
     {
         public DateTime Date { get; set; }
         public double Value { get; set; }

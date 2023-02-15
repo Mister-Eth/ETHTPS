@@ -22,6 +22,6 @@ namespace ETHTPS.Data.Core
 
     public enum DataType
     {
-        TPS, GPS, GasAdjustedTPS
+        TPS, GPS, GasAdjustedTPS, All
     }
 }
