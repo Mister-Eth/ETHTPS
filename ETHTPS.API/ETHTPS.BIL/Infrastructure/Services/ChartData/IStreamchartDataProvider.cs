@@ -5,6 +5,6 @@ namespace ETHTPS.API.BIL.Infrastructure.Services.ChartData
 {
     public interface IStreamchartDataProvider
     {
-        StreamchartModel Get(ProviderQueryModel model, string interval, int count);
+        StreamchartModel GetStreamchartData(ChartDataRequestModel model);
     }
 }

@@ -40,16 +40,34 @@ export interface StreamchartModel {
     tpsData?: Array<Array<number>> | null;
     /**
      * 
+     * @type {number}
+     * @memberof StreamchartModel
+     */
+    maxTPS?: number;
+    /**
+     * 
      * @type {Array<Array<number>>}
      * @memberof StreamchartModel
      */
     gpsData?: Array<Array<number>> | null;
     /**
      * 
+     * @type {number}
+     * @memberof StreamchartModel
+     */
+    maxGPS?: number;
+    /**
+     * 
      * @type {Array<Array<number>>}
      * @memberof StreamchartModel
      */
     gtpsData?: Array<Array<number>> | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof StreamchartModel
+     */
+    maxGTPS?: number;
 }
 
 /**
@@ -73,8 +91,11 @@ export function StreamchartModelFromJSONTyped(json: any, ignoreDiscriminator: bo
         
         'legend': !exists(json, 'legend') ? undefined : LegendModelFromJSON(json['legend']),
         'tpsData': !exists(json, 'tpsData') ? undefined : json['tpsData'],
+        'maxTPS': !exists(json, 'maxTPS') ? undefined : json['maxTPS'],
         'gpsData': !exists(json, 'gpsData') ? undefined : json['gpsData'],
+        'maxGPS': !exists(json, 'maxGPS') ? undefined : json['maxGPS'],
         'gtpsData': !exists(json, 'gtpsData') ? undefined : json['gtpsData'],
+        'maxGTPS': !exists(json, 'maxGTPS') ? undefined : json['maxGTPS'],
     };
 }
 
@@ -89,8 +110,11 @@ export function StreamchartModelToJSON(value?: StreamchartModel | null): any {
         
         'legend': LegendModelToJSON(value.legend),
         'tpsData': value.tpsData,
+        'maxTPS': value.maxTPS,
         'gpsData': value.gpsData,
+        'maxGPS': value.maxGPS,
         'gtpsData': value.gtpsData,
+        'maxGTPS': value.maxGTPS,
     };
 }
 

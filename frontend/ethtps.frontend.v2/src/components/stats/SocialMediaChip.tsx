@@ -40,7 +40,7 @@ export function SocialMediaChipCollection(config: {
                 fontSize: "1.25em",
               }}
             >
-              {"No data available"}
+              No data available
             </Typography>
           }
           variant="outlined"

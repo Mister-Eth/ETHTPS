@@ -277,6 +277,58 @@
         }
       }
     },
+    "/api/ChartData/GetStackedChartData": {
+      "get": {
+        "tags": [
+          "ChartData"
+        ],
+        "parameters": [
+          {
+            "name": "interval",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "dataType",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "XAPIKey",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StackedChartModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StackedChartModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StackedChartModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/DataInitialization/Initialize": {
       "put": {
         "tags": [
@@ -4947,6 +4999,62 @@
         },
         "additionalProperties": false
       },
+      "StackedChartDataPoint": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "y": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StackedChartModel": {
+        "type": "object",
+        "properties": {
+          "series": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StackedChartSeries"
+            },
+            "nullable": true
+          },
+          "maxValue": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StackedChartSeries": {
+        "type": "object",
+        "properties": {
+          "dataPoints": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StackedChartDataPoint"
+            },
+            "nullable": true
+          },
+          "maxValue": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "provider": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "StarkwareTransactionCountDatum": {
         "type": "object",
         "properties": {
@@ -4997,6 +5105,10 @@
             },
             "nullable": true
           },
+          "maxTPS": {
+            "type": "number",
+            "format": "double"
+          },
           "gpsData": {
             "type": "array",
             "items": {
@@ -5008,6 +5120,10 @@
             },
             "nullable": true
           },
+          "maxGPS": {
+            "type": "number",
+            "format": "double"
+          },
           "gtpsData": {
             "type": "array",
             "items": {
@@ -5018,6 +5134,10 @@
               }
             },
             "nullable": true
+          },
+          "maxGTPS": {
+            "type": "number",
+            "format": "double"
           }
         },
         "additionalProperties": false

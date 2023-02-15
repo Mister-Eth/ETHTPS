@@ -1,6 +1,6 @@
 import "react-date-range/dist/styles.css" // main style file
 import "react-date-range/dist/theme/default.css" // theme css
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { ProviderIntervalDropdown } from "../dropdowns/ProviderIntervalDropdown"
 import { NetworksDropdown } from "../dropdowns/NetworksDropdown"
 import Container from "@mui/material/Container/Container"
@@ -14,6 +14,7 @@ import { DateRangeSelectorDropdown } from "../dropdowns/DateRangeSelectorDropdow
 import { api } from "../../services/DependenciesIOC"
 import { DataModeButtonGroup } from "../buttons/DataModeButtonGroup"
 import { useQuery } from "react-query"
+import { BrushChart } from "./brush/BrushChart"
 
 interface IProviderDataChartConfiguration extends INoDataAvailableEvent {
   provider: string
@@ -76,7 +77,13 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
     setLoading(true)
     refetch()
   }, [interval, network, mode])
-
+  const [containerWidth, setContainerWidth] = useState(0)
+  const containerRef = useRef<any>(null)
+  useEffect(() => {
+    setContainerWidth(
+      containerRef.current ? containerRef.current.offsetWidth : 0,
+    )
+  }, [containerRef.current])
   return (
     <React.Fragment>
       <Container
@@ -113,9 +120,12 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
           </div>
         </Paper>
         <br />
-
         <Paper elevation={1}>
-          <div className="parent">
+          <div className="parent" ref={containerRef}>
+            <BrushChart
+              width={containerWidth}
+              height={containerWidth / 1.4142}
+            />
             {ConditionalRender(
               <Chip
                 label={

@@ -1,5 +1,6 @@
 .gitignore
 .npmignore
+.openapi-generator-ignore
 README.md
 package.json
 src/apis/APIKeyApi.ts
@@ -67,6 +68,9 @@ src/models/ProviderModel.ts
 src/models/ProviderResponseModel.ts
 src/models/ProviderType.ts
 src/models/Role.ts
+src/models/StackedChartDataPoint.ts
+src/models/StackedChartModel.ts
+src/models/StackedChartSeries.ts
 src/models/StarkwareTransactionCountDatum.ts
 src/models/StreamchartModel.ts
 src/models/TimeInterval.ts

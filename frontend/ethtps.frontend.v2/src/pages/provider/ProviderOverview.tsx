@@ -15,9 +15,6 @@ export function ProviderOverview(model: IProviderPageModel) {
   )
   return (
     <>
-      <Paper elevation={1}>
-        <ProviderCarousel provider={model.provider} />
-      </Paper>
       <Paper sx={{ marginTop: "20px" }} elevation={1}>
         <ProviderDataChart provider={model.provider as string} />
         <Box className={"flexbox flex-horizontal spaced-vertically"}>

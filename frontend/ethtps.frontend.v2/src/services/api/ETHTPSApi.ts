@@ -12,6 +12,7 @@ import {
   MarkdownPagesApi,
   ChartDataApi,
   ApiChartDataGetStreamchartDataGetRequest,
+  ApiChartDataGetStackedChartDataGetRequest,
 } from "ethtps.api.client"
 import { tryLoadAPIKeyFromLocalStorage, getAPIKey } from "../DependenciesIOC"
 import { APIKeyMiddleware } from "./APIKeyMiddleware"
@@ -108,7 +109,7 @@ export class ETHTPSApi {
     )
 
     this.chartDataAPI = new ChartDataApi(
-      this._genConfig(this._chartDataAPIEndpoint),
+      this._genConfig(this._generalApiEndpoint),
     )
     /*
     this.statusAPI = new StatusApi(
@@ -264,6 +265,14 @@ export class ETHTPSApi {
     requestParameters?: ApiChartDataGetStreamchartDataGetRequest,
   ) {
     return this.chartDataAPI.apiChartDataGetStreamchartDataGet(
+      requestParameters,
+    )
+  }
+
+  public getStackedChartData(
+    requestParameters: ApiChartDataGetStackedChartDataGetRequest,
+  ) {
+    return this.chartDataAPI.apiChartDataGetStackedChartDataGet(
       requestParameters,
     )
   }

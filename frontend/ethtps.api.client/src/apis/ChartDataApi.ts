@@ -15,12 +15,21 @@
 
 import * as runtime from '../runtime';
 import type {
+  StackedChartModel,
   StreamchartModel,
 } from '../models';
 import {
+    StackedChartModelFromJSON,
+    StackedChartModelToJSON,
     StreamchartModelFromJSON,
     StreamchartModelToJSON,
 } from '../models';
+
+export interface ApiChartDataGetStackedChartDataGetRequest {
+    interval?: string;
+    dataType?: string;
+    xAPIKey?: string;
+}
 
 export interface ApiChartDataGetStreamchartDataGetRequest {
     provider?: string;
@@ -35,6 +44,42 @@ export interface ApiChartDataGetStreamchartDataGetRequest {
  * 
  */
 export class ChartDataApi extends runtime.BaseAPI {
+
+    /**
+     */
+    async apiChartDataGetStackedChartDataGetRaw(requestParameters: ApiChartDataGetStackedChartDataGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StackedChartModel>> {
+        const queryParameters: any = {};
+
+        if (requestParameters.interval !== undefined) {
+            queryParameters['interval'] = requestParameters.interval;
+        }
+
+        if (requestParameters.dataType !== undefined) {
+            queryParameters['dataType'] = requestParameters.dataType;
+        }
+
+        if (requestParameters.xAPIKey !== undefined) {
+            queryParameters['XAPIKey'] = requestParameters.xAPIKey;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/api/ChartData/GetStackedChartData`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => StackedChartModelFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async apiChartDataGetStackedChartDataGet(requestParameters: ApiChartDataGetStackedChartDataGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StackedChartModel> {
+        const response = await this.apiChartDataGetStackedChartDataGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      */

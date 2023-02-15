@@ -23,11 +23,7 @@ export default function App(): JSX.Element {
       <Routes>
         <Route path={"/"} element={<MainPage />} />
         <Route path={"/Providers/:providerName/*"}>
-          <Route
-            path={":subsection/*"}
-            element={<ProviderPage />}
-            handle={providerPageHandler}
-          />
+          <Route path={":subsection/*"} element={<ProviderPage />} />
         </Route>
         <Route path={"/About"} element={<About />} />
         <Route path={"/WSTest"} element={<WSTestPage />} />

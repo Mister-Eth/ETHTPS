@@ -29,7 +29,7 @@ export function DataModeButtonGroup(model: IDataModeButtonGroupConfiguration) {
       <Box sx={{ float: "right" }}>
         {ConditionalRender(
           <CurrentViewersIcon />,
-          experimentsAppStoreValue.includes(5),
+          experimentsAppStoreValue.includes(5) && false,
         )}
         <Tooltip
           arrow

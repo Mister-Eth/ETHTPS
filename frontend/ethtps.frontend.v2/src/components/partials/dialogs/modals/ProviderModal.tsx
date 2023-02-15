@@ -1,12 +1,9 @@
-import { Alert, AlertTitle, Box, Modal, Paper, Typography } from "@mui/material"
-import { ProviderModel } from "../../../../services/api-gen/models/ProviderModel"
+import { Alert, AlertTitle, Box, Modal, Paper } from "@mui/material"
 import { ProviderDataChart } from "../../../charts/ProviderDataChart"
 import { ConditionalRender } from "../../../../Types"
-import { ProviderCarousel } from "../../navigation/ProviderCarousel"
 import { INoDataAvailableEvent } from "../../../INoDataAvailableEvent"
-import { useEffect, useState } from "react"
-import { tableCellTypographyStandard } from "../../../tables/all networks/cells/Typography.types"
-import { useSearchParams } from "react-router-dom"
+import { useState } from "react"
+import { ProviderModel } from "ethtps.api.client"
 
 interface IProviderModalConfiguration extends INoDataAvailableEvent {
   open: boolean
@@ -47,7 +44,6 @@ export function ProviderModal(config: IProviderModalConfiguration) {
       <Box sx={{ ...style }}>
         <Paper elevation={1}>
           <Paper elevation={2}>
-            <ProviderCarousel provider={config.provider} />
             {ConditionalRender(
               <ProviderDataChart
                 onNoDataAvailable={() => setNoData(true)}
@@ -60,7 +56,7 @@ export function ProviderModal(config: IProviderModalConfiguration) {
             <>
               <Alert severity="warning">
                 <AlertTitle>No data available</AlertTitle>
-                {generateNoDataAvailableString(config.provider?.name)}
+                {generateNoDataAvailableString(config.provider?.name ?? "")}
                 <a href="https://discord.com/invite/jWPcsTzpCT">Discord</a>.
                 <br />
                 <a href="https://github.com/Mister-Eth/ETHTPS/tree/dev/ETHTPS.API/ETHTPS.Services.Ethereum">
