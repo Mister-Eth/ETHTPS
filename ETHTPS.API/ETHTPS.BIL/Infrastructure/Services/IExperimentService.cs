@@ -1,5 +1,5 @@
 ﻿
-using ETHTPS.Data.Models;
+using ETHTPS.Data.Core.Models;
 
 using Microsoft.AspNetCore.Http;
 

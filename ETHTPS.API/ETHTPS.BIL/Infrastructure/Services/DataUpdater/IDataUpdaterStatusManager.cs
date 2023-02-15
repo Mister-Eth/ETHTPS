@@ -1,5 +1,5 @@
 ﻿using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater.ProviderSpecific;
-using ETHTPS.Data.Models.DataUpdater;
+using ETHTPS.Data.Core.Models.DataUpdater;
 
 namespace ETHTPS.API.BIL.Infrastructure.Services.DataUpdater
 {

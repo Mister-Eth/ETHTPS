@@ -1,8 +1,8 @@
 ﻿using ETHTPS.API.BIL.Infrastructure.Services;
 using ETHTPS.API.Core.Integrations.MSSQL.Controllers.CRUD;
 using ETHTPS.Data.Integrations.MSSQL;
-using ETHTPS.Data.Models;
-using ETHTPS.Data.Models.Markdown;
+using ETHTPS.Data.Core.Models;
+using ETHTPS.Data.Core.Models.Markdown;
 
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,7 +1,6 @@
 ﻿using ETHTPS.API.BIL.Infrastructure.Services.BlockInfo;
 using ETHTPS.Data.Core;
-using ETHTPS.Data.Models.Queries;
-
+using ETHTPS.Data.Core.Models.Queries.Data.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 using System;

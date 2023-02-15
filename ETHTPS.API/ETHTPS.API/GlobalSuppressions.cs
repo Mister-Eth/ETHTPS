@@ -5,4 +5,4 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>", Scope = "member", Target = "~M:ETHTPS.API.Controllers.ExternalWebsitesController.GetExternalWebsitesFor(System.String,ETHTPS.Data.Models.APIKeyRequestModel)~System.Collections.Generic.IEnumerable{ETHTPS.Data.Integrations.MSSQL.ExternalWebsite}")]
+[assembly: SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>", Scope = "member", Target = "~M:ETHTPS.API.Controllers.ExternalWebsitesController.GetExternalWebsitesFor(System.String,ETHTPS.Data.Core.Models.APIKeyRequestModel)~System.Collections.Generic.IEnumerable{ETHTPS.Data.Integrations.MSSQL.ExternalWebsite}")]

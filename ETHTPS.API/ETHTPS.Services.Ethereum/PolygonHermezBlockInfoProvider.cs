@@ -1,5 +1,5 @@
 ﻿using ETHTPS.API.BIL.Infrastructure.Services.BlockInfo;
-using ETHTPS.Data.Models.DataEntries;
+using ETHTPS.Data.Core.Models.DataEntries;
 using ETHTPS.Services.Attributes;
 using ETHTPS.Services.BlockchainServices;
 

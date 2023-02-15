@@ -1,6 +1,6 @@
 ﻿
 using ETHTPS.API.BIL.Infrastructure.Services;
-using ETHTPS.Data.Models;
+using ETHTPS.Data.Core.Models;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

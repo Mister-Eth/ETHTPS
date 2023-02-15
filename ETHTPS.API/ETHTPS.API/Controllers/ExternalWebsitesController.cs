@@ -1,8 +1,8 @@
 ﻿using ETHTPS.API.BIL.Infrastructure.Services;
 using ETHTPS.API.Core.Integrations.MSSQL.Controllers.CRUD;
 using ETHTPS.Data.Integrations.MSSQL;
-using ETHTPS.Data.Models;
-using ETHTPS.Data.Models.ExternalWebsites;
+using ETHTPS.Data.Core.Models;
+using ETHTPS.Data.Core.Models.ExternalWebsites;
 using ETHTPS.Data.ResponseModels.SocialMedia;
 
 using Microsoft.AspNetCore.Mvc;

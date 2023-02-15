@@ -1,5 +1,4 @@
-﻿using ETHTPS.Data.Models.Queries;
-
+﻿using ETHTPS.Data.Core.Models.Queries.Data.Requests;
 using System.Collections.Generic;
 using System.Linq;
 

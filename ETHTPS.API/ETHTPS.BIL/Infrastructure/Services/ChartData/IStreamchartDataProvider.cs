@@ -1,5 +1,5 @@
-﻿using ETHTPS.Data.Models.Queries;
-using ETHTPS.Data.Models.ResponseModels.ChartData.Streamchart;
+﻿using ETHTPS.Data.Core.Models.Queries.Data.Requests;
+using ETHTPS.Data.Core.Models.ResponseModels.ChartData.Streamchart;
 
 namespace ETHTPS.API.BIL.Infrastructure.Services.ChartData
 {

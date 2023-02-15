@@ -1,6 +1,6 @@
 ﻿using ETHTPS.Data.Core;
-using ETHTPS.Data.Models;
-using ETHTPS.Data.Models.Providers;
+using ETHTPS.Data.Core.Models;
+using ETHTPS.Data.Core.Models.Providers;
 
 namespace ETHTPS.Data.Integrations.MSSQL;
 

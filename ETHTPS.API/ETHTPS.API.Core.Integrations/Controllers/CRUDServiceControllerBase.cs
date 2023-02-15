@@ -1,7 +1,7 @@
 ﻿using ETHTPS.API.BIL.Infrastructure.Services;
 using ETHTPS.API.Core.Controllers;
 using ETHTPS.API.Core.Controllers.CRUD;
-using ETHTPS.Data.Models;
+using ETHTPS.Data.Core.Models;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

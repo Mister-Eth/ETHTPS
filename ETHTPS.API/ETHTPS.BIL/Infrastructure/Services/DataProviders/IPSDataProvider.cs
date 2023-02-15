@@ -1,6 +1,6 @@
 ﻿using ETHTPS.Data;
 using ETHTPS.Data.Core;
-using ETHTPS.Data.Models.Queries;
+using ETHTPS.Data.Core.Models.Queries.Data.Requests;
 
 using System.Collections.Generic;
 

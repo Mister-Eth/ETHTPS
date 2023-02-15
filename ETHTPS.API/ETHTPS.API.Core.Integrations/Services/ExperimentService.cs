@@ -4,7 +4,7 @@ using ETHTPS.Data.Core.Extensions;
 
 using Microsoft.AspNetCore.Http;
 using ETHTPS.API.BIL.Infrastructure.Services;
-using ETHTPS.Data.Models;
+using ETHTPS.Data.Core.Models;
 
 namespace ETHTPS.API.Core.Integrations.MSSQL.Services
 {
@@ -23,7 +23,7 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services
             var runningExperiments = experiments.Where(x => x.IsRunning());
             if (runningExperiments.Any())
             {
-                foreach(var experiment in runningExperiments)
+                foreach (var experiment in runningExperiments)
                 {
                     var apiKeyID = _context.GetAPIKeyID(context);
                     if (_context.UserIsEligibleForEnrollmentIn(experiment, apiKeyID))

@@ -1,7 +1,7 @@
 ﻿using ETHTPS.API.BIL.Infrastructure.Services.BlockInfo;
 using ETHTPS.Data.Core.Extensions;
 using ETHTPS.Services.BlockchainServices;
-using ETHTPS.Data.Models.DataEntries;
+using ETHTPS.Data.Core.Models.DataEntries;
 using Newtonsoft.Json;
 
 using System;
@@ -47,9 +47,9 @@ namespace ETHTPS.Services.Ethereum
             return 0;
         }
 
-        public async Task<ETHTPS.Data.Models.DataEntries.Block> GetLatestBlockInfoAsync() => await GetBlockInfoAsync(await GetLatestBlockHeightAsync());
+        public async Task<ETHTPS.Data.Core.Models.DataEntries.Block> GetLatestBlockInfoAsync() => await GetBlockInfoAsync(await GetLatestBlockHeightAsync());
 
-        public async Task<ETHTPS.Data.Models.DataEntries.Block> GetBlockInfoAsync(int blockNumber)
+        public async Task<ETHTPS.Data.Core.Models.DataEntries.Block> GetBlockInfoAsync(int blockNumber)
         {
             var payload = new GraphQLPayload()
             {
@@ -65,7 +65,7 @@ namespace ETHTPS.Services.Ethereum
             if (response.IsSuccessStatusCode)
             {
                 var obj = JsonConvert.DeserializeObject<BlocksRootobject>(await response.Content.ReadAsStringAsync());
-                return new ETHTPS.Data.Models.DataEntries.Block()
+                return new ETHTPS.Data.Core.Models.DataEntries.Block()
                 {
                     TransactionCount = int.Parse(obj.data.blocks[0].transactionCount),
                     Date = DateTimeExtensions.FromUnixTime(int.Parse(obj.data.blocks[0].timestamp)),
@@ -76,7 +76,7 @@ namespace ETHTPS.Services.Ethereum
             return null;
         }
 
-        public Task<ETHTPS.Data.Models.DataEntries.Block> GetBlockInfoAsync(DateTime time)
+        public Task<ETHTPS.Data.Core.Models.DataEntries.Block> GetBlockInfoAsync(DateTime time)
         {
             throw new NotImplementedException();
         }

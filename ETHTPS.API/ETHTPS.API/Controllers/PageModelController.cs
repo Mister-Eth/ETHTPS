@@ -2,16 +2,16 @@
 using ETHTPS.Data;
 using ETHTPS.Data.Core;
 using ETHTPS.Data.Core.Extensions.StringExtensions;
-using ETHTPS.Data.Models.Pages.Chart;
-using ETHTPS.Data.Models.Pages.HomePage;
-using ETHTPS.Data.Models.Pages.ProviderPage;
-using ETHTPS.Data.Models.Queries;
+using ETHTPS.Data.Core.Models.Pages.Chart;
+using ETHTPS.Data.Core.Models.Pages.HomePage;
+using ETHTPS.Data.Core.Models.Pages.ProviderPage;
 
 using Microsoft.AspNetCore.Mvc;
 
 using System.Linq;
 using ETHTPS.API.Core.Integrations.MSSQL.Services.Data;
 using ETHTPS.API.BIL.Infrastructure.Services.DataProviders;
+using ETHTPS.Data.Core.Models.Queries.Data.Requests;
 
 namespace ETHTPS.API.Controllers
 {

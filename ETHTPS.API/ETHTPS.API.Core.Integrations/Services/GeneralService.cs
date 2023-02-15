@@ -1,14 +1,14 @@
 ﻿using ETHTPS.Data.Integrations.MSSQL;
 using ETHTPS.Data.Integrations.MSSQL.HistoricalDataProviders;
 using ETHTPS.Data.Core.Extensions.StringExtensions;
-using ETHTPS.Data.Models.Queries;
 using ETHTPS.Data.ResponseModels;
 using ETHTPS.Data.Core;
 using ETHTPS.API.Core.Services;
 using ETHTPS.API.Core.Integrations.MSSQL.Services.Data;
 using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater;
-using ETHTPS.Data.Models.DataUpdater;
-using ETHTPS.Data.Models.ResponseModels.DataPoints;
+using ETHTPS.Data.Core.Models.DataUpdater;
+using ETHTPS.Data.Core.Models.ResponseModels.DataPoints;
+using ETHTPS.Data.Core.Models.Queries.Data.Requests;
 
 namespace ETHTPS.API.Core.Integrations.MSSQL.Services
 {

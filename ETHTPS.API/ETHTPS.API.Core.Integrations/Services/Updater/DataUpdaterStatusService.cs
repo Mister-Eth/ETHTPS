@@ -1,4 +1,4 @@
-﻿using ETHTPS.Data.Models.DataUpdater;
+﻿using ETHTPS.Data.Core.Models.DataUpdater;
 using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater;
 using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater.ProviderSpecific;
 using ETHTPS.Data.Core.Extensions;

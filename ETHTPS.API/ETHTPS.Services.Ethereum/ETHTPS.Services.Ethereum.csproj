@@ -1,17 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <Configurations>Debug;Release;Staging</Configurations>
-    <Platforms>AnyCPU;x64</Platforms>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<Configurations>Debug;Release;Staging</Configurations>
+		<Platforms>AnyCPU;x64</Platforms>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="NLog.Database" Version="5.1.1" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="NLog.Database" Version="5.1.1" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ETHTPS.BackgroundServices\ETHTPS.Services.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\ETHTPS.BackgroundServices\ETHTPS.Services.csproj" />
+	</ItemGroup>
 
 </Project>

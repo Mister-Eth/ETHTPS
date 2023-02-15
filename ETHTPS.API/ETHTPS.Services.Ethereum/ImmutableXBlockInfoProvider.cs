@@ -3,7 +3,7 @@ using ETHTPS.Data.Core.Extensions;
 using ETHTPS.Services.BlockchainServices;
 
 using Microsoft.Extensions.Configuration;
-using ETHTPS.Data.Models.DataEntries;
+using ETHTPS.Data.Core.Models.DataEntries;
 using Newtonsoft.Json;
 
 using System;

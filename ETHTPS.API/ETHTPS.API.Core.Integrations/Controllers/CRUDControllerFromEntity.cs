@@ -2,7 +2,7 @@
 using ETHTPS.API.Core.Integrations.MSSQL.Services;
 using ETHTPS.Data.Core;
 using ETHTPS.Data.Integrations.MSSQL;
-using ETHTPS.Data.Models;
+using ETHTPS.Data.Core.Models;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

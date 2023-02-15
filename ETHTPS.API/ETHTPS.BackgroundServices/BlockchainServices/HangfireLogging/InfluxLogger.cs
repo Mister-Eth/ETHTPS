@@ -2,7 +2,7 @@
 using ETHTPS.Data.Integrations.InfluxIntegration;
 using ETHTPS.Data.Integrations.InfluxIntegration.ProviderServices;
 using ETHTPS.Services.BlockchainServices.Extensions;
-using ETHTPS.Data.Models.DataEntries;
+using ETHTPS.Data.Core.Models.DataEntries;
 
 using Hangfire;
 
@@ -11,10 +11,10 @@ using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using System;
 using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater;
-using ETHTPS.Data.Models.DataUpdater;
+using ETHTPS.Data.Core.Models.DataUpdater;
 using System.Collections.Generic;
 using ETHTPS.API.BIL.Infrastructure.Services.BlockInfo;
-using ETHTPS.Data.Models.DataEntries.BlockchainServices.Models;
+using ETHTPS.Data.Core.Models.DataEntries.BlockchainServices.Models;
 
 namespace ETHTPS.Services.BlockchainServices.HangfireLogging
 {

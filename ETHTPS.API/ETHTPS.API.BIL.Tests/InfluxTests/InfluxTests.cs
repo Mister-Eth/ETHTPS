@@ -1,11 +1,12 @@
 using ETHTPS.API.BIL.Infrastructure.Services.BlockInfo;
 using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater;
 using ETHTPS.Data.Integrations.InfluxIntegration;
-using ETHTPS.Data.Models.DataEntries;
-using ETHTPS.Data.Models.DataUpdater;
-using ETHTPS.Data.Models.Queries;
+using ETHTPS.Data.Core.Models.DataEntries;
+using ETHTPS.Data.Core.Models.DataUpdater;
+using ETHTPS.Data.Core.Models.Queries;
 
 using Microsoft.Extensions.DependencyInjection;
+using ETHTPS.Data.Core.Models.Queries.Data.Requests;
 
 namespace ETHTPS.Tests.ServiceTests
 {

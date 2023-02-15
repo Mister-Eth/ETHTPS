@@ -1,6 +1,6 @@
 ﻿using ETHTPS.Data.Core;
-using ETHTPS.Data.Models.Queries;
-using ETHTPS.Data.Models.ResponseModels.DataPoints;
+using ETHTPS.Data.Core.Models.Queries.Data.Requests;
+using ETHTPS.Data.Core.Models.ResponseModels.DataPoints;
 
 namespace ETHTPS.API.BIL.Infrastructure.Services.DataProviders
 {

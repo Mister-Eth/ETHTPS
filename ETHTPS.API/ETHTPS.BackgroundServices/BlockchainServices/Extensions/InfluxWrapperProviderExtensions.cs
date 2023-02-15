@@ -1,5 +1,5 @@
 ﻿using ETHTPS.Data.Integrations.InfluxIntegration;
-using ETHTPS.Data.Models.DataEntries;
+using ETHTPS.Data.Core.Models.DataEntries;
 
 using System.Threading.Tasks;
 

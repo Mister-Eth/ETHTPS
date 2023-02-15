@@ -1,4 +1,4 @@
-﻿using ETHTPS.Data.Models.DataEntries;
+﻿using ETHTPS.Data.Core.Models.DataEntries;
 
 namespace ETHTPS.Services.BlockchainServices
 {

@@ -1,11 +1,6 @@
-﻿using Coravel.Invocable;
-
-using ETHTPS.API.Core.Integrations.MSSQL.Services;
-using ETHTPS.Data.Models.Queries;
-
-using Newtonsoft.Json;
-
-using System.Text;
+﻿using ETHTPS.API.Core.Integrations.MSSQL.Services;
+using ETHTPS.Data.Core.Models.Queries;
+using ETHTPS.Data.Core.Models.Queries.Data.Requests;
 
 using WebSocketSharp.Server;
 

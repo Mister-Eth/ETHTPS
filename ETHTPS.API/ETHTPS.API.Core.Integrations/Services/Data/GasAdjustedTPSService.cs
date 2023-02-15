@@ -2,8 +2,8 @@
 using ETHTPS.API.Core.Services;
 using ETHTPS.Data.Integrations.MSSQL;
 using ETHTPS.Data.Integrations.MSSQL.HistoricalDataProviders;
-using ETHTPS.Data.Models.Queries;
-using ETHTPS.Data.Models.ResponseModels.DataPoints;
+using ETHTPS.Data.Core.Models.Queries.Data.Requests;
+using ETHTPS.Data.Core.Models.ResponseModels.DataPoints;
 
 namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Data
 {

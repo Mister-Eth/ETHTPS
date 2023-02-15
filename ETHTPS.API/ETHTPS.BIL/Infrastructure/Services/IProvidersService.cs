@@ -1,4 +1,4 @@
-﻿using ETHTPS.Data.Models.Providers;
+﻿using ETHTPS.Data.Core.Models.Providers;
 
 namespace ETHTPS.API.BIL.Infrastructure.Services
 {

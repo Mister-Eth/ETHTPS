@@ -1,6 +1,6 @@
 ﻿using ETHTPS.Data.Integrations.MSSQL;
 using ETHTPS.Data.Integrations.MSSQL.HistoricalDataProviders;
-using ETHTPS.Data.Models.Queries;
+using ETHTPS.Data.Core.Models.Queries.Data.Requests;
 
 namespace ETHTPS.API.Core.Services
 {

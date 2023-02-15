@@ -1,11 +1,11 @@
 ﻿using ETHTPS.API.BIL.Infrastructure.Services.BlockInfo;
 using ETHTPS.Data.Core;
 using ETHTPS.Data.Core.Extensions;
-using ETHTPS.Data.Models.Queries;
+using ETHTPS.Data.Core.Models.Queries.Data.Requests;
 
 using Flux.Net;
 
-using Block = ETHTPS.Data.Models.DataEntries.Block;
+using Block = ETHTPS.Data.Core.Models.DataEntries.Block;
 
 namespace ETHTPS.Data.Integrations.InfluxIntegration.HistoricalDataProviders
 {

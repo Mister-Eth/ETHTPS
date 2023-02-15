@@ -1,10 +1,10 @@
 ﻿using ETHTPS.API.Core.Integrations.MSSQL.Services;
-using ETHTPS.Data.Models.Queries;
-using ETHTPS.Data.Models;
+using ETHTPS.Data.Core.Models;
 using ETHTPS.Data.ResponseModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using ETHTPS.Data.Models.ResponseModels.DataPoints;
+using ETHTPS.Data.Core.Models.ResponseModels.DataPoints;
+using ETHTPS.Data.Core.Models.Queries.Data.Requests;
 
 namespace ETHTPS.API.Controllers
 {

@@ -4,8 +4,8 @@ using ETHTPS.Configuration;
 using ETHTPS.Data.Core;
 using ETHTPS.Data.Core.Extensions;
 using ETHTPS.Data.Integrations.InfluxIntegration.Extensions;
-using ETHTPS.Data.Models;
-using ETHTPS.Data.Models.DataEntries;
+using ETHTPS.Data.Core.Models;
+using ETHTPS.Data.Core.Models.DataEntries;
 
 using Flux.Net;
 

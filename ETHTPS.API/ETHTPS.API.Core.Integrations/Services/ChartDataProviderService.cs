@@ -4,10 +4,10 @@ using ETHTPS.API.BIL.Infrastructure.Services.ChartData;
 using ETHTPS.API.BIL.Infrastructure.Services.DataProviders;
 using ETHTPS.API.Core.Integrations.MSSQL.Services.Data;
 using ETHTPS.Data.Core;
-using ETHTPS.Data.Models.Queries;
-using ETHTPS.Data.Models.ResponseModels.ChartData.StackedChart;
-using ETHTPS.Data.Models.ResponseModels.ChartData.Streamchart;
-using ETHTPS.Data.Models.ResponseModels.ChartData.Streamchart.Extensions;
+using ETHTPS.Data.Core.Models.Queries.Data.Requests;
+using ETHTPS.Data.Core.Models.ResponseModels.ChartData.StackedChart;
+using ETHTPS.Data.Core.Models.ResponseModels.ChartData.Streamchart;
+using ETHTPS.Data.Core.Models.ResponseModels.ChartData.Streamchart.Extensions;
 using ETHTPS.Data.ResponseModels;
 
 using Microsoft.Extensions.Logging;

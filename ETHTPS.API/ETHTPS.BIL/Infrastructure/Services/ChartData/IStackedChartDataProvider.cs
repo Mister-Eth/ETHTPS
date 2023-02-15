@@ -1,5 +1,5 @@
-﻿using ETHTPS.Data.Models.Queries;
-using ETHTPS.Data.Models.ResponseModels.ChartData.StackedChart;
+﻿using ETHTPS.Data.Core.Models.Queries.Data.Requests;
+using ETHTPS.Data.Core.Models.ResponseModels.ChartData.StackedChart;
 
 namespace ETHTPS.API.BIL.Infrastructure.Services.ChartData
 {

@@ -2,7 +2,7 @@
 using ETHTPS.Data.Core.Extensions.StringExtensions;
 using ETHTPS.Data.ResponseModels.SocialMedia;
 using ETHTPS.API.BIL.Infrastructure.Services;
-using ETHTPS.Data.Models.ExternalWebsites;
+using ETHTPS.Data.Core.Models.ExternalWebsites;
 
 namespace ETHTPS.API.Core.Integrations.MSSQL.Services
 {

@@ -1,4 +1,4 @@
-﻿using ETHTPS.Data.Models.ExternalWebsites;
+﻿using ETHTPS.Data.Core.Models.ExternalWebsites;
 
 namespace ETHTPS.API.BIL.Infrastructure.Services
 {

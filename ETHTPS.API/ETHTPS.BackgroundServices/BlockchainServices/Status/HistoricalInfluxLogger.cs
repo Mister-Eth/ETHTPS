@@ -2,7 +2,7 @@
 using ETHTPS.Data.Integrations.InfluxIntegration.ProviderServices;
 using ETHTPS.Data.Integrations.InfluxIntegration;
 using ETHTPS.Data.Integrations.MSSQL;
-using ETHTPS.Data.Models.DataUpdater;
+using ETHTPS.Data.Core.Models.DataUpdater;
 using Microsoft.Extensions.Logging;
 
 using System;

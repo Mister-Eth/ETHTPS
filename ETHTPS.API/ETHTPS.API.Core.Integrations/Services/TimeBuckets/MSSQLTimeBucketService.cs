@@ -2,7 +2,7 @@
 using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater.TimeBuckets;
 using ETHTPS.Data.Integrations.MSSQL;
 using ETHTPS.Data.Integrations.MSSQL.Extensions;
-using ETHTPS.Data.Models.DataEntries.BlockchainServices.Models;
+using ETHTPS.Data.Core.Models.DataEntries.BlockchainServices.Models;
 using ETHTPS.Services.BlockchainServices.Extensions;
 
 using Microsoft.Extensions.Logging;
