@@ -14,8 +14,7 @@ export default class ArbitrumDetails extends React.Component {
                   documentation: ['https://developer.offchainlabs.com/'],
                   explorers: ['https://arbiscan.io', 'https://explorer.arbitrum.io/'],
                   repositories: [
-                    'https://github.com/OffchainLabs/arbitrum',
-                    'https://github.com/OffchainLabs/arb-os',
+                    'https://github.com/OffchainLabs/nitro'
                   ],
                   socialMedia: [
                     'https://twitter.com/OffchainLabs',
