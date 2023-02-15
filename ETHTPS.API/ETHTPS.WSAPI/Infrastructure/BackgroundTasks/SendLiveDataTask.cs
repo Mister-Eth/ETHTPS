@@ -1,6 +1,7 @@
 ﻿using Coravel.Invocable;
 
 using ETHTPS.API.Core.Integrations.MSSQL.Services;
+using ETHTPS.Data.Models.Queries;
 
 using Newtonsoft.Json;
 
@@ -25,7 +26,7 @@ namespace ETHTPS.WSAPI.Infrastructure.BackgroundTasks
             _webSocketServer.WebSocketServices.BroadcastAsync(new WebsocketClientMessage()
             {
                 Type = "post_live_data",
-                Data = _generalService.InstantData(new Data.Models.Query.ProviderQueryModel())
+                Data = _generalService.InstantData(new ProviderQueryModel())
             }.ToJSON(), () =>
             {
 

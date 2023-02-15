@@ -1,7 +1,7 @@
 ﻿using ETHTPS.Data.Integrations.MSSQL;
 using ETHTPS.Data.Integrations.MSSQL.TimeWarp;
 using ETHTPS.Data.Integrations.MSSQL.TimeWarp.Models;
-using ETHTPS.Data.Models.Query;
+using ETHTPS.Data.Models.Queries;
 using ETHTPS.Data.Models.ResponseModels.DataPoints;
 using ETHTPS.Services.BlockchainServices.Extensions;
 

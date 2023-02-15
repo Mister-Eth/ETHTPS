@@ -1,7 +1,7 @@
 ﻿using ETHTPS.API.BIL.Infrastructure.Services.BlockInfo;
 using ETHTPS.Data.Core;
 using ETHTPS.Data.Core.Extensions;
-using ETHTPS.Data.Models.Query;
+using ETHTPS.Data.Models.Queries;
 
 using Flux.Net;
 

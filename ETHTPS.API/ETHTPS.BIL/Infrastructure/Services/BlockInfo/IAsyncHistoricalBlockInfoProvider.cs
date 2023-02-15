@@ -1,5 +1,5 @@
 ﻿using ETHTPS.Data.Core;
-using ETHTPS.Data.Models.Query;
+using ETHTPS.Data.Models.Queries;
 
 namespace ETHTPS.API.BIL.Infrastructure.Services.BlockInfo
 {

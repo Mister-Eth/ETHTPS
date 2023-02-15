@@ -4,7 +4,7 @@ using ETHTPS.API.BIL.Infrastructure.Services.ChartData;
 using ETHTPS.API.BIL.Infrastructure.Services.DataProviders;
 using ETHTPS.API.Core.Integrations.MSSQL.Services.Data;
 using ETHTPS.Data.Core;
-using ETHTPS.Data.Models.Query;
+using ETHTPS.Data.Models.Queries;
 using ETHTPS.Data.Models.ResponseModels.ChartData.StackedChart;
 using ETHTPS.Data.Models.ResponseModels.ChartData.Streamchart;
 using ETHTPS.Data.Models.ResponseModels.ChartData.Streamchart.Extensions;

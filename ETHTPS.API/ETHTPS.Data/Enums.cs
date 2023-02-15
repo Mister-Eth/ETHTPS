@@ -12,12 +12,13 @@ namespace ETHTPS.Data.Core
         [GroupBy(TimeGrouping.Day)] OneWeek,
         [GroupBy(TimeGrouping.Day)] OneMonth,
         [GroupBy(TimeGrouping.Month)] OneYear,
-        [GroupBy(TimeGrouping.Year)] All
+        [GroupBy(TimeGrouping.Year)] All,
+        [GroupBy(TimeGrouping.Auto)] Auto
     }
 
     public enum TimeGrouping
     {
-        Second, Minute, Hour, Day, Week, DayOfWeek, Month, Year, Decade
+        Second, Minute, Hour, Day, Week, DayOfWeek, Month, Year, Decade, Auto
     }
 
     public enum DataType

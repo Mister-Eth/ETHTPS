@@ -1,4 +1,4 @@
-﻿namespace ETHTPS.Data.Models.Query
+﻿namespace ETHTPS.Data.Models.Queries
 {
     public class ChartDataRequestModel : ProviderQueryModel
     {

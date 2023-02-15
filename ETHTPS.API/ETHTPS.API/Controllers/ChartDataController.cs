@@ -1,6 +1,6 @@
 ﻿using ETHTPS.API.BIL.Infrastructure.Services.ChartData;
 using ETHTPS.API.Core.Controllers;
-using ETHTPS.Data.Models.Query;
+using ETHTPS.Data.Models.Queries;
 using ETHTPS.Data.Models.ResponseModels.ChartData.StackedChart;
 using ETHTPS.Data.Models.ResponseModels.ChartData.Streamchart;
 

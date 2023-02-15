@@ -3,6 +3,7 @@ using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater;
 using ETHTPS.Data.Integrations.InfluxIntegration;
 using ETHTPS.Data.Models.DataEntries;
 using ETHTPS.Data.Models.DataUpdater;
+using ETHTPS.Data.Models.Queries;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -58,7 +59,7 @@ namespace ETHTPS.Tests.ServiceTests
         [Test]
         public async Task ValuesOkAsync()
         {
-            var x = await _asyncHistoricalBlockInfoProvider.GetLatestBlocksAsync(new Data.Models.Query.ProviderQueryModel(), Data.Core.TimeInterval.OneWeek);
+            var x = await _asyncHistoricalBlockInfoProvider.GetLatestBlocksAsync(new ProviderQueryModel(), Data.Core.TimeInterval.OneWeek);
             Assert.That(x.Any(x => x.TransactionCount > 0));
             Assert.Pass();
         }

@@ -5,7 +5,7 @@ using ETHTPS.Data.Core.Extensions.StringExtensions;
 using ETHTPS.Data.Models.Pages.Chart;
 using ETHTPS.Data.Models.Pages.HomePage;
 using ETHTPS.Data.Models.Pages.ProviderPage;
-using ETHTPS.Data.Models.Query;
+using ETHTPS.Data.Models.Queries;
 
 using Microsoft.AspNetCore.Mvc;
 

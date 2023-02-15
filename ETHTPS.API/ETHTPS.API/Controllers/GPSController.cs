@@ -1,6 +1,6 @@
 ﻿using ETHTPS.API.BIL.Infrastructure.Services.DataProviders;
 using ETHTPS.API.Core.Integrations.MSSQL.Services.Data;
-using ETHTPS.Data.Models.Query;
+using ETHTPS.Data.Models.Queries;
 using ETHTPS.Data.Models.ResponseModels.DataPoints;
 
 using Microsoft.AspNetCore.Mvc;
