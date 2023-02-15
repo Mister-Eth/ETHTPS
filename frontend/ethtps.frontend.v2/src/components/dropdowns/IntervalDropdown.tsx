@@ -21,7 +21,6 @@ export function IntervalDropdown(config: IIntervalDropdownProperties) {
     "All",
     "Custom",
   ]
-  const modeChanged = (mode: DataType) => {}
   return (
     <Container
       sx={{
@@ -30,8 +29,7 @@ export function IntervalDropdown(config: IIntervalDropdownProperties) {
         borderBlockColor: "primary",
       }}
     >
-      <DataModeButtonGroup modeChanged={modeChanged} />
-      <div style={{ float: "right" }}>
+      <div className="inline" style={{ float: "right" }}>
         <Dropdown<string>
           options={intervals?.map((x) => toShortString_2(x))}
           selectionChanged={config.onChanged}
@@ -40,7 +38,6 @@ export function IntervalDropdown(config: IIntervalDropdownProperties) {
           hoverText={<Typography>{"Select time interval"}</Typography>}
         />
       </div>
-      <div className="parent"></div>
     </Container>
   )
 }
