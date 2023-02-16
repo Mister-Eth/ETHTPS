@@ -6,6 +6,7 @@ using ETHTPS.Data.Core.Models.Queries.Data.Requests;
 using ETHTPS.Data.Core.Models.DataPoints;
 using ETHTPS.API.BIL.Infrastructure.Services.DataServices.TPS;
 using ETHTPS.Data.Core.Extensions;
+using ETHTPS.Data.Core;
 
 namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Data
 {
@@ -62,7 +63,7 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Data
             return result.ToDictionary(x => x.Provider, x => x.Data.First());
         }
 
-        public IDictionary<string, IEnumerable<DataResponseModel>> Get(ProviderQueryModel model, string interval)
+        public IDictionary<string, IEnumerable<DataResponseModel>> Get(ProviderQueryModel model, TimeInterval interval)
         {
             Dictionary<string, IEnumerable<DataResponseModel>> result = new();
             lock (Context.LockObj)
@@ -103,7 +104,7 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Data
 
         public IDictionary<string, IEnumerable<DataResponseModel>> GetMonthlyDataByYear(ProviderQueryModel model, int year)
         {
-            IDictionary<string, IEnumerable<DataResponseModel>> data = Get(model, Constants.All);
+            IDictionary<string, IEnumerable<DataResponseModel>> data = Get(model, TimeInterval.All);
             foreach (string key in data.Keys)
             {
                 data[key] = data[key].Where(x => x.Data.First().Date.Year == year);
@@ -142,6 +143,6 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Data
             return result.ToDictionary(x => x.Provider, x => x.Data.AsEnumerable());
         }
 
-        public List<DataResponseModel> GetTPS(ProviderQueryModel requestModel) => Get(requestModel, "All").SelectMany((x) => x.Value).ToList();
+        public List<DataResponseModel> GetTPS(ProviderQueryModel requestModel, TimeInterval interval) => Get(requestModel, interval).SelectMany((x) => x.Value).ToList();
     }
 }

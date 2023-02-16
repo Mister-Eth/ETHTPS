@@ -22,14 +22,15 @@ namespace ETHTPS.API.Core.Services
             return result;
         }
 
-        protected IEnumerable<string> TimeIntervals()
+        protected IEnumerable<TimeInterval> TimeIntervals()
         {
+            var excluded = new[] { "Instant", "Latest", "All", "Auto" };
             foreach (var interval in Enum.GetValues(typeof(TimeInterval)))
             {
-                if (interval.ToString() == "Instant" || interval.ToString() == "Latest")
+                if (excluded.Contains(interval.ToString()))
                     continue;
 
-                yield return interval.ToString();
+                yield return (TimeInterval)interval;
             }
         }
     }

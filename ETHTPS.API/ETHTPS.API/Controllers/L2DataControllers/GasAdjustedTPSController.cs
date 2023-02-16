@@ -7,10 +7,11 @@ using ETHTPS.Data.Core.Models.DataPoints;
 using Microsoft.AspNetCore.Mvc;
 
 using System.Collections.Generic;
+using ETHTPS.Data.Core;
 
 namespace ETHTPS.API.Controllers.L2DataControllers
 {
-    [Route("API/GasAdjustedTPS/[action]")]
+    [Route("api/v2/GasAdjustedTPS/[action]")]
     public class GasAdjustedTPSController : IPSService
     {
         private readonly IGTPSService _gasAdjustedTPSService;
@@ -26,7 +27,7 @@ namespace ETHTPS.API.Controllers.L2DataControllers
             return _gasAdjustedTPSService.GetMonthlyDataByYear(model, year);
         }
         [HttpGet]
-        public IDictionary<string, IEnumerable<DataResponseModel>> Get([FromQuery] ProviderQueryModel model, string interval)
+        public IDictionary<string, IEnumerable<DataResponseModel>> Get([FromQuery] ProviderQueryModel model, TimeInterval interval)
         {
             return _gasAdjustedTPSService.Get(model, interval);
         }

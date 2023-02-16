@@ -6,7 +6,7 @@ namespace ETHTPS.Data.Core.Models.Pages.ProviderPage
 {
     public class ProviderPageResponseModel : ResponseModelWithChartBase
     {
-        public IEnumerable<string> IntervalsWithData { get; set; }
+        public IEnumerable<TimeInterval> IntervalsWithData { get; set; }
         public IEnumerable<string> UniqueDataYears { get; set; }
     }
 }

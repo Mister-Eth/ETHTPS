@@ -19,6 +19,6 @@ namespace ETHTPS.Data.Core.Models.DataPoints.XYPoints
 
         public override NumericXYDataPoint ToNumericXYDataPoint() => new(Convert.ToDouble(X?.GetHashCode()), Y);
 
-        public override StringXYDataPoint ToStringXYDataPoint() => new(X, Y);
+        public override StringXYDataPoint ToStringXYDataPoint() => this;
     }
 }

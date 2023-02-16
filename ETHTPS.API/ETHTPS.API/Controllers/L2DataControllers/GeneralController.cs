@@ -5,10 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using ETHTPS.Data.Core.Models.DataPoints;
 using ETHTPS.Data.Core.Models.Queries.Data.Requests;
+using ETHTPS.Data.Core;
 
 namespace ETHTPS.API.Controllers.L2DataControllers
 {
-    [Route("API/v2/[action]")]
+    [Route("api/v2/[action]")]
     public class GeneralController
     {
         private readonly GeneralService _generalService;
@@ -25,7 +26,7 @@ namespace ETHTPS.API.Controllers.L2DataControllers
         }
 
         [HttpGet]
-        public IEnumerable<string> Intervals()
+        public IEnumerable<TimeInterval> Intervals()
         {
             return _generalService.Intervals();
         }
@@ -66,7 +67,7 @@ namespace ETHTPS.API.Controllers.L2DataControllers
             /// Used for displaying chart buttons.
             /// </summary>
         [HttpGet]
-        public IEnumerable<string> GetIntervalsWithData([FromQuery] ProviderQueryModel model)
+        public IEnumerable<TimeInterval> GetIntervalsWithData([FromQuery] ProviderQueryModel model)
         {
             return _generalService.GetIntervalsWithData(model);
         }

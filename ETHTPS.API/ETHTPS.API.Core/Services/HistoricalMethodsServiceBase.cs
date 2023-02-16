@@ -1,6 +1,7 @@
 ﻿using ETHTPS.Data.Integrations.MSSQL;
 using ETHTPS.Data.Integrations.MSSQL.HistoricalDataServices;
 using ETHTPS.Data.Core.Models.Queries.Data.Requests;
+using ETHTPS.Data.Core;
 
 namespace ETHTPS.API.Core.Services
 {
@@ -12,7 +13,7 @@ namespace ETHTPS.API.Core.Services
             HistoricalDataServices = historicalDataServices;
         }
 
-        protected IEnumerable<TimedTPSAndGasData> GetHistoricalData(ProviderQueryModel model, string interval)
+        protected IEnumerable<TimedTPSAndGasData> GetHistoricalData(ProviderQueryModel model, TimeInterval interval)
         {
             if (HistoricalDataServices.Any(x => x.Interval == interval))
             {

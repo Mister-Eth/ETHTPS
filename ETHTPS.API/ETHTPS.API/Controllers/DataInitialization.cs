@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ETHTPS.API.Controllers
 {
 #if DEBUG
-    [Route("api/[controller]")]
+    [Route("api/v3/[controller]")]
     public class DataInitialization : APIControllerBase
     {
         private readonly PublicDataInitializer _publicDataInitializer;

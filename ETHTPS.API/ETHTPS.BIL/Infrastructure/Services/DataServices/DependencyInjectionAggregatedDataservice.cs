@@ -26,40 +26,40 @@ namespace ETHTPS.API.BIL.Infrastructure.Services.DataServices
             _logger = logger;
         }
 
-        public List<DataResponseModel> GetData(DataRequestModel requestModel, DataType dataType)
+        public List<DataResponseModel> GetData(DataRequestModel requestModel, DataType dataType, TimeInterval interval)
         {
             return dataType switch
             {
-                DataType.TPS => GetGTPS(requestModel),
-                DataType.GPS => GetGPS(requestModel),
-                DataType.GasAdjustedTPS => GetGTPS(requestModel),
+                DataType.TPS => GetGTPS(requestModel, interval),
+                DataType.GPS => GetGPS(requestModel, interval),
+                DataType.GasAdjustedTPS => GetGTPS(requestModel, interval),
                 _ => throw new ArgumentException($"{dataType} is not supported."),
             };
         }
 
         public L2DataResponseModel GetData(DataRequestModel requestModel, DataType dataType, IPSDataFormatter formatter)
         {
-            var data = GetData(requestModel, dataType);
+            var data = GetData(requestModel, dataType, requestModel.CorrespondingInterval);
             var modifiedPoints = formatter.Format(data, requestModel);
             return new L2DataResponseModel()
             {
-
+                DataType = dataType
             };
         }
 
-        public List<DataResponseModel> GetGPS(ProviderQueryModel requestModel)
+        public List<DataResponseModel> GetGPS(ProviderQueryModel requestModel, TimeInterval interval)
         {
-            return _gpsService.GetGPS(requestModel);
+            return _gpsService.GetGPS(requestModel, interval);
         }
 
-        public List<DataResponseModel> GetGTPS(ProviderQueryModel requestModel)
+        public List<DataResponseModel> GetGTPS(ProviderQueryModel requestModel, TimeInterval interval)
         {
-            return _gtpsService.GetGTPS(requestModel);
+            return _gtpsService.GetGTPS(requestModel, interval);
         }
 
-        public List<DataResponseModel> GetTPS(ProviderQueryModel requestModel)
+        public List<DataResponseModel> GetTPS(ProviderQueryModel requestModel, TimeInterval interval)
         {
-            return _tpsService.GetTPS(requestModel);
+            return _tpsService.GetTPS(requestModel, interval);
         }
     }
 }

@@ -6,6 +6,7 @@ using ETHTPS.Data.Core.Models.Queries.Data.Requests;
 using ETHTPS.Data.Core.Models.DataPoints;
 using ETHTPS.API.BIL.Infrastructure.Services.DataServices.GTPS;
 using ETHTPS.API.BIL.Infrastructure.Services.DataServices.GPS;
+using ETHTPS.Data.Core;
 
 namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Data
 {
@@ -17,7 +18,7 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Data
             _gpsService = gpsService;
         }
 
-        public IDictionary<string, IEnumerable<DataResponseModel>> Get(ProviderQueryModel model, string interval)
+        public IDictionary<string, IEnumerable<DataResponseModel>> Get(ProviderQueryModel model, TimeInterval interval)
         {
             var data = _gpsService.Get(model, interval);
             foreach (var key in data.Keys)
@@ -58,7 +59,7 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Data
 
         public IDictionary<string, IEnumerable<DataResponseModel>> GetMonthlyDataByYear(ProviderQueryModel model, int year)
         {
-            var data = Get(model, Constants.All);
+            var data = Get(model, TimeInterval.All);
             foreach (var key in data.Keys)
             {
                 data[key] = data[key].Where(x => x.Data.First().Date.Year == year);
@@ -81,6 +82,6 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Data
             return gasAdjustedTPS;
         }
 
-        public List<DataResponseModel> GetGTPS(ProviderQueryModel requestModel) => Get(requestModel, "All").SelectMany((x) => x.Value).ToList();
+        public List<DataResponseModel> GetGTPS(ProviderQueryModel requestModel, TimeInterval interval) => Get(requestModel, interval).SelectMany((x) => x.Value).ToList();
     }
 }

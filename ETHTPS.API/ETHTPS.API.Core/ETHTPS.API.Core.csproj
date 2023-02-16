@@ -1,26 +1,28 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <Configurations>Debug;Release;Staging</Configurations>
-    <Platforms>AnyCPU;x64</Platforms>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<Configurations>Debug;Release;Staging</Configurations>
+		<Platforms>AnyCPU;x64</Platforms>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<NoWarn>$(NoWarn);1591</NoWarn>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="CaseExtensions" Version="1.1.0" />
-    <PackageReference Include="NLog.Database" Version="5.1.1" />
-    <PackageReference Include="NLog.Extensions.Hosting" Version="5.2.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="CaseExtensions" Version="1.1.0" />
+		<PackageReference Include="NLog.Database" Version="5.1.1" />
+		<PackageReference Include="NLog.Extensions.Hosting" Version="5.2.1" />
+		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ETHTPS.BIL\ETHTPS.API.BIL.csproj" />
-    <ProjectReference Include="..\ETHTPS.Data.Database\ETHTPS.Data.Integrations.MSSQL.csproj" />
-    <ProjectReference Include="..\ETHTPS.Data\ETHTPS.Data.Core.csproj" />
-    <ProjectReference Include="..\ETHTPS.Services.BackgroundTasks\ETHTPS.Services.BackgroundTasks.csproj" />
-    <ProjectReference Include="..\ETHTPS.Services.Ethereum\ETHTPS.Services.Ethereum.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\ETHTPS.BIL\ETHTPS.API.BIL.csproj" />
+		<ProjectReference Include="..\ETHTPS.Data.Database\ETHTPS.Data.Integrations.MSSQL.csproj" />
+		<ProjectReference Include="..\ETHTPS.Data\ETHTPS.Data.Core.csproj" />
+		<ProjectReference Include="..\ETHTPS.Services.BackgroundTasks\ETHTPS.Services.BackgroundTasks.csproj" />
+		<ProjectReference Include="..\ETHTPS.Services.Ethereum\ETHTPS.Services.Ethereum.csproj" />
+	</ItemGroup>
 
 </Project>

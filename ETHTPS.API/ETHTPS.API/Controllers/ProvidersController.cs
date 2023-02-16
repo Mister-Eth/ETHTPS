@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ETHTPS.API.Controllers
 {
-    [Route("api/management/providers")]
+    [Route("api/v3/management/providers")]
     [ApiController]
     [Authorize(Policy = "AdminsOnly")]
     public class ProvidersController : CRUDServiceControllerBase<Provider>

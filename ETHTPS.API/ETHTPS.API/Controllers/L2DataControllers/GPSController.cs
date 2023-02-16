@@ -7,10 +7,11 @@ using ETHTPS.Data.Core.Models.DataPoints;
 using Microsoft.AspNetCore.Mvc;
 
 using System.Collections.Generic;
+using ETHTPS.Data.Core;
 
 namespace ETHTPS.API.Controllers.L2DataControllers
 {
-    [Route("API/GPS/[action]")]
+    [Route(template: "api/v2/GPS/[action]")]
     public class GPSController : IPSService
     {
         private readonly IGPSService _gpsService;
@@ -27,7 +28,7 @@ namespace ETHTPS.API.Controllers.L2DataControllers
         }
 
         [HttpGet]
-        public IDictionary<string, IEnumerable<DataResponseModel>> Get([FromQuery] ProviderQueryModel model, string interval)
+        public IDictionary<string, IEnumerable<DataResponseModel>> Get([FromQuery] ProviderQueryModel model, TimeInterval interval)
         {
             return _gpsService.Get(model, interval);
         }

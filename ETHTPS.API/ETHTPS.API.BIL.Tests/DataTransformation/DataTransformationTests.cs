@@ -53,15 +53,15 @@ namespace ETHTPS.Tests.DataTransformation
 
             Assert.DoesNotThrow(() =>
             {
-                _dataService.GetTPS(_defaultModel); _dataService.GetData(_defaultModel, Data.Core.DataType.TPS);
+                _dataService.GetTPS(_defaultModel, Data.Core.TimeInterval.OneWeek); _dataService.GetData(_defaultModel, Data.Core.DataType.TPS, Data.Core.TimeInterval.OneWeek);
             });
             Assert.DoesNotThrow(() =>
             {
-                _dataService.GetGPS(_defaultModel); _dataService.GetData(_defaultModel, Data.Core.DataType.GPS);
+                _dataService.GetGPS(_defaultModel, Data.Core.TimeInterval.OneWeek); _dataService.GetData(_defaultModel, Data.Core.DataType.GPS, Data.Core.TimeInterval.OneWeek);
             });
             Assert.DoesNotThrow(() =>
             {
-                _dataService.GetGTPS(_defaultModel); _dataService.GetData(_defaultModel, Data.Core.DataType.GasAdjustedTPS);
+                _dataService.GetGTPS(_defaultModel, Data.Core.TimeInterval.OneWeek); _dataService.GetData(_defaultModel, Data.Core.DataType.GasAdjustedTPS, Data.Core.TimeInterval.OneWeek);
             });
         }
     }

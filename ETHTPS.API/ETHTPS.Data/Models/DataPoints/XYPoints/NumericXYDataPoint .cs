@@ -17,7 +17,7 @@ namespace ETHTPS.Data.Core.Models.DataPoints.XYPoints
 
         public override DatedXYDataPoint ToDatedXYDataPoint() => new(DateTimeExtensions.FromUnixTime(Convert.ToInt64(X)), Y);
 
-        public override NumericXYDataPoint ToNumericXYDataPoint() => new(X, Y);
+        public override NumericXYDataPoint ToNumericXYDataPoint() => this;
 
         public override StringXYDataPoint ToStringXYDataPoint() => new(X.ToString(), Y);
     }

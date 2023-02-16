@@ -1,9 +1,7 @@
-﻿using ETHTPS.Data.Core.Models.Queries.Data.Requests;
-using Microsoft.EntityFrameworkCore;
+﻿using ETHTPS.Data.Core;
+using ETHTPS.Data.Core.Models.Queries.Data.Requests;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace ETHTPS.Data.Integrations.MSSQL.HistoricalDataServices
 {
@@ -14,7 +12,7 @@ namespace ETHTPS.Data.Integrations.MSSQL.HistoricalDataServices
         private readonly Func<EthtpsContext, DbSet<TTargetHistoricalData>> _dataSelector;
         private readonly TimeSpan _maxAge;
 
-        protected HistoricalTimedTPSAndGasDataProviderBase(string interval, EthtpsContext context, Func<EthtpsContext, DbSet<TTargetHistoricalData>> dataSelector, TimeSpan maxAge)
+        protected HistoricalTimedTPSAndGasDataProviderBase(TimeInterval interval, EthtpsContext context, Func<EthtpsContext, DbSet<TTargetHistoricalData>> dataSelector, TimeSpan maxAge)
         {
             Interval = interval;
             _context = context;
@@ -22,7 +20,7 @@ namespace ETHTPS.Data.Integrations.MSSQL.HistoricalDataServices
             _maxAge = maxAge;
         }
 
-        public string Interval { get; private set; }
+        public TimeInterval Interval { get; private set; }
 
         public IEnumerable<TimedTPSAndGasData> GetData(ProviderQueryModel model)
         {

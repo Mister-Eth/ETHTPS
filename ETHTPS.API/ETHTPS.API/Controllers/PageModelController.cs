@@ -18,7 +18,7 @@ using ETHTPS.API.BIL.Infrastructure.Services.DataServices.GPS;
 
 namespace ETHTPS.API.Controllers
 {
-    [Route("API/Pages/[action]")]
+    [Route("api/v2/Pages/[action]")]
     public class PageModelController : ControllerBase
     {
         private readonly GeneralService _generalService;

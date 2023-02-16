@@ -13,11 +13,21 @@ namespace ETHTPS.API.BIL.Infrastructure.Services
             throw new NotImplementedException();
         }
 
-        public IDictionary<DataType, IEnumerable<IXYMultiConvertible>> Format(List<DataResponseModel> source, DataRequestModel requestModel)
+        public IEnumerable<IXYMultiConvertible> Format(List<DataResponseModel> source, DataRequestModel requestModel)
         {
-            var result = new Dictionary<DataType, IEnumerable<IXYMultiConvertible>>();
-            //foreach (var key in source.)
+            var result = source.Transform().RemoveInvalidDataPoints();
             return result;
         }
+    }
+
+    public static class TimeSeriesExtensions
+    {
+        public static IEnumerable<IXYMultiConvertible> Transform(this IEnumerable<DataResponseModel> source) => source.Select(x => new DatedXYDataPoint()
+        {
+            X = x.Data.FirstOrDefault()?.Date ?? DateTime.MinValue,
+            Y = x.Data.FirstOrDefault()?.Value ?? 0
+        });
+
+        public static IEnumerable<IXYMultiConvertible> RemoveInvalidDataPoints(this IEnumerable<IXYMultiConvertible> source) => source.Where(x => x.ToDatedXYDataPoint().X != DateTime.MinValue);
     }
 }

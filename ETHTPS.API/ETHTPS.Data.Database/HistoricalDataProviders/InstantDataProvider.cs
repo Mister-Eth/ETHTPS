@@ -1,6 +1,5 @@
-﻿using ETHTPS.Data.Core.Models.Queries.Data.Requests;
-using System.Collections.Generic;
-using System.Linq;
+﻿using ETHTPS.Data.Core;
+using ETHTPS.Data.Core.Models.Queries.Data.Requests;
 
 namespace ETHTPS.Data.Integrations.MSSQL.HistoricalDataServices
 {
@@ -13,11 +12,11 @@ namespace ETHTPS.Data.Integrations.MSSQL.HistoricalDataServices
             _context = context;
         }
 
-        public string Interval { get => "Instant"; }
+        public TimeInterval Interval => TimeInterval.Instant;
 
         public IEnumerable<TimedTPSAndGasData> GetData(ProviderQueryModel model)
         {
-            lock(_context.LockObj)
+            lock (_context.LockObj)
             {
                 foreach (Provider p in _context.Providers.Where(x => x.Enabled).ToList())
                 {

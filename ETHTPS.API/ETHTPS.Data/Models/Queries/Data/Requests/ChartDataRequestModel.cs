@@ -2,7 +2,7 @@
 {
     public class ChartDataRequestModel : ProviderQueryModel
     {
-        public string Interval { get; set; } = "OneDay";
+        public TimeInterval Interval { get; set; } = TimeInterval.OneDay;
         public int Count { get; set; } = -1;
         public string DataType { get; set; } = "tps";
         public int CombineSeriesWithAverageLessThanPercentage { get; set; } = 0;

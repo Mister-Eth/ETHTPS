@@ -7,10 +7,11 @@ using ETHTPS.API.BIL.Infrastructure.Services.DataServices;
 using ETHTPS.Data.Core.Models.DataPoints;
 using ETHTPS.Data.Core.Models.Queries.Data.Requests;
 using ETHTPS.API.BIL.Infrastructure.Services.DataServices.TPS;
+using ETHTPS.Data.Core;
 
 namespace ETHTPS.API.Controllers.L2DataControllers
 {
-    [Route("API/TPS/[action]")]
+    [Route("api/v2/TPS/[action]")]
     [Authorize(AuthenticationSchemes = "APIKey")]
     public class TPSController : IPSService
     {
@@ -28,7 +29,7 @@ namespace ETHTPS.API.Controllers.L2DataControllers
         }
 
         [HttpGet]
-        public IDictionary<string, IEnumerable<DataResponseModel>> Get([FromQuery] ProviderQueryModel model, string interval)
+        public IDictionary<string, IEnumerable<DataResponseModel>> Get([FromQuery] ProviderQueryModel model, TimeInterval interval)
         {
             return _tpsService.Get(model, interval);
         }
