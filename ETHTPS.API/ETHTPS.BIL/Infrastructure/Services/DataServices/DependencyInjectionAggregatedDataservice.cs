@@ -2,10 +2,12 @@
 using ETHTPS.API.BIL.Infrastructure.Services.DataServices.GTPS;
 using ETHTPS.API.BIL.Infrastructure.Services.DataServices.TPS;
 using ETHTPS.Data.Core;
+using ETHTPS.Data.Core.Models.DataPoints.XYPoints;
 using ETHTPS.Data.Core.Models.Queries.Data.Requests;
-using ETHTPS.Data.Core.Models.Queries.Responses;
+using ETHTPS.Data.Core.Models.DataPoints;
 
 using Microsoft.Extensions.Logging;
+using ETHTPS.Data.Core.Models.ResponseModels.L2s;
 
 namespace ETHTPS.API.BIL.Infrastructure.Services.DataServices
 {
@@ -25,6 +27,17 @@ namespace ETHTPS.API.BIL.Infrastructure.Services.DataServices
         }
 
         public DataResponseModel GetData(DataRequestModel requestModel, DataType dataType)
+        {
+            return dataType switch
+            {
+                DataType.TPS => GetGTPS(requestModel),
+                DataType.GPS => GetGPS(requestModel),
+                DataType.GasAdjustedTPS => GetGTPS(requestModel),
+                _ => throw new ArgumentException($"{dataType} is not supported."),
+            };
+        }
+
+        public L2DataResponseModel GetData(DataRequestModel requestModel, DataType dataType, IPSDataFormatter formatter)
         {
             throw new NotImplementedException();
         }

@@ -1,4 +1,4 @@
-﻿using ETHTPS.Data.Core.Models.ResponseModels.DataPoints;
+﻿using ETHTPS.Data.Core.Models.DataPoints;
 
 using System.Collections.Generic;
 using System.Linq;

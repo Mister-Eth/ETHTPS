@@ -2,6 +2,9 @@
 
 using ETHTPS.API.BIL.Infrastructure.Services.ChartData;
 using ETHTPS.API.BIL.Infrastructure.Services.DataServices;
+using ETHTPS.API.BIL.Infrastructure.Services.DataServices.GPS;
+using ETHTPS.API.BIL.Infrastructure.Services.DataServices.GTPS;
+using ETHTPS.API.BIL.Infrastructure.Services.DataServices.TPS;
 using ETHTPS.API.Core.Integrations.MSSQL.Services.Data;
 using ETHTPS.Data.Core;
 using ETHTPS.Data.Core.Models.Queries.Data.Requests;
@@ -18,13 +21,13 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services
 {
     public class ChartDataServiceservice : IChartDataServiceservice
     {
-        private readonly TPSService _tpsService;
-        private readonly GPSService _gpsService;
-        private readonly GasAdjustedTPSService _gtpsService;
+        private readonly ITPSService _tpsService;
+        private readonly IGPSService _gpsService;
+        private readonly IGTPSService _gtpsService;
         private readonly GeneralService _generalService;
         private readonly ILogger<ChartDataServiceservice> _logger;
 
-        public ChartDataServiceservice(TPSService tpsService, GPSService gpsService, GasAdjustedTPSService gtpsService, GeneralService generalService, ILogger<ChartDataServiceservice> logger)
+        public ChartDataServiceservice(ITPSService tpsService, IGPSService gpsService, IGTPSService gtpsService, GeneralService generalService, ILogger<ChartDataServiceservice> logger)
         {
             _tpsService = tpsService;
             _gpsService = gpsService;

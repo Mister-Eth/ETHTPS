@@ -51,7 +51,8 @@ namespace ETHTPS.API.DependencyInjection
                 default:
                     throw new NotImplementedException($"{databaseProvider}");
             }
-            return services.AddScoped<IAggregatedDataService, DependencyInjectionAggregatedDataservice>();
+            return services.AddScoped<IAggregatedDataService, DependencyInjectionAggregatedDataservice>()
+                .AddScoped<GeneralService>();
         }
 
 

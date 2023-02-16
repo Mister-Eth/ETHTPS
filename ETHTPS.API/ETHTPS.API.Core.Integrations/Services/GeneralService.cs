@@ -7,19 +7,22 @@ using ETHTPS.API.Core.Services;
 using ETHTPS.API.Core.Integrations.MSSQL.Services.Data;
 using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater;
 using ETHTPS.Data.Core.Models.DataUpdater;
-using ETHTPS.Data.Core.Models.ResponseModels.DataPoints;
+using ETHTPS.Data.Core.Models.DataPoints;
 using ETHTPS.Data.Core.Models.Queries.Data.Requests;
+using ETHTPS.API.BIL.Infrastructure.Services.DataServices.TPS;
+using ETHTPS.API.BIL.Infrastructure.Services.DataServices.GPS;
+using ETHTPS.API.BIL.Infrastructure.Services.DataServices.GTPS;
 
 namespace ETHTPS.API.Core.Integrations.MSSQL.Services
 {
     public class GeneralService : HistoricalMethodsServiceBase
     {
-        private readonly TPSService _tpsService;
-        private readonly GPSService _gpsService;
-        private readonly GasAdjustedTPSService _gasAdjustedTPSService;
+        private readonly ITPSService _tpsService;
+        private readonly IGPSService _gpsService;
+        private readonly IGTPSService _gasAdjustedTPSService;
         private readonly IDataUpdaterStatusService _dataUpdaterStatusService;
 
-        public GeneralService(TPSService tpsService, GPSService gpsService, GasAdjustedTPSService gasAdjustedTPSService, EthtpsContext context, IEnumerable<IHistoricalDataProvider> historicalDataServices, IDataUpdaterStatusService dataUpdaterStatusService) : base(context, historicalDataServices)
+        public GeneralService(ITPSService tpsService, IGPSService gpsService, IGTPSService gasAdjustedTPSService, EthtpsContext context, IEnumerable<IHistoricalDataProvider> historicalDataServices, IDataUpdaterStatusService dataUpdaterStatusService) : base(context, historicalDataServices)
         {
             _tpsService = tpsService;
             _gpsService = gpsService;

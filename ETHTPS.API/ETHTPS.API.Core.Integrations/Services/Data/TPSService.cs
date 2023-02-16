@@ -3,7 +3,7 @@ using ETHTPS.API.Core.Services;
 using ETHTPS.Data.Integrations.MSSQL;
 using ETHTPS.Data.Integrations.MSSQL.HistoricalDataServices;
 using ETHTPS.Data.Core.Models.Queries.Data.Requests;
-using ETHTPS.Data.Core.Models.ResponseModels.DataPoints;
+using ETHTPS.Data.Core.Models.DataPoints;
 using ETHTPS.API.BIL.Infrastructure.Services.DataServices.TPS;
 
 namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Data
@@ -141,7 +141,7 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Data
             return result.ToDictionary(x => x.Provider, x => x.Data.AsEnumerable());
         }
 
-        public ETHTPS.Data.Core.Models.Queries.Responses.DataResponseModel GetTPS(DataRequestModel requestModel)
+        public ETHTPS.Data.Core.Models.DataPoints.DataResponseModel GetTPS(DataRequestModel requestModel)
         {
             throw new NotImplementedException();
         }

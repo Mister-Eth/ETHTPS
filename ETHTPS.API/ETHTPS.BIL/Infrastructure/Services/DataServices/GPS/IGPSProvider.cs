@@ -1,5 +1,5 @@
 ﻿using ETHTPS.Data.Core.Models.Queries.Data.Requests;
-using ETHTPS.Data.Core.Models.Queries.Responses;
+using ETHTPS.Data.Core.Models.DataPoints;
 
 namespace ETHTPS.API.BIL.Infrastructure.Services.DataServices.GPS
 {

@@ -12,6 +12,9 @@ using System.Linq;
 using ETHTPS.API.Core.Integrations.MSSQL.Services.Data;
 using ETHTPS.API.BIL.Infrastructure.Services.DataServices;
 using ETHTPS.Data.Core.Models.Queries.Data.Requests;
+using ETHTPS.API.BIL.Infrastructure.Services.DataServices.GTPS;
+using ETHTPS.API.BIL.Infrastructure.Services.DataServices.TPS;
+using ETHTPS.API.BIL.Infrastructure.Services.DataServices.GPS;
 
 namespace ETHTPS.API.Controllers
 {
@@ -19,12 +22,12 @@ namespace ETHTPS.API.Controllers
     public class PageModelController : ControllerBase
     {
         private readonly GeneralService _generalService;
-        private readonly GasAdjustedTPSService _gasAdjustedTPSService;
-        private readonly TPSService _tpsService;
-        private readonly GPSService _gpsService;
+        private readonly IGTPSService _gasAdjustedTPSService;
+        private readonly ITPSService _tpsService;
+        private readonly IGPSService _gpsService;
         private readonly TimeWarpService _timeWarpService;
 
-        public PageModelController(GeneralService generalService, GasAdjustedTPSService gasAdjustedTPSService, TPSService tpsService, GPSService gpsService, TimeWarpService timeWarpService)
+        public PageModelController(GeneralService generalService, IGTPSService gasAdjustedTPSService, ITPSService tpsService, IGPSService gpsService, TimeWarpService timeWarpService)
         {
             _generalService = generalService;
             _gasAdjustedTPSService = gasAdjustedTPSService;

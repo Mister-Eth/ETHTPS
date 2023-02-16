@@ -3,10 +3,10 @@ using ETHTPS.Data.Core.Models;
 using ETHTPS.Data.ResponseModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using ETHTPS.Data.Core.Models.ResponseModels.DataPoints;
+using ETHTPS.Data.Core.Models.DataPoints;
 using ETHTPS.Data.Core.Models.Queries.Data.Requests;
 
-namespace ETHTPS.API.Controllers
+namespace ETHTPS.API.Controllers.L2DataControllers
 {
     [Route("API/v2/[action]")]
     public class GeneralController

@@ -3,7 +3,7 @@ using ETHTPS.API.Core.Services;
 using ETHTPS.Data.Integrations.MSSQL;
 using ETHTPS.Data.Integrations.MSSQL.HistoricalDataServices;
 using ETHTPS.Data.Core.Models.Queries.Data.Requests;
-using ETHTPS.Data.Core.Models.ResponseModels.DataPoints;
+using ETHTPS.Data.Core.Models.DataPoints;
 using ETHTPS.API.BIL.Infrastructure.Services.DataServices.GPS;
 
 namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Data
@@ -138,7 +138,7 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Data
             return result;
         }
 
-        public ETHTPS.Data.Core.Models.Queries.Responses.DataResponseModel GetGPS(DataRequestModel requestModel)
+        public ETHTPS.Data.Core.Models.DataPoints.DataResponseModel GetGPS(DataRequestModel requestModel)
         {
             throw new NotImplementedException();
         }
