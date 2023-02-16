@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ETHTPS.API.Controllers
 {
-    [Route("api/beta/experiments")]
+    [Route("/api/v3/Experiments/[action]")]
     [ApiController]
     public class ExperimentController : ControllerBase
     {

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace ETHTPS.API.Controllers
 {
-    [Route("api/info/markdown-pages/")]
+    [Route("/api/v3/markdown-pages/[action]")]
     [ApiController]
     public class MarkdownPagesController : CRUDServiceControllerBase<MarkdownPage>
     {
@@ -18,7 +18,6 @@ namespace ETHTPS.API.Controllers
         public MarkdownPagesController(IMarkdownService serviceImplementation) : base((ICRUDService<MarkdownPage>)serviceImplementation) => _markdownService = serviceImplementation;
 
         [HttpGet]
-        [Route("[action]")]
         public IEnumerable<IMarkdownPage> GetMarkdownPagesFor(string providerName, [FromQuery] APIKeyRequestModel model) => _markdownService.GetMarkdownPagesFor(providerName);
     }
 }

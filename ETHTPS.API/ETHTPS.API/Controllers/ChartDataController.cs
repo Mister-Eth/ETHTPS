@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace ETHTPS.API.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("/api/v3/ChartData/[action]")]
     public class ChartDataController : APIControllerBase
     {
         private readonly IChartDataServiceservice _chartDataServiceservice;

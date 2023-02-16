@@ -4,12 +4,6 @@ using ETHTPS.Data.Core.Models.DataPoints;
 using ETHTPS.Data.Core.Models.DataPoints.XYPoints;
 using ETHTPS.Data.Core.Models.Queries.Data.Requests;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace ETHTPS.API.BIL.Infrastructure.Services
 {
     public class DeedleTimeSeriesFormatter : IPSDataFormatter
@@ -21,7 +15,9 @@ namespace ETHTPS.API.BIL.Infrastructure.Services
 
         public IDictionary<DataType, IEnumerable<IXYMultiConvertible>> Format(List<DataResponseModel> source, DataRequestModel requestModel)
         {
-            throw new NotImplementedException();
+            var result = new Dictionary<DataType, IEnumerable<IXYMultiConvertible>>();
+            //foreach (var key in source.)
+            return result;
         }
     }
 }

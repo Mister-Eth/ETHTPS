@@ -47,7 +47,8 @@ namespace ETHTPS.API.Core.Middlewares
             }
             catch (Exception e)
             {
-                logger.LogError("Exception caught by middleware", e);
+                logger.LogError($"{e.GetType()} exception caught by middleware");
+                context.Response.StatusCode = 400;
                 // throw;
             }
             finally

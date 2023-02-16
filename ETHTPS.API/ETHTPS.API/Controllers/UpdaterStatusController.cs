@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace ETHTPS.API.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("/api/v3/updater-status/[action]")]
     [ApiController]
     public class UpdaterStatusController : APIControllerBase
     {

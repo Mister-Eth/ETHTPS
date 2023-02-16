@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace ETHTPS.API.Controllers
 {
-    [Route("api/info/external-websites/")]
+    [Route("/api/v3/external-websites/[action]")]
     [ApiController]
     public class ExternalWebsitesController : CRUDServiceControllerBase<IExternalWebsite>
     {

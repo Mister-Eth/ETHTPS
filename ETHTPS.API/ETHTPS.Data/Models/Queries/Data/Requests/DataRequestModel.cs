@@ -1,19 +1,22 @@
 ﻿using ETHTPS.Data.Core.Extensions;
 using ETHTPS.Data.Core.Models.DataPoints.XYPoints;
 
+using Newtonsoft.Json;
+
 using System;
 
 namespace ETHTPS.Data.Core.Models.Queries.Data.Requests
 {
     public class DataRequestModel : ProviderQueryModel
     {
+        [JsonIgnore]
         public TimeInterval CorrespondingInterval
         {
             get
             {
                 StartDate ??= DateTime.Now;
                 EndDate ??= DateTime.Now;
-                return (StartDate.Value - EndDate.Value).GetClosestInterval();
+                return (EndDate.Value - StartDate.Value).GetClosestInterval();
             }
         }
         public DateTime? StartDate { get; set; }

@@ -1,8 +1,12 @@
 ﻿
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
 using System;
 
 namespace ETHTPS.Data.Core
 {
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum TimeInterval
     {
         [GroupBy(TimeGrouping.Second)] Instant,
@@ -16,6 +20,7 @@ namespace ETHTPS.Data.Core
         [GroupBy(TimeGrouping.Auto)] Auto
     }
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum TimeGrouping
     {
         Second,
@@ -30,8 +35,9 @@ namespace ETHTPS.Data.Core
         Auto
     }
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum DataType
     {
-        TPS, GPS, GasAdjustedTPS, All
+        TPS, GPS, GasAdjustedTPS
     }
 }

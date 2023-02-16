@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ETHTPS.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("/api/v3/APIKeys/[action]")]
     [ApiController]
     [AllowAnonymous]
     public class APIKeyController : ControllerBase, IAPIKeyService

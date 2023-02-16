@@ -6,15 +6,16 @@ using ETHTPS.Data.Core.Models.ResponseModels.L2s;
 
 namespace ETHTPS.API.Controllers.L2DataControllers
 {
-    [Route("API/v2/[action]")]
+    [Route("/api/v3/L2Data/[action]")]
     public class L2DataController
     {
         private readonly IAggregatedDataService _aggregatedDataService;
         private readonly IPSDataFormatter _dataFormatter;
 
-        public L2DataController(IAggregatedDataService aggregatedDataService)
+        public L2DataController(IAggregatedDataService aggregatedDataService, IPSDataFormatter dataFormatter)
         {
             _aggregatedDataService = aggregatedDataService;
+            _dataFormatter = dataFormatter;
         }
 
         [HttpGet]

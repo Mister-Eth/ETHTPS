@@ -11,7 +11,7 @@ namespace ETHTPS.API.Controllers
     /// <summary>
     /// Used in prod ingesting data processed somewhere else. Saves prod work.
     /// </summary>
-    [Route("api/[controller]")]
+    [Route("/api/v3/Ingestion/[action]")]
     [ApiController]
     public class IngestionController : ControllerBase
     {

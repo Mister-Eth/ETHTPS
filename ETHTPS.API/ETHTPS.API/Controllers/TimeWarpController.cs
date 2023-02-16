@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace ETHTPS.API.Controllers
 {
-    [Route("API/TimeWarp/[action]")]
+    [Route("/api/v3/TimeWarp/[action]")]
     public class TimeWarpController
     {
         private readonly TimeWarpService _timeWarpService;

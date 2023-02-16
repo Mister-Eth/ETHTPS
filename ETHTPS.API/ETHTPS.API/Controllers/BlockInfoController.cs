@@ -1,6 +1,7 @@
 ﻿using ETHTPS.API.BIL.Infrastructure.Services.BlockInfo;
 using ETHTPS.Data.Core;
 using ETHTPS.Data.Core.Models.Queries.Data.Requests;
+
 using Microsoft.AspNetCore.Mvc;
 
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ETHTPS.API.Controllers
 {
-    [Route("/api/v3/[controller]/[action]")]
+    [Route("/api/v3/BlockInfo/[action]")]
     public class BlockInfoController : Controller
     {
         private readonly IAsyncHistoricalBlockInfoProvider _asyncHistoricalBlockInfoProvider;
