@@ -101,7 +101,7 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Data
             return result;
         }
 
-        public IDictionary<string, IEnumerable<DataResponseModel>> GeMonthlyDataByYear(ProviderQueryModel model, int year)
+        public IDictionary<string, IEnumerable<DataResponseModel>> GetMonthlyDataByYear(ProviderQueryModel model, int year)
         {
             IDictionary<string, IEnumerable<DataResponseModel>> data = Get(model, Constants.All);
             foreach (string key in data.Keys)

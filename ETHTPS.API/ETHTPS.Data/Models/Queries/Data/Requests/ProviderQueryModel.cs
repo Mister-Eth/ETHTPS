@@ -5,7 +5,7 @@ namespace ETHTPS.Data.Core.Models.Queries.Data.Requests
     /// <summary>
     /// Represents a filtering model based on a provider, network and whether to include sidechains. Also has an APIKey property.
     /// </summary>
-    public class ProviderQueryModel : APIKeyRequestModel
+    public class ProviderQueryModel
     {
         public string Provider { get; set; } = Constants.All;
         public string Network { get; set; } = Constants.Mainnet;

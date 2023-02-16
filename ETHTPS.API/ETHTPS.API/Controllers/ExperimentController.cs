@@ -21,7 +21,7 @@ namespace ETHTPS.API.Controllers
             _experimentService = experimentService;
         }
 
-        [HttpGet("AvailableExperiments")]
+        [HttpGet]
         public async Task<IEnumerable<int>> GetAvailableExperiments([FromQuery] ExperimentRequesterParameters parameters)
         {
             return await _experimentService.GetAvailableExperimentsAsync(parameters, HttpContext);

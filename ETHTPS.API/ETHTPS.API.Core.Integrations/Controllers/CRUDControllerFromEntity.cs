@@ -20,20 +20,20 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Controllers.CRUD
         [Route("[action]")]
         [HttpPut]
         [Authorize(Policy = "EditorsOnly")]
-        public void Create(TEntity entity, APIKeyRequestModel requestModel) => Create(entity);
+        public void Create(TEntity entity) => Create(entity);
         [Route("[action]")]
         [HttpPut]
         [Authorize(Policy = "EditorsOnly")]
-        public void DeleteById(int id, APIKeyRequestModel requestModel) => DeleteById(id);
+        public void DeleteById(int id) => DeleteById(id);
         [Route("[action]")]
         [HttpGet]
-        public IEnumerable<TEntity> GetAll(APIKeyRequestModel requestModel) => GetAll();
+        public new IEnumerable<TEntity> GetAll() => base.GetAll();
         [HttpGet]
         [Route("[action]")]
-        public TEntity GetById(int id, APIKeyRequestModel requestModel) => GetById(id);
+        public TEntity GetById(int id) => GetById(id);
         [Route("[action]")]
         [Authorize(Policy = "EditorsOnly")]
         [HttpPut]
-        public void Update(TEntity entity, APIKeyRequestModel requestModel) => Update(entity);
+        public void Update(TEntity entity) => Update(entity);
     }
 }

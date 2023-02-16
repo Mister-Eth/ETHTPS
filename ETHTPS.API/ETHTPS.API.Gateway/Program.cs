@@ -1,11 +1,6 @@
-using System.IO;
-
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using NLog.Extensions.Logging;
 
 namespace ETHTPS.API.Gateway
 {
@@ -14,6 +9,7 @@ namespace ETHTPS.API.Gateway
         public static void Main(string[] args)
         {
             new WebHostBuilder()
+            .UseUrls(args)
             .UseKestrel()
             .UseContentRoot(Directory.GetCurrentDirectory())
             .ConfigureAppConfiguration((hostingContext, config) =>
@@ -29,6 +25,10 @@ namespace ETHTPS.API.Gateway
                 s.AddOcelot();
             })
             .UseIISIntegration()
+            .ConfigureLogging(opts =>
+            {
+                opts.AddNLog();
+            })
             .Configure(app =>
             {
                 app.UseOcelot().Wait();

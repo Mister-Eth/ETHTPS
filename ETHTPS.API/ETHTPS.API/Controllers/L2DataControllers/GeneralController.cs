@@ -19,20 +19,20 @@ namespace ETHTPS.API.Controllers.L2DataControllers
         }
 
         [HttpGet]
-        public IEnumerable<string> Networks([FromQuery] APIKeyRequestModel model)
+        public IEnumerable<string> Networks()
         {
             return _generalService.Networks();
         }
 
         [HttpGet]
-        public IEnumerable<string> Intervals([FromQuery] APIKeyRequestModel model)
+        public IEnumerable<string> Intervals()
         {
             return _generalService.Intervals();
         }
 
 
         [HttpGet]
-        public IEnumerable<ProviderResponseModel> Providers([FromQuery] APIKeyRequestModel model, string subchainsOf)
+        public IEnumerable<ProviderResponseModel> Providers(string subchainsOf)
         {
             if (!string.IsNullOrWhiteSpace(subchainsOf))
                 return _generalService.Providers(subchainsOf);
@@ -41,13 +41,13 @@ namespace ETHTPS.API.Controllers.L2DataControllers
         }
 
         [HttpGet]
-        public IDictionary<string, string> ColorDictionary([FromQuery] APIKeyRequestModel model)
+        public IDictionary<string, string> ColorDictionary()
         {
             return _generalService.ColorDictionary();
         }
 
         [HttpGet]
-        public IDictionary<string, string> ProviderTypesColorDictionary([FromQuery] APIKeyRequestModel model)
+        public IDictionary<string, string> ProviderTypesColorDictionary()
         {
             return _generalService.ProviderTypesColorDictionary();
         }
@@ -78,7 +78,7 @@ namespace ETHTPS.API.Controllers.L2DataControllers
         }
 
         [HttpGet]
-        public AllDataModel AllData([FromQuery] APIKeyRequestModel model, string network = "Mainnet")
+        public AllDataModel AllData(string network = "Mainnet")
         {
             return _generalService.GetAllData(network);
         }

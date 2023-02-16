@@ -18,8 +18,8 @@ namespace ETHTPS.API.Controllers.L2DataControllers
             _dataFormatter = dataFormatter;
         }
 
-        [HttpGet]
-        public L2DataResponseModel Get([FromQuery] DataRequestModel requestModel, DataType dataType)
+        [HttpPost]
+        public L2DataResponseModel Get([FromBody] DataRequestModel requestModel, DataType dataType)
         {
             return _aggregatedDataService.GetData(requestModel, dataType, _dataFormatter);
         }

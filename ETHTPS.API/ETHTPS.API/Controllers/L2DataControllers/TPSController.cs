@@ -22,9 +22,9 @@ namespace ETHTPS.API.Controllers.L2DataControllers
         }
 
         [HttpGet]
-        public IDictionary<string, IEnumerable<DataResponseModel>> GeMonthlyDataByYear([FromQuery] ProviderQueryModel model, int year)
+        public IDictionary<string, IEnumerable<DataResponseModel>> GetMonthlyDataByYear([FromQuery] ProviderQueryModel model, int year)
         {
-            return _tpsService.GeMonthlyDataByYear(model, year);
+            return _tpsService.GetMonthlyDataByYear(model, year);
         }
 
         [HttpGet]

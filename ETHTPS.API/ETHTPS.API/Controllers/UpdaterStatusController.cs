@@ -22,19 +22,19 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<LiveUpdaterStatus> GetAllStatuses([FromQuery] APIKeyRequestModel model)
+        public IEnumerable<LiveUpdaterStatus> GetAllStatuses()
         {
             return _dataUpdaterService.GetAllStatuses();
         }
 
         [HttpGet]
-        public LiveUpdaterStatus GetStatusFor(string provider, string updaterType, [FromQuery] APIKeyRequestModel model)
+        public LiveUpdaterStatus GetStatusFor(string provider, string updaterType)
         {
             return _dataUpdaterService.GetStatusFor(provider, Enum.Parse<UpdaterType>(updaterType));
         }
 
         [HttpGet]
-        public IEnumerable<LiveUpdaterStatus> GetStatusesFor(string provider, [FromQuery] APIKeyRequestModel model)
+        public IEnumerable<LiveUpdaterStatus> GetStatusesFor(string provider)
         {
             return _dataUpdaterService.GetStatusFor(provider);
         }

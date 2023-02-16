@@ -23,7 +23,7 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult IngestLatestData([FromQuery] APIKeyRequestModel model)
+        public IActionResult IngestLatestData()
         {
             return Ok();
         }

@@ -11,7 +11,8 @@ namespace ETHTPS.Runner
             {
                 //ServiceCreator.GetTaskRunner(),
                 ServiceCreator.GetAPI(),
-                ServiceCreator.GetWSAPI()
+                ServiceCreator.GetWSAPI(),
+                ServiceCreator.GetGateway()
             };
             var size = Window.GetHostWidthHeight.Invoke();
             Console.Clear();

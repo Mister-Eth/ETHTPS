@@ -17,31 +17,31 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Controllers.CRUD
         }
 
         [Route("[action]")]
-        [HttpPut]
+        [HttpPost]
         [Authorize(Policy = "EditorsOnly")]
-        public void Create([FromBody] T entity, [FromQuery] APIKeyRequestModel requestModel)
+        public void Create([FromBody] T entity)
         {
             _serviceImplementation.Create(entity);
         }
 
         [Route("[action]")]
-        [HttpPut]
+        [HttpDelete]
         [Authorize(Policy = "EditorsOnly")]
-        public void DeleteById(int id, [FromQuery] APIKeyRequestModel requestModel)
+        public void DeleteById(int id)
         {
             _serviceImplementation.DeleteById(id);
         }
 
         [Route("[action]")]
         [HttpGet]
-        public IEnumerable<T> GetAll([FromQuery] APIKeyRequestModel requestModel)
+        public IEnumerable<T> GetAll()
         {
             return _serviceImplementation.GetAll();
         }
 
         [HttpGet]
         [Route("[action]")]
-        public T GetById(int id, [FromQuery] APIKeyRequestModel requestModel)
+        public T GetById(int id)
         {
             return _serviceImplementation.GetById(id);
         }
@@ -49,7 +49,7 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Controllers.CRUD
         [Route("[action]")]
         [Authorize(Policy = "EditorsOnly")]
         [HttpPut]
-        public void Update([FromBody] T entity, [FromQuery] APIKeyRequestModel requestModel)
+        public void Update([FromBody] T entity)
         {
             _serviceImplementation.Update(entity);
         }

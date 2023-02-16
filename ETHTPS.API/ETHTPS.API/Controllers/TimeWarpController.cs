@@ -24,7 +24,7 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
-        public DateTime GetEarliestDate([FromQuery] APIKeyRequestModel model)
+        public DateTime GetEarliestDate()
         {
             return ((ITimeWarpService)_timeWarpService).GetEarliestDate();
         }

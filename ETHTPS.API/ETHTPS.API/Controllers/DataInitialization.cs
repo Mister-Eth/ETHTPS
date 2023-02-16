@@ -21,7 +21,7 @@ namespace ETHTPS.API.Controllers
 
         [Route("[action]")]
         [HttpPut]
-        public IActionResult Initialize([FromQuery] APIKeyRequestModel model)
+        public IActionResult Initialize()
         {
             _publicDataInitializer.Initialize();
             _privateDataInitializer.Initialize();

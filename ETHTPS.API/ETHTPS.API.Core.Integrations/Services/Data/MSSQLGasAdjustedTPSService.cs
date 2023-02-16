@@ -56,7 +56,7 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Data
             return gasAdjustedTPS.ToDictionary(x => x.Key, x => x.Value.AsEnumerable());
         }
 
-        public IDictionary<string, IEnumerable<DataResponseModel>> GeMonthlyDataByYear(ProviderQueryModel model, int year)
+        public IDictionary<string, IEnumerable<DataResponseModel>> GetMonthlyDataByYear(ProviderQueryModel model, int year)
         {
             var data = Get(model, Constants.All);
             foreach (var key in data.Keys)

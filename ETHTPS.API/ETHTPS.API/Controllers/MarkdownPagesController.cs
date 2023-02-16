@@ -18,6 +18,6 @@ namespace ETHTPS.API.Controllers
         public MarkdownPagesController(IMarkdownService serviceImplementation) : base((ICRUDService<MarkdownPage>)serviceImplementation) => _markdownService = serviceImplementation;
 
         [HttpGet]
-        public IEnumerable<IMarkdownPage> GetMarkdownPagesFor(string providerName, [FromQuery] APIKeyRequestModel model) => _markdownService.GetMarkdownPagesFor(providerName);
+        public IEnumerable<IMarkdownPage> GetMarkdownPagesFor(string providerName) => _markdownService.GetMarkdownPagesFor(providerName);
     }
 }

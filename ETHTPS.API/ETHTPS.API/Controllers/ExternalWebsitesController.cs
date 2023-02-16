@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace ETHTPS.API.Controllers
 {
-    [Route("/api/v3/external-websites/[action]")]
+    [Route("/api/v3/external-websites/")]
     [ApiController]
     public class ExternalWebsitesController : CRUDServiceControllerBase<IExternalWebsite>
     {
@@ -22,8 +22,7 @@ namespace ETHTPS.API.Controllers
         }
 
         [HttpGet]
-        [Route("[action]")]
-        public IEnumerable<IProviderExternalWebsite> GetExternalWebsitesFor(string providerName, [FromQuery] APIKeyRequestModel model)
+        public IEnumerable<IProviderExternalWebsite> GetExternalWebsitesFor(string providerName)
         {
             return _externalWebsitesService.GetExternalWebsitesFor(providerName);
         }

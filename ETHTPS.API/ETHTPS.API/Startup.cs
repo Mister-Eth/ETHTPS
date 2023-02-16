@@ -12,9 +12,6 @@ using ETHTPS.API.Security.Core.Policies;
 using ETHTPS.API.DependencyInjection;
 using ETHTPS.API.Security.Core.Authentication;
 using Coravel;
-using Coravel.Queuing.Interfaces;
-using ETHTPS.Data.Integrations.MSSQL;
-using Microsoft.Extensions.Logging;
 using ETHTPS.Services.BackgroundTasks.Recurring.Aggregated;
 using ETHTPS.API.BIL.Infrastructure.Services.DataUpdater;
 
