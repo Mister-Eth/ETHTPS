@@ -18,7 +18,16 @@ namespace ETHTPS.Data.Core
 
     public enum TimeGrouping
     {
-        Second, Minute, Hour, Day, Week, DayOfWeek, Month, Year, Decade, Auto
+        Second,
+        Minute,
+        Hour,
+        Day,
+        Week,
+        DayOfWeek,
+        Month,
+        Year,
+        Decade,
+        Auto
     }
 
     public enum DataType

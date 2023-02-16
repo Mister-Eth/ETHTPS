@@ -26,7 +26,7 @@ namespace ETHTPS.API.BIL.Infrastructure.Services.DataServices
             _logger = logger;
         }
 
-        public DataResponseModel GetData(DataRequestModel requestModel, DataType dataType)
+        public List<DataResponseModel> GetData(DataRequestModel requestModel, DataType dataType)
         {
             return dataType switch
             {
@@ -39,20 +39,25 @@ namespace ETHTPS.API.BIL.Infrastructure.Services.DataServices
 
         public L2DataResponseModel GetData(DataRequestModel requestModel, DataType dataType, IPSDataFormatter formatter)
         {
-            throw new NotImplementedException();
+            var data = GetData(requestModel, dataType);
+            var modifiedPoints = formatter.Format(data, requestModel);
+            return new L2DataResponseModel()
+            {
+
+            };
         }
 
-        public DataResponseModel GetGPS(DataRequestModel requestModel)
+        public List<DataResponseModel> GetGPS(ProviderQueryModel requestModel)
         {
             return _gpsService.GetGPS(requestModel);
         }
 
-        public DataResponseModel GetGTPS(DataRequestModel requestModel)
+        public List<DataResponseModel> GetGTPS(ProviderQueryModel requestModel)
         {
             return _gtpsService.GetGTPS(requestModel);
         }
 
-        public DataResponseModel GetTPS(DataRequestModel requestModel)
+        public List<DataResponseModel> GetTPS(ProviderQueryModel requestModel)
         {
             return _tpsService.GetTPS(requestModel);
         }

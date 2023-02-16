@@ -5,6 +5,6 @@ namespace ETHTPS.API.BIL.Infrastructure.Services.DataServices.GPS
 {
     public interface IGPSProvider
     {
-        DataResponseModel GetGPS(DataRequestModel requestModel);
+        List<DataResponseModel> GetGPS(ProviderQueryModel requestModel);
     }
 }

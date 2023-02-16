@@ -5,6 +5,6 @@ namespace ETHTPS.API.BIL.Infrastructure.Services.DataServices.TPS
 {
     public interface ITPSProvider
     {
-        DataResponseModel GetTPS(DataRequestModel requestModel);
+        List<DataResponseModel> GetTPS(ProviderQueryModel requestModel);
     }
 }

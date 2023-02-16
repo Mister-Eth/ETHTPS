@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ETHTPS.API.BIL.Infrastructure.Services.DataServices;
-using System.Collections.Generic;
-using ETHTPS.Data.Core.Models.DataPoints.XYPoints;
 using ETHTPS.Data.Core.Models.Queries.Data.Requests;
 using ETHTPS.Data.Core;
 using ETHTPS.Data.Core.Models.ResponseModels.L2s;

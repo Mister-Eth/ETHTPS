@@ -44,14 +44,16 @@ namespace ETHTPS.API.DependencyInjection
             switch (databaseProvider)
             {
                 case DatabaseProvider.MSSQL:
-                    services.AddScoped<ITPSService, TPSService>()
-                            .AddScoped<IGPSService, GPSService>()
-                            .AddScoped<IGTPSService, GasAdjustedTPSService>();
+                    services.AddScoped<ITPSService, MSSQLTPSService>()
+                            .AddScoped<IGPSService, MSSQLGPSService>()
+                            .AddScoped<IGTPSService, MSSQLGasAdjustedTPSService>();
                     break;
                 default:
                     throw new NotImplementedException($"{databaseProvider}");
             }
-            return services.AddScoped<IAggregatedDataService, DependencyInjectionAggregatedDataservice>()
+            return services
+                .AddScoped<IPSDataFormatter, DeedleTimeSeriesFormatter>()
+                .AddScoped<IAggregatedDataService, DependencyInjectionAggregatedDataservice>()
                 .AddScoped<GeneralService>();
         }
 

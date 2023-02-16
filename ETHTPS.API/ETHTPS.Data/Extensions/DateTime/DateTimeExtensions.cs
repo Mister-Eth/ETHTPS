@@ -12,5 +12,20 @@ namespace ETHTPS.Data.Core.Extensions
         }
 
         public static long ToUnixTime(this DateTime time) => ((DateTimeOffset)time).ToUnixTimeSeconds();
+
+        public static TimeInterval GetClosestInterval(this TimeSpan timeSpan)
+        {
+            if (timeSpan < TimeSpan.FromSeconds(60))
+                return TimeInterval.Instant;
+            if (timeSpan < TimeSpan.FromHours(1))
+                return TimeInterval.OneMinute;
+            if (timeSpan < TimeSpan.FromDays(7))
+                return TimeInterval.OneHour;
+            if (timeSpan < TimeSpan.FromDays(30))
+                return TimeInterval.OneDay;
+            if (timeSpan < TimeSpan.FromDays(365))
+                return TimeInterval.OneHour;
+            return TimeInterval.OneYear;
+        }
     }
 }

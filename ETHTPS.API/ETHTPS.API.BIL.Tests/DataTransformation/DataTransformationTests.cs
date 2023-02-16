@@ -10,31 +10,58 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ETHTPS.API.BIL.Infrastructure.Services.DataServices;
+using ETHTPS.Data.Core.Models.Queries.Data.Requests;
+using ETHTPS.Data.Integrations.MSSQL;
 
 namespace ETHTPS.Tests.DataTransformation
 {
     public class DataTransformationTests : TestBase
     {
-        private IEnumerable<IHistoricalDataProvider> _DataServices;
+        private IAggregatedDataService _dataService;
+        private readonly DataRequestModel _defaultModel = new DataRequestModel()
+        {
+            Provider = "Ethereum",
+            StartDate = DateTime.Now.Subtract(TimeSpan.FromDays(2)),
+            EndDate = DateTime.Now.Subtract(TimeSpan.FromDays(1)),
+            ReturnTypeXAxisType = Data.Core.Models.DataPoints.XYPoints.XPointType.Date,
+            Network = "Mainnet",
+            ReturnCollectionType = ReturnCollectionType.Dictionary,
+            BucketOptions = new BucketOptions()
+            {
+                UseTimeBuckets = true,
+                CustomBucketSize = TimeSpan.FromHours(2),
+            },
+            IncludeSidechains = true,
+        };
 
         [SetUp]
         public void Setup()
         {
-            _DataServices = ServiceProvider.GetRequiredService<IEnumerable<IHistoricalDataProvider>>();
+            _dataService = ServiceProvider.GetRequiredService<IAggregatedDataService>();
         }
 
         [Test]
         public void NotNullTest()
         {
-            Assert.That(_DataServices != null);
+            Assert.That(_dataService != null);
         }
 
         [Test]
         public void InitializationTest()
         {
+
             Assert.DoesNotThrow(() =>
             {
-                //   _DataServices.GetData(ProviderQueryModel.All);
+                _dataService.GetTPS(_defaultModel); _dataService.GetData(_defaultModel, Data.Core.DataType.TPS);
+            });
+            Assert.DoesNotThrow(() =>
+            {
+                _dataService.GetGPS(_defaultModel); _dataService.GetData(_defaultModel, Data.Core.DataType.GPS);
+            });
+            Assert.DoesNotThrow(() =>
+            {
+                _dataService.GetGTPS(_defaultModel); _dataService.GetData(_defaultModel, Data.Core.DataType.GasAdjustedTPS);
             });
         }
     }

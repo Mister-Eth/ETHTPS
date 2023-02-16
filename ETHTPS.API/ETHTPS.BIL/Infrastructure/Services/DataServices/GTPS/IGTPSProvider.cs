@@ -5,6 +5,6 @@ namespace ETHTPS.API.BIL.Infrastructure.Services.DataServices.GTPS
 {
     public interface IGTPSProvider
     {
-        DataResponseModel GetGTPS(DataRequestModel requestModel);
+        List<DataResponseModel> GetGTPS(ProviderQueryModel requestModel);
     }
 }

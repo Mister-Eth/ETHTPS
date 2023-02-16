@@ -9,10 +9,10 @@ using ETHTPS.API.BIL.Infrastructure.Services.DataServices.GPS;
 
 namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Data
 {
-    public class GasAdjustedTPSService : HistoricalMethodsServiceBase, IGTPSService
+    public class MSSQLGasAdjustedTPSService : HistoricalMethodsServiceBase, IGTPSService
     {
         private readonly IGPSService _gpsService;
-        public GasAdjustedTPSService(IGPSService gpsService, EthtpsContext context, IEnumerable<IHistoricalDataProvider> historicalDataServices) : base(context, historicalDataServices)
+        public MSSQLGasAdjustedTPSService(IGPSService gpsService, EthtpsContext context, IEnumerable<IHistoricalDataProvider> historicalDataServices) : base(context, historicalDataServices)
         {
             _gpsService = gpsService;
         }
@@ -81,9 +81,6 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Data
             return gasAdjustedTPS;
         }
 
-        public ETHTPS.Data.Core.Models.DataPoints.DataResponseModel GetGTPS(DataRequestModel requestModel)
-        {
-            throw new NotImplementedException();
-        }
+        public List<DataResponseModel> GetGTPS(ProviderQueryModel requestModel) => Get(requestModel, "All").SelectMany((x) => x.Value).ToList();
     }
 }

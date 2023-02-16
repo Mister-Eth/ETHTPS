@@ -4,17 +4,15 @@ using ETHTPS.Data.Integrations.MSSQL;
 using ETHTPS.Data.Integrations.MSSQL.HistoricalDataServices;
 using ETHTPS.Data.Core.Models.Queries.Data.Requests;
 using ETHTPS.Data.Core.Models.DataPoints;
-using ETHTPS.API.BIL.Infrastructure.Services.DataServices.TPS;
+using ETHTPS.API.BIL.Infrastructure.Services.DataServices.GPS;
 
 namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Data
 {
-    public class TPSService : HistoricalMethodsServiceBase, ITPSService
+    public class MSSQLGPSService : HistoricalMethodsServiceBase, IGPSService
     {
-        public TPSService(EthtpsContext context, IEnumerable<IHistoricalDataProvider> historicalDataServices) : base(context, historicalDataServices)
+        public MSSQLGPSService(EthtpsContext context, IEnumerable<IHistoricalDataProvider> historicalDataServices) : base(context, historicalDataServices)
         {
-
         }
-
 
         public IDictionary<string, DataPoint> Max(ProviderQueryModel model)
         {
@@ -35,8 +33,8 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Data
                             new DataPoint()
                             {
                                 Date = entry.Date,
-                                Value = entry.MaxTps,
-                                BlockNumber = entry.MaxTpsblockNumber
+                                Value = entry.MaxGps,
+                                BlockNumber = entry.MaxGpsblockNumber
                             }
                         }
                         });
@@ -61,55 +59,6 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Data
             return result.ToDictionary(x => x.Provider, x => x.Data.First());
         }
 
-        public IDictionary<string, IEnumerable<DataResponseModel>> Get(ProviderQueryModel model, string interval)
-        {
-            Dictionary<string, IEnumerable<DataResponseModel>> result = new();
-            lock (Context.LockObj)
-            {
-                if (model.Provider.ToUpper() == "ALL")
-                {
-                    foreach (Provider p in Context.Providers.Where(x => x.Enabled).ToList())
-                    {
-                        if (!model.IncludeSidechains)
-                        {
-                            if (IsSidechain(p.Name))
-                            {
-                                continue;
-                            }
-                        }
-                        result[p.Name] = GetHistoricalData(ProviderQueryModel.FromProviderName(p.Name), interval).Select(x => new DataResponseModel()
-                        {
-                            Data = new List<DataPoint>()
-                        {
-                            { new DataPoint(){ Value = x.AverageTps, Date = x.StartDate} }
-                        }
-                        });
-                    }
-                }
-                else
-                {
-                    result[model.Provider] = GetHistoricalData(model, interval).Select(x => new DataResponseModel()
-                    {
-                        Data = new List<DataPoint>()
-                        {
-                            { new DataPoint(){Value = x.AverageTps, Date = x.StartDate} }
-                        }
-                    });
-                }
-            }
-            return result;
-        }
-
-        public IDictionary<string, IEnumerable<DataResponseModel>> GeMonthlyDataByYear(ProviderQueryModel model, int year)
-        {
-            IDictionary<string, IEnumerable<DataResponseModel>> data = Get(model, Constants.All);
-            foreach (string key in data.Keys)
-            {
-                data[key] = data[key].Where(x => x.Data.First().Date.Year == year);
-            }
-            return data;
-        }
-
         public IDictionary<string, IEnumerable<DataPoint>> Instant(ProviderQueryModel model)
         {
             List<DataResponseModel> result = new();
@@ -130,9 +79,7 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Data
                         result.Add(new DataResponseModel()
                         {
                             Provider = p.Name,
-                            Data = new List<DataPoint>()
-                    {
-                        { new DataPoint() { Value = entry.Tps} }
+                            Data = new List<DataPoint>() {{ new DataPoint() { Value = entry.Gps} }
                     }
                         });
                     }
@@ -141,9 +88,56 @@ namespace ETHTPS.API.Core.Integrations.MSSQL.Services.Data
             return result.ToDictionary(x => x.Provider, x => x.Data.AsEnumerable());
         }
 
-        public ETHTPS.Data.Core.Models.DataPoints.DataResponseModel GetTPS(DataRequestModel requestModel)
+
+        public IDictionary<string, IEnumerable<DataResponseModel>> GeMonthlyDataByYear(ProviderQueryModel model, int year)
         {
-            throw new NotImplementedException();
+            IDictionary<string, IEnumerable<DataResponseModel>> data = Get(model, Constants.All);
+            foreach (string key in data.Keys)
+            {
+                data[key] = data[key].Where(x => x.Data.First().Date.Year == year);
+            }
+            return data;
         }
+
+        public IDictionary<string, IEnumerable<DataResponseModel>> Get(ProviderQueryModel model, string interval)
+        {
+            Dictionary<string, IEnumerable<DataResponseModel>> result = new();
+            lock (Context.LockObj)
+            {
+                if (model.Provider.ToUpper() == Constants.All.ToUpper())
+                {
+                    foreach (Provider p in Context.Providers.Where(x => x.Enabled).ToList())
+                    {
+                        if (!model.IncludeSidechains)
+                        {
+                            if (IsSidechain(p.Name))
+                            {
+                                continue;
+                            }
+                        }
+                        result[p.Name] = GetHistoricalData(ProviderQueryModel.FromProviderName(p.Name), interval).Select(x => new DataResponseModel()
+                        {
+                            Data = new List<DataPoint>()
+                        {
+                            { new DataPoint(){ Value = x.AverageGps, Date = x.StartDate} }
+                        }
+                        });
+                    }
+                }
+                else
+                {
+                    result[model.Provider] = GetHistoricalData(model, interval).Select(x => new DataResponseModel()
+                    {
+                        Data = new List<DataPoint>()
+                        {
+                            { new DataPoint(){Value = x.AverageGps, Date = x.StartDate} }
+                        }
+                    });
+                }
+            }
+            return result;
+        }
+
+        public List<DataResponseModel> GetGPS(ProviderQueryModel requestModel) => Get(requestModel, "All").SelectMany((x) => x.Value).ToList();
     }
 }
