@@ -5,5 +5,6 @@
         DatedXYDataPoint ToDatedXYDataPoint();
         NumericXYDataPoint ToNumericXYDataPoint();
         StringXYDataPoint ToStringXYDataPoint();
+        public double Y { get; set; }
     }
 }

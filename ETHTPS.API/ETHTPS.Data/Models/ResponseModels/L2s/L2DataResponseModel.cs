@@ -8,8 +8,15 @@ namespace ETHTPS.Data.Core.Models.ResponseModels.L2s
     /// <summary>
     /// An object used for responsding to L2 data requests
     /// </summary>
-    public class L2DataResponseModel
+    public class L2DataResponseModel : IAnalysisParameters
     {
+
+        public L2DataResponseModel() { }
+        public L2DataResponseModel(IAnalysisParameters analysisParameters)
+        {
+            IncludeSimpleAnalysis = analysisParameters.IncludeSimpleAnalysis;
+            IncludeComplexAnalysis = analysisParameters.IncludeComplexAnalysis;
+        }
         /// <summary>
         /// This field is set when data is requested for a single provider
         /// </summary>
@@ -38,6 +45,17 @@ namespace ETHTPS.Data.Core.Models.ResponseModels.L2s
                 }
             }
         }
+        public SimpleMultiDatasetAnalysis? SimpleAnalysis
+        {
+            get
+            {
+                if (IncludeSimpleAnalysis && Datasets != null && Datasets.Any(x => x.DataPoints.Count() > 0))
+                    return new SimpleMultiDatasetAnalysis(Datasets);
+                return null;
+            }
+        }
         public DataType? DataType { get; set; } = null;
+        public bool IncludeSimpleAnalysis { get; set; }
+        public bool IncludeComplexAnalysis { get; set; }
     }
 }

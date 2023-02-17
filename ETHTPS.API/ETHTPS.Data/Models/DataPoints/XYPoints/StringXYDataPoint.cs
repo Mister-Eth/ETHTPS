@@ -2,7 +2,7 @@
 
 namespace ETHTPS.Data.Core.Models.DataPoints.XYPoints
 {
-    public class StringXYDataPoint : XYDataPointBase<string, double>
+    public class StringXYDataPoint : XYDataPointBase<string>
     {
         public StringXYDataPoint() : base() { }
         public StringXYDataPoint(string x, double y) : base(x, y)

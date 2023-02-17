@@ -8,6 +8,8 @@ using ETHTPS.Data.Core.Models.DataPoints;
 
 using Microsoft.Extensions.Logging;
 using ETHTPS.Data.Core.Models.ResponseModels.L2s;
+using System.Linq;
+using System.Xml;
 
 namespace ETHTPS.API.BIL.Infrastructure.Services.DataServices
 {
@@ -39,15 +41,53 @@ namespace ETHTPS.API.BIL.Infrastructure.Services.DataServices
 
         public L2DataResponseModel GetData(L2DataRequestModel requestModel, DataType dataType, IPSDataFormatter formatter)
         {
-            return new L2DataResponseModel()
+            var result = new L2DataResponseModel(requestModel)
             {
                 DataType = dataType,
-                Datasets = requestModel.Providers.ToArray().Select(providerName =>
+                Datasets = requestModel.Providers?.ToArray().Select(providerName =>
                 {
                     requestModel.Provider = providerName;
-                    return new Dataset(formatter.Format(GetData(requestModel, dataType, requestModel.AutoInterval), requestModel), providerName, requestModel.IncludeBasicAnalysis, requestModel.IncludeComplexAnalysis);
+                    return new Dataset(formatter.Format(GetData(requestModel, dataType, requestModel.AutoInterval), requestModel), providerName, requestModel.IncludeSimpleAnalysis, requestModel.IncludeComplexAnalysis);
                 })
+                .Where(x => !requestModel.IncludeEmptyDatasets ? x.DataPoints.Count() > 0 : true)
+                .OrderByDescending(x => x.DataPoints.Average(x => x.Y))
+                .ToArray()
             };
+            if (result.Datasets != null)
+                result.Datasets = formatter.MakeEqualLength(result.Datasets, requestModel.ReturnXAxisType);
+            if (requestModel.MergeOptions.MergePercentage.HasValue)
+            {
+                SimpleMultiDatasetAnalysis analysis = result.SimpleAnalysis ?? new(result.Datasets);
+                if (result.Datasets != null && result.Datasets.Any())
+                {
+                    var toBeMergedCount = Enumerable.Range(1, result.Datasets.Count() - 1).Where(i => (new SimpleMultiDatasetAnalysis(result.Datasets.TakeLast(i)).Mean * 100 / analysis.Mean < requestModel.MergeOptions.MergePercentage.Value)).Count();
+
+                    var toBeMerged = result.Datasets.TakeLast(toBeMergedCount);
+
+                    result.Datasets = result.Datasets.Take(result.Datasets.Count() - toBeMergedCount);
+
+                    List<DatedXYDataPoint> mergedSet = new();
+                    for (int i = 0; i < toBeMerged.First().DataPoints.Count(); i++)
+                    {
+                        var points = toBeMerged.Select(x => x.DataPoints.ElementAt(i));
+                        mergedSet.Add(new DatedXYDataPoint()
+                        {
+                            X = points.First().ToDatedXYDataPoint().X,
+                            Y = Math.Round(points.Average(x => x.Y), 2)
+                        });
+                    }
+                    result.Datasets = result.Datasets.Concat(new[]
+                    {
+                        new Dataset(mergedSet.Convert
+                        (requestModel.ReturnXAxisType), "Others", requestModel.IncludeSimpleAnalysis, requestModel.IncludeComplexAnalysis)
+                    }).ToArray();
+                }
+            }
+            if (requestModel.MergeOptions.MaxCount.HasValue)
+            {
+                result.Datasets = result.Datasets?.Take(requestModel.MergeOptions.MaxCount.Value);
+            }
+            return result;
         }
 
         public List<DataResponseModel> GetGPS(ProviderQueryModel requestModel, TimeInterval interval)

@@ -8,4 +8,10 @@ namespace ETHTPS.Data.Core.Models.Queries.Data.Requests
     {
         Array, Dictionary
     }
+
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum DatasetMergeMethod
+    {
+        MaxCount, SummingPercentage, NoMerge
+    }
 }

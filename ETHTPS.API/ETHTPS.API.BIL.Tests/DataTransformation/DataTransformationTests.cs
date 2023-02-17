@@ -24,9 +24,8 @@ namespace ETHTPS.Tests.DataTransformation
             Provider = "Ethereum",
             StartDate = DateTime.Now.Subtract(TimeSpan.FromDays(2)),
             EndDate = DateTime.Now.Subtract(TimeSpan.FromDays(1)),
-            ReturnTypeXAxisType = Data.Core.Models.DataPoints.XYPoints.XPointType.Date,
+            ReturnXAxisType = Data.Core.Models.DataPoints.XYPoints.XPointType.Date,
             Network = "Mainnet",
-            ReturnCollectionType = ReturnCollectionType.Dictionary,
             BucketOptions = new BucketOptions()
             {
                 UseTimeBuckets = true,

@@ -7,7 +7,7 @@ namespace ETHTPS.Data.Core.Models.DataPoints.XYPoints
     /// <summary>
     /// Represents a TPS/GPS/GTPS data point
     /// </summary>
-    public class NumericXYDataPoint : XYDataPointBase<double, double>
+    public class NumericXYDataPoint : XYDataPointBase<double>
     {
         public NumericXYDataPoint() : base() { }
         public NumericXYDataPoint(double x, double y) : base(x, y)
