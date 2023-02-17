@@ -15,19 +15,19 @@ namespace ETHTPS.API.Core.Filters
         {
             foreach (var path in swaggerDoc.Paths)
             {
-                if (!path.Key.Contains("RegisterNewKeyForProof"))
+                if (path.Key.Contains("RegisterNewKeyForProof"))
+                    continue;
+
+                path.Value.Parameters.Add(new OpenApiParameter()
                 {
-                    path.Value.Parameters.Add(new OpenApiParameter()
+                    AllowEmptyValue = true,
+                    Name = "X-API-Key",
+                    In = ParameterLocation.Header,
+                    Schema = new OpenApiSchema()
                     {
-                        AllowEmptyValue = true,
-                        Name = "X-API-Key",
-                        In = ParameterLocation.Header,
-                        Schema = new OpenApiSchema()
-                        {
-                            Type = "string"
-                        }
-                    });
-                }
+                        Type = "string"
+                    }
+                });
             }
         }
     }

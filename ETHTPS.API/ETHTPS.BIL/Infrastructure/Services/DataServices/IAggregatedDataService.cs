@@ -11,7 +11,7 @@ namespace ETHTPS.API.BIL.Infrastructure.Services.DataServices
 {
     public interface IAggregatedDataService : ITPSProvider, IGPSProvider, IGTPSProvider
     {
-        List<DataResponseModel> GetData(DataRequestModel requestModel, DataType dataType, TimeInterval interval);
-        L2DataResponseModel GetData(DataRequestModel requestModel, DataType dataType, IPSDataFormatter formatter);
+        List<DataResponseModel> GetData(L2DataRequestModel requestModel, DataType dataType, TimeInterval interval);
+        L2DataResponseModel GetData(L2DataRequestModel requestModel, DataType dataType, IPSDataFormatter formatter);
     }
 }

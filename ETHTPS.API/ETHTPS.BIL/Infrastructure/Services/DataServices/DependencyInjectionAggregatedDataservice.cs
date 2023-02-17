@@ -26,24 +26,27 @@ namespace ETHTPS.API.BIL.Infrastructure.Services.DataServices
             _logger = logger;
         }
 
-        public List<DataResponseModel> GetData(DataRequestModel requestModel, DataType dataType, TimeInterval interval)
+        public List<DataResponseModel> GetData(L2DataRequestModel requestModel, DataType dataType, TimeInterval interval)
         {
             return dataType switch
             {
-                DataType.TPS => GetGTPS(requestModel, interval),
+                DataType.TPS => GetTPS(requestModel, interval),
                 DataType.GPS => GetGPS(requestModel, interval),
                 DataType.GasAdjustedTPS => GetGTPS(requestModel, interval),
                 _ => throw new ArgumentException($"{dataType} is not supported."),
             };
         }
 
-        public L2DataResponseModel GetData(DataRequestModel requestModel, DataType dataType, IPSDataFormatter formatter)
+        public L2DataResponseModel GetData(L2DataRequestModel requestModel, DataType dataType, IPSDataFormatter formatter)
         {
-            var data = GetData(requestModel, dataType, requestModel.CorrespondingInterval);
-            var modifiedPoints = formatter.Format(data, requestModel);
             return new L2DataResponseModel()
             {
-                DataType = dataType
+                DataType = dataType,
+                Datasets = requestModel.Providers.ToArray().Select(providerName =>
+                {
+                    requestModel.Provider = providerName;
+                    return new Dataset(formatter.Format(GetData(requestModel, dataType, requestModel.AutoInterval), requestModel), providerName, requestModel.IncludeBasicAnalysis, requestModel.IncludeComplexAnalysis);
+                })
             };
         }
 

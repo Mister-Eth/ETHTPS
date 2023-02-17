@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 
 namespace ETHTPS.Data.Core.Extensions
 {
@@ -60,6 +61,37 @@ namespace ETHTPS.Data.Core.Extensions
                 TimeGrouping.Year => TimeSpan.FromDays(365),
                 TimeGrouping.Decade => TimeSpan.FromDays(3652),
                 _ => throw new ArgumentOutOfRangeException($"No definition for {grouping}"),
+            };
+        }
+
+        public static Func<DateTime, long> GetKeyExtractionFunction(this TimeGrouping grouping)
+        {
+            return grouping switch
+            {
+                TimeGrouping.Second => x => x.Ticks / TimeSpan.TicksPerSecond * TimeSpan.TicksPerSecond,
+                TimeGrouping.Minute => x => x.Ticks / (TimeSpan.TicksPerSecond * 60) * (TimeSpan.TicksPerSecond * 60),
+                TimeGrouping.Hour => x => x.Ticks / TimeSpan.TicksPerHour * TimeSpan.TicksPerHour,
+                TimeGrouping.Day => x => x.Ticks / TimeSpan.TicksPerDay * TimeSpan.TicksPerDay,
+                TimeGrouping.Week => x => x.Ticks / (TimeSpan.TicksPerDay * 7) * (TimeSpan.TicksPerDay * 7),
+                TimeGrouping.Month => x => x.Ticks / (TimeSpan.TicksPerDay * 30) * (TimeSpan.TicksPerDay * 30),
+                TimeGrouping.Year => x => x.Ticks / (TimeSpan.TicksPerDay * 365) * (TimeSpan.TicksPerDay * 365),
+                _ => throw new ArgumentOutOfRangeException($"No definition for {grouping}"),
+            };
+        }
+
+        public static Func<DateTime, DateTime, bool> GetAggregationFunction(this TimeGrouping grouping)
+        {
+            return grouping switch
+            {
+                TimeGrouping.Second => (k1, k2) => k1.Year == k2.Year && k1.Month == k2.Month && k1.Day == k2.Day && k1.Hour == k2.Hour && k1.Minute == k2.Minute && k1.Second == k2.Second,
+                TimeGrouping.Minute => (k1, k2) => k1.Year == k2.Year && k1.Month == k2.Month && k1.Day == k2.Day && k1.Hour == k2.Hour && k1.Minute == k2.Minute,
+                TimeGrouping.Hour => (k1, k2) => k1.Year == k2.Year && k1.Month == k2.Month && k1.Day == k2.Day && k1.Hour == k2.Hour,
+                TimeGrouping.Day => (k1, k2) => k1.Year == k2.Year && k1.Month == k2.Month && k1.Day == k2.Day,
+                TimeGrouping.Week => (k1, k2) => k1.Year == k2.Year && k1.Month == k2.Month && (k1.DayOfYear / 12) == (k2.DayOfYear / 12),
+                TimeGrouping.Month => (k1, k2) => k1.Year == k2.Year && k1.Month == k2.Month,
+                TimeGrouping.Year => (k1, k2) => k1.Year == k2.Year,
+                TimeGrouping.Decade => (k1, k2) => k1.Year / 10 == k2.Year / 10,
+                _ => throw new ArgumentOutOfRangeException($"No definition for {grouping}")
             };
         }
 

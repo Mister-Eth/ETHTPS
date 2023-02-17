@@ -7,16 +7,16 @@ namespace ETHTPS.Data.Core.Models.Queries.Data.Requests
     /// </summary>
     public class ProviderQueryModel
     {
-        public string Provider { get; set; } = Constants.All;
+        public string Provider { get; set; }
         public string Network { get; set; } = Constants.Mainnet;
         public bool IncludeSidechains { get; set; } = true;
 
-        public static ProviderQueryModel FromProviderName(string provider) => new ProviderQueryModel()
+        public static ProviderQueryModel FromProviderName(string provider) => new()
         {
             Provider = provider
         };
 
-        public static ProviderQueryModel All => new ProviderQueryModel()
+        public static ProviderQueryModel All => new()
         {
             Provider = Constants.All
         };

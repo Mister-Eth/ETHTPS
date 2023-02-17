@@ -19,7 +19,7 @@ namespace ETHTPS.Tests.DataTransformation
     public class DataTransformationTests : TestBase
     {
         private IAggregatedDataService _dataService;
-        private readonly DataRequestModel _defaultModel = new DataRequestModel()
+        private readonly L2DataRequestModel _defaultModel = new L2DataRequestModel()
         {
             Provider = "Ethereum",
             StartDate = DateTime.Now.Subtract(TimeSpan.FromDays(2)),

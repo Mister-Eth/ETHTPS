@@ -10,6 +10,6 @@ namespace ETHTPS.API.BIL.Infrastructure.Services.DataServices
         IEnumerable<TOutDataPoint> Convert<TInDataPoint, TOutDataPoint>(IEnumerable<TInDataPoint> data)
             where TOutDataPoint : IXYMultiConvertible;
 
-        IEnumerable<IXYMultiConvertible> Format(List<DataResponseModel> source, DataRequestModel requestModel);
+        IEnumerable<IXYMultiConvertible> Format(List<DataResponseModel> source, L2DataRequestModel requestModel);
     }
 }
