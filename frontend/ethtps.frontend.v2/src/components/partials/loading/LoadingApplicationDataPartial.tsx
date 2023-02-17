@@ -10,7 +10,6 @@ import {
   setMaxGTPSData,
   setMaxTPSData,
 } from "../../../slices/DataSlice"
-import { DataType } from "../../../Types"
 import {
   setProviderColorDictionary,
   setProviderTypeColorDictionary,
@@ -20,6 +19,7 @@ import { useState } from "react"
 import { setApplicationDataLoaded } from "../../../slices/ApplicationStateSlice"
 import { setLastMinuteData } from "../../../slices/LiveDataSlice"
 import { websocketActions } from "../../../slices/WebsocketSubscriptionSlice"
+import { DataType } from "ethtps.api.client"
 
 export function LoadingApplicationDataPartial({
   children,
@@ -54,21 +54,21 @@ export function LoadingApplicationDataPartial({
     ),
     useLoadValuesHook(
       "maxTPS",
-      () => api.getMax(DataType.TPS),
+      () => api.getMax(DataType.Tps),
       (value) => store.dispatch(setMaxTPSData(value)),
       neverUpdates,
       neverUpdates,
     ),
     useLoadValuesHook(
       "maxGPS",
-      () => api.getMax(DataType.GPS),
+      () => api.getMax(DataType.Gps),
       (value) => store.dispatch(setMaxGPSData(value)),
       neverUpdates,
       neverUpdates,
     ),
     useLoadValuesHook(
       "maxGTPS",
-      () => api.getMax(DataType.GTPS),
+      () => api.getMax(DataType.GasAdjustedTps),
       (value) => store.dispatch(setMaxGTPSData(value)),
       neverUpdates,
       neverUpdates,
@@ -89,21 +89,21 @@ export function LoadingApplicationDataPartial({
     ),
     useLoadValuesHook(
       "getLastMinuteTPSData",
-      () => api.getLastMinuteData(DataType.TPS),
+      () => api.getLastMinuteData(DataType.Tps),
       (value) => store.dispatch(setLastMinuteData(value)),
       neverUpdates,
       neverUpdates,
     ),
     useLoadValuesHook(
       "getLastMinuteGPSData",
-      () => api.getLastMinuteData(DataType.GPS),
+      () => api.getLastMinuteData(DataType.Gps),
       (value) => store.dispatch(setLastMinuteData(value)),
       neverUpdates,
       neverUpdates,
     ),
     useLoadValuesHook(
       "getLastMinuteGTPSData",
-      () => api.getLastMinuteData(DataType.GTPS),
+      () => api.getLastMinuteData(DataType.GasAdjustedTps),
       (value) => store.dispatch(setLastMinuteData(value)),
       neverUpdates,
       neverUpdates,

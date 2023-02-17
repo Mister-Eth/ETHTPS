@@ -1,28 +1,19 @@
 import { Moment } from "moment"
 import moment from "moment"
-import React, { ReactNode } from "react"
+import React from "react"
 import { SkeletonWithTooltip } from "./components/partials/SkeletonWithTooltip"
 import { toShortString_2 } from "./models/TimeIntervals"
 import { DataResponseModelDictionary } from "./Types.dictionaries"
 import { ILiveDataModeModel } from "./models/interfaces/ILiveDataModeModel"
-import { SvgIconTypeMap } from "@mui/material"
-import { OverridableComponent } from "@mui/material/OverridableComponent"
-import { DataPoint } from "ethtps.api.client"
-
-export enum DataType {
-  TPS,
-  GPS,
-  GTPS,
-  Unknown,
-}
+import { DataPoint, DataType } from "ethtps.api.client"
 
 export function toShortString(type: DataType): string {
   switch (type) {
-    case DataType.TPS:
+    case DataType.Tps:
       return "TPS"
-    case DataType.GPS:
+    case DataType.Gps:
       return "GPS"
-    case DataType.GTPS:
+    case DataType.GasAdjustedTps:
       return "GTPS"
     default:
       return "Unknown"
@@ -32,13 +23,11 @@ export function toShortString(type: DataType): string {
 export function fromShortString(typeStr: string): DataType {
   switch (typeStr.toUpperCase()) {
     case "TPS":
-      return DataType.TPS
+      return DataType.Tps
     case "GPS":
-      return DataType.GPS
-    case "GTPS":
-      return DataType.GTPS
+      return DataType.Gps
     default:
-      return DataType.Unknown
+      return DataType.GasAdjustedTps
   }
 }
 
@@ -61,11 +50,11 @@ export const getModeData = (
   mode: DataType,
 ): DataResponseModelDictionary | undefined => {
   switch (mode) {
-    case DataType.TPS:
+    case DataType.Tps:
       return model.data?.tps
-    case DataType.GPS:
+    case DataType.Gps:
       return model.data?.gps
-    case DataType.GTPS:
+    case DataType.GasAdjustedTps:
       return model.data?.gasAdjustedTPS
   }
 }

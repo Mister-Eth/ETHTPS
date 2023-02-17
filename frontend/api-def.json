@@ -1,11 +1,16 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "ETHTPS.API",
-    "version": "1.0"
+    "title": "ETHTPS.info API",
+    "description": "Backend definition for ethtps.info; you're free to play around",
+    "contact": {
+      "name": "Mister_Eth",
+      "url": "https://twitter.com/Mister_Eth"
+    },
+    "version": "v3"
   },
   "paths": {
-    "/api/APIKey/GetNewKey": {
+    "/api/v3/APIKeys/RegisterNewKeyForProof/GetNewKey": {
       "get": {
         "tags": [
           "APIKey"
@@ -71,13 +76,6 @@
             }
           },
           {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
             "name": "start",
             "in": "query",
             "schema": {
@@ -125,7 +123,17 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "/api/v3/BlockInfo/GetLatestBlocks": {
       "get": {
@@ -152,13 +160,6 @@
             "in": "query",
             "schema": {
               "type": "boolean"
-            }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
             }
           },
           {
@@ -200,14 +201,75 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/api/ChartData/GetStreamchartData": {
+    "/api/v3/ChartData/GetStreamchartData": {
       "get": {
         "tags": [
           "ChartData"
         ],
         "parameters": [
+          {
+            "name": "Interval",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/TimeInterval"
+            }
+          },
+          {
+            "name": "Count",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "DataType",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "CombineSeriesWithAverageLessThanPercentage",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "OrderByDateAscending",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "NoDuplicates",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "RemoveNullValues",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
           {
             "name": "Provider",
             "in": "query",
@@ -228,29 +290,6 @@
             "schema": {
               "type": "boolean"
             }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "interval",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "count",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32",
-              "default": 15
-            }
           }
         ],
         "responses": {
@@ -275,30 +314,154 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/api/DataInitialization/Initialize": {
-      "put": {
+    "/api/v3/ChartData/GetStackedChartData": {
+      "get": {
         "tags": [
-          "DataInitialization"
+          "ChartData"
         ],
         "parameters": [
           {
-            "name": "XAPIKey",
+            "name": "Interval",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/TimeInterval"
+            }
+          },
+          {
+            "name": "Count",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "DataType",
             "in": "query",
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "CombineSeriesWithAverageLessThanPercentage",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "OrderByDateAscending",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "NoDuplicates",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "RemoveNullValues",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "Provider",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Network",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IncludeSidechains",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
           }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StackedChartModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StackedChartModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StackedChartModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/api/v3/DataInitialization/Initialize": {
+      "put": {
+        "tags": [
+          "DataInitialization"
         ],
         "responses": {
           "200": {
             "description": "Success"
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/api/beta/experiments/AvailableExperiments": {
+    "/api/v3/Experiments/GetAvailableExperiments": {
       "get": {
         "tags": [
           "Experiment"
@@ -310,13 +473,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -353,9 +509,19 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/api/info/external-websites/GetExternalWebsitesFor": {
+    "/api/v3/external-websites": {
       "get": {
         "tags": [
           "ExternalWebsites"
@@ -367,13 +533,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -407,21 +566,22 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/api/info/external-websites/Create": {
-      "put": {
+    "/api/v3/external-websites/Create": {
+      "post": {
         "tags": [
           "ExternalWebsites"
-        ],
-        "parameters": [
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
         ],
         "requestBody": {
           "content": {
@@ -452,10 +612,20 @@
             "description": "Success"
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/api/info/external-websites/DeleteById": {
-      "put": {
+    "/api/v3/external-websites/DeleteById": {
+      "delete": {
         "tags": [
           "ExternalWebsites"
         ],
@@ -466,13 +636,6 @@
             "schema": {
               "type": "integer",
               "format": "int32"
-            }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
             }
           }
         ],
@@ -481,21 +644,22 @@
             "description": "Success"
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/api/info/external-websites/GetAll": {
+    "/api/v3/external-websites/GetAll": {
       "get": {
         "tags": [
           "ExternalWebsites"
-        ],
-        "parameters": [
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
         ],
         "responses": {
           "200": {
@@ -528,9 +692,19 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/api/info/external-websites/GetById": {
+    "/api/v3/external-websites/GetById": {
       "get": {
         "tags": [
           "ExternalWebsites"
@@ -543,13 +717,6 @@
               "type": "integer",
               "format": "int32"
             }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -574,21 +741,22 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/api/info/external-websites/Update": {
+    "/api/v3/external-websites/Update": {
       "put": {
         "tags": [
           "ExternalWebsites"
-        ],
-        "parameters": [
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
         ],
         "requestBody": {
           "content": {
@@ -619,9 +787,19 @@
             "description": "Success"
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/API/GasAdjustedTPS/GeMonthlyDataByYear": {
+    "/api/v2/GasAdjustedTPS/GetMonthlyDataByYear": {
       "get": {
         "tags": [
           "GasAdjustedTPS"
@@ -646,13 +824,6 @@
             "in": "query",
             "schema": {
               "type": "boolean"
-            }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
             }
           },
           {
@@ -704,9 +875,19 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/API/GasAdjustedTPS/Get": {
+    "/api/v2/GasAdjustedTPS/Get": {
       "get": {
         "tags": [
           "GasAdjustedTPS"
@@ -731,20 +912,13 @@
             "in": "query",
             "schema": {
               "type": "boolean"
-            }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
             }
           },
           {
             "name": "interval",
             "in": "query",
             "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/TimeInterval"
             }
           }
         ],
@@ -788,9 +962,19 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/API/GasAdjustedTPS/Instant": {
+    "/api/v2/GasAdjustedTPS/Instant": {
       "get": {
         "tags": [
           "GasAdjustedTPS"
@@ -816,13 +1000,6 @@
             "schema": {
               "type": "boolean"
             }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -865,9 +1042,19 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/API/GasAdjustedTPS/Max": {
+    "/api/v2/GasAdjustedTPS/Max": {
       "get": {
         "tags": [
           "GasAdjustedTPS"
@@ -893,13 +1080,6 @@
             "schema": {
               "type": "boolean"
             }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -933,21 +1113,22 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/API/v2/Networks": {
+    "/api/v2/Networks": {
       "get": {
         "tags": [
           "General"
-        ],
-        "parameters": [
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
         ],
         "responses": {
           "200": {
@@ -980,21 +1161,22 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/API/v2/Intervals": {
+    "/api/v2/Intervals": {
       "get": {
         "tags": [
           "General"
-        ],
-        "parameters": [
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
         ],
         "responses": {
           "200": {
@@ -1004,7 +1186,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "type": "string"
+                    "$ref": "#/components/schemas/TimeInterval"
                   }
                 }
               },
@@ -1012,7 +1194,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "type": "string"
+                    "$ref": "#/components/schemas/TimeInterval"
                   }
                 }
               },
@@ -1020,28 +1202,31 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "type": "string"
+                    "$ref": "#/components/schemas/TimeInterval"
                   }
                 }
               }
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/API/v2/Providers": {
+    "/api/v2/Providers": {
       "get": {
         "tags": [
           "General"
         ],
         "parameters": [
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "subchainsOf",
             "in": "query",
@@ -1081,21 +1266,22 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/API/v2/ColorDictionary": {
+    "/api/v2/ColorDictionary": {
       "get": {
         "tags": [
           "General"
-        ],
-        "parameters": [
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
         ],
         "responses": {
           "200": {
@@ -1128,21 +1314,22 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/API/v2/ProviderTypesColorDictionary": {
+    "/api/v2/ProviderTypesColorDictionary": {
       "get": {
         "tags": [
           "General"
-        ],
-        "parameters": [
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
         ],
         "responses": {
           "200": {
@@ -1175,9 +1362,19 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/API/v2/InstantData": {
+    "/api/v2/InstantData": {
       "get": {
         "tags": [
           "General"
@@ -1202,13 +1399,6 @@
             "in": "query",
             "schema": {
               "type": "boolean"
-            }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
             }
           },
           {
@@ -1245,9 +1435,19 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/API/v2/Max": {
+    "/api/v2/Max": {
       "get": {
         "tags": [
           "General"
@@ -1272,13 +1472,6 @@
             "in": "query",
             "schema": {
               "type": "boolean"
-            }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
             }
           }
         ],
@@ -1307,9 +1500,19 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/API/v2/GetIntervalsWithData": {
+    "/api/v2/GetIntervalsWithData": {
       "get": {
         "tags": [
           "General"
@@ -1335,12 +1538,76 @@
             "schema": {
               "type": "boolean"
             }
-          },
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeInterval"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeInterval"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeInterval"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/api/v2/GetUniqueDataYears": {
+      "get": {
+        "tags": [
+          "General"
+        ],
+        "parameters": [
           {
-            "name": "XAPIKey",
+            "name": "Provider",
             "in": "query",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "Network",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IncludeSidechains",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
             }
           }
         ],
@@ -1375,89 +1642,24 @@
             }
           }
         }
-      }
-    },
-    "/API/v2/GetUniqueDataYears": {
-      "get": {
-        "tags": [
-          "General"
-        ],
-        "parameters": [
-          {
-            "name": "Provider",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "Network",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "IncludeSidechains",
-            "in": "query",
-            "schema": {
-              "type": "boolean"
-            }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
           }
         }
-      }
+      ]
     },
-    "/API/v2/AllData": {
+    "/api/v2/AllData": {
       "get": {
         "tags": [
           "General"
         ],
         "parameters": [
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "network",
             "in": "query",
@@ -1489,9 +1691,19 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/API/GPS/GeMonthlyDataByYear": {
+    "/api/v2/GPS/GetMonthlyDataByYear": {
       "get": {
         "tags": [
           "GPS"
@@ -1516,13 +1728,6 @@
             "in": "query",
             "schema": {
               "type": "boolean"
-            }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
             }
           },
           {
@@ -1574,9 +1779,19 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/API/GPS/Get": {
+    "/api/v2/GPS/Get": {
       "get": {
         "tags": [
           "GPS"
@@ -1601,20 +1816,13 @@
             "in": "query",
             "schema": {
               "type": "boolean"
-            }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
             }
           },
           {
             "name": "interval",
             "in": "query",
             "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/TimeInterval"
             }
           }
         ],
@@ -1658,9 +1866,19 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/API/GPS/Instant": {
+    "/api/v2/GPS/Instant": {
       "get": {
         "tags": [
           "GPS"
@@ -1686,13 +1904,6 @@
             "schema": {
               "type": "boolean"
             }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -1735,9 +1946,19 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/API/GPS/Max": {
+    "/api/v2/GPS/Max": {
       "get": {
         "tags": [
           "GPS"
@@ -1763,13 +1984,6 @@
             "schema": {
               "type": "boolean"
             }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -1803,30 +2017,96 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/api/Ingestion": {
+    "/api/v3/Ingestion/IngestLatestData": {
       "post": {
         "tags": [
           "Ingestion"
-        ],
-        "parameters": [
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
         ],
         "responses": {
           "200": {
             "description": "Success"
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/api/info/markdown-pages/GetMarkdownPagesFor": {
+    "/api/v3/L2Data/Get": {
+      "post": {
+        "tags": [
+          "L2Data"
+        ],
+        "parameters": [
+          {
+            "name": "dataType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/DataType"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/L2DataRequestModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/L2DataRequestModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/L2DataRequestModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/L2DataRequestModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/api/v3/markdown-pages/GetMarkdownPagesFor": {
       "get": {
         "tags": [
           "MarkdownPages"
@@ -1838,13 +2118,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -1878,21 +2151,22 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/api/info/markdown-pages/Create": {
-      "put": {
+    "/api/v3/markdown-pages/Create/Create": {
+      "post": {
         "tags": [
           "MarkdownPages"
-        ],
-        "parameters": [
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
         ],
         "requestBody": {
           "content": {
@@ -1923,10 +2197,20 @@
             "description": "Success"
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/api/info/markdown-pages/DeleteById": {
-      "put": {
+    "/api/v3/markdown-pages/DeleteById/DeleteById": {
+      "delete": {
         "tags": [
           "MarkdownPages"
         ],
@@ -1937,13 +2221,6 @@
             "schema": {
               "type": "integer",
               "format": "int32"
-            }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
             }
           }
         ],
@@ -1952,21 +2229,22 @@
             "description": "Success"
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/api/info/markdown-pages/GetAll": {
+    "/api/v3/markdown-pages/GetAll/GetAll": {
       "get": {
         "tags": [
           "MarkdownPages"
-        ],
-        "parameters": [
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
         ],
         "responses": {
           "200": {
@@ -1999,9 +2277,19 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/api/info/markdown-pages/GetById": {
+    "/api/v3/markdown-pages/GetById/GetById": {
       "get": {
         "tags": [
           "MarkdownPages"
@@ -2014,13 +2302,6 @@
               "type": "integer",
               "format": "int32"
             }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -2045,21 +2326,22 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/api/info/markdown-pages/Update": {
+    "/api/v3/markdown-pages/Update/Update": {
       "put": {
         "tags": [
           "MarkdownPages"
-        ],
-        "parameters": [
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
         ],
         "requestBody": {
           "content": {
@@ -2090,9 +2372,19 @@
             "description": "Success"
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/API/Pages/Home": {
+    "/api/v2/Pages/Home": {
       "get": {
         "tags": [
           "PageModel"
@@ -2139,13 +2431,6 @@
             "schema": {
               "type": "boolean"
             }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -2170,9 +2455,19 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/API/Pages/Provider": {
+    "/api/v2/Pages/Provider": {
       "get": {
         "tags": [
           "PageModel"
@@ -2212,13 +2507,6 @@
             "schema": {
               "type": "boolean"
             }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -2226,21 +2514,22 @@
             "description": "Success"
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/api/management/providers/Create": {
-      "put": {
+    "/api/v3/management/providers/Create": {
+      "post": {
         "tags": [
           "Providers"
-        ],
-        "parameters": [
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
         ],
         "requestBody": {
           "content": {
@@ -2271,10 +2560,20 @@
             "description": "Success"
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/api/management/providers/DeleteById": {
-      "put": {
+    "/api/v3/management/providers/DeleteById": {
+      "delete": {
         "tags": [
           "Providers"
         ],
@@ -2285,13 +2584,6 @@
             "schema": {
               "type": "integer",
               "format": "int32"
-            }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
             }
           }
         ],
@@ -2300,21 +2592,22 @@
             "description": "Success"
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/api/management/providers/GetAll": {
+    "/api/v3/management/providers/GetAll": {
       "get": {
         "tags": [
           "Providers"
-        ],
-        "parameters": [
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
         ],
         "responses": {
           "200": {
@@ -2347,9 +2640,19 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/api/management/providers/GetById": {
+    "/api/v3/management/providers/GetById": {
       "get": {
         "tags": [
           "Providers"
@@ -2362,13 +2665,6 @@
               "type": "integer",
               "format": "int32"
             }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -2393,21 +2689,22 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/api/management/providers/Update": {
+    "/api/v3/management/providers/Update": {
       "put": {
         "tags": [
           "Providers"
-        ],
-        "parameters": [
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
         ],
         "requestBody": {
           "content": {
@@ -2438,21 +2735,22 @@
             "description": "Success"
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/API/TimeWarp/GetEarliestDate": {
+    "/api/v3/TimeWarp/GetEarliestDate": {
       "get": {
         "tags": [
           "TimeWarp"
-        ],
-        "parameters": [
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
         ],
         "responses": {
           "200": {
@@ -2479,9 +2777,19 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/API/TimeWarp/GetGasAdjustedTPSAt": {
+    "/api/v3/TimeWarp/GetGasAdjustedTPSAt": {
       "get": {
         "tags": [
           "TimeWarp"
@@ -2506,13 +2814,6 @@
             "in": "query",
             "schema": {
               "type": "boolean"
-            }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
             }
           },
           {
@@ -2572,9 +2873,19 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/API/TimeWarp/GetGPSAt": {
+    "/api/v3/TimeWarp/GetGPSAt": {
       "get": {
         "tags": [
           "TimeWarp"
@@ -2599,13 +2910,6 @@
             "in": "query",
             "schema": {
               "type": "boolean"
-            }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
             }
           },
           {
@@ -2665,9 +2969,19 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/API/TimeWarp/GetSyncProgress": {
+    "/api/v3/TimeWarp/GetSyncProgress": {
       "get": {
         "tags": [
           "TimeWarp"
@@ -2692,13 +3006,6 @@
             "in": "query",
             "schema": {
               "type": "boolean"
-            }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
             }
           }
         ],
@@ -2724,9 +3031,19 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/API/TimeWarp/GetTPSAt": {
+    "/api/v3/TimeWarp/GetTPSAt": {
       "get": {
         "tags": [
           "TimeWarp"
@@ -2751,13 +3068,6 @@
             "in": "query",
             "schema": {
               "type": "boolean"
-            }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
             }
           },
           {
@@ -2817,9 +3127,19 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/API/TPS/GeMonthlyDataByYear": {
+    "/api/v2/TPS/GetMonthlyDataByYear": {
       "get": {
         "tags": [
           "TPS"
@@ -2844,13 +3164,6 @@
             "in": "query",
             "schema": {
               "type": "boolean"
-            }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
             }
           },
           {
@@ -2902,9 +3215,19 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/API/TPS/Get": {
+    "/api/v2/TPS/Get": {
       "get": {
         "tags": [
           "TPS"
@@ -2929,20 +3252,13 @@
             "in": "query",
             "schema": {
               "type": "boolean"
-            }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
             }
           },
           {
             "name": "interval",
             "in": "query",
             "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/TimeInterval"
             }
           }
         ],
@@ -2986,9 +3302,19 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/API/TPS/Instant": {
+    "/api/v2/TPS/Instant": {
       "get": {
         "tags": [
           "TPS"
@@ -3014,13 +3340,6 @@
             "schema": {
               "type": "boolean"
             }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -3063,9 +3382,19 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/API/TPS/Max": {
+    "/api/v2/TPS/Max": {
       "get": {
         "tags": [
           "TPS"
@@ -3091,13 +3420,6 @@
             "schema": {
               "type": "boolean"
             }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -3131,22 +3453,23 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/api/UpdaterStatus/GetAllStatuses": {
+    "/api/v3/updater-status/GetAllStatuses": {
       "get": {
         "tags": [
           "UpdaterStatus"
         ],
-        "parameters": [
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -3178,9 +3501,19 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/api/UpdaterStatus/GetStatusFor": {
+    "/api/v3/updater-status/GetStatusFor": {
       "get": {
         "tags": [
           "UpdaterStatus"
@@ -3199,13 +3532,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -3230,9 +3556,19 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
-    "/api/UpdaterStatus/GetStatusesFor": {
+    "/api/v3/updater-status/GetStatusesFor": {
       "get": {
         "tags": [
           "UpdaterStatus"
@@ -3244,13 +3580,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "XAPIKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -3284,7 +3613,17 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "name": "X-API-Key",
+          "in": "header",
+          "allowEmptyValue": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     }
   },
   "components": {
@@ -3292,6 +3631,15 @@
       "APIKeyResponseModel": {
         "type": "object",
         "properties": {
+          "success": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "failureReason": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
           "key": {
             "type": "string",
             "nullable": true,
@@ -3300,15 +3648,6 @@
           "requestLimit24h": {
             "type": "integer",
             "format": "int32",
-            "nullable": true,
-            "readOnly": true
-          },
-          "success": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "failureReason": {
-            "type": "string",
             "nullable": true,
             "readOnly": true
           }
@@ -3332,41 +3671,266 @@
           },
           "allTPSData": {
             "type": "object",
-            "additionalProperties": {
-              "type": "object",
-              "additionalProperties": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/DataResponseModel"
+            "properties": {
+              "Instant": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataResponseModel"
+                  }
+                }
+              },
+              "OneMinute": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataResponseModel"
+                  }
+                }
+              },
+              "OneHour": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataResponseModel"
+                  }
+                }
+              },
+              "OneDay": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataResponseModel"
+                  }
+                }
+              },
+              "OneWeek": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataResponseModel"
+                  }
+                }
+              },
+              "OneMonth": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataResponseModel"
+                  }
+                }
+              },
+              "OneYear": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataResponseModel"
+                  }
+                }
+              },
+              "All": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataResponseModel"
+                  }
+                }
+              },
+              "Auto": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataResponseModel"
+                  }
                 }
               }
             },
+            "additionalProperties": false,
             "nullable": true
           },
           "allGPSData": {
             "type": "object",
-            "additionalProperties": {
-              "type": "object",
-              "additionalProperties": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/DataResponseModel"
+            "properties": {
+              "Instant": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataResponseModel"
+                  }
+                }
+              },
+              "OneMinute": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataResponseModel"
+                  }
+                }
+              },
+              "OneHour": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataResponseModel"
+                  }
+                }
+              },
+              "OneDay": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataResponseModel"
+                  }
+                }
+              },
+              "OneWeek": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataResponseModel"
+                  }
+                }
+              },
+              "OneMonth": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataResponseModel"
+                  }
+                }
+              },
+              "OneYear": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataResponseModel"
+                  }
+                }
+              },
+              "All": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataResponseModel"
+                  }
+                }
+              },
+              "Auto": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataResponseModel"
+                  }
                 }
               }
             },
+            "additionalProperties": false,
             "nullable": true
           },
           "allGasAdjustedTPSData": {
             "type": "object",
-            "additionalProperties": {
-              "type": "object",
-              "additionalProperties": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/DataResponseModel"
+            "properties": {
+              "Instant": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataResponseModel"
+                  }
+                }
+              },
+              "OneMinute": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataResponseModel"
+                  }
+                }
+              },
+              "OneHour": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataResponseModel"
+                  }
+                }
+              },
+              "OneDay": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataResponseModel"
+                  }
+                }
+              },
+              "OneWeek": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataResponseModel"
+                  }
+                }
+              },
+              "OneMonth": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataResponseModel"
+                  }
+                }
+              },
+              "OneYear": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataResponseModel"
+                  }
+                }
+              },
+              "All": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataResponseModel"
+                  }
+                }
+              },
+              "Auto": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataResponseModel"
+                  }
                 }
               }
             },
+            "additionalProperties": false,
             "nullable": true
           }
         },
@@ -3466,6 +4030,23 @@
         },
         "additionalProperties": false
       },
+      "BucketOptions": {
+        "type": "object",
+        "properties": {
+          "useTimeBuckets": {
+            "type": "boolean"
+          },
+          "bucketSize": {
+            "$ref": "#/components/schemas/TimeInterval"
+          },
+          "customBucketSize": {
+            "type": "string",
+            "format": "date-span",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ChartData": {
         "type": "object",
         "properties": {
@@ -3523,12 +4104,11 @@
       },
       "DataType": {
         "enum": [
-          0,
-          1,
-          2
+          "TPS",
+          "GPS",
+          "GasAdjustedTPS"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "DataUpdater": {
         "type": "object",
@@ -3602,6 +4182,22 @@
             },
             "nullable": true,
             "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DatasetMergeOptions": {
+        "type": "object",
+        "properties": {
+          "mergePercentage": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "maxCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -3867,6 +4463,9 @@
       "ExternalWebsite": {
         "type": "object",
         "properties": {
+          "categoryNavigation": {
+            "$ref": "#/components/schemas/ExternalWebsiteCategory"
+          },
           "name": {
             "type": "string",
             "nullable": true
@@ -3882,17 +4481,6 @@
           "id": {
             "type": "integer",
             "format": "int32"
-          },
-          "categoryNavigation": {
-            "$ref": "#/components/schemas/ExternalWebsiteCategory"
-          },
-          "providerLinks": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ProviderLink"
-            },
-            "nullable": true,
-            "readOnly": true
           }
         },
         "additionalProperties": false
@@ -4004,9 +4592,6 @@
       "HomePageResponseModel": {
         "type": "object",
         "properties": {
-          "chartData": {
-            "$ref": "#/components/schemas/ChartData"
-          },
           "maxData": {
             "type": "object",
             "additionalProperties": { },
@@ -4037,6 +4622,9 @@
               "$ref": "#/components/schemas/ProviderResponseModel"
             },
             "nullable": true
+          },
+          "chartData": {
+            "$ref": "#/components/schemas/ChartData"
           }
         },
         "additionalProperties": false
@@ -4147,6 +4735,58 @@
           "id": {
             "type": "integer",
             "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "L2DataRequestModel": {
+        "type": "object",
+        "properties": {
+          "startDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "bucketOptions": {
+            "$ref": "#/components/schemas/BucketOptions"
+          },
+          "returnXAxisType": {
+            "$ref": "#/components/schemas/XPointType"
+          },
+          "includeEmptyDatasets": {
+            "type": "boolean"
+          },
+          "mergeOptions": {
+            "$ref": "#/components/schemas/DatasetMergeOptions"
+          },
+          "includeSimpleAnalysis": {
+            "type": "boolean"
+          },
+          "includeComplexAnalysis": {
+            "type": "boolean"
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "provider": {
+            "type": "string",
+            "nullable": true
+          },
+          "network": {
+            "type": "string",
+            "nullable": true
+          },
+          "includeSidechains": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -4947,6 +5587,62 @@
         },
         "additionalProperties": false
       },
+      "StackedChartDataPoint": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "y": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StackedChartModel": {
+        "type": "object",
+        "properties": {
+          "series": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StackedChartSeries"
+            },
+            "nullable": true
+          },
+          "maxValue": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StackedChartSeries": {
+        "type": "object",
+        "properties": {
+          "dataPoints": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StackedChartDataPoint"
+            },
+            "nullable": true
+          },
+          "maxValue": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "provider": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "StarkwareTransactionCountDatum": {
         "type": "object",
         "properties": {
@@ -4997,6 +5693,10 @@
             },
             "nullable": true
           },
+          "maxTPS": {
+            "type": "number",
+            "format": "double"
+          },
           "gpsData": {
             "type": "array",
             "items": {
@@ -5008,6 +5708,10 @@
             },
             "nullable": true
           },
+          "maxGPS": {
+            "type": "number",
+            "format": "double"
+          },
           "gtpsData": {
             "type": "array",
             "items": {
@@ -5018,23 +5722,27 @@
               }
             },
             "nullable": true
+          },
+          "maxGTPS": {
+            "type": "number",
+            "format": "double"
           }
         },
         "additionalProperties": false
       },
       "TimeInterval": {
         "enum": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          "Instant",
+          "OneMinute",
+          "OneHour",
+          "OneDay",
+          "OneWeek",
+          "OneMonth",
+          "OneYear",
+          "All",
+          "Auto"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "TimeWarpDataDay": {
         "type": "object",
@@ -5258,6 +5966,22 @@
       "TpsandGasDataAll": {
         "type": "object",
         "properties": {
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "averageTps": {
+            "type": "number",
+            "format": "double"
+          },
+          "averageGps": {
+            "type": "number",
+            "format": "double"
+          },
+          "readingsCount": {
+            "type": "integer",
+            "format": "int32"
+          },
           "id": {
             "type": "integer",
             "format": "int32"
@@ -5275,22 +5999,6 @@
           },
           "providerNavigation": {
             "$ref": "#/components/schemas/Provider"
-          },
-          "startDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "averageTps": {
-            "type": "number",
-            "format": "double"
-          },
-          "averageGps": {
-            "type": "number",
-            "format": "double"
-          },
-          "readingsCount": {
-            "type": "integer",
-            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -5298,6 +6006,22 @@
       "TpsandGasDataDay": {
         "type": "object",
         "properties": {
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "averageTps": {
+            "type": "number",
+            "format": "double"
+          },
+          "averageGps": {
+            "type": "number",
+            "format": "double"
+          },
+          "readingsCount": {
+            "type": "integer",
+            "format": "int32"
+          },
           "id": {
             "type": "integer",
             "format": "int32"
@@ -5315,22 +6039,6 @@
           },
           "providerNavigation": {
             "$ref": "#/components/schemas/Provider"
-          },
-          "startDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "averageTps": {
-            "type": "number",
-            "format": "double"
-          },
-          "averageGps": {
-            "type": "number",
-            "format": "double"
-          },
-          "readingsCount": {
-            "type": "integer",
-            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -5338,24 +6046,6 @@
       "TpsandGasDataHour": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "network": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "provider": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "networkNavigation": {
-            "$ref": "#/components/schemas/Network"
-          },
-          "providerNavigation": {
-            "$ref": "#/components/schemas/Provider"
-          },
           "startDate": {
             "type": "string",
             "format": "date-time"
@@ -5371,6 +6061,24 @@
           "readingsCount": {
             "type": "integer",
             "format": "int32"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "network": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "provider": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "networkNavigation": {
+            "$ref": "#/components/schemas/Network"
+          },
+          "providerNavigation": {
+            "$ref": "#/components/schemas/Provider"
           }
         },
         "additionalProperties": false
@@ -5378,24 +6086,6 @@
       "TpsandGasDataLatest": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "network": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "provider": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "networkNavigation": {
-            "$ref": "#/components/schemas/Network"
-          },
-          "providerNavigation": {
-            "$ref": "#/components/schemas/Provider"
-          },
           "tps": {
             "type": "number",
             "format": "double"
@@ -5403,13 +6093,7 @@
           "gps": {
             "type": "number",
             "format": "double"
-          }
-        },
-        "additionalProperties": false
-      },
-      "TpsandGasDataMax": {
-        "type": "object",
-        "properties": {
+          },
           "id": {
             "type": "integer",
             "format": "int32"
@@ -5427,7 +6111,13 @@
           },
           "providerNavigation": {
             "$ref": "#/components/schemas/Provider"
-          },
+          }
+        },
+        "additionalProperties": false
+      },
+      "TpsandGasDataMax": {
+        "type": "object",
+        "properties": {
           "date": {
             "type": "string",
             "format": "date-time"
@@ -5449,6 +6139,24 @@
             "type": "integer",
             "format": "int32",
             "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "network": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "provider": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "networkNavigation": {
+            "$ref": "#/components/schemas/Network"
+          },
+          "providerNavigation": {
+            "$ref": "#/components/schemas/Provider"
           }
         },
         "additionalProperties": false
@@ -5456,6 +6164,22 @@
       "TpsandGasDataMinute": {
         "type": "object",
         "properties": {
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "averageTps": {
+            "type": "number",
+            "format": "double"
+          },
+          "averageGps": {
+            "type": "number",
+            "format": "double"
+          },
+          "readingsCount": {
+            "type": "integer",
+            "format": "int32"
+          },
           "id": {
             "type": "integer",
             "format": "int32"
@@ -5473,22 +6197,6 @@
           },
           "providerNavigation": {
             "$ref": "#/components/schemas/Provider"
-          },
-          "startDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "averageTps": {
-            "type": "number",
-            "format": "double"
-          },
-          "averageGps": {
-            "type": "number",
-            "format": "double"
-          },
-          "readingsCount": {
-            "type": "integer",
-            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -5496,6 +6204,22 @@
       "TpsandGasDataMonth": {
         "type": "object",
         "properties": {
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "averageTps": {
+            "type": "number",
+            "format": "double"
+          },
+          "averageGps": {
+            "type": "number",
+            "format": "double"
+          },
+          "readingsCount": {
+            "type": "integer",
+            "format": "int32"
+          },
           "id": {
             "type": "integer",
             "format": "int32"
@@ -5513,22 +6237,6 @@
           },
           "providerNavigation": {
             "$ref": "#/components/schemas/Provider"
-          },
-          "startDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "averageTps": {
-            "type": "number",
-            "format": "double"
-          },
-          "averageGps": {
-            "type": "number",
-            "format": "double"
-          },
-          "readingsCount": {
-            "type": "integer",
-            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -5536,6 +6244,22 @@
       "TpsandGasDataWeek": {
         "type": "object",
         "properties": {
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "averageTps": {
+            "type": "number",
+            "format": "double"
+          },
+          "averageGps": {
+            "type": "number",
+            "format": "double"
+          },
+          "readingsCount": {
+            "type": "integer",
+            "format": "int32"
+          },
           "id": {
             "type": "integer",
             "format": "int32"
@@ -5553,22 +6277,6 @@
           },
           "providerNavigation": {
             "$ref": "#/components/schemas/Provider"
-          },
-          "startDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "averageTps": {
-            "type": "number",
-            "format": "double"
-          },
-          "averageGps": {
-            "type": "number",
-            "format": "double"
-          },
-          "readingsCount": {
-            "type": "integer",
-            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -5576,6 +6284,22 @@
       "TpsandGasDataYear": {
         "type": "object",
         "properties": {
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "averageTps": {
+            "type": "number",
+            "format": "double"
+          },
+          "averageGps": {
+            "type": "number",
+            "format": "double"
+          },
+          "readingsCount": {
+            "type": "integer",
+            "format": "int32"
+          },
           "id": {
             "type": "integer",
             "format": "int32"
@@ -5593,25 +6317,17 @@
           },
           "providerNavigation": {
             "$ref": "#/components/schemas/Provider"
-          },
-          "startDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "averageTps": {
-            "type": "number",
-            "format": "double"
-          },
-          "averageGps": {
-            "type": "number",
-            "format": "double"
-          },
-          "readingsCount": {
-            "type": "integer",
-            "format": "int32"
           }
         },
         "additionalProperties": false
+      },
+      "XPointType": {
+        "enum": [
+          "Date",
+          "Number",
+          "String"
+        ],
+        "type": "string"
       }
     }
   }

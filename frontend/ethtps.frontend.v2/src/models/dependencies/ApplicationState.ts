@@ -3,9 +3,8 @@ import { IMaxDataModel } from "../interfaces/IMaxDataModel"
 import { IDataModeModel } from "../interfaces/IDataModeModel"
 import { ILiveDataModeModel } from "../interfaces/ILiveDataModeModel"
 import { TimeInterval } from "../TimeIntervals"
-import { DataPoint } from "../../services/api-gen"
 import { DataPointDictionary } from "../../Types.dictionaries"
-import { DataType } from "../../Types"
+import { DataPoint, DataType } from "ethtps.api.client"
 
 export interface IApplicationState
   extends IMaxDataModel,
@@ -21,6 +20,7 @@ export interface IApplicationState
   liveDataSmoothing: TimeInterval
   liveDataType: DataType
   experiments: number[]
+  currentVisitors?: number
   getMaxDataFor(provider: string, type: DataType): DataPoint | undefined
 }
 
@@ -50,8 +50,8 @@ export class ApplicationState implements IApplicationState {
     this.maxTPSData = state?.maxTPSData
     this.maxGPSData = state?.maxGPSData
     this.maxGTPSData = state?.maxGTPSData
-    this.mode = state?.mode ?? DataType.TPS
+    this.mode = state?.mode ?? DataType.Tps
     this.liveDataSmoothing = state?.liveDataSmoothing ?? TimeInterval._1m
-    this.liveDataType = state?.liveDataType ?? DataType.TPS
+    this.liveDataType = state?.liveDataType ?? DataType.Tps
   }
 }

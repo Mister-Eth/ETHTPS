@@ -10,6 +10,7 @@ export * from './GPSApi';
 export * from './GasAdjustedTPSApi';
 export * from './GeneralApi';
 export * from './IngestionApi';
+export * from './L2DataApi';
 export * from './MarkdownPagesApi';
 export * from './PageModelApi';
 export * from './ProvidersApi';

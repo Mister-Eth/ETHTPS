@@ -1,5 +1,5 @@
 import { Fragment, useState } from "react"
-import { ConditionalRender, DataType, inline } from "../../Types"
+import { ConditionalRender, inline } from "../../Types"
 import { CustomButtonGroup } from "./CustomButtonGroup"
 import { Box, IconButton, Tooltip, Typography } from "@mui/material"
 import {
@@ -10,13 +10,14 @@ import {
 } from "@mui/icons-material"
 import { CurrentViewersIcon } from "./CurrentViewersIcon"
 import { useGetExperimentsFromAppStore } from "../experiments/ExperimentHooks"
+import { DataType } from "ethtps.api.client"
 
 interface IDataModeButtonGroupConfiguration {
   modeChanged: (mode: DataType) => void
 }
 
 export function DataModeButtonGroup(model: IDataModeButtonGroupConfiguration) {
-  const [mode, setMode] = useState(DataType.TPS)
+  const [mode, setMode] = useState<DataType>(DataType.Tps)
   const getColorComparedTo = (proposedMode: DataType) =>
     proposedMode == mode ? { color: "primary" } : undefined
   const triggerChange = (mode: DataType) => {
@@ -34,10 +35,10 @@ export function DataModeButtonGroup(model: IDataModeButtonGroupConfiguration) {
         <Tooltip
           arrow
           placement={"top"}
-          {...getColorComparedTo(DataType.TPS)}
+          {...getColorComparedTo(DataType.Tps)}
           title={<Typography>Transactions per second</Typography>}
         >
-          <IconButton onClick={() => triggerChange(DataType.TPS)}>
+          <IconButton onClick={() => triggerChange(DataType.Tps)}>
             <Numbers />
           </IconButton>
         </Tooltip>
@@ -45,10 +46,10 @@ export function DataModeButtonGroup(model: IDataModeButtonGroupConfiguration) {
         <Tooltip
           arrow
           placement={"top"}
-          {...getColorComparedTo(DataType.GPS)}
+          {...getColorComparedTo(DataType.Gps)}
           title={<Typography>Gas per second</Typography>}
         >
-          <IconButton onClick={() => triggerChange(DataType.GPS)}>
+          <IconButton onClick={() => triggerChange(DataType.Gps)}>
             <LocalGasStation />
           </IconButton>
         </Tooltip>
@@ -56,10 +57,10 @@ export function DataModeButtonGroup(model: IDataModeButtonGroupConfiguration) {
         <Tooltip
           arrow
           placement={"top"}
-          {...getColorComparedTo(DataType.GTPS)}
+          {...getColorComparedTo(DataType.GasAdjustedTps)}
           title={<Typography>Gas-adjusted transactions per second</Typography>}
         >
-          <IconButton onClick={() => triggerChange(DataType.GTPS)}>
+          <IconButton onClick={() => triggerChange(DataType.GasAdjustedTps)}>
             <EvStation />
           </IconButton>
         </Tooltip>

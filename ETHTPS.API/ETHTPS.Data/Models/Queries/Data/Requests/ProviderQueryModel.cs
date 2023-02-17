@@ -7,7 +7,10 @@ namespace ETHTPS.Data.Core.Models.Queries.Data.Requests
     /// </summary>
     public class ProviderQueryModel
     {
-        public string Provider { get; set; }
+        /// <summary>
+        /// All hell breaks loose if we don't initially set this to "All"
+        /// </summary>
+        public string Provider { get; set; } = Constants.All;
         public string Network { get; set; } = Constants.Mainnet;
         public bool IncludeSidechains { get; set; } = true;
 

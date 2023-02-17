@@ -11,8 +11,11 @@ import {
   ExternalWebsitesApi,
   MarkdownPagesApi,
   ChartDataApi,
-  ApiChartDataGetStreamchartDataGetRequest,
-  ApiChartDataGetStackedChartDataGetRequest,
+  L2DataApi,
+  ApiV3ChartDataGetStreamchartDataGetRequest,
+  ApiV3ChartDataGetStackedChartDataGetRequest,
+  ApiV3L2DataGetPostRequest,
+  DataType,
 } from "ethtps.api.client"
 import { tryLoadAPIKeyFromLocalStorage, getAPIKey } from "../DependenciesIOC"
 import { APIKeyMiddleware } from "./APIKeyMiddleware"
@@ -21,48 +24,23 @@ import {
   DataPointDictionary,
   StringDictionary,
 } from "../../Types.dictionaries"
-import { DataType } from "../../Types"
 
 export class ETHTPSApi {
   public generalApi: GeneralApi = new GeneralApi()
-  private _generalApiEndpoint: string
+  private _apiURL: string
   public tpsApi: TPSApi = new TPSApi()
-  private _tpsApiEndpoint: string
   public gpsApi: GPSApi = new GPSApi()
-  private _gpsApiEndpoint: string
   public gtpsApi: GasAdjustedTPSApi = new GasAdjustedTPSApi()
-  private _gtpsApiEndpoint: string
   public experimentAPI: ExperimentApi = new ExperimentApi()
   public externalWebsitePAI: ExternalWebsitesApi = new ExternalWebsitesApi()
   public markdownAPI: MarkdownPagesApi = new MarkdownPagesApi()
-
   public chartDataAPI: ChartDataApi = new ChartDataApi()
-  private _chartDataAPIEndpoint: string
-
+  public l2DataAPI: L2DataApi = new L2DataApi()
   public apiKeyAPI: APIKeyApi
-  private _apiKeyApiEndpoint: string
-  //public statusAPI: StatusApi
-  private _statusAPIEndpoint: string
   public apiKey?: string
 
-  constructor(
-    generalApiUrl: string,
-    tpsApiUrl: string,
-    gpsApiUrl: string,
-    gtpsApiUrl: string,
-    apiKeyApiUrl: string,
-    statusAPIEndpoint: string,
-    chartDataAPIEndpoint: string,
-    apiKey?: string,
-    useArtificialDelay: boolean = true,
-  ) {
-    this._generalApiEndpoint = generalApiUrl
-    this._tpsApiEndpoint = tpsApiUrl
-    this._gpsApiEndpoint = gpsApiUrl
-    this._gtpsApiEndpoint = gtpsApiUrl
-    this._apiKeyApiEndpoint = apiKeyApiUrl
-    this._statusAPIEndpoint = statusAPIEndpoint
-    this._chartDataAPIEndpoint = chartDataAPIEndpoint
+  constructor(apiURL: string, apiKey?: string) {
+    this._apiURL = apiURL
     if (!apiKey) {
       tryLoadAPIKeyFromLocalStorage()
       let supposedlyAKey = getAPIKey()
@@ -72,7 +50,7 @@ export class ETHTPSApi {
     }
     this.apiKeyAPI = new APIKeyApi(
       new Configuration({
-        basePath: this._apiKeyApiEndpoint,
+        basePath: this._apiURL,
       }),
     )
     this.resetConfig()
@@ -88,29 +66,24 @@ export class ETHTPSApi {
   }
 
   public resetConfig() {
-    this.generalApi = new GeneralApi(this._genConfig(this._generalApiEndpoint))
-    this.tpsApi = new TPSApi(this._genConfig(this._tpsApiEndpoint))
-    this.gpsApi = new GPSApi(this._genConfig(this._gpsApiEndpoint))
-    this.gtpsApi = new GasAdjustedTPSApi(this._genConfig(this._gtpsApiEndpoint))
-    this.experimentAPI = new ExperimentApi(
-      this._genConfig(this._generalApiEndpoint),
-    )
+    this.generalApi = new GeneralApi(this._genConfig(this._apiURL))
+    this.tpsApi = new TPSApi(this._genConfig(this._apiURL))
+    this.gpsApi = new GPSApi(this._genConfig(this._apiURL))
+    this.gtpsApi = new GasAdjustedTPSApi(this._genConfig(this._apiURL))
+    this.experimentAPI = new ExperimentApi(this._genConfig(this._apiURL))
     this.externalWebsitePAI = new ExternalWebsitesApi(
-      this._genConfig(this._generalApiEndpoint),
+      this._genConfig(this._apiURL),
     )
-    this.markdownAPI = new MarkdownPagesApi(
-      this._genConfig(this._generalApiEndpoint),
-    )
+    this.markdownAPI = new MarkdownPagesApi(this._genConfig(this._apiURL))
 
     this.apiKeyAPI = new APIKeyApi(
       new Configuration({
-        basePath: this._apiKeyApiEndpoint,
+        basePath: this._apiURL,
       }),
     )
 
-    this.chartDataAPI = new ChartDataApi(
-      this._genConfig(this._generalApiEndpoint),
-    )
+    this.chartDataAPI = new ChartDataApi(this._genConfig(this._apiURL))
+    this.l2DataAPI = new L2DataApi(this._genConfig(this._apiURL))
     /*
     this.statusAPI = new StatusApi(
       new Configuration({
@@ -120,41 +93,41 @@ export class ETHTPSApi {
   }
 
   public getProviders(): Promise<ProviderResponseModel[]> {
-    return this.generalApi.aPIV2ProvidersGet()
+    return this.generalApi.apiV2ProvidersGet()
   }
 
   public getNetworks(): Promise<Array<string>> {
-    return this.generalApi.aPIV2NetworksGet()
+    return this.generalApi.apiV2NetworksGet()
   }
 
   public getIntervals(): Promise<string[]> {
-    return this.generalApi.aPIV2IntervalsGet()
+    return this.generalApi.apiV2IntervalsGet()
   }
 
   public getData(
     dataType: DataType,
-    interval: string,
+    interval: TimeInterval,
     provider?: string,
     network?: string,
     includeSidechains?: boolean,
   ): Promise<DataResponseModelDictionary> {
     switch (dataType) {
-      case DataType.TPS:
-        return this.tpsApi.aPITPSGetGet({
+      case DataType.Tps:
+        return this.tpsApi.apiV2TPSGetGet({
           provider,
           network,
           includeSidechains,
           interval,
         })
-      case DataType.GTPS:
-        return this.gtpsApi.aPIGasAdjustedTPSGetGet({
+      case DataType.GasAdjustedTps:
+        return this.gtpsApi.apiV2GasAdjustedTPSGetGet({
           provider,
           network,
           includeSidechains,
           interval,
         })
-      case DataType.GPS:
-        return this.gpsApi.aPIGPSGetGet({
+      case DataType.Gps:
+        return this.gpsApi.apiV2GPSGetGet({
           provider,
           network,
           includeSidechains,
@@ -172,20 +145,20 @@ export class ETHTPSApi {
     includeSidechains?: boolean,
   ): Promise<DataPointDictionary> | undefined {
     switch (dataType) {
-      case DataType.TPS:
-        return this.tpsApi.aPITPSMaxGet({
+      case DataType.Tps:
+        return this.tpsApi.apiV2TPSMaxGet({
           provider,
           network,
           includeSidechains,
         })
-      case DataType.GPS:
-        return this.gpsApi.aPIGPSMaxGet({
+      case DataType.Gps:
+        return this.gpsApi.apiV2GPSMaxGet({
           provider,
           network,
           includeSidechains,
         })
-      case DataType.GTPS:
-        return this.gtpsApi.aPIGasAdjustedTPSMaxGet({
+      case DataType.GasAdjustedTps:
+        return this.gtpsApi.apiV2GasAdjustedTPSMaxGet({
           provider,
           network,
           includeSidechains,
@@ -196,46 +169,48 @@ export class ETHTPSApi {
   }
 
   public getInstantData(smoothing: TimeInterval) {
-    return this.generalApi.aPIV2InstantDataGet({
+    return this.generalApi.apiV2InstantDataGet({
       includeSidechains: true,
       //toShortString_2(smoothing),
     })
   }
 
   public getNewAPIKey(humanityProof: string) {
-    return this.apiKeyAPI.apiAPIKeyGetNewKeyGet({ humanityProof })
+    return this.apiKeyAPI.apiV3APIKeysRegisterNewKeyForProofGetNewKeyGet({
+      humanityProof,
+    })
   }
 
   public getProviderColorDictionary(): Promise<StringDictionary> {
-    return this.generalApi.aPIV2ColorDictionaryGet()
+    return this.generalApi.apiV2ColorDictionaryGet()
   }
 
   public getProviderTypeColorDictionary(): Promise<StringDictionary> {
-    return this.generalApi.aPIV2ProviderTypesColorDictionaryGet()
+    return this.generalApi.apiV2ProviderTypesColorDictionaryGet()
   }
 
   public getIntervalsWithData(provider: string) {
-    return this.generalApi.aPIV2GetIntervalsWithDataGet({ provider })
+    return this.generalApi.apiV2GetIntervalsWithDataGet({ provider })
   }
 
   public getAvailableExperiments(deviceType: string) {
-    return this.experimentAPI.apiBetaExperimentsAvailableExperimentsGet({
+    return this.experimentAPI.apiV3ExperimentsGetAvailableExperimentsGet({
       deviceType,
     })
   }
 
   public getLastMinuteData(dataType: DataType) {
     switch (dataType) {
-      case DataType.TPS:
-        return this.tpsApi.aPITPSGetGet({
+      case DataType.Tps:
+        return this.tpsApi.apiV2TPSGetGet({
           interval: "OneMinute",
         })
-      case DataType.GPS:
-        return this.gpsApi.aPIGPSGetGet({
+      case DataType.Gps:
+        return this.gpsApi.apiV2GPSGetGet({
           interval: "OneMinute",
         })
       default:
-        return this.gtpsApi.aPIGasAdjustedTPSGetGet({
+        return this.gtpsApi.apiV2GasAdjustedTPSGetGet({
           interval: "OneMinute",
         })
     }
@@ -245,35 +220,36 @@ export class ETHTPSApi {
     if (!providerName) {
       return Promise.reject()
     }
-    return this.externalWebsitePAI.apiInfoExternalWebsitesGetExternalWebsitesForGet(
-      {
-        providerName,
-      },
-    )
+    return this.externalWebsitePAI.apiV3ExternalWebsitesGet({
+      providerName,
+    })
   }
 
   public getMarkdownInfoPageFor(providerName?: string) {
     if (!providerName) {
       return Promise.reject()
     }
-    return this.markdownAPI.apiInfoMarkdownPagesGetMarkdownPagesForGet({
+    return this.markdownAPI.apiV3MarkdownPagesGetMarkdownPagesForGet({
       providerName,
     })
   }
 
   public getStreamChartData(
-    requestParameters?: ApiChartDataGetStreamchartDataGetRequest,
+    requestParameters?: ApiV3ChartDataGetStreamchartDataGetRequest,
   ) {
-    return this.chartDataAPI.apiChartDataGetStreamchartDataGet(
+    return this.chartDataAPI.apiV3ChartDataGetStreamchartDataGet(
       requestParameters,
     )
   }
 
   public getStackedChartData(
-    requestParameters: ApiChartDataGetStackedChartDataGetRequest,
+    requestParameters: ApiV3ChartDataGetStackedChartDataGetRequest,
   ) {
-    return this.chartDataAPI.apiChartDataGetStackedChartDataGet(
+    return this.chartDataAPI.apiV3ChartDataGetStackedChartDataGet(
       requestParameters,
     )
+  }
+  public getL2Data(request: ApiV3L2DataGetPostRequest) {
+    return this.l2DataAPI.apiV3L2DataGetPost(request)
   }
 }

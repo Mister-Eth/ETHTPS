@@ -1,16 +1,16 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { ILiveDataModeModel } from "../models/interfaces/ILiveDataModeModel"
 import { TimeInterval } from "../models/TimeIntervals"
-import { DataType } from "../Types"
 import {
   InstantDataResponseModel,
   DataResponseModelDictionary,
 } from "../Types.dictionaries"
 import { storage } from "../services/DependenciesIOC"
+import { DataType } from "ethtps.api.client"
 
 const initialState: ILiveDataModeModel = {
   liveDataSmoothing: TimeInterval.Instant,
-  liveDataType: DataType.TPS,
+  liveDataType: DataType.Tps,
   includeSidechains: storage.retrieveItem("includeSidechains") ?? false,
   oneMinuteTPSData: storage.retrieveItem("oneMinuteTPSData"),
   oneMinuteGPSData: storage.retrieveItem("oneMinuteGPSData"),
@@ -65,11 +65,11 @@ const liveDataSlice = createSlice({
       action: PayloadAction<DataResponseModelDictionary | undefined>,
     ) {
       switch (state.liveDataType) {
-        case DataType.TPS:
+        case DataType.Tps:
           storage.cacheItem(action.payload, "oneMinuteTPSData")
           state.oneMinuteTPSData = action.payload
           break
-        case DataType.GPS:
+        case DataType.Gps:
           storage.cacheItem(action.payload, "oneMinuteGPSData")
           state.oneMinuteGPSData = action.payload
           break

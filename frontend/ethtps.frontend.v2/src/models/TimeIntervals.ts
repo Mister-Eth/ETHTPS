@@ -1,4 +1,5 @@
-import { DataType } from "../Types"
+import { DataType } from "ethtps.api.client"
+
 export enum TimeInterval {
   Instant,
   _1m,
@@ -33,9 +34,9 @@ export function toShortString(interval: TimeInterval) {
 
 export function dataTypeToString(type: DataType) {
   switch (type) {
-    case DataType.TPS:
+    case DataType.Tps:
       return "TPS"
-    case DataType.GPS:
+    case DataType.Gps:
       return "GPS"
     default:
       return "GTPS"

@@ -1,8 +1,8 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
-import { DataType } from "../Types"
 import { DataPointDictionary } from "../Types.dictionaries"
 import { IMaxDataModel } from "../models/interfaces/IMaxDataModel"
 import { storage } from "../services/DependenciesIOC"
+import { DataType } from "ethtps.api.client"
 
 const initialState: IMaxDataModel = {
   maxTPSData: storage.retrieveItem("maxTPSData") ?? {},
@@ -10,7 +10,7 @@ const initialState: IMaxDataModel = {
   maxGTPSData: storage.retrieveItem("maxGTPSData") ?? {},
   getMaxDataFor(provider, type) {
     switch (type) {
-      case DataType.TPS:
+      case DataType.Tps:
         if (
           this.maxTPSData !== undefined &&
           Object.keys(this.maxGPSData as DataPointDictionary).some(
@@ -19,7 +19,7 @@ const initialState: IMaxDataModel = {
         )
           return this.maxTPSData[provider]
         else break
-      case DataType.GPS:
+      case DataType.Gps:
         if (
           this.maxGPSData !== undefined &&
           Object.keys(this.maxGPSData as DataPointDictionary).some(
@@ -28,7 +28,7 @@ const initialState: IMaxDataModel = {
         )
           return this.maxGPSData[provider]
         else break
-      case DataType.GTPS:
+      case DataType.GasAdjustedTps:
         if (
           this.maxGTPSData !== undefined &&
           Object.keys(this.maxGTPSData as DataPointDictionary).some(

@@ -5,7 +5,7 @@ import { ProviderIntervalDropdown } from "../dropdowns/ProviderIntervalDropdown"
 import { NetworksDropdown } from "../dropdowns/NetworksDropdown"
 import Container from "@mui/material/Container/Container"
 import { useGetProviderColorDictionaryFromAppStore } from "../../hooks/ColorHooks"
-import { DataType, ConditionalRender, StringTimeValue } from "../../Types"
+import { ConditionalRender, StringTimeValue } from "../../Types"
 import { Chip, Paper, Typography } from "@mui/material"
 import { INoDataAvailableEvent } from "../INoDataAvailableEvent"
 import { DoNotDisturbAlt } from "@mui/icons-material"
@@ -15,6 +15,7 @@ import { api } from "../../services/DependenciesIOC"
 import { DataModeButtonGroup } from "../buttons/DataModeButtonGroup"
 import { useQuery } from "react-query"
 import { BrushChart } from "./brush/BrushChart"
+import { DataType, TimeInterval } from "ethtps.api.client"
 
 interface IProviderDataChartConfiguration extends INoDataAvailableEvent {
   provider: string
@@ -26,7 +27,7 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
   const colorDictionary = useGetProviderColorDictionaryFromAppStore() ?? {}
   const [interval, setInterval] = useState<string>()
   const [network, setNetwork] = useState("Mainnet")
-  const [mode, setMode] = useState(DataType.TPS)
+  const [mode, setMode] = useState<DataType>(DataType.Tps)
 
   const [d, setD] = useState<StringTimeValue[]>([])
   const [noData, setNoData] = useState(false)
@@ -46,7 +47,13 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
 
   const { data, isSuccess, refetch } = useQuery(
     "get data",
-    () => api.getData(mode, interval as string, config.provider, network),
+    () =>
+      api.getData(
+        mode,
+        TimeInterval[interval as string as keyof typeof TimeInterval],
+        config.provider,
+        network,
+      ),
     { refetchOnMount: false, refetchInterval: 60 * 1000 },
   )
   useEffect(() => {

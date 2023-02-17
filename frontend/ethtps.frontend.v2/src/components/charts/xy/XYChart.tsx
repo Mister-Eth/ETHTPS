@@ -7,12 +7,17 @@ import {
 } from "@visx/xychart"
 import { useState, useEffect } from "react"
 import { useQuery } from "react-query"
-import { DataType, StringTimeValue, toShortString } from "../../../Types"
+import { StringTimeValue, toShortString, fromShortString } from "../../../Types"
 import { api } from "../../../services/DependenciesIOC"
 import { IntervalDropdown } from "../../dropdowns/IntervalDropdown"
 import { DataModeButtonGroup } from "../../buttons/DataModeButtonGroup"
 import moment from "moment"
-import { StackedChartDataPoint, StackedChartSeries } from "ethtps.api.client"
+import {
+  DataType,
+  StackedChartDataPoint,
+  StackedChartSeries,
+  TimeInterval,
+} from "ethtps.api.client"
 import { curveMonotoneX } from "@visx/curve"
 import { useGetSidechainsIncludedFromAppStore } from "../../../hooks/LiveDataHooks"
 
@@ -40,19 +45,20 @@ interface Size {
 }
 
 export function CustomXYChart({ width, height }: Size) {
-  const [interval, setInterval] = useState<string>("OneMonth")
+  const [interval, setInterval] = useState<TimeInterval>(TimeInterval.OneMonth)
   const [network, setNetwork] = useState("Mainnet")
-  const [mode, setMode] = useState(DataType.TPS)
+  const [mode, setMode] = useState<DataType>(DataType.Tps)
   const includeSidechains = useGetSidechainsIncludedFromAppStore()
 
   const [d, setD] = useState<StringTimeValue[]>([])
   const [noData, setNoData] = useState(false)
   const [usesDatePicker, setUsesDatePicker] = useState(false)
   const [loading, setLoading] = useState(true)
-  const intervalChanged = (interval: string) => {
-    const usesDate = interval === "Custom"
+  const intervalChanged = (i: string) => {
+    let value = TimeInterval[i as keyof typeof TimeInterval]
+    const usesDate = value === TimeInterval.Auto
     setUsesDatePicker(usesDate)
-    if (!usesDate) setInterval(interval)
+    if (!usesDate) setInterval(value)
   }
   const modeChanged = (mode: DataType) => {
     setMode(mode)
@@ -66,13 +72,13 @@ export function CustomXYChart({ width, height }: Size) {
   const { data, isSuccess, refetch } = useQuery(
     "get data",
     () =>
-      api.getStackedChartData({
-        interval,
-        dataType: toShortString(mode),
+      api.getL2Data({
+        dataType: mode,
       }),
     { refetchOnMount: false, refetchInterval: 60 * 1000 },
   )
   useEffect(() => {
+    /*
     if (isSuccess) {
       if (data !== undefined) {
         if (data.series) {
@@ -82,7 +88,7 @@ export function CustomXYChart({ width, height }: Size) {
         setNoData(false)
         setLoading(false)
       }
-    }
+    }*/
   }, [data])
 
   useEffect(() => {
