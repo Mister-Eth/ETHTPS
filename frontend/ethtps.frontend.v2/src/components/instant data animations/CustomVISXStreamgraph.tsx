@@ -168,23 +168,30 @@ export function CustomVISXStreamgraph({
   const colorFunction = (key: number, index: number) =>
     colors ? colors[processedStreamchartData.providers[index]] : "yellow"
   const customScale = (x: number) => colorFunction(0, x)
-  const patterns = processedStreamchartData.providers.map((x, i) => (
-    <PatternCircles
-      id={"circles"}
-      key={i}
-      height={40}
-      width={40}
-      radius={5}
-      fill={colors !== undefined ? "black" : BACKGROUND}
-      complement
-    />
-  ))
-  const seriesHovered = (providerName?: string) => {}
+  const pathRefs = range(processedStreamchartData.data.length).map((x) =>
+    React.createRef<any>(),
+  )
+  const [highlightedIndex, setHighlightedIndex] = useState(0)
   return (
     <>
       <WebsocketStatusPartial />
       <svg width={width} height={height}>
-        {patterns}
+        <PatternCircles
+          id={"circles"}
+          height={40}
+          width={40}
+          radius={5}
+          fill={"black"}
+          complement
+        />
+        <PatternCircles
+          id={"hovered-circles"}
+          height={40}
+          width={40}
+          radius={5}
+          fill={"white"}
+          complement
+        />
         <g>
           <rect
             x={0}
@@ -212,19 +219,17 @@ export function CustomVISXStreamgraph({
                   ? useSpring({ pathString })
                   : { pathString }
                 const color = customScale(stack.key)
-                const pattern = "circles"
                 return (
                   <g key={`series-${stack.key}`}>
                     <animated.path d={tweened.pathString} fill={color} />
                     <animated.path
-                      onMouseEnter={() =>
-                        seriesHovered(
-                          processedStreamchartData.providers[stack.key],
-                        )
-                      }
-                      onMouseLeave={() => seriesHovered(undefined)}
+                      ref={pathRefs[stack.index]}
+                      onMouseEnter={() => setHighlightedIndex(stack.index)}
+                      onMouseLeave={() => setHighlightedIndex(-1)}
                       d={tweened.pathString}
-                      fill={`url(#${pattern})`}
+                      fill={`url(#${
+                        stack.index === highlightedIndex ? "hovered-" : ""
+                      }circles)`}
                     />
                   </g>
                 )
