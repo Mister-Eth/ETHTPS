@@ -88,7 +88,6 @@ export function CustomVISXStreamgraph({
   width,
   height,
   animate = true,
-  providerHovered,
 }: StreamGraphProps) {
   //const forceUpdate = useForceUpdate()
   //const handlePress = () => forceUpdate()
@@ -98,7 +97,6 @@ export function CustomVISXStreamgraph({
   const liveState = useLiveDataState()
   const [pastData, setPastData] = useState<L2DataResponseModel>()
   const colors = useGetProviderColorDictionaryFromAppStore()
-  const [hoveredProvider, setHoveredProvider] = useState<string>()
   const [processedStreamchartData, setProcessedStreamchartData] =
     useState<StreamchartLayers>({
       providers: ["Mock until loaded"],
@@ -181,12 +179,7 @@ export function CustomVISXStreamgraph({
       complement
     />
   ))
-  const seriesHovered = (providerName: string) => {
-    setHoveredProvider(providerName)
-    if (providerHovered) {
-      providerHovered(providerName)
-    }
-  }
+  const seriesHovered = (providerName?: string) => {}
   return (
     <>
       <WebsocketStatusPartial />
@@ -229,7 +222,7 @@ export function CustomVISXStreamgraph({
                           processedStreamchartData.providers[stack.key],
                         )
                       }
-                      onMouseLeave={() => setHoveredProvider(undefined)}
+                      onMouseLeave={() => seriesHovered(undefined)}
                       d={tweened.pathString}
                       fill={`url(#${pattern})`}
                     />
