@@ -1,5 +1,7 @@
 ﻿using ETHTPS.Data.Core.Models.DataPoints.XYPoints;
 
+using Newtonsoft.Json;
+
 using Swashbuckle.AspNetCore.Annotations;
 
 using System.Collections.Generic;
@@ -57,7 +59,9 @@ namespace ETHTPS.Data.Core.Models.ResponseModels.L2s
             }
         }
         public DataType? DataType { get; set; } = null;
+        [JsonIgnore]
         public bool IncludeSimpleAnalysis { get; set; }
+        [JsonIgnore]
         public bool IncludeComplexAnalysis { get; set; }
     }
 }

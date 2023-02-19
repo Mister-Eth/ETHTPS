@@ -62,18 +62,6 @@ export interface L2DataResponseModel {
      * @memberof L2DataResponseModel
      */
     dataType?: DataType;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof L2DataResponseModel
-     */
-    includeSimpleAnalysis?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof L2DataResponseModel
-     */
-    includeComplexAnalysis?: boolean;
 }
 
 /**
@@ -99,8 +87,6 @@ export function L2DataResponseModelFromJSONTyped(json: any, ignoreDiscriminator:
         'datasets': !exists(json, 'datasets') ? undefined : (json['datasets'] === null ? null : (json['datasets'] as Array<any>).map(DatasetFromJSON)),
         'simpleAnalysis': !exists(json, 'simpleAnalysis') ? undefined : SimpleMultiDatasetAnalysisFromJSON(json['simpleAnalysis']),
         'dataType': !exists(json, 'dataType') ? undefined : DataTypeFromJSON(json['dataType']),
-        'includeSimpleAnalysis': !exists(json, 'includeSimpleAnalysis') ? undefined : json['includeSimpleAnalysis'],
-        'includeComplexAnalysis': !exists(json, 'includeComplexAnalysis') ? undefined : json['includeComplexAnalysis'],
     };
 }
 
@@ -117,8 +103,6 @@ export function L2DataResponseModelToJSON(value?: L2DataResponseModel | null): a
         'datasets': value.datasets === undefined ? undefined : (value.datasets === null ? null : (value.datasets as Array<any>).map(DatasetToJSON)),
         'simpleAnalysis': SimpleMultiDatasetAnalysisToJSON(value.simpleAnalysis),
         'dataType': DataTypeToJSON(value.dataType),
-        'includeSimpleAnalysis': value.includeSimpleAnalysis,
-        'includeComplexAnalysis': value.includeComplexAnalysis,
     };
 }
 

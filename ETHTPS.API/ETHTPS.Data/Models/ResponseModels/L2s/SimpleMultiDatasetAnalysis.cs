@@ -1,5 +1,7 @@
 ﻿using ETHTPS.Data.Core.Models.DataPoints.XYPoints;
 
+using Newtonsoft.Json;
+
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -8,8 +10,10 @@ namespace ETHTPS.Data.Core.Models.ResponseModels.L2s
 {
     public class SimpleMultiDatasetAnalysis : DatasetAnalysisBase
     {
+        private readonly IEnumerable<Dataset> _datasets;
         public SimpleMultiDatasetAnalysis(IEnumerable<Dataset> datasets)
         {
+            _datasets = datasets;
             if (datasets
                    != null && datasets.Any(x => x.DataPoints?.Count() > 0))
             {
@@ -37,5 +41,17 @@ namespace ETHTPS.Data.Core.Models.ResponseModels.L2s
         public IProviderXYMultiConvertible Max { get; private set; }
         public IProviderXYMultiConvertible Min { get; private set; }
         public double Mean { get; private set; }
+        [JsonIgnore]
+        private IEnumerable<int> _datasetLengths => _datasets.Select(x => x.DataPoints.Count()).Distinct();
+        public bool AllDatasetsSameLength { get => _datasetLengths?.Count() == 1; }
+        public int? UniformDatasetLength
+        {
+            get
+            {
+                if (AllDatasetsSameLength)
+                    return _datasetLengths.FirstOrDefault();
+                return null;
+            }
+        }
     }
 }

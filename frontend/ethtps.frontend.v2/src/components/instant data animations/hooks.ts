@@ -69,6 +69,13 @@ export function useGet1mGTPS() {
   return useAppSelector((state) => state.liveData.oneMinuteGTPSData)
 }
 
+export function useLiveDataState() {
+  const smoothing = useGetLiveDataSmoothingFromAppStore()
+  const sidechainsIncluded = useGetSidechainsIncludedFromAppStore()
+  const mode = useGetLiveDataModeFromAppStore()
+  return { smoothing, sidechainsIncluded, mode }
+}
+
 export function useStreamchartData(interval: string) {
   /*
   const sidechainsIncluded = useGetSidechainsIncludedFromAppStore()

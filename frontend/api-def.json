@@ -4923,12 +4923,6 @@
           },
           "dataType": {
             "$ref": "#/components/schemas/DataType"
-          },
-          "includeSimpleAnalysis": {
-            "type": "boolean"
-          },
-          "includeComplexAnalysis": {
-            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -5789,6 +5783,16 @@
           "mean": {
             "type": "number",
             "format": "double"
+          },
+          "allDatasetsSameLength": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "uniformDatasetLength": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true,
+            "readOnly": true
           }
         },
         "additionalProperties": false

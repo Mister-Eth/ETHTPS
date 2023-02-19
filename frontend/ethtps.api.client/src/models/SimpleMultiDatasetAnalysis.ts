@@ -44,6 +44,18 @@ export interface SimpleMultiDatasetAnalysis {
      * @memberof SimpleMultiDatasetAnalysis
      */
     mean?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SimpleMultiDatasetAnalysis
+     */
+    readonly allDatasetsSameLength?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof SimpleMultiDatasetAnalysis
+     */
+    readonly uniformDatasetLength?: number | null;
 }
 
 /**
@@ -68,6 +80,8 @@ export function SimpleMultiDatasetAnalysisFromJSONTyped(json: any, ignoreDiscrim
         'max': !exists(json, 'max') ? undefined : IProviderXYMultiConvertibleFromJSON(json['max']),
         'min': !exists(json, 'min') ? undefined : IProviderXYMultiConvertibleFromJSON(json['min']),
         'mean': !exists(json, 'mean') ? undefined : json['mean'],
+        'allDatasetsSameLength': !exists(json, 'allDatasetsSameLength') ? undefined : json['allDatasetsSameLength'],
+        'uniformDatasetLength': !exists(json, 'uniformDatasetLength') ? undefined : json['uniformDatasetLength'],
     };
 }
 

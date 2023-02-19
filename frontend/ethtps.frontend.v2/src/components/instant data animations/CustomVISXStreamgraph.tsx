@@ -12,10 +12,16 @@ import { animated, useSpring } from "@react-spring/web"
 
 import useForceUpdate from "./useForceUpdate"
 import generateData from "./generateData"
-import { useLiveData } from "./hooks"
+import { useLiveData, useLiveDataState } from "./hooks"
 import { WebsocketStatusPartial } from "../stats/WebsocketStatusPartial"
 import { useEffect } from "react"
 import { useState } from "react"
+import { curveCardinal } from "@visx/curve"
+import { useQuery } from "react-query"
+import { api } from "../../services/DependenciesIOC"
+import { useGetLiveDataModeFromAppStore } from "../../hooks/LiveDataHooks"
+import moment from "moment"
+import { L2DataResponseModel } from "ethtps.api.client"
 
 // constants
 const NUM_LAYERS = 20
@@ -81,6 +87,29 @@ export function CustomVISXStreamgraph({
 
   if (width < 10) return null
 
+  const liveState = useLiveDataState()
+  const [pastData, setPastData] = useState<L2DataResponseModel>()
+  const { data, isSuccess, refetch } = useQuery("get past data", () =>
+    api.getL2Data({
+      dataType: liveState.mode,
+      l2DataRequestModel: {
+        startDate: moment().subtract(1, "minute").toDate(),
+        providers: ["All"],
+        includeSidechains: liveState.sidechainsIncluded,
+        mergeOptions: {
+          mergePercentage: 10,
+        },
+      },
+    }),
+  )
+  useEffect(() => {
+    refetch()
+  }, [liveState.mode, liveState.sidechainsIncluded, liveState.smoothing])
+  useEffect(() => {
+    if (isSuccess) {
+      setPastData(data)
+    }
+  }, [data])
   const liveData = useLiveData()
   const [dataPoints, setDataPoints] = useState<number[]>([0, 0, 0])
   useEffect(() => {
@@ -89,18 +118,27 @@ export function CustomVISXStreamgraph({
     }
   }, [liveData])
 
+  let layers = transpose<number>([
+    [1, 2, 3],
+    [4, 5, 6],
+  ])
   xScale.range([0, width])
-  xScale.domain([0, 2])
+  if (pastData?.simpleAnalysis?.allDatasetsSameLength) {
+    let length = Math.min(
+      pastData?.simpleAnalysis?.uniformDatasetLength ?? 1,
+      60,
+    )
+    xScale.domain([0, length - 1])
+    if (pastData.datasets)
+      layers = transpose<number>(
+        pastData.datasets.map(
+          (x) => x.dataPoints?.slice(0, length).map((y) => y.y as number) ?? [],
+        ),
+      )
+  }
 
   yScale.range([height, 0])
   //yScale.domain([1, 6])
-
-  // generate layers in render to update on touch
-  const layers = transpose<number>([
-    [1, 1, dataPoints[0]],
-    [0, 1, dataPoints[1]],
-    [1, 0, dataPoints[2]],
-  ])
 
   return (
     <>
@@ -151,6 +189,7 @@ export function CustomVISXStreamgraph({
           <Stack<number[], number>
             data={layers}
             keys={keys}
+            curve={curveCardinal}
             offset="wiggle"
             color={colorScale}
             x={(_, i) => xScale(i) ?? 0}
