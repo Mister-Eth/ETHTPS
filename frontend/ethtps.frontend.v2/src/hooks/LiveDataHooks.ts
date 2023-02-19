@@ -1,4 +1,3 @@
-import { DataType } from "../Types"
 import { TimeInterval } from "../models/TimeIntervals"
 import { api } from "../services/DependenciesIOC"
 import {
@@ -9,6 +8,7 @@ import {
 import { useAppSelector, useAppDispatch, store } from "../store"
 import { useLoadValuesHook } from "./useLoadValuesHook"
 import { websocketActions } from "../slices/WebsocketSubscriptionSlice"
+import { DataType } from "ethtps.api.client"
 
 export function useGetLiveDataModeFromAppStore() {
   return useAppSelector((state) => state.liveData.liveDataType)
@@ -19,7 +19,7 @@ export function useGetLiveDataSmoothingFromAppStore() {
 }
 
 export function useGetLiveDataFromAppStore() {
-  return useAppSelector((state) => state.liveData)
+  return useAppSelector((state) => state.liveData.data)
 }
 
 export function useSetDataModeMutation(mode: DataType) {

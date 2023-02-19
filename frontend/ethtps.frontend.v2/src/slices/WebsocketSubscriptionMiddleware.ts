@@ -4,6 +4,7 @@ import websocketSlice from "./WebsocketSubscriptionSlice"
 import ReconnectingWebSocket from "reconnecting-websocket"
 import { websocketServiceURL } from "../services/DependenciesIOC"
 import { setLiveData } from "./LiveDataSlice"
+import { InstantDataResponseModel } from "../Types.dictionaries"
 
 let connect = true
 const rws = new ReconnectingWebSocket(websocketServiceURL)
@@ -33,7 +34,7 @@ const websocketMiddleware: Middleware = (store) => (next) => (action) => {
         let type: string = obj.Type ?? "unknown"
         switch (type) {
           case WebsocketEvent.LiveDataReceived:
-            store.dispatch(setLiveData(obj.Data))
+            store.dispatch(setLiveData(obj.Data as InstantDataResponseModel))
             break
           case WebsocketEvent.KeepAlive:
             rws.send("ack")

@@ -5,6 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 using ETHTPS.API.Core.Controllers;
 using ETHTPS.API.Core.Integrations.MSSQL.Services;
 using System.Linq;
+using Swashbuckle.AspNetCore.Annotations;
+using ETHTPS.Data.Core.Models.ResponseModels.L2s;
+using Swashbuckle.AspNetCore.Filters;
+using ETHTPS.Data.Core.Models.DataPoints.XYPoints;
 
 namespace ETHTPS.API.Controllers.L2DataControllers
 {
@@ -29,16 +33,20 @@ namespace ETHTPS.API.Controllers.L2DataControllers
         /// <param name="dataType"></param>
         /// <returns></returns>
         [HttpPost]
+        [SwaggerResponse(200, Type = typeof(L2DataResponseModel))]
+        [SwaggerResponse(400, "Invalid parameter(s)", Type = typeof(ValidationResult))]
         public IActionResult Get([FromBody] L2DataRequestModel requestModel, DataType dataType)
         {
             var providers = _generalService.Providers().Select(x => (x.Name, x.Type == "Sidechain")).Where(x => !requestModel.IncludeSidechains ? !x.Item2 : true);
+            if (requestModel.Providers != null)
+                if (requestModel.Providers.Contains(Constants.All))
+                    requestModel.Providers = providers.Select(x => x.Name).ToList();
+                else requestModel.Providers = requestModel.Providers.Where(p => providers.Select(x => x.Name).Contains(p)).ToList();
             var validationResult = requestModel.Validate(providers.Select(x => x.Name));
             if (!validationResult.IsValid)
             {
                 return BadRequest(validationResult.Reason);
             }
-            if (requestModel.AllDistinctProviders.Contains(Constants.All))
-                requestModel.Providers = providers.Select(x => x.Name).ToList();
             return Ok(_aggregatedDataService.GetData(requestModel, dataType, _dataFormatter));
         }
     }

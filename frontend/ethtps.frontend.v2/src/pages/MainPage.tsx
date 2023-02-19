@@ -14,7 +14,7 @@ import {
   useGetLiveDataModeFromAppStore,
 } from "../hooks/LiveDataHooks"
 import { createSearchParams, useSearchParams } from "react-router-dom"
-import { toShortString, ConditionalRender } from "../Types"
+import { toShortString } from "../Types"
 import { useGetProvidersFromAppStore } from "../hooks/ProviderHooks"
 import { isMobile } from "react-device-detect"
 import { ProviderModel } from "ethtps.api.client"
@@ -23,12 +23,10 @@ import {
   useGet1mGPS,
   useGet1mGTPS,
 } from "../components/instant data animations/hooks"
-import { CurrentViewersIcon } from "../components/buttons/CurrentViewersIcon"
-import { useGetExperimentsFromAppStore } from "../components/experiments/ExperimentHooks"
 import Streamgraph from "../components/instant data animations/VISXStreamgraph"
 import { useState } from "react"
-import { CustomVISXStreamgraph } from "../components/instant data animations/CustomVISXStreamgraph"
 import { MultiProviderVSIXChart } from "../components/charts/MultiProviderVSIXChart"
+import { CustomVISXStreamgraph } from "../components/instant data animations/CustomVISXStreamgraph"
 
 export default function MainPage(): JSX.Element {
   const providers = useGetProvidersFromAppStore()
@@ -63,9 +61,7 @@ export default function MainPage(): JSX.Element {
         <>
           <br />
           <Container maxWidth={"md"}>
-            <Paper elevation={1}>
-              <MultiProviderVSIXChart />
-            </Paper>
+            <Paper elevation={1}>{/*<MultiProviderVSIXChart />*/}</Paper>
             <Paper elevation={1}>
               <SidechainToggleButton
                 toggled={useSetSidechainsIncluded}
@@ -74,8 +70,8 @@ export default function MainPage(): JSX.Element {
               <DataModeButtonGroup modeChanged={useSetDataModeMutation} />
             </Paper>
             <Paper ref={containerRef} elevation={1}>
-              <Streamgraph width={containerWidth} height={500} />
-              <CustomVISXStreamgraph width={containerWidth} height={500} />
+              {/*<Streamgraph width={containerWidth} height={500} />*/}
+              {<CustomVISXStreamgraph width={containerWidth} height={500} />}
             </Paper>
             <Paper elevation={1}>
               <AllProvidersTable

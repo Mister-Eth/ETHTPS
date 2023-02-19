@@ -3,7 +3,10 @@ import moment from "moment"
 import React from "react"
 import { SkeletonWithTooltip } from "./components/partials/SkeletonWithTooltip"
 import { toShortString_2 } from "./models/TimeIntervals"
-import { DataResponseModelDictionary } from "./Types.dictionaries"
+import {
+  DataResponseModelDictionary,
+  InstantDataResponseModel,
+} from "./Types.dictionaries"
 import { ILiveDataModeModel } from "./models/interfaces/ILiveDataModeModel"
 import { DataPoint, DataType } from "ethtps.api.client"
 
@@ -37,7 +40,7 @@ export const extractData = (dict?: any, providerName?: string | null) => {
     if (dict[providerName].at(0)) {
       let q = dict[providerName].at(0)
       if (q) {
-        let result = q.value
+        let result = q.Value as number
         return Math.round(result * 100) / 100
       }
     }
@@ -46,16 +49,16 @@ export const extractData = (dict?: any, providerName?: string | null) => {
 }
 
 export const getModeData = (
-  model: ILiveDataModeModel,
+  model: InstantDataResponseModel,
   mode: DataType,
 ): DataResponseModelDictionary | undefined => {
   switch (mode) {
     case DataType.Tps:
-      return model.data?.tps
+      return model?.tps
     case DataType.Gps:
-      return model.data?.gps
+      return model?.gps
     case DataType.GasAdjustedTps:
-      return model.data?.gasAdjustedTPS
+      return model?.gasAdjustedTPS
   }
 }
 

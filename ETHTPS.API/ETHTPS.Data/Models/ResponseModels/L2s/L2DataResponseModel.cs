@@ -1,5 +1,7 @@
 ﻿using ETHTPS.Data.Core.Models.DataPoints.XYPoints;
 
+using Swashbuckle.AspNetCore.Annotations;
+
 using System.Collections.Generic;
 using System.Linq;
 

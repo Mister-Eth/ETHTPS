@@ -49,6 +49,7 @@ const liveDataSlice = createSlice({
       state: ILiveDataModeModel,
       action: PayloadAction<InstantDataResponseModel | undefined>,
     ) {
+      if (!action.payload) return state
       state.data = action.payload
     },
 

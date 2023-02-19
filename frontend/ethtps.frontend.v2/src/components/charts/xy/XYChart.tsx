@@ -14,12 +14,17 @@ import { DataModeButtonGroup } from "../../buttons/DataModeButtonGroup"
 import moment from "moment"
 import {
   DataType,
+  Dataset,
+  DatedXYDataPoint,
+  IProviderXYMultiConvertible,
+  IXYMultiConvertible,
   StackedChartDataPoint,
   StackedChartSeries,
   TimeInterval,
 } from "ethtps.api.client"
 import { curveMonotoneX } from "@visx/curve"
 import { useGetSidechainsIncludedFromAppStore } from "../../../hooks/LiveDataHooks"
+import { range } from "../../instant data animations/types"
 
 const data1 = [
   { x: "2020-01-01", y: 50 },
@@ -34,9 +39,8 @@ const data2 = [
 ]
 
 const accessors = {
-  xAccessor: (d: StackedChartDataPoint) =>
-    moment(d.x).format("yyyy-mm-dd hh:mm"),
-  yAccessor: (d: StackedChartDataPoint) => d.y,
+  xAccessor: (d?: DatedXYDataPoint) => d?.x?.toString(),
+  yAccessor: (d?: DatedXYDataPoint) => d?.y,
 }
 
 interface Size {
@@ -67,28 +71,35 @@ export function CustomXYChart({ width, height }: Size) {
     setNetwork(network)
   }
 
-  const [chartData, setChartData] = useState<StackedChartSeries[]>()
+  const [chartData, setChartData] = useState<Dataset[]>()
 
   const { data, isSuccess, refetch } = useQuery(
     "get data",
     () =>
       api.getL2Data({
         dataType: mode,
+        l2DataRequestModel: {
+          startDate: moment().subtract("1d").toDate(),
+          mergeOptions: {
+            mergePercentage: 10,
+            maxCount: 20,
+          },
+        },
       }),
     { refetchOnMount: false, refetchInterval: 60 * 1000 },
   )
   useEffect(() => {
-    /*
     if (isSuccess) {
+      console.log(data)
       if (data !== undefined) {
-        if (data.series) {
-          console.log(data.series)
-          setChartData(data.series)
+        if (data.datasets) {
+          //console.log(data.series)
+          setChartData(data.datasets)
         }
         setNoData(false)
         setLoading(false)
       }
-    }*/
+    }
   }, [data])
 
   useEffect(() => {
@@ -136,7 +147,11 @@ export function CustomXYChart({ width, height }: Size) {
             <div>
               <div
                 style={{
-                  color: colorScale(tooltipData.nearestDatum?.key ?? ""),
+                  color:
+                    tooltipData?.nearestDatum?.key !== undefined &&
+                    colorScale !== undefined
+                      ? colorScale(tooltipData?.nearestDatum?.key)
+                      : "ActiveBorder",
                 }}
               >
                 {tooltipData?.nearestDatum?.key}

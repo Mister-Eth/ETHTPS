@@ -17,12 +17,18 @@ import * as runtime from '../runtime';
 import type {
   DataType,
   L2DataRequestModel,
+  L2DataResponseModel,
+  ValidationResult,
 } from '../models';
 import {
     DataTypeFromJSON,
     DataTypeToJSON,
     L2DataRequestModelFromJSON,
     L2DataRequestModelToJSON,
+    L2DataResponseModelFromJSON,
+    L2DataResponseModelToJSON,
+    ValidationResultFromJSON,
+    ValidationResultToJSON,
 } from '../models';
 
 export interface ApiV3L2DataGetPostRequest {
@@ -38,7 +44,7 @@ export class L2DataApi extends runtime.BaseAPI {
 
     /**
      */
-    async apiV3L2DataGetPostRaw(requestParameters: ApiV3L2DataGetPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async apiV3L2DataGetPostRaw(requestParameters: ApiV3L2DataGetPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<L2DataResponseModel>> {
         const queryParameters: any = {};
 
         if (requestParameters.dataType !== undefined) {
@@ -61,13 +67,14 @@ export class L2DataApi extends runtime.BaseAPI {
             body: L2DataRequestModelToJSON(requestParameters.l2DataRequestModel),
         }, initOverrides);
 
-        return new runtime.VoidApiResponse(response);
+        return new runtime.JSONApiResponse(response, (jsonValue) => L2DataResponseModelFromJSON(jsonValue));
     }
 
     /**
      */
-    async apiV3L2DataGetPost(requestParameters: ApiV3L2DataGetPostRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.apiV3L2DataGetPostRaw(requestParameters, initOverrides);
+    async apiV3L2DataGetPost(requestParameters: ApiV3L2DataGetPostRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<L2DataResponseModel> {
+        const response = await this.apiV3L2DataGetPostRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
 }

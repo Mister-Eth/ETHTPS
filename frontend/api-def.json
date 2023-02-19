@@ -2091,7 +2091,44 @@
         },
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/L2DataResponseModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/L2DataResponseModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/L2DataResponseModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationResult"
+                }
+              }
+            }
           }
         }
       },
@@ -4066,6 +4103,22 @@
         },
         "additionalProperties": false
       },
+      "ComplexDatasetAnalysis": {
+        "type": "object",
+        "properties": {
+          "max": {
+            "$ref": "#/components/schemas/IXYMultiConvertible"
+          },
+          "min": {
+            "$ref": "#/components/schemas/IXYMultiConvertible"
+          },
+          "mean": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
       "DataPoint": {
         "type": "object",
         "properties": {
@@ -4186,6 +4239,29 @@
         },
         "additionalProperties": false
       },
+      "Dataset": {
+        "type": "object",
+        "properties": {
+          "dataPoints": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IXYMultiConvertible"
+            },
+            "nullable": true
+          },
+          "provider": {
+            "type": "string",
+            "nullable": true
+          },
+          "simpleAnalysis": {
+            "$ref": "#/components/schemas/SimpleDatasetAnalysis"
+          },
+          "complexAnalysis": {
+            "$ref": "#/components/schemas/ComplexDatasetAnalysis"
+          }
+        },
+        "additionalProperties": false
+      },
       "DatasetMergeOptions": {
         "type": "object",
         "properties": {
@@ -4198,6 +4274,20 @@
             "type": "integer",
             "format": "int32",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DatedXYDataPoint": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "y": {
+            "type": "number",
+            "format": "double"
           }
         },
         "additionalProperties": false
@@ -4739,6 +4829,30 @@
         },
         "additionalProperties": false
       },
+      "IProviderXYMultiConvertible": {
+        "type": "object",
+        "properties": {
+          "provider": {
+            "type": "string",
+            "nullable": true
+          },
+          "y": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "IXYMultiConvertible": {
+        "type": "object",
+        "properties": {
+          "y": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
       "L2DataRequestModel": {
         "type": "object",
         "properties": {
@@ -4786,6 +4900,34 @@
             "nullable": true
           },
           "includeSidechains": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "L2DataResponseModel": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/Dataset"
+          },
+          "datasets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Dataset"
+            },
+            "nullable": true
+          },
+          "simpleAnalysis": {
+            "$ref": "#/components/schemas/SimpleMultiDatasetAnalysis"
+          },
+          "dataType": {
+            "$ref": "#/components/schemas/DataType"
+          },
+          "includeSimpleAnalysis": {
+            "type": "boolean"
+          },
+          "includeComplexAnalysis": {
             "type": "boolean"
           }
         },
@@ -5060,6 +5202,20 @@
             },
             "nullable": true,
             "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "NumericXYDataPoint": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number",
+            "format": "double"
+          },
+          "y": {
+            "type": "number",
+            "format": "double"
           }
         },
         "additionalProperties": false
@@ -5427,6 +5583,24 @@
         },
         "additionalProperties": false
       },
+      "ProviderDatedXYDataPoint": {
+        "type": "object",
+        "properties": {
+          "provider": {
+            "type": "string",
+            "nullable": true
+          },
+          "x": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "y": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
       "ProviderDetailsMarkdownPage": {
         "type": "object",
         "properties": {
@@ -5587,6 +5761,38 @@
         },
         "additionalProperties": false
       },
+      "SimpleDatasetAnalysis": {
+        "type": "object",
+        "properties": {
+          "max": {
+            "$ref": "#/components/schemas/IXYMultiConvertible"
+          },
+          "min": {
+            "$ref": "#/components/schemas/IXYMultiConvertible"
+          },
+          "mean": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SimpleMultiDatasetAnalysis": {
+        "type": "object",
+        "properties": {
+          "max": {
+            "$ref": "#/components/schemas/IProviderXYMultiConvertible"
+          },
+          "min": {
+            "$ref": "#/components/schemas/IProviderXYMultiConvertible"
+          },
+          "mean": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
       "StackedChartDataPoint": {
         "type": "object",
         "properties": {
@@ -5724,6 +5930,20 @@
             "nullable": true
           },
           "maxGTPS": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "StringXYDataPoint": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "string",
+            "nullable": true
+          },
+          "y": {
             "type": "number",
             "format": "double"
           }
@@ -6317,6 +6537,19 @@
           },
           "providerNavigation": {
             "$ref": "#/components/schemas/Provider"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ValidationResult": {
+        "type": "object",
+        "properties": {
+          "isValid": {
+            "type": "boolean"
+          },
+          "reason": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

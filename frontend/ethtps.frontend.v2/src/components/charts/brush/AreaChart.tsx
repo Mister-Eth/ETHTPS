@@ -41,7 +41,7 @@ export default function AreaChart({
   left,
   children,
 }: {
-  data: AppleStock[]
+  data: { x: Date; y: number }[]
   gradientColor: string
   xScale: AxisScale<number>
   yScale: AxisScale<number>
@@ -64,10 +64,10 @@ export default function AreaChart({
         to={gradientColor}
         toOpacity={0.2}
       />
-      <AreaClosed<AppleStock>
+      <AreaClosed<{ x: Date; y: number }>
         data={data}
-        x={(d) => xScale(getDate(d)) || 0}
-        y={(d) => yScale(getStockValue(d)) || 0}
+        x={(d) => xScale(d.x) || new Date().getTime()}
+        y={(d) => yScale(d.y) || 0}
         yScale={yScale}
         strokeWidth={1}
         stroke="url(#gradient)"

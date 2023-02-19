@@ -15,7 +15,8 @@ import { api } from "../../services/DependenciesIOC"
 import { DataModeButtonGroup } from "../buttons/DataModeButtonGroup"
 import { useQuery } from "react-query"
 import { BrushChart } from "./brush/BrushChart"
-import { DataType, TimeInterval } from "ethtps.api.client"
+import { DataType, TimeInterval, DatedXYDataPoint } from "ethtps.api.client"
+import moment from "moment"
 
 interface IProviderDataChartConfiguration extends INoDataAvailableEvent {
   provider: string
@@ -44,32 +45,28 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
   const networkChanged = (network: string) => {
     setNetwork(network)
   }
-
+  const [points, setPoints] = useState<DatedXYDataPoint[]>([
+    { x: new Date(), y: 0 },
+  ])
   const { data, isSuccess, refetch } = useQuery(
     "get data",
     () =>
-      api.getData(
-        mode,
-        TimeInterval[interval as string as keyof typeof TimeInterval],
-        config.provider,
-        network,
-      ),
+      api.getL2Data({
+        dataType: mode,
+        l2DataRequestModel: {
+          providers: [config.provider],
+          startDate: moment().subtract(1, "months").toDate(),
+        },
+      }),
     { refetchOnMount: false, refetchInterval: 60 * 1000 },
   )
   useEffect(() => {
     if (isSuccess) {
-      if (data[config.provider] !== undefined) {
-        const values = data[config.provider]?.map((x) => x.data?.at(0))
-        if (values.length > 0) {
-          setD(
-            values
-              .filter((x) => x?.value !== undefined)
-              ?.map((x) => new StringTimeValue(x)),
-          )
-          setNoData(false)
-          setLoading(false)
-        }
+      if (data?.data) {
+        if (data.data.dataPoints) setPoints(data.data.dataPoints)
       }
+      setNoData(false)
+      setLoading(false)
     }
   }, [data])
 
@@ -130,6 +127,7 @@ export function ProviderDataChart(config: IProviderDataChartConfiguration) {
         <Paper elevation={1}>
           <div className="parent" ref={containerRef}>
             <BrushChart
+              dataPoints={points}
               width={containerWidth}
               height={containerWidth / 1.4142}
             />

@@ -14,9 +14,11 @@ import { LinearGradient } from "@visx/gradient"
 import { max, extent } from "d3-array"
 import { BrushHandleRenderProps } from "@visx/brush/src/BrushHandle"
 import AreaChart from "./AreaChart"
+import { DatedXYDataPoint } from "ethtps.api.client"
+import moment from "moment"
 
 // Initialize some variables
-const stock = appleStock.slice(1000)
+//const stock = appleStock.slice(1000)
 const brushMargin = { top: 10, bottom: 15, left: 50, right: 20 }
 const chartSeparation = 30
 const PATTERN_ID = "brush_pattern"
@@ -29,11 +31,24 @@ const selectedBrushStyle = {
   stroke: "white",
 }
 
+type Point = {
+  x: Date
+  y: number
+}
+
+function toPoint(d: DatedXYDataPoint) {
+  return {
+    x: d.x ?? new Date(),
+    y: d.y ?? 0,
+  }
+}
+
 // accessors
 const getDate = (d: AppleStock) => new Date(d.date)
 const getStockValue = (d: AppleStock) => d.close
 
 export type BrushProps = {
+  dataPoints: DatedXYDataPoint[]
   width: number
   height: number
   margin?: { top: number; right: number; bottom: number; left: number }
@@ -41,6 +56,7 @@ export type BrushProps = {
 }
 
 export function BrushChart({
+  dataPoints,
   compact = false,
   width,
   height,
@@ -52,14 +68,15 @@ export function BrushChart({
   },
 }: BrushProps) {
   const brushRef = useRef<BaseBrush | null>(null)
+  const stock = dataPoints.filter((x) => x !== undefined).map(toPoint)
   const [filteredStock, setFilteredStock] = useState(stock)
 
   const onBrushChange = (domain: Bounds | null) => {
     if (!domain) return
     const { x0, x1, y0, y1 } = domain
     const stockCopy = stock.filter((s) => {
-      const x = getDate(s).getTime()
-      const y = getStockValue(s)
+      const x = s.x?.getTime() ?? new Date().getTime()
+      const y = s.y ?? 0
       return x > x0 && x < x1 && y > y0 && y < y1
     })
     setFilteredStock(stockCopy)
@@ -86,7 +103,7 @@ export function BrushChart({
     () =>
       scaleTime<number>({
         range: [0, xMax],
-        domain: extent(filteredStock, getDate) as [Date, Date],
+        domain: extent(filteredStock) as [Date, Date],
       }),
     [xMax, filteredStock],
   )
@@ -116,11 +133,10 @@ export function BrushChart({
       }),
     [yBrushMax],
   )
-
   const initialBrushPosition = useMemo(
     () => ({
-      start: { x: brushDateScale(getDate(stock[50])) },
-      end: { x: brushDateScale(getDate(stock[100])) },
+      start: { x: brushDateScale(getDate(stock[0])) },
+      end: { x: brushDateScale(getDate(stock[stock.length - 1])) },
     }),
     [brushDateScale],
   )

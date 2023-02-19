@@ -8,4 +8,8 @@ npm publish
 
 #then
 
-npm i --save ../ethtps.api.client/
+npm link
+npm link ethtps.api.cliend
+^ life saver
+
+#npm i --save ../ethtps.api.client/

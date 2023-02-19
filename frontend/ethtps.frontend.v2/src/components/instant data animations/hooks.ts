@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { DataType, extractData, getModeData } from "../../Types"
+import { extractData, getModeData } from "../../Types"
 import { useGetProviderColorDictionaryFromAppStore } from "../../hooks/ColorHooks"
 import {
   useGetLiveDataSmoothingFromAppStore,
@@ -8,9 +8,13 @@ import {
 } from "../../hooks/LiveDataHooks"
 import { useGetProvidersFromAppStore } from "../../hooks/ProviderHooks"
 import { DataResponseModelDictionary } from "../../Types.dictionaries"
-import { dataTypeToString, toShortString_2 } from "../../models/TimeIntervals"
+import {
+  dataTypeToString,
+  toShortString_2,
+  TimeInterval,
+} from "../../models/TimeIntervals"
 import { useGetSidechainsIncludedFromAppStore } from "../../hooks/LiveDataHooks"
-import { ProviderResponseModel } from "ethtps.api.client"
+import { ProviderResponseModel, TimeIntervalFromJSON } from "ethtps.api.client"
 import { useAppSelector } from "../../store"
 import { useQuery } from "react-query"
 import { api } from "../../services/DependenciesIOC"
@@ -46,7 +50,6 @@ export const createDataPoint = (
   color: string,
 ) => {
   let value = extractData(data, provider.name as string)
-  if (value === 0) return undefined
   return {
     providerName: provider.name,
     providerColor: color,
@@ -67,17 +70,18 @@ export function useGet1mGTPS() {
 }
 
 export function useStreamchartData(interval: string) {
+  /*
   const sidechainsIncluded = useGetSidechainsIncludedFromAppStore()
   const { data, status, refetch } = useQuery("get streamchart data", () =>
     api.getStreamChartData({
-      interval,
+      interval: TimeIntervalFromJSON(`"${interval}"`),
       includeSidechains: sidechainsIncluded,
     }),
   )
   useEffect(() => {
     refetch()
-  }, [sidechainsIncluded])
-  return { data, status }
+  }, [sidechainsIncluded])*/
+  //return { data, status }
 }
 
 export function useLiveData() {
@@ -87,10 +91,12 @@ export function useLiveData() {
   const sidechainsIncluded = useGetSidechainsIncludedFromAppStore()
   const mode = useGetLiveDataModeFromAppStore()
   const liveData = useGetLiveDataFromAppStore()
-  const [data, setData] = useState(getModeData(liveData, mode))
+  const [data, setData] = useState<DataResponseModelDictionary>()
   const [processedData, setProcessedData] = useState<LiveData>()
   useEffect(() => {
-    setData(getModeData(liveData, mode))
+    if (liveData) {
+      setData(getModeData(liveData, mode))
+    }
   }, [mode, liveData, sidechainsIncluded])
   useEffect(() => {
     if (data && colors) {
