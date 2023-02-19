@@ -22,6 +22,7 @@ import { api } from "../../services/DependenciesIOC"
 import { useGetLiveDataModeFromAppStore } from "../../hooks/LiveDataHooks"
 import moment from "moment"
 import { L2DataResponseModel } from "ethtps.api.client"
+import { useGetProviderColorDictionaryFromAppStore } from "../../hooks/ColorHooks"
 
 // constants
 const NUM_LAYERS = 20
@@ -77,6 +78,11 @@ export type StreamGraphProps = {
   animate?: boolean
 }
 
+type StreamchartLayers = {
+  data: number[][]
+  providers: string[]
+}
+
 export function CustomVISXStreamgraph({
   width,
   height,
@@ -89,6 +95,12 @@ export function CustomVISXStreamgraph({
 
   const liveState = useLiveDataState()
   const [pastData, setPastData] = useState<L2DataResponseModel>()
+  const colors = useGetProviderColorDictionaryFromAppStore()
+  const [processedStreamchartData, setProcessedStreamchartData] =
+    useState<StreamchartLayers>({
+      providers: ["Mock until loaded"],
+      data: [range(60).map((x) => Math.random() * 10)],
+    })
   const { data, isSuccess, refetch } = useQuery("get past data", () =>
     api.getL2Data({
       dataType: liveState.mode,
@@ -102,92 +114,88 @@ export function CustomVISXStreamgraph({
       },
     }),
   )
+
   useEffect(() => {
     refetch()
   }, [liveState.mode, liveState.sidechainsIncluded, liveState.smoothing])
   useEffect(() => {
     if (isSuccess) {
       setPastData(data)
+      if (pastData?.simpleAnalysis?.allDatasetsSameLength) {
+        let length = Math.min(
+          pastData?.simpleAnalysis?.uniformDatasetLength ?? 1,
+          60,
+        )
+        xScale.domain([0, length - 1])
+        if (pastData.datasets)
+          setProcessedStreamchartData({
+            providers: pastData.datasets.map((x) => x.provider as string),
+            data: pastData.datasets.map(
+              (x) =>
+                x.dataPoints?.slice(0, length).map((y) => y.y as number) ?? [],
+            ),
+          })
+      }
     }
   }, [data])
   const liveData = useLiveData()
   const [dataPoints, setDataPoints] = useState<number[]>([0, 0, 0])
   useEffect(() => {
     if (liveData) {
-      setDataPoints(liveData.data?.map((x) => x?.value as number))
+      setDataPoints(liveData.data?.map((x) => x?.value ?? 0))
+      let temp = processedStreamchartData
+      let max = 0
+      for (let i = 0; i < temp.providers.length; i++) {
+        temp.data[i].shift()
+        max = Math.max(max, Math.max(...temp.data[i]))
+        const v =
+          liveData.data?.find((x) => x.providerName === temp.providers[i])
+            ?.value ?? temp.data[i][temp.data.length - 1]
+        temp.data[i].push(v)
+      }
+      //yScale.domain([-max, max])
+      setProcessedStreamchartData(temp)
     }
   }, [liveData])
-
-  let layers = transpose<number>([
-    [1, 2, 3],
-    [4, 5, 6],
-  ])
   xScale.range([0, width])
-  if (pastData?.simpleAnalysis?.allDatasetsSameLength) {
-    let length = Math.min(
-      pastData?.simpleAnalysis?.uniformDatasetLength ?? 1,
-      60,
-    )
-    xScale.domain([0, length - 1])
-    if (pastData.datasets)
-      layers = transpose<number>(
-        pastData.datasets.map(
-          (x) => x.dataPoints?.slice(0, length).map((y) => y.y as number) ?? [],
-        ),
-      )
-  }
-
+  xScale.domain([0, 59])
   yScale.range([height, 0])
-  //yScale.domain([1, 6])
+  yScale.domain([-50, 50])
 
   return (
     <>
       <WebsocketStatusPartial />
       <svg width={width} height={height}>
-        <PatternCircles
-          id="mustard"
-          height={40}
-          width={40}
-          radius={5}
-          fill="#036ecf"
-          complement
+        <rect
+          x={0}
+          y={0}
+          width={width}
+          height={height}
+          fill={"#ffdede"}
+          rx={14}
         />
-        <PatternWaves
-          id="cherry"
-          height={12}
-          width={12}
-          fill="transparent"
-          stroke="#232493"
-          strokeWidth={1}
-        />
-        <PatternCircles
-          id="navy"
-          height={60}
-          width={60}
-          radius={10}
-          fill="white"
-          complement
-        />
-        <PatternCircles
-          complement
-          id="circles"
-          height={60}
-          width={60}
-          radius={10}
-          fill="transparent"
-        />
-
+        {processedStreamchartData.providers.map((x) => (
+          <PatternCircles
+            id="mustard"
+            height={40}
+            width={40}
+            radius={5}
+            fill={colors !== undefined ? colors[x] : "darkblue"}
+            complement
+          />
+        ))}
         <g>
           <rect
             x={0}
             y={0}
             width={width}
             height={height}
-            fill={BACKGROUND}
+            fill={"#ffdede"}
             rx={14}
           />
+          {/** bottom */}
           <Stack<number[], number>
-            data={layers}
+            data={transpose<number>(processedStreamchartData.data)}
             keys={keys}
             curve={curveCardinal}
             offset="wiggle"
