@@ -1,8 +1,4 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-/**
- * Inspired by Mike Bostock's Streamgraph & Lee Byron’s test data generator:
- * https://bl.ocks.org/mbostock/4060954
- */
 import React from "react"
 import { Stack } from "@visx/shape"
 import { PatternCircles, PatternWaves } from "@visx/pattern"
@@ -80,6 +76,7 @@ export type StreamGraphProps = {
   width: number
   height: number
   animate?: boolean
+  providerHovered?: (name: string) => void
 }
 
 type StreamchartLayers = {
@@ -91,6 +88,7 @@ export function CustomVISXStreamgraph({
   width,
   height,
   animate = true,
+  providerHovered,
 }: StreamGraphProps) {
   //const forceUpdate = useForceUpdate()
   //const handlePress = () => forceUpdate()
@@ -100,6 +98,7 @@ export function CustomVISXStreamgraph({
   const liveState = useLiveDataState()
   const [pastData, setPastData] = useState<L2DataResponseModel>()
   const colors = useGetProviderColorDictionaryFromAppStore()
+  const [hoveredProvider, setHoveredProvider] = useState<string>()
   const [processedStreamchartData, setProcessedStreamchartData] =
     useState<StreamchartLayers>({
       providers: ["Mock until loaded"],
@@ -182,6 +181,12 @@ export function CustomVISXStreamgraph({
       complement
     />
   ))
+  const seriesHovered = (providerName: string) => {
+    setHoveredProvider(providerName)
+    if (providerHovered) {
+      providerHovered(providerName)
+    }
+  }
   return (
     <>
       <WebsocketStatusPartial />
@@ -202,7 +207,6 @@ export function CustomVISXStreamgraph({
             curve={curveCardinal}
             offset="wiggle"
             color={colorFunction}
-            order="reverse"
             x={(_, i) => xScale(i) ?? 0}
             y0={getY0}
             y1={getY1}
@@ -220,6 +224,12 @@ export function CustomVISXStreamgraph({
                   <g key={`series-${stack.key}`}>
                     <animated.path d={tweened.pathString} fill={color} />
                     <animated.path
+                      onMouseEnter={() =>
+                        seriesHovered(
+                          processedStreamchartData.providers[stack.key],
+                        )
+                      }
+                      onMouseLeave={() => setHoveredProvider(undefined)}
                       d={tweened.pathString}
                       fill={`url(#${pattern})`}
                     />

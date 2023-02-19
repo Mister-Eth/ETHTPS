@@ -19,10 +19,14 @@ export function AllProvidersRows(model: IProviderTableModel): JSX.Element {
   const hasData = (model.providerData?.length as number) > 0
   const mode = useGetLiveDataModeFromAppStore()
   const liveData = useGetLiveDataFromAppStore()
-  const [data, setData] = useState(getModeData(liveData, mode))
+  const [data, setData] = useState(getModeData(liveData ?? {}, mode))
   useEffect(() => {
-    setData(getModeData(liveData, mode))
+    setData(getModeData(liveData ?? {}, mode))
   }, [mode, liveData])
+  const [highlight, setHighlight] = useState<string>()
+  useEffect(() => {
+    setHighlight(model.selectedProvider)
+  }, [model.selectedProvider])
   return (
     <>
       {hasData ? (
@@ -36,8 +40,24 @@ export function AllProvidersRows(model: IProviderTableModel): JSX.Element {
               ),
             )
             ?.map((x, i) => (
-              <TableRow key={i}>
-                <IndexCell clickCallback={model.clickCallback} index={i + 1} />
+              <TableRow
+                onMouseEnter={() => {
+                  if (model.providerRowHovered)
+                    model.providerRowHovered(x.name as string)
+                  setHighlight(x.name as string)
+                }}
+                onMouseLeave={() => {
+                  if (model.providerRowHovered)
+                    model.providerRowHovered(undefined)
+                  setHighlight(undefined)
+                }}
+                key={i}
+              >
+                <IndexCell
+                  showTick={x.name === highlight}
+                  clickCallback={model.clickCallback}
+                  index={i + 1}
+                />
                 <NameCell clickCallback={model.clickCallback} provider={x} />
                 <DataValueCell
                   clickCallback={model.clickCallback}

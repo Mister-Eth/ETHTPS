@@ -54,6 +54,11 @@ export default function MainPage(): JSX.Element {
       containerRef.current ? containerRef.current.offsetWidth : 0,
     )
   }, [containerRef.current])
+  const [streamgraphHoveredProvider, setStreamgraphHoveredProvider] =
+    useState<string>()
+  const streamgraphProviderHovered = (name: string) => {
+    setStreamgraphHoveredProvider(name)
+  }
   return (
     <>
       <Paper elevation={0}>
@@ -71,12 +76,19 @@ export default function MainPage(): JSX.Element {
             </Paper>
             <Paper ref={containerRef} elevation={1}>
               {/*<Streamgraph width={containerWidth} height={500} />*/}
-              {<CustomVISXStreamgraph width={containerWidth} height={500} />}
+              {
+                <CustomVISXStreamgraph
+                  providerHovered={streamgraphProviderHovered}
+                  width={containerWidth}
+                  height={500}
+                />
+              }
             </Paper>
             <Paper elevation={1}>
               <AllProvidersTable
                 providerData={providers}
                 maxData={max}
+                selectedProvider={streamgraphHoveredProvider}
                 maxRowsBeforeShowingExpand={isMobile ? 15 : 20}
                 clickCallback={useHandleCellClick}
               />

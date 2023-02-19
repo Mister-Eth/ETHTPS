@@ -14,11 +14,8 @@ import { LinearGradient } from "@visx/gradient"
 import { max, extent } from "d3-array"
 import { BrushHandleRenderProps } from "@visx/brush/src/BrushHandle"
 import AreaChart from "./AreaChart"
-import { DatedXYDataPoint } from "ethtps.api.client"
-import moment from "moment"
+import { DatedXYDataPoint, L2DataResponseModel } from "ethtps.api.client"
 
-// Initialize some variables
-//const stock = appleStock.slice(1000)
 const brushMargin = { top: 10, bottom: 15, left: 50, right: 20 }
 const chartSeparation = 30
 const PATTERN_ID = "brush_pattern"
@@ -31,20 +28,8 @@ const selectedBrushStyle = {
   stroke: "white",
 }
 
-type Point = {
-  x: Date
-  y: number
-}
-
-function toPoint(d: DatedXYDataPoint) {
-  return {
-    x: d.x ?? new Date(),
-    y: d.y ?? 0,
-  }
-}
-
 // accessors
-const getDate = (d: AppleStock) => new Date(d.date)
+const getDate = (d: AppleStock) => new Date(d?.date)
 const getStockValue = (d: AppleStock) => d.close
 
 export type BrushProps = {
@@ -53,6 +38,13 @@ export type BrushProps = {
   height: number
   margin?: { top: number; right: number; bottom: number; left: number }
   compact?: boolean
+}
+
+const toAppleStock = (d: DatedXYDataPoint) => {
+  return {
+    date: d.x?.toTimeString(),
+    close: d.y,
+  } as AppleStock
 }
 
 export function BrushChart({
@@ -68,18 +60,19 @@ export function BrushChart({
   },
 }: BrushProps) {
   const brushRef = useRef<BaseBrush | null>(null)
-  const stock = dataPoints.filter((x) => x !== undefined).map(toPoint)
-  const [filteredStock, setFilteredStock] = useState(stock)
-
+  const [filteredStock, setFilteredStock] = useState<AppleStock[]>(
+    dataPoints.map(toAppleStock),
+  )
+  const stock = dataPoints.map(toAppleStock)
   const onBrushChange = (domain: Bounds | null) => {
     if (!domain) return
     const { x0, x1, y0, y1 } = domain
-    const stockCopy = stock.filter((s) => {
-      const x = s.x?.getTime() ?? new Date().getTime()
-      const y = s.y ?? 0
-      return x > x0 && x < x1 && y > y0 && y < y1
+    const stockCopy = dataPoints.filter((s) => {
+      const x = (x: DatedXYDataPoint) => x.x?.getTime() ?? new Date().getTime()
+      const y = (x: DatedXYDataPoint) => x.y ?? 0
+      return x(s) > x0 && x(s) < x1 && y(s) > y0 && y(s) < y1
     })
-    setFilteredStock(stockCopy)
+    setFilteredStock(stockCopy.map(toAppleStock))
   }
 
   const innerHeight = height - margin.top - margin.bottom
@@ -103,7 +96,7 @@ export function BrushChart({
     () =>
       scaleTime<number>({
         range: [0, xMax],
-        domain: extent(filteredStock) as [Date, Date],
+        domain: extent(filteredStock, getDate) as [Date, Date],
       }),
     [xMax, filteredStock],
   )
@@ -133,6 +126,7 @@ export function BrushChart({
       }),
     [yBrushMax],
   )
+
   const initialBrushPosition = useMemo(
     () => ({
       start: { x: brushDateScale(getDate(stock[0])) },

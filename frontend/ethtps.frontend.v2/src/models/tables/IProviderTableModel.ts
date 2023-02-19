@@ -6,4 +6,6 @@ import { ProviderResponseModel } from "ethtps.api.client"
 export interface IProviderTableModel extends ICellClickedEvent, IMaxRowsModel {
   providerData?: ProviderResponseModel[]
   maxData?: IMaxDataModel
+  selectedProvider?: string
+  providerRowHovered?: (providerName?: string) => void
 }
