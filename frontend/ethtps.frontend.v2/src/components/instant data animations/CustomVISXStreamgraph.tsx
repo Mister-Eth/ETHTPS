@@ -69,8 +69,12 @@ const patternScale = scaleOrdinal<number, string>({
 
 // accessors
 type Datum = number[]
-const getY0 = (d: Datum) => yScale(d[0]) ?? 0
-const getY1 = (d: Datum) => yScale(d[1]) ?? 0
+const getY0 = (d: Datum) => {
+  return yScale(Math.min(...d)) ?? 0
+}
+const getY1 = (d: Datum) => {
+  return yScale(Math.max(...d)) ?? 0
+}
 
 export type StreamGraphProps = {
   width: number
@@ -114,7 +118,7 @@ export function CustomVISXStreamgraph({
       },
     }),
   )
-
+  const [max, setMax] = useState(0)
   useEffect(() => {
     refetch()
   }, [liveState.mode, liveState.sidechainsIncluded, liveState.smoothing])
@@ -153,6 +157,7 @@ export function CustomVISXStreamgraph({
             ?.value ?? temp.data[i][temp.data.length - 1]
         temp.data[i].push(v)
       }
+      setMax(max)
       //yScale.domain([-max, max])
       setProcessedStreamchartData(temp)
     }
@@ -160,46 +165,44 @@ export function CustomVISXStreamgraph({
   xScale.range([0, width])
   xScale.domain([0, 59])
   yScale.range([height, 0])
-  yScale.domain([-50, 50])
-
+  useEffect(() => {
+    yScale.domain([-max * 1.5, max * 1.5])
+  }, [max])
+  const colorFunction = (key: number, index: number) =>
+    colors ? colors[processedStreamchartData.providers[index]] : "yellow"
+  const customScale = (x: number) => colorFunction(0, x)
+  const patterns = processedStreamchartData.providers.map((x, i) => (
+    <PatternCircles
+      id={"circles"}
+      key={i}
+      height={40}
+      width={40}
+      radius={5}
+      fill={colors !== undefined ? "black" : BACKGROUND}
+      complement
+    />
+  ))
   return (
     <>
       <WebsocketStatusPartial />
       <svg width={width} height={height}>
-        <rect
-          x={0}
-          y={0}
-          width={width}
-          height={height}
-          fill={"#ffdede"}
-          rx={14}
-        />
-        {processedStreamchartData.providers.map((x) => (
-          <PatternCircles
-            id="mustard"
-            height={40}
-            width={40}
-            radius={5}
-            fill={colors !== undefined ? colors[x] : "darkblue"}
-            complement
-          />
-        ))}
+        {patterns}
         <g>
           <rect
             x={0}
             y={0}
             width={width}
             height={height}
-            fill={"#ffdede"}
-            rx={14}
+            fill={BACKGROUND}
+            rx={24}
           />
-          {/** bottom */}
           <Stack<number[], number>
             data={transpose<number>(processedStreamchartData.data)}
             keys={keys}
             curve={curveCardinal}
             offset="wiggle"
-            color={colorScale}
+            color={colorFunction}
+            order="reverse"
             x={(_, i) => xScale(i) ?? 0}
             y0={getY0}
             y1={getY1}
@@ -211,8 +214,8 @@ export function CustomVISXStreamgraph({
                 const tweened = animate
                   ? useSpring({ pathString })
                   : { pathString }
-                const color = colorScale(stack.key)
-                const pattern = patternScale(stack.key)
+                const color = customScale(stack.key)
+                const pattern = "circles"
                 return (
                   <g key={`series-${stack.key}`}>
                     <animated.path d={tweened.pathString} fill={color} />
