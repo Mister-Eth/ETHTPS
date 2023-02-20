@@ -12,10 +12,9 @@ export default class ArbitrumNovaDetails extends React.Component {
                 links: {
                   websites: ['https://nova.arbitrum.io/'],
                   documentation: ['https://developer.offchainlabs.com/docs/AnyTrust'],
-                  explorers: ['https://nova-explorer.arbitrum.io/'],
+                  explorers: ['https://nova.arbitrum.io/'],
                   repositories: [
-                    'https://github.com/OffchainLabs/arbitrum',
-                    'https://github.com/OffchainLabs/arb-os',
+                    'https://github.com/OffchainLabs/nitro',
                   ],
                   socialMedia: [
                     'https://twitter.com/OffchainLabs',
