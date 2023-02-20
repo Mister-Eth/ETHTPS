@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React from "react"
 import { Stack } from "@visx/shape"
-import { PatternCircles, PatternWaves } from "@visx/pattern"
+import { PatternCircles, PatternHexagons, PatternWaves } from "@visx/pattern"
 import { scaleLinear, scaleOrdinal } from "@visx/scale"
 import { transpose } from "d3-array"
 import { animated, useSpring } from "@react-spring/web"
@@ -19,6 +19,7 @@ import { useGetLiveDataModeFromAppStore } from "../../hooks/LiveDataHooks"
 import moment from "moment"
 import { L2DataResponseModel } from "ethtps.api.client"
 import { useGetProviderColorDictionaryFromAppStore } from "../../hooks/ColorHooks"
+import { background } from "../charts/brush/BrushChart"
 
 // constants
 const NUM_LAYERS = 20
@@ -32,12 +33,8 @@ const range = (n: number) => Array.from(new Array(n), (_, i) => i)
 const keys = range(NUM_LAYERS)
 
 // scales
-const xScale = scaleLinear<number>({
-  domain: [0, SAMPLES_PER_LAYER - 1],
-})
-const yScale = scaleLinear<number>({
-  domain: [-30, 50],
-})
+const xScale = scaleLinear<number>({})
+const yScale = scaleLinear<number>({})
 const colorScale = scaleOrdinal<number, string>({
   domain: keys,
   range: [
@@ -145,16 +142,16 @@ export function CustomVISXStreamgraph({
     if (liveData) {
       setDataPoints(liveData.data?.map((x) => x?.value ?? 0))
       let temp = processedStreamchartData
-      let max = 0
+      let currentMax = 0
       for (let i = 0; i < temp.providers.length; i++) {
         temp.data[i].shift()
-        max = Math.max(max, Math.max(...temp.data[i]))
+        currentMax = Math.max(currentMax, Math.max(...temp.data[i]))
         const v =
           liveData.data?.find((x) => x.providerName === temp.providers[i])
-            ?.value ?? temp.data[i][temp.data.length - 1]
+            ?.value ?? 0 //temp.data[i][temp.data.length - 1]
         temp.data[i].push(v)
       }
-      setMax(max)
+      setMax(currentMax)
       //yScale.domain([-max, max])
       setProcessedStreamchartData(temp)
     }
@@ -163,8 +160,11 @@ export function CustomVISXStreamgraph({
   xScale.domain([0, 59])
   yScale.range([height, 0])
   useEffect(() => {
-    yScale.domain([-max * 1.5, max * 1.5])
+    const n = Math.ceil((max / 10) * 10)
+    const m = Math.floor((max / 10) * 10)
+    yScale.domain([-m, n * 1.5])
   }, [max])
+  yScale.clamp(true)
   const colorFunction = (key: number, index: number) =>
     colors ? colors[processedStreamchartData.providers[index]] : "yellow"
   const customScale = (x: number) => colorFunction(0, x)
@@ -205,6 +205,7 @@ export function CustomVISXStreamgraph({
             data={transpose<number>(processedStreamchartData.data)}
             keys={keys}
             curve={curveCardinal}
+            accumulate={"sum"}
             offset="wiggle"
             color={colorFunction}
             x={(_, i) => xScale(i) ?? 0}

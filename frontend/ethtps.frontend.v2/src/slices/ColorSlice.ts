@@ -24,6 +24,7 @@ const colorSlice = createSlice({
       action: PayloadAction<StringDictionary | undefined>,
     ) {
       if (action.payload === undefined) return state
+      action.payload["Others"] = "yellow"
       storage.cacheItem(action.payload, "IColorDictionaries")
       state.providerTypesColorDictionary = { ...action.payload }
       return state

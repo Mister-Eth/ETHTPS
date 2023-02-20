@@ -58,6 +58,19 @@
   }
 }
 
+.fade-in-white{
+  animation: fade-in-w 1s forwards;
+}
+
+@keyframes fade-in-w{
+  0%{
+    fill: black;
+  }
+  100%{
+    fill:white;
+  }
+}
+
 .appear {
   animation: appear 1s forwards;
 }
