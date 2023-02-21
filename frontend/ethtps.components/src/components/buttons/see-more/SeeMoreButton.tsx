@@ -1,7 +1,8 @@
 import { ArrowDownward, ArrowUpward } from '@mui/icons-material'
 import { Button } from '@mui/material'
-import { useState, Fragment } from 'react'
+import { useState } from 'react'
 import { ISeeMoreButtonProps } from './ISeeMoreButtonProps'
+import React from 'react'
 
 export function SeeMoreButton(events: ISeeMoreButtonProps) {
 	const [expand, setExpand] = useState(true)

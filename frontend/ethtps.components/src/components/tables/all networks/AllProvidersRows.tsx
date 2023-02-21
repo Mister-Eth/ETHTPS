@@ -1,15 +1,18 @@
-import { TableRow, TableCell } from '@mui/material'
+import { TableCell, TableRow } from '@mui/material'
+import { range } from 'd3-array'
+import {
+	IProviderTableModel,
+	extractData,
+	getModeData,
+	liveDataHooks,
+} from 'ethtps.data'
+import React, { useEffect, useState } from 'react'
+import { SkeletonWithTooltip } from 'src/components/partials/skeletons/SkeletonWithTooltip'
 import { IndexCell } from './cells/IndexCell'
 import { NameCell } from './cells/NameCell'
 import { DataValueCell } from './cells/DataValueCell'
 import { MaxValueCell } from './cells/MaxValueCell'
 import { ProviderTypeCell } from './cells/ProviderTypeCell'
-import { SkeletonWithTooltip } from '../../partials/SkeletonWithTooltip'
-import { extractData, getModeData } from '../../../Types'
-import { Fragment, useEffect, useState } from 'react'
-import { range } from 'lodash'
-import { IProviderTableModel, liveDataHooks } from 'ethtps.data'
-import React from 'react'
 
 export function AllProvidersRows(model: IProviderTableModel): JSX.Element {
 	const hasData = (model.providerData?.length as number) > 0

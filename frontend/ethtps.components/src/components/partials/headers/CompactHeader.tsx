@@ -6,7 +6,7 @@ import Toolbar from '@mui/material/Toolbar'
 import { LinksSection } from '../LinksSection'
 import React, { Fragment } from 'react'
 
-export default function CompactHeader(): JSX.Element {
+export function CompactHeader(): JSX.Element {
 	return (
 		<React.Fragment>
 			<AppBar

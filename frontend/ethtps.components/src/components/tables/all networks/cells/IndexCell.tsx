@@ -6,7 +6,6 @@ import {
 import { ArrowRight } from '@mui/icons-material'
 import { ConditionalRender } from '../../../../Types'
 import React from 'react'
-import React from 'react'
 
 interface IIndexCellConfiguration extends ICustomCellConfiguration {
 	index: number

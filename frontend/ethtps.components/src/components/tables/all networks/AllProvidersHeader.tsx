@@ -1,8 +1,6 @@
+import { liveDataHooks, toShortString } from 'ethtps.data'
+import React from 'react'
 import { TableHeader } from '../TableHeader'
-import { toShortString } from '../../../Types'
-import { liveDataHooks } from 'ethtps.data'
-import React from 'react'
-import React from 'react'
 
 export function AllProvidersHeader(): JSX.Element {
 	const mode = liveDataHooks.useGetLiveDataModeFromAppStore()

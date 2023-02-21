@@ -1,18 +1,15 @@
-import { TableCell, Tooltip, Typography } from '@mui/material'
+import { Typography, TableCell, Tooltip } from '@mui/material'
+import { DataPoint } from 'ethtps.api.client'
+import { numberFormat, liveDataHooks } from 'ethtps.data'
+import { useGetMaxDataForProviderFromAppStore } from 'ethtps.data/dist/hooks/DataHooks'
+import moment from 'moment'
+import React from 'react'
+import { centered } from '../../Cells.Types'
 import {
 	ICustomCellConfiguration,
 	buildClassNames,
 } from './ICustomCellConfiguration'
-import moment from 'moment'
-import { numberFormat } from '../../../../Types'
-import { DataPoint } from 'ethtps.api.client'
-import { useGetMaxDataForProviderFromAppStore } from 'ethtps.data/dist/hooks/DataHooks'
-import { useGetLiveDataModeFromAppStore } from 'ethtps.data/dist/hooks/LiveDataHooks'
-import { centered } from '../../Cells.Types'
 import { tableCellTypographyStandard } from './Typography.types'
-import { liveDataHooks } from 'ethtps.data'
-import React from 'react'
-import React from 'react'
 
 function generateMaxHoverMessage(data?: DataPoint): string {
 	if (

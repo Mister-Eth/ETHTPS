@@ -1,5 +1,5 @@
 import { addDays } from 'date-fns'
-import { Fragment, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { DateRange, Range as RRange } from 'react-date-range'
 import {
 	Chip,
@@ -37,16 +37,6 @@ export function DateRangeSelectorDropdown(
 		setPopperOpen((prevOpen) => !prevOpen)
 	}
 
-	const handleClose = (event: Event) => {
-		if (
-			anchorRef.current &&
-			anchorRef.current.contains(event.target as HTMLElement)
-		) {
-			return
-		}
-
-		setPopperOpen(false)
-	}
 	let hoverAwayRef: NodeJS.Timeout | undefined
 	const clearHoverAwayTimeout = () => {
 		clearInterval(hoverAwayRef)
