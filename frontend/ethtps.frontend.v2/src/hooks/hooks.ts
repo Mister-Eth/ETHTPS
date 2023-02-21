@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react'
-import { extractData, getModeData } from '../../Types'
-import { DataResponseModelDictionary } from '../../Types.dictionaries'
 import { ProviderResponseModel } from 'ethtps.api.client'
 import {
 	useAppSelector,
@@ -8,6 +6,9 @@ import {
 	liveDataHooks,
 	colorHooks,
 	dataTypeToString,
+	DataResponseModelDictionary,
+	extractData,
+	getModeData,
 } from 'ethtps.data'
 export type InstantBarChartDataset = {
 	label: string
