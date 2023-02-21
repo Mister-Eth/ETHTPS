@@ -1,5 +1,5 @@
 import { MenuItem } from '@mui/material'
-import { AnimatedButtonWithIcon } from '../buttons/AnimatedButtonWithIcon'
+import { AnimatedLinkButtonWithIcon } from '../buttons/AnimatedLinkButtonWithIcon'
 import React from 'react'
 import { openNewTab } from '../../LinksHelper'
 import Fragment from 'react'
@@ -28,7 +28,7 @@ export function MenuItemWithIcon(props: IButtonProperties): JSX.Element {
 				key={props.myKey}
 				onMouseOverCapture={props.onMouseOverCapture}
 				onClick={handleClick}>
-				<AnimatedButtonWithIcon
+				<AnimatedLinkButtonWithIcon
 					showText
 					openInNewTab={false}
 					image={props.image}

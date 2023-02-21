@@ -1,6 +1,5 @@
 import { IconButton, Tooltip, Typography } from '@mui/material'
 import { openNewTab } from '../../LinksHelper'
-import React from 'react'
 import { Fragment } from 'react'
 
 interface IButtonProperties {
@@ -12,7 +11,9 @@ interface IButtonProperties {
 }
 
 // No animation YET
-export function AnimatedButtonWithIcon(props: IButtonProperties): JSX.Element {
+export function AnimatedLinkButtonWithIcon(
+	props: IButtonProperties
+): JSX.Element {
 	const handleClick = () => {
 		if (props.openInNewTab) {
 			openNewTab(props.href)

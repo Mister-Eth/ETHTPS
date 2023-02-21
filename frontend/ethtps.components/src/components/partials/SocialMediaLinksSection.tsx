@@ -1,4 +1,4 @@
-import { AnimatedButtonWithIcon } from '../buttons/AnimatedButtonWithIcon'
+import { AnimatedLinkButtonWithIcon } from '../buttons/AnimatedLinkButtonWithIcon'
 import { ButtonGroup } from '@mui/material'
 import { GitHub, Twitter } from '@mui/icons-material'
 import { DiscordIcon } from '../icons/DiscordIcon'
@@ -9,19 +9,19 @@ export function SocialMediaLinksSection(): JSX.Element {
 	return (
 		<Fragment>
 			<ButtonGroup sx={{ float: 'right' }}>
-				<AnimatedButtonWithIcon
+				<AnimatedLinkButtonWithIcon
 					openInNewTab
 					image={<GitHub />}
 					href={'https://github.com/Mister-Eth/ETHTPS'}
 					text={'Github repository'}
 				/>
-				<AnimatedButtonWithIcon
+				<AnimatedLinkButtonWithIcon
 					openInNewTab
 					image={<Twitter />}
 					href={'https://twitter.com/ethtps'}
 					text={'Twitter'}
 				/>
-				<AnimatedButtonWithIcon
+				<AnimatedLinkButtonWithIcon
 					openInNewTab
 					image={<DiscordIcon />}
 					href={'https://discord.gg/jWPcsTzpCT'}

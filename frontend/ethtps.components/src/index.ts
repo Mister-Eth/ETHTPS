@@ -1,4 +1,4 @@
-import { AnimatedButtonWithIcon } from './components/buttons/AnimatedButtonWithIcon'
+import { AnimatedLinkButtonWithIcon } from './components/buttons/AnimatedLinkButtonWithIcon'
 import { CurrentViewersIcon } from './components/buttons/CurrentViewersIcon'
 import { CustomButtonGroup } from './components/buttons/CustomButtonGroup'
 import { DataModeButtonGroup } from './components/buttons/DataModeButtonGroup'
@@ -8,7 +8,7 @@ import { SidechainToggleButton } from './components/buttons/SidechainToggleButto
 import AreaChart from './components/charts/brush/AreaChart'
 import { BrushChart } from './components/charts/brush/BrushChart'
 export {
-	AnimatedButtonWithIcon,
+	AnimatedLinkButtonWithIcon,
 	CurrentViewersIcon,
 	CustomButtonGroup,
 	DataModeButtonGroup,
