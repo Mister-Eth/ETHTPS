@@ -19,7 +19,7 @@ const root = createRoot(container) //
 
 root.render(
   <BrowserRouter>
-    <ETHTPSDataLayer store={store()}>
+    <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={themeProvider.getCurrentTheme()}>
           <CompactHeader />
@@ -27,7 +27,7 @@ root.render(
           <SignatureFooter />
         </ThemeProvider>
       </QueryClientProvider>
-    </ETHTPSDataLayer>
+    </Provider>
   </BrowserRouter>,
 )
 reportWebVitals()

@@ -9,7 +9,7 @@ const intervalsSlice = createSlice({
   reducers: {
     setIntervals(state: string[], action: PayloadAction<string[] | undefined>) {
       if (action.payload !== undefined) {
-        localStorage.cacheItem(action.payload, "intervals");
+        localStorage.setItem("intervals", JSON.stringify(action.payload));
         state.length = 0;
         state = [...action.payload];
       }

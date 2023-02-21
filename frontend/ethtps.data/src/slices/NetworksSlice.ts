@@ -9,7 +9,7 @@ const networksSlice = createSlice({
   reducers: {
     setNetworks(state: string[], action: PayloadAction<string[] | undefined>) {
       if (action.payload !== undefined) {
-        localStorage.cacheItem(action.payload, "networks");
+        localStorage.setItem("networks", JSON.stringify(action.payload));
         state.length = 0;
         state = [...(action.payload as string[])];
       }

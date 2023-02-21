@@ -12,7 +12,7 @@ export class LocalStorageService {
     this._setIsLocalStorageEnabled()
   }
 
-  public cacheItem<T>(item: T, key: string) {
+  public setItem<T>(item: T, key: string) {
     if (this._enabled) {
       localStorage.setItem(key, JSON.stringify(item))
       //console.log("Set " + key)

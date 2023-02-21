@@ -12,7 +12,7 @@ const experimentSlice = createSlice({
       state: number[],
       action: PayloadAction<number[] | undefined>
     ) {
-      localStorage.cacheItem(action.payload, "experiments");
+      localStorage.setItem("experiments", JSON.stringify(action.payload));
       return action.payload;
     },
   },

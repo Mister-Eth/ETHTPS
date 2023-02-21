@@ -57,7 +57,7 @@ const liveDataSlice = createSlice({
       state: ILiveDataModeModel,
       action: PayloadAction<boolean | undefined>
     ) {
-      localStorage.cacheItem(action.payload, "includeSidechains");
+      localStorage.setItem("includeSidechains", JSON.stringify(action.payload));
       state.includeSidechains = action.payload ?? false;
     },
 
@@ -67,15 +67,24 @@ const liveDataSlice = createSlice({
     ) {
       switch (state.liveDataType) {
         case DataType.Tps:
-          localStorage.cacheItem(action.payload, "oneMinuteTPSData");
+          localStorage.setItem(
+            "oneMinuteTPSData",
+            JSON.stringify(action.payload)
+          );
           state.oneMinuteTPSData = action.payload;
           break;
         case DataType.Gps:
-          localStorage.cacheItem(action.payload, "oneMinuteGPSData");
+          localStorage.setItem(
+            "oneMinuteGPSData",
+            JSON.stringify(action.payload)
+          );
           state.oneMinuteGPSData = action.payload;
           break;
         default:
-          localStorage.cacheItem(action.payload, "oneMinuteTPSData");
+          localStorage.setItem(
+            "oneMinuteTPSData",
+            JSON.stringify(action.payload)
+          );
           state.oneMinuteGTPSData = action.payload;
           break;
       }

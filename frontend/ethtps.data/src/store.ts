@@ -16,28 +16,24 @@ import {
 } from "./models/dependencies/ApplicationState";
 
 const preloadedState = new ApplicationState();
-export const history = new History();
-export const store = configureStore(
-  {
-    reducer: {
-      providers: providersReducer,
-      networks: networksReducer,
-      intervals: intervalsReducer,
-      maxData: dataReducer,
-      liveData: liveDataReducer,
-      colors: colorReducer,
-      experiments: experimentReducer,
-      applicationState: applicationStateReducer,
-      websockets: websocketReducer,
-    },
-    ...(preloadedState as IApplicationState),
-    middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware({
-        serializableCheck: false,
-      }).concat(websocketMiddleware),
+export const store = configureStore({
+  reducer: {
+    providers: providersReducer,
+    networks: networksReducer,
+    intervals: intervalsReducer,
+    maxData: dataReducer,
+    liveData: liveDataReducer,
+    colors: colorReducer,
+    experiments: experimentReducer,
+    applicationState: applicationStateReducer,
+    websockets: websocketReducer,
   },
-  history
-);
+  ...(preloadedState as IApplicationState),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }).concat(websocketMiddleware),
+});
 
 export type RootState = ReturnType<typeof store.getState>;
 

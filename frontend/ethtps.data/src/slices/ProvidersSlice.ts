@@ -21,7 +21,7 @@ const providersSlice = createSlice({
       state: ProviderResponseModel[],
       action: PayloadAction<ProviderResponseModel[] | undefined>
     ) {
-      localStorage.cacheItem(action.payload, "providers");
+      localStorage.setItem("providers", JSON.stringify(action.payload));
       return action.payload;
     },
   },

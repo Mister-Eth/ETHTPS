@@ -69,21 +69,21 @@ const dataSlice = createSlice({
       state: IMaxDataModel,
       action: PayloadAction<DataPointDictionary | undefined>
     ) {
-      localStorage.cacheItem(action.payload, "maxTPSData");
+      localStorage.setItem("maxTPSData", JSON.stringify(action.payload));
       return modifyMaxDataState(state, action.payload, (s) => s.maxTPSData);
     },
     setMaxGPSData(
       state: IMaxDataModel,
       action: PayloadAction<DataPointDictionary | undefined>
     ) {
-      localStorage.cacheItem(action.payload, "maxGPSData");
+      localStorage.setItem("maxGPSData", JSON.stringify(action.payload));
       return modifyMaxDataState(state, action.payload, (s) => s.maxGPSData);
     },
     setMaxGTPSData(
       state: IMaxDataModel,
       action: PayloadAction<DataPointDictionary | undefined>
     ) {
-      localStorage.cacheItem(action.payload, "maxGTPSData");
+      localStorage.setItem("maxGTPSData", JSON.stringify(action.payload));
       return modifyMaxDataState(state, action.payload, (s) => s.maxGTPSData);
     },
   },

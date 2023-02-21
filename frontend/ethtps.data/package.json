@@ -14,7 +14,8 @@
     "react-dom": "^18.2.0",
     "react-query": "^3.39.3",
     "react-redux": "^8.0.5",
-    "reconnecting-websocket": "^4.4.0"
+    "reconnecting-websocket": "^4.4.0",
+    "ethtps.api.client": "../ethtps.api.client"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -39,5 +40,8 @@
     ".vscode"
   ],
   "author": "Mister_Eth",
-  "license": "ISC"
+  "license": "ISC",
+  "relativeDependencies": {
+    "ethtps.api.client": "../ethtps.api.client"
+  }
 }
