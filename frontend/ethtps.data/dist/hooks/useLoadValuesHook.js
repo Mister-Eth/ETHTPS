@@ -11,7 +11,7 @@ function useLoadValuesHook(dataName, loadFunction, setValueFunction, cacheTime =
         refetchOnWindowFocus: false,
     });
     (0, react_1.useEffect)(() => {
-        if (status === "success") {
+        if (status === 'success') {
             setCompleted(true);
             setValueFunction(data);
         }

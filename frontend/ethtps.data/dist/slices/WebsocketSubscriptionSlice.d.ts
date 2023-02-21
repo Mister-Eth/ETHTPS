@@ -1,4 +1,4 @@
-import { PayloadAction } from "@reduxjs/toolkit";
+import { PayloadAction } from '@reduxjs/toolkit';
 export interface WebsocketSubscriptionState {
     isEstablishingConnection: boolean;
     isConnecting: boolean;

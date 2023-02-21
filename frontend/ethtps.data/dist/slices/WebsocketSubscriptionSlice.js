@@ -9,7 +9,7 @@ const initialState = {
     isConnected: false,
 };
 const websocketSlice = (0, toolkit_1.createSlice)({
-    name: "websockets",
+    name: 'websockets',
     initialState,
     reducers: {
         connecting: (state) => {

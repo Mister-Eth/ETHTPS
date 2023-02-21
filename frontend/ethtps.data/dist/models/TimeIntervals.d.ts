@@ -1,4 +1,4 @@
-import { DataType } from "ethtps.api.client";
+import { DataType } from 'ethtps.api.client';
 export declare enum TimeInterval {
     Instant = 0,
     _1m = 1,

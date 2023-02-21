@@ -6,9 +6,9 @@ exports.dataReducer = exports.setMaxGTPSData = exports.setMaxGPSData = exports.s
 const toolkit_1 = require("@reduxjs/toolkit");
 const ethtps_api_client_1 = require("ethtps.api.client");
 const initialState = {
-    maxTPSData: JSON.parse((_b = localStorage.getItem("maxTPSData")) !== null && _b !== void 0 ? _b : "{}"),
-    maxGPSData: JSON.parse((_c = localStorage.getItem("maxGPSData")) !== null && _c !== void 0 ? _c : "{}"),
-    maxGTPSData: JSON.parse((_d = localStorage.getItem("maxGTPSData")) !== null && _d !== void 0 ? _d : "{}"),
+    maxTPSData: JSON.parse((_b = localStorage.getItem('maxTPSData')) !== null && _b !== void 0 ? _b : '{}'),
+    maxGPSData: JSON.parse((_c = localStorage.getItem('maxGPSData')) !== null && _c !== void 0 ? _c : '{}'),
+    maxGTPSData: JSON.parse((_d = localStorage.getItem('maxGTPSData')) !== null && _d !== void 0 ? _d : '{}'),
     getMaxDataFor(provider, type) {
         switch (type) {
             case ethtps_api_client_1.DataType.Tps:
@@ -48,19 +48,19 @@ function modifyMaxDataState(state, finalState, f) {
     return state;
 }
 const dataSlice = (0, toolkit_1.createSlice)({
-    name: "data",
+    name: 'data',
     initialState,
     reducers: {
         setMaxTPSData(state, action) {
-            localStorage.setItem("maxTPSData", JSON.stringify(action.payload));
+            localStorage.setItem('maxTPSData', JSON.stringify(action.payload));
             return modifyMaxDataState(state, action.payload, (s) => s.maxTPSData);
         },
         setMaxGPSData(state, action) {
-            localStorage.setItem("maxGPSData", JSON.stringify(action.payload));
+            localStorage.setItem('maxGPSData', JSON.stringify(action.payload));
             return modifyMaxDataState(state, action.payload, (s) => s.maxGPSData);
         },
         setMaxGTPSData(state, action) {
-            localStorage.setItem("maxGTPSData", JSON.stringify(action.payload));
+            localStorage.setItem('maxGTPSData', JSON.stringify(action.payload));
             return modifyMaxDataState(state, action.payload, (s) => s.maxGTPSData);
         },
     },

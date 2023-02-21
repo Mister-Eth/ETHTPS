@@ -1,20 +1,26 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { ILiveDataModeModel } from '../models/interfaces/ILiveDataModeModel'
-import { TimeInterval } from '../models/TimeIntervals'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { TimeInterval, DataType } from 'ethtps.api.client'
 import {
 	InstantDataResponseModel,
 	DataResponseModelDictionary,
-} from '../Types.dictionaries'
-import { DataType } from 'ethtps.api.client'
+} from '../common-types/Dictionaries'
+import { ILiveDataModeModel } from '../models/interfaces/ILiveDataModeModel'
 
 const initialState: ILiveDataModeModel = {
 	liveDataSmoothing: TimeInterval.Instant,
 	liveDataType: DataType.Tps,
-	includeSidechains:
-		JSON.parse(localStorage.getItem('includeSidechains')) ?? false,
-	oneMinuteTPSData: JSON.parse(localStorage.getItem('oneMinuteTPSData')),
-	oneMinuteGPSData: JSON.parse(localStorage.getItem('oneMinuteGPSData')),
-	oneMinuteGTPSData: JSON.parse(localStorage.getItem('oneMinuteGTPSData')),
+	includeSidechains: JSON.parse(
+		localStorage.getItem('includeSidechains') ?? 'false'
+	),
+	oneMinuteTPSData: JSON.parse(
+		localStorage.getItem('oneMinuteTPSData') ?? '{}'
+	),
+	oneMinuteGPSData: JSON.parse(
+		localStorage.getItem('oneMinuteGPSData') ?? '{}'
+	),
+	oneMinuteGTPSData: JSON.parse(
+		localStorage.getItem('oneMinuteGTPSData') ?? '{}'
+	),
 	currentVisitors: 0,
 }
 

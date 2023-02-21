@@ -1,4 +1,4 @@
-import { IMainPageModel } from "./interfaces/IMainPageModel";
+import { IMainPageModel } from './interfaces/IMainPageModel';
 export interface IPagesState {
     mainPage: IMainPageModel;
 }

@@ -1,4 +1,4 @@
-import { TypedUseSelectorHook } from "react-redux";
+import { TypedUseSelectorHook } from 'react-redux';
 export declare const store: import("@reduxjs/toolkit/dist/configureStore").ToolkitStore<{
     providers: import("ethtps.api.client").ProviderResponseModel[];
     networks: string[];

@@ -4,7 +4,7 @@ exports.mainPageReducer = exports.setHighlightedProvider = void 0;
 const toolkit_1 = require("@reduxjs/toolkit");
 const initialState = {};
 const mainPage = (0, toolkit_1.createSlice)({
-    name: "mainPage",
+    name: 'mainPage',
     initialState,
     reducers: {
         setHighlightedProvider(state, action) {

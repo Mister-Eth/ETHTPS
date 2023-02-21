@@ -6,10 +6,10 @@ const toolkit_1 = require("@reduxjs/toolkit");
 const initialState = {
     applicationDataLoaded: false,
     completeApplicationDataAvailableInLocalStorage: false,
-    apiKey: localStorage.getItem("XAPIKey"),
+    apiKey: localStorage.getItem('XAPIKey'),
 };
 const applicationStateSlice = (0, toolkit_1.createSlice)({
-    name: "applicationStates",
+    name: 'applicationStates',
     initialState,
     reducers: {
         setApplicationDataLoaded(state, action) {
@@ -19,7 +19,7 @@ const applicationStateSlice = (0, toolkit_1.createSlice)({
             return state;
         },
         setStoreAPIKey(state, action) {
-            localStorage.setItem("XAPIKey", action.payload);
+            localStorage.setItem('XAPIKey', action.payload);
             state.apiKey = action.payload;
             return state;
         },

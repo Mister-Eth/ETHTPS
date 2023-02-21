@@ -1,22 +1,21 @@
 "use strict";
 var _a;
-var _b;
+var _b, _c, _d, _e;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.liveDataReducer = exports.setLastMinuteData = exports.setIncludeSidechains = exports.setLiveData = exports.setLiveDataType = exports.setLiveDataSmoothing = exports.setCurrentVisitors = void 0;
 const toolkit_1 = require("@reduxjs/toolkit");
-const TimeIntervals_1 = require("../models/TimeIntervals");
 const ethtps_api_client_1 = require("ethtps.api.client");
 const initialState = {
-    liveDataSmoothing: TimeIntervals_1.TimeInterval.Instant,
+    liveDataSmoothing: ethtps_api_client_1.TimeInterval.Instant,
     liveDataType: ethtps_api_client_1.DataType.Tps,
-    includeSidechains: (_b = JSON.parse(localStorage.getItem("includeSidechains"))) !== null && _b !== void 0 ? _b : false,
-    oneMinuteTPSData: JSON.parse(localStorage.getItem("oneMinuteTPSData")),
-    oneMinuteGPSData: JSON.parse(localStorage.getItem("oneMinuteGPSData")),
-    oneMinuteGTPSData: JSON.parse(localStorage.getItem("oneMinuteGTPSData")),
+    includeSidechains: JSON.parse((_b = localStorage.getItem('includeSidechains')) !== null && _b !== void 0 ? _b : 'false'),
+    oneMinuteTPSData: JSON.parse((_c = localStorage.getItem('oneMinuteTPSData')) !== null && _c !== void 0 ? _c : '{}'),
+    oneMinuteGPSData: JSON.parse((_d = localStorage.getItem('oneMinuteGPSData')) !== null && _d !== void 0 ? _d : '{}'),
+    oneMinuteGTPSData: JSON.parse((_e = localStorage.getItem('oneMinuteGTPSData')) !== null && _e !== void 0 ? _e : '{}'),
     currentVisitors: 0,
 };
 const liveDataSlice = (0, toolkit_1.createSlice)({
-    name: "live data",
+    name: 'live data',
     initialState,
     reducers: {
         setCurrentVisitors(state, action) {
@@ -40,21 +39,21 @@ const liveDataSlice = (0, toolkit_1.createSlice)({
         },
         setIncludeSidechains(state, action) {
             var _a;
-            localStorage.setItem("includeSidechains", JSON.stringify(action.payload));
+            localStorage.setItem('includeSidechains', JSON.stringify(action.payload));
             state.includeSidechains = (_a = action.payload) !== null && _a !== void 0 ? _a : false;
         },
         setLastMinuteData(state, action) {
             switch (state.liveDataType) {
                 case ethtps_api_client_1.DataType.Tps:
-                    localStorage.setItem("oneMinuteTPSData", JSON.stringify(action.payload));
+                    localStorage.setItem('oneMinuteTPSData', JSON.stringify(action.payload));
                     state.oneMinuteTPSData = action.payload;
                     break;
                 case ethtps_api_client_1.DataType.Gps:
-                    localStorage.setItem("oneMinuteGPSData", JSON.stringify(action.payload));
+                    localStorage.setItem('oneMinuteGPSData', JSON.stringify(action.payload));
                     state.oneMinuteGPSData = action.payload;
                     break;
                 default:
-                    localStorage.setItem("oneMinuteTPSData", JSON.stringify(action.payload));
+                    localStorage.setItem('oneMinuteTPSData', JSON.stringify(action.payload));
                     state.oneMinuteGTPSData = action.payload;
                     break;
             }

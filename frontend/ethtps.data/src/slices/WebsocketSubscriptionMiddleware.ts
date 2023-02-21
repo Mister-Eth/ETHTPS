@@ -3,11 +3,15 @@ import { WebsocketEvent, websocketActions } from './WebsocketSubscriptionSlice'
 import websocketSlice from './WebsocketSubscriptionSlice'
 import ReconnectingWebSocket from 'reconnecting-websocket'
 import { setLiveData } from './LiveDataSlice'
-import { InstantDataResponseModel } from '../Types.dictionaries'
 import { useAppSelector } from '../store'
 import { useState, useEffect } from 'react'
-import { rws, reconnect } from 'src/models/services/DependenciesIOC'
-import { setReconnect, setRWS } from '../models/services/DependenciesIOC'
+import {
+	reconnect,
+	rws,
+	setReconnect,
+	setRWS,
+} from '../models/services/DependenciesIOC'
+import { InstantDataResponseModel } from '../common-types/Dictionaries'
 
 const wsURL = useAppSelector((state) => state.websockets.wsURL)
 
@@ -18,7 +22,7 @@ const websocketMiddleware: Middleware = (store) => (next) => (action) => {
 	return next(action)
 	if (reconnect && wsURL) {
 		setReconnect(false) //Only needs to be done once
-		setRWS(new ReconnectingWebSocket(wsURL))
+		setRWS(new ReconnectingWebSocket(wsURL ?? ''))
 		store.dispatch(websocketActions.connecting())
 
 		rws.addEventListener('open', () => {
