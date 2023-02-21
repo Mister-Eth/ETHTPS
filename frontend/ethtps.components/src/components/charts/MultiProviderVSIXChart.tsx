@@ -12,10 +12,10 @@ export function MultiProviderVSIXChart() {
 		)
 	}, [containerRef.current])
 	return (
-		<Fragment>
+		<React.Fragment>
 			<div className="container" ref={containerRef}>
 				{ConditionalSkeletonRender(<></>, containerWidth > 0)}
 			</div>
-		</Fragment>
+		</React.Fragment>
 	)
 }

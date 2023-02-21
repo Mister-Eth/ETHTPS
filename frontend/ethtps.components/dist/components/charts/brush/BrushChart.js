@@ -1,6 +1,6 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import { useRef, useState, useMemo, Fragment } from 'react';
+import { useRef, useState, useMemo } from 'react';
 import { scaleTime, scaleLinear } from '@visx/scale';
 import { Brush } from '@visx/brush';
 import { PatternLines } from '@visx/pattern';
@@ -8,6 +8,7 @@ import { Group } from '@visx/group';
 import { LinearGradient } from '@visx/gradient';
 import { max, extent } from 'd3-array';
 import AreaChart from './AreaChart';
+import React from 'react';
 const brushMargin = { top: 10, bottom: 15, left: 50, right: 20 };
 const chartSeparation = 30;
 const PATTERN_ID = 'brush_pattern';
@@ -113,5 +114,5 @@ function BrushHandle({ x, height, isBrushActive }) {
     if (!isBrushActive) {
         return null;
     }
-    return (_jsx(Fragment, { children: _jsx(Group, { left: x + pathWidth / 2, top: (height - pathHeight) / 2, children: _jsx("path", { fill: "#f2f2f2", d: "M -4.5 0.5 L 3.5 0.5 L 3.5 15.5 L -4.5 15.5 L -4.5 0.5 M -1.5 4 L -1.5 12 M 0.5 4 L 0.5 12", stroke: "#999999", strokeWidth: "1", style: { cursor: 'ew-resize' } }) }) }));
+    return (_jsx(React.Fragment, { children: _jsx(Group, { left: x + pathWidth / 2, top: (height - pathHeight) / 2, children: _jsx("path", { fill: "#f2f2f2", d: "M -4.5 0.5 L 3.5 0.5 L 3.5 15.5 L -4.5 15.5 L -4.5 0.5 M -1.5 4 L -1.5 12 M 0.5 4 L 0.5 12", stroke: "#999999", strokeWidth: "1", style: { cursor: 'ew-resize' } }) }) }));
 }

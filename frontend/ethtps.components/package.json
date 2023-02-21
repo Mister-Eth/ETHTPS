@@ -47,6 +47,7 @@
 		"date-fns": "^2.29.3",
 		"ethtps.api.client": "../ethtps.api.client",
 		"ethtps.data": "../ethtps.data",
+		"groupby-js": "^1.1.9",
 		"moment": "^2.29.4",
 		"react": "^18.2.0",
 		"react-chartjs-2": "^5.2.0",

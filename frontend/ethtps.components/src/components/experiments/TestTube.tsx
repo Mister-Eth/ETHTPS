@@ -21,7 +21,7 @@ export function TestTube() {
 	}
 	useEffect(() => {}, [currentExperiments])
 	return (
-		<Fragment>
+		<React.Fragment>
 			<BrowserView>
 				{ConditionalRender(
 					<SimpleDesktopFeedbackExperiment />,
@@ -29,6 +29,6 @@ export function TestTube() {
 				)}
 			</BrowserView>
 			<MobileOnlyView></MobileOnlyView>
-		</Fragment>
+		</React.Fragment>
 	)
 }

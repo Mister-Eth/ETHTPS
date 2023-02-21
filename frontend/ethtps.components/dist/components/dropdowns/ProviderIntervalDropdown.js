@@ -3,9 +3,10 @@ import { Dropdown } from './Dropdown';
 import { Typography } from '@mui/material';
 import { useQuery } from 'react-query';
 import { api } from '../../services/DependenciesIOC';
-import { Fragment, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { shortTimeIntervalToUIFormat } from '../../Types';
 import { toShortString_2, fromShortString_2, } from 'ethtps.data/dist/models/TimeIntervals';
+import React from 'react';
 export function ProviderIntervalDropdown(config) {
     const [intervals, setIntervals] = useState();
     const { data, status } = useQuery(`${config.provider}-intervals`, () => api.getIntervalsWithData(config.provider), {});
@@ -24,7 +25,7 @@ export function ProviderIntervalDropdown(config) {
             }
         }
     }, [data, status]);
-    return (_jsx(Fragment, { children: _jsx(Dropdown, { hidden: intervals === undefined, options: intervals === undefined
+    return (_jsx(React.Fragment, { children: _jsx(Dropdown, { hidden: intervals === undefined, options: intervals === undefined
                 ? []
                 : intervals
                     ?.map((x) => toShortString_2(x))

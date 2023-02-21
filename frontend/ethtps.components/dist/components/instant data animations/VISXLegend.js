@@ -2,7 +2,7 @@ import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-run
 import { scaleOrdinal } from '@visx/scale';
 import { GlyphStar, GlyphWye, GlyphTriangle, GlyphDiamond } from '@visx/glyph';
 import { Legend, LegendItem, LegendLabel } from '@visx/legend';
-import React, { Fragment } from 'react';
+import React from 'react';
 const shapeScale = scaleOrdinal({
     domain: ['a', 'b', 'c', 'd', 'e'],
     range: [
@@ -20,7 +20,7 @@ export function VISXLegend({ keys, colors }) {
             domain: keys,
             range: colors,
         });
-        return (_jsx(Fragment, { children: _jsx("div", { style: {
+        return (_jsx(React.Fragment, { children: _jsx("div", { style: {
                     position: 'relative',
                     float: 'right',
                     transform: 'translateY(-110%)',

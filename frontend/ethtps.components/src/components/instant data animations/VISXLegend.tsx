@@ -53,7 +53,7 @@ export function VISXLegend({ keys, colors }: VISXLegendProperties) {
 			range: colors,
 		})
 		return (
-			<Fragment>
+			<React.Fragment>
 				<div
 					style={{
 						position: 'relative',
@@ -102,7 +102,7 @@ export function VISXLegend({ keys, colors }: VISXLegendProperties) {
 						)}
 					</Legend>
 				</div>
-			</Fragment>
+			</React.Fragment>
 		)
 	}
 	return <></>

@@ -2,12 +2,12 @@ import { AnimatedLinkButtonWithIcon } from '../buttons/AnimatedLinkButtonWithIco
 import { ButtonGroup } from '@mui/material'
 import { GitHub, Twitter } from '@mui/icons-material'
 import { DiscordIcon } from '../icons/DiscordIcon'
-import { Fragment } from 'react'
+import React from 'react'
 import React from 'react'
 
 export function SocialMediaLinksSection(): JSX.Element {
 	return (
-		<Fragment>
+		<React.Fragment>
 			<ButtonGroup sx={{ float: 'right' }}>
 				<AnimatedLinkButtonWithIcon
 					openInNewTab
@@ -28,6 +28,6 @@ export function SocialMediaLinksSection(): JSX.Element {
 					text={'Join our Discord'}
 				/>
 			</ButtonGroup>
-		</Fragment>
+		</React.Fragment>
 	)
 }

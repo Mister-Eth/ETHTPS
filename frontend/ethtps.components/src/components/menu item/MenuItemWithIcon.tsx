@@ -23,7 +23,7 @@ export function MenuItemWithIcon(props: IButtonProperties): JSX.Element {
 		}
 	}
 	return (
-		<Fragment>
+		<React.Fragment>
 			<MenuItem
 				key={props.myKey}
 				onMouseOverCapture={props.onMouseOverCapture}
@@ -36,6 +36,6 @@ export function MenuItemWithIcon(props: IButtonProperties): JSX.Element {
 					text={props.text}
 				/>
 			</MenuItem>
-		</Fragment>
+		</React.Fragment>
 	)
 }

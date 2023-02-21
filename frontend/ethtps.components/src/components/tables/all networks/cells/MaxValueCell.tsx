@@ -11,7 +11,7 @@ import { useGetLiveDataModeFromAppStore } from 'ethtps.data/dist/hooks/LiveDataH
 import { centered } from '../../Cells.Types'
 import { tableCellTypographyStandard } from './Typography.types'
 import { liveDataHooks } from 'ethtps.data'
-import { Fragment } from 'react'
+import React from 'react'
 import React from 'react'
 
 function generateMaxHoverMessage(data?: DataPoint): string {
@@ -47,7 +47,7 @@ export function MaxValueCell(config: ICustomCellConfiguration) {
 	)
 	const tooltipTypography = generateMaxTypography(maxData)
 	return (
-		<Fragment>
+		<React.Fragment>
 			<TableCell
 				{...centered}
 				{...buildClassNames(config)}
@@ -69,6 +69,6 @@ export function MaxValueCell(config: ICustomCellConfiguration) {
 					</Typography>
 				</Tooltip>
 			</TableCell>
-		</Fragment>
+		</React.Fragment>
 	)
 }

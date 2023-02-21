@@ -1,5 +1,5 @@
 import { jsx as _jsx } from "react/jsx-runtime";
-import { Fragment } from 'react';
+import React from 'react';
 export function DiscordBanner() {
-    return _jsx(Fragment, {});
+    return _jsx(React.Fragment, {});
 }

@@ -3,11 +3,12 @@ import { TableCell, Tooltip, Typography } from '@mui/material';
 import { buildClassNames, } from './ICustomCellConfiguration';
 import { centered } from '../../Cells.Types';
 import { tableCellTypographyStandard } from './Typography.types';
-import { Fragment, useEffect } from 'react';
+import { useEffect } from 'react';
 import { ConditionalRender } from '../../../../Types';
 import * as icons from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { useGetProviderColorDictionaryFromAppStore } from 'ethtps.data/dist/hooks/ColorHooks';
+import React from 'react';
 export function NameCell(config) {
     const colorDictionary = useGetProviderColorDictionaryFromAppStore();
     const name = config.provider?.name ?? '';
@@ -20,7 +21,7 @@ export function NameCell(config) {
     const hasIssues = (config.provider?.status?.isUnreliable ?? false) &&
         (config.provider?.status?.isProbablyDown ?? false);
     const noDataProvider = config.provider?.status === undefined;
-    return (_jsx(Fragment, { children: _jsx(Tooltip, { arrow: true, placement: "right", title: _jsx(Typography, { children: `Click to read more about ${name}` }), children: _jsx(TableCell, { ...centered, ...buildClassNames(config), onClick: () => config.clickCallback !== undefined
+    return (_jsx(React.Fragment, { children: _jsx(Tooltip, { arrow: true, placement: "right", title: _jsx(Typography, { children: `Click to read more about ${name}` }), children: _jsx(TableCell, { ...centered, ...buildClassNames(config), onClick: () => config.clickCallback !== undefined
                     ? config.clickCallback(config.provider, 'Name')
                     : () => { }, children: _jsx(_Fragment, { children: _jsxs("div", { className: 'box', children: [_jsx(Link, { to: `/Providers/${config.provider?.name}/Overview`, children: _jsxs("div", { children: [_jsx("img", { alt: `${config.provider?.name} icon`, src: `provider-icons/${config.provider?.name}.png`, className: 'tiny-img inline', style: { marginRight: '15px' } }), _jsx(Typography, { className: `inline ${config.clickCallback !== undefined
                                                 ? 'pointable'

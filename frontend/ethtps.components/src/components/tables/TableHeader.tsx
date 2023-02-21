@@ -2,7 +2,7 @@ import { TableRow, TableCell } from '@mui/material'
 import { centered } from './Cells.Types'
 import { Typography } from '@mui/material/'
 import { tableHeaderCellTypography } from './all networks/cells/Typography.types'
-import { Fragment } from 'react'
+import React from 'react'
 import React from 'react'
 
 interface ITableHeaderParams {
@@ -11,7 +11,7 @@ interface ITableHeaderParams {
 
 export function TableHeader(params: ITableHeaderParams): JSX.Element {
 	return (
-		<Fragment>
+		<React.Fragment>
 			<TableRow>
 				{params.text?.map((x, i) => (
 					<TableCell
@@ -25,6 +25,6 @@ export function TableHeader(params: ITableHeaderParams): JSX.Element {
 					</TableCell>
 				))}
 			</TableRow>
-		</Fragment>
+		</React.Fragment>
 	)
 }

@@ -20,7 +20,7 @@ export function AllProvidersRows(model: IProviderTableModel): JSX.Element {
 		setData(getModeData(liveData ?? {}, mode))
 	}, [mode, liveData])
 	return (
-		<Fragment>
+		<React.Fragment>
 			{hasData ? (
 				<>
 					{model.providerData
@@ -74,6 +74,6 @@ export function AllProvidersRows(model: IProviderTableModel): JSX.Element {
 					)
 				})
 			)}
-		</Fragment>
+		</React.Fragment>
 	)
 }

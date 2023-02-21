@@ -1,6 +1,6 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { Tooltip, Typography, IconButton, Paper, DialogTitle, Dialog, List, ListItem, Box, } from '@mui/material';
-import { Fragment } from 'react';
+import React from 'react';
 import { QuestionMark } from '@mui/icons-material';
 import { useState } from 'react';
 import { ConditionalRender } from '../../../Types';
@@ -18,7 +18,7 @@ export function SimpleDesktopFeedbackExperiment() {
     const handleClose = () => {
         setShowPopup(false);
     };
-    return (_jsx(Fragment, { children: ConditionalRender(_jsxs("div", { style: {
+    return (_jsx(React.Fragment, { children: ConditionalRender(_jsxs("div", { style: {
                 position: 'fixed',
                 top: 'auto',
                 bottom: '2rem',

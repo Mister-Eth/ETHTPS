@@ -6,7 +6,8 @@ import {
 	TableBody,
 } from '@mui/material'
 import { IProviderTableModel } from 'ethtps.data'
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
+import React from 'react'
 import { ConditionalRender } from '../../../Types'
 import { SeeMoreButton } from '../../buttons/SeeMoreButton'
 import { AllProvidersHeader } from './AllProvidersHeader'
@@ -25,7 +26,7 @@ export function AllProvidersTable(tableData: IProviderTableModel): JSX.Element {
 		setShowRowCount(oldShowRowCountValue)
 	}
 	return (
-		<Fragment>
+		<React.Fragment>
 			<TableContainer component={Paper}>
 				<Table
 					//size="small"
@@ -52,6 +53,6 @@ export function AllProvidersTable(tableData: IProviderTableModel): JSX.Element {
 				/>,
 				showRowCount > 0
 			)}
-		</Fragment>
+		</React.Fragment>
 	)
 }

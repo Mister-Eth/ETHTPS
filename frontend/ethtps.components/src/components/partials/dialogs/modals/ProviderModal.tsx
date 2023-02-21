@@ -2,7 +2,8 @@ import { Alert, AlertTitle, Box, Modal, Paper } from '@mui/material'
 import { ProviderDataChart } from '../../../charts/ProviderDataChart'
 import { ConditionalRender } from '../../../../Types'
 import { INoDataAvailableEvent } from '../../../INoDataAvailableEvent'
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
+import React from 'react'
 import { ProviderModel } from 'ethtps.api.client'
 import React from 'react'
 
@@ -32,7 +33,7 @@ const generateNoDataAvailableString = (provider?: string) =>
 export function ProviderModal(config: IProviderModalConfiguration) {
 	const [noData, setNoData] = useState(false)
 	return (
-		<Fragment>
+		<React.Fragment>
 			<Modal
 				keepMounted={false}
 				open={config.open}
@@ -77,6 +78,6 @@ export function ProviderModal(config: IProviderModalConfiguration) {
 					</Paper>
 				</Box>
 			</Modal>
-		</Fragment>
+		</React.Fragment>
 	)
 }

@@ -7,7 +7,7 @@ import { useGetMaxDataForProviderFromAppStore } from 'ethtps.data/dist/hooks/Dat
 import { centered } from '../../Cells.Types';
 import { tableCellTypographyStandard } from './Typography.types';
 import { liveDataHooks } from 'ethtps.data';
-import { Fragment } from 'react';
+import React from 'react';
 function generateMaxHoverMessage(data) {
     if (data === undefined ||
         (data?.blockNumber === undefined && data?.date === undefined) ||
@@ -29,7 +29,7 @@ export function MaxValueCell(config) {
     const type = liveDataHooks.useGetLiveDataModeFromAppStore();
     const maxData = useGetMaxDataForProviderFromAppStore(config.provider?.name, type);
     const tooltipTypography = generateMaxTypography(maxData);
-    return (_jsx(Fragment, { children: _jsx(TableCell, { ...centered, ...buildClassNames(config), onClick: () => config.clickCallback !== undefined
+    return (_jsx(React.Fragment, { children: _jsx(TableCell, { ...centered, ...buildClassNames(config), onClick: () => config.clickCallback !== undefined
                 ? config.clickCallback(config.provider, 'MaxValue')
                 : () => { }, children: _jsx(Tooltip, { arrow: true, placement: "top-start", title: tooltipTypography, children: _jsx(Typography, { ...tableCellTypographyStandard, sx: {
                         textDecoration: tooltipTypography !== undefined

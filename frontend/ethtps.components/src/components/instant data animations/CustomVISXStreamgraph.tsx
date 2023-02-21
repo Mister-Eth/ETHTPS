@@ -2,7 +2,7 @@
 import React from 'react'
 import { Stack } from '@visx/shape'
 import { PatternCircles } from '@visx/pattern'
-import { scaleLinear, scaleOrdinal } from '@visx/scale'
+import { scaleLinear } from '@visx/scale'
 import { transpose } from 'd3-array'
 import { animated, useSpring } from '@react-spring/web'
 
@@ -14,7 +14,7 @@ import { useQuery } from 'react-query'
 import moment from 'moment'
 import { L2DataResponseModel, DataType } from 'ethtps.api.client'
 import { colorHooks } from 'ethtps.data'
-import Fragment from 'react'
+import { useLiveData, useLiveDataState } from './hooks'
 // constants
 const NUM_LAYERS = 20
 export const BACKGROUND = '#ffdede'
@@ -146,7 +146,7 @@ export function CustomVISXStreamgraph({
 	)
 	const [highlightedIndex, setHighlightedIndex] = useState(0)
 	return (
-		<Fragment>
+		<React.Fragment>
 			<WebsocketStatusPartial />
 			<svg width={width} height={height}>
 				<PatternCircles
@@ -220,6 +220,6 @@ export function CustomVISXStreamgraph({
 					</Stack>
 				</g>
 			</svg>
-		</Fragment>
+		</React.Fragment>
 	)
 }

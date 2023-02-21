@@ -1,10 +1,10 @@
-import { Fragment } from 'react'
+import React from 'react'
 import { CustomButtonGroup } from './groups/custom/CustomButtonGroup'
 
 export function ModeButton(): JSX.Element {
 	return (
-		<Fragment>
+		<React.Fragment>
 			<CustomButtonGroup {...{ buttons: ['TPS', 'GPS', 'GTPS'] }} />
-		</Fragment>
+		</React.Fragment>
 	)
 }

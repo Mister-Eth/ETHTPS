@@ -1,7 +1,8 @@
 import { Link, LinkOff } from '@mui/icons-material'
 import { IconButton, Tooltip, Typography } from '@mui/material'
 import { setIncludeSidechains } from 'ethtps.data/dist/slices/LiveDataSlice'
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
+import React from 'react'
 import { store } from 'ethtps.data'
 import { ISidechainToggleButtonConfiguration } from './ISidechainToggleButtonConfiguration'
 
@@ -17,7 +18,7 @@ export function SidechainToggleButton(
 		setOn(!on)
 	}
 	return (
-		<Fragment>
+		<React.Fragment>
 			<Tooltip
 				arrow
 				title={
@@ -30,6 +31,6 @@ export function SidechainToggleButton(
 					{on ? <Link color="primary" /> : <LinkOff />}
 				</IconButton>
 			</Tooltip>
-		</Fragment>
+		</React.Fragment>
 	)
 }

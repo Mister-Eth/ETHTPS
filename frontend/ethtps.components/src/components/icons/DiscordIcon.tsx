@@ -1,10 +1,10 @@
 import React from 'react'
-import { Fragment } from 'react'
+import React from 'react'
 
 export function DiscordIcon(): JSX.Element {
 	return (
-		<Fragment>
+		<React.Fragment>
 			<span className={'material-icons'}>discord</span>
-		</Fragment>
+		</React.Fragment>
 	)
 }

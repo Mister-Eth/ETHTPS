@@ -4,7 +4,7 @@ import Fragment from 'react'
 
 export function Logo() {
 	return (
-		<Fragment>
+		<React.Fragment>
 			<Link
 				style={{
 					textDecoration: 'none',
@@ -20,6 +20,6 @@ export function Logo() {
 					ETHTPS.info
 				</div>
 			</Link>
-		</Fragment>
+		</React.Fragment>
 	)
 }

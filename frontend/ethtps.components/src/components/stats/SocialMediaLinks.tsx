@@ -18,7 +18,7 @@ export function SocialMediaLinks(config: ISocialMediaLinksConfiguration) {
 	)
 
 	return (
-		<Fragment>
+		<React.Fragment>
 			<Paper
 				className={'spaced-vertically spaced-horizontally'}
 				sx={{
@@ -66,6 +66,6 @@ export function SocialMediaLinks(config: ISocialMediaLinksConfiguration) {
 					)}
 				</Box>
 			</Paper>
-		</Fragment>
+		</React.Fragment>
 	)
 }

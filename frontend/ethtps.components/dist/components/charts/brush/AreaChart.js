@@ -1,5 +1,5 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import { Fragment } from 'react';
+import React from 'react';
 import { Group } from '@visx/group';
 import { AreaClosed } from '@visx/shape';
 import { AxisLeft, AxisBottom } from '@visx/axis';
@@ -24,5 +24,5 @@ const axisLeftTickLabelProps = {
 export default function AreaChart({ data, gradientColor, width, yMax, margin, xScale, yScale, hideBottomAxis = false, hideLeftAxis = false, top, left, children, }) {
     if (width < 10)
         return null;
-    return (_jsx(Fragment, { children: _jsxs(Group, { left: left || margin.left, top: top || margin.top, children: [_jsx(LinearGradient, { id: "gradient", from: gradientColor, fromOpacity: 1, to: gradientColor, toOpacity: 0.2 }), _jsx(AreaClosed, { data: data, x: (d) => xScale(d.x) || new Date().getTime(), y: (d) => yScale(d.y) || 0, yScale: yScale, strokeWidth: 1, stroke: "url(#gradient)", fill: "url(#gradient)", curve: curveMonotoneX }), !hideBottomAxis && (_jsx(AxisBottom, { top: yMax, scale: xScale, numTicks: width > 520 ? 10 : 5, stroke: axisColor, tickStroke: axisColor, tickLabelProps: () => axisBottomTickLabelProps })), !hideLeftAxis && (_jsx(AxisLeft, { scale: yScale, numTicks: 5, stroke: axisColor, tickStroke: axisColor, tickLabelProps: () => axisLeftTickLabelProps })), children] }) }));
+    return (_jsx(React.Fragment, { children: _jsxs(Group, { left: left || margin.left, top: top || margin.top, children: [_jsx(LinearGradient, { id: "gradient", from: gradientColor, fromOpacity: 1, to: gradientColor, toOpacity: 0.2 }), _jsx(AreaClosed, { data: data, x: (d) => xScale(d.x) || new Date().getTime(), y: (d) => yScale(d.y) || 0, yScale: yScale, strokeWidth: 1, stroke: "url(#gradient)", fill: "url(#gradient)", curve: curveMonotoneX }), !hideBottomAxis && (_jsx(AxisBottom, { top: yMax, scale: xScale, numTicks: width > 520 ? 10 : 5, stroke: axisColor, tickStroke: axisColor, tickLabelProps: () => axisBottomTickLabelProps })), !hideLeftAxis && (_jsx(AxisLeft, { scale: yScale, numTicks: 5, stroke: axisColor, tickStroke: axisColor, tickLabelProps: () => axisLeftTickLabelProps })), children] }) }));
 }

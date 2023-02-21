@@ -80,7 +80,7 @@ export default function Streamgraph({
 	)
 
 	return (
-		<Fragment>
+		<React.Fragment>
 			<svg width={width} height={height}>
 				<PatternCircles
 					id="mustard"
@@ -158,6 +158,6 @@ export default function Streamgraph({
 					</Stack>
 				</g>
 			</svg>
-		</Fragment>
+		</React.Fragment>
 	)
 }

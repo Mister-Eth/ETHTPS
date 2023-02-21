@@ -1,9 +1,9 @@
 import { Skeleton, Tooltip, Typography } from '@mui/material'
-import { Fragment } from 'react'
 import { useState } from 'react'
 import { ConditionalRender } from '../../../Types'
 import { Box } from '@mui/system'
 import { ISkeletonWithTooltipConfiguration } from './ISkeletonWithTooltipConfiguration'
+import React from 'react'
 
 export function SkeletonWithTooltip(config: ISkeletonWithTooltipConfiguration) {
 	const message = config.text ?? 'Loading...'
@@ -15,7 +15,7 @@ export function SkeletonWithTooltip(config: ISkeletonWithTooltipConfiguration) {
 	}
 	return (
 		<>
-			<Fragment>
+			<React.Fragment>
 				{ConditionalRender(
 					<Tooltip arrow title={<Typography>{message}</Typography>}>
 						<Box sx={{ width: '90%' }}>
@@ -30,7 +30,7 @@ export function SkeletonWithTooltip(config: ISkeletonWithTooltipConfiguration) {
 					</Tooltip>,
 					!delay
 				)}
-			</Fragment>
+			</React.Fragment>
 		</>
 	)
 }

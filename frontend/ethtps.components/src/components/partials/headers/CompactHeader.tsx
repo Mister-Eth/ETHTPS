@@ -8,7 +8,7 @@ import React, { Fragment } from 'react'
 
 export default function CompactHeader(): JSX.Element {
 	return (
-		<Fragment>
+		<React.Fragment>
 			<AppBar
 				position={'sticky'}
 				enableColorOnDark={true}
@@ -21,6 +21,6 @@ export default function CompactHeader(): JSX.Element {
 					</Container>
 				</Toolbar>
 			</AppBar>
-		</Fragment>
+		</React.Fragment>
 	)
 }

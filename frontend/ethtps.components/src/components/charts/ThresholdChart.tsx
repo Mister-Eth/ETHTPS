@@ -55,7 +55,7 @@ export function ThresholdChart({
 	temperatureScale.range([yMax, 0])
 
 	return (
-		<Fragment>
+		<React.Fragment>
 			<div>
 				<svg width={width} height={height}>
 					<rect
@@ -138,6 +138,6 @@ export function ThresholdChart({
 					</Group>
 				</svg>
 			</div>
-		</Fragment>
+		</React.Fragment>
 	)
 }

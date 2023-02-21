@@ -1,9 +1,9 @@
-import { Fragment } from 'react'
+import React from 'react'
 import React from 'react'
 
 export function SignatureFooter(): JSX.Element {
 	return (
-		<Fragment>
+		<React.Fragment>
 			<footer
 				style={{
 					fontSize: '13px',
@@ -29,6 +29,6 @@ export function SignatureFooter(): JSX.Element {
 					</p>
 				</div>
 			</footer>
-		</Fragment>
+		</React.Fragment>
 	)
 }

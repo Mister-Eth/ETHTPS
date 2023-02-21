@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material'
 import React from 'react'
-import { Fragment } from 'react'
+import React from 'react'
 
 interface IAnimatedTypographyConfiguration {
 	child: JSX.Element | string
@@ -12,7 +12,7 @@ interface IAnimatedTypographyConfiguration {
 
 export function AnimatedTypography(config: IAnimatedTypographyConfiguration) {
 	return (
-		<Fragment>
+		<React.Fragment>
 			<Typography
 				{...config.standard}
 				className={config.animationClassName}
@@ -20,6 +20,6 @@ export function AnimatedTypography(config: IAnimatedTypographyConfiguration) {
 				textAlign={config.centerText ? 'center' : undefined}>
 				{config.child}
 			</Typography>
-		</Fragment>
+		</React.Fragment>
 	)
 }

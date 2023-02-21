@@ -1,10 +1,11 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 /* eslint-disable react-hooks/rules-of-hooks */
-import { Fragment, createRef, useState, useEffect } from 'react';
+import { createRef, useState, useEffect } from 'react';
 import { ConditionalRender } from '../Types';
 import Recaptcha from 'react-google-invisible-recaptcha';
 import { LoadingApplicationDataPartial } from './partials/loading/LoadingApplicationDataPartial';
 import { useSetStoreAPIKey, } from 'ethtps.data';
+import React from 'react';
 export function RecaptchaAPIKeyAndDataLoader() {
     const [hasAPIKey, setHasAPIKey] = useState(getAPIKey() !== undefined && getAPIKey() !== null);
     const [ready, setReady] = useState(hasAPIKey);
@@ -39,5 +40,5 @@ export function RecaptchaAPIKeyAndDataLoader() {
     const handlePossiblyABeepBoop = () => { };
     return (
     //We use recaptcha only for getting an API key, if the user comes back later we don't let google know that
-    _jsxs(Fragment, { children: [ConditionalRender(_jsx(Recaptcha, { ref: refRecaptcha, onLoaded: () => console.log(refRecaptcha.current?.callbacks.execute()), sitekey: '6Le_XTUkAAAAAJKXCh8Cvq6UFvokPtjfTLCp1JAP', onResolved: handleHumanArrived, onError: handlePossiblyABeepBoop, onExpired: handlePossiblyABeepBoop }), !ready), ConditionalRender(_jsx(LoadingApplicationDataPartial, {}), ready)] }));
+    _jsxs(React.Fragment, { children: [ConditionalRender(_jsx(Recaptcha, { ref: refRecaptcha, onLoaded: () => console.log(refRecaptcha.current?.callbacks.execute()), sitekey: '6Le_XTUkAAAAAJKXCh8Cvq6UFvokPtjfTLCp1JAP', onResolved: handleHumanArrived, onError: handlePossiblyABeepBoop, onExpired: handlePossiblyABeepBoop }), !ready), ConditionalRender(_jsx(LoadingApplicationDataPartial, {}), ready)] }));
 }

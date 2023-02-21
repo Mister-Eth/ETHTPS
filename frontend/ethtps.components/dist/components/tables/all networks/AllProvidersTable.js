@@ -1,6 +1,7 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { TableContainer, Paper, Table, TableHead, TableBody, } from '@mui/material';
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
+import React from 'react';
 import { ConditionalRender } from '../../../Types';
 import { SeeMoreButton } from '../../buttons/SeeMoreButton';
 import { AllProvidersHeader } from './AllProvidersHeader';
@@ -14,7 +15,7 @@ export function AllProvidersTable(tableData) {
     const onSeeLess = () => {
         setShowRowCount(oldShowRowCountValue);
     };
-    return (_jsxs(Fragment, { children: [_jsx(TableContainer, { component: Paper, children: _jsxs(Table
+    return (_jsxs(React.Fragment, { children: [_jsx(TableContainer, { component: Paper, children: _jsxs(Table
                 //size="small"
                 , { 
                     //size="small"

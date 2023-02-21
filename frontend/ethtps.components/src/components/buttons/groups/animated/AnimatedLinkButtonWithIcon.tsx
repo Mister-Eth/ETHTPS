@@ -1,7 +1,7 @@
 import { IconButton, Tooltip, Typography } from '@mui/material'
 import { openNewTab } from '../../../../LinksHelper'
-import { Fragment } from 'react'
 import { IAnimatedLinkButtonWithIconProperties } from './IAnimatedLinkButtonWithIconProperties'
+import React from 'react'
 
 // No animation YET
 export function AnimatedLinkButtonWithIcon(
@@ -15,13 +15,13 @@ export function AnimatedLinkButtonWithIcon(
 		}
 	}
 	return (
-		<Fragment>
+		<React.Fragment>
 			<Tooltip arrow title={<Typography>{props.text}</Typography>}>
 				<IconButton onClick={handleClick} color={'primary'}>
 					{props.image}
 				</IconButton>
 			</Tooltip>
 			{props.showText ? <Typography>{props.text}</Typography> : <></>}
-		</Fragment>
+		</React.Fragment>
 	)
 }

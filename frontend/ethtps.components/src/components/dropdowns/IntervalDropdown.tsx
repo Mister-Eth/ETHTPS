@@ -23,7 +23,7 @@ export function IntervalDropdown(config: IIntervalDropdownProperties) {
 		'Custom',
 	]
 	return (
-		<Fragment>
+		<React.Fragment>
 			<Container
 				sx={{
 					borderThickness: '1px',
@@ -42,6 +42,6 @@ export function IntervalDropdown(config: IIntervalDropdownProperties) {
 					/>
 				</div>
 			</Container>
-		</Fragment>
+		</React.Fragment>
 	)
 }

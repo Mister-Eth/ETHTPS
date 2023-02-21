@@ -19,7 +19,7 @@ interface IDataValueCellConficuration extends ICustomCellConfiguration {
 
 export function DataValueCell(config: IDataValueCellConficuration) {
 	return (
-		<Fragment>
+		<React.Fragment>
 			<TableCell
 				{...centered}
 				{...buildClassNames(config)}
@@ -43,6 +43,6 @@ export function DataValueCell(config: IDataValueCellConficuration) {
 					/>
 				)}
 			</TableCell>
-		</Fragment>
+		</React.Fragment>
 	)
 }

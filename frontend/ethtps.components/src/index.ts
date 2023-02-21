@@ -42,7 +42,6 @@ import { LoadingApplicationDataPartial } from './components/partials/loading/Loa
 import { LocationBreadcrumb } from './components/partials/navigation/LocationBreadcrumb'
 import { ProviderCarousel } from './components/partials/navigation/ProviderCarousel'
 import { ProviderList } from './components/partials/navigation/ProviderList'
-import { ISkeletonWithTooltipConfiguration } from '../dist/components/partials/skeletons/ISkeletonWithTooltipConfiguration'
 import { SkeletonWithTooltip } from './components/partials/skeletons/SkeletonWithTooltip'
 import { ErrorSnackbar } from './components/partials/snackbars/ErrorSnackbar'
 import { Logo } from './components/partials/Logo'
@@ -109,7 +108,6 @@ export {
 	LocationBreadcrumb,
 	ProviderCarousel,
 	ProviderList,
-	ISkeletonWithTooltipConfiguration,
 	SkeletonWithTooltip,
 	ErrorSnackbar,
 	Logo,

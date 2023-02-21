@@ -1,12 +1,12 @@
 import { Grain, Home, Whatshot } from '@mui/icons-material'
 import { Breadcrumbs, Link, Paper, Typography } from '@mui/material'
-import { Fragment } from 'react'
+import React from 'react'
 import { useLocation } from 'react-router'
 
 export function LocationBreadcrumb() {
 	const location = useLocation()
 	return (
-		<Fragment>
+		<React.Fragment>
 			<Paper elevation={1}>
 				<Breadcrumbs aria-label="breadcrumb">
 					<Link
@@ -33,6 +33,6 @@ export function LocationBreadcrumb() {
 					</Typography>
 				</Breadcrumbs>
 			</Paper>
-		</Fragment>
+		</React.Fragment>
 	)
 }

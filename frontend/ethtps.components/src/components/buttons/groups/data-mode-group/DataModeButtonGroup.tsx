@@ -1,4 +1,5 @@
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
+import React from 'react'
 import { ConditionalRender } from '../../../../Types'
 import { Box, IconButton, Tooltip, Typography } from '@mui/material'
 import { EvStation, LocalGasStation, Numbers } from '@mui/icons-material'
@@ -18,7 +19,7 @@ export function DataModeButtonGroup(model: IDataModeButtonGroupConfiguration) {
 		(state) => state.experiments
 	)
 	return (
-		<Fragment>
+		<React.Fragment>
 			<Box sx={{ float: 'right' }}>
 				{ConditionalRender(
 					<CurrentViewersIcon />,
@@ -59,6 +60,6 @@ export function DataModeButtonGroup(model: IDataModeButtonGroupConfiguration) {
 					</IconButton>
 				</Tooltip>
 			</Box>
-		</Fragment>
+		</React.Fragment>
 	)
 }

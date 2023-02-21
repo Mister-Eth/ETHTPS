@@ -1,5 +1,5 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import { Fragment } from 'react';
+import React from 'react';
 import { Group } from '@visx/group';
 import { curveBasis } from '@visx/curve';
 import { LinePath } from '@visx/shape';
@@ -36,7 +36,7 @@ export function ThresholdChart({ width, height, margin = defaultMargin, }) {
     const yMax = height - margin.top - margin.bottom;
     timeScale.range([0, xMax]);
     temperatureScale.range([yMax, 0]);
-    return (_jsx(Fragment, { children: _jsx("div", { children: _jsxs("svg", { width: width, height: height, children: [_jsx("rect", { x: 0, y: 0, width: width, height: height, fill: background, rx: 14 }), _jsxs(Group, { left: margin.left, top: margin.top, children: [_jsx(GridRows, { scale: temperatureScale, width: xMax, height: yMax, stroke: "#e0e0e0" }), _jsx(GridColumns, { scale: timeScale, width: xMax, height: yMax, stroke: "#e0e0e0" }), _jsx("line", { x1: xMax, x2: xMax, y1: 0, y2: yMax, stroke: "#e0e0e0" }), _jsx(AxisBottom, { top: yMax, scale: timeScale, numTicks: width > 520 ? 10 : 5 }), _jsx(AxisLeft, { scale: temperatureScale }), _jsx("text", { x: "-70", y: "15", transform: "rotate(-90)", fontSize: 10, children: "Temperature (\u00B0F)" }), _jsx(Threshold, { id: `${Math.random()}`, data: cityTemperature, x: (d) => timeScale(date(d)) ?? 0, y0: (d) => temperatureScale(ny(d)) ?? 0, y1: (d) => temperatureScale(sf(d)) ?? 0, clipAboveTo: 0, clipBelowTo: yMax, curve: curveBasis, belowAreaProps: {
+    return (_jsx(React.Fragment, { children: _jsx("div", { children: _jsxs("svg", { width: width, height: height, children: [_jsx("rect", { x: 0, y: 0, width: width, height: height, fill: background, rx: 14 }), _jsxs(Group, { left: margin.left, top: margin.top, children: [_jsx(GridRows, { scale: temperatureScale, width: xMax, height: yMax, stroke: "#e0e0e0" }), _jsx(GridColumns, { scale: timeScale, width: xMax, height: yMax, stroke: "#e0e0e0" }), _jsx("line", { x1: xMax, x2: xMax, y1: 0, y2: yMax, stroke: "#e0e0e0" }), _jsx(AxisBottom, { top: yMax, scale: timeScale, numTicks: width > 520 ? 10 : 5 }), _jsx(AxisLeft, { scale: temperatureScale }), _jsx("text", { x: "-70", y: "15", transform: "rotate(-90)", fontSize: 10, children: "Temperature (\u00B0F)" }), _jsx(Threshold, { id: `${Math.random()}`, data: cityTemperature, x: (d) => timeScale(date(d)) ?? 0, y0: (d) => temperatureScale(ny(d)) ?? 0, y1: (d) => temperatureScale(sf(d)) ?? 0, clipAboveTo: 0, clipBelowTo: yMax, curve: curveBasis, belowAreaProps: {
                                     fill: 'violet',
                                     fillOpacity: 0.4,
                                 }, aboveAreaProps: {

@@ -1,12 +1,12 @@
-import { Fragment } from 'react'
+import React from 'react'
 import './Spinning hourglass.css'
 import { Autorenew } from '@mui/icons-material'
 import React from 'react'
 
 export function SpinningArrows() {
 	return (
-		<Fragment>
+		<React.Fragment>
 			<Autorenew className="rotation-animation" />
-		</Fragment>
+		</React.Fragment>
 	)
 }

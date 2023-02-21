@@ -51,7 +51,7 @@ export default function AreaChart({
 }) {
 	if (width < 10) return null
 	return (
-		<Fragment>
+		<React.Fragment>
 			<Group left={left || margin.left} top={top || margin.top}>
 				<LinearGradient
 					id="gradient"
@@ -91,6 +91,6 @@ export default function AreaChart({
 				)}
 				{children}
 			</Group>
-		</Fragment>
+		</React.Fragment>
 	)
 }

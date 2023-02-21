@@ -67,7 +67,7 @@ export function DateRangeSelectorDropdown(
 				onMouseDownCapture: () => setPopperOpen(true),
 		  }
 	return (
-		<Fragment>
+		<React.Fragment>
 			<ButtonGroup
 				{...hoverEvents}
 				variant="outlined"
@@ -133,6 +133,6 @@ export function DateRangeSelectorDropdown(
 					</Grow>
 				)}
 			</Popper>
-		</Fragment>
+		</React.Fragment>
 	)
 }

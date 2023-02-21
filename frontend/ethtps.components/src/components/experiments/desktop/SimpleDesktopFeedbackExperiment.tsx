@@ -9,7 +9,7 @@ import {
 	ListItem,
 	Box,
 } from '@mui/material'
-import { Fragment } from 'react'
+import React from 'react'
 import { QuestionMark } from '@mui/icons-material'
 import { useState } from 'react'
 import { ConditionalRender } from '../../../Types'
@@ -33,7 +33,7 @@ export function SimpleDesktopFeedbackExperiment() {
 	}
 
 	return (
-		<Fragment>
+		<React.Fragment>
 			{ConditionalRender(
 				<div
 					style={{
@@ -79,6 +79,6 @@ export function SimpleDesktopFeedbackExperiment() {
 				</div>,
 				display
 			)}
-		</Fragment>
+		</React.Fragment>
 	)
 }

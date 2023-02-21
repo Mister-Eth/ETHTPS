@@ -5,7 +5,7 @@ import {
 } from './ICustomCellConfiguration'
 import { ArrowRight } from '@mui/icons-material'
 import { ConditionalRender } from '../../../../Types'
-import { Fragment } from 'react'
+import React from 'react'
 import React from 'react'
 
 interface IIndexCellConfiguration extends ICustomCellConfiguration {
@@ -15,7 +15,7 @@ interface IIndexCellConfiguration extends ICustomCellConfiguration {
 
 export function IndexCell(config: IIndexCellConfiguration) {
 	return (
-		<Fragment>
+		<React.Fragment>
 			<TableCell
 				{...buildClassNames(config)}
 				onClick={() =>
@@ -38,6 +38,6 @@ export function IndexCell(config: IIndexCellConfiguration) {
 					}}
 				/>
 			</TableCell>
-		</Fragment>
+		</React.Fragment>
 	)
 }

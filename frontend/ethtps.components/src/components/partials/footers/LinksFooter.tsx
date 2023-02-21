@@ -1,9 +1,9 @@
 import React from 'react'
-import { Fragment } from 'react'
+import React from 'react'
 
 export function LinksFooter(): JSX.Element {
 	return (
-		<Fragment>
+		<React.Fragment>
 			<div className="bottomnavbar">
 				<a href="/Status">Status</a>
 				<div className={'inline'} style={{ marginRight: '10px' }} />
@@ -12,6 +12,6 @@ export function LinksFooter(): JSX.Element {
 				</a>
 			</div>
 			<hr />
-		</Fragment>
+		</React.Fragment>
 	)
 }

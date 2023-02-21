@@ -1,7 +1,7 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import { Fragment } from 'react';
+import React from 'react';
 export function SignatureFooter() {
-    return (_jsx(Fragment, { children: _jsx("footer", { style: {
+    return (_jsx(React.Fragment, { children: _jsx("footer", { style: {
                 fontSize: '13px',
                 marginTop: '2rem',
                 marginLeft: '2rem',

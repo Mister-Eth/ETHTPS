@@ -33,7 +33,7 @@ export function LinksSection(): JSX.Element {
 		}, 200)
 	}
 	return (
-		<Fragment>
+		<React.Fragment>
 			<ButtonGroup ref={anchorRef} sx={{ float: 'center' }}>
 				<IconButton
 					onMouseOverCapture={clearHoverAwayTimeout}
@@ -94,6 +94,6 @@ export function LinksSection(): JSX.Element {
 					)}
 				</Popper>
 			</ButtonGroup>
-		</Fragment>
+		</React.Fragment>
 	)
 }

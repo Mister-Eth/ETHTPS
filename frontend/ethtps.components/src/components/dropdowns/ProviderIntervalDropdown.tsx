@@ -45,7 +45,7 @@ export function ProviderIntervalDropdown(
 		}
 	}, [data, status])
 	return (
-		<Fragment>
+		<React.Fragment>
 			<Dropdown<string>
 				hidden={intervals === undefined}
 				options={
@@ -60,6 +60,6 @@ export function ProviderIntervalDropdown(
 				uiFormatFunction={shortTimeIntervalToUIFormat}
 				hoverText={<Typography>{'Select time interval'}</Typography>}
 			/>
-		</Fragment>
+		</React.Fragment>
 	)
 }

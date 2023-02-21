@@ -1,6 +1,6 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { addDays } from 'date-fns';
-import { Fragment, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { DateRange } from 'react-date-range';
 import { Chip, ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper, } from '@mui/material';
 import React from 'react';
@@ -46,7 +46,7 @@ export function DateRangeSelectorDropdown(config) {
             onMouseOutCapture: setHoverAwayTimeout,
             onMouseDownCapture: () => setPopperOpen(true),
         };
-    return (_jsxs(Fragment, { children: [_jsx(ButtonGroup, { ...hoverEvents, variant: "outlined", ref: anchorRef, "aria-label": "split button", color: 'primary', sx: {
+    return (_jsxs(React.Fragment, { children: [_jsx(ButtonGroup, { ...hoverEvents, variant: "outlined", ref: anchorRef, "aria-label": "split button", color: 'primary', sx: {
                     cursor: 'pointer',
                     opacity: config.hidden ? 0 : 1,
                 }, children: _jsx(Chip, { color: "primary", label: state === undefined

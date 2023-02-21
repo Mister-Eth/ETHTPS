@@ -8,7 +8,7 @@ import React, { Fragment } from 'react'
 export function ModeDropdown(config: IDropdownConfig<DataType>) {
 	const types = ['TPS', 'GPS', 'GTPS']
 	return (
-		<Fragment>
+		<React.Fragment>
 			<Dropdown<DataType>
 				options={types}
 				hidden={config.hidden}
@@ -17,6 +17,6 @@ export function ModeDropdown(config: IDropdownConfig<DataType>) {
 				uiFormatFunction={appModeToUIFormat}
 				hoverText={<Typography>{'Select data type'}</Typography>}
 			/>
-		</Fragment>
+		</React.Fragment>
 	)
 }

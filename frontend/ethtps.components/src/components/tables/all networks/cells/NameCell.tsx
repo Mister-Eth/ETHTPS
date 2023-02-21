@@ -27,7 +27,7 @@ export function NameCell(config: ICustomCellConfiguration) {
 		(config.provider?.status?.isProbablyDown ?? false)
 	const noDataProvider = config.provider?.status === undefined
 	return (
-		<Fragment>
+		<React.Fragment>
 			<Tooltip
 				arrow
 				placement="right"
@@ -103,6 +103,6 @@ export function NameCell(config: ICustomCellConfiguration) {
 					</>
 				</TableCell>
 			</Tooltip>
-		</Fragment>
+		</React.Fragment>
 	)
 }

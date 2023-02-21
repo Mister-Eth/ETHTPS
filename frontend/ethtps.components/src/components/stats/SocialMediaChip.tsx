@@ -1,9 +1,8 @@
 import { Web } from '@mui/icons-material'
 import { Chip, Link, Typography } from '@mui/material'
-import { Fragment } from 'react'
+import React from 'react'
 import { groupBy, WithObjectType } from 'groupby-js'
 import { IProviderExternalWebsite } from 'ethtps.api.client'
-import React from 'react'
 
 interface ISocialMediaChipConfiguration {
 	href?: string | null
@@ -31,7 +30,7 @@ export function SocialMediaChipCollection(config: {
 	)
 	if (links === undefined || links.length === 0)
 		return (
-			<Fragment>
+			<React.Fragment>
 				<Chip
 					className="spaced-vertically"
 					label={
@@ -46,14 +45,14 @@ export function SocialMediaChipCollection(config: {
 					variant="outlined"
 					color="primary"
 				/>
-			</Fragment>
+			</React.Fragment>
 		)
 
 	return (
-		<Fragment>
+		<React.Fragment>
 			{links.flatMap((group, i) => {
 				return (
-					<Fragment key={i}>
+					<React.Fragment key={i}>
 						<Chip
 							label={
 								<Typography
@@ -71,16 +70,16 @@ export function SocialMediaChipCollection(config: {
 								websiteName={x.name}
 							/>
 						))}
-					</Fragment>
+					</React.Fragment>
 				)
 			})}
-		</Fragment>
+		</React.Fragment>
 	)
 }
 
 export function SocialMediaChip(config: ISocialMediaChipConfiguration) {
 	return (
-		<Fragment>
+		<React.Fragment>
 			<Chip
 				className="spaced-vertically"
 				icon={getIconForWebsite(config.websiteName as string)}
@@ -106,6 +105,6 @@ export function SocialMediaChip(config: ISocialMediaChipConfiguration) {
 					marginTop: '1em',
 				}}
 			/>
-		</Fragment>
+		</React.Fragment>
 	)
 }

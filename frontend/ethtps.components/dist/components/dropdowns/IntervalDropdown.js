@@ -3,7 +3,7 @@ import { Container, Typography } from '@mui/material';
 import { shortTimeIntervalToUIFormat } from '../../Types';
 import { Dropdown } from './Dropdown';
 import { toShortString_2, fromShortString_2, } from 'ethtps.data/dist/models/TimeIntervals';
-import { Fragment } from 'react';
+import React from 'react';
 export function IntervalDropdown(config) {
     const intervals = [
         'OneMinute',
@@ -15,7 +15,7 @@ export function IntervalDropdown(config) {
         'All',
         'Custom',
     ];
-    return (_jsx(Fragment, { children: _jsx(Container, { sx: {
+    return (_jsx(React.Fragment, { children: _jsx(Container, { sx: {
                 borderThickness: '1px',
                 borderColor: 'primary',
                 borderBlockColor: 'primary',

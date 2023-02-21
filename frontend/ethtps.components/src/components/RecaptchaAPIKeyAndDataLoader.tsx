@@ -47,7 +47,7 @@ export function RecaptchaAPIKeyAndDataLoader() {
 	const handlePossiblyABeepBoop = () => {}
 	return (
 		//We use recaptcha only for getting an API key, if the user comes back later we don't let google know that
-		<Fragment>
+		<React.Fragment>
 			{ConditionalRender(
 				<Recaptcha
 					ref={refRecaptcha}
@@ -62,6 +62,6 @@ export function RecaptchaAPIKeyAndDataLoader() {
 				!ready
 			)}
 			{ConditionalRender(<LoadingApplicationDataPartial />, ready)}
-		</Fragment>
+		</React.Fragment>
 	)
 }

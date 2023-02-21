@@ -14,7 +14,7 @@ import { useQuery } from 'react-query';
 import moment from 'moment';
 import { DataType } from 'ethtps.api.client';
 import { colorHooks } from 'ethtps.data';
-import Fragment from 'react';
+import { useLiveData, useLiveDataState } from './hooks';
 // constants
 const NUM_LAYERS = 20;
 export const BACKGROUND = '#ffdede';
@@ -104,7 +104,7 @@ export function CustomVISXStreamgraph({ width, height, animate = true, }) {
     const customScale = (x) => colorFunction(0, x);
     const pathRefs = range(processedStreamchartData.data.length).map(() => React.createRef());
     const [highlightedIndex, setHighlightedIndex] = useState(0);
-    return (_jsxs(Fragment, { children: [_jsx(WebsocketStatusPartial, {}), _jsxs("svg", { width: width, height: height, children: [_jsx(PatternCircles, { id: 'circles', height: 40, width: 40, radius: 5, fill: 'black', complement: true }), _jsx(PatternCircles, { id: 'hovered-circles', height: 40, width: 40, radius: 5, fill: 'white', complement: true }), _jsxs("g", { children: [_jsx("rect", { x: 0, y: 0, width: width, height: height, fill: BACKGROUND, rx: 24 }), _jsx(Stack, { data: transpose(processedStreamchartData.data), keys: keys, curve: curveCardinal, accumulate: 'sum', offset: "wiggle", color: colorFunction, x: (_, i) => xScale(i) ?? 0, y0: getY0, y1: getY1, children: ({ stacks, path }) => stacks.map((stack) => {
+    return (_jsxs(React.Fragment, { children: [_jsx(WebsocketStatusPartial, {}), _jsxs("svg", { width: width, height: height, children: [_jsx(PatternCircles, { id: 'circles', height: 40, width: 40, radius: 5, fill: 'black', complement: true }), _jsx(PatternCircles, { id: 'hovered-circles', height: 40, width: 40, radius: 5, fill: 'white', complement: true }), _jsxs("g", { children: [_jsx("rect", { x: 0, y: 0, width: width, height: height, fill: BACKGROUND, rx: 24 }), _jsx(Stack, { data: transpose(processedStreamchartData.data), keys: keys, curve: curveCardinal, accumulate: 'sum', offset: "wiggle", color: colorFunction, x: (_, i) => xScale(i) ?? 0, y0: getY0, y1: getY1, children: ({ stacks, path }) => stacks.map((stack) => {
                                     // Alternatively use renderprops <Spring to={{ d }}>{tweened => ...}</Spring>
                                     const pathString = path(stack) || '';
                                     const tweened = animate

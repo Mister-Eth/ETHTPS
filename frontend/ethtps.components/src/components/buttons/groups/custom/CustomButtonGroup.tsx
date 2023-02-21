@@ -1,10 +1,10 @@
 import { Button, ButtonGroup } from '@mui/material'
-import { Fragment } from 'react'
+import React from 'react'
 import { ICustomButtonGroupParameters } from './ICustomButtonGroupParameters'
 
 export function CustomButtonGroup(params: ICustomButtonGroupParameters) {
 	return (
-		<Fragment>
+		<React.Fragment>
 			<ButtonGroup
 				variant="contained"
 				aria-label="outlined primary button group">
@@ -12,6 +12,6 @@ export function CustomButtonGroup(params: ICustomButtonGroupParameters) {
 					<Button key={i}>{x}</Button>
 				))}
 			</ButtonGroup>
-		</Fragment>
+		</React.Fragment>
 	)
 }

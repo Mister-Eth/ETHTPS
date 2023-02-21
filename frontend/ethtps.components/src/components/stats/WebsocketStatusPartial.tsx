@@ -12,7 +12,7 @@ export function WebsocketStatusPartial() {
 		setConnected(status)
 	}, [status])
 	return (
-		<Fragment>
+		<React.Fragment>
 			<div
 				style={{
 					position: 'absolute',
@@ -32,6 +32,6 @@ export function WebsocketStatusPartial() {
 					{connected ? 'Connected' : 'Disconnected'}
 				</Typography>
 			</div>
-		</Fragment>
+		</React.Fragment>
 	)
 }

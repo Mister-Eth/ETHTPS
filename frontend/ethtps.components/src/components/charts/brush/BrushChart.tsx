@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import { useRef, useState, useMemo, Fragment } from 'react'
+import { useRef, useState, useMemo } from 'react'
 import { scaleTime, scaleLinear } from '@visx/scale'
 import { AppleStock } from '@visx/mock-data/lib/mocks/appleStock'
 import { Brush } from '@visx/brush'
@@ -15,6 +15,7 @@ import { max, extent } from 'd3-array'
 import AreaChart from './AreaChart'
 import { BrushHandleRenderProps } from '@visx/brush/lib/BrushHandle'
 import { DatedXYDataPoint } from 'ethtps.api.client'
+import React from 'react'
 
 const brushMargin = { top: 10, bottom: 15, left: 50, right: 20 }
 const chartSeparation = 30
@@ -245,7 +246,7 @@ function BrushHandle({ x, height, isBrushActive }: BrushHandleRenderProps) {
 		return null
 	}
 	return (
-		<Fragment>
+		<React.Fragment>
 			<Group left={x + pathWidth / 2} top={(height - pathHeight) / 2}>
 				<path
 					fill="#f2f2f2"
@@ -255,6 +256,6 @@ function BrushHandle({ x, height, isBrushActive }: BrushHandleRenderProps) {
 					style={{ cursor: 'ew-resize' }}
 				/>
 			</Group>
-		</Fragment>
+		</React.Fragment>
 	)
 }
