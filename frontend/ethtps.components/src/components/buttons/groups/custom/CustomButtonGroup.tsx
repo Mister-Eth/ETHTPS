@@ -1,7 +1,6 @@
 import { Button, ButtonGroup } from '@mui/material'
 import { Fragment } from 'react'
 import { ICustomButtonGroupParameters } from './ICustomButtonGroupParameters'
-import React from 'react'
 
 export function CustomButtonGroup(params: ICustomButtonGroupParameters) {
 	return (

@@ -1,5 +1,5 @@
 import React from 'react'
-import { SkeletonWithTooltip } from './components/partials/SkeletonWithTooltip'
+import { SkeletonWithTooltip } from './components/partials/skeletons/SkeletonWithTooltip'
 
 export const ConditionalRender = (
 	component: JSX.Element,

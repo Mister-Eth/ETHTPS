@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import React, { useRef, useState, useMemo, Fragment } from 'react'
+import { useRef, useState, useMemo, Fragment } from 'react'
 import { scaleTime, scaleLinear } from '@visx/scale'
 import { AppleStock } from '@visx/mock-data/lib/mocks/appleStock'
 import { Brush } from '@visx/brush'
