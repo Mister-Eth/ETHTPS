@@ -12,9 +12,9 @@ import { PatternLines } from "@visx/pattern"
 import { Group } from "@visx/group"
 import { LinearGradient } from "@visx/gradient"
 import { max, extent } from "d3-array"
-import { BrushHandleRenderProps } from "@visx/brush/src/BrushHandle"
 import AreaChart from "./AreaChart"
 import { DatedXYDataPoint, L2DataResponseModel } from "ethtps.api.client"
+import { BrushHandleRenderProps } from "@visx/brush/lib/BrushHandle"
 
 const brushMargin = { top: 10, bottom: 15, left: 50, right: 20 }
 const chartSeparation = 30
@@ -183,7 +183,7 @@ export function BrushChart({
         />
         <AreaChart
           hideBottomAxis={compact}
-          data={filteredStock}
+          data={[]}
           width={width}
           margin={{ ...margin, bottom: topChartBottomMargin }}
           yMax={yMax}
@@ -194,7 +194,7 @@ export function BrushChart({
         <AreaChart
           hideBottomAxis
           hideLeftAxis
-          data={stock}
+          data={[]}
           width={width}
           yMax={yBrushMax}
           xScale={brushDateScale}

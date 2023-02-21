@@ -1,5 +1,4 @@
 import { Dropdown } from "./Dropdown"
-import { fromShortString_2, toShortString_2 } from "../../models/TimeIntervals"
 import { IDropdownCallbackWithProvider } from "./IDropdownCallbackWithProvider"
 import { Typography } from "@mui/material"
 import { useQuery } from "react-query"
@@ -9,6 +8,10 @@ import { IDropdownConfig } from "./IDropdownConfig"
 import { shortTimeIntervalToUIFormat } from "../../Types"
 import { INoDataAvailableEvent } from "../INoDataAvailableEvent"
 import { isMobile } from "react-device-detect"
+import {
+  toShortString_2,
+  fromShortString_2,
+} from "ethtps.data/dist/models/TimeIntervals"
 
 interface IProviderIntervalDropdownConfig
   extends IDropdownCallbackWithProvider<string>,

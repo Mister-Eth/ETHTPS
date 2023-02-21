@@ -1,5 +1,4 @@
-import { TimeInterval } from "../models/TimeIntervals"
-import { DataType } from "../Types"
+import { DataType, TimeInterval } from "ethtps.api.client"
 
 export function getLiveDataSmoothingFromQueryStringOrDefault(
   defaultValue: TimeInterval,

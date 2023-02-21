@@ -5,11 +5,12 @@ import { ProviderDataChart } from "../../components/charts/ProviderDataChart"
 import { ProviderCarousel } from "../../components/partials/navigation/ProviderCarousel"
 import { SocialMediaLinks } from "../../components/stats/SocialMediaLinks"
 
-import { useGetQueryWithAutoRefetch } from "../../hooks/QueryHooks"
 import { api } from "../../services/DependenciesIOC"
+import { IProviderPageModel } from "ethtps.data"
+import { queryHooks } from "ethtps.data"
 
 export function ProviderOverview(model: IProviderPageModel) {
-  const markdown = useGetQueryWithAutoRefetch(
+  const markdown = queryHooks.useGetQueryWithAutoRefetch(
     `${model.provider} markdown`,
     () => api.getMarkdownInfoPageFor(model.provider as string),
   )

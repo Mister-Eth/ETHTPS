@@ -1,10 +1,10 @@
 import { Container, Typography } from "@mui/material"
-import { Fragment } from "react"
-import { config } from "react-transition-group"
-import { DataType, shortTimeIntervalToUIFormat } from "../../Types"
-import { toShortString_2, fromShortString_2 } from "../../models/TimeIntervals"
+import { shortTimeIntervalToUIFormat } from "../../Types"
 import { Dropdown } from "./Dropdown"
-import { DataModeButtonGroup } from "../buttons/DataModeButtonGroup"
+import {
+  toShortString_2,
+  fromShortString_2,
+} from "ethtps.data/dist/models/TimeIntervals"
 
 interface IIntervalDropdownProperties {
   onChanged?: (value: string) => void

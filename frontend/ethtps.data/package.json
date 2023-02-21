@@ -1,0 +1,43 @@
+{
+  "name": "ethtps.data",
+  "version": "0.1.0",
+  "description": "Data layer for ETHTPS.info frontend",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.9.1",
+    "@types/node": "^18.14.0",
+    "moment": "^2.29.4",
+    "react-dom": "^18.2.0",
+    "react-query": "^3.39.3",
+    "react-redux": "^8.0.5",
+    "reconnecting-websocket": "^4.4.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx tsc"
+  },
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "outDir": "dist",
+    "moduleResolution": "node"
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/index.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    ".vscode"
+  ],
+  "author": "Mister_Eth",
+  "license": "ISC"
+}

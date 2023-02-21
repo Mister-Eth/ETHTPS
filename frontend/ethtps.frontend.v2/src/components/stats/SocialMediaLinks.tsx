@@ -3,17 +3,18 @@ import { Box, Chip, Paper, Tooltip, Typography } from "@mui/material"
 import { Fragment, useEffect } from "react"
 import { useState } from "react"
 import { ConditionalSkeletonRender, ConditionalRender } from "../../Types"
-import { useGetQueryWithAutoRefetch } from "../../hooks/QueryHooks"
 import { api } from "../../services/DependenciesIOC"
 import { SocialMediaChipCollection } from "./SocialMediaChip"
+import { queryHooks } from "ethtps.data"
 
 interface ISocialMediaLinksConfiguration {
   providerName: string
 }
 
 export function SocialMediaLinks(config: ISocialMediaLinksConfiguration) {
-  const links = useGetQueryWithAutoRefetch(`${config.providerName} links`, () =>
-    api.getLinksForProvider(config.providerName),
+  const links = queryHooks.useGetQueryWithAutoRefetch(
+    `${config.providerName} links`,
+    () => api.getLinksForProvider(config.providerName),
   )
 
   return (

@@ -5,17 +5,15 @@ import {
   TableHead,
   TableBody,
 } from "@mui/material"
-import { IProviderTableModel } from "../../../models/tables/IProviderTableModel"
+import { IProviderTableModel } from "ethtps.data"
+import { useState } from "react"
+import { ConditionalRender } from "../../../Types"
+import { SeeMoreButton } from "../../buttons/SeeMoreButton"
 import { AllProvidersHeader } from "./AllProvidersHeader"
 import { AllProvidersRows } from "./AllProvidersRows"
-import { ConditionalRender } from "../../../Types"
-import { useState } from "react"
-import { SeeMoreButton } from "../../buttons/SeeMoreButton"
-import { useGetApplicationDataLoadedFromAppStore } from "../../../hooks/ApplicationStateHooks"
 
 export function AllProvidersTable(tableData: IProviderTableModel): JSX.Element {
   const oldShowRowCountValue = tableData.maxRowsBeforeShowingExpand as number
-  const appDataLoaded = useGetApplicationDataLoadedFromAppStore()
   const [showRowCount, setShowRowCount] = useState(
     tableData?.maxRowsBeforeShowingExpand as number,
   )

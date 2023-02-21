@@ -1,14 +1,13 @@
 import { Moment } from "moment"
 import moment from "moment"
-import React from "react"
-import { SkeletonWithTooltip } from "./components/partials/SkeletonWithTooltip"
-import { toShortString_2 } from "./models/TimeIntervals"
-import {
-  DataResponseModelDictionary,
-  InstantDataResponseModel,
-} from "./Types.dictionaries"
-import { ILiveDataModeModel } from "./models/interfaces/ILiveDataModeModel"
 import { DataPoint, DataType } from "ethtps.api.client"
+import { toShortString_2 } from "ethtps.data/dist/models/TimeIntervals"
+import React from "react"
+import {
+  InstantDataResponseModel,
+  DataResponseModelDictionary,
+} from "./Types.dictionaries"
+import { SkeletonWithTooltip } from "./components/partials/SkeletonWithTooltip"
 
 export function toShortString(type: DataType): string {
   switch (type) {

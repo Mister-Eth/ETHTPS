@@ -11,7 +11,6 @@ import {
   useParams,
   useResolvedPath,
 } from "react-router"
-import { useGetProvidersFromAppStore } from "../../hooks/ProviderHooks"
 import { TabPanelProps, a11yProps } from "../../components/tab panel/TabPanel"
 import { ProviderAnalysis } from "./ProviderAnalysis"
 import { TabPanel } from "../../components/partials/TabPanel"

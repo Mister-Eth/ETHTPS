@@ -9,7 +9,13 @@ npm publish
 #then
 
 npm link
-npm link ethtps.api.cliend
+in data layer: npm link ethtps.api.client
+in frontend: 
+1. npm link ethtps.api.client ethtps.data
+2. npm link ../ethtps.data/node_modules/react ethtps.api.client ethtps.data
+
+Always link after updating dependencies [!!!]
+
 ^ life saver
 
 #npm i --save ../ethtps.api.client/

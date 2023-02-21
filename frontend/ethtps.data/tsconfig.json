@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2015",
+    "moduleResolution": "node",
+    "declaration": true,
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "jsx": "react-jsx"
+  },
+  "include": ["src/**/*.ts", "tests/**/*.ts", "src/index.ts", "src/*.tsx"],
+  "exclude": ["node_modules", ".vscode"]
+}

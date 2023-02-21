@@ -7,12 +7,12 @@ import {
 } from "./ExperimentHooks"
 import { ConditionalRender } from "../../Types"
 import { SimpleDesktopFeedbackExperiment } from "./desktop/SimpleDesktopFeedbackExperiment"
-import { store } from "../../store"
-import { setExperiments } from "../../slices/ExperimentSlice"
+import { setExperiments } from "ethtps.data/dist/slices/ExperimentSlice"
+import { store, useAppSelector } from "ethtps.data"
 
 export function TestTube() {
   const [currentExperiments, setCurrentExperiments] = useState<number[]>(
-    useGetExperimentsFromAppStore(),
+    useAppSelector((state) => state.experiments) || [],
   )
   const [fetchedFromServer, setFetchedFromServer] = useState(false)
   if (!fetchedFromServer) {

@@ -15,12 +15,10 @@ import { useState } from "react"
 import { curveCardinal } from "@visx/curve"
 import { useQuery } from "react-query"
 import { api } from "../../services/DependenciesIOC"
-import { useGetLiveDataModeFromAppStore } from "../../hooks/LiveDataHooks"
 import moment from "moment"
-import { L2DataResponseModel } from "ethtps.api.client"
-import { useGetProviderColorDictionaryFromAppStore } from "../../hooks/ColorHooks"
+import { L2DataResponseModel, DataType } from "ethtps.api.client"
 import { background } from "../charts/brush/BrushChart"
-
+import { colorHooks } from "ethtps.data"
 // constants
 const NUM_LAYERS = 20
 const SAMPLES_PER_LAYER = 200
@@ -93,7 +91,7 @@ export function CustomVISXStreamgraph({
 
   const liveState = useLiveDataState()
   const [pastData, setPastData] = useState<L2DataResponseModel>()
-  const colors = useGetProviderColorDictionaryFromAppStore()
+  const colors = colorHooks.useGetProviderColorDictionaryFromAppStore()
   const [processedStreamchartData, setProcessedStreamchartData] =
     useState<StreamchartLayers>({
       providers: ["Mock until loaded"],
@@ -101,7 +99,7 @@ export function CustomVISXStreamgraph({
     })
   const { data, isSuccess, refetch } = useQuery("get past data", () =>
     api.getL2Data({
-      dataType: liveState.mode,
+      dataType: liveState?.mode ?? DataType.Tps,
       l2DataRequestModel: {
         startDate: moment().subtract(1, "minute").toDate(),
         providers: ["All"],

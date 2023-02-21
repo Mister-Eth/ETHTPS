@@ -3,7 +3,6 @@ import {
   ICustomCellConfiguration,
   buildClassNames,
 } from "./ICustomCellConfiguration"
-import { useGetProviderColorDictionaryFromAppStore } from "../../../../hooks/ColorHooks"
 
 import { centered } from "../../Cells.Types"
 import { tableCellTypographyStandard } from "./Typography.types"
@@ -11,6 +10,7 @@ import { useEffect } from "react"
 import { ConditionalRender } from "../../../../Types"
 import * as icons from "@mui/icons-material"
 import { Link } from "react-router-dom"
+import { useGetProviderColorDictionaryFromAppStore } from "ethtps.data/dist/hooks/ColorHooks"
 
 export function NameCell(config: ICustomCellConfiguration) {
   const colorDictionary = useGetProviderColorDictionaryFromAppStore()

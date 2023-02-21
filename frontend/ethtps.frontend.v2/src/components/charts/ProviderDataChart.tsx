@@ -4,7 +4,6 @@ import React, { useEffect, useRef, useState } from "react"
 import { ProviderIntervalDropdown } from "../dropdowns/ProviderIntervalDropdown"
 import { NetworksDropdown } from "../dropdowns/NetworksDropdown"
 import Container from "@mui/material/Container/Container"
-import { useGetProviderColorDictionaryFromAppStore } from "../../hooks/ColorHooks"
 import { ConditionalRender, StringTimeValue } from "../../Types"
 import { Chip, Paper, Typography } from "@mui/material"
 import { INoDataAvailableEvent } from "../INoDataAvailableEvent"
@@ -17,6 +16,7 @@ import { useQuery } from "react-query"
 import { BrushChart } from "./brush/BrushChart"
 import { DataType, TimeInterval, DatedXYDataPoint } from "ethtps.api.client"
 import moment from "moment"
+import { useGetProviderColorDictionaryFromAppStore } from "ethtps.data/dist/hooks/ColorHooks"
 
 interface IProviderDataChartConfiguration extends INoDataAvailableEvent {
   provider: string

@@ -1,7 +1,7 @@
 import { Fragment } from "react"
-import { useGetProvidersFromAppStore } from "../../../hooks/ProviderHooks"
-import { IObjectWithProvider } from "../../../models/interfaces/IObjectWithProvider"
 import { LargeProviderHeader } from "../../widgets/LargeProviderHeader"
+import { IObjectWithProvider } from "ethtps.data"
+import { useGetProvidersFromAppStore } from "ethtps.data/dist/hooks/ProviderHooks"
 
 interface IProviderCarouselConfiguration extends IObjectWithProvider {}
 

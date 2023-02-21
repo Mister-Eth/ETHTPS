@@ -1,7 +1,8 @@
 import { Typography } from "@mui/material"
-import { DataType, appModeToUIFormat, fromShortString } from "../../Types"
 import { Dropdown } from "./Dropdown"
 import { IDropdownConfig } from "./IDropdownConfig"
+import { DataType } from "ethtps.api.client"
+import { fromShortString, appModeToUIFormat } from "../../Types"
 
 export function ModeDropdown(config: IDropdownConfig<DataType>) {
   const types = ["TPS", "GPS", "GTPS"]

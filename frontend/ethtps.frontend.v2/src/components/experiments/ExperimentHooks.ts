@@ -1,6 +1,5 @@
+import { store, useAppSelector } from "ethtps.data"
 import { api } from "../../services/DependenciesIOC"
-import { useAppSelector } from "../../store"
-
 export const loadAvailableExperiments = (deviceType: string) => {
   return api.getAvailableExperiments(deviceType)
 }

@@ -1,7 +1,7 @@
 import { Dropdown } from "./Dropdown"
-import { useGetNetworksFromAppStore } from "../../hooks/DataHooks"
 import { Typography } from "@mui/material"
 import { IDropdownConfig } from "./IDropdownConfig"
+import { useGetNetworksFromAppStore } from "ethtps.data/dist/hooks/DataHooks"
 
 export function NetworksDropdown(config: IDropdownConfig<string>) {
   const networks = useGetNetworksFromAppStore()

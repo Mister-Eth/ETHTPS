@@ -11,6 +11,7 @@ import {
 import { CurrentViewersIcon } from "./CurrentViewersIcon"
 import { useGetExperimentsFromAppStore } from "../experiments/ExperimentHooks"
 import { DataType } from "ethtps.api.client"
+import { store, useAppSelector } from "ethtps.data"
 
 interface IDataModeButtonGroupConfiguration {
   modeChanged: (mode: DataType) => void
@@ -24,13 +25,13 @@ export function DataModeButtonGroup(model: IDataModeButtonGroupConfiguration) {
     setMode(mode)
     model.modeChanged(mode)
   }
-  const experimentsAppStoreValue = useGetExperimentsFromAppStore()
+  const experimentsAppStoreValue = useAppSelector((state) => state.experiments)
   return (
     <Fragment>
       <Box sx={{ float: "right" }}>
         {ConditionalRender(
           <CurrentViewersIcon />,
-          experimentsAppStoreValue.includes(5) && false,
+          experimentsAppStoreValue?.includes(5) && false,
         )}
         <Tooltip
           arrow

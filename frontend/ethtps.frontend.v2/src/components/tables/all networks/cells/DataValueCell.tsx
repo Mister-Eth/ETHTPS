@@ -4,11 +4,12 @@ import {
 } from "./ICustomCellConfiguration"
 import { SkeletonWithTooltip } from "../../../partials/SkeletonWithTooltip"
 import { TableCell } from "@mui/material"
-import { DataType, numberFormat, toShortString } from "../../../../Types"
 import { tableCellTypographyStandard } from "./Typography.types"
 import { centered } from "../../Cells.Types"
 import "../../cells.styles.css"
 import { AnimatedTypography } from "../../../text/AnimatedTypography"
+import { DataType } from "ethtps.api.client"
+import { toShortString, numberFormat } from "../../../../Types"
 
 interface IDataValueCellConficuration extends ICustomCellConfiguration {
   value?: number

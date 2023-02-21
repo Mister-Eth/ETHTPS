@@ -1,9 +1,9 @@
 import { Fragment, useEffect } from "react"
-import { useAppSelector } from "../../store"
 import { useState } from "react"
 import { IconButton, Tooltip, Typography } from "@mui/material"
 import { MobiledataOff, SyncAlt } from "@mui/icons-material"
 import { ConditionalRender } from "../../Types"
+import { store, useAppSelector } from "ethtps.data"
 
 export function WebsocketStatusPartial() {
   const [connected, setConnected] = useState(false)

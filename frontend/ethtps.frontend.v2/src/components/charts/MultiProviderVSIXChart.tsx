@@ -1,7 +1,6 @@
 import { Fragment, useEffect, useRef, useState } from "react"
 import { ProviderIntervalDropdown } from "../dropdowns/ProviderIntervalDropdown"
 import { IntervalDropdown } from "../dropdowns/IntervalDropdown"
-import { CustomXYChart } from "./xy/XYChart"
 import { ConditionalRender, ConditionalSkeletonRender } from "../../Types"
 
 export function MultiProviderVSIXChart() {
@@ -15,13 +14,7 @@ export function MultiProviderVSIXChart() {
   return (
     <Fragment>
       <div className="container" ref={containerRef}>
-        {ConditionalSkeletonRender(
-          <CustomXYChart
-            width={containerWidth}
-            height={containerWidth / 1.41}
-          />,
-          containerWidth > 0,
-        )}
+        {ConditionalSkeletonRender(<></>, containerWidth > 0)}
       </div>
     </Fragment>
   )

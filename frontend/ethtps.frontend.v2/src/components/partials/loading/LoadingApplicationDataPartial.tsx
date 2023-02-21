@@ -1,25 +1,23 @@
-import { PropsWithChildren, useEffect } from "react"
-import { setProviders } from "../../../slices/ProvidersSlice"
-import { store, useAppSelector } from "../../../store"
-import { useLoadValuesHook } from "../../../hooks/useLoadValuesHook"
-import { api } from "../../../services/DependenciesIOC"
-import { setNetworks } from "../../../slices/NetworksSlice"
-import { setIntervals } from "../../../slices/IntervalsSlice"
-import {
-  setMaxGPSData,
-  setMaxGTPSData,
-  setMaxTPSData,
-} from "../../../slices/DataSlice"
+import { DataType } from "ethtps.api.client"
+import { setApplicationDataLoaded } from "ethtps.data/dist/slices/ApplicationStateSlice"
 import {
   setProviderColorDictionary,
   setProviderTypeColorDictionary,
-} from "../../../slices/ColorSlice"
-import { useUpdateLiveData } from "../../../hooks/LiveDataHooks"
-import { useState } from "react"
-import { setApplicationDataLoaded } from "../../../slices/ApplicationStateSlice"
-import { setLastMinuteData } from "../../../slices/LiveDataSlice"
-import { websocketActions } from "../../../slices/WebsocketSubscriptionSlice"
-import { DataType } from "ethtps.api.client"
+} from "ethtps.data/dist/slices/ColorSlice"
+import {
+  setMaxTPSData,
+  setMaxGPSData,
+  setMaxGTPSData,
+} from "ethtps.data/dist/slices/DataSlice"
+import { setIntervals } from "ethtps.data/dist/slices/IntervalsSlice"
+import { setLastMinuteData } from "ethtps.data/dist/slices/LiveDataSlice"
+import { setNetworks } from "ethtps.data/dist/slices/NetworksSlice"
+import { setProviders } from "ethtps.data/dist/slices/ProvidersSlice"
+import { websocketActions } from "ethtps.data/dist/slices/WebsocketSubscriptionSlice"
+import { PropsWithChildren, useState, useEffect } from "react"
+import { api } from "../../../services/DependenciesIOC"
+import { store } from "ethtps.data"
+import { useLoadValueHooks as loadHooks } from "ethtps.data"
 
 export function LoadingApplicationDataPartial({
   children,
@@ -31,77 +29,77 @@ export function LoadingApplicationDataPartial({
   const frequentlyUpdates = 30000
   const almostLive = 4000
   const [loaded, setLoaded] = useState([
-    useLoadValuesHook(
+    loadHooks.useLoadValuesHook(
       "providers",
       () => api.getProviders(),
       (value) => store.dispatch(setProviders(value)),
       neverUpdates,
       neverUpdates,
     ),
-    useLoadValuesHook(
+    loadHooks.useLoadValuesHook(
       "networks",
       () => api.getNetworks(),
       (value) => store.dispatch(setNetworks(value)),
       neverUpdates,
       neverUpdates,
     ),
-    useLoadValuesHook(
+    loadHooks.useLoadValuesHook(
       "intervals",
       () => api.getIntervals(),
       (value) => store.dispatch(setIntervals(value)),
       neverUpdates,
       neverUpdates,
     ),
-    useLoadValuesHook(
+    loadHooks.useLoadValuesHook(
       "maxTPS",
       () => api.getMax(DataType.Tps),
       (value) => store.dispatch(setMaxTPSData(value)),
       neverUpdates,
       neverUpdates,
     ),
-    useLoadValuesHook(
+    loadHooks.useLoadValuesHook(
       "maxGPS",
       () => api.getMax(DataType.Gps),
       (value) => store.dispatch(setMaxGPSData(value)),
       neverUpdates,
       neverUpdates,
     ),
-    useLoadValuesHook(
+    loadHooks.useLoadValuesHook(
       "maxGTPS",
       () => api.getMax(DataType.GasAdjustedTps),
       (value) => store.dispatch(setMaxGTPSData(value)),
       neverUpdates,
       neverUpdates,
     ),
-    useLoadValuesHook(
+    loadHooks.useLoadValuesHook(
       "getProviderColorDictionary",
       () => api.getProviderColorDictionary(),
       (value) => store.dispatch(setProviderColorDictionary(value)),
       neverUpdates,
       neverUpdates,
     ),
-    useLoadValuesHook(
+    loadHooks.useLoadValuesHook(
       "getProviderTypeColorDictionary",
       () => api.getProviderTypeColorDictionary(),
       (value) => store.dispatch(setProviderTypeColorDictionary(value)),
       neverUpdates,
       neverUpdates,
     ),
-    useLoadValuesHook(
+    loadHooks.useLoadValuesHook(
       "getLastMinuteTPSData",
       () => api.getLastMinuteData(DataType.Tps),
       (value) => store.dispatch(setLastMinuteData(value)),
       neverUpdates,
       neverUpdates,
     ),
-    useLoadValuesHook(
+    loadHooks.useLoadValuesHook(
       "getLastMinuteGPSData",
       () => api.getLastMinuteData(DataType.Gps),
       (value) => store.dispatch(setLastMinuteData(value)),
       neverUpdates,
       neverUpdates,
     ),
-    useLoadValuesHook(
+    loadHooks.useLoadValuesHook(
       "getLastMinuteGTPSData",
       () => api.getLastMinuteData(DataType.GasAdjustedTps),
       (value) => store.dispatch(setLastMinuteData(value)),

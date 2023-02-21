@@ -3,10 +3,10 @@ import {
   ICustomCellConfiguration,
   buildClassNames,
 } from "./ICustomCellConfiguration"
-import { useGetProviderTypeColorDictionaryFromAppStore } from "../../../../hooks/ColorHooks"
 import React from "react"
 import { centered } from "../../Cells.Types"
 import { tableCellTypographyStandard } from "./Typography.types"
+import { useGetProviderTypeColorDictionaryFromAppStore } from "ethtps.data/dist/hooks/ColorHooks"
 
 export function ProviderTypeCell(config: ICustomCellConfiguration) {
   const colorDictionary = useGetProviderTypeColorDictionaryFromAppStore()

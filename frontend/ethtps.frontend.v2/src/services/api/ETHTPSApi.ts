@@ -249,7 +249,7 @@ export class ETHTPSApi {
       requestParameters,
     )
   }
-  public getL2Data(request: ApiV3L2DataGetPostRequest) {
-    return this.l2DataAPI.apiV3L2DataGetPost(request)
+  public async getL2Data(request: ApiV3L2DataGetPostRequest) {
+    return await this.l2DataAPI.apiV3L2DataGetPost(request)
   }
 }

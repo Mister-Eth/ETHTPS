@@ -1,13 +1,12 @@
 import { Link, LinkOff } from "@mui/icons-material"
 import { IconButton, Tooltip, Typography } from "@mui/material"
+import { setIncludeSidechains } from "ethtps.data/dist/slices/LiveDataSlice"
 import { Fragment, useState } from "react"
-import { setIncludeSidechains } from "../../slices/LiveDataSlice"
-import { store } from "../../store"
-import { useSetSidechainsIncluded } from "../../hooks/LiveDataHooks"
+import { store } from "ethtps.data"
 
 interface ISidechainToggleButtonConfiguration {
   toggled?: (on: boolean) => void
-  defaultIncluded: boolean
+  defaultIncluded?: boolean
 }
 
 export function SidechainToggleButton(
@@ -27,7 +26,7 @@ export function SidechainToggleButton(
         arrow
         title={
           <Typography>
-            Sidechains are {on ? "included" : "excluded"}. Click to{" "}
+            Sidechains are {on ? "included" : "excluded"}. Click to
             {on ? "exclude" : "include"}
           </Typography>
         }

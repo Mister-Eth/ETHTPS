@@ -1,4 +1,3 @@
-import { IProviderTableModel } from "../../../models/tables/IProviderTableModel"
 import { TableRow, TableCell } from "@mui/material"
 import { IndexCell } from "./cells/IndexCell"
 import { NameCell } from "./cells/NameCell"
@@ -7,18 +6,14 @@ import { MaxValueCell } from "./cells/MaxValueCell"
 import { ProviderTypeCell } from "./cells/ProviderTypeCell"
 import { SkeletonWithTooltip } from "../../partials/SkeletonWithTooltip"
 import { extractData, getModeData } from "../../../Types"
-import {
-  useGetLiveDataModeFromAppStore,
-  useGetLiveDataFromAppStore,
-} from "../../../hooks/LiveDataHooks"
 import { useEffect, useState } from "react"
 import { range } from "lodash"
-import { Link } from "react-router-dom"
+import { IProviderTableModel, liveDataHooks } from "ethtps.data"
 
 export function AllProvidersRows(model: IProviderTableModel): JSX.Element {
   const hasData = (model.providerData?.length as number) > 0
-  const mode = useGetLiveDataModeFromAppStore()
-  const liveData = useGetLiveDataFromAppStore()
+  const mode = liveDataHooks.useGetLiveDataModeFromAppStore()
+  const liveData = liveDataHooks.useGetLiveDataFromAppStore()
   const [data, setData] = useState(getModeData(liveData ?? {}, mode))
   useEffect(() => {
     setData(getModeData(liveData ?? {}, mode))

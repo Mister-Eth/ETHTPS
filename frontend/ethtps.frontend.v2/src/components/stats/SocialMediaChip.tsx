@@ -1,8 +1,8 @@
 import { Web } from "@mui/icons-material"
 import { Chip, Link, Typography } from "@mui/material"
-import { ProviderExternalWebsite } from "ethtps.api.client"
 import { Fragment } from "react"
 import { groupBy, WithObjectType } from "groupby-js"
+import { IProviderExternalWebsite } from "ethtps.api.client"
 
 interface ISocialMediaChipConfiguration {
   href?: string | null
@@ -22,11 +22,11 @@ const formatUrl = (url: string | undefined | null) => {
 }
 
 export function SocialMediaChipCollection(config: {
-  links?: ProviderExternalWebsite[] | undefined
+  links?: IProviderExternalWebsite[] | undefined
 }) {
-  const links = groupBy<ProviderExternalWebsite, WithObjectType>(
+  const links = groupBy<IProviderExternalWebsite, WithObjectType>(
     "category",
-    config.links as ProviderExternalWebsite[],
+    config.links as IProviderExternalWebsite[],
   )
   if (links === undefined || links.length === 0)
     return (
@@ -66,11 +66,7 @@ export function SocialMediaChipCollection(config: {
               }
             />
             {group.items.map((x, i) => (
-              <SocialMediaChip
-                key={i}
-                href={x.url}
-                websiteName={x.websiteName}
-              />
+              <SocialMediaChip key={i} href={x.url} websiteName={x.name} />
             ))}
           </Fragment>
         )

@@ -1,6 +1,6 @@
 import { inline, uniform } from "../../Types"
-import { IObjectWithProvider } from "../../models/interfaces/IObjectWithProvider"
 import { Box, Typography } from "@mui/material"
+import { IObjectWithProvider } from "ethtps.data"
 
 interface ILargeProviderHeaderConfiguration extends IObjectWithProvider {}
 

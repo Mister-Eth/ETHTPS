@@ -1,9 +1,9 @@
 import { TableHeader } from "../TableHeader"
-import { useGetLiveDataModeFromAppStore } from "../../../hooks/LiveDataHooks"
 import { toShortString } from "../../../Types"
+import { liveDataHooks } from "ethtps.data"
 
 export function AllProvidersHeader(): JSX.Element {
-  const mode = useGetLiveDataModeFromAppStore()
+  const mode = liveDataHooks.useGetLiveDataModeFromAppStore()
   const modeStr = toShortString(mode)
   return (
     <>

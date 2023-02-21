@@ -3,15 +3,14 @@ import {
   ICustomCellConfiguration,
   buildClassNames,
 } from "./ICustomCellConfiguration"
-import { useGetMaxDataForProviderFromAppStore } from "../../../../hooks/DataHooks"
-import { useGetLiveDataModeFromAppStore } from "../../../../hooks/LiveDataHooks"
-import { centered } from "../../Cells.Types"
-import { tableCellTypographyStandard } from "./Typography.types"
-import { DataPoint } from "../../../../services/api-gen"
 import moment from "moment"
 import { numberFormat } from "../../../../Types"
-import { AnimatedTypography } from "../../../text/AnimatedTypography"
-import { fontWeight } from "@mui/system"
+import { DataPoint } from "ethtps.api.client"
+import { useGetMaxDataForProviderFromAppStore } from "ethtps.data/dist/hooks/DataHooks"
+import { useGetLiveDataModeFromAppStore } from "ethtps.data/dist/hooks/LiveDataHooks"
+import { centered } from "../../Cells.Types"
+import { tableCellTypographyStandard } from "./Typography.types"
+import { liveDataHooks } from "ethtps.data"
 
 function generateMaxHoverMessage(data?: DataPoint): string {
   if (
@@ -25,7 +24,7 @@ function generateMaxHoverMessage(data?: DataPoint): string {
   }
 
   if (data?.blockNumber !== undefined && data?.blockNumber !== 0) {
-    return `Seen at block ${numberFormat(data?.blockNumber).toString()}`
+    return `Seen at block ${numberFormat(data?.blockNumber ?? 0).toString()}`
   }
 
   return `Seen ${moment(data?.date)}`
@@ -37,7 +36,7 @@ function generateMaxTypography(data?: DataPoint) {
 }
 
 export function MaxValueCell(config: ICustomCellConfiguration) {
-  const type = useGetLiveDataModeFromAppStore()
+  const type = liveDataHooks.useGetLiveDataModeFromAppStore()
   const maxData = useGetMaxDataForProviderFromAppStore(
     config.provider?.name as string,
     type,

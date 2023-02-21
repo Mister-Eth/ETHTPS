@@ -1,4 +1,4 @@
-import { DataType } from "./api-gen/models/DataType"
+import { DataType } from "ethtps.api.client"
 
 export function ThrowInvalidDataTypeException(typeStr: string) {
   throw new TypeError(`Invalid DataType "${typeStr}"`)

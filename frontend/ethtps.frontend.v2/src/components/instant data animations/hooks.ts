@@ -1,24 +1,14 @@
 import { useState, useEffect } from "react"
 import { extractData, getModeData } from "../../Types"
-import { useGetProviderColorDictionaryFromAppStore } from "../../hooks/ColorHooks"
-import {
-  useGetLiveDataSmoothingFromAppStore,
-  useGetLiveDataModeFromAppStore,
-  useGetLiveDataFromAppStore,
-} from "../../hooks/LiveDataHooks"
-import { useGetProvidersFromAppStore } from "../../hooks/ProviderHooks"
 import { DataResponseModelDictionary } from "../../Types.dictionaries"
+import { ProviderResponseModel } from "ethtps.api.client"
 import {
+  useAppSelector,
+  providerHooks,
+  liveDataHooks,
+  colorHooks,
   dataTypeToString,
-  toShortString_2,
-  TimeInterval,
-} from "../../models/TimeIntervals"
-import { useGetSidechainsIncludedFromAppStore } from "../../hooks/LiveDataHooks"
-import { ProviderResponseModel, TimeIntervalFromJSON } from "ethtps.api.client"
-import { useAppSelector } from "../../store"
-import { useQuery } from "react-query"
-import { api } from "../../services/DependenciesIOC"
-
+} from "ethtps.data"
 export type InstantBarChartDataset = {
   label: string
   data: [number]
@@ -58,27 +48,29 @@ export const createDataPoint = (
 }
 
 export function useGet1mTPS() {
-  return useAppSelector((state) => state.liveData.oneMinuteTPSData)
+  return useAppSelector((state) => state.liveData?.oneMinuteTPSData)
 }
 
 export function useGet1mGPS() {
-  return useAppSelector((state) => state.liveData.oneMinuteGPSData)
+  return useAppSelector((state) => state.liveData?.oneMinuteGPSData)
 }
 
 export function useGet1mGTPS() {
-  return useAppSelector((state) => state.liveData.oneMinuteGTPSData)
+  return useAppSelector((state) => state.liveData?.oneMinuteGTPSData)
 }
 
 export function useLiveDataState() {
-  const smoothing = useGetLiveDataSmoothingFromAppStore()
-  const sidechainsIncluded = useGetSidechainsIncludedFromAppStore()
-  const mode = useGetLiveDataModeFromAppStore()
+  const smoothing = liveDataHooks.useGetLiveDataSmoothingFromAppStore()
+  const sidechainsIncluded = false //useAppSelector(
+  //  (state) => state.pages.mainPage.sidechainsIncluded,
+  //)
+  const mode = liveDataHooks.useGetLiveDataModeFromAppStore()
   return { smoothing, sidechainsIncluded, mode }
 }
 
 export function useStreamchartData(interval: string) {
   /*
-  const sidechainsIncluded = useGetSidechainsIncludedFromAppStore()
+  const sidechainsIncluded = useAppSelector((state) => state.mainPage?.sidechainsIncluded)
   const { data, status, refetch } = useQuery("get streamchart data", () =>
     api.getStreamChartData({
       interval: TimeIntervalFromJSON(`"${interval}"`),
@@ -92,12 +84,16 @@ export function useStreamchartData(interval: string) {
 }
 
 export function useLiveData() {
-  const providers = useGetProvidersFromAppStore()
-  const smoothing = useGetLiveDataSmoothingFromAppStore()
-  const colors = useGetProviderColorDictionaryFromAppStore()
-  const sidechainsIncluded = useGetSidechainsIncludedFromAppStore()
-  const mode = useGetLiveDataModeFromAppStore()
-  const liveData = useGetLiveDataFromAppStore()
+  const providers = providerHooks.useGetProvidersFromAppStore()
+  const smoothing = liveDataHooks.useGetLiveDataSmoothingFromAppStore()
+  const colors = colorHooks.useGetProviderColorDictionaryFromAppStore()
+  const [sidechainsIncluded, setSidechainsIncluded] = useState<boolean>(false)
+  const v = liveDataHooks.useGetSidechainsIncludedFromAppStore()
+  if (v) {
+    setSidechainsIncluded(v)
+  }
+  const mode = liveDataHooks.useGetLiveDataModeFromAppStore()
+  const liveData = liveDataHooks.useGetLiveDataFromAppStore()
   const [data, setData] = useState<DataResponseModelDictionary>()
   const [processedData, setProcessedData] = useState<LiveData>()
   useEffect(() => {
@@ -123,9 +119,14 @@ export function useLiveData() {
         setProcessedData({
           data: d_possiblyUndefined,
           total,
-          mode: dataTypeToString(mode),
           sidechainsIncluded,
+          mode: dataTypeToString(mode),
         })
+        /*setProcessedData({
+          data: d_possiblyUndefined,
+          total,
+          mode: dataTypeToString(mode)
+        })*/
       }
     }
   }, [mode, smoothing, data, colors])
