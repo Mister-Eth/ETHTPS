@@ -1,9 +1,9 @@
-import { useAppSelector } from "../store";
+import { useAppSelector } from '../store'
 
 export function useGetProviderColorDictionaryFromAppStore() {
-  return useAppSelector((state) => state.colors.providerColorDictionary);
+	return useAppSelector((state) => state.colors.providerColorDictionary)
 }
 
 export function useGetProviderTypeColorDictionaryFromAppStore() {
-  return useAppSelector((state) => state.colors.providerTypesColorDictionary);
+	return useAppSelector((state) => state.colors.providerTypesColorDictionary)
 }

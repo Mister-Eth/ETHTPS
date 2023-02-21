@@ -1,5 +1,5 @@
-import { ProviderModel } from "ethtps.api.client";
+import { ProviderModel } from 'ethtps.api.client'
 
 export interface IObjectWithProvider {
-  provider?: ProviderModel;
+	provider?: ProviderModel
 }

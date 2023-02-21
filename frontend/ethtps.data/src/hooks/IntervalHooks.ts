@@ -1,5 +1,5 @@
-import { useAppSelector } from "../store";
+import { useAppSelector } from '../store'
 
 export function useGetIntervalsFromAppStore() {
-  return useAppSelector((state) => state.intervals);
+	return useAppSelector((state) => state.intervals)
 }

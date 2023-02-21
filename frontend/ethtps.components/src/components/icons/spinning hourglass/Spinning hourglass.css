@@ -1,0 +1,19 @@
+.rotation-animation {
+	animation: rotate 2s infinite;
+}
+
+@keyframes rotate {
+	0% {
+		transform: rotate(0deg);
+		color: white;
+	}
+	50% {
+		transform: rotate(180deg);
+		color: yellow;
+	}
+
+	100% {
+		transform: rotate(360deg);
+		color: white;
+	}
+}

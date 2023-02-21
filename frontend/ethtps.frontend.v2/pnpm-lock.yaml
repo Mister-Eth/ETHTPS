@@ -49,6 +49,8 @@ specifiers:
   d3-format: ^3.1.0
   date-fns: ^2.29.3
   env-cmd: ^10.1.0
+  ethtps.api.client: ../ethtps.api.client
+  ethtps.data: file:../ethtps.data
   groupby-js: ^1.1.9
   localforage: ^1.10.0
   match-sorter: ^6.3.1
@@ -119,6 +121,8 @@ dependencies:
   d3-format: 3.1.0
   date-fns: 2.29.3
   env-cmd: 10.1.0
+  ethtps.api.client: link:../ethtps.api.client
+  ethtps.data: file:../ethtps.data_g6hwum2plthjglm2yxwdoyal7y
   groupby-js: 1.1.9
   localforage: 1.10.0
   match-sorter: 6.3.1
@@ -5850,6 +5854,10 @@ packages:
   /@types/node/16.18.12:
     resolution: {integrity: sha512-vzLe5NaNMjIE3mcddFVGlAXN1LEWueUsMsOJWaT6wWMJGyljHAWHznqfnKUQWGzu7TLPrGvWdNAsvQYW+C0xtw==}
 
+  /@types/node/18.14.0:
+    resolution: {integrity: sha512-5EWrvLmglK+imbCJY0+INViFWUHg1AHel1sq4ZVSfdcNqGy9Edv3UB9IIzzg+xPaUcAgZYcfVs2fBcwDeZzU0A==}
+    dev: false
+
   /@types/normalize-package-data/2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
 
@@ -8597,7 +8605,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001457
-      electron-to-chromium: 1.4.304
+      electron-to-chromium: 1.4.305
       node-releases: 2.0.10
       update-browserslist-db: 1.0.10_browserslist@4.21.5
 
@@ -10217,8 +10225,8 @@ packages:
     dependencies:
       jake: 10.8.5
 
-  /electron-to-chromium/1.4.304:
-    resolution: {integrity: sha512-6c8M+ojPgDIXN2NyfGn8oHASXYnayj+gSEnGeLMKb9zjsySeVB/j7KkNAAG9yDcv8gNlhvFg5REa1N/kQU6pgA==}
+  /electron-to-chromium/1.4.305:
+    resolution: {integrity: sha512-WETy6tG0CT5gm1O+xCbyapWNsCcmIvrn4NHViIGYo2AT8FV2qUCXdaB+WqYxSv/vS5mFqhBYnfZAAkVArjBmUg==}
 
   /elliptic/6.5.4:
     resolution: {integrity: sha512-iLhC6ULemrljPZb+QutR5TQGB+pdW6KGD5RSegS+8sorOZT+rdQFbsQFJgvN3eRqNALqJer4oQ16YvJHlU8hzQ==}
@@ -20418,3 +20426,25 @@ packages:
   /zwitch/1.0.5:
     resolution: {integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==}
     dev: true
+
+  file:../ethtps.data_g6hwum2plthjglm2yxwdoyal7y:
+    resolution: {directory: ../ethtps.data, type: directory}
+    id: file:../ethtps.data
+    name: ethtps.data
+    version: 0.1.0
+    dependencies:
+      '@reduxjs/toolkit': 1.9.3_k4ae6lp43ej6mezo3ztvx6pykq
+      '@types/node': 18.14.0
+      ethtps.api.client: link:../ethtps.api.client
+      moment: 2.29.4
+      react-dom: 18.2.0_react@18.2.0
+      react-query: 3.39.3_biqbaboplfbrettd7655fr4n2y
+      react-redux: 8.0.5_3xleytyzprlgycb2ded54tx72i
+      reconnecting-websocket: 4.4.0
+    transitivePeerDependencies:
+      - '@types/react'
+      - '@types/react-dom'
+      - react
+      - react-native
+      - redux
+    dev: false

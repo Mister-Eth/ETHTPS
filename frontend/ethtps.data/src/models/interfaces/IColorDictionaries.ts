@@ -1,6 +1,6 @@
-import { StringDictionary } from "../../Types.dictionaries"
+import { StringDictionary } from '../../Types.dictionaries'
 
 export interface IColorDictionaries {
-  providerColorDictionary?: StringDictionary
-  providerTypesColorDictionary?: StringDictionary
+	providerColorDictionary?: StringDictionary
+	providerTypesColorDictionary?: StringDictionary
 }

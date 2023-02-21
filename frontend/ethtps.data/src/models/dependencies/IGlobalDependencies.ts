@@ -1,5 +1,5 @@
-import { GeneralApi } from "ethtps.api.client";
+import { GeneralApi } from 'ethtps.api.client'
 
 export interface IGlobalDependencies {
-  generalApi?: GeneralApi;
+	generalApi?: GeneralApi
 }

@@ -1,3 +1,3 @@
 export interface IProviderPageModel {
-  provider?: string;
+	provider?: string
 }

@@ -1,3 +1,3 @@
 export interface IMaxRowsModel {
-  maxRowsBeforeShowingExpand?: number
+	maxRowsBeforeShowingExpand?: number
 }
