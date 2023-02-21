@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react'
-import { CustomButtonGroup } from './CustomButtonGroup'
+import { Fragment } from 'react'
+import { CustomButtonGroup } from './groups/custom/CustomButtonGroup'
 
 export function ModeButton(): JSX.Element {
 	return (

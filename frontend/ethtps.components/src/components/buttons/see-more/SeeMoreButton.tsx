@@ -1,13 +1,7 @@
 import { ArrowDownward, ArrowUpward } from '@mui/icons-material'
 import { Button } from '@mui/material'
-import React from 'react'
 import { useState, Fragment } from 'react'
-
-interface ISeeMoreButtonProps {
-	onSeeMore?: () => void
-	onSeeLess?: () => void
-	enabled: boolean
-}
+import { ISeeMoreButtonProps } from './ISeeMoreButtonProps'
 
 export function SeeMoreButton(events: ISeeMoreButtonProps) {
 	const [expand, setExpand] = useState(true)

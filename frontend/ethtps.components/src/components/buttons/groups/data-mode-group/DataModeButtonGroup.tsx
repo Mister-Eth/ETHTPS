@@ -1,14 +1,10 @@
 import { Fragment, useState } from 'react'
-import { ConditionalRender } from '../../Types'
+import { ConditionalRender } from '../../../../Types'
 import { Box, IconButton, Tooltip, Typography } from '@mui/material'
 import { EvStation, LocalGasStation, Numbers } from '@mui/icons-material'
-import { CurrentViewersIcon } from './CurrentViewersIcon'
+import { CurrentViewersIcon } from '../../CurrentViewersIcon'
 import { DataType, useAppSelector } from 'ethtps.data'
-import React from 'react'
-
-interface IDataModeButtonGroupConfiguration {
-	modeChanged: (mode: DataType) => void
-}
+import { IDataModeButtonGroupConfiguration } from './IDataModeButtonGroupConfiguration'
 
 export function DataModeButtonGroup(model: IDataModeButtonGroupConfiguration) {
 	const [mode, setMode] = useState<DataType>(DataType.Tps)

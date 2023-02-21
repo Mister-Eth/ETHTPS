@@ -3,12 +3,7 @@ import { IconButton, Tooltip, Typography } from '@mui/material'
 import { setIncludeSidechains } from 'ethtps.data/dist/slices/LiveDataSlice'
 import { Fragment, useState } from 'react'
 import { store } from 'ethtps.data'
-import React from 'react'
-
-interface ISidechainToggleButtonConfiguration {
-	toggled?: (on: boolean) => void
-	defaultIncluded?: boolean
-}
+import { ISidechainToggleButtonConfiguration } from './ISidechainToggleButtonConfiguration'
 
 export function SidechainToggleButton(
 	config: ISidechainToggleButtonConfiguration
