@@ -25,7 +25,10 @@ const colorSlice = createSlice({
     ) {
       if (action.payload === undefined) return state;
       action.payload["Others"] = "yellow";
-      localStorage.setItem(action.payload, "IColorDictionaries");
+      localStorage.setItem(
+        "IColorDictionaries",
+        JSON.stringify(action.payload)
+      );
       state.providerTypesColorDictionary = { ...action.payload };
       return state;
     },

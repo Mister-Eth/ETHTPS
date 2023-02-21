@@ -4,18 +4,21 @@ import websocketSlice from "./WebsocketSubscriptionSlice";
 import ReconnectingWebSocket from "reconnecting-websocket";
 import { setLiveData } from "./LiveDataSlice";
 import { InstantDataResponseModel } from "../Types.dictionaries";
+import { useAppSelector } from "../store";
+import { useState, useEffect } from "react";
+import { rws, reconnect } from "src/models/services/DependenciesIOC";
+import { setReconnect, setRWS } from "../models/services/DependenciesIOC";
 
-let connect = true;
-const rws = new ReconnectingWebSocket("ws://localhost:2000");
+const wsURL = useAppSelector((state) => state.websockets.wsURL);
 
 const websocketMiddleware: Middleware = (store) => (next) => (action) => {
   if (!websocketActions.connecting.match(action)) {
     return next(action);
   }
-
-  if (connect) {
-    connect = false; //Only needs to be done once
-
+  return next(action);
+  if (reconnect && wsURL) {
+    setReconnect(false); //Only needs to be done once
+    setRWS(new ReconnectingWebSocket(wsURL));
     store.dispatch(websocketActions.connecting());
 
     rws.addEventListener("open", () => {

@@ -12,7 +12,10 @@ import { IMaxRowsModel } from "./models/tables/IMaxRowsModel";
 import { IProviderTableModel } from "./models/tables/IProviderTableModel";
 import * as timeIntervalUtils from "./models/TimeIntervals";
 import { mainPageReducer } from "./slices/page slices/MainPageSlice";
-import { applicationStateReducer } from "./slices/ApplicationStateSlice";
+import {
+  applicationStateReducer,
+  setStoreAPIKey,
+} from "./slices/ApplicationStateSlice";
 import { colorReducer } from "./slices/ColorSlice";
 import { dataReducer } from "./slices/DataSlice";
 import { experimentReducer } from "./slices/ExperimentSlice";
@@ -35,6 +38,7 @@ import * as useLoadValueHooks from "./hooks/useLoadValuesHook";
 import { TimeInterval, dataTypeToString } from "./models/TimeIntervals";
 import { useSetSidechainsIncluded } from "./hooks/LiveDataHooks";
 import { IPagesState } from "./models/IPagesState";
+import { useSetStoreAPIKey } from "./hooks/ApplicationStateHooks";
 export {
   ApplicationState,
   IGlobalDependencies,
@@ -76,4 +80,6 @@ export {
   TimeInterval,
   useSetSidechainsIncluded,
   dataTypeToString,
+  useSetStoreAPIKey,
+  setStoreAPIKey,
 };

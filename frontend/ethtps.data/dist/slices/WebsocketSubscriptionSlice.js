@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.websocketReducer = exports.websocketActions = exports.WebsocketEvent = void 0;
 const toolkit_1 = require("@reduxjs/toolkit");
+const DependenciesIOC_1 = require("../models/services/DependenciesIOC");
 const initialState = {
     isEstablishingConnection: false,
     isConnecting: false,
@@ -22,6 +23,11 @@ const websocketSlice = (0, toolkit_1.createSlice)({
         disconnected: (state) => {
             state.isConnecting = false;
             state.isConnected = false;
+        },
+        setWSURL(state, action) {
+            state.wsURL = action.payload;
+            (0, DependenciesIOC_1.setReconnect)(true);
+            return state;
         },
     },
 });

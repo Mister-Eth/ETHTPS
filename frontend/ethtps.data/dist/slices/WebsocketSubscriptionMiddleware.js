@@ -6,23 +6,27 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const WebsocketSubscriptionSlice_1 = require("./WebsocketSubscriptionSlice");
 const reconnecting_websocket_1 = __importDefault(require("reconnecting-websocket"));
 const LiveDataSlice_1 = require("./LiveDataSlice");
-let connect = true;
-const rws = new reconnecting_websocket_1.default("ws://localhost:2000");
+const store_1 = require("../store");
+const DependenciesIOC_1 = require("src/models/services/DependenciesIOC");
+const DependenciesIOC_2 = require("../models/services/DependenciesIOC");
+const wsURL = (0, store_1.useAppSelector)((state) => state.websockets.wsURL);
 const websocketMiddleware = (store) => (next) => (action) => {
     if (!WebsocketSubscriptionSlice_1.websocketActions.connecting.match(action)) {
         return next(action);
     }
-    if (connect) {
-        connect = false; //Only needs to be done once
+    return next(action);
+    if (DependenciesIOC_1.reconnect && wsURL) {
+        (0, DependenciesIOC_2.setReconnect)(false); //Only needs to be done once
+        (0, DependenciesIOC_2.setRWS)(new reconnecting_websocket_1.default(wsURL));
         store.dispatch(WebsocketSubscriptionSlice_1.websocketActions.connecting());
-        rws.addEventListener("open", () => {
+        DependenciesIOC_1.rws.addEventListener("open", () => {
             store.dispatch(WebsocketSubscriptionSlice_1.websocketActions.connected());
         });
-        rws.addEventListener("close", () => {
+        DependenciesIOC_1.rws.addEventListener("close", () => {
             store.dispatch(WebsocketSubscriptionSlice_1.websocketActions.disconnected());
             store.dispatch(WebsocketSubscriptionSlice_1.websocketActions.connecting());
         });
-        rws.addEventListener("message", (e) => {
+        DependenciesIOC_1.rws.addEventListener("message", (e) => {
             var _a;
             try {
                 let obj = JSON.parse(e.data);
@@ -32,7 +36,7 @@ const websocketMiddleware = (store) => (next) => (action) => {
                         store.dispatch((0, LiveDataSlice_1.setLiveData)(obj.Data));
                         break;
                     case WebsocketSubscriptionSlice_1.WebsocketEvent.KeepAlive:
-                        rws.send("ack");
+                        DependenciesIOC_1.rws.send("ack");
                         break;
                     default:
                         console.log(`Unhandled event of type "${type}"`);

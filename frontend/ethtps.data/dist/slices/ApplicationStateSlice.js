@@ -1,10 +1,12 @@
 "use strict";
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.applicationStateReducer = exports.setApplicationDataLoaded = void 0;
+exports.applicationStateReducer = exports.setStoreAPIKey = exports.setApplicationDataLoaded = void 0;
 const toolkit_1 = require("@reduxjs/toolkit");
 const initialState = {
     applicationDataLoaded: false,
     completeApplicationDataAvailableInLocalStorage: false,
+    apiKey: localStorage.getItem("XAPIKey"),
 };
 const applicationStateSlice = (0, toolkit_1.createSlice)({
     name: "applicationStates",
@@ -16,7 +18,12 @@ const applicationStateSlice = (0, toolkit_1.createSlice)({
             state.applicationDataLoaded = action.payload;
             return state;
         },
+        setStoreAPIKey(state, action) {
+            localStorage.setItem("XAPIKey", action.payload);
+            state.apiKey = action.payload;
+            return state;
+        },
     },
 });
-exports.setApplicationDataLoaded = applicationStateSlice.actions.setApplicationDataLoaded;
+_a = applicationStateSlice.actions, exports.setApplicationDataLoaded = _a.setApplicationDataLoaded, exports.setStoreAPIKey = _a.setStoreAPIKey;
 exports.applicationStateReducer = applicationStateSlice.reducer;

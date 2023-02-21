@@ -1,9 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { setReconnect } from "../models/services/DependenciesIOC";
 
 export interface WebsocketSubscriptionState {
   isEstablishingConnection: boolean;
   isConnecting: boolean;
   isConnected: boolean;
+  wsURL?: string;
 }
 
 const initialState: WebsocketSubscriptionState = {
@@ -27,6 +29,14 @@ const websocketSlice = createSlice({
     disconnected: (state) => {
       state.isConnecting = false;
       state.isConnected = false;
+    },
+    setWSURL(
+      state: WebsocketSubscriptionState,
+      action: PayloadAction<string | undefined>
+    ) {
+      state.wsURL = action.payload;
+      setReconnect(true);
+      return state;
     },
   },
 });

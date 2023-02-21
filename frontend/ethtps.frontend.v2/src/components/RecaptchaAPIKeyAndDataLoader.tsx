@@ -1,9 +1,16 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { Fragment, createRef, useState, useEffect } from "react"
 import { ConditionalRender } from "../Types"
 import Recaptcha from "react-google-invisible-recaptcha"
 import { LoadingApplicationDataPartial } from "./partials/loading/LoadingApplicationDataPartial"
 import { api, setAPIKey } from "../services/DependenciesIOC"
 import { getAPIKey } from "../services/DependenciesIOC"
+import {
+  store,
+  setStoreAPIKey,
+  useAppDispatch,
+  useSetStoreAPIKey,
+} from "ethtps.data"
 
 export function RecaptchaAPIKeyAndDataLoader() {
   const [hasAPIKey, setHasAPIKey] = useState(
@@ -29,12 +36,12 @@ export function RecaptchaAPIKeyAndDataLoader() {
     api
       .getNewAPIKey(token)
       .then((x) => {
-        console.log(`Got API key ${x}`)
+        console.log(`Got API key ${JSON.stringify(x)}`)
         if (x !== undefined) {
-          const key = x.key as string
-          setAPIKey(key)
-          api.resetConfig()
+          setAPIKey(x.key as string)
           setHasAPIKey(true)
+          useSetStoreAPIKey(x.key as string)
+          api.resetConfig()
         }
       })
       .catch(retryHandler)
