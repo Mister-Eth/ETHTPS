@@ -10,9 +10,6 @@ import { ICustomButtonGroupParameters } from './components/buttons/groups/custom
 import { IDataModeButtonGroupConfiguration } from './components/buttons/groups/data-mode-group/IDataModeButtonGroupConfiguration'
 import { ISeeMoreButtonProps } from './components/buttons/see-more/ISeeMoreButtonProps'
 import { ISidechainToggleButtonConfiguration } from './components/buttons/sidechain-toggle/ISidechainToggleButtonConfiguration'
-import { IDropdownCallback } from './components/dropdowns/IDropdownCallback'
-import { IDropdownCallbackWithProvider } from './components/dropdowns/IDropdownCallbackWithProvider'
-import { IDropdownConfig } from './components/dropdowns/IDropdownConfig'
 import { SkeletonWithTooltip } from './components/partials/skeletons/SkeletonWithTooltip'
 import { AnimatedLinkButtonWithIcon } from './components/buttons/groups/animated/AnimatedLinkButtonWithIcon'
 import { CurrentViewersIcon } from './components/buttons/CurrentViewersIcon'
@@ -20,19 +17,6 @@ import { CustomButtonGroup } from './components/buttons/groups/custom/CustomButt
 import { DataModeButtonGroup } from './components/buttons/groups/data-mode-group/DataModeButtonGroup'
 import { ModeButton } from './components/buttons/ModeButton'
 import { SeeMoreButton } from './components/buttons/see-more/SeeMoreButton'
-import { SidechainToggleButton } from './components/buttons/sidechain-toggle/SidechainToggleButton'
-import { BrushChart } from './components/charts/brush/BrushChart'
-import { ProviderDataChart } from './components/charts/provider/ProviderDataChart'
-import { ThresholdChart } from './components/charts/ThresholdChart'
-import { DateRangeSelectorDropdown } from './components/dropdowns/concrete/DateRangeSelectorDropdown'
-import { Dropdown } from './components/dropdowns/types/Dropdown'
-import { NetworksDropdown } from './components/dropdowns/NetworksDropdown'
-import { ProviderIntervalDropdown } from './components/dropdowns/ProviderIntervalDropdown'
-import { SpinningArrows } from './components/icons/spinning hourglass/SpinningArrows'
-import { MultiProviderVSIXChart } from './components/charts/MultiProviderVSIXChart'
-import AreaChart from './components/charts/brush/AreaChart'
-import { IntervalDropdown } from './components/dropdowns/IntervalDropdown'
-import { ModeDropdown } from './components/dropdowns/ModeDropdown'
 import { SimpleDesktopFeedbackExperiment } from './components/experiments/desktop/SimpleDesktopFeedbackExperiment'
 import { FaceRatingGroup } from './components/experiments/feedback/FaceRatingGroup'
 import { TestTube } from './components/experiments/TestTube'
@@ -60,8 +44,24 @@ import { WebsocketStatusPartial } from './components/stats/WebsocketStatusPartia
 import { LargeProviderHeader } from './components/widgets/LargeProviderHeader'
 import { AllProvidersTable } from './components/tables/all networks/AllProvidersTable'
 import { AnimatedTypography } from './components/text/AnimatedTypography'
-import { RecaptchaAPIKeyAndDataLoader } from './components/RecaptchaAPIKeyAndDataLoader'
+import { RecaptchaTokenLoader } from './components/RecaptchaTokenLoader'
 import { CompactHeader } from './components/partials/headers/CompactHeader'
+import { MultiProviderVSIXChart } from './components/charts/MultiProviderVSIXChart'
+import AreaChart from './components/charts/brush/AreaChart'
+import { BrushChart } from './components/charts/brush/BrushChart'
+import { ProviderDataChart } from './components/charts/provider/ProviderDataChart'
+import { DateRangeSelectorDropdown } from './components/dropdowns/concrete/DateRangeSelectorDropdown'
+import { ProviderIntervalDropdown } from './components/dropdowns/concrete/ProviderIntervalDropdown'
+import { Dropdown } from './components/dropdowns/types/Dropdown'
+import { IDropdownCallback } from './components/dropdowns/types/IDropdownCallback'
+import { IDropdownCallbackWithProvider } from './components/dropdowns/types/IDropdownCallbackWithProvider'
+import { IDropdownConfig } from './components/dropdowns/types/IDropdownConfig'
+import { SpinningArrows } from './components/icons/spinning hourglass/SpinningArrows'
+import { ThresholdChart } from './components/charts/ThresholdChart'
+import { IntervalDropdown } from './components/dropdowns/concrete/IntervalDropdown'
+import { ModeDropdown } from './components/dropdowns/concrete/ModeDropdown'
+import { NetworksDropdown } from './components/dropdowns/concrete/NetworksDropdown'
+import { SidechainToggleButton } from './components/buttons/sidechain-toggle/SidechainToggleButton'
 
 export {
 	AnimatedLinkButtonWithIcon,
@@ -119,7 +119,7 @@ export {
 	AnimatedTypography,
 	LargeProviderHeader,
 	INoDataAvailableEvent,
-	RecaptchaAPIKeyAndDataLoader,
+	RecaptchaTokenLoader,
 	getLiveDataSmoothingFromQueryStringOrDefault,
 	getLiveDataTypeFromQueryStringOrDefault,
 	getIncludeSidechainsFromQueryStringOrDefault,

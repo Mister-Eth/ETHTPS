@@ -1,8 +1,7 @@
 import { MenuItem } from '@mui/material'
-import { AnimatedLinkButtonWithIcon } from '../buttons/AnimatedLinkButtonWithIcon'
 import React from 'react'
 import { openNewTab } from '../../LinksHelper'
-import Fragment from 'react'
+import { AnimatedLinkButtonWithIcon } from '../buttons/groups/animated/AnimatedLinkButtonWithIcon'
 
 interface IButtonProperties {
 	image: JSX.Element

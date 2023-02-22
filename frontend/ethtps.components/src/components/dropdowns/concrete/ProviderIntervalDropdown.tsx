@@ -15,13 +15,14 @@ import { Dropdown } from '../types/Dropdown'
 import { IDropdownConfig } from '../types/IDropdownConfig'
 import { IDropdownCallbackWithProvider } from '../types/IDropdownCallbackWithProvider'
 import { useEffect } from 'react'
+import { IOptionalCallback } from 'ethtps.data'
 
 interface IProviderIntervalDropdownConfig
 	extends IDropdownCallbackWithProvider<string>,
 		IDropdownConfig<string> {
 	loader?: IRequestHandler<void, string[]>
 	availableIntervals?: IHandler<string[]>
-	noDataAvailable?: IHandler<string>
+	noDataAvailable?: IOptionalCallback<string>
 }
 
 export function ProviderIntervalDropdown(

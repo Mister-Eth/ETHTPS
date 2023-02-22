@@ -1,4 +1,4 @@
-import { IHandler } from 'ethtps.data';
+import { IOptionalCallback } from 'ethtps.data';
 export interface IDropdownCallback<T> {
-    changed?: IHandler<T>;
+    changed?: IOptionalCallback<T>;
 }

@@ -1,2 +1,2 @@
 /// <reference types="react" />
-export declare function RecaptchaAPIKeyAndDataLoader(): JSX.Element;
+export declare function RecaptchaTokenLoader(): JSX.Element;

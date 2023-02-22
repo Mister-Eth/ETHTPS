@@ -6,7 +6,7 @@ import Recaptcha from 'react-google-invisible-recaptcha';
 import { LoadingApplicationDataPartial } from './partials/loading/LoadingApplicationDataPartial';
 import { useSetStoreAPIKey, } from 'ethtps.data';
 import React from 'react';
-export function RecaptchaAPIKeyAndDataLoader() {
+export function RecaptchaTokenLoader() {
     const [hasAPIKey, setHasAPIKey] = useState(getAPIKey() !== undefined && getAPIKey() !== null);
     const [ready, setReady] = useState(hasAPIKey);
     if (hasAPIKey) {

@@ -11,7 +11,8 @@ import { BrushChart } from '../brush/BrushChart'
 import { IChartConfigurationModel } from '../IChartConfigurationModel'
 import { useHandler } from 'ethtps.data'
 import { useQuery } from 'react-query'
-import { NetworksDropdown, ProviderIntervalDropdown } from 'src'
+import { ProviderIntervalDropdown } from '../../dropdowns/concrete/ProviderIntervalDropdown'
+import { NetworksDropdown } from '../../dropdowns/concrete/NetworksDropdown'
 
 export function ProviderDataChart(config: IChartConfigurationModel) {
 	const displayNetworksDropdown =
@@ -75,9 +76,7 @@ export function ProviderDataChart(config: IChartConfigurationModel) {
 					elevation={1}
 					sx={{ display: noData ? 'none' : undefined }}>
 					{displayNetworksDropdown ? (
-						<NetworksDropdown
-							selectionChanged={networkHandler?.setter}
-						/>
+						<NetworksDropdown changed={{ ...networkHandler }} />
 					) : (
 						<></>
 					)}
@@ -88,13 +87,8 @@ export function ProviderDataChart(config: IChartConfigurationModel) {
 					<div style={{ float: 'right' }}>
 						<ProviderIntervalDropdown
 							hidden={noData}
-							onNoDataAvailable={(p) => {
-								setNoData(true)
-								if (config.onNoDataAvailable) {
-									config.onNoDataAvailable(p as string)
-								}
-							}}
-							onDataLoaded={(intervals) =>
+							noDataAvailable={config.onNoDataAvailable}
+							onDataLoaded={(intervals: string[]) =>
 								intervalHandler?.setter(intervals?.at(0))
 							}
 							provider={config.provider?.provider}

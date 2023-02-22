@@ -1,7 +1,7 @@
 import { scaleOrdinal } from '@visx/scale'
 import { GlyphStar, GlyphWye, GlyphTriangle, GlyphDiamond } from '@visx/glyph'
 import { Legend, LegendItem, LegendLabel } from '@visx/legend'
-import React, { Fragment } from 'react'
+import React from 'react'
 
 interface VISXLegendProperties {
 	keys?: string[] | null

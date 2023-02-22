@@ -7,12 +7,11 @@ import {
 } from '@mui/material'
 import { IProviderTableModel } from 'ethtps.data'
 import { useState } from 'react'
-import React from 'react'
 import { ConditionalRender } from '../../../Types'
-import { SeeMoreButton } from '../../buttons/SeeMoreButton'
 import { AllProvidersHeader } from './AllProvidersHeader'
 import { AllProvidersRows } from './AllProvidersRows'
 import React from 'react'
+import { SeeMoreButton } from '../../buttons/see-more/SeeMoreButton'
 
 export function AllProvidersTable(tableData: IProviderTableModel): JSX.Element {
 	const oldShowRowCountValue = tableData.maxRowsBeforeShowingExpand as number

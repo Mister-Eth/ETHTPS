@@ -82,6 +82,8 @@ import {
 } from './models/charts/handlers/hooks/HandlerHooks'
 import { handleException } from './exceptions/ExceptionHandler'
 import { IDataGetter } from './models/charts/requests/IDataGetter'
+import { IOptionalCallback } from './models/charts/handlers/IOptionalCallback'
+import { IOptionalDefault } from './models/charts/handlers/IOptionalDefault'
 export {
 	ApplicationState,
 	IGlobalDependencies,
@@ -167,6 +169,8 @@ export {
 	Handler,
 	IHandler,
 	INetworkChangedHandler,
+	IOptionalCallback,
+	IOptionalDefault,
 }
 
 export { handleException }

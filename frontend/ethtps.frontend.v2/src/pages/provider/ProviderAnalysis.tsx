@@ -2,6 +2,7 @@ import { Paper, Typography } from "@mui/material"
 import { Fragment, useEffect, useRef } from "react"
 import { ThresholdChart } from "../../components/charts/ThresholdChart"
 import { useState } from "react"
+import React from "react"
 
 export function ProviderAnalysis(props: IProviderPageModel) {
   const [containerWidth, setContainerWidth] = useState(0)

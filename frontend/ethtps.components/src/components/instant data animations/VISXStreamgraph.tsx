@@ -3,7 +3,7 @@
  * Inspired by Mike Bostock's Streamgraph & Lee Byron’s test data generator:
  * https://bl.ocks.org/mbostock/4060954
  */
-import React, { Fragment } from 'react'
+import React from 'react'
 import { Stack } from '@visx/shape'
 import { PatternCircles, PatternWaves } from '@visx/pattern'
 import { scaleLinear, scaleOrdinal } from '@visx/scale'

@@ -131,7 +131,7 @@ export function CustomVISXStreamgraph({
 		}
 	}, [data])
 	const liveData = useLiveData()
-	const [dataPoints, setDataPoints] = useState<number[]>([0, 0, 0])
+	const [_, setDataPoints] = useState<number[]>([0, 0, 0])
 	useEffect(() => {
 		if (liveData) {
 			setDataPoints(liveData.data?.map((x) => x?.value ?? 0))

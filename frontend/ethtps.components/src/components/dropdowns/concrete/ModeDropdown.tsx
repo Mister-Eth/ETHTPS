@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material'
 import { DataType } from 'ethtps.api.client'
-import React, { Fragment } from 'react'
+import React from 'react'
 import { IDropdownConfig } from '../types/IDropdownConfig'
 import { Dropdown } from '../types/Dropdown'
 import { appModeToUIFormat, fromShortString } from 'ethtps.data'

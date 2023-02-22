@@ -11,8 +11,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { curveCardinal } from '@visx/curve';
 import moment from 'moment';
-import { DataType, } from 'ethtps.data';
-import { colorHooks } from 'ethtps.data';
+import { DataType, colorHooks, handleException, } from 'ethtps.data';
 import { useLiveData, useLiveDataState } from './hooks';
 // constants
 const NUM_LAYERS = 20;
@@ -35,7 +34,7 @@ export function CustomVISXStreamgraph({ width, height, animate = true, l2DataGet
     if (width < 10)
         return null;
     const liveState = useLiveDataState();
-    const [pastData, setPastData] = useState();
+    const [data, setData] = useState();
     const colors = colorHooks.useGetProviderColorDictionaryFromAppStore();
     const [processedStreamchartData, setProcessedStreamchartData] = useState({
         providers: ['Mock until loaded'],
@@ -51,24 +50,30 @@ export function CustomVISXStreamgraph({ width, height, animate = true, l2DataGet
             },
         };
     };
-    useCallback(() => l2DataGetter.dataGetter({
+    const getDataCallback = () => useCallback(async () => await l2DataGetter?.dataGetter({
         ...generateRequestModel(),
         dataType: DataType.Tps,
-    }), [liveState.mode, liveState.sidechainsIncluded, liveState.smoothing]);
+    }), [
+        (liveState.mode,
+            liveState.sidechainsIncluded,
+            liveState.smoothing),
+    ]);
     const [max, setMax] = useState(0);
     useEffect(() => {
-        refetch();
+        getDataCallback()()
+            .then((x) => setData(x))
+            .catch(handleException);
     }, [liveState.mode, liveState.sidechainsIncluded, liveState.smoothing]);
     useEffect(() => {
-        if (isSuccess) {
-            setPastData(data);
-            if (pastData?.simpleAnalysis?.allDatasetsSameLength) {
-                let length = Math.min(pastData?.simpleAnalysis?.uniformDatasetLength ?? 1, 60);
+        if (data) {
+            setData(data);
+            if (data?.simpleAnalysis?.allDatasetsSameLength) {
+                let length = Math.min(data?.simpleAnalysis?.uniformDatasetLength ?? 1, 60);
                 xScale.domain([0, length - 1]);
-                if (pastData.datasets)
+                if (data.datasets)
                     setProcessedStreamchartData({
-                        providers: pastData.datasets.map((x) => x.provider),
-                        data: pastData.datasets.map((x) => x.dataPoints
+                        providers: data.datasets.map((x) => x.provider),
+                        data: data.datasets.map((x) => x.dataPoints
                             ?.slice(0, length)
                             .map((y) => y.y) ?? []),
                     });
@@ -76,7 +81,7 @@ export function CustomVISXStreamgraph({ width, height, animate = true, l2DataGet
         }
     }, [data]);
     const liveData = useLiveData();
-    const [dataPoints, setDataPoints] = useState([0, 0, 0]);
+    const [_, setDataPoints] = useState([0, 0, 0]);
     useEffect(() => {
         if (liveData) {
             setDataPoints(liveData.data?.map((x) => x?.value ?? 0));

@@ -24,8 +24,8 @@ const applicationStateSlice = createSlice({
 			state: IDataLoadingModel,
 			action: PayloadAction<string | undefined>
 		) {
-			localStorage.setItem('XAPIKey', action.payload)
-			state.apiKey = action.payload
+			localStorage.setItem('XAPIKey', action.payload as string)
+			state.apiKey = action.payload as string
 			return state
 		},
 	},
