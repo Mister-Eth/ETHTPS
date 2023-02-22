@@ -1,8 +1,8 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import { MenuItem } from '@mui/material';
-import { AnimatedLinkButtonWithIcon } from '../buttons/AnimatedLinkButtonWithIcon';
 import React from 'react';
 import { openNewTab } from '../../LinksHelper';
+import { AnimatedLinkButtonWithIcon } from '../buttons/groups/animated/AnimatedLinkButtonWithIcon';
 // No animation YET
 export function MenuItemWithIcon(props) {
     const handleClick = () => {

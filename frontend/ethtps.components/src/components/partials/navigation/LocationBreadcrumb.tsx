@@ -1,10 +1,8 @@
 import { Grain, Home, Whatshot } from '@mui/icons-material'
 import { Breadcrumbs, Link, Paper, Typography } from '@mui/material'
 import React from 'react'
-import { useLocation } from 'react-router'
 
 export function LocationBreadcrumb() {
-	const location = useLocation()
 	return (
 		<React.Fragment>
 			<Paper elevation={1}>

@@ -79,6 +79,7 @@ import { IRequestHandler } from './models/charts/requests/IRequestHandler'
 import {
 	useHandler,
 	Handler,
+	createHandlerFromCallback,
 } from './models/charts/handlers/hooks/HandlerHooks'
 import { handleException } from './exceptions/ExceptionHandler'
 import { IDataGetter } from './models/charts/requests/IDataGetter'
@@ -171,6 +172,7 @@ export {
 	INetworkChangedHandler,
 	IOptionalCallback,
 	IOptionalDefault,
+	createHandlerFromCallback,
 }
 
 export { handleException }

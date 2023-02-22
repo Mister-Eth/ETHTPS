@@ -49,7 +49,7 @@ import { IIntervalChangedHandler } from './models/charts/handlers/l2DataParamete
 import { IIncludeSidechainsChangedHandler } from './models/charts/handlers/l2DataParameterHandlers/IIncludeSidechainsChangedHandler';
 import { IHandler } from './models/charts/handlers/IHandler';
 import { IRequestHandler } from './models/charts/requests/IRequestHandler';
-import { useHandler, Handler } from './models/charts/handlers/hooks/HandlerHooks';
+import { useHandler, Handler, createHandlerFromCallback } from './models/charts/handlers/hooks/HandlerHooks';
 import { handleException } from './exceptions/ExceptionHandler';
 import { IDataGetter } from './models/charts/requests/IDataGetter';
 import { IOptionalCallback } from './models/charts/handlers/IOptionalCallback';
@@ -57,5 +57,5 @@ import { IOptionalDefault } from './models/charts/handlers/IOptionalDefault';
 export { ApplicationState, IGlobalDependencies, IColorDictionaries, IDataLoadingModel, ILiveDataModeModel, IMainPageModel, IMaxDataModel, IObjectWithProvider, IProviderModel, IProviderPageModel, IMaxRowsModel, IProviderTableModel, IPagesState, DataType, mainPageReducer, applicationStateReducer, colorReducer, dataReducer, experimentReducer, intervalsReducer, liveDataReducer, networksReducer, providersReducer, websocketMiddleware, websocketSlice, timeIntervalUtils, appStateHooks, colorHooks, dataHooks, intervalHooks, liveDataHooks, providerHooks, queryHooks, useLoadValueHooks, store, useAppSelector, useAppDispatch, TimeInterval, useSetSidechainsIncluded, dataTypeToString, useSetStoreAPIKey, setStoreAPIKey, useGetExperimentsFromAppStore, };
 export { GenericDictionary, DataPointDictionary, DataResponseModelDictionary, InstantDataResponseModel, StringDictionary, AnyDictionary, };
 export { toShortString_2, toShortString, fromShortString, fromShortString_2, extractData, getModeData, TV, TimeValue, StringTimeValue, appModeToUIFormat, inline, uniform, numberFormat, shortTimeIntervalToUIFormat, };
-export { IL2DataRequestHandler, IL2DataRequestModel, IRequestHandler, IDataGetter, IL2DataResponseModel, IModeChangedHandler, IIntervalChangedHandler, IIncludeSidechainsChangedHandler, useHandler, Handler, IHandler, INetworkChangedHandler, IOptionalCallback, IOptionalDefault, };
+export { IL2DataRequestHandler, IL2DataRequestModel, IRequestHandler, IDataGetter, IL2DataResponseModel, IModeChangedHandler, IIntervalChangedHandler, IIncludeSidechainsChangedHandler, useHandler, Handler, IHandler, INetworkChangedHandler, IOptionalCallback, IOptionalDefault, createHandlerFromCallback, };
 export { handleException };

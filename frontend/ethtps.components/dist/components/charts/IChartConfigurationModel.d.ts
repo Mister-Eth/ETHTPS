@@ -8,5 +8,5 @@ export interface IChartConfigurationModel {
     interval?: IIntervalChangedHandler;
     network?: INetworkChangedHandler;
     data?: IL2DataResponseModel;
-    onNoDataAvailable: IOptionalCallback<string>;
+    onNoDataAvailable: IOptionalCallback<string | undefined>;
 }

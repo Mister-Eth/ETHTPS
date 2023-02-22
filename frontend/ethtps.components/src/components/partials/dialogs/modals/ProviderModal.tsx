@@ -5,7 +5,7 @@ import { INoDataAvailableEvent } from '../../../INoDataAvailableEvent'
 import { useState } from 'react'
 import React from 'react'
 import { ProviderModel } from 'ethtps.api.client'
-import React from 'react'
+import { createHandlerFromCallback, IOptionalCallback } from 'ethtps.data'
 
 interface IProviderModalConfiguration extends INoDataAvailableEvent {
 	open: boolean
@@ -32,6 +32,11 @@ const generateNoDataAvailableString = (provider?: string) =>
 
 export function ProviderModal(config: IProviderModalConfiguration) {
 	const [noData, setNoData] = useState(false)
+	const noDataHandler = createHandlerFromCallback((newValue?: string) => {
+		setNoData(true)
+		console.debug('No data available for ' + newValue)
+	})
+
 	return (
 		<React.Fragment>
 			<Modal
@@ -48,8 +53,15 @@ export function ProviderModal(config: IProviderModalConfiguration) {
 						<Paper elevation={2}>
 							{ConditionalRender(
 								<ProviderDataChart
-									onNoDataAvailable={() => setNoData(true)}
-									provider={config.provider?.name as string}
+									onNoDataAvailable={
+										noDataHandler as IOptionalCallback<
+											string | undefined
+										>
+									}
+									provider={{
+										provider: config.provider
+											?.name as string,
+									}}
 								/>,
 								config.provider !== undefined
 							)}

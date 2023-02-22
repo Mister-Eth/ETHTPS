@@ -1,6 +1,5 @@
-import { inline, uniform } from '../../Types'
-import { Box, Typography } from '@mui/material'
-import { IObjectWithProvider } from 'ethtps.data'
+import { Typography } from '@mui/material'
+import { IObjectWithProvider, inline, uniform } from 'ethtps.data'
 import React from 'react'
 
 interface ILargeProviderHeaderConfiguration extends IObjectWithProvider {}

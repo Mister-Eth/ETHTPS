@@ -1,2 +1,6 @@
 import { PropsWithChildren } from 'react';
-export declare function LoadingApplicationDataPartial({ children, ...props }: PropsWithChildren): JSX.Element;
+type Loadee = {
+    loaded: boolean;
+};
+export declare function LoadingApplicationDataPartial({ children, ...props }: PropsWithChildren, loadees: Loadee[]): JSX.Element;
+export {};

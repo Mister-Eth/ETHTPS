@@ -1,6 +1,12 @@
 import React from 'react'
 import { IHandler } from '../IHandler'
 
+export function createHandlerFromCallback<TReturnValue>(
+	callback: (newValue?: TReturnValue) => void
+): Handler<TReturnValue> | undefined {
+	return createHandlerFromType<TReturnValue>({ callback })
+}
+
 export function useHandler<TReturnValue>(
 	handler?: IHandler<TReturnValue>
 ): Handler<TReturnValue> | undefined {
@@ -21,7 +27,7 @@ function createHandler<THandler extends IHandler<TReturnValue>, TReturnValue>(
 	handler?: THandler
 ): Handler<TReturnValue> {
 	if (!handler)
-		return { setter: (newValue?: TReturnValue) => {}, value: undefined }
+		return new Handler<TReturnValue>((newValue?: TReturnValue) => {})
 
 	const [value, setValue] = React.useState<TReturnValue | undefined>(
 		handler.defaultValue
@@ -30,10 +36,22 @@ function createHandler<THandler extends IHandler<TReturnValue>, TReturnValue>(
 		setValue(newValue)
 		handler.callback?.(newValue as TReturnValue)
 	}
-	return { setter, value }
+	return new Handler<TReturnValue>(setter, value)
 }
 
-export type Handler<TReturnValue> = {
-	setter: (newValue?: TReturnValue) => void
-	value?: TReturnValue | undefined
+export class Handler<TReturnValue> {
+	constructor(
+		public setter: (newValue?: TReturnValue) => void = (
+			newValue?: TReturnValue
+		) => {
+			this.value = newValue
+		},
+		public value?: TReturnValue | undefined
+	) {}
+
+	public convertToIHandler(): IHandler<TReturnValue> {
+		return {
+			defaultValue: this.value,
+		}
+	}
 }

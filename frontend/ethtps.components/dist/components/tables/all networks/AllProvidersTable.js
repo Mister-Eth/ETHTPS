@@ -1,11 +1,11 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { TableContainer, Paper, Table, TableHead, TableBody, } from '@mui/material';
 import { useState } from 'react';
-import React from 'react';
-import { ConditionalRender } from '../../../Types';
-import { SeeMoreButton } from '../../buttons/SeeMoreButton';
 import { AllProvidersHeader } from './AllProvidersHeader';
 import { AllProvidersRows } from './AllProvidersRows';
+import React from 'react';
+import { SeeMoreButton } from '../../buttons/see-more/SeeMoreButton';
+import { ConditionalRender } from '../../../Types';
 export function AllProvidersTable(tableData) {
     const oldShowRowCountValue = tableData.maxRowsBeforeShowingExpand;
     const [showRowCount, setShowRowCount] = useState(tableData?.maxRowsBeforeShowingExpand);

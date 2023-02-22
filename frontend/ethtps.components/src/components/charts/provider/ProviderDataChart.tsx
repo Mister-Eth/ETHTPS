@@ -9,7 +9,7 @@ import { DateRangeSelectorDropdown } from '../../dropdowns/concrete/DateRangeSel
 import { SpinningArrows } from '../../icons/spinning hourglass/SpinningArrows'
 import { BrushChart } from '../brush/BrushChart'
 import { IChartConfigurationModel } from '../IChartConfigurationModel'
-import { useHandler } from 'ethtps.data'
+import { useHandler, IOptionalCallback } from 'ethtps.data'
 import { useQuery } from 'react-query'
 import { ProviderIntervalDropdown } from '../../dropdowns/concrete/ProviderIntervalDropdown'
 import { NetworksDropdown } from '../../dropdowns/concrete/NetworksDropdown'
@@ -21,7 +21,7 @@ export function ProviderDataChart(config: IChartConfigurationModel) {
 	const modeHandler = useHandler<DataType>(config.mode)
 	const networkHandler = useHandler<string>(config.network)
 	const [noData, setNoData] = useState(false)
-	const [usesDatePicker, setUsesDatePicker] = useState(false)
+	const [usesDatePicker] = useState(false)
 	const [points, setPoints] = useState<DatedXYDataPoint[]>([])
 
 	useQuery(`${config.provider} ${config.mode} ${config.interval} data`, () =>
@@ -76,7 +76,13 @@ export function ProviderDataChart(config: IChartConfigurationModel) {
 					elevation={1}
 					sx={{ display: noData ? 'none' : undefined }}>
 					{displayNetworksDropdown ? (
-						<NetworksDropdown changed={{ ...networkHandler }} />
+						<NetworksDropdown
+							changed={
+								networkHandler as IOptionalCallback<
+									string | undefined
+								>
+							}
+						/>
 					) : (
 						<></>
 					)}
@@ -88,14 +94,14 @@ export function ProviderDataChart(config: IChartConfigurationModel) {
 						<ProviderIntervalDropdown
 							hidden={noData}
 							noDataAvailable={config.onNoDataAvailable}
-							onDataLoaded={(intervals: string[]) =>
-								intervalHandler?.setter(intervals?.at(0))
+							changed={
+								config.interval
+									?.callback as IOptionalCallback<string>
 							}
 							provider={config.provider?.provider}
-							selectionChanged={intervalHandler?.setter}
 						/>
 						<DataModeButtonGroup
-							modeChanged={modeHandler?.setter}
+							modeHandle={modeHandler?.convertToIHandler()}
 						/>
 					</div>
 				</Paper>

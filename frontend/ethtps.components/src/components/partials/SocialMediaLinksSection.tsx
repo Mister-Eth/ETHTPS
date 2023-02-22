@@ -1,8 +1,8 @@
-import { AnimatedLinkButtonWithIcon } from '../buttons/AnimatedLinkButtonWithIcon'
 import { ButtonGroup } from '@mui/material'
 import { GitHub, Twitter } from '@mui/icons-material'
 import { DiscordIcon } from '../icons/DiscordIcon'
 import React from 'react'
+import { AnimatedLinkButtonWithIcon } from '../buttons/groups/animated/AnimatedLinkButtonWithIcon'
 
 export function SocialMediaLinksSection(): JSX.Element {
 	return (
