@@ -4,15 +4,17 @@ import {
 	IHandler,
 	useHandler,
 	IRequestHandler,
+	handleException,
 } from 'ethtps.data'
 import {
 	toShortString_2,
 	fromShortString_2,
 } from 'ethtps.data/dist/models/TimeIntervals'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Dropdown } from '../types/Dropdown'
 import { IDropdownConfig } from '../types/IDropdownConfig'
 import { IDropdownCallbackWithProvider } from '../types/IDropdownCallbackWithProvider'
+import { useEffect } from 'react'
 
 interface IProviderIntervalDropdownConfig
 	extends IDropdownCallbackWithProvider<string>,
@@ -27,7 +29,17 @@ export function ProviderIntervalDropdown(
 ) {
 	const intervals = useHandler(config.availableIntervals)
 	const noDataAvailable = useHandler(config.noDataAvailable)
-	config.loader?.refetchFunction()
+	config.loader
+		?.dataGetter()
+		.then((x) => {
+			intervals?.setter(x)
+		})
+		.catch(handleException)
+	useEffect(() => {
+		if (intervals?.value?.length === 0) {
+			noDataAvailable?.setter(config.provider as string)
+		}
+	}, [intervals?.value])
 	return (
 		<React.Fragment>
 			<Dropdown<string>

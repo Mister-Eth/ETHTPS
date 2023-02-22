@@ -6,13 +6,12 @@ import React, { useState, useEffect, useRef } from 'react'
 import { ConditionalRender } from 'src/Types'
 import { DataModeButtonGroup } from '../../buttons/groups/data-mode-group/DataModeButtonGroup'
 import { DateRangeSelectorDropdown } from '../../dropdowns/concrete/DateRangeSelectorDropdown'
-import { NetworksDropdown } from '../../dropdowns/NetworksDropdown'
-import { ProviderIntervalDropdown } from '../../dropdowns/ProviderIntervalDropdown'
 import { SpinningArrows } from '../../icons/spinning hourglass/SpinningArrows'
 import { BrushChart } from '../brush/BrushChart'
 import { IChartConfigurationModel } from '../IChartConfigurationModel'
 import { useHandler } from 'ethtps.data'
 import { useQuery } from 'react-query'
+import { NetworksDropdown, ProviderIntervalDropdown } from 'src'
 
 export function ProviderDataChart(config: IChartConfigurationModel) {
 	const displayNetworksDropdown =
@@ -31,7 +30,18 @@ export function ProviderDataChart(config: IChartConfigurationModel) {
 	useEffect(() => {
 		if (config.request?.fetchInfo?.isSuccess) {
 			if (config.data) {
-				if (config.data?.data) setPoints(config.data?.data?.dataPoints)
+				if (config.data?.data)
+					setPoints(
+						config.data?.data?.dataPoints
+							?.filter((x) => x !== undefined)
+							?.map(
+								(x) =>
+									(x ?? {
+										x: new Date(),
+										y: 0,
+									}) as DatedXYDataPoint
+							) ?? []
+					)
 			}
 			setNoData(false)
 		}
