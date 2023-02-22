@@ -4,7 +4,7 @@ import { Logo } from '../Logo'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import { LinksSection } from '../LinksSection'
-import React, { Fragment } from 'react'
+import React from 'react'
 
 export function CompactHeader(): JSX.Element {
 	return (

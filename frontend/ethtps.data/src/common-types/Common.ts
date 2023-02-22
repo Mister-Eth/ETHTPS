@@ -6,6 +6,8 @@ import {
 	InstantDataResponseModel,
 } from './Dictionaries'
 import { toShortString_2 } from '../models/TimeIntervals'
+import { IL2DataRequestHandler } from '../models/charts/requests/IL2DataRequestHandler'
+import { IHandler } from '../models/charts/handlers/IHandler'
 
 export function toShortString(type: DataType): string {
 	switch (type) {

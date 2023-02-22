@@ -1,7 +1,6 @@
-import { Fragment, useEffect, useRef, useState } from 'react'
-import { ProviderIntervalDropdown } from '../dropdowns/ProviderIntervalDropdown'
-import { IntervalDropdown } from '../dropdowns/IntervalDropdown'
-import { ConditionalRender, ConditionalSkeletonRender } from '../../Types'
+import { useEffect, useRef, useState } from 'react'
+import { ConditionalSkeletonRender } from '../../Types'
+import React from 'react'
 
 export function MultiProviderVSIXChart() {
 	const [containerWidth, setContainerWidth] = useState(0)

@@ -1,5 +1,5 @@
 import { Alert, AlertTitle, Box, Modal, Paper } from '@mui/material'
-import { ProviderDataChart } from '../../../charts/ProviderDataChart'
+import { ProviderDataChart } from '../../../charts/provider/ProviderDataChart'
 import { ConditionalRender } from '../../../../Types'
 import { INoDataAvailableEvent } from '../../../INoDataAvailableEvent'
 import { useState } from 'react'
