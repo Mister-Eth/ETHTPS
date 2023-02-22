@@ -13,13 +13,11 @@ import React from 'react'
 import { QuestionMark } from '@mui/icons-material'
 import { useState } from 'react'
 import { ConditionalRender } from '../../../Types'
-import React from 'react'
 import { FaceRatingGroup } from '../feedback/FaceRatingGroup'
 
 export function SimpleDesktopFeedbackExperiment() {
 	const [display, setDisplay] = useState(false)
 	const [showPopup, setShowPopup] = useState(false)
-	const [hovered, setHovered] = useState(false)
 	setTimeout(() => {
 		setDisplay(true)
 	}, 1 * 1000) //Display after 15 seconds

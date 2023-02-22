@@ -5,7 +5,7 @@ import { DataType, DatedXYDataPoint } from 'ethtps.api.client'
 import React, { useState, useEffect, useRef } from 'react'
 import { ConditionalRender } from 'src/Types'
 import { DataModeButtonGroup } from '../../buttons/groups/data-mode-group/DataModeButtonGroup'
-import { DateRangeSelectorDropdown } from '../../dropdowns/DateRangeSelectorDropdown'
+import { DateRangeSelectorDropdown } from '../../dropdowns/concrete/DateRangeSelectorDropdown'
 import { NetworksDropdown } from '../../dropdowns/NetworksDropdown'
 import { ProviderIntervalDropdown } from '../../dropdowns/ProviderIntervalDropdown'
 import { SpinningArrows } from '../../icons/spinning hourglass/SpinningArrows'
@@ -31,7 +31,7 @@ export function ProviderDataChart(config: IChartConfigurationModel) {
 	useEffect(() => {
 		if (config.request?.fetchInfo?.isSuccess) {
 			if (config.data) {
-				if (config.data?.data) setPoints(config.data?.data)
+				if (config.data?.data) setPoints(config.data?.data?.dataPoints)
 			}
 			setNoData(false)
 		}

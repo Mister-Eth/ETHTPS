@@ -1,3 +1,4 @@
+/// <reference types="react" />
 export interface IAnimatedLinkButtonWithIconProperties {
     image: JSX.Element;
     text: string;

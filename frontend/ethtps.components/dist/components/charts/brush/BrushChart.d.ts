@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import { DatedXYDataPoint } from 'ethtps.api.client';
 export declare const accentColor = "#f6acc8";
 export declare const background = "#584153";

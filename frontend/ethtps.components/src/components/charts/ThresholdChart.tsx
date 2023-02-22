@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { Group } from '@visx/group'
 import { curveBasis } from '@visx/curve'
 import { LinePath } from '@visx/shape'

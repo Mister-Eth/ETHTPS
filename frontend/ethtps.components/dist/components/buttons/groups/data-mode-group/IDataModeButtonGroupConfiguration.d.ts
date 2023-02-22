@@ -1,4 +1,5 @@
 import { DataType } from 'ethtps.data';
+import { IHandler } from 'ethtps.data';
 export interface IDataModeButtonGroupConfiguration {
-    modeChanged: (mode: DataType) => void;
+    modeHandle?: IHandler<DataType>;
 }

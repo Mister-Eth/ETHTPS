@@ -1,3 +1,4 @@
+/// <reference types="react" />
 interface VISXLegendProperties {
     keys?: string[] | null;
     colors?: string[] | null;

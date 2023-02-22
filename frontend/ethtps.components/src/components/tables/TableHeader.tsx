@@ -3,7 +3,6 @@ import { centered } from './Cells.Types'
 import { Typography } from '@mui/material/'
 import { tableHeaderCellTypography } from './all networks/cells/Typography.types'
 import React from 'react'
-import React from 'react'
 
 interface ITableHeaderParams {
 	text?: string[]

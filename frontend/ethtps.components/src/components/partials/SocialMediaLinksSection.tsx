@@ -3,7 +3,6 @@ import { ButtonGroup } from '@mui/material'
 import { GitHub, Twitter } from '@mui/icons-material'
 import { DiscordIcon } from '../icons/DiscordIcon'
 import React from 'react'
-import React from 'react'
 
 export function SocialMediaLinksSection(): JSX.Element {
 	return (

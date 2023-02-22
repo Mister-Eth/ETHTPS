@@ -1,3 +1,4 @@
+/// <reference types="react" />
 interface IAnimatedTypographyConfiguration {
     child: JSX.Element | string;
     animationClassName: string;

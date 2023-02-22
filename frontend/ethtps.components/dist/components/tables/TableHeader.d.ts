@@ -1,3 +1,4 @@
+/// <reference types="react" />
 interface ITableHeaderParams {
     text?: string[];
 }

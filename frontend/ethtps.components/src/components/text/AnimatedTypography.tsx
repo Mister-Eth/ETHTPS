@@ -1,6 +1,5 @@
 import { Typography } from '@mui/material'
 import React from 'react'
-import React from 'react'
 
 interface IAnimatedTypographyConfiguration {
 	child: JSX.Element | string

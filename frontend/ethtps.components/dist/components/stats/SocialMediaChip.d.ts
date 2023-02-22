@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import { IProviderExternalWebsite } from 'ethtps.api.client';
 interface ISocialMediaChipConfiguration {
     href?: string | null;

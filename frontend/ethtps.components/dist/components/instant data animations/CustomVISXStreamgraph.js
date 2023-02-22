@@ -1,6 +1,6 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 /* eslint-disable react-hooks/rules-of-hooks */
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Stack } from '@visx/shape';
 import { PatternCircles } from '@visx/pattern';
 import { scaleLinear } from '@visx/scale';
@@ -10,9 +10,8 @@ import { WebsocketStatusPartial } from '../stats/WebsocketStatusPartial';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { curveCardinal } from '@visx/curve';
-import { useQuery } from 'react-query';
 import moment from 'moment';
-import { DataType } from 'ethtps.api.client';
+import { DataType, } from 'ethtps.data';
 import { colorHooks } from 'ethtps.data';
 import { useLiveData, useLiveDataState } from './hooks';
 // constants
@@ -30,7 +29,7 @@ const getY0 = (d) => {
 const getY1 = (d) => {
     return yScale(Math.max(...d)) ?? 0;
 };
-export function CustomVISXStreamgraph({ width, height, animate = true, }) {
+export function CustomVISXStreamgraph({ width, height, animate = true, l2DataGetter, }) {
     //const forceUpdate = useForceUpdate()
     //const handlePress = () => forceUpdate()
     if (width < 10)
@@ -42,17 +41,20 @@ export function CustomVISXStreamgraph({ width, height, animate = true, }) {
         providers: ['Mock until loaded'],
         data: [range(60).map(() => Math.random() * 10)],
     });
-    const { data, isSuccess, refetch } = useQuery('get past data', () => api.getL2Data({
-        dataType: liveState?.mode ?? DataType.Tps,
-        l2DataRequestModel: {
+    const generateRequestModel = () => {
+        return {
             startDate: moment().subtract(1, 'minute').toDate(),
             providers: ['All'],
             includeSidechains: liveState.sidechainsIncluded,
             mergeOptions: {
                 mergePercentage: 10,
             },
-        },
-    }));
+        };
+    };
+    useCallback(() => l2DataGetter.dataGetter({
+        ...generateRequestModel(),
+        dataType: DataType.Tps,
+    }), [liveState.mode, liveState.sidechainsIncluded, liveState.smoothing]);
     const [max, setMax] = useState(0);
     useEffect(() => {
         refetch();

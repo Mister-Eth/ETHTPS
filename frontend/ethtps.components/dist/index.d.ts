@@ -20,8 +20,8 @@ import { SidechainToggleButton } from './components/buttons/sidechain-toggle/Sid
 import { BrushChart } from './components/charts/brush/BrushChart';
 import { ProviderDataChart } from './components/charts/provider/ProviderDataChart';
 import { ThresholdChart } from './components/charts/ThresholdChart';
-import { DateRangeSelectorDropdown } from './components/dropdowns/DateRangeSelectorDropdown';
-import { Dropdown } from './components/dropdowns/Dropdown';
+import { DateRangeSelectorDropdown } from './components/dropdowns/concrete/DateRangeSelectorDropdown';
+import { Dropdown } from './components/dropdowns/types/Dropdown';
 import { NetworksDropdown } from './components/dropdowns/NetworksDropdown';
 import { ProviderIntervalDropdown } from './components/dropdowns/ProviderIntervalDropdown';
 import { SpinningArrows } from './components/icons/spinning hourglass/SpinningArrows';

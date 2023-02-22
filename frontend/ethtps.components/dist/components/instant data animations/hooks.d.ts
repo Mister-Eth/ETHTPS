@@ -22,9 +22,9 @@ export type LiveData = {
     sidechainsIncluded: boolean;
 };
 export declare const createDataPoint: (data: DataResponseModelDictionary, provider: ProviderResponseModel, color: string) => LiveDataPoint;
-export declare function useGet1mTPS(): DataResponseModelDictionary | undefined;
-export declare function useGet1mGPS(): DataResponseModelDictionary | undefined;
-export declare function useGet1mGTPS(): DataResponseModelDictionary | undefined;
+export declare function useGet1mTPS(): any;
+export declare function useGet1mGPS(): any;
+export declare function useGet1mGTPS(): any;
 export declare function useLiveDataState(): {
     smoothing: import("ethtps.api.client").TimeInterval;
     sidechainsIncluded: boolean;

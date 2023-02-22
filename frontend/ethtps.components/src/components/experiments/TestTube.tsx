@@ -1,16 +1,25 @@
-import { Fragment, useEffect } from 'react'
-import { BrowserView, MobileOnlyView, isDesktop } from 'react-device-detect'
+import { BrowserView, MobileOnlyView } from 'react-device-detect'
 import { useState } from 'react'
 import { ConditionalRender } from '../../Types'
 import { SimpleDesktopFeedbackExperiment } from './desktop/SimpleDesktopFeedbackExperiment'
-import { setExperiments } from 'ethtps.data/dist/slices/ExperimentSlice'
-import { store, useAppSelector } from 'ethtps.data'
+import {
+	IRequestHandler,
+	store,
+	handleException,
+	useAppSelector,
+} from 'ethtps.data'
 import React from 'react'
 
-export function TestTube() {
+export async function TestTube(
+	request: IRequestHandler<{ isDesktop: boolean }, number[]>,
+	params: {
+		isDesktop: boolean
+	}
+): Promise<JSX.Element> {
 	const [currentExperiments, setCurrentExperiments] = useState<number[]>(
 		useAppSelector((state) => state.experiments) || []
 	)
+	/*
 	const [fetchedFromServer, setFetchedFromServer] = useState(false)
 	if (!fetchedFromServer) {
 		loadAvailableExperiments(isDesktop ? 'Desktop' : 'Mobile').then((x) => {
@@ -18,8 +27,14 @@ export function TestTube() {
 			store.dispatch(setExperiments(x))
 			setFetchedFromServer(true)
 		})
+	}*/
+	try {
+		const result = await request.dataGetter(params)
+		setCurrentExperiments(result)
+		store.dispatch(setCurrentExperiments(result))
+	} catch (e) {
+		handleException(e)
 	}
-	useEffect(() => {}, [currentExperiments])
 	return (
 		<React.Fragment>
 			<BrowserView>

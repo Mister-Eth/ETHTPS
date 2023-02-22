@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import { IObjectWithProvider } from 'ethtps.data';
 interface IProviderCarouselConfiguration extends IObjectWithProvider {
 }

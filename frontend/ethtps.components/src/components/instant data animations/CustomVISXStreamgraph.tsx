@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Stack } from '@visx/shape'
 import { PatternCircles } from '@visx/pattern'
 import { scaleLinear } from '@visx/scale'
@@ -10,10 +10,15 @@ import { WebsocketStatusPartial } from '../stats/WebsocketStatusPartial'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { curveCardinal } from '@visx/curve'
-import { useQuery } from 'react-query'
 import moment from 'moment'
-import { L2DataResponseModel, DataType } from 'ethtps.api.client'
-import { colorHooks } from 'ethtps.data'
+import {
+	IL2DataResponseModel,
+	DataType,
+	IDataGetter,
+	colorHooks,
+	IL2DataRequestModel,
+	handleException,
+} from 'ethtps.data'
 import { useLiveData, useLiveDataState } from './hooks'
 // constants
 const NUM_LAYERS = 20
@@ -36,12 +41,16 @@ const getY0 = (d: Datum) => {
 const getY1 = (d: Datum) => {
 	return yScale(Math.max(...d)) ?? 0
 }
+type L2Request = {
+	[K in keyof IL2DataRequestModel]: IL2DataRequestModel[K]
+} & { dataType: DataType }
 
 export type StreamGraphProps = {
 	width: number
 	height: number
 	animate?: boolean
 	providerHovered?: (name: string) => void
+	l2DataGetter?: IDataGetter<L2Request, IL2DataResponseModel>
 }
 
 type StreamchartLayers = {
@@ -53,6 +62,7 @@ export function CustomVISXStreamgraph({
 	width,
 	height,
 	animate = true,
+	l2DataGetter,
 }: StreamGraphProps) {
 	//const forceUpdate = useForceUpdate()
 	//const handlePress = () => forceUpdate()
@@ -60,45 +70,57 @@ export function CustomVISXStreamgraph({
 	if (width < 10) return null
 
 	const liveState = useLiveDataState()
-	const [pastData, setPastData] = useState<L2DataResponseModel>()
+	const [data, setData] = useState<IL2DataResponseModel>()
 	const colors = colorHooks.useGetProviderColorDictionaryFromAppStore()
 	const [processedStreamchartData, setProcessedStreamchartData] =
 		useState<StreamchartLayers>({
 			providers: ['Mock until loaded'],
 			data: [range(60).map(() => Math.random() * 10)],
 		})
-	const { data, isSuccess, refetch } = useQuery('get past data', () =>
-		api.getL2Data({
-			dataType: liveState?.mode ?? DataType.Tps,
-			l2DataRequestModel: {
-				startDate: moment().subtract(1, 'minute').toDate(),
-				providers: ['All'],
-				includeSidechains: liveState.sidechainsIncluded,
-				mergeOptions: {
-					mergePercentage: 10,
-				},
+	const generateRequestModel = (): IL2DataRequestModel => {
+		return {
+			startDate: moment().subtract(1, 'minute').toDate(),
+			providers: ['All'],
+			includeSidechains: liveState.sidechainsIncluded,
+			mergeOptions: {
+				mergePercentage: 10,
 			},
-		})
-	)
+		}
+	}
+	const getDataCallback = () =>
+		useCallback(
+			async () =>
+				await l2DataGetter?.dataGetter({
+					...generateRequestModel(),
+					dataType: DataType.Tps,
+				}),
+			[
+				(liveState.mode,
+				liveState.sidechainsIncluded,
+				liveState.smoothing),
+			]
+		)
 	const [max, setMax] = useState(0)
 	useEffect(() => {
-		refetch()
+		getDataCallback()()
+			.then((x) => setData(x))
+			.catch(handleException)
 	}, [liveState.mode, liveState.sidechainsIncluded, liveState.smoothing])
 	useEffect(() => {
-		if (isSuccess) {
-			setPastData(data)
-			if (pastData?.simpleAnalysis?.allDatasetsSameLength) {
+		if (data) {
+			setData(data)
+			if (data?.simpleAnalysis?.allDatasetsSameLength) {
 				let length = Math.min(
-					pastData?.simpleAnalysis?.uniformDatasetLength ?? 1,
+					data?.simpleAnalysis?.uniformDatasetLength ?? 1,
 					60
 				)
 				xScale.domain([0, length - 1])
-				if (pastData.datasets)
+				if (data.datasets)
 					setProcessedStreamchartData({
-						providers: pastData.datasets.map(
+						providers: data.datasets.map(
 							(x) => x.provider as string
 						),
-						data: pastData.datasets.map(
+						data: data.datasets.map(
 							(x) =>
 								x.dataPoints
 									?.slice(0, length)

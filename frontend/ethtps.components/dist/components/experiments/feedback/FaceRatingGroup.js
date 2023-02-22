@@ -1,18 +1,11 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import { styled } from '@mui/material/styles';
-import Rating from '@mui/material/Rating';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAltOutlined';
 import SentimentVerySatisfiedIcon from '@mui/icons-material/SentimentVerySatisfied';
 import { Paper, Grid, Tooltip, Typography, IconButton } from '@mui/material';
-const StyledRating = styled(Rating)(({ theme }) => ({
-    '& .MuiRating-iconEmpty .MuiSvgIcon-root': {
-        color: theme.palette.action.disabled,
-        fontSize: 'large',
-    },
-}));
 const customIcons = [
     {
         icon: (_jsx(SentimentVeryDissatisfiedIcon, { fontSize: "inherit", color: "error" })),
