@@ -1,1 +1,0 @@
-export declare function useLoadValuesHook<T>(dataName: string, loadFunction: () => Promise<T> | undefined, setValueFunction: (value?: T) => void, cacheTime?: number | undefined, refetchInterval?: number | undefined): boolean;
