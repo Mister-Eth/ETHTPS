@@ -10,4 +10,4 @@ export type ThresholdProps = {
         left: number;
     };
 };
-export declare function ThresholdChart({ width, height, margin, }: ThresholdProps): JSX.Element | null;
+export declare function ThresholdChart({ width, height, margin, }: ThresholdProps): JSX.Element;

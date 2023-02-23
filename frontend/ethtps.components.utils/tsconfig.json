@@ -7,8 +7,9 @@
     "outDir": "./dist",
     "esModuleInterop": true,
     "baseUrl": ".",
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "skipLibCheck": true
   },
   "include": ["src/**/*.ts", "tests/**/*.ts", "src/index.ts", "src/*.tsx"],
-  "exclude": ["node_modules", ".vscode"]
+  "exclude": ["node_modules", "dist", ".vscode"]
 }

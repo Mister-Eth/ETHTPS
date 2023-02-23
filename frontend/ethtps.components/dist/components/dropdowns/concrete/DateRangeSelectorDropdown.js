@@ -1,23 +1,30 @@
-import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import { addDays } from 'date-fns';
-import { useState, useEffect } from 'react';
-import { DateRange } from 'react-date-range';
-import { Chip, ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper, } from '@mui/material';
-import React from 'react';
-import ButtonGroup from '@mui/material/ButtonGroup';
-export function DateRangeSelectorDropdown(config) {
-    const [state, setState] = useState([
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DateRangeSelectorDropdown = void 0;
+const jsx_runtime_1 = require("react/jsx-runtime");
+const date_fns_1 = require("date-fns");
+const react_1 = require("react");
+const react_date_range_1 = require("react-date-range");
+const material_1 = require("@mui/material");
+const react_2 = __importDefault(require("react"));
+const ButtonGroup_1 = __importDefault(require("@mui/material/ButtonGroup"));
+function DateRangeSelectorDropdown(config) {
+    var _a, _b;
+    const [state, setState] = (0, react_1.useState)([
         {
             startDate: new Date(),
-            endDate: addDays(new Date(), 7),
+            endDate: (0, date_fns_1.addDays)(new Date(), 7),
             key: 'selection',
         },
     ]);
-    const [popperOpen, setPopperOpen] = useState(!config.hidden);
-    useEffect(() => {
+    const [popperOpen, setPopperOpen] = (0, react_1.useState)(!config.hidden);
+    (0, react_1.useEffect)(() => {
         setPopperOpen(!config.hidden);
     }, [config.hidden]);
-    const anchorRef = React.useRef(null);
+    const anchorRef = react_2.default.useRef(null);
     const handleToggle = () => {
         setPopperOpen((prevOpen) => !prevOpen);
     };
@@ -39,18 +46,19 @@ export function DateRangeSelectorDropdown(config) {
             onMouseOutCapture: setHoverAwayTimeout,
             onMouseDownCapture: () => setPopperOpen(true),
         };
-    return (_jsxs(React.Fragment, { children: [_jsx(ButtonGroup, { ...hoverEvents, variant: "outlined", ref: anchorRef, "aria-label": "split button", color: 'primary', sx: {
+    return ((0, jsx_runtime_1.jsxs)(react_2.default.Fragment, { children: [(0, jsx_runtime_1.jsx)(ButtonGroup_1.default, Object.assign({}, hoverEvents, { variant: "outlined", ref: anchorRef, "aria-label": "split button", color: 'primary', sx: {
                     cursor: 'pointer',
                     opacity: config.hidden ? 0 : 1,
-                }, children: _jsx(Chip, { color: "primary", label: state === undefined
+                } }, { children: (0, jsx_runtime_1.jsx)(material_1.Chip, { color: "primary", label: state === undefined
                         ? 'Range'
-                        : state[0].startDate?.toLocaleDateString() +
+                        : ((_a = state[0].startDate) === null || _a === void 0 ? void 0 : _a.toLocaleDateString()) +
                             ' - ' +
-                            state[0].endDate?.toLocaleDateString(), variant: "outlined" }) }), _jsx(Popper, { sx: {
+                            ((_b = state[0].endDate) === null || _b === void 0 ? void 0 : _b.toLocaleDateString()), variant: "outlined" }) })), (0, jsx_runtime_1.jsx)(material_1.Popper, Object.assign({ sx: {
                     zIndex: 1,
-                }, open: popperOpen, anchorEl: anchorRef.current, role: undefined, transition: true, disablePortal: true, children: ({ TransitionProps, placement }) => (_jsx(Grow, { ...TransitionProps, style: {
+                }, open: popperOpen, anchorEl: anchorRef.current, role: undefined, transition: true, disablePortal: true }, { children: ({ TransitionProps, placement }) => ((0, jsx_runtime_1.jsx)(material_1.Grow, Object.assign({}, TransitionProps, { style: {
                         transformOrigin: placement === 'bottom'
                             ? 'center top'
                             : 'center bottom',
-                    }, children: _jsx(Paper, { children: _jsx(ClickAwayListener, { onClickAway: () => setPopperOpen(false), children: _jsx(MenuList, { id: "split-button-menu", autoFocusItem: true, children: _jsx(MenuItem, { ...hoverEvents, onClick: undefined, children: _jsx(DateRange, { onChange: (item) => setState([item.selection]), moveRangeOnFirstSelection: false, months: 1, ranges: state, scroll: { enabled: true }, direction: "vertical" }) }) }) }) }) })) })] }));
+                    } }, { children: (0, jsx_runtime_1.jsx)(material_1.Paper, { children: (0, jsx_runtime_1.jsx)(material_1.ClickAwayListener, Object.assign({ onClickAway: () => setPopperOpen(false) }, { children: (0, jsx_runtime_1.jsx)(material_1.MenuList, Object.assign({ id: "split-button-menu", autoFocusItem: true }, { children: (0, jsx_runtime_1.jsx)(material_1.MenuItem, Object.assign({}, hoverEvents, { onClick: undefined }, { children: (0, jsx_runtime_1.jsx)(react_date_range_1.DateRange, { onChange: (item) => setState([item.selection]), moveRangeOnFirstSelection: false, months: 1, ranges: state, scroll: { enabled: true }, direction: "vertical" }) })) })) })) }) }))) }))] }));
 }
+exports.DateRangeSelectorDropdown = DateRangeSelectorDropdown;

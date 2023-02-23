@@ -1,18 +1,27 @@
-import React from 'react';
-import { SkeletonWithTooltip } from './components/partials/skeletons/SkeletonWithTooltip';
-export const ConditionalRender = (component, renderIf) => {
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.createDropdownOptionWithIcon = exports.ConditionalSkeletonRender = exports.ConditionalRender = void 0;
+const react_1 = __importDefault(require("react"));
+const SkeletonWithTooltip_1 = require("./components/partials/skeletons/SkeletonWithTooltip");
+const ConditionalRender = (component, renderIf) => {
     return renderIf
         ? component
-        : React.createElement('div', {
+        : react_1.default.createElement('div', {
             className: 'placeholder',
         });
 };
-export const ConditionalSkeletonRender = (component, renderIf) => {
-    return renderIf ? component : React.createElement(SkeletonWithTooltip);
+exports.ConditionalRender = ConditionalRender;
+const ConditionalSkeletonRender = (component, renderIf) => {
+    return renderIf ? component : react_1.default.createElement(SkeletonWithTooltip_1.SkeletonWithTooltip);
 };
-export function createDropdownOptionWithIcon(value, icon) {
+exports.ConditionalSkeletonRender = ConditionalSkeletonRender;
+function createDropdownOptionWithIcon(value, icon) {
     return {
         value,
         icon,
     };
 }
+exports.createDropdownOptionWithIcon = createDropdownOptionWithIcon;

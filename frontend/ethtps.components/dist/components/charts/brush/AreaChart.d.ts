@@ -21,4 +21,4 @@ export default function AreaChart({ data, gradientColor, width, yMax, margin, xS
     top?: number;
     left?: number;
     children?: React.ReactNode;
-}): JSX.Element | null;
+}): JSX.Element;

@@ -1,5 +1,7 @@
-import { getSeededRandom } from '@visx/mock-data';
-const random = getSeededRandom(0.65);
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const mock_data_1 = require("@visx/mock-data");
+const random = (0, mock_data_1.getSeededRandom)(0.65);
 const getPoints = (array, pointCount) => {
     const x = 1 / (0.1 + random());
     const y = 2 * random() - 0.5;
@@ -18,4 +20,4 @@ const generateData = (pointCount, bumpCount) => {
         getPoints(arr, pointCount);
     return arr;
 };
-export default generateData;
+exports.default = generateData;

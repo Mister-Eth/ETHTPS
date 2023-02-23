@@ -30,4 +30,4 @@ export declare function useLiveDataState(): {
     mode: DataType;
 };
 export declare function useStreamchartData(interval: string): void;
-export declare function useLiveData(): LiveData | undefined;
+export declare function useLiveData(): LiveData;

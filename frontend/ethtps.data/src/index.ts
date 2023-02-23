@@ -99,6 +99,11 @@ import { IOptionalCallback } from './models/charts/handlers/IOptionalCallback'
 import { IOptionalDefault } from './models/charts/handlers/IOptionalDefault'
 import { L2DataRequestModel } from 'ethtps.api.client'
 import { useGetQueryWithAutoRefetch } from './hooks/QueryHooks'
+import { useGetProvidersFromAppStore } from './hooks/ProviderHooks'
+import {
+	useGetProviderColorDictionaryFromAppStore,
+	useGetProviderTypeColorDictionaryFromAppStore,
+} from './hooks/ColorHooks'
 export {
 	ApplicationState,
 	IGlobalDependencies,
@@ -146,6 +151,9 @@ export {
 	setExperiments,
 	useGetLiveDataFromAppStore,
 	useGetQueryWithAutoRefetch,
+	useGetProvidersFromAppStore,
+	useGetProviderColorDictionaryFromAppStore,
+	useGetProviderTypeColorDictionaryFromAppStore,
 }
 
 export {

@@ -6,14 +6,14 @@ import {
 	getModeData,
 	dataTypeToString,
 } from 'ethtps.data'
-import { useGetProviderColorDictionaryFromAppStore } from 'ethtps.data/dist/hooks/ColorHooks'
+import { useGetProviderColorDictionaryFromAppStore } from 'ethtps.data'
 import {
 	useGetLiveDataSmoothingFromAppStore,
 	useGetSidechainsIncludedFromAppStore,
 	useGetLiveDataModeFromAppStore,
 	useGetLiveDataFromAppStore,
 } from 'ethtps.data/dist/hooks/LiveDataHooks'
-import { useGetProvidersFromAppStore } from 'ethtps.data/dist/hooks/ProviderHooks'
+import { useGetProvidersFromAppStore } from 'ethtps.data'
 import { useState, useEffect } from 'react'
 
 export type InstantBarChartDataset = {

@@ -1,6 +1,6 @@
 /// <reference types="react" />
 export declare const ConditionalRender: (component: JSX.Element, renderIf?: boolean) => JSX.Element;
-export declare const ConditionalSkeletonRender: (component?: JSX.Element, renderIf?: boolean) => JSX.Element | undefined;
+export declare const ConditionalSkeletonRender: (component?: JSX.Element, renderIf?: boolean) => JSX.Element;
 interface IconTypeProps {
     width: number;
     height: number;

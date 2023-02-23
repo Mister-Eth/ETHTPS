@@ -13,5 +13,5 @@ export type StreamGraphProps = {
     providerHovered?: (name: string) => void;
     l2DataGetter?: IDataGetter<L2Request, L2DataResponseModel>;
 };
-export declare function CustomVISXStreamgraph({ width, height, animate, l2DataGetter, }: StreamGraphProps): JSX.Element | null;
+export declare function CustomVISXStreamgraph({ width, height, animate, l2DataGetter, }: StreamGraphProps): JSX.Element;
 export {};
