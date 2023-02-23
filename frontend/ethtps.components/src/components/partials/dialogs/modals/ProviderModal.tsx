@@ -4,7 +4,7 @@ import { ConditionalRender } from '../../../../Types'
 import { INoDataAvailableEvent } from '../../../INoDataAvailableEvent'
 import { useState } from 'react'
 import React from 'react'
-import { ProviderModel } from 'ethtps.api.client'
+import { ProviderModel } from 'ethtps.data'
 import { createHandlerFromCallback, IOptionalCallback } from 'ethtps.data'
 
 interface IProviderModalConfiguration extends INoDataAvailableEvent {

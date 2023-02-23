@@ -1,5 +1,5 @@
 import { Typography, TableCell, Tooltip } from '@mui/material'
-import { DataPoint } from 'ethtps.api.client'
+import { DataPoint } from 'ethtps.data'
 import { numberFormat, liveDataHooks } from 'ethtps.data'
 import { useGetMaxDataForProviderFromAppStore } from 'ethtps.data/dist/hooks/DataHooks'
 import moment from 'moment'

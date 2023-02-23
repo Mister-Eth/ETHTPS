@@ -14,7 +14,7 @@ import { LinearGradient } from '@visx/gradient'
 import { max, extent } from 'd3-array'
 import AreaChart from './AreaChart'
 import { BrushHandleRenderProps } from '@visx/brush/lib/BrushHandle'
-import { DatedXYDataPoint } from 'ethtps.api.client'
+import { DatedXYDataPoint } from 'ethtps.data'
 import React from 'react'
 
 const brushMargin = { top: 10, bottom: 15, left: 50, right: 20 }

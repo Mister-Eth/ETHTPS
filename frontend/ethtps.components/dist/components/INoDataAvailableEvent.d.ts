@@ -1,4 +1,4 @@
-import { ProviderModel } from 'ethtps.api.client';
+import { ProviderModel } from 'ethtps.data';
 export interface INoDataAvailableEvent {
     onNoDataAvailable?: (provider: ProviderModel | string) => void;
 }

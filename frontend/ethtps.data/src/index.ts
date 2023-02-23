@@ -18,14 +18,25 @@ import {
 } from './slices/ApplicationStateSlice'
 import { colorReducer } from './slices/ColorSlice'
 import { dataReducer } from './slices/DataSlice'
-import { experimentReducer } from './slices/ExperimentSlice'
+import { experimentReducer, setExperiments } from './slices/ExperimentSlice'
 import { intervalsReducer } from './slices/IntervalsSlice'
 import { liveDataReducer } from './slices/LiveDataSlice'
 import { networksReducer } from './slices/NetworksSlice'
 import { providersReducer } from './slices/ProvidersSlice'
 import websocketMiddleware from './slices/WebsocketSubscriptionMiddleware'
 import websocketSlice from './slices/WebsocketSubscriptionSlice'
-import { DataType } from 'ethtps.api.client'
+import {
+	DataType,
+	DataPoint,
+	ProviderResponseModel,
+	ProviderModel,
+	IProviderExternalWebsite,
+	DatedXYDataPoint,
+	StringXYDataPoint,
+	NumericXYDataPoint,
+	Dataset,
+	L2DataResponseModel,
+} from 'ethtps.api.client'
 import { store, useAppSelector, useAppDispatch } from './store'
 import * as appStateHooks from './hooks/ApplicationStateHooks'
 import * as colorHooks from './hooks/ColorHooks'
@@ -40,7 +51,10 @@ import {
 	dataTypeToString,
 	fromShortString_2,
 } from './models/TimeIntervals'
-import { useSetSidechainsIncluded } from './hooks/LiveDataHooks'
+import {
+	useSetSidechainsIncluded,
+	useGetLiveDataFromAppStore,
+} from './hooks/LiveDataHooks'
 import { IPagesState } from './models/IPagesState'
 import { useSetStoreAPIKey } from './hooks/ApplicationStateHooks'
 import { useGetExperimentsFromAppStore } from './hooks/ExperimentHooks'
@@ -69,8 +83,6 @@ import {
 } from './common-types/Dictionaries'
 import { INetworkChangedHandler } from './models/charts/handlers/l2DataParameterHandlers/INetworkChangedHandler'
 import { IL2DataRequestHandler } from './models/charts/requests/IL2DataRequestHandler'
-import { IL2DataRequestModel } from './models/charts/requests/IL2DataRequestModel'
-import { IL2DataResponseModel } from './models/charts/responses/IL2DataResponseModel'
 import { IModeChangedHandler } from './models/charts/handlers/l2DataParameterHandlers/IModeChangedHandler'
 import { IIntervalChangedHandler } from './models/charts/handlers/l2DataParameterHandlers/IIntervalChangedHandler'
 import { IIncludeSidechainsChangedHandler } from './models/charts/handlers/l2DataParameterHandlers/IIncludeSidechainsChangedHandler'
@@ -85,6 +97,7 @@ import { handleException } from './exceptions/ExceptionHandler'
 import { IDataGetter } from './models/charts/requests/IDataGetter'
 import { IOptionalCallback } from './models/charts/handlers/IOptionalCallback'
 import { IOptionalDefault } from './models/charts/handlers/IOptionalDefault'
+import { L2DataRequestModel } from 'ethtps.api.client'
 export {
 	ApplicationState,
 	IGlobalDependencies,
@@ -129,6 +142,8 @@ export {
 	useSetStoreAPIKey,
 	setStoreAPIKey,
 	useGetExperimentsFromAppStore,
+	setExperiments,
+	useGetLiveDataFromAppStore,
 }
 
 export {
@@ -159,10 +174,10 @@ export {
 
 export {
 	IL2DataRequestHandler,
-	IL2DataRequestModel,
+	L2DataRequestModel,
 	IRequestHandler,
 	IDataGetter,
-	IL2DataResponseModel,
+	L2DataResponseModel,
 	IModeChangedHandler,
 	IIntervalChangedHandler,
 	IIncludeSidechainsChangedHandler,
@@ -176,3 +191,13 @@ export {
 }
 
 export { handleException }
+export {
+	DataPoint,
+	ProviderResponseModel,
+	ProviderModel,
+	IProviderExternalWebsite,
+	DatedXYDataPoint,
+	StringXYDataPoint,
+	NumericXYDataPoint,
+	Dataset,
+}

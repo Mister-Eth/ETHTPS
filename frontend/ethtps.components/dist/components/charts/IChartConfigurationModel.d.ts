@@ -1,4 +1,4 @@
-import { IIntervalChangedHandler, IL2DataRequestHandler, IL2DataResponseModel, IModeChangedHandler, INetworkChangedHandler } from 'ethtps.data';
+import { IIntervalChangedHandler, IL2DataRequestHandler, L2DataResponseModel, IModeChangedHandler, INetworkChangedHandler } from 'ethtps.data';
 import { IProviderDataChartConfiguration } from './IProviderDataChartConfiguration';
 import { IOptionalCallback } from 'ethtps.data';
 export interface IChartConfigurationModel {
@@ -7,6 +7,6 @@ export interface IChartConfigurationModel {
     mode?: IModeChangedHandler;
     interval?: IIntervalChangedHandler;
     network?: INetworkChangedHandler;
-    data?: IL2DataResponseModel;
+    data?: L2DataResponseModel;
     onNoDataAvailable: IOptionalCallback<string | undefined>;
 }

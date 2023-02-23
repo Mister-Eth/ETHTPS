@@ -1,7 +1,7 @@
 import { DoNotDisturbAlt } from '@mui/icons-material'
 import { Paper, Chip, Typography } from '@mui/material'
 import { Container } from '@mui/system'
-import { DataType, DatedXYDataPoint } from 'ethtps.api.client'
+import { DataType, DatedXYDataPoint } from 'ethtps.data'
 import React, { useState, useEffect, useRef } from 'react'
 import { ConditionalRender } from 'src/Types'
 import { DataModeButtonGroup } from '../../buttons/groups/data-mode-group/DataModeButtonGroup'
@@ -34,9 +34,9 @@ export function ProviderDataChart(config: IChartConfigurationModel) {
 				if (config.data?.data)
 					setPoints(
 						config.data?.data?.dataPoints
-							?.filter((x) => x !== undefined)
+							?.filter((x: DatedXYDataPoint) => x !== undefined)
 							?.map(
-								(x) =>
+								(x: DatedXYDataPoint) =>
 									(x ?? {
 										x: new Date(),
 										y: 0,

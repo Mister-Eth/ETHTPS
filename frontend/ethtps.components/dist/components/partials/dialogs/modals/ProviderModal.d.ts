@@ -1,6 +1,6 @@
 /// <reference types="react" />
 import { INoDataAvailableEvent } from '../../../INoDataAvailableEvent';
-import { ProviderModel } from 'ethtps.api.client';
+import { ProviderModel } from 'ethtps.data';
 interface IProviderModalConfiguration extends INoDataAvailableEvent {
     open: boolean;
     provider?: ProviderModel;

@@ -1,5 +1,5 @@
 /// <reference types="react" />
-import { IProviderExternalWebsite } from 'ethtps.api.client';
+import { IProviderExternalWebsite } from 'ethtps.data';
 interface ISocialMediaChipConfiguration {
     href?: string | null;
     websiteName?: string | null;

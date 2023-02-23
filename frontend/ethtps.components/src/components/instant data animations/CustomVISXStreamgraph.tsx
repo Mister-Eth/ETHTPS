@@ -12,14 +12,16 @@ import { useState } from 'react'
 import { curveCardinal } from '@visx/curve'
 import moment from 'moment'
 import {
-	IL2DataResponseModel,
+	L2DataResponseModel,
 	DataType,
 	IDataGetter,
 	colorHooks,
-	IL2DataRequestModel,
+	L2DataRequestModel,
 	handleException,
+	Dataset,
 } from 'ethtps.data'
 import { useLiveData, useLiveDataState } from './hooks'
+import { DatedXYDataPoint } from 'ethtps.data'
 // constants
 const NUM_LAYERS = 20
 export const BACKGROUND = '#ffdede'
@@ -42,7 +44,7 @@ const getY1 = (d: Datum) => {
 	return yScale(Math.max(...d)) ?? 0
 }
 type L2Request = {
-	[K in keyof IL2DataRequestModel]: IL2DataRequestModel[K]
+	[K in keyof L2DataRequestModel]: L2DataRequestModel[K]
 } & { dataType: DataType }
 
 export type StreamGraphProps = {
@@ -50,7 +52,7 @@ export type StreamGraphProps = {
 	height: number
 	animate?: boolean
 	providerHovered?: (name: string) => void
-	l2DataGetter?: IDataGetter<L2Request, IL2DataResponseModel>
+	l2DataGetter?: IDataGetter<L2Request, L2DataResponseModel>
 }
 
 type StreamchartLayers = {
@@ -70,14 +72,14 @@ export function CustomVISXStreamgraph({
 	if (width < 10) return null
 
 	const liveState = useLiveDataState()
-	const [data, setData] = useState<IL2DataResponseModel>()
+	const [data, setData] = useState<L2DataResponseModel>()
 	const colors = colorHooks.useGetProviderColorDictionaryFromAppStore()
 	const [processedStreamchartData, setProcessedStreamchartData] =
 		useState<StreamchartLayers>({
 			providers: ['Mock until loaded'],
 			data: [range(60).map(() => Math.random() * 10)],
 		})
-	const generateRequestModel = (): IL2DataRequestModel => {
+	const generateRequestModel = (): L2DataRequestModel => {
 		return {
 			startDate: moment().subtract(1, 'minute').toDate(),
 			providers: ['All'],
@@ -118,13 +120,15 @@ export function CustomVISXStreamgraph({
 				if (data.datasets)
 					setProcessedStreamchartData({
 						providers: data.datasets.map(
-							(x) => x.provider as string
+							(x: Dataset) => x.provider as string
 						),
 						data: data.datasets.map(
-							(x) =>
+							(x: Dataset) =>
 								x.dataPoints
 									?.slice(0, length)
-									.map((y) => y.y as number) ?? []
+									.map(
+										(y: DatedXYDataPoint) => y.y as number
+									) ?? []
 						),
 					})
 			}

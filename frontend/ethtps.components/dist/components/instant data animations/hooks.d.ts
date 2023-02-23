@@ -1,4 +1,3 @@
-import { ProviderResponseModel } from 'ethtps.api.client';
 import { DataResponseModelDictionary } from 'ethtps.data';
 export type InstantBarChartDataset = {
     label: string;
@@ -26,9 +25,9 @@ export declare function useGet1mTPS(): any;
 export declare function useGet1mGPS(): any;
 export declare function useGet1mGTPS(): any;
 export declare function useLiveDataState(): {
-    smoothing: import("ethtps.api.client").TimeInterval;
+    smoothing: any;
     sidechainsIncluded: boolean;
-    mode: import("ethtps.api.client").DataType;
+    mode: DataType;
 };
 export declare function useStreamchartData(interval: string): void;
 export declare function useLiveData(): LiveData | undefined;

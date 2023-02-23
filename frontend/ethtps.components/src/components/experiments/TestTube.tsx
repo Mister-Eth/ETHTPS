@@ -7,6 +7,7 @@ import {
 	store,
 	handleException,
 	useAppSelector,
+	setExperiments,
 } from 'ethtps.data'
 import React from 'react'
 
@@ -31,7 +32,7 @@ export async function TestTube(
 	try {
 		const result = await request.dataGetter(params)
 		setCurrentExperiments(result)
-		store.dispatch(setCurrentExperiments(result))
+		store.dispatch(setExperiments(result))
 	} catch (e) {
 		handleException(e)
 	}

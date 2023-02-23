@@ -2,7 +2,7 @@ import { Web } from '@mui/icons-material'
 import { Chip, Link, Typography } from '@mui/material'
 import React from 'react'
 import { groupBy, WithObjectType } from 'groupby-js'
-import { IProviderExternalWebsite } from 'ethtps.api.client'
+import { IProviderExternalWebsite } from 'ethtps.data'
 
 interface ISocialMediaChipConfiguration {
 	href?: string | null

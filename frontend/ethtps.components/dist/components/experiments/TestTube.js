@@ -3,7 +3,7 @@ import { BrowserView, MobileOnlyView } from 'react-device-detect';
 import { useState } from 'react';
 import { ConditionalRender } from '../../Types';
 import { SimpleDesktopFeedbackExperiment } from './desktop/SimpleDesktopFeedbackExperiment';
-import { store, handleException, useAppSelector, } from 'ethtps.data';
+import { store, handleException, useAppSelector, setExperiments, } from 'ethtps.data';
 import React from 'react';
 export async function TestTube(request, params) {
     const [currentExperiments, setCurrentExperiments] = useState(useAppSelector((state) => state.experiments) || []);
@@ -19,7 +19,7 @@ export async function TestTube(request, params) {
     try {
         const result = await request.dataGetter(params);
         setCurrentExperiments(result);
-        store.dispatch(setCurrentExperiments(result));
+        store.dispatch(setExperiments(result));
     }
     catch (e) {
         handleException(e);

@@ -1,5 +1,5 @@
-import { TabPanelProps } from "../../components/tab panel/TabPanel"
+import { TabPanelProps } from 'ethtps.components'
 
 export interface ISubsection extends TabPanelProps {
-  provider?: string
+	provider?: string
 }

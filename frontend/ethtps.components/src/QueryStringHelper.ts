@@ -1,4 +1,4 @@
-import { DataType, TimeInterval } from 'ethtps.api.client'
+import { DataType, TimeInterval } from 'ethtps.data'
 
 export function getLiveDataSmoothingFromQueryStringOrDefault(
 	defaultValue: TimeInterval

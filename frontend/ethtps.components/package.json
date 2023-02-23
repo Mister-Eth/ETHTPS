@@ -45,7 +45,6 @@
 		"d3-array": "^3.2.2",
 		"d3-format": "^3.1.0",
 		"date-fns": "^2.29.3",
-		"ethtps.api.client": "../ethtps.api.client",
 		"ethtps.data": "../ethtps.data",
 		"groupby-js": "^1.1.9",
 		"moment": "^2.29.4",
@@ -70,8 +69,7 @@
 		"web-vitals": "^2.1.4"
 	},
 	"relativeDependencies": {
-		"ethtps.data": "../ethtps.data",
-		"ethtps.api.client": "../ethtps.api.client"
+		"ethtps.data": "../ethtps.data"
 	},
 	"devDependencies": {
 		"eslint": "^8.0.1",

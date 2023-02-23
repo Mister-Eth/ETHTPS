@@ -4,12 +4,13 @@ import { About } from './pages/About'
 import { FourOhFour } from './pages/FourOhFour'
 import { ProviderPage } from './pages/provider/ProviderPage'
 import MainPage from './pages/MainPage'
+import { RecaptchaTokenLoader, TestTube } from 'ethtps.components'
 
 export default function App(): JSX.Element {
 	return (
 		<Fragment>
 			<TestTube />
-			<RecaptchaAPIKeyAndDataLoader />
+			<RecaptchaTokenLoader />
 			<Routes>
 				<Route path={'/'} element={<MainPage />} />
 				<Route path={'/Providers/:providerName/*'}>

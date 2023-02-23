@@ -1,4 +1,4 @@
-import { ProviderResponseModel } from 'ethtps.api.client'
+import { ProviderResponseModel } from 'ethtps.data'
 import {
 	DataResponseModelDictionary,
 	extractData,

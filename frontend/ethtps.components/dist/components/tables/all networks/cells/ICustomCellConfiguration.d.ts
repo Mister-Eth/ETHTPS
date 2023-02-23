@@ -1,5 +1,5 @@
 import { ICellClickedEvent } from './ICellClickedEvent';
-import { ProviderResponseModel } from 'ethtps.api.client';
+import { ProviderResponseModel } from 'ethtps.data';
 export declare const buildClassNames: (config: ICustomCellConfiguration) => {
     className: string;
 };

@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material'
-import { DataType } from 'ethtps.api.client'
+import { DataType } from 'ethtps.data'
 import React from 'react'
 import { IDropdownConfig } from '../types/IDropdownConfig'
 import { Dropdown } from '../types/Dropdown'
