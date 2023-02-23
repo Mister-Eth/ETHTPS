@@ -5,12 +5,20 @@ import { FourOhFour } from './pages/FourOhFour'
 import { ProviderPage } from './pages/provider/ProviderPage'
 import MainPage from './pages/MainPage'
 import { RecaptchaTokenLoader, TestTube } from 'ethtps.components'
+import { BinaryConditionalRender } from 'ethtps.components.utils'
+import { onKeyLoaded } from './stories/AuthenticationFlow'
+import { useState, useEffect } from 'react'
 
 export default function App(): JSX.Element {
+	const [isHuman, setIsHuman] = useState<boolean>(true)
 	return (
 		<Fragment>
+			<BinaryConditionalRender condition={isHuman} />
 			<TestTube />
-			<RecaptchaTokenLoader />
+			<RecaptchaTokenLoader
+				onIsHuman={setIsHuman}
+				onKeyLoaded={onKeyLoaded}
+			/>
 			<Routes>
 				<Route path={'/'} element={<MainPage />} />
 				<Route path={'/Providers/:providerName/*'}>

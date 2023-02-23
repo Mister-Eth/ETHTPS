@@ -98,6 +98,7 @@ import { IDataGetter } from './models/charts/requests/IDataGetter'
 import { IOptionalCallback } from './models/charts/handlers/IOptionalCallback'
 import { IOptionalDefault } from './models/charts/handlers/IOptionalDefault'
 import { L2DataRequestModel } from 'ethtps.api.client'
+import { useGetQueryWithAutoRefetch } from './hooks/QueryHooks'
 export {
 	ApplicationState,
 	IGlobalDependencies,
@@ -144,6 +145,7 @@ export {
 	useGetExperimentsFromAppStore,
 	setExperiments,
 	useGetLiveDataFromAppStore,
+	useGetQueryWithAutoRefetch,
 }
 
 export {

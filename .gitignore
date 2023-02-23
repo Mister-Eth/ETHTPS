@@ -9,6 +9,7 @@ ConfigurationExtensions.cs
 PrivateData.cs
 appsettings - Copy.default.json
 cloc-1.64.exe
+package-lock,json
 appsettings - Copy.json
 appsettings.json
 appsettings.development.json

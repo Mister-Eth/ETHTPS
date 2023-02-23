@@ -1,0 +1,22 @@
+{
+  "name": "ethtps.components.utils",
+  "version": "0.1.0",
+  "description": "A binder for components or a proto-framework; idk yet",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mister_Eth",
+  "license": "ISC",
+  "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@types/d3-array": "^3.0.4",
+    "@types/react-date-range": "^1.4.4",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "ethtps.data": "../ethtps.data",
+    "react-dom": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
+    "react-d3-library": "^1.1.8",
+    "typescript": "^4.9.5"
+  }
+}
