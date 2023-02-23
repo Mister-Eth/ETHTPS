@@ -8,8 +8,7 @@ import {
 } from 'ethtps.data'
 import { useGetProviderColorDictionaryFromAppStore } from 'ethtps.data'
 import { liveDataHooks } from 'ethtps.data'
-import useState from 'react'
-import useEffect from 'react'
+import { useState, useEffect } from 'react'
 import {
 	useGetProvidersFromAppStore,
 	useGetLiveDataFromAppStore,

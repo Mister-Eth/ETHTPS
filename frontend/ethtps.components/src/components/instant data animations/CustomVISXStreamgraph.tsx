@@ -20,7 +20,7 @@ import {
 	handleException,
 	Dataset,
 } from 'ethtps.data'
-import { useLiveData, useLiveDataState } from './hooks'
+import { LiveDataPoint, useLiveData, useLiveDataState } from './hooks'
 import { DatedXYDataPoint } from 'ethtps.data'
 // constants
 const NUM_LAYERS = 20
@@ -138,7 +138,9 @@ export function CustomVISXStreamgraph({
 	const [_, setDataPoints] = useState<number[]>([0, 0, 0])
 	useEffect(() => {
 		if (liveData) {
-			setDataPoints(liveData.data?.map((x) => x?.value ?? 0))
+			setDataPoints(
+				liveData.data?.map((x: LiveDataPoint) => x?.value ?? 0)
+			)
 			let temp = processedStreamchartData
 			let currentMax = 0
 			for (let i = 0; i < temp.providers.length; i++) {
@@ -146,7 +148,8 @@ export function CustomVISXStreamgraph({
 				currentMax = Math.max(currentMax, Math.max(...temp.data[i]))
 				const v =
 					liveData.data?.find(
-						(x) => x.providerName === temp.providers[i]
+						(x: LiveDataPoint) =>
+							x.providerName === temp.providers[i]
 					)?.value ?? 0 //temp.data[i][temp.data.length - 1]
 				temp.data[i].push(v)
 			}
