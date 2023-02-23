@@ -8,11 +8,12 @@ import {
 } from 'ethtps.data'
 import { useGetProviderColorDictionaryFromAppStore } from 'ethtps.data'
 import { liveDataHooks } from 'ethtps.data'
+import useState from 'react'
+import useEffect from 'react'
 import {
 	useGetProvidersFromAppStore,
 	useGetLiveDataFromAppStore,
 } from 'ethtps.data'
-import { useState, useEffect } from 'react'
 
 export type InstantBarChartDataset = {
 	label: string
