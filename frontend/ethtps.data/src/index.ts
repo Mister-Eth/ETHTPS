@@ -46,11 +46,7 @@ import * as liveDataHooks from './hooks/LiveDataHooks'
 import * as providerHooks from './hooks/ProviderHooks'
 import * as queryHooks from './hooks/QueryHooks'
 import * as useLoadValueHooks from './hooks/useLoadValuesHook'
-import {
-	TimeInterval,
-	dataTypeToString,
-	fromShortString_2,
-} from './models/TimeIntervals'
+import { dataTypeToString, fromShortString_2 } from './models/TimeIntervals'
 import {
 	useSetSidechainsIncluded,
 	useGetLiveDataFromAppStore,
@@ -97,9 +93,13 @@ import { handleException } from './exceptions/ExceptionHandler'
 import { IDataGetter } from './models/charts/requests/IDataGetter'
 import { IOptionalCallback } from './models/charts/handlers/IOptionalCallback'
 import { IOptionalDefault } from './models/charts/handlers/IOptionalDefault'
-import { L2DataRequestModel } from 'ethtps.api.client'
+import { L2DataRequestModel, TimeInterval } from 'ethtps.api.client'
 import { useGetQueryWithAutoRefetch } from './hooks/QueryHooks'
 import { useGetProvidersFromAppStore } from './hooks/ProviderHooks'
+import {
+	useGetSidechainsIncludedFromAppStore,
+	useSetDataModeMutation,
+} from './hooks/LiveDataHooks'
 import {
 	useGetProviderColorDictionaryFromAppStore,
 	useGetProviderTypeColorDictionaryFromAppStore,
@@ -142,7 +142,6 @@ export {
 	store,
 	useAppSelector,
 	useAppDispatch,
-	TimeInterval,
 	useSetSidechainsIncluded,
 	dataTypeToString,
 	useSetStoreAPIKey,
@@ -154,6 +153,8 @@ export {
 	useGetProvidersFromAppStore,
 	useGetProviderColorDictionaryFromAppStore,
 	useGetProviderTypeColorDictionaryFromAppStore,
+	useGetSidechainsIncludedFromAppStore,
+	useSetDataModeMutation,
 }
 
 export {
@@ -210,4 +211,5 @@ export {
 	StringXYDataPoint,
 	NumericXYDataPoint,
 	Dataset,
+	TimeInterval,
 }

@@ -10,7 +10,7 @@ import { AnimatedTypography } from '../../../text/AnimatedTypography'
 import { DataType } from 'ethtps.data'
 import { toShortString, numberFormat } from 'ethtps.data'
 import React from 'react'
-import { SkeletonWithTooltip } from 'src/components/partials/skeletons/SkeletonWithTooltip'
+import { SkeletonWithTooltip } from '../../../partials/skeletons/SkeletonWithTooltip'
 
 interface IDataValueCellConficuration extends ICustomCellConfiguration {
 	value?: number

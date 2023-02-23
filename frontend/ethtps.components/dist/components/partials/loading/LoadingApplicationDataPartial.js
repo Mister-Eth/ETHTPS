@@ -1,4 +1,3 @@
-"use strict";
 var __rest = (this && this.__rest) || function (s, e) {
     var t = {};
     for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
@@ -10,17 +9,12 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.LoadingApplicationDataPartial = void 0;
-const jsx_runtime_1 = require("react/jsx-runtime");
-const react_1 = __importDefault(require("react"));
-function LoadingApplicationDataPartial(_a, loadees) {
-    var { children } = _a, props = __rest(_a, ["children"]);
+import { jsx as _jsx } from "react/jsx-runtime";
+import React from 'react';
+export function LoadingApplicationDataPartial(_a, loadees) {
+    var children = _a.children, props = __rest(_a, ["children"]);
     console.log(loadees.length);
-    return (0, jsx_runtime_1.jsx)(react_1.default.Fragment, { children: children });
+    return _jsx(React.Fragment, { children: children });
     /*
   if (loadees.every((x) => x)) return <>{children}</>
   else
@@ -35,4 +29,4 @@ function LoadingApplicationDataPartial(_a, loadees) {
       </>
     )*/
 }
-exports.LoadingApplicationDataPartial = LoadingApplicationDataPartial;
+//# sourceMappingURL=LoadingApplicationDataPartial.js.map

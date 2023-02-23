@@ -1,8 +1,9 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.useGetExperimentsFromAppStore = void 0;
-const store_1 = require("../store");
-const useGetExperimentsFromAppStore = () => {
-    return (0, store_1.useAppSelector)((state) => state.experiments);
+var store_1 = require("../store");
+var useGetExperimentsFromAppStore = function () {
+    return (0, store_1.useAppSelector)(function (state) { return state.experiments; });
 };
 exports.useGetExperimentsFromAppStore = useGetExperimentsFromAppStore;
+//# sourceMappingURL=ExperimentHooks.js.map

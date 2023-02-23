@@ -1,9 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.buildClassNames = void 0;
-const buildClassNames = (config) => {
+export var buildClassNames = function (config) {
     return {
-        className: `inline ${config.clickCallback !== undefined ? 'pointable' : ''}`,
+        className: "inline ".concat(config.clickCallback !== undefined ? 'pointable' : ''),
     };
 };
-exports.buildClassNames = buildClassNames;
+//# sourceMappingURL=ICustomCellConfiguration.js.map

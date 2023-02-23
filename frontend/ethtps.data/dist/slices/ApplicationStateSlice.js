@@ -1,29 +1,30 @@
 "use strict";
 var _a;
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.applicationStateReducer = exports.setStoreAPIKey = exports.setApplicationDataLoaded = void 0;
-const toolkit_1 = require("@reduxjs/toolkit");
-const initialState = {
+var toolkit_1 = require("@reduxjs/toolkit");
+var initialState = {
     applicationDataLoaded: false,
     completeApplicationDataAvailableInLocalStorage: false,
-    apiKey: localStorage.getItem('XAPIKey'),
+    apiKey: localStorage.getItem('XAPIKey')
 };
-const applicationStateSlice = (0, toolkit_1.createSlice)({
+var applicationStateSlice = (0, toolkit_1.createSlice)({
     name: 'applicationStates',
-    initialState,
+    initialState: initialState,
     reducers: {
-        setApplicationDataLoaded(state, action) {
+        setApplicationDataLoaded: function (state, action) {
             if (action.payload === undefined)
                 return state;
             state.applicationDataLoaded = action.payload;
             return state;
         },
-        setStoreAPIKey(state, action) {
+        setStoreAPIKey: function (state, action) {
             localStorage.setItem('XAPIKey', action.payload);
             state.apiKey = action.payload;
             return state;
-        },
-    },
+        }
+    }
 });
-_a = applicationStateSlice.actions, exports.setApplicationDataLoaded = _a.setApplicationDataLoaded, exports.setStoreAPIKey = _a.setStoreAPIKey;
+exports.setApplicationDataLoaded = (_a = applicationStateSlice.actions, _a.setApplicationDataLoaded), exports.setStoreAPIKey = _a.setStoreAPIKey;
 exports.applicationStateReducer = applicationStateSlice.reducer;
+//# sourceMappingURL=ApplicationStateSlice.js.map

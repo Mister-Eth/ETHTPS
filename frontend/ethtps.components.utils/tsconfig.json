@@ -1,14 +1,24 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es2015",
-    "moduleResolution": "node",
-    "declaration": true,
-    "outDir": "./dist",
+    // Default
+    "target": "es5",
     "esModuleInterop": true,
-    "baseUrl": ".",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "noImplicitAny": true,
+    "removeComments": false,
+    "preserveConstEnums": true,
+    // Added
     "jsx": "react-jsx",
-    "skipLibCheck": true
+    "module": "ESNext",
+    "declaration": true,
+    "declarationDir": "types",
+    "sourceMap": true,
+    "outDir": "dist",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "emitDeclarationOnly": true
   },
   "include": ["src/**/*.ts", "tests/**/*.ts", "src/index.ts", "src/*.tsx"],
   "exclude": ["node_modules", "dist", ".vscode"]

@@ -1,24 +1,30 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-const jsx_runtime_1 = require("react/jsx-runtime");
-const react_1 = __importDefault(require("react"));
-const group_1 = require("@visx/group");
-const shape_1 = require("@visx/shape");
-const axis_1 = require("@visx/axis");
-const gradient_1 = require("@visx/gradient");
-const curve_1 = require("@visx/curve");
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import React from 'react';
+import { Group } from '@visx/group';
+import { AreaClosed } from '@visx/shape';
+import { AxisLeft, AxisBottom } from '@visx/axis';
+import { LinearGradient } from '@visx/gradient';
+import { curveMonotoneX } from '@visx/curve';
 // Initialize some variables
-const axisColor = '#fff';
-const axisBottomTickLabelProps = {
+var axisColor = '#fff';
+var axisBottomTickLabelProps = {
     textAnchor: 'middle',
     fontFamily: 'Arial',
     fontSize: 10,
     fill: axisColor,
 };
-const axisLeftTickLabelProps = {
+var axisLeftTickLabelProps = {
     dx: '-0.25em',
     dy: '0.25em',
     fontFamily: 'Arial',
@@ -26,9 +32,10 @@ const axisLeftTickLabelProps = {
     textAnchor: 'end',
     fill: axisColor,
 };
-function AreaChart({ data, gradientColor, width, yMax, margin, xScale, yScale, hideBottomAxis = false, hideLeftAxis = false, top, left, children, }) {
+export default function AreaChart(_a) {
+    var data = _a.data, gradientColor = _a.gradientColor, width = _a.width, yMax = _a.yMax, margin = _a.margin, xScale = _a.xScale, yScale = _a.yScale, _b = _a.hideBottomAxis, hideBottomAxis = _b === void 0 ? false : _b, _c = _a.hideLeftAxis, hideLeftAxis = _c === void 0 ? false : _c, top = _a.top, left = _a.left, children = _a.children;
     if (width < 10)
         return null;
-    return ((0, jsx_runtime_1.jsx)(react_1.default.Fragment, { children: (0, jsx_runtime_1.jsxs)(group_1.Group, Object.assign({ left: left || margin.left, top: top || margin.top }, { children: [(0, jsx_runtime_1.jsx)(gradient_1.LinearGradient, { id: "gradient", from: gradientColor, fromOpacity: 1, to: gradientColor, toOpacity: 0.2 }), (0, jsx_runtime_1.jsx)(shape_1.AreaClosed, { data: data, x: (d) => xScale(d.x) || new Date().getTime(), y: (d) => yScale(d.y) || 0, yScale: yScale, strokeWidth: 1, stroke: "url(#gradient)", fill: "url(#gradient)", curve: curve_1.curveMonotoneX }), !hideBottomAxis && ((0, jsx_runtime_1.jsx)(axis_1.AxisBottom, { top: yMax, scale: xScale, numTicks: width > 520 ? 10 : 5, stroke: axisColor, tickStroke: axisColor, tickLabelProps: () => axisBottomTickLabelProps })), !hideLeftAxis && ((0, jsx_runtime_1.jsx)(axis_1.AxisLeft, { scale: yScale, numTicks: 5, stroke: axisColor, tickStroke: axisColor, tickLabelProps: () => axisLeftTickLabelProps })), children] })) }));
+    return (_jsx(React.Fragment, { children: _jsxs(Group, __assign({ left: left || margin.left, top: top || margin.top }, { children: [_jsx(LinearGradient, { id: "gradient", from: gradientColor, fromOpacity: 1, to: gradientColor, toOpacity: 0.2 }), _jsx(AreaClosed, { data: data, x: function (d) { return xScale(d.x) || new Date().getTime(); }, y: function (d) { return yScale(d.y) || 0; }, yScale: yScale, strokeWidth: 1, stroke: "url(#gradient)", fill: "url(#gradient)", curve: curveMonotoneX }), !hideBottomAxis && (_jsx(AxisBottom, { top: yMax, scale: xScale, numTicks: width > 520 ? 10 : 5, stroke: axisColor, tickStroke: axisColor, tickLabelProps: function () { return axisBottomTickLabelProps; } })), !hideLeftAxis && (_jsx(AxisLeft, { scale: yScale, numTicks: 5, stroke: axisColor, tickStroke: axisColor, tickLabelProps: function () { return axisLeftTickLabelProps; } })), children] })) }));
 }
-exports.default = AreaChart;
+//# sourceMappingURL=AreaChart.js.map

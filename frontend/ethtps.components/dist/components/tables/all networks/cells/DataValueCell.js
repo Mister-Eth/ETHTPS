@@ -1,23 +1,30 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.DataValueCell = void 0;
-const jsx_runtime_1 = require("react/jsx-runtime");
-const ICustomCellConfiguration_1 = require("./ICustomCellConfiguration");
-const material_1 = require("@mui/material");
-const Typography_types_1 = require("./Typography.types");
-const Cells_Types_1 = require("../../Cells.Types");
-require("../../cells.styles.css");
-const AnimatedTypography_1 = require("../../../text/AnimatedTypography");
-const ethtps_data_1 = require("ethtps.data");
-const react_1 = __importDefault(require("react"));
-const SkeletonWithTooltip_1 = require("src/components/partials/skeletons/SkeletonWithTooltip");
-function DataValueCell(config) {
+import { jsx as _jsx } from "react/jsx-runtime";
+import { buildClassNames, } from './ICustomCellConfiguration';
+import { TableCell } from '@mui/material';
+import { tableCellTypographyStandard } from './Typography.types';
+import { centered } from '../../Cells.Types';
+import '../../cells.styles.css';
+import { AnimatedTypography } from '../../../text/AnimatedTypography';
+import { toShortString, numberFormat } from 'ethtps.data';
+import React from 'react';
+import { SkeletonWithTooltip } from '../../../partials/skeletons/SkeletonWithTooltip';
+export function DataValueCell(config) {
     var _a;
-    return ((0, jsx_runtime_1.jsx)(react_1.default.Fragment, { children: (0, jsx_runtime_1.jsx)(material_1.TableCell, Object.assign({}, Cells_Types_1.centered, (0, ICustomCellConfiguration_1.buildClassNames)(config), { onClick: () => config.clickCallback !== undefined
-                ? config.clickCallback(config.provider, 'DataValue')
-                : () => { } }, { children: config.value === undefined ? ((0, jsx_runtime_1.jsx)(SkeletonWithTooltip_1.SkeletonWithTooltip, { text: `Loading ${(_a = config.provider) === null || _a === void 0 ? void 0 : _a.name} ${(0, ethtps_data_1.toShortString)(config.dataType)}...` })) : ((0, jsx_runtime_1.jsx)(AnimatedTypography_1.AnimatedTypography, { animationClassName: "animated-cell", standard: Typography_types_1.tableCellTypographyStandard, child: (0, ethtps_data_1.numberFormat)(config.value).toString(), durationMs: 1000 })) })) }));
+    return (_jsx(React.Fragment, { children: _jsx(TableCell, __assign({}, centered, buildClassNames(config), { onClick: function () {
+                return config.clickCallback !== undefined
+                    ? config.clickCallback(config.provider, 'DataValue')
+                    : function () { };
+            } }, { children: config.value === undefined ? (_jsx(SkeletonWithTooltip, { text: "Loading ".concat((_a = config.provider) === null || _a === void 0 ? void 0 : _a.name, " ").concat(toShortString(config.dataType), "...") })) : (_jsx(AnimatedTypography, { animationClassName: "animated-cell", standard: tableCellTypographyStandard, child: numberFormat(config.value).toString(), durationMs: 1000 })) })) }));
 }
-exports.DataValueCell = DataValueCell;
+//# sourceMappingURL=DataValueCell.js.map

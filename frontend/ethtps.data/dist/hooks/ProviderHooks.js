@@ -1,10 +1,15 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.useGetProvidersFromAppStore = void 0;
-const LiveDataHooks_1 = require("./LiveDataHooks");
-const store_1 = require("../store");
+var LiveDataHooks_1 = require("./LiveDataHooks");
+var store_1 = require("../store");
 function useGetProvidersFromAppStore() {
-    const sidechainsIncluded = (0, LiveDataHooks_1.useGetSidechainsIncludedFromAppStore)();
-    return (0, store_1.useAppSelector)((state) => state.providers.filter((x) => sidechainsIncluded ? x : x.type !== 'Sidechain'));
+    var sidechainsIncluded = (0, LiveDataHooks_1.useGetSidechainsIncludedFromAppStore)();
+    return (0, store_1.useAppSelector)(function (state) {
+        return state.providers.filter(function (x) {
+            return sidechainsIncluded ? x : x.type !== 'Sidechain';
+        });
+    });
 }
 exports.useGetProvidersFromAppStore = useGetProvidersFromAppStore;
+//# sourceMappingURL=ProviderHooks.js.map

@@ -3,7 +3,9 @@
 	"version": "0.1.0",
 	"description": "Data layer for ETHTPS.info frontend",
 	"main": "dist/index.js",
+	"module": "dist/esm/index.js",
 	"types": "dist/index.d.ts",
+	"type": "module",
 	"files": [
 		"/dist"
 	],
@@ -15,7 +17,8 @@
 		"react-dom": "^18.2.0",
 		"react-query": "^3.39.3",
 		"react-redux": "^8.0.5",
-		"reconnecting-websocket": "^4.4.0"
+		"reconnecting-websocket": "^4.4.0",
+		"typescript": "^4.9.4"
 	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
@@ -24,16 +27,6 @@
 		"lint:fix": "npm run lint -- --fix",
 		"prettier": "npx prettier src test --check",
 		"prettier:fix": "npm run prettier -- --write"
-	},
-	"compilerOptions": {
-		"target": "es5",
-		"module": "commonjs",
-		"noImplicitAny": true,
-		"removeComments": false,
-		"preserveConstEnums": true,
-		"sourceMap": true,
-		"outDir": "dist",
-		"moduleResolution": "node"
 	},
 	"include": [
 		"src/**/*.ts",
@@ -49,12 +42,13 @@
 		"ethtps.api.client": "../ethtps.api.client"
 	},
 	"devDependencies": {
+		"@types/react-dom": "^18.0.11",
 		"eslint": "^8.0.1",
-		"prettier": "2.8.4",
 		"eslint-config-standard-with-typescript": "^34.0.0",
 		"eslint-plugin-import": "^2.25.2",
 		"eslint-plugin-n": "^15.0.0",
 		"eslint-plugin-promise": "^6.0.0",
-		"eslint-plugin-react": "^7.32.2"
+		"eslint-plugin-react": "^7.32.2",
+		"prettier": "2.8.4"
 	}
 }

@@ -3,7 +3,6 @@ import { Paper, Chip, Typography } from '@mui/material'
 import { Container } from '@mui/system'
 import { DataType, DatedXYDataPoint } from 'ethtps.data'
 import React, { useState, useEffect, useRef } from 'react'
-import { ConditionalRender } from 'src/Types'
 import { DataModeButtonGroup } from '../../buttons/groups/data-mode-group/DataModeButtonGroup'
 import { DateRangeSelectorDropdown } from '../../dropdowns/concrete/DateRangeSelectorDropdown'
 import { SpinningArrows } from '../../icons/spinning hourglass/SpinningArrows'
@@ -13,6 +12,7 @@ import { useHandler, IOptionalCallback } from 'ethtps.data'
 import { useQuery } from 'react-query'
 import { ProviderIntervalDropdown } from '../../dropdowns/concrete/ProviderIntervalDropdown'
 import { NetworksDropdown } from '../../dropdowns/concrete/NetworksDropdown'
+import { ConditionalRender } from '../../../Types'
 
 export function ProviderDataChart(config: IChartConfigurationModel) {
 	const displayNetworksDropdown =

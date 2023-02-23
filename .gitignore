@@ -3,6 +3,8 @@
 ##
 ## Get latest from 
 nlog.config
+types
+dist
 node_modules
 ServiceCreator.cs
 ConfigurationExtensions.cs

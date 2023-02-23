@@ -1,35 +1,35 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.websocketReducer = exports.websocketActions = exports.WebsocketEvent = void 0;
-const toolkit_1 = require("@reduxjs/toolkit");
-const DependenciesIOC_1 = require("../models/services/DependenciesIOC");
-const initialState = {
+var toolkit_1 = require("@reduxjs/toolkit");
+var DependenciesIOC_1 = require("../models/services/DependenciesIOC");
+var initialState = {
     isEstablishingConnection: false,
     isConnecting: false,
-    isConnected: false,
+    isConnected: false
 };
-const websocketSlice = (0, toolkit_1.createSlice)({
+var websocketSlice = (0, toolkit_1.createSlice)({
     name: 'websockets',
-    initialState,
+    initialState: initialState,
     reducers: {
-        connecting: (state) => {
+        connecting: function (state) {
             state.isConnecting = true;
             state.isConnected = false;
         },
-        connected: (state) => {
+        connected: function (state) {
             state.isConnected = true;
             state.isConnecting = false;
         },
-        disconnected: (state) => {
+        disconnected: function (state) {
             state.isConnecting = false;
             state.isConnected = false;
         },
-        setWSURL(state, action) {
+        setWSURL: function (state, action) {
             state.wsURL = action.payload;
             (0, DependenciesIOC_1.setReconnect)(true);
             return state;
-        },
-    },
+        }
+    }
 });
 var WebsocketEvent;
 (function (WebsocketEvent) {
@@ -40,4 +40,5 @@ var WebsocketEvent;
 })(WebsocketEvent = exports.WebsocketEvent || (exports.WebsocketEvent = {}));
 exports.websocketActions = websocketSlice.actions;
 exports.websocketReducer = websocketSlice.reducer;
-exports.default = websocketSlice;
+exports["default"] = websocketSlice;
+//# sourceMappingURL=WebsocketSubscriptionSlice.js.map

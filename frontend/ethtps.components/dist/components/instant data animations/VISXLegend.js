@@ -1,38 +1,44 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.VISXLegend = void 0;
-const jsx_runtime_1 = require("react/jsx-runtime");
-const scale_1 = require("@visx/scale");
+import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
+import { scaleOrdinal } from '@visx/scale';
 //import { GlyphStar, GlyphWye, GlyphTriangle, GlyphDiamond } from '@visx/glyph'
-const legend_1 = require("@visx/legend");
-const react_1 = __importDefault(require("react"));
-const legendGlyphSize = 20;
-function VISXLegend({ keys, colors }) {
+import { Legend, LegendItem, LegendLabel } from '@visx/legend';
+import React from 'react';
+var legendGlyphSize = 20;
+export function VISXLegend(_a) {
+    var keys = _a.keys, colors = _a.colors;
     if (keys && colors) {
-        const scale = (0, scale_1.scaleOrdinal)({
+        var scale = scaleOrdinal({
             domain: keys,
             range: colors,
         });
-        return ((0, jsx_runtime_1.jsx)(react_1.default.Fragment, { children: (0, jsx_runtime_1.jsx)("div", Object.assign({ style: {
+        return (_jsx(React.Fragment, { children: _jsx("div", __assign({ style: {
                     position: 'relative',
                     float: 'right',
                     transform: 'translateY(-110%)',
                     marginRight: '10px',
-                } }, { children: (0, jsx_runtime_1.jsx)(legend_1.Legend, Object.assign({ scale: scale }, { children: (labels) => ((0, jsx_runtime_1.jsx)("div", Object.assign({ style: {
+                } }, { children: _jsx(Legend, __assign({ scale: scale }, { children: function (labels) { return (_jsx("div", __assign({ style: {
                             display: 'flex',
                             flexDirection: 'column',
-                        } }, { children: labels.map((label, i) => {
+                        } }, { children: labels.map(function (label, i) {
                             //const color = scale(label.datum)
                             //const shape = shapeScale(label.datum)
                             //const isValidElement = React.isValidElement(shape)
-                            return ((0, jsx_runtime_1.jsxs)(legend_1.LegendItem, Object.assign({ margin: "0 4px 0 0", flexDirection: "row", onClick: () => {
+                            return (_jsxs(LegendItem, __assign({ margin: "0 4px 0 0", flexDirection: "row", onClick: function () {
                                     //const { datum, index } = label
-                                } }, { children: [(0, jsx_runtime_1.jsx)("svg", Object.assign({ width: legendGlyphSize, height: legendGlyphSize }, { children: (0, jsx_runtime_1.jsx)("rect", { fill: label.value, width: legendGlyphSize, height: legendGlyphSize }) })), (0, jsx_runtime_1.jsx)(legend_1.LegendLabel, Object.assign({ align: "left", margin: 0 }, { children: label.text }))] }), `legend-quantile-${i}`));
-                        }) }))) })) })) }));
+                                } }, { children: [_jsx("svg", __assign({ width: legendGlyphSize, height: legendGlyphSize }, { children: _jsx("rect", { fill: label.value, width: legendGlyphSize, height: legendGlyphSize }) })), _jsx(LegendLabel, __assign({ align: "left", margin: 0 }, { children: label.text }))] }), "legend-quantile-".concat(i)));
+                        }) }))); } })) })) }));
     }
-    return (0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, {});
+    return _jsx(_Fragment, {});
 }
-exports.VISXLegend = VISXLegend;
+//# sourceMappingURL=VISXLegend.js.map

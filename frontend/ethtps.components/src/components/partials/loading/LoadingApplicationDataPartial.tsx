@@ -1,11 +1,11 @@
-import { PropsWithChildren } from 'react'
 import React from 'react'
+import { PropsWithChildren } from 'react'
 
 type Loadee = {
 	loaded: boolean
 }
-export function LoadingApplicationDataPartial(
-	{ children, ...props }: PropsWithChildren,
+export function LoadingApplicationDataPartial<T>(
+	{ children, ...props }: PropsWithChildren<T>,
 	loadees: Loadee[]
 ): JSX.Element {
 	console.log(loadees.length)

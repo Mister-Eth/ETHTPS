@@ -1,11 +1,11 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.useGetQueryWithAutoRefetch = void 0;
-const react_query_1 = require("react-query");
-const react_1 = require("react");
+var react_query_1 = require("react-query");
+var react_1 = require("react");
 function useGetQueryWithAutoRefetch(requestName, action) {
-    const { data, isSuccess, refetch } = (0, react_query_1.useQuery)('auto refetch ' + requestName, action);
-    (0, react_1.useEffect)(() => {
+    var _a = (0, react_query_1.useQuery)('auto refetch ' + requestName, action), data = _a.data, isSuccess = _a.isSuccess, refetch = _a.refetch;
+    (0, react_1.useEffect)(function () {
         if (!isSuccess) {
             refetch();
         }
@@ -13,3 +13,4 @@ function useGetQueryWithAutoRefetch(requestName, action) {
     return data;
 }
 exports.useGetQueryWithAutoRefetch = useGetQueryWithAutoRefetch;
+//# sourceMappingURL=QueryHooks.js.map

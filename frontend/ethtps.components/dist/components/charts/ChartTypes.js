@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.commonNivoProperties = exports.noGrid = void 0;
-exports.noGrid = {
+export var noGrid = {
     grid: {
         display: false,
     },
@@ -11,10 +8,11 @@ exports.noGrid = {
         display: false,
     },
 };
-exports.commonNivoProperties = {
+export var commonNivoProperties = {
     width: 900,
     height: 400,
     margin: { top: 20, right: 20, bottom: 60, left: 80 },
     animate: true,
     enableSlices: 'x',
 };
+//# sourceMappingURL=ChartTypes.js.map

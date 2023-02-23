@@ -110,7 +110,6 @@
 	"relativeDependencies": {
 		"ethtps.data": "../ethtps.data",
 		"ethtps.api.client": "../ethtps.api.client",
-		"ethtps.components": "../ethtps.components",
-		"ethtps.components.utils": "../ethtps.components.utils"
+		"ethtps.components": "../ethtps.components"
 	}
 }

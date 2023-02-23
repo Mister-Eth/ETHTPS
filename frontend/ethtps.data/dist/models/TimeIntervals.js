@@ -1,33 +1,22 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.fromShortString_2 = exports.toShortString_2 = exports.dataTypeToString = exports.toShortString = exports.TimeInterval = void 0;
-const ethtps_api_client_1 = require("ethtps.api.client");
-var TimeInterval;
-(function (TimeInterval) {
-    TimeInterval[TimeInterval["Instant"] = 0] = "Instant";
-    TimeInterval[TimeInterval["_1m"] = 1] = "_1m";
-    TimeInterval[TimeInterval["_1h"] = 2] = "_1h";
-    TimeInterval[TimeInterval["_1d"] = 3] = "_1d";
-    TimeInterval[TimeInterval["_1mo"] = 4] = "_1mo";
-    TimeInterval[TimeInterval["_1y_"] = 5] = "_1y_";
-    TimeInterval[TimeInterval["All"] = 6] = "All";
-    TimeInterval[TimeInterval["Other"] = 7] = "Other";
-})(TimeInterval = exports.TimeInterval || (exports.TimeInterval = {}));
+exports.__esModule = true;
+exports.fromShortString_2 = exports.toShortString_2 = exports.dataTypeToString = exports.toShortString = void 0;
+var ethtps_api_client_1 = require("ethtps.api.client");
 function toShortString(interval) {
     switch (interval) {
-        case TimeInterval.All:
+        case ethtps_api_client_1.TimeInterval.All:
             return 'All';
-        case TimeInterval.Instant:
+        case ethtps_api_client_1.TimeInterval.Instant:
             return 'Instant';
-        case TimeInterval._1d:
+        case ethtps_api_client_1.TimeInterval.OneDay:
             return '1d';
-        case TimeInterval._1h:
+        case ethtps_api_client_1.TimeInterval.OneHour:
             return '1h';
-        case TimeInterval._1m:
+        case ethtps_api_client_1.TimeInterval.OneMinute:
             return '1m';
-        case TimeInterval._1mo:
+        case ethtps_api_client_1.TimeInterval.OneMonth:
             return '1mo';
-        case TimeInterval._1y_:
+        case ethtps_api_client_1.TimeInterval.OneYear:
             return '1y';
         default:
             return 'Other';
@@ -85,3 +74,4 @@ function fromShortString_2(intervalName) {
     }
 }
 exports.fromShortString_2 = fromShortString_2;
+//# sourceMappingURL=TimeIntervals.js.map

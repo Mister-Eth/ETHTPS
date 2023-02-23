@@ -1,15 +1,4 @@
-import { DataType } from 'ethtps.api.client'
-
-export enum TimeInterval {
-	Instant,
-	_1m,
-	_1h,
-	_1d,
-	_1mo,
-	_1y_,
-	All,
-	Other,
-}
+import { DataType, TimeInterval } from 'ethtps.api.client'
 
 export function toShortString(interval: TimeInterval) {
 	switch (interval) {
@@ -17,15 +6,15 @@ export function toShortString(interval: TimeInterval) {
 			return 'All'
 		case TimeInterval.Instant:
 			return 'Instant'
-		case TimeInterval._1d:
+		case TimeInterval.OneDay:
 			return '1d'
-		case TimeInterval._1h:
+		case TimeInterval.OneHour:
 			return '1h'
-		case TimeInterval._1m:
+		case TimeInterval.OneMinute:
 			return '1m'
-		case TimeInterval._1mo:
+		case TimeInterval.OneMonth:
 			return '1mo'
-		case TimeInterval._1y_:
+		case TimeInterval.OneYear:
 			return '1y'
 		default:
 			return 'Other'

@@ -1,13 +1,16 @@
 {
 	"compilerOptions": {
-		"module": "commonjs",
-		"target": "es2015",
+		"module": "CommonJS",
 		"moduleResolution": "node",
-		"declaration": true,
 		"outDir": "./dist",
 		"esModuleInterop": true,
 		"baseUrl": ".",
-		"jsx": "react-jsx"
+		"jsx": "react-jsx",
+		"noImplicitAny": true,
+		"removeComments": false,
+		"preserveConstEnums": true,
+		"declaration": true,
+		"sourceMap": true
 	},
 	"include": ["src/**/*.ts", "tests/**/*.ts", "src/index.ts", "src/*.tsx"],
 	"exclude": ["node_modules/*", "dist/*", ".vscode/*"]

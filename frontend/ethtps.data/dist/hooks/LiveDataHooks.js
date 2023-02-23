@@ -1,19 +1,19 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.useSetSidechainsIncluded = exports.useGetSidechainsIncludedFromAppStore = exports.useUpdateLiveData = exports.useSetDataModeMutation = exports.useGetLiveDataFromAppStore = exports.useGetLiveDataSmoothingFromAppStore = exports.useGetLiveDataModeFromAppStore = void 0;
-const LiveDataSlice_1 = require("../slices/LiveDataSlice");
-const WebsocketSubscriptionSlice_1 = require("../slices/WebsocketSubscriptionSlice");
-const store_1 = require("../store");
+var LiveDataSlice_1 = require("../slices/LiveDataSlice");
+var WebsocketSubscriptionSlice_1 = require("../slices/WebsocketSubscriptionSlice");
+var store_1 = require("../store");
 function useGetLiveDataModeFromAppStore() {
-    return (0, store_1.useAppSelector)((state) => state.liveData.liveDataType);
+    return (0, store_1.useAppSelector)(function (state) { return state.liveData.liveDataType; });
 }
 exports.useGetLiveDataModeFromAppStore = useGetLiveDataModeFromAppStore;
 function useGetLiveDataSmoothingFromAppStore() {
-    return (0, store_1.useAppSelector)((state) => state.liveData.liveDataSmoothing);
+    return (0, store_1.useAppSelector)(function (state) { return state.liveData.liveDataSmoothing; });
 }
 exports.useGetLiveDataSmoothingFromAppStore = useGetLiveDataSmoothingFromAppStore;
 function useGetLiveDataFromAppStore() {
-    return (0, store_1.useAppSelector)((state) => state.liveData.data);
+    return (0, store_1.useAppSelector)(function (state) { return state.liveData.data; });
 }
 exports.useGetLiveDataFromAppStore = useGetLiveDataFromAppStore;
 function useSetDataModeMutation(mode) {
@@ -25,10 +25,11 @@ function useUpdateLiveData(updateRateMs) {
 }
 exports.useUpdateLiveData = useUpdateLiveData;
 function useGetSidechainsIncludedFromAppStore() {
-    return (0, store_1.useAppSelector)((state) => state.liveData.includeSidechains);
+    return (0, store_1.useAppSelector)(function (state) { return state.liveData.includeSidechains; });
 }
 exports.useGetSidechainsIncludedFromAppStore = useGetSidechainsIncludedFromAppStore;
 function useSetSidechainsIncluded(value) {
     store_1.store.dispatch((0, LiveDataSlice_1.setIncludeSidechains)(value));
 }
 exports.useSetSidechainsIncluded = useSetSidechainsIncluded;
+//# sourceMappingURL=LiveDataHooks.js.map

@@ -1,24 +1,29 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.MenuItemWithIcon = void 0;
-const jsx_runtime_1 = require("react/jsx-runtime");
-const material_1 = require("@mui/material");
-const react_1 = __importDefault(require("react"));
-const LinksHelper_1 = require("../../LinksHelper");
-const AnimatedLinkButtonWithIcon_1 = require("../buttons/groups/animated/AnimatedLinkButtonWithIcon");
+import { jsx as _jsx } from "react/jsx-runtime";
+import { MenuItem } from '@mui/material';
+import React from 'react';
+import { openNewTab } from '../../LinksHelper';
+import { AnimatedLinkButtonWithIcon } from '../buttons/groups/animated/AnimatedLinkButtonWithIcon';
 // No animation YET
-function MenuItemWithIcon(props) {
-    const handleClick = () => {
+export function MenuItemWithIcon(props) {
+    var handleClick = function () {
         if (props.openInNewTab) {
-            (0, LinksHelper_1.openNewTab)(props.href);
+            openNewTab(props.href);
         }
         else {
             window.location.href = props.href;
         }
     };
-    return ((0, jsx_runtime_1.jsx)(react_1.default.Fragment, { children: (0, jsx_runtime_1.jsx)(material_1.MenuItem, Object.assign({ onMouseOverCapture: props.onMouseOverCapture, onClick: handleClick }, { children: (0, jsx_runtime_1.jsx)(AnimatedLinkButtonWithIcon_1.AnimatedLinkButtonWithIcon, { showText: true, openInNewTab: false, image: props.image, href: props.href, text: props.text }) }), props.myKey) }));
+    return (_jsx(React.Fragment, { children: _jsx(MenuItem, __assign({ onMouseOverCapture: props.onMouseOverCapture, onClick: handleClick }, { children: _jsx(AnimatedLinkButtonWithIcon, { showText: true, openInNewTab: false, image: props.image, href: props.href, text: props.text }) }), props.myKey) }));
 }
-exports.MenuItemWithIcon = MenuItemWithIcon;
+//# sourceMappingURL=MenuItemWithIcon.js.map

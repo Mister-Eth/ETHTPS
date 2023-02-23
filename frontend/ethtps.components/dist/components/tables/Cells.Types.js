@@ -1,5 +1,14 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.animatedCentered = exports.centered = void 0;
-exports.centered = { align: 'center' };
-exports.animatedCentered = Object.assign(Object.assign({}, exports.centered), { className: 'animated-cell' });
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+export var centered = { align: 'center' };
+export var animatedCentered = __assign(__assign({}, centered), { className: 'animated-cell' });
+//# sourceMappingURL=Cells.Types.js.map

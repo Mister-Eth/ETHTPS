@@ -1,25 +1,30 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.SidechainToggleButton = void 0;
-const jsx_runtime_1 = require("react/jsx-runtime");
-const icons_material_1 = require("@mui/icons-material");
-const material_1 = require("@mui/material");
-const LiveDataSlice_1 = require("ethtps.data/dist/slices/LiveDataSlice");
-const react_1 = require("react");
-const react_2 = __importDefault(require("react"));
-const ethtps_data_1 = require("ethtps.data");
-function SidechainToggleButton(config) {
-    const [on, setOn] = (0, react_1.useState)(config.defaultIncluded);
-    const toggle = () => {
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { Link, LinkOff } from '@mui/icons-material';
+import { IconButton, Tooltip, Typography } from '@mui/material';
+import { setIncludeSidechains } from 'ethtps.data/dist/slices/LiveDataSlice';
+import { useState } from 'react';
+import React from 'react';
+import { store } from 'ethtps.data';
+export function SidechainToggleButton(config) {
+    var _a = useState(config.defaultIncluded), on = _a[0], setOn = _a[1];
+    var toggle = function () {
         if (config.toggled) {
             config.toggled(!on);
-            ethtps_data_1.store.dispatch((0, LiveDataSlice_1.setIncludeSidechains)(!on));
+            store.dispatch(setIncludeSidechains(!on));
         }
         setOn(!on);
     };
-    return ((0, jsx_runtime_1.jsx)(react_2.default.Fragment, { children: (0, jsx_runtime_1.jsx)(material_1.Tooltip, Object.assign({ arrow: true, title: (0, jsx_runtime_1.jsxs)(material_1.Typography, { children: ["Sidechains are ", on ? 'included' : 'excluded', ". Click to", on ? 'exclude' : 'include'] }) }, { children: (0, jsx_runtime_1.jsx)(material_1.IconButton, Object.assign({ onClick: toggle }, { children: on ? (0, jsx_runtime_1.jsx)(icons_material_1.Link, { color: "primary" }) : (0, jsx_runtime_1.jsx)(icons_material_1.LinkOff, {}) })) })) }));
+    return (_jsx(React.Fragment, { children: _jsx(Tooltip, __assign({ arrow: true, title: _jsxs(Typography, { children: ["Sidechains are ", on ? 'included' : 'excluded', ". Click to", on ? 'exclude' : 'include'] }) }, { children: _jsx(IconButton, __assign({ onClick: toggle }, { children: on ? _jsx(Link, { color: "primary" }) : _jsx(LinkOff, {}) })) })) }));
 }
-exports.SidechainToggleButton = SidechainToggleButton;
+//# sourceMappingURL=SidechainToggleButton.js.map

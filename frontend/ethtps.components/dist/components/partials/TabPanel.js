@@ -1,4 +1,14 @@
-"use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __rest = (this && this.__rest) || function (s, e) {
     var t = {};
     for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
@@ -10,16 +20,11 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.TabPanel = void 0;
-const jsx_runtime_1 = require("react/jsx-runtime");
-const material_1 = require("@mui/material");
-const react_1 = __importDefault(require("react"));
-function TabPanel(props) {
-    const { children, value, index } = props, other = __rest(props, ["children", "value", "index"]);
-    return ((0, jsx_runtime_1.jsx)(react_1.default.Fragment, { children: (0, jsx_runtime_1.jsx)("div", Object.assign({ role: "tabpanel", hidden: value !== index, id: `simple-tabpanel-${index}`, "aria-labelledby": `simple-tab-${index}` }, other, { children: value === index && ((0, jsx_runtime_1.jsx)(material_1.Box, Object.assign({ sx: { p: 3 } }, { children: (0, jsx_runtime_1.jsx)(material_1.Typography, { children: children }) }))) })) }));
+import { jsx as _jsx } from "react/jsx-runtime";
+import { Box, Typography } from '@mui/material';
+import React from 'react';
+export function TabPanel(props) {
+    var children = props.children, value = props.value, index = props.index, other = __rest(props, ["children", "value", "index"]);
+    return (_jsx(React.Fragment, { children: _jsx("div", __assign({ role: "tabpanel", hidden: value !== index, id: "simple-tabpanel-".concat(index), "aria-labelledby": "simple-tab-".concat(index) }, other, { children: value === index && (_jsx(Box, __assign({ sx: { p: 3 } }, { children: _jsx(Typography, { children: children }) }))) })) }));
 }
-exports.TabPanel = TabPanel;
+//# sourceMappingURL=TabPanel.js.map

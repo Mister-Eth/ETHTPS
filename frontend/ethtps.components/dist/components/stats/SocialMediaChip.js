@@ -1,41 +1,45 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.SocialMediaChip = exports.SocialMediaChipCollection = void 0;
-const jsx_runtime_1 = require("react/jsx-runtime");
-const icons_material_1 = require("@mui/icons-material");
-const material_1 = require("@mui/material");
-const react_1 = __importDefault(require("react"));
-const groupby_js_1 = require("groupby-js");
-const getIconForWebsite = (website) => {
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { Web } from '@mui/icons-material';
+import { Chip, Link, Typography } from '@mui/material';
+import React from 'react';
+import { groupBy } from 'groupby-js';
+var getIconForWebsite = function (website) {
     switch (website.toUpperCase()) {
         default:
-            return (0, jsx_runtime_1.jsx)(icons_material_1.Web, {});
+            return _jsx(Web, {});
     }
 };
-const formatUrl = (url) => {
+var formatUrl = function (url) {
     if (!(url === null || url === void 0 ? void 0 : url.startsWith('http://')))
         url = 'http://' + url;
     return url;
 };
-function SocialMediaChipCollection(config) {
-    const links = (0, groupby_js_1.groupBy)('category', config.links);
+export function SocialMediaChipCollection(config) {
+    var links = groupBy('category', config.links);
     if (links === undefined || links.length === 0)
-        return ((0, jsx_runtime_1.jsx)(react_1.default.Fragment, { children: (0, jsx_runtime_1.jsx)(material_1.Chip, { className: "spaced-vertically", label: (0, jsx_runtime_1.jsx)(material_1.Typography, Object.assign({ sx: {
+        return (_jsx(React.Fragment, { children: _jsx(Chip, { className: "spaced-vertically", label: _jsx(Typography, __assign({ sx: {
                         fontWeight: 'bold',
                         fontSize: '1.25em',
                     } }, { children: "No data available" })), variant: "outlined", color: "primary" }) }));
-    return ((0, jsx_runtime_1.jsx)(react_1.default.Fragment, { children: links.flatMap((group, i) => {
-            return ((0, jsx_runtime_1.jsxs)(react_1.default.Fragment, { children: [(0, jsx_runtime_1.jsx)(material_1.Chip, { label: (0, jsx_runtime_1.jsx)(material_1.Typography, Object.assign({ sx: {
+    return (_jsx(React.Fragment, { children: links.flatMap(function (group, i) {
+            return (_jsxs(React.Fragment, { children: [_jsx(Chip, { label: _jsx(Typography, __assign({ sx: {
                                 fontWeight: 'bold',
-                            } }, { children: group.title })) }), group.items.map((x, i) => ((0, jsx_runtime_1.jsx)(SocialMediaChip, { href: x.url, websiteName: x.name }, i)))] }, i));
+                            } }, { children: group.title })) }), group.items.map(function (x, i) { return (_jsx(SocialMediaChip, { href: x.url, websiteName: x.name }, i)); })] }, i));
         }) }));
 }
-exports.SocialMediaChipCollection = SocialMediaChipCollection;
-function SocialMediaChip(config) {
-    return ((0, jsx_runtime_1.jsx)(react_1.default.Fragment, { children: (0, jsx_runtime_1.jsx)(material_1.Chip, { className: "spaced-vertically", icon: getIconForWebsite(config.websiteName), label: (0, jsx_runtime_1.jsx)(material_1.Typography, Object.assign({ fontSize: '1em', color: "primary.text" }, { children: (0, jsx_runtime_1.jsx)(material_1.Link, Object.assign({ href: formatUrl(config.href), underline: 'hover', color: "inherit", sx: {
+export function SocialMediaChip(config) {
+    return (_jsx(React.Fragment, { children: _jsx(Chip, { className: "spaced-vertically", icon: getIconForWebsite(config.websiteName), label: _jsx(Typography, __assign({ fontSize: '1em', color: "primary.text" }, { children: _jsx(Link, __assign({ href: formatUrl(config.href), underline: 'hover', color: "inherit", sx: {
                         fontWeight: 'bold',
                         fontSize: '1.25em',
                     }, variant: "h6", rel: "noopener" }, { children: config.websiteName })) })), 
@@ -44,4 +48,4 @@ function SocialMediaChip(config) {
                 marginTop: '1em',
             } }) }));
 }
-exports.SocialMediaChip = SocialMediaChip;
+//# sourceMappingURL=SocialMediaChip.js.map

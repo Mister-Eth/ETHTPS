@@ -1,6 +1,6 @@
 {
   "name": "ethtps.api.client",
-  "version": "v3",
+  "version": "3.0.0",
   "description": "OpenAPI client for ethtps.api.client",
   "author": "OpenAPI-Generator",
   "repository": {

@@ -1,8 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const react_1 = require("react");
-function useForceUpdate() {
-    const [, setValue] = (0, react_1.useState)(0);
-    return () => setValue((value) => value + 1); // update state to force render
+import { useState } from 'react';
+export default function useForceUpdate() {
+    var _a = useState(0), setValue = _a[1];
+    return function () { return setValue(function (value) { return value + 1; }); }; // update state to force render
 }
-exports.default = useForceUpdate;
+//# sourceMappingURL=useForceUpdate.js.map

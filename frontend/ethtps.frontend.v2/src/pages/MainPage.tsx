@@ -77,7 +77,7 @@ export default function MainPage(): JSX.Element {
 							<AllProvidersTable
 								providerData={providers}
 								maxData={max}
-								maxRowsBeforeShowingExpand={isMobile ? 15 : 20}
+								maxRowsBeforeShowingExpand={20}
 								clickCallback={useHandleCellClick}
 							/>
 						</Paper>

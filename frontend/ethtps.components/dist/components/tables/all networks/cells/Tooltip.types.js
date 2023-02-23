@@ -1,8 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.largeTooltipText = void 0;
-exports.largeTooltipText = {
+export var largeTooltipText = {
     sx: {
         fontSize: '2rem',
     },
 };
+//# sourceMappingURL=Tooltip.types.js.map

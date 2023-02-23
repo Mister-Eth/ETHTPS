@@ -1,4 +1,3 @@
-import { BrowserView, MobileOnlyView } from 'react-device-detect'
 import { useState } from 'react'
 import { ConditionalRender } from '../../Types'
 import { SimpleDesktopFeedbackExperiment } from './desktop/SimpleDesktopFeedbackExperiment'
@@ -38,13 +37,10 @@ export async function TestTube(
 	}
 	return (
 		<React.Fragment>
-			<BrowserView>
-				{ConditionalRender(
-					<SimpleDesktopFeedbackExperiment />,
-					currentExperiments?.some((x) => x === 2)
-				)}
-			</BrowserView>
-			<MobileOnlyView></MobileOnlyView>
+			{ConditionalRender(
+				<SimpleDesktopFeedbackExperiment />,
+				currentExperiments?.some((x) => x === 2)
+			)}
 		</React.Fragment>
 	)
 }

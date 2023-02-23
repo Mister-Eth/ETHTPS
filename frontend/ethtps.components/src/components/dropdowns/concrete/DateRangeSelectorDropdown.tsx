@@ -106,16 +106,7 @@ export function DateRangeSelectorDropdown(
 									<MenuItem
 										{...hoverEvents}
 										onClick={undefined}>
-										<DateRange
-											onChange={(item) =>
-												setState([item.selection])
-											}
-											moveRangeOnFirstSelection={false}
-											months={1}
-											ranges={state}
-											scroll={{ enabled: true }}
-											direction="vertical"
-										/>
+										range
 									</MenuItem>
 								</MenuList>
 							</ClickAwayListener>

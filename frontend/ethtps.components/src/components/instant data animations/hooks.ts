@@ -1,4 +1,4 @@
-import { ProviderResponseModel } from 'ethtps.data'
+import { DataType, ProviderResponseModel, TimeInterval } from 'ethtps.data'
 import {
 	DataResponseModelDictionary,
 	extractData,
@@ -7,13 +7,11 @@ import {
 	dataTypeToString,
 } from 'ethtps.data'
 import { useGetProviderColorDictionaryFromAppStore } from 'ethtps.data'
+import { liveDataHooks } from 'ethtps.data'
 import {
-	useGetLiveDataSmoothingFromAppStore,
-	useGetSidechainsIncludedFromAppStore,
-	useGetLiveDataModeFromAppStore,
+	useGetProvidersFromAppStore,
 	useGetLiveDataFromAppStore,
-} from 'ethtps.data/dist/hooks/LiveDataHooks'
-import { useGetProvidersFromAppStore } from 'ethtps.data'
+} from 'ethtps.data'
 import { useState, useEffect } from 'react'
 
 export type InstantBarChartDataset = {
@@ -65,11 +63,17 @@ export function useGet1mGPS() {
 export function useGet1mGTPS() {
 	return useAppSelector((state) => state.liveData.oneMinuteGTPSData)
 }
+export type LiveDataState = {
+	smoothing: TimeInterval
+	sidechainsIncluded: boolean
+	mode: DataType
+}
 
-export function useLiveDataState() {
-	const smoothing = useGetLiveDataSmoothingFromAppStore()
-	const sidechainsIncluded = useGetSidechainsIncludedFromAppStore()
-	const mode = useGetLiveDataModeFromAppStore()
+export function useLiveDataState(): LiveDataState {
+	const smoothing = liveDataHooks.useGetLiveDataSmoothingFromAppStore()
+	const sidechainsIncluded =
+		liveDataHooks.useGetSidechainsIncludedFromAppStore()
+	const mode = liveDataHooks.useGetLiveDataModeFromAppStore()
 	return { smoothing, sidechainsIncluded, mode }
 }
 
@@ -89,11 +93,12 @@ export function useStreamchartData(interval: string) {
 }
 
 export function useLiveData() {
-	const providers = useGetProvidersFromAppStore()
-	const smoothing = useGetLiveDataSmoothingFromAppStore()
+	const providers: ProviderResponseModel[] = useGetProvidersFromAppStore()
+	const smoothing = liveDataHooks.useGetLiveDataSmoothingFromAppStore()
 	const colors = useGetProviderColorDictionaryFromAppStore()
-	const sidechainsIncluded = useGetSidechainsIncludedFromAppStore()
-	const mode = useGetLiveDataModeFromAppStore()
+	const sidechainsIncluded =
+		liveDataHooks.useGetSidechainsIncludedFromAppStore()
+	const mode = liveDataHooks.useGetLiveDataModeFromAppStore()
 	const liveData = useGetLiveDataFromAppStore()
 	const [data, setData] = useState<DataResponseModelDictionary>()
 	const [processedData, setProcessedData] = useState<LiveData>()
@@ -116,7 +121,9 @@ export function useLiveData() {
 			) {
 				let total = d_possiblyUndefined
 					.map((x) => x?.value)
-					.reduce((a, b) => (a as number) + (b as number))
+					.reduce(
+						(a: number, b: number) => (a as number) + (b as number)
+					)
 				setProcessedData({
 					data: d_possiblyUndefined,
 					total,

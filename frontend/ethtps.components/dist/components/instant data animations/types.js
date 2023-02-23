@@ -1,5 +1,2 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.range = void 0;
-const range = (n) => Array.from(new Array(n), (_, i) => i);
-exports.range = range;
+export var range = function (n) { return Array.from(new Array(n), function (_, i) { return i; }); };
+//# sourceMappingURL=types.js.map

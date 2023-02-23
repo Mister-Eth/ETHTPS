@@ -1,20 +1,21 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.useSetStoreAPIKey = exports.useMarkApplicationDataLoaded = exports.useGetApplicationDataLoadedFromAppStore = void 0;
-const ApplicationStateSlice_1 = require("../slices/ApplicationStateSlice");
-const store_1 = require("../store");
-const WebsocketSubscriptionSlice_1 = require("../slices/WebsocketSubscriptionSlice");
-const DependenciesIOC_1 = require("../models/services/DependenciesIOC");
-const useGetApplicationDataLoadedFromAppStore = () => {
-    return (0, store_1.useAppSelector)((state) => state.applicationState.applicationDataLoaded);
+var ApplicationStateSlice_1 = require("../slices/ApplicationStateSlice");
+var store_1 = require("../store");
+var WebsocketSubscriptionSlice_1 = require("../slices/WebsocketSubscriptionSlice");
+var DependenciesIOC_1 = require("../models/services/DependenciesIOC");
+var useGetApplicationDataLoadedFromAppStore = function () {
+    return (0, store_1.useAppSelector)(function (state) { return state.applicationState.applicationDataLoaded; });
 };
 exports.useGetApplicationDataLoadedFromAppStore = useGetApplicationDataLoadedFromAppStore;
-const useMarkApplicationDataLoaded = () => {
+var useMarkApplicationDataLoaded = function () {
     store_1.store.dispatch((0, ApplicationStateSlice_1.setApplicationDataLoaded)(true));
 };
 exports.useMarkApplicationDataLoaded = useMarkApplicationDataLoaded;
-const useSetStoreAPIKey = (apiKey) => {
+var useSetStoreAPIKey = function (apiKey) {
     store_1.store.dispatch((0, ApplicationStateSlice_1.setStoreAPIKey)(apiKey));
     store_1.store.dispatch(WebsocketSubscriptionSlice_1.websocketActions.setWSURL(DependenciesIOC_1.wsBaseURL + apiKey));
 };
 exports.useSetStoreAPIKey = useSetStoreAPIKey;
+//# sourceMappingURL=ApplicationStateHooks.js.map

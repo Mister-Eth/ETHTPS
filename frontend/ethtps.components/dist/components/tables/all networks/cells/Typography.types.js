@@ -1,10 +1,8 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.tableHeaderCellTypography = exports.tableCellTypographyStandard = void 0;
-exports.tableCellTypographyStandard = {
+export var tableCellTypographyStandard = {
     fontWeight: 'bold',
 };
-exports.tableHeaderCellTypography = {
+export var tableHeaderCellTypography = {
     fontWeight: 'bold',
     fontSize: '1.1rem',
 };
+//# sourceMappingURL=Typography.types.js.map

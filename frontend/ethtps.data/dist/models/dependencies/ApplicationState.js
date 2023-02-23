@@ -1,12 +1,13 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.ApplicationState = void 0;
-class ApplicationState {
-    constructor(websockets, colorDictionaries, dataLoading, dataMode, liveData, mainPage, maxData, experiments, intervals, networks, providers, pages = {
-        mainPage: {
-            sidechainsIncluded: false,
-        },
-    }) {
+var ApplicationState = /** @class */ (function () {
+    function ApplicationState(websockets, colorDictionaries, dataLoading, dataMode, liveData, mainPage, maxData, experiments, intervals, networks, providers, pages) {
+        if (pages === void 0) { pages = {
+            mainPage: {
+                sidechainsIncluded: false
+            }
+        }; }
         this.websockets = websockets;
         this.colorDictionaries = colorDictionaries;
         this.dataLoading = dataLoading;
@@ -20,5 +21,7 @@ class ApplicationState {
         this.providers = providers;
         this.pages = pages;
     }
-}
+    return ApplicationState;
+}());
 exports.ApplicationState = ApplicationState;
+//# sourceMappingURL=ApplicationState.js.map

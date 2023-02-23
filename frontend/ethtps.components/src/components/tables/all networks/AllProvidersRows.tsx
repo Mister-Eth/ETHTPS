@@ -7,12 +7,12 @@ import {
 	liveDataHooks,
 } from 'ethtps.data'
 import React, { useEffect, useState } from 'react'
-import { SkeletonWithTooltip } from 'src/components/partials/skeletons/SkeletonWithTooltip'
 import { IndexCell } from './cells/IndexCell'
 import { NameCell } from './cells/NameCell'
 import { DataValueCell } from './cells/DataValueCell'
 import { MaxValueCell } from './cells/MaxValueCell'
 import { ProviderTypeCell } from './cells/ProviderTypeCell'
+import { SkeletonWithTooltip } from '../../partials/skeletons/SkeletonWithTooltip'
 
 export function AllProvidersRows(model: IProviderTableModel): JSX.Element {
 	const hasData = (model.providerData?.length as number) > 0

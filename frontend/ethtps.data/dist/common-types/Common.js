@@ -2,11 +2,11 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.numberFormat = exports.uniform = exports.inline = exports.shortTimeIntervalToUIFormat = exports.appModeToUIFormat = exports.StringTimeValue = exports.TimeValue = exports.getModeData = exports.extractData = exports.fromShortString = exports.toShortString = void 0;
-const moment_1 = __importDefault(require("moment"));
-const ethtps_api_client_1 = require("ethtps.api.client");
-const TimeIntervals_1 = require("../models/TimeIntervals");
+var moment_1 = __importDefault(require("moment"));
+var ethtps_api_client_1 = require("ethtps.api.client");
+var TimeIntervals_1 = require("../models/TimeIntervals");
 function toShortString(type) {
     switch (type) {
         case ethtps_api_client_1.DataType.Tps:
@@ -32,12 +32,12 @@ function fromShortString(typeStr) {
 }
 exports.fromShortString = fromShortString;
 // Have to use any because it has a weird structure. Whose fault could it be?
-const extractData = (dict, providerName) => {
+var extractData = function (dict, providerName) {
     if (dict && providerName && dict[providerName]) {
         if (dict[providerName].at(0)) {
-            let q = dict[providerName].at(0);
+            var q = dict[providerName].at(0);
             if (q) {
-                let result = q.Value;
+                var result = q.Value;
                 return Math.round(result * 100) / 100;
             }
         }
@@ -45,7 +45,7 @@ const extractData = (dict, providerName) => {
     return 0;
 };
 exports.extractData = extractData;
-const getModeData = (model, mode) => {
+var getModeData = function (model, mode) {
     switch (mode) {
         case ethtps_api_client_1.DataType.Tps:
             return model === null || model === void 0 ? void 0 : model.tps;
@@ -56,23 +56,25 @@ const getModeData = (model, mode) => {
     }
 };
 exports.getModeData = getModeData;
-class TimeValue {
-    constructor(p) {
+var TimeValue = /** @class */ (function () {
+    function TimeValue(p) {
         var _a;
-        this.x = (0, moment_1.default)(p === null || p === void 0 ? void 0 : p.date);
+        this.x = (0, moment_1["default"])(p === null || p === void 0 ? void 0 : p.date);
         this.y = (_a = p === null || p === void 0 ? void 0 : p.value) !== null && _a !== void 0 ? _a : 0;
     }
-}
+    return TimeValue;
+}());
 exports.TimeValue = TimeValue;
-class StringTimeValue {
-    constructor(p) {
+var StringTimeValue = /** @class */ (function () {
+    function StringTimeValue(p) {
         var _a, _b, _c;
         this.x = (_b = (_a = p === null || p === void 0 ? void 0 : p.date) === null || _a === void 0 ? void 0 : _a.toString()) !== null && _b !== void 0 ? _b : '';
         this.y = (_c = p === null || p === void 0 ? void 0 : p.value) !== null && _c !== void 0 ? _c : 0;
     }
-}
+    return StringTimeValue;
+}());
 exports.StringTimeValue = StringTimeValue;
-const appModeToUIFormat = (mode) => {
+var appModeToUIFormat = function (mode) {
     switch (toShortString(mode).toUpperCase()) {
         case 'TPS':
             return 'Transactions per second';
@@ -83,7 +85,7 @@ const appModeToUIFormat = (mode) => {
     }
 };
 exports.appModeToUIFormat = appModeToUIFormat;
-const shortTimeIntervalToUIFormat = (interval) => {
+var shortTimeIntervalToUIFormat = function (interval) {
     switch ((0, TimeIntervals_1.toShortString_2)(interval).toUpperCase()) {
         case '1H':
             return 'One hour';
@@ -103,18 +105,18 @@ const shortTimeIntervalToUIFormat = (interval) => {
 };
 exports.shortTimeIntervalToUIFormat = shortTimeIntervalToUIFormat;
 exports.inline = {
-    className: 'inline',
+    className: 'inline'
 };
 function uniform(size) {
     return {
         style: {
             width: size,
-            height: size,
-        },
+            height: size
+        }
     };
 }
 exports.uniform = uniform;
-const numberFormat = (value) => {
+var numberFormat = function (value) {
     if (!value)
         return 0;
     if (value > 1000)
@@ -122,3 +124,4 @@ const numberFormat = (value) => {
     return (Math.round(value * 100) / 100).toLocaleString();
 };
 exports.numberFormat = numberFormat;
+//# sourceMappingURL=Common.js.map

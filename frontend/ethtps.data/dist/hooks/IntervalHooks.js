@@ -1,8 +1,9 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.useGetIntervalsFromAppStore = void 0;
-const store_1 = require("../store");
+var store_1 = require("../store");
 function useGetIntervalsFromAppStore() {
-    return (0, store_1.useAppSelector)((state) => state.intervals);
+    return (0, store_1.useAppSelector)(function (state) { return state.intervals; });
 }
 exports.useGetIntervalsFromAppStore = useGetIntervalsFromAppStore;
+//# sourceMappingURL=IntervalHooks.js.map
