@@ -1,6 +1,0 @@
-{
-    "scripts": {
-    "start": "react-scripts start",
-    "dev": "concurrently \"cd server && npm run start\" \"npm run start\""
-  }
-}
