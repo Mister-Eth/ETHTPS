@@ -58,7 +58,7 @@ namespace ETHTPS.API.Middlewares
                 logger.LogError("Error sending Telegram message", e);
             }
 #endif
-            return;
+            /*return;
             var entry = new AccesStat()
             {
                 Count = 1,
@@ -78,6 +78,7 @@ namespace ETHTPS.API.Middlewares
                 dbContext.AccesStats.Update(target);
             }
             dbContext.SaveChanges();
+        }*/
         }
     }
 }

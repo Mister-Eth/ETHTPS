@@ -1,0 +1,33 @@
+version: '3.8'
+
+x-common-variables: &common-variables
+  #MYSQL_DATABASE: books
+
+services:
+  nginx:
+    depends_on:
+      - api
+      - frontend
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - "5000:80"
+
+  api:
+    build:
+      dockerfile: Dockerfile
+      context: "./ETHTPS.API"
+
+  frontend:
+    stdin_open: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    build:
+      dockerfile: Dockerfile
+      context: ./React/ethtps.frontend
+    volumes:
+      - /app/node_modules
+      - ./React/ethtps.frontend:/app
+      

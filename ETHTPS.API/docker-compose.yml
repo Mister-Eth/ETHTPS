@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  ethtps.api:
+    image: ${DOCKER_REGISTRY-}ethtpsapi
+    build:
+      context: .
+      dockerfile: ETHTPS.API/Dockerfile

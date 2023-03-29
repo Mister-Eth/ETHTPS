@@ -35,9 +35,9 @@ namespace ETHTPS.Services.Ethereum
             {
                 txCount = (int)transactionsResponse.Count;
             }
-            catch(Exception e)
+            catch
             {
-                ;
+
             }
             return new BlockInfo()
             {
