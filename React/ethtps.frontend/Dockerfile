@@ -4,6 +4,6 @@ COPY package.json ./
 COPY package-lock.json ./
 COPY ./ ./
 RUN npm i
-EXPOSE 3007
+EXPOSE 3006
 ENV NODE_OPTIONS=--openssl-legacy-provider
 CMD ["npm", "run", "start"]

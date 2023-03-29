@@ -1,8 +1,11 @@
 version: '3.4'
-
-services:
   ethtps.api:
+    restart: always
     image: ${DOCKER_REGISTRY-}ethtpsapi
+    expose:
+      - "6430"
+    ports:
+      - "6430:6430"
     build:
       context: .
       dockerfile: ETHTPS.API/Dockerfile

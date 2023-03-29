@@ -1,0 +1,12 @@
+services:
+  ethtps.frontend:
+    restart: always
+    image: ${DOCKER_REGISTRY-}ethtpsfrontend
+    expose:
+      - "3006"
+    ports:
+      - "3006:3006"
+    build:
+      context: .
+      dockerfile: Dockerfile
+      
