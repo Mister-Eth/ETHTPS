@@ -1,8 +1,7 @@
 FROM node:alpine
+
 WORKDIR /app
-COPY package.json ./
-COPY package-lock.json ./
-COPY ./ ./
+COPY ./ ./app
 RUN npm i
 EXPOSE 3006
 ENV NODE_OPTIONS=--openssl-legacy-provider

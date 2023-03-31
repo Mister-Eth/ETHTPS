@@ -4,30 +4,27 @@ x-common-variables: &common-variables
   #MYSQL_DATABASE: books
 
 services:
-  nginx:
-    depends_on:
-      - api
-      - frontend
+  ethtps.api:
     restart: always
-    build:
-      dockerfile: Dockerfile
-      context: ./nginx
+    image: ${DOCKER_REGISTRY-}ethtpsapi
+    expose:
+      - "6430"
     ports:
-      - "5000:80"
-
-  api:
+      - "6430:6430"
     build:
-      dockerfile: Dockerfile
-      context: "./ETHTPS.API"
+      context: .
+      dockerfile: ETHTPS.API/Dockerfile
 
-  frontend:
-    stdin_open: true
-    environment:
-      - CHOKIDAR_USEPOLLING=true
+
+  ethtps.frontend:
+    depends_on:
+      - ethtps.api
+    restart: always
+    image: ${DOCKER_REGISTRY-}ethtpsfrontend
+    expose:
+      - "3006"
+    ports:
+      - "3006:3006"
     build:
-      dockerfile: Dockerfile
-      context: ./React/ethtps.frontend
-    volumes:
-      - /app/node_modules
-      - ./React/ethtps.frontend:/app
-      
+      context: .
+      dockerfile: React/ethtps.frontend/Dockerfile
