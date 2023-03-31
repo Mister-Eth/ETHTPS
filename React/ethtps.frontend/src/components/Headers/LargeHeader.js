@@ -28,7 +28,7 @@ export default class LargeHeader extends React.Component {
                 style={{ color: "white", fontWeight: "bold", fontSize: 15 }}
                 href={"/register-l2"}
               >
-                Have an L2 you would like to see? Tell us about it here
+                Have an L2 you would like to see? Tell us about it here →
               </a>
             </div>
           </center>

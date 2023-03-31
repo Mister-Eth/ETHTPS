@@ -1,5 +1,4 @@
 import React from "react";
-import CompactHeader from "../../Headers/CompactHeader";
 import { providerData } from "../../../services/defaultData";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';

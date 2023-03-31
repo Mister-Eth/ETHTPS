@@ -4,6 +4,7 @@ import { IBannerConfiguration } from "./IBannerConfiguration";
 export function Banner(config: IBannerConfiguration) {
   return (
     <>
+      <CompactHeader />
       <div
         style={{
           backgroundColor: config.bgColor,
