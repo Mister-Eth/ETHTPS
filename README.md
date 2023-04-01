@@ -1,6 +1,10 @@
 # ETHTPS
 Aggregated Ethereum TPS data for L2s and sidechains
 
+# Note
+
+This is the old version of the website and is not maintained. Check out the new version [here](https://github.com/ethtps)
+
 # Frontend
 
 Requirements: [NodeJS](https://nodejs.org/en/download/)
